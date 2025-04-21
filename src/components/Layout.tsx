@@ -77,6 +77,7 @@ export function Layout({ children, showSearch = true, title, backUrl }: LayoutPr
           <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-right">
             <p className="text-gray-500 text-sm mb-2 md:mb-0">تمامی ابزارها به صورت رایگان و بدون نیاز به ثبت‌نام ارائه می‌شوند.</p>
             <p className="text-gray-500 text-sm">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
+            <p className="text-gray-500 text-sm mt-2 md:mt-0">ساخته شده با عشق توسط کیان داودی برای کاربران فارسی‌زبان</p>
           </div>
         </div>
       </footer>
