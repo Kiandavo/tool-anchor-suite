@@ -1,4 +1,3 @@
-
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
   }
 });
 
-interface ResumeData {
+export interface ResumeData {
   fullName: string;
   jobTitle: string;
   email: string;
