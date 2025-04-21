@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Settings } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -28,7 +29,7 @@ export function Layout({ children, showSearch = true, title, backUrl }: LayoutPr
             {backUrl ? (
               <div className="flex items-center">
                 <Link to={backUrl} className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
-                  <span className="ml-1">←</span>
+                  <ArrowLeft size={18} className="ml-1" />
                   <span>بازگشت</span>
                 </Link>
               </div>
@@ -45,7 +46,7 @@ export function Layout({ children, showSearch = true, title, backUrl }: LayoutPr
             )}
             
             <Link to="/settings" className="text-gray-600 hover:text-primary transition-colors duration-300">
-              تنظیمات
+              <Settings size={20} />
             </Link>
           </div>
         </div>

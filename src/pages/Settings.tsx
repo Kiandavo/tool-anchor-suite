@@ -1,8 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
+import { Moon, Sun, Languages, Mail } from 'lucide-react';
 
 const Settings = () => {
+  const [darkMode, setDarkMode] = useState(false);
+  const [language, setLanguage] = useState('fa');
+  
   return (
     <Layout title="تنظیمات" backUrl="/" showSearch={false}>
       <div className="bg-white rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
@@ -11,22 +15,37 @@ const Settings = () => {
         <div className="space-y-6">
           {/* Theme Toggle */}
           <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-medium text-gray-800">حالت تاریک</h3>
-              <p className="text-sm text-gray-500">تغییر بین حالت روشن و تاریک</p>
+            <div className="flex items-center">
+              {darkMode ? <Moon size={20} className="ml-2 text-primary" /> : <Sun size={20} className="ml-2 text-primary" />}
+              <div>
+                <h3 className="text-lg font-medium text-gray-800">حالت تاریک</h3>
+                <p className="text-sm text-gray-500">تغییر بین حالت روشن و تاریک</p>
+              </div>
             </div>
-            <div className="relative inline-block w-12 h-6 bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300 transition-colors">
-              <span className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform shadow-sm"></span>
-            </div>
+            <button 
+              onClick={() => setDarkMode(!darkMode)}
+              className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors focus:outline-none ${darkMode ? 'bg-primary' : 'bg-gray-200'}`}
+            >
+              <span 
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-1' : 'translate-x-7'}`} 
+              />
+            </button>
           </div>
           
           {/* Language Setting */}
           <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-medium text-gray-800">زبان</h3>
-              <p className="text-sm text-gray-500">انتخاب زبان نمایش برنامه</p>
+            <div className="flex items-center">
+              <Languages size={20} className="ml-2 text-primary" />
+              <div>
+                <h3 className="text-lg font-medium text-gray-800">زبان</h3>
+                <p className="text-sm text-gray-500">انتخاب زبان نمایش برنامه</p>
+              </div>
             </div>
-            <select className="border border-gray-300 rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select 
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="border border-gray-300 rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-primary"
+            >
               <option value="fa">فارسی</option>
               <option value="en">English</option>
             </select>
@@ -45,9 +64,10 @@ const Settings = () => {
             </p>
             
             <h4 className="text-md font-medium text-gray-800 mb-2">تماس با ما</h4>
-            <p className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 flex items-center">
+              <Mail size={16} className="ml-2 text-primary" />
               info@anchor-tools.ir
-            </p>
+            </div>
           </div>
         </div>
       </div>
