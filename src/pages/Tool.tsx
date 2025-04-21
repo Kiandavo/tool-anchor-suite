@@ -5,9 +5,10 @@ import { Layout } from '@/components/Layout';
 import { tools, Tool as ToolType } from '@/data/tools';
 import TextTool from './ToolTypes/TextTool';
 import ImageTool from './ToolTypes/ImageTool';
+import RandomPasswordTool from './ToolTypes/RandomPasswordTool';
 import ToolNotImplemented from './ToolTypes/ToolNotImplemented';
 
-const toolTypeBySlug: Record<string, 'text' | 'image'> = {
+const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password'> = {
   // Text tools
   'latin-to-persian-convertor': 'text',
   'text-counter': 'text',
@@ -31,6 +32,8 @@ const toolTypeBySlug: Record<string, 'text' | 'image'> = {
   'image-flip': 'image',
   'image-grayscale': 'image',
   'image-blur': 'image',
+  // Special tools with dedicated components
+  'random-password': 'random-password',
 };
 
 export default function Tool() {
@@ -57,6 +60,8 @@ export default function Tool() {
           <TextTool slug={tool.slug} />
         ) : toolTypeBySlug[tool.slug] === "image" ? (
           <ImageTool slug={tool.slug} />
+        ) : toolTypeBySlug[tool.slug] === "random-password" ? (
+          <RandomPasswordTool />
         ) : (
           <ToolNotImplemented />
         )}
@@ -64,4 +69,3 @@ export default function Tool() {
     </Layout>
   );
 }
-
