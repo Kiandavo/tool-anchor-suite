@@ -46,28 +46,31 @@ const Index = () => {
           ))}
         </div>
       </section>
-      
+
       {/* New Tools */}
-      <section className="mb-12 animate-slide-up" style={{animationDelay: '0.2s'}}>
-        <div className="flex justify-between items-center mb-6">
+      <section
+        className="mb-12 animate-slide-up rounded-xl border border-[#8cc55b]/30 bg-[#F2FCE2]"
+        style={{animationDelay: '0.2s'}}
+      >
+        <div className="flex justify-between items-center mb-6 px-6 pt-6">
           <div className="flex items-center">
-            <Sparkles size={20} className="text-primary ml-2" />
+            <Sparkles size={20} className="text-[#8cc55b] ml-2" />
             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">ابزارهای جدید</h2>
           </div>
-          <Link to="/all-tools" className="text-primary flex items-center text-sm hover:underline">
+          <Link to="/all-tools" className="text-[#7c9c36] flex items-center text-sm font-bold hover:underline">
             مشاهده همه
             <ChevronLeft size={16} className="mr-1" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6 pb-6">
           {newTools.map((tool, index) => (
             <div key={tool.id} className="animate-fade-in" style={{animationDelay: `${0.3 + index * 0.1}s`}}>
-              <ToolCard tool={tool} />
+              <ToolCard tool={tool} highlight />
             </div>
           ))}
         </div>
       </section>
-      
+
       {/* Popular Tools */}
       <section className="mb-12 animate-slide-up" style={{animationDelay: '0.4s'}}>
         <div className="flex justify-between items-center mb-6">
