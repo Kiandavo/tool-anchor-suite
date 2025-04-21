@@ -20,7 +20,7 @@ import { Grid2x2, CalendarDays, Dice5 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
-import { Dice } from 'lucide-react';
+// Removing the incorrect Dice import
 
 interface RandomToolProps {
   slug: string;
