@@ -1,22 +1,13 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ToolCard } from '@/components/ToolCard';
-import { 
-  tools, 
-  ToolCategory, 
-  categoryLabels, 
-  getToolsByCategory,
-  getNewTools,
-  getPopularTools
-} from '@/data/tools';
+import { tools, ToolCategory, categoryLabels, getToolsByCategory, getNewTools, getPopularTools } from '@/data/tools';
 import { ChevronLeft, Sparkles, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { finglishToPersian } from '@/utils/toolUtils'; // Use our utility
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-
 const Index = () => {
   // Finglish to Farsi (Home page instant converter state)
   const [finglishInput, setFinglishInput] = useState('');
@@ -44,9 +35,7 @@ const Index = () => {
       setTimeout(() => setCopyClicked(false), 1200);
     }
   };
-  
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero Section */}
       <section className="text-center py-12 mb-10 bg-white dark:bg-gray-800 rounded-xl shadow-sm animate-fade-in">
         <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-50">لنگر - مجموعه ابزار</h1>
@@ -56,59 +45,27 @@ const Index = () => {
       </section>
 
       {/* Typewriting - Instant Finglish to Farsi (utility) */}
-      <section className="mb-8 mx-auto w-full max-w-2xl bg-[#F2FCE2] border border-[#8cc55b]/20 rounded-xl shadow p-6 flex flex-col gap-4 items-stretch animate-fade-in">
-        <h2 className="text-xl font-bold text-[#8cc55b] mb-2 flex items-center gap-2">
-          <span className="inline-block">🔤</span> تبدیل سریع فینگلیش به فارسی
-        </h2>
-        <Textarea
-          placeholder="متن فینگلیش خود را وارد کنید (مانند: salam chetori)"
-          dir="ltr"
-          value={finglishInput}
-          minRows={1}
-          onChange={e => setFinglishInput(e.target.value)}
-          className="mb-1"
-        />
-        <div className="flex items-center gap-2 mb-2">
-          <Textarea
-            readOnly
-            value={persianOutput}
-            placeholder="خروجی فارسی در اینجا نمایش داده می‌شود"
-            dir="rtl"
-            minRows={1}
-            className="flex-1"
-          />
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleCopyFarsi}
-            disabled={!persianOutput}
-            className="min-w-[70px]"
-          >
-            {copyClicked ? "کپی شد!" : "کپی"}
-          </Button>
-        </div>
-        <div className="text-xs text-[#7c9c36] font-medium opacity-90">
-          این تبدیل با یک الگوریتم داخلی انجام می‌شود و به اینترنت نیاز ندارد.
-        </div>
-      </section>
+      
       
       {/* Categories */}
       <section className="mb-12 animate-slide-up">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">دسته‌بندی‌ها</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {categoryCounts.map(({category, count}, index) => (
-            <div key={category} className="animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
+          {categoryCounts.map(({
+          category,
+          count
+        }, index) => <div key={category} className="animate-fade-in" style={{
+          animationDelay: `${index * 0.1}s`
+        }}>
               <CategoryCard category={category} count={count} />
-            </div>
-          ))}
+            </div>)}
         </div>
       </section>
 
       {/* New Tools */}
-      <section
-        className="mb-12 animate-slide-up rounded-xl border border-[#8cc55b]/30 bg-[#F2FCE2]"
-        style={{animationDelay: '0.2s'}}
-      >
+      <section className="mb-12 animate-slide-up rounded-xl border border-[#8cc55b]/30 bg-[#F2FCE2]" style={{
+      animationDelay: '0.2s'
+    }}>
         <div className="flex justify-between items-center mb-6 px-6 pt-6">
           <div className="flex items-center">
             <Sparkles size={20} className="text-[#8cc55b] ml-2" />
@@ -120,16 +77,18 @@ const Index = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6 pb-6">
-          {newTools.map((tool, index) => (
-            <div key={tool.id} className="animate-fade-in" style={{animationDelay: `${0.3 + index * 0.1}s`}}>
+          {newTools.map((tool, index) => <div key={tool.id} className="animate-fade-in" style={{
+          animationDelay: `${0.3 + index * 0.1}s`
+        }}>
               <ToolCard tool={tool} highlight />
-            </div>
-          ))}
+            </div>)}
         </div>
       </section>
 
       {/* Popular Tools */}
-      <section className="mb-12 animate-slide-up" style={{animationDelay: '0.4s'}}>
+      <section className="mb-12 animate-slide-up" style={{
+      animationDelay: '0.4s'
+    }}>
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
             <TrendingUp size={20} className="text-primary ml-2" />
@@ -141,15 +100,13 @@ const Index = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {popularTools.map((tool, index) => (
-            <div key={tool.id} className="animate-fade-in" style={{animationDelay: `${0.5 + index * 0.1}s`}}>
+          {popularTools.map((tool, index) => <div key={tool.id} className="animate-fade-in" style={{
+          animationDelay: `${0.5 + index * 0.1}s`
+        }}>
               <ToolCard tool={tool} />
-            </div>
-          ))}
+            </div>)}
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Index;
