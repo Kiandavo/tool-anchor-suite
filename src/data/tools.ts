@@ -17,8 +17,9 @@ export const tools: Tool[] = [
   ...randomTools
 ];
 
-// Re-export types and labels
-export { Tool, ToolCategory, categoryLabels };
+// Re-export types and labels using `export type`
+export type { Tool, ToolCategory };
+export const { categoryLabels } = { categoryLabels };
 
 // Helper functions
 export function getToolsByCategory(category: ToolCategory): Tool[] {
@@ -46,3 +47,4 @@ export function searchTools(query: string): Tool[] {
     tool.slug.toLowerCase().includes(lowercaseQuery)
   );
 }
+
