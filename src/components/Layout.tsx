@@ -36,17 +36,19 @@ export function Layout({
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center">
             <div className="flex items-center justify-between w-full gap-4">
+              {/* Settings on the left */}
               <Link to="/settings" className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
                 <Settings size={22} />
               </Link>
 
+              {/* Home or Back on the right */}
               {backUrl ? (
-                <Link to={backUrl} className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
+                <Link to={backUrl} className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center ml-auto">
                   <ArrowLeft size={20} className="ml-2" />
                   <span>بازگشت</span>
                 </Link>
               ) : (
-                <Link to="/" className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center">
+                <Link to="/" className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center ml-auto">
                   <Home size={20} className="ml-2" />
                   لنگر
                 </Link>
@@ -77,4 +79,3 @@ export function Layout({
     </div>
   );
 }
-
