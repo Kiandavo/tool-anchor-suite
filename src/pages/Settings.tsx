@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { Layout } from '@/components/Layout';
 import { Moon, Sun, Languages, Mail, Heart, InfoIcon, Shield, Globe } from 'lucide-react';
-
 const Settings = () => {
   // Get the initial dark mode value from localStorage, defaulting to false if not set
   const [darkMode, setDarkMode] = useState(() => {
@@ -10,7 +8,7 @@ const Settings = () => {
     return savedMode === 'true';
   });
   const [language, setLanguage] = useState('fa');
-  
+
   // Apply dark mode when component mounts or darkMode changes
   useEffect(() => {
     if (darkMode) {
@@ -18,42 +16,20 @@ const Settings = () => {
     } else {
       document.documentElement.classList.remove('dark');
     }
-    
+
     // Save to localStorage
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
-  
   const handleDarkModeToggle = () => {
     setDarkMode(prev => !prev);
   };
-  
-  return (
-    <Layout title="تنظیمات" backUrl="/" showSearch={false}>
+  return <Layout title="تنظیمات" backUrl="/" showSearch={false}>
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">تنظیمات</h1>
         
         <div className="space-y-6">
           {/* Theme Toggle */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              {darkMode ? 
-                <Moon size={22} className="ml-3 text-primary" /> : 
-                <Sun size={22} className="ml-3 text-primary" />
-              }
-              <div>
-                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100">حالت تاریک</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">تغییر بین حالت روشن و تاریک</p>
-              </div>
-            </div>
-            <button 
-              onClick={handleDarkModeToggle}
-              className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors focus:outline-none ${darkMode ? 'bg-primary' : 'bg-gray-200'}`}
-            >
-              <span 
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-1' : 'translate-x-7'}`} 
-              />
-            </button>
-          </div>
+          
           
           {/* Language Setting */}
           <div className="flex items-center justify-between">
@@ -64,11 +40,7 @@ const Settings = () => {
                 <p className="text-sm text-gray-500 dark:text-gray-400">انتخاب زبان نمایش برنامه</p>
               </div>
             </div>
-            <select 
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-primary"
-            >
+            <select value={language} onChange={e => setLanguage(e.target.value)} className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-primary">
               <option value="fa">فارسی</option>
               <option value="en">English</option>
             </select>
@@ -97,7 +69,7 @@ const Settings = () => {
               <h4 className="text-md font-medium text-gray-800 dark:text-gray-100">تماس با ما</h4>
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-300 flex items-center pr-9">
-              <span className="ml-2">info@anchor-tools.ir</span>
+              <span className="ml-2">info@helpfuladvertising.com</span>
             </div>
             
             <div className="flex items-center justify-center mt-8">
@@ -107,8 +79,6 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Settings;
