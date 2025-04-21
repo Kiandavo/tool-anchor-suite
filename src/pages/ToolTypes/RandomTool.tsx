@@ -16,9 +16,11 @@ import {
 } from "@/components/ui/select";
 import { generateRandomString, pickRandomFromList, getRandomQuote, quoteCategories } from '@/utils/textUtils';
 import { generateRandomDate, generateRandomEmoji, rollDice, generateRandomWord, copyToClipboard } from '@/utils/randomUtils';
-import { List, "grid-2x2" as Grid2x2 } from 'lucide-react';
+import { Grid2x2, CalendarDays, Dice5 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { Dice } from 'lucide-react';
 
 interface RandomToolProps {
   slug: string;
@@ -129,7 +131,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
         <Card>
           <CardContent className="p-6 space-y-4">
             <Button onClick={handleGenerateDate} className="flex items-center gap-2">
-              <Calendar size={18} />
+              <CalendarDays size={18} />
               تولید تاریخ تصادفی
             </Button>
             {randomDate && (
@@ -163,7 +165,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
         <Card>
           <CardContent className="p-6 space-y-4">
             <Button onClick={handleRollDice} className="flex items-center gap-2">
-              <Dice size={18} />
+              <Dice5 size={18} />
               پرتاب تاس
             </Button>
             {diceResult && (
