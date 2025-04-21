@@ -3,8 +3,9 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { tools, Tool as ToolType } from '@/data/tools';
-import TextTools from '@/components/TextTools';
-import ImageTools from '@/components/ImageTools';
+import TextTool from './ToolTypes/TextTool';
+import ImageTool from './ToolTypes/ImageTool';
+import ToolNotImplemented from './ToolTypes/ToolNotImplemented';
 
 const toolTypeBySlug: Record<string, 'text' | 'image'> = {
   // Text tools
@@ -34,7 +35,7 @@ const toolTypeBySlug: Record<string, 'text' | 'image'> = {
 
 export default function Tool() {
   const { slug } = useParams<{ slug: string }>();
-  const tool = tools.find(t => t.slug === slug) as ToolType;
+  const tool = tools.find(t => t.slug === slug) as ToolType | undefined;
 
   if (!tool) {
     return (
@@ -53,13 +54,14 @@ export default function Tool() {
         <h1 className="text-2xl font-bold text-primary mb-4">{tool.name}</h1>
         <p className="mb-6 text-muted-foreground">{tool.description}</p>
         {toolTypeBySlug[tool.slug] === "text" ? (
-          <TextTools slug={tool.slug} />
+          <TextTool slug={tool.slug} />
         ) : toolTypeBySlug[tool.slug] === "image" ? (
-          <ImageTools slug={tool.slug} />
+          <ImageTool slug={tool.slug} />
         ) : (
-          <div className="text-red-500">ابزار پیاده سازی نشده است.</div>
+          <ToolNotImplemented />
         )}
       </div>
     </Layout>
   );
 }
+

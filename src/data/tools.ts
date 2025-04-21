@@ -1010,4 +1010,4 @@ export const tools: Tool[] = [
     slug: "remove-accent-tool",
     name: "حذف اِعراب متون فارسی",
     category: "text",
-    description: "اِعراب (فتحه و کسره و ...) را از متن حذف کنید",
+    description: "اِعراب (فتحه و کسره و ...) را از متن حذف
