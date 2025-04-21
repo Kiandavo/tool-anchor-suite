@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Rotate, Circle } from 'lucide-react';
+import { RotateCcw, Circle } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface CoinSideProps {
@@ -70,7 +70,7 @@ const CoinFlip: React.FC = () => {
         disabled={isFlipping}
         className="flex items-center gap-2"
       >
-        <Rotate size={18} className={isFlipping ? "animate-spin" : ""} />
+        <RotateCcw size={18} className={isFlipping ? "animate-spin" : ""} />
         {isFlipping ? "در حال پرتاب..." : "پرتاب سکه"}
       </Button>
       
