@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
@@ -55,7 +54,7 @@ const Index = () => {
             <Sparkles size={20} className="text-primary ml-2" />
             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">ابزارهای جدید</h2>
           </div>
-          <Link to="/search?q=new" className="text-primary flex items-center text-sm hover:underline">
+          <Link to="/all-tools" className="text-primary flex items-center text-sm hover:underline">
             مشاهده همه
             <ChevronLeft size={16} className="mr-1" />
           </Link>
@@ -76,7 +75,7 @@ const Index = () => {
             <TrendingUp size={20} className="text-primary ml-2" />
             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">ابزارهای محبوب</h2>
           </div>
-          <Link to="/search?q=popular" className="text-primary flex items-center text-sm hover:underline">
+          <Link to="/all-tools" className="text-primary flex items-center text-sm hover:underline">
             مشاهده همه
             <ChevronLeft size={16} className="mr-1" />
           </Link>

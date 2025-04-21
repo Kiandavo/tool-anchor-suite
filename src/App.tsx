@@ -9,6 +9,7 @@ import Tool from "./pages/Tool";
 import Search from "./pages/Search";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import AllTools from "./pages/AllTools";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/category/:categoryId" element={<Category />} />
           <Route path="/tool/:slug" element={<Tool />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/all-tools" element={<AllTools />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
