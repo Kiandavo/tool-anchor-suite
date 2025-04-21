@@ -37,6 +37,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     lineHeight: 1.5,
   },
+  contactInfo: {
+    fontSize: 12,
+    textAlign: 'right',
+    marginBottom: 10,
+  },
+  sectionContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+  }
 });
 
 interface ResumeData {
@@ -57,21 +66,31 @@ const ResumePDF = ({ data }: { data: ResumeData }) => (
         <Text style={styles.title}>{data.fullName}</Text>
         <Text style={styles.subtitle}>{data.jobTitle}</Text>
 
-        <Text style={styles.heading}>اطلاعات تماس</Text>
-        <Text style={styles.text}>ایمیل: {data.email}</Text>
-        <Text style={styles.text}>تلفن: {data.phone}</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.heading}>اطلاعات تماس</Text>
+          <Text style={styles.contactInfo}>ایمیل: {data.email}</Text>
+          <Text style={styles.contactInfo}>تلفن: {data.phone}</Text>
+        </View>
 
-        <Text style={styles.heading}>درباره من</Text>
-        <Text style={styles.text}>{data.about}</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.heading}>درباره من</Text>
+          <Text style={styles.text}>{data.about}</Text>
+        </View>
 
-        <Text style={styles.heading}>تحصیلات</Text>
-        <Text style={styles.text}>{data.education}</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.heading}>تحصیلات</Text>
+          <Text style={styles.text}>{data.education}</Text>
+        </View>
 
-        <Text style={styles.heading}>تجربیات کاری</Text>
-        <Text style={styles.text}>{data.experience}</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.heading}>تجربیات کاری</Text>
+          <Text style={styles.text}>{data.experience}</Text>
+        </View>
 
-        <Text style={styles.heading}>مهارت‌ها</Text>
-        <Text style={styles.text}>{data.skills}</Text>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.heading}>مهارت‌ها</Text>
+          <Text style={styles.text}>{data.skills}</Text>
+        </View>
       </View>
     </Page>
   </Document>
