@@ -1,9 +1,7 @@
-
 import React, { useState } from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
 import RandomColorGenerator from '@/components/RandomColorGenerator';
-import CoinFlip from '@/components/CoinFlip';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -120,12 +118,6 @@ export default function RandomTool({ slug }: RandomToolProps) {
                 {selectedItem}
               </div>
             )}
-          </CardContent>
-        </Card>
-      ) : slug === 'coin-flip' ? (
-        <Card>
-          <CardContent className="p-6">
-            <CoinFlip />
           </CardContent>
         </Card>
       ) : slug === 'random-quote-generator' ? (
