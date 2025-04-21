@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
@@ -7,7 +6,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { generateRandomString, pickRandomFromList, getRandomQuote } from '@/utils/textUtils';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { generateRandomString, pickRandomFromList, getRandomQuote, quoteCategories } from '@/utils/textUtils';
 import { Quote, List, Shuffle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -22,6 +28,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
   const [itemsList, setItemsList] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [quote, setQuote] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   const handleGenerateString = () => {
     const newString = generateRandomString(stringLength);
@@ -41,7 +48,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
   };
 
   const handleGenerateQuote = () => {
-    const newQuote = getRandomQuote();
+    const newQuote = getRandomQuote(selectedCategory);
     setQuote(newQuote);
     toast.success("جمله قصار جدید تولید شد");
   };
@@ -116,6 +123,22 @@ export default function RandomTool({ slug }: RandomToolProps) {
       ) : slug === 'random-quote-generator' ? (
         <Card>
           <CardContent className="p-6 space-y-4">
+            <Select
+              value={selectedCategory}
+              onValueChange={setSelectedCategory}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="انتخاب دسته‌بندی (همه)" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">همه دسته‌بندی‌ها</SelectItem>
+                {quoteCategories.map((category) => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Button onClick={handleGenerateQuote} className="flex items-center gap-2">
               <Quote size={18} />
               دریافت جمله قصار جدید
