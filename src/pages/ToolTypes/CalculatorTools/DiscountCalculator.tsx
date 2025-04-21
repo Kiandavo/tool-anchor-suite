@@ -1,158 +1,136 @@
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-import React, { useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
-import { Calculator, Percent } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+interface DiscountCalculatorProps {}
 
-export default function DiscountCalculator() {
-  const [originalPrice, setOriginalPrice] = useState<string>('');
-  const [discountPercent, setDiscountPercent] = useState<string>('');
-  const [result, setResult] = useState<string | null>(null);
-  const [calcType, setCalcType] = useState<'applyDiscount' | 'findDiscount'>('applyDiscount');
+const DiscountCalculator = () => {
+  type CalcType = "applyDiscount" | "findDiscount";
+  const [calcType, setCalcType] = useState<CalcType>("applyDiscount");
 
-  const calculate = () => {
-    const price = parseFloat(originalPrice);
-    const discount = parseFloat(discountPercent);
+  const [originalPrice, setOriginalPrice] = useState<number | "">("");
+  const [discount, setDiscount] = useState<number | "">("");
+  const [finalPrice, setFinalPrice] = useState<number | "">("");
 
-    if (isNaN(price) || price <= 0 || isNaN(discount) || discount < 0) {
-      return;
-    }
+  const [priceBeforeDiscount, setPriceBeforeDiscount] = useState<number | "">("");
+  const [priceAfterDiscount, setPriceAfterDiscount] = useState<number | "">("");
+  const [calculatedDiscount, setCalculatedDiscount] = useState<number | "">("");
 
-    if (calcType === 'applyDiscount') {
-      if (discount > 100) {
-        setResult("درصد تخفیف نمی‌تواند بیشتر از 100 باشد!");
-        return;
-      }
-      
-      const discountAmount = (price * discount) / 100;
-      const finalPrice = price - discountAmount;
-      
-      setResult(`
-      قیمت اصلی: ${price.toLocaleString('fa-IR')}
-      درصد تخفیف: ${discount.toLocaleString('fa-IR')}%
-      مقدار تخفیف: ${discountAmount.toLocaleString('fa-IR')}
-      قیمت نهایی: ${finalPrice.toLocaleString('fa-IR')}
-      `);
-    } else {
-      // Find discount percentage between two prices
-      // Here originalPrice is the original price and discountPercent is the final price (after discount)
-      const finalPrice = parseFloat(discountPercent);
-      
-      if (finalPrice > price) {
-        setResult("قیمت نهایی نمی‌تواند بیشتر از قیمت اصلی باشد!");
-        return;
-      }
-      
-      const discountAmount = price - finalPrice;
-      const discountPercentage = (discountAmount / price) * 100;
-      
-      setResult(`
-      قیمت اصلی: ${price.toLocaleString('fa-IR')}
-      قیمت نهایی: ${finalPrice.toLocaleString('fa-IR')}
-      مقدار تخفیف: ${discountAmount.toLocaleString('fa-IR')}
-      درصد تخفیف: ${discountPercentage.toFixed(2).toLocaleString('fa-IR')}%
-      `);
+  const calculateDiscountedPrice = () => {
+    if (typeof originalPrice === 'number' && typeof discount === 'number') {
+      const discountedPrice = originalPrice - (originalPrice * (discount / 100));
+      setFinalPrice(discountedPrice);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
-    // Only allow numbers and decimals
-    const value = e.target.value.replace(/[^0-9.]/g, '');
-    setter(value);
+  const calculateDiscountPercentage = () => {
+    if (typeof priceBeforeDiscount === 'number' && typeof priceAfterDiscount === 'number') {
+      const discountAmount = priceBeforeDiscount - priceAfterDiscount;
+      const discountPercentage = (discountAmount / priceBeforeDiscount) * 100;
+      setCalculatedDiscount(discountPercentage);
+    }
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="p-6">
-        <div className="flex flex-col space-y-6">
-          <div className="flex items-center justify-center space-x-2 space-x-reverse mb-4">
-            <Percent className="text-primary h-6 w-6 ml-2" />
-            <h2 className="text-xl font-bold text-center">محاسبه‌گر تخفیف</h2>
-          </div>
-
+    <div>
+      <Card>
+        <CardHeader>
+          <CardTitle>محاسبه گر تخفیف</CardTitle>
+          <CardDescription>
+            با استفاده از این ابزار می‌توانید قیمت نهایی پس از تخفیف یا درصد تخفیف را محاسبه کنید.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <div className="grid grid-cols-1 gap-4 mb-4">
             <div className="flex justify-center space-x-4 space-x-reverse">
               <Button
-                onClick={() => setCalcType('applyDiscount')}
-                variant={calcType === 'applyDiscount' ? 'default' : 'outline'}
+                onClick={() => setCalcType("applyDiscount")}
+                variant={calcType === "applyDiscount" ? "default" : "outline"}
               >
                 محاسبه قیمت پس از تخفیف
               </Button>
               <Button
-                onClick={() => setCalcType('findDiscount')}
-                variant={calcType === 'findDiscount' ? 'default' : 'outline'}
+                onClick={() => setCalcType("findDiscount")}
+                variant={calcType === "findDiscount" ? "default" : "outline"}
               >
                 محاسبه درصد تخفیف
               </Button>
             </div>
           </div>
 
-          {calcType === 'applyDiscount' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
+          {calcType === "applyDiscount" ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
                 <Label htmlFor="originalPrice">قیمت اصلی</Label>
                 <Input
+                  type="number"
                   id="originalPrice"
                   value={originalPrice}
-                  onChange={(e) => handleInputChange(e, setOriginalPrice)}
-                  placeholder="مثال: 100000"
-                  type="text"
-                  dir="ltr"
+                  onChange={(e) => setOriginalPrice(e.target.value === "" ? "" : parseFloat(e.target.value))}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="discountPercent">درصد تخفیف</Label>
+              <div>
+                <Label htmlFor="discount">درصد تخفیف</Label>
                 <Input
-                  id="discountPercent"
-                  value={discountPercent}
-                  onChange={(e) => handleInputChange(e, setDiscountPercent)}
-                  placeholder="مثال: 20"
-                  type="text"
-                  dir="ltr"
+                  type="number"
+                  id="discount"
+                  value={discount}
+                  onChange={(e) => setDiscount(e.target.value === "" ? "" : parseFloat(e.target.value))}
                 />
+              </div>
+              <div>
+                <Label htmlFor="finalPrice">قیمت نهایی</Label>
+                <Input
+                  type="number"
+                  id="finalPrice"
+                  value={finalPrice}
+                  readOnly
+                />
+              </div>
+              <div className="flex items-center">
+                <Button onClick={calculateDiscountedPrice}>محاسبه قیمت نهایی</Button>
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="originalPrice">قیمت اصلی</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="priceBeforeDiscount">قیمت قبل از تخفیف</Label>
                 <Input
-                  id="originalPrice"
-                  value={originalPrice}
-                  onChange={(e) => handleInputChange(e, setOriginalPrice)}
-                  placeholder="مثال: 100000"
-                  type="text"
-                  dir="ltr"
+                  type="number"
+                  id="priceBeforeDiscount"
+                  value={priceBeforeDiscount}
+                  onChange={(e) => setPriceBeforeDiscount(e.target.value === "" ? "" : parseFloat(e.target.value))}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="finalPrice">قیمت نهایی (با تخفیف)</Label>
+              <div>
+                <Label htmlFor="priceAfterDiscount">قیمت بعد از تخفیف</Label>
                 <Input
-                  id="finalPrice"
-                  value={discountPercent}
-                  onChange={(e) => handleInputChange(e, setDiscountPercent)}
-                  placeholder="مثال: 80000"
-                  type="text"
-                  dir="ltr"
+                  type="number"
+                  id="priceAfterDiscount"
+                  value={priceAfterDiscount}
+                  onChange={(e) => setPriceAfterDiscount(e.target.value === "" ? "" : parseFloat(e.target.value))}
                 />
+              </div>
+              <div>
+                <Label htmlFor="calculatedDiscount">درصد تخفیف</Label>
+                <Input
+                  type="number"
+                  id="calculatedDiscount"
+                  value={calculatedDiscount}
+                  readOnly
+                />
+              </div>
+              <div className="flex items-center">
+                <Button onClick={calculateDiscountPercentage}>محاسبه درصد تخفیف</Button>
               </div>
             </div>
           )}
-
-          <Button
-            onClick={calculate}
-            className="flex items-center justify-center"
-          >
-            <Calculator className="ml-2 h-5 w-5" />
-            محاسبه کن
-          </Button>
-
-          {result && <OutcomeInfoCard outcome={result} />}
-        </div>
+        </CardContent>
       </Card>
     </div>
   );
-}
+};
+
+export default DiscountCalculator;
