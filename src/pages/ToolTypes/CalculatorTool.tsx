@@ -3,6 +3,10 @@ import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
 import PercentageCalculator from './CalculatorTools/PercentageCalculator';
+import LoanCalculator from './CalculatorTools/LoanCalculator';
+import AgeCalculator from './CalculatorTools/AgeCalculator';
+import BmiCalculator from './CalculatorTools/BmiCalculator';
+import DiscountCalculator from './CalculatorTools/DiscountCalculator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -16,6 +20,14 @@ export default function CalculatorTool({ slug }: CalculatorToolProps) {
     switch (slug) {
       case 'percentage-calculator':
         return <PercentageCalculator />;
+      case 'loan-calculator':
+        return <LoanCalculator />;
+      case 'age-calculator':
+        return <AgeCalculator />;
+      case 'bmi-calculator':
+        return <BmiCalculator />;
+      case 'discount-calculator':
+        return <DiscountCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
