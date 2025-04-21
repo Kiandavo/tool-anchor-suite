@@ -1036,3 +1036,14 @@ export function getPopularTools(): Tool[] {
     tools.find(t => t.slug === "percentage-calculator")!
   ];
 }
+
+// Search function to find tools based on query
+export function searchTools(query: string): Tool[] {
+  const lowercaseQuery = query.toLowerCase();
+  
+  return tools.filter(tool => 
+    tool.name.toLowerCase().includes(lowercaseQuery) || 
+    tool.description.toLowerCase().includes(lowercaseQuery) ||
+    tool.slug.toLowerCase().includes(lowercaseQuery)
+  );
+}
