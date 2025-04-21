@@ -31,7 +31,8 @@ const iconMap = {
   'filter': Filter,
   'activity': Activity,
   'dice': Dice6,
-  'hash': Hash
+  'hash': Hash,
+  'calendar': Activity
 };
 
 interface ToolCardProps {
@@ -43,22 +44,22 @@ export function ToolCard({ tool }: ToolCardProps) {
   const IconComponent = iconMap[icon as keyof typeof iconMap] || TextIcon;
   
   return (
-    <Link to={`/tool/${slug}`}>
-      <div className="tool-card">
+    <Link to={`/tool/${slug}`} className="block transition-all duration-300">
+      <div className="tool-card group">
         <div className="flex items-start justify-between mb-3">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-            <IconComponent className="text-primary" size={18} />
+          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+            <IconComponent className="text-primary" size={22} />
           </div>
           
           {isNew && (
-            <span className="badge-new">
+            <span className="badge-new px-3 py-1 text-xs">
               جدید
             </span>
           )}
         </div>
         
-        <h3 className="text-lg font-medium text-gray-800 mb-2">{name}</h3>
-        <p className="text-sm text-gray-500">{description}</p>
+        <h3 className="text-lg font-medium text-gray-800 mb-2 line-clamp-1">{name}</h3>
+        <p className="text-sm text-gray-500 line-clamp-2">{description}</p>
       </div>
     </Link>
   );

@@ -1,9 +1,9 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Settings } from 'lucide-react';
+import { ArrowLeft, Settings, Sun, Moon, Home } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,6 +14,7 @@ interface LayoutProps {
 
 export function Layout({ children, showSearch = true, title, backUrl }: LayoutProps) {
   const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false);
   
   const handleSearch = (query: string) => {
     if (query.trim()) {
@@ -21,32 +22,47 @@ export function Layout({ children, showSearch = true, title, backUrl }: LayoutPr
     }
   };
   
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
   return (
     <div className="min-h-screen bg-gray-50 pb-10">
-      <header className="bg-white shadow-sm py-4 sticky top-0 z-10 transition-all duration-300">
+      <header className={`bg-white shadow-sm py-4 sticky top-0 z-10 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {backUrl ? (
               <div className="flex items-center">
                 <Link to={backUrl} className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
-                  <ArrowLeft size={18} className="ml-1" />
+                  <ArrowLeft size={20} className="ml-2" />
                   <span>بازگشت</span>
                 </Link>
               </div>
             ) : (
-              <Link to="/" className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300">لنگر</Link>
+              <Link to="/" className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center">
+                <Home size={20} className="ml-2" />
+                لنگر
+              </Link>
             )}
             
             {title && <h1 className="text-lg font-medium text-gray-800">{title}</h1>}
             
             {showSearch && (
-              <div className="w-full max-w-md animate-fade-in">
+              <div className="w-full max-w-md mx-auto animate-fade-in">
                 <SearchBar onSearch={handleSearch} />
               </div>
             )}
             
             <Link to="/settings" className="text-gray-600 hover:text-primary transition-colors duration-300">
-              <Settings size={20} />
+              <Settings size={22} />
             </Link>
           </div>
         </div>
@@ -57,9 +73,11 @@ export function Layout({ children, showSearch = true, title, backUrl }: LayoutPr
       </main>
       
       <footer className="mt-auto py-6 bg-white border-t">
-        <div className="container mx-auto px-4 text-center text-gray-500 text-sm">
-          <p>تمامی ابزارها به صورت رایگان و بدون نیاز به ثبت‌نام ارائه می‌شوند.</p>
-          <p className="mt-1">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-right">
+            <p className="text-gray-500 text-sm mb-2 md:mb-0">تمامی ابزارها به صورت رایگان و بدون نیاز به ثبت‌نام ارائه می‌شوند.</p>
+            <p className="text-gray-500 text-sm">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
+          </div>
         </div>
       </footer>
     </div>
