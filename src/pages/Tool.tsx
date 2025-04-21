@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { tools, Tool as ToolType } from '@/data/tools';
@@ -22,12 +21,21 @@ import {
   Download,
   Share2,
   Bookmark,
-  CheckCircle2
+  CheckCircle2,
+  RotateCcw,
+  RotateCw,
+  Crop,
+  ZoomIn,
+  ZoomOut,
+  ImageOff
 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 // -- Finglish to Persian Converter Functions --
 const finglishMap: Record<string, string> = {
@@ -202,6 +210,370 @@ function generateSlug(text: string): string {
     .replace(/-+$/, '');
 }
 
+// -- Image processing functions --
+const compressImage = (file: File, quality: number = 0.7): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas toBlob failed'));
+              return;
+            }
+            resolve(blob);
+          },
+          'image/jpeg',
+          quality
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const resizeImage = (file: File, maxWidth: number, maxHeight: number): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        
+        // Calculate new dimensions
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round(height * maxWidth / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round(width * maxHeight / height);
+            height = maxHeight;
+          }
+        }
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas toBlob failed'));
+              return;
+            }
+            resolve(blob);
+          },
+          'image/jpeg',
+          0.9
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const convertToFormat = (file: File, format: string): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+        ctx.drawImage(img, 0, 0);
+        
+        let mimeType;
+        switch(format) {
+          case 'webp':
+            mimeType = 'image/webp';
+            break;
+          case 'jpg':
+          case 'jpeg':
+            mimeType = 'image/jpeg';
+            break;
+          case 'png':
+            mimeType = 'image/png';
+            break;
+          default:
+            mimeType = 'image/jpeg';
+        }
+        
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas toBlob failed'));
+              return;
+            }
+            resolve(blob);
+          },
+          mimeType,
+          0.9
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const rotateImage = (file: File, degrees: number): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        
+        // Set canvas size based on rotation
+        if (degrees === 90 || degrees === 270) {
+          canvas.width = img.height;
+          canvas.height = img.width;
+        } else {
+          canvas.width = img.width;
+          canvas.height = img.height;
+        }
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+        
+        // Translate and rotate
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate((degrees * Math.PI) / 180);
+        
+        // Draw the image
+        if (degrees === 90 || degrees === 270) {
+          ctx.drawImage(img, -img.height / 2, -img.width / 2);
+        } else {
+          ctx.drawImage(img, -img.width / 2, -img.height / 2);
+        }
+        
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas toBlob failed'));
+              return;
+            }
+            resolve(blob);
+          },
+          'image/jpeg',
+          0.9
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const flipImage = (file: File, direction: 'horizontal' | 'vertical'): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+        
+        // Flip the image
+        if (direction === 'horizontal') {
+          ctx.translate(canvas.width, 0);
+          ctx.scale(-1, 1);
+        } else {
+          ctx.translate(0, canvas.height);
+          ctx.scale(1, -1);
+        }
+        
+        ctx.drawImage(img, 0, 0);
+        
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas toBlob failed'));
+              return;
+            }
+            resolve(blob);
+          },
+          'image/jpeg',
+          0.9
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const applyGrayscale = (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+        
+        ctx.drawImage(img, 0, 0);
+        
+        // Apply grayscale
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const gray = (data[i] * 0.3 + data[i + 1] * 0.59 + data[i + 2] * 0.11);
+          data[i] = gray;
+          data[i + 1] = gray;
+          data[i + 2] = gray;
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+        
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas toBlob failed'));
+              return;
+            }
+            resolve(blob);
+          },
+          'image/jpeg',
+          0.9
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+const applyBlur = (file: File, blurAmount: number): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+        
+        // Draw image
+        ctx.drawImage(img, 0, 0);
+        
+        // Apply blur filter
+        if (ctx.filter !== undefined) { // Check if filter property is supported
+          ctx.filter = `blur(${blurAmount}px)`;
+          ctx.drawImage(img, 0, 0);
+        }
+        
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas toBlob failed'));
+              return;
+            }
+            resolve(blob);
+          },
+          'image/jpeg',
+          0.9
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
 // Map icon strings to Lucide components
 const iconMap = {
   'text-size': TextIcon,
@@ -224,6 +596,8 @@ const Tool = () => {
   const { slug } = useParams<{ slug: string }>();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Finglish converter state
   const [finglishInput, setFinglishInput] = useState("");
@@ -244,6 +618,17 @@ const Tool = () => {
   const [textToolInput, setTextToolInput] = useState("");
   const [textToolOutput, setTextToolOutput] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  
+  // Image tools state
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [processedImageURL, setProcessedImageURL] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [imageQuality, setImageQuality] = useState(70);
+  const [imageWidth, setImageWidth] = useState(800);
+  const [imageHeight, setImageHeight] = useState(600);
+  const [rotationDegrees, setRotationDegrees] = useState(90);
+  const [flipDirection, setFlipDirection] = useState<'horizontal' | 'vertical'>('horizontal');
+  const [blurAmount, setBlurAmount] = useState(5);
   
   // Calculate text stats on input change
   useEffect(() => {
@@ -298,6 +683,19 @@ const Tool = () => {
         textToCopy = textToolOutput;
         break;
       default:
+        if (processedImageURL) {
+          navigator.clipboard.writeText(processedImageURL);
+          setCopied(true);
+          toast({
+            title: "لینک کپی شد!",
+            description: "لینک تصویر با موفقیت در کلیپ‌بورد کپی شد.",
+            duration: 2000,
+          });
+          setTimeout(() => {
+            setCopied(false);
+          }, 2000);
+          return;
+        }
         return;
     }
     
@@ -317,6 +715,33 @@ const Tool = () => {
   };
   
   const handleDownload = () => {
+    if (processedImageURL && (
+      slug === 'image-compressor' || 
+      slug === 'image-resizer' || 
+      slug === 'image-to-webp' || 
+      slug === 'image-to-jpg' || 
+      slug === 'image-to-png' || 
+      slug === 'image-rotate' || 
+      slug === 'image-flip' || 
+      slug === 'image-grayscale' ||
+      slug === 'image-blur'
+    )) {
+      // For image tools, download the processed image
+      const a = document.createElement('a');
+      a.href = processedImageURL;
+      a.download = `processed-${selectedFile?.name || 'image'}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      toast({
+        title: "در حال دانلود...",
+        description: "تصویر پردازش شده در حال دانلود است.",
+        duration: 2000,
+      });
+      return;
+    }
+    
     let content = "";
     let filename = tool.name + ".txt";
     
@@ -386,6 +811,86 @@ const Tool = () => {
     }
   };
 
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+      // Clear previous results
+      setProcessedImageURL(null);
+    }
+  };
+
+  const handleImageProcess = async () => {
+    if (!selectedFile) {
+      toast({
+        title: "خطا",
+        description: "لطفاً ابتدا یک تصویر انتخاب کنید.",
+        duration: 2000,
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+    let processedBlob: Blob | null = null;
+
+    try {
+      switch (slug) {
+        case 'image-compressor':
+          processedBlob = await compressImage(selectedFile, imageQuality / 100);
+          break;
+        case 'image-resizer':
+          processedBlob = await resizeImage(selectedFile, imageWidth, imageHeight);
+          break;
+        case 'image-to-webp':
+          processedBlob = await convertToFormat(selectedFile, 'webp');
+          break;
+        case 'image-to-jpg':
+          processedBlob = await convertToFormat(selectedFile, 'jpg');
+          break;
+        case 'image-to-png':
+          processedBlob = await convertToFormat(selectedFile, 'png');
+          break;
+        case 'image-rotate':
+          processedBlob = await rotateImage(selectedFile, rotationDegrees);
+          break;
+        case 'image-flip':
+          processedBlob = await flipImage(selectedFile, flipDirection);
+          break;
+        case 'image-grayscale':
+          processedBlob = await applyGrayscale(selectedFile);
+          break;
+        case 'image-blur':
+          processedBlob = await applyBlur(selectedFile, blurAmount);
+          break;
+        default:
+          toast({
+            title: "خطا",
+            description: "این ابزار هنوز پیاده‌سازی نشده است.",
+            duration: 2000,
+          });
+      }
+
+      if (processedBlob) {
+        const url = URL.createObjectURL(processedBlob);
+        setProcessedImageURL(url);
+        
+        toast({
+          title: "موفقیت",
+          description: "تصویر با موفقیت پردازش شد.",
+          duration: 2000,
+        });
+      }
+    } catch (error) {
+      console.error("Error processing image:", error);
+      toast({
+        title: "خطا",
+        description: "خطا در پردازش تصویر. لطفاً دوباره تلاش کنید.",
+        duration: 2000,
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   // Feature UI for Finglish-to-Farsi Tool
   const isFinglishTool = tool.slug === 'latin-to-persian-convertor';
   const isTextCounterTool = tool.slug === 'text-counter';
@@ -399,6 +904,17 @@ const Tool = () => {
   const isUpperCaseTool = tool.slug === 'text-uppercasing';
   const isLowerCaseTool = tool.slug === 'text-lowercasing';
   const isTitleCaseTool = tool.slug === 'text-titlecase';
+  
+  // Image tool indicators
+  const isImageCompressorTool = tool.slug === 'image-compressor';
+  const isImageResizerTool = tool.slug === 'image-resizer';
+  const isImageToWebpTool = tool.slug === 'image-to-webp';
+  const isImageToJpgTool = tool.slug === 'image-to-jpg';
+  const isImageToPngTool = tool.slug === 'image-to-png';
+  const isImageRotateTool = tool.slug === 'image-rotate';
+  const isImageFlipTool = tool.slug === 'image-flip';
+  const isImageGrayscaleTool = tool.slug === 'image-grayscale';
+  const isImageBlurTool = tool.slug === 'image-blur';
   
   // Generic text tool handler
   const handleTextToolProcess = () => {
@@ -461,228 +977,4 @@ const Tool = () => {
   const renderTextToolUI = () => {
     return (
       <div dir="rtl" className="flex flex-col items-stretch gap-4">
-        <label htmlFor="textTool" className="mb-2 text-right font-medium text-gray-700">
-          متن مورد نظر را وارد کنید:
-        </label>
-        <textarea
-          id="textTool"
-          value={textToolInput}
-          onChange={(e) => setTextToolInput(e.target.value)}
-          placeholder="متن خود را اینجا وارد کنید..."
-          rows={5}
-          className="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary/20 text-base"
-          dir="auto"
-        />
-        
-        {isSortLinesTextTool && (
-          <div className="flex items-center gap-4 mb-2">
-            <span className="text-gray-700">ترتیب:</span>
-            <Button
-              onClick={() => setSortOrder("asc")}
-              variant={sortOrder === "asc" ? "default" : "outline"}
-              className="ml-2"
-            >
-              صعودی
-            </Button>
-            <Button
-              onClick={() => setSortOrder("desc")}
-              variant={sortOrder === "desc" ? "default" : "outline"}
-            >
-              نزولی
-            </Button>
-          </div>
-        )}
-        
-        <button
-          onClick={handleTextToolProcess}
-          className="bg-primary text-white rounded-md py-2 mt-2 hover:bg-primary/80 transition-colors"
-        >
-          پردازش
-        </button>
-        
-        {textToolOutput && (
-          <div className="mt-4 bg-gray-50 border border-gray-200 rounded-lg p-3 flex flex-col gap-2">
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-semibold text-gray-700">نتیجه:</span>
-              <button 
-                onClick={handleCopy}
-                className="text-primary text-xs px-2 py-1 rounded hover:bg-primary/10 transition-colors flex items-center"
-              >
-                {copied ? <CheckCircle2 size={16} className="ml-1" /> : <Copy size={16} className="ml-1" />}
-                {copied ? "کپی شد" : "کپی"}
-              </button>
-            </div>
-            <div className="text-lg text-gray-800 whitespace-pre-wrap" dir="auto" style={{ wordBreak: "break-word" }}>
-              {textToolOutput}
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-  
-  return (
-    <Layout 
-      title={tool.name} 
-      backUrl={`/category/${tool.category}`} 
-      showSearch={false}
-    >
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in">
-        <div className="flex items-center mb-4">
-          <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center ml-4">
-            <IconComponent className="text-primary" size={28} />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-1">{tool.name}</h1>
-            <p className="text-gray-600">{tool.description}</p>
-          </div>
-        </div>
-      </div>
-      
-      {/* Tool Canvas - Custom for different tools */}
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in animate-delay-100">
-        {isFinglishTool ? (
-          <div dir="rtl" className="flex flex-col items-stretch gap-4">
-            <label htmlFor="finglish" className="mb-2 text-right font-medium text-gray-700">متن انگلیسی یا فینگلیش را وارد کنید:</label>
-            <textarea
-              id="finglish"
-              value={finglishInput}
-              onChange={(e) => setFinglishInput(e.target.value)}
-              placeholder="مثال: salam chetori?"
-              rows={4}
-              className="border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary/20 text-base"
-              dir="ltr"
-            />
-            <button
-              onClick={handleConvertFinglish}
-              className="bg-primary text-white rounded-md py-2 mt-2 hover:bg-primary/80 transition-colors"
-            >
-              تبدیل کن
-            </button>
-            {persianOutput && (
-              <div className="mt-4 bg-gray-50 border border-gray-200 rounded-lg p-3 flex flex-col gap-2">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-gray-700">نتیجه:</span>
-                  <button 
-                    onClick={handleCopyFarsi}
-                    className="text-primary text-xs px-2 py-1 rounded hover:bg-primary/10 transition-colors flex items-center"
-                  >
-                    {copied ? <CheckCircle2 size={16} className="ml-1" /> : <Copy size={16} className="ml-1" />}
-                    {copied ? "کپی شد" : "کپی"}
-                  </button>
-                </div>
-                <div className="text-lg text-gray-800" dir="rtl" style={{ wordBreak: "break-word" }}>
-                  {persianOutput}
-                </div>
-              </div>
-            )}
-          </div>
-        ) : isTextCounterTool ? (
-          <div dir="rtl" className="flex flex-col gap-5">
-            <div>
-              <label htmlFor="text-input" className="block mb-2 text-right font-medium text-gray-700">
-                متن خود را وارد کنید:
-              </label>
-              <Textarea
-                id="text-input"
-                value={textInput}
-                onChange={(e) => setTextInput(e.target.value)}
-                placeholder="متن خود را اینجا وارد کنید..."
-                className="border border-gray-200 rounded-lg p-3 min-h-[150px] w-full focus:outline-none focus:ring-2 focus:ring-primary/20"
-                dir="auto"
-              />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
-                <CardContent className="p-4 text-center">
-                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد کاراکترها</p>
-                  <p className="text-3xl font-bold text-primary">{textStats.characters}</p>
-                  <p className="text-sm text-gray-400 mt-1">بدون فاصله: {textStats.charactersNoSpaces}</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
-                <CardContent className="p-4 text-center">
-                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد کلمات</p>
-                  <p className="text-3xl font-bold text-primary">{textStats.words}</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
-                <CardContent className="p-4 text-center">
-                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد جملات</p>
-                  <p className="text-3xl font-bold text-primary">{textStats.sentences}</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
-                <CardContent className="p-4 text-center">
-                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد پاراگراف‌ها</p>
-                  <p className="text-3xl font-bold text-primary">{textStats.paragraphs}</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
-                <CardContent className="p-4 text-center">
-                  <p className="text-lg font-medium text-gray-500 mb-1">زمان مطالعه</p>
-                  <p className="text-3xl font-bold text-primary">{textStats.readingTimeMinutes}</p>
-                  <p className="text-sm text-gray-400 mt-1">دقیقه</p>
-                </CardContent>
-              </Card>
-              
-              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
-                <CardContent className="p-4 flex items-center justify-center">
-                  <Button 
-                    onClick={handleCopy}
-                    className="w-full"
-                    variant="outline"
-                  >
-                    {copied ? <CheckCircle2 size={16} className="ml-2" /> : <Copy size={16} className="ml-2" />}
-                    {copied ? 'کپی شد' : 'کپی آمار'}
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        ) : isTextReverseTool || isRemoveDuplicatesTool || isSortLinesTextTool || 
-           isTrimTextTool || isRemoveEmptyLinesTool || isRemoveEmojisTool || 
-           isSlugGeneratorTool || isUpperCaseTool || isLowerCaseTool || isTitleCaseTool ? (
-          renderTextToolUI()
-        ) : (
-          <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-lg hover:border-primary/30 transition-colors duration-300">
-            <p className="text-gray-500">این ابزار هنوز پیاده‌سازی نشده است</p>
-            <p className="text-sm text-gray-400 mt-2">به زودی منتشر خواهد شد</p>
-          </div>
-        )}
-      </div>
-      
-      {/* Action Buttons */}
-      <div className="flex flex-wrap justify-end space-x-4 rtl:space-x-reverse animate-fade-in animate-delay-200">
-        <button 
-          onClick={handleShare}
-          className="px-4 py-2 mb-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center"
-        >
-          <Share2 size={16} className="ml-2" />
-          اشتراک‌گذاری
-        </button>
-        <button 
-          onClick={handleCopy}
-          className={`px-4 py-2 mb-2 ${copied ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'} rounded-lg hover:bg-gray-200 transition-colors flex items-center`}
-        >
-          {copied ? <CheckCircle2 size={16} className="ml-2" /> : <Copy size={16} className="ml-2" />}
-          {copied ? 'کپی شد' : 'کپی نتیجه'}
-        </button>
-        <button 
-          onClick={handleDownload}
-          className="px-4 py-2 mb-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center"
-        >
-          <Download size={16} className="ml-2" />
-          دانلود
-        </button>
-      </div>
-    </Layout>
-  );
-};
-
-export default Tool;
+        <label htmlFor="textTool"
