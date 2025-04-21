@@ -38,13 +38,14 @@ const Index = () => {
   return <Layout>
       {/* Hero Section */}
       <section className="text-center py-12 mb-10 bg-white dark:bg-gray-800 rounded-xl shadow-sm animate-fade-in">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-50">لنگر - مجموعه ابزار</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          بیش از ۱۲۰ ابزار رایگان تحت وب، بدون نیاز به ثبت‌نام و با حفظ حریم خصوصی شما
+        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-50">لنگر - مجموعه ابزارهای آنلاین</h1>
+        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. 
+          از ابزارهای متنی و تصویری گرفته تا محاسبه‌گرها و ابزارهای SEO، همه چیز در یک پلتفرم ساده و رایگان. 
+          ما متعهد هستیم تا با ارائه ابزارهای کاربردی، کار شما را آسان‌تر و سریع‌تر کنیم، بدون دریافت هیچ هزینه‌ای و با حفظ کامل اطلاعات شخصی شما.
         </p>
       </section>
 
-      {/* Typewriting - Instant Finglish to Farsi (utility) */}
       
       
       {/* Categories */}
@@ -109,4 +110,5 @@ const Index = () => {
       </section>
     </Layout>;
 };
+
 export default Index;
