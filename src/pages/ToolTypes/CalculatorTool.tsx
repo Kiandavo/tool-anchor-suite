@@ -7,6 +7,7 @@ import LoanCalculator from './CalculatorTools/LoanCalculator';
 import AgeCalculator from './CalculatorTools/AgeCalculator';
 import BmiCalculator from './CalculatorTools/BmiCalculator';
 import DiscountCalculator from './CalculatorTools/DiscountCalculator';
+import SalaryTaxCalculator from './CalculatorTools/SalaryTaxCalculator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -28,6 +29,8 @@ export default function CalculatorTool({ slug }: CalculatorToolProps) {
         return <BmiCalculator />;
       case 'discount-calculator':
         return <DiscountCalculator />;
+      case 'salary-tax-calculator':
+        return <SalaryTaxCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
