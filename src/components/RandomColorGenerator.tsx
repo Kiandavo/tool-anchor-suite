@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { Swatch } from "lucide-react";
+import { Palette } from "lucide-react";
 import { toast } from "sonner";
 import { generateRandomColor, copyToClipboard, isLightColor, ColorValue, ColorFormat } from '@/utils/colorUtils';
 
@@ -26,7 +26,7 @@ const ColorCard: React.FC<ColorCardProps> = ({ color, format, onClick }) => {
       onClick={onClick}
     >
       <div className="flex items-center gap-2">
-        <Swatch size={18} />
+        <Palette size={18} />
         <span className="font-mono">{format}</span>
       </div>
       <span className="font-mono text-sm">{color}</span>
