@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
 import { Calculator, Percent } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function DiscountCalculator() {
   const [originalPrice, setOriginalPrice] = useState<string>('');
@@ -141,13 +142,13 @@ export default function DiscountCalculator() {
             </div>
           )}
 
-          <button
+          <Button
             onClick={calculate}
-            className="flex items-center justify-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+            className="flex items-center justify-center"
           >
             <Calculator className="ml-2 h-5 w-5" />
             محاسبه کن
-          </button>
+          </Button>
 
           {result && <OutcomeInfoCard outcome={result} />}
         </div>
