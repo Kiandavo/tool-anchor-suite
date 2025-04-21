@@ -1,12 +1,18 @@
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
 export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  minRows?: number;
+}
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, minRows, ...props }, ref) => {
+    // Convert minRows to rows if provided
+    const rowsProps = minRows ? { rows: minRows } : {};
+    
     return (
       <textarea
         className={cn(
@@ -14,6 +20,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           className
         )}
         ref={ref}
+        {...rowsProps}
         {...props}
       />
     )
