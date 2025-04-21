@@ -1,13 +1,12 @@
-
 import { Tool } from '@/types/tool-types';
 
 export const resumeTools: Tool[] = [
   {
     id: 'resume-builder',
     slug: 'resume-builder',
-    name: 'ساخت رزومه',
+    name: 'ساخت رزومه حرفه‌ای',
     category: 'resume',
-    description: 'ساخت رزومه حرفه‌ای با قالب‌های متنوع و زیبا',
+    description: 'ایجاد رزومه حرفه‌ای با قالب‌های استاندارد و راهنمایی‌های تخصصی برای جذب شغل مورد نظر',
     isNew: true,
     icon: 'file-text'
   },
