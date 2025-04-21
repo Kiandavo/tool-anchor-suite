@@ -59,9 +59,10 @@ export function ToolCard({ tool }: ToolCardProps) {
             </span>
           )}
         </div>
-        
-        <h3 className="text-lg font-medium text-gray-800 mb-2 line-clamp-1">{name}</h3>
-        <p className="text-sm text-gray-500 line-clamp-2">{description}</p>
+        <div className="mb-2">
+          <h3 className="text-lg font-medium text-gray-800 mb-1 line-clamp-1">{name}</h3>
+          <p className="text-sm text-gray-500 mt-1">{description}</p>
+        </div>
       </div>
     </Link>
   );
