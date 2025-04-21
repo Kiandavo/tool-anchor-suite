@@ -15,7 +15,8 @@ import {
   Type, 
   Maximize, 
   Filter, 
-  Activity 
+  Activity,
+  Calendar
 } from 'lucide-react';
 
 // Map icon strings to Lucide components
@@ -32,7 +33,8 @@ const iconMap = {
   'activity': Activity,
   'dice': Dice6,
   'hash': Hash,
-  'calendar': Activity
+  'calendar': Calendar,
+  'calculator': Calculator
 };
 
 interface ToolCardProps {
@@ -45,14 +47,14 @@ export function ToolCard({ tool }: ToolCardProps) {
   
   return (
     <Link to={`/tool/${slug}`} className="block transition-all duration-300">
-      <div className="tool-card group">
+      <div className="rounded-xl bg-white p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-transparent hover:border-primary/10 group">
         <div className="flex items-start justify-between mb-3">
           <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
             <IconComponent className="text-primary" size={22} />
           </div>
           
           {isNew && (
-            <span className="badge-new px-3 py-1 text-xs">
+            <span className="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs">
               جدید
             </span>
           )}
