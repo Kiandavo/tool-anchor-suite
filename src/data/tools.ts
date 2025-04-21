@@ -1,11 +1,11 @@
-
-import { Tool, ToolCategory, categoryLabels } from '@/types/tool-types';
+import { Tool, ToolCategory } from '@/types/tool-types';
 import { textTools } from './tool-categories/text-tools';
 import { imageTools } from './tool-categories/image-tools';
 import { seoTools } from './tool-categories/seo-tools';
 import { calculatorTools } from './tool-categories/calculator-tools';
 import { numberTools } from './tool-categories/number-tools';
 import { randomTools } from './tool-categories/random-tools';
+import { categoryLabels } from '@/types/tool-types';
 
 // Combine all tools
 export const tools: Tool[] = [
@@ -17,9 +17,9 @@ export const tools: Tool[] = [
   ...randomTools
 ];
 
-// Re-export types and labels using `export type`
+// Re-export types and labels
 export type { Tool, ToolCategory };
-export const { categoryLabels } = { categoryLabels };
+export { categoryLabels };
 
 // Helper functions
 export function getToolsByCategory(category: ToolCategory): Tool[] {
@@ -47,4 +47,3 @@ export function searchTools(query: string): Tool[] {
     tool.slug.toLowerCase().includes(lowercaseQuery)
   );
 }
-
