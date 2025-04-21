@@ -75,18 +75,18 @@ export default function DiscountCalculator() {
 
           <div className="grid grid-cols-1 gap-4 mb-4">
             <div className="flex justify-center space-x-4 space-x-reverse">
-              <button
+              <Button
                 onClick={() => setCalcType('applyDiscount')}
-                className={`px-4 py-2 rounded-md ${calcType === 'applyDiscount' ? 'bg-primary text-white' : 'bg-gray-100'}`}
+                variant={calcType === 'applyDiscount' ? 'default' : 'outline'}
               >
                 محاسبه قیمت پس از تخفیف
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => setCalcType('findDiscount')}
-                className={`px-4 py-2 rounded-md ${calcType === 'findDiscount' ? 'bg-primary text-white' : 'bg-gray-100'}`}
+                variant={calcType === 'findDiscount' ? 'default' : 'outline'}
               >
                 محاسبه درصد تخفیف
-              </button>
+              </Button>
             </div>
           </div>
 
