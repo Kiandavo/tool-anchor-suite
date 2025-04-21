@@ -1,3 +1,4 @@
+
 export interface Tool {
   id: string;
   slug: string;
@@ -1010,4 +1011,28 @@ export const tools: Tool[] = [
     slug: "remove-accent-tool",
     name: "حذف اِعراب متون فارسی",
     category: "text",
-    description: "اِعراب (فتحه و کسره و ...) را از متن حذف
+    description: "اِعراب (فتحه و کسره و ...) را از متن حذف کنید",
+    isNew: false,
+    icon: "filter"
+  }
+];
+
+// Helper functions to get tools by category, new tools, and popular tools
+export function getToolsByCategory(category: ToolCategory): Tool[] {
+  return tools.filter(tool => tool.category === category);
+}
+
+export function getNewTools(): Tool[] {
+  return tools.filter(tool => tool.isNew).slice(0, 4);
+}
+
+export function getPopularTools(): Tool[] {
+  // This is a placeholder, in a real app you would probably have a popularity metric
+  // For now, returning a curated selection of tools
+  return [
+    tools.find(t => t.slug === "text-counter")!,
+    tools.find(t => t.slug === "image-compressor")!,
+    tools.find(t => t.slug === "random-password")!,
+    tools.find(t => t.slug === "percentage-calculator")!
+  ];
+}
