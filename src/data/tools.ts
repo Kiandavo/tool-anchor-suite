@@ -681,27 +681,333 @@ export const tools: Tool[] = [
     isNew: false,
     icon: "dice"
   },
-];
-
-export const getToolsByCategory = (category: ToolCategory): Tool[] => {
-  return tools.filter(tool => tool.category === category);
-};
-
-export const getNewTools = (): Tool[] => {
-  return tools.filter(tool => tool.isNew);
-};
-
-export const getPopularTools = (): Tool[] => {
-  // In a real app, this would be based on usage analytics
-  // For this demo, we'll just return a subset of tools
-  return [tools[0], tools[3], tools[5], tools[9]];
-};
-
-export const searchTools = (query: string): Tool[] => {
-  const lowercaseQuery = query.toLowerCase();
-  return tools.filter(
-    tool => 
-      tool.name.toLowerCase().includes(lowercaseQuery) || 
-      tool.description.toLowerCase().includes(lowercaseQuery)
-  );
-};
+  {
+    id: "74",
+    slug: "font-size-calculator",
+    name: "محاسبه‌گر اندازه فونت",
+    category: "calculators",
+    description: "اندازه فونت مناسب وب را پیدا کنید",
+    isNew: false,
+    icon: "calculator"
+  },
+  {
+    id: "75",
+    slug: "uppercase-finder",
+    name: "تبدیل به حروف بزرگ ویژه",
+    category: "text",
+    description: "متن خود را به فرمت حروف بزرگ ویژه تبدیل کنید",
+    isNew: false,
+    icon: "type"
+  },
+  {
+    id: "76",
+    slug: "image-sepia",
+    name: "اعمال فیلتر سپیا",
+    category: "image",
+    description: "تصویر خود را قهوه‌ای کلاسیک کنید",
+    isNew: false,
+    icon: "image"
+  },
+  {
+    id: "77",
+    slug: "password-strength-check",
+    name: "بررسی قدرت رمز عبور",
+    category: "random",
+    description: "قدرت رمز عبور خود را بسنجید",
+    isNew: false,
+    icon: "key"
+  },
+  {
+    id: "78",
+    slug: "meta-description-suggester",
+    name: "پیشنهاد توضیحات متا",
+    category: "seo",
+    description: "توضیح متای سئو برای صفحات خود بسازید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "79",
+    slug: "alt-attribute-generator",
+    name: "ایجاد Alt تصاویر",
+    category: "seo",
+    description: "متن جایگزین برای تصاویر را تولید کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "80",
+    slug: "photo-dimensions-finder",
+    name: "یافتن ابعاد عکس",
+    category: "image",
+    description: "ابعاد دقیق تصاویر خود را مشاهده کنید",
+    isNew: false,
+    icon: "image"
+  },
+  {
+    id: "81",
+    slug: "even-number-list",
+    name: "لیست اعداد زوج",
+    category: "number",
+    description: "تولید لیست اعداد زوج در بازه دلخواه",
+    isNew: false,
+    icon: "hash"
+  },
+  {
+    id: "82",
+    slug: "odd-number-list",
+    name: "لیست اعداد فرد",
+    category: "number",
+    description: "تولید لیست اعداد فرد در بازه دلخواه",
+    isNew: false,
+    icon: "hash"
+  },
+  {
+    id: "83",
+    slug: "decimal-to-roman",
+    name: "مبدل عدد ده‌دهی به رومی",
+    category: "number",
+    description: "تبدیل اعداد ده‌دهی به رومی",
+    isNew: false,
+    icon: "hash"
+  },
+  {
+    id: "84",
+    slug: "seo-title-case",
+    name: "حالت عنوان سئو",
+    category: "seo",
+    description: "عنوان صفحات خود را به فرمت سئو تبدیل کنید",
+    isNew: false,
+    icon: "type"
+  },
+  {
+    id: "85",
+    slug: "auto-shorten-link",
+    name: "کوتاه کننده لینک",
+    category: "seo",
+    description: "لینک های طولانی را کوتاه کنید",
+    isNew: false,
+    icon: "hash"
+  },
+  {
+    id: "86",
+    slug: "character-remover",
+    name: "حذف کاراکتر خاص",
+    category: "text",
+    description: "هر کاراکتری که بخواهید را از متن حذف کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "87",
+    slug: "word-replacer",
+    name: "جایگزین‌گر واژه",
+    category: "text",
+    description: "یک واژه را با واژه‌ای دیگر جایگزین کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "88",
+    slug: "batch-image-converter",
+    name: "تبدیل گروهی عکس",
+    category: "image",
+    description: "تبدیل فرمت چندین عکس به صورت همزمان",
+    isNew: false,
+    icon: "image"
+  },
+  {
+    id: "89",
+    slug: "random-paragraph-generator",
+    name: "تولید پاراگراف تصادفی",
+    category: "text",
+    description: "تولید خودکار پاراگراف برای تست و محتوا",
+    isNew: false,
+    icon: "dice"
+  },
+  {
+    id: "90",
+    slug: "number-shuffler",
+    name: "درهم‌ریز اعداد",
+    category: "number",
+    description: "اعداد را به طور تصادفی ترکیب کنید",
+    isNew: false,
+    icon: "dice"
+  },
+  {
+    id: "91",
+    slug: "range-calculator",
+    name: "محاسبه بازه",
+    category: "calculators",
+    description: "بازه اعداد را محاسبه کنید",
+    isNew: false,
+    icon: "calculator"
+  },
+  {
+    id: "92",
+    slug: "random-qrcode-generator",
+    name: "تولید QRCode تصادفی",
+    category: "random",
+    description: "تولید کد QR برای هر مقدار تصادفی",
+    isNew: false,
+    icon: "dice"
+  },
+  {
+    id: "93",
+    slug: "capitalize-tool",
+    name: "ابزار بزرگ‌کردن حروف اول",
+    category: "text",
+    description: "حرف اول هر واژه را بزرگ کنید",
+    isNew: false,
+    icon: "type"
+  },
+  {
+    id: "94",
+    slug: "advanced-text-analyzer",
+    name: "آنالیز متن پیشرفته",
+    category: "text",
+    description: "آمار و داده های کامل متن را مشاهده کنید",
+    isNew: false,
+    icon: "type"
+  },
+  {
+    id: "95",
+    slug: "bulk-slug-generator",
+    name: "تولید اسلاگ گروهی",
+    category: "text",
+    description: "برای لیستی از متون اسلاگ تولید کنید",
+    isNew: false,
+    icon: "hash"
+  },
+  {
+    id: "96",
+    slug: "bulk-url-checker",
+    name: "بررسی گروهی URL",
+    category: "seo",
+    description: "بررسی چندین آدرس سایت به صورت همزمان",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "97",
+    slug: "number-comparator",
+    name: "مقایسه اعداد",
+    category: "number",
+    description: "چندین عدد را با هم مقایسه کنید",
+    isNew: false,
+    icon: "binary"
+  },
+  {
+    id: "98",
+    slug: "filter-lines-tool",
+    name: "فیلترکننده خطوط",
+    category: "text",
+    description: "خطوط شامل یک عبارت خاص را فیلتر کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "99",
+    slug: "duplicate-number-finder",
+    name: "یافتن اعداد تکراری",
+    category: "number",
+    description: "اعداد تکراری را در لیست شناسایی کنید",
+    isNew: false,
+    icon: "binary"
+  },
+  {
+    id: "100",
+    slug: "seo-redirect-generator",
+    name: "تولید ریدایرکت سئو",
+    category: "seo",
+    description: "ساخت سریع کد ریدایرکت سایت",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "101",
+    slug: "random-username-generator",
+    name: "تولید نام کاربری تصادفی ویژه",
+    category: "random",
+    description: "نام کاربری تصادفی خلق کنید",
+    isNew: false,
+    icon: "key"
+  },
+  {
+    id: "102",
+    slug: "emoji-text-inserter",
+    name: "درج ایموجی به متن",
+    category: "text",
+    description: "به متن خود ایموجی اضافه کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "103",
+    slug: "remove-html-tags",
+    name: "حذف تگ HTML",
+    category: "text",
+    description: "تگ های HTML را از متن حذف کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "104",
+    slug: "unit-list-generator",
+    name: "تولید لیست واحدها",
+    category: "calculators",
+    description: "لیست تبدیل واحدها را بسازید",
+    isNew: false,
+    icon: "calculator"
+  },
+  {
+    id: "105",
+    slug: "meta-viewport-checker",
+    name: "بررسی متا ویوپورت",
+    category: "seo",
+    description: "وضعیت تگ viewport سایت را بررسی کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "106",
+    slug: "image-pixelator",
+    name: "پیکسلی کردن تصویر",
+    category: "image",
+    description: "بر روی عکس خود افکت پیکسلی اعمال کنید",
+    isNew: false,
+    icon: "image"
+  },
+  {
+    id: "107",
+    slug: "mirror-text",
+    name: "متن آینه‌ای",
+    category: "text",
+    description: "متن را به صورت آینه‌ای نمایش دهید",
+    isNew: false,
+    icon: "type"
+  },
+  {
+    id: "108",
+    slug: "special-character-finder",
+    name: "یافتن کاراکتر ویژه",
+    category: "text",
+    description: "کاراکترهای غیر معمول را در متن پیدا کنید",
+    isNew: false,
+    icon: "filter"
+  },
+  {
+    id: "109",
+    slug: "svg-to-png-converter",
+    name: "تبدیل SVG به PNG",
+    category: "image",
+    description: "فرمت SVG عکس را به PNG تبدیل کنید",
+    isNew: false,
+    icon: "image"
+  },
+  {
+    id: "110",
+    slug: "remove-accent-tool",
+    name: "حذف اِعراب متون فارسی",
+    category: "text",
+    description: "اِعراب (فتحه و کسره و ...) را از متن حذف کنید",
