@@ -5,7 +5,8 @@ export type ToolCategory =
   | "seo" 
   | "calculators" 
   | "number" 
-  | "random";
+  | "random"
+  | "resume"; // Added new category
 
 export interface Tool {
   id: string;
@@ -23,5 +24,6 @@ export const categoryLabels: Record<ToolCategory, string> = {
   seo: "سئو",
   calculators: "ماشین حساب",
   number: "اعداد",
-  random: "تصادفی"
+  random: "تصادفی",
+  resume: "رزومه و CV" // Added new category label
 };
