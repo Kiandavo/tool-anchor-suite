@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Settings, Sun, Moon, Home } from 'lucide-react';
+import { ArrowLeft, Settings, Home } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -34,25 +34,13 @@ export function Layout({
     <div className="min-h-screen bg-gray-50 pb-10">
       <header className={`bg-white shadow-sm py-4 sticky top-0 z-10 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
         <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center justify-center">
-            <div>
-              <img
-                src="/lovable-uploads/a29ccf04-1313-4fd1-8c7f-3303f18ee22f.png"
-                alt="Laangar Logo"
-                className="h-32 w-auto mx-auto"
-                loading="eager"
-                width={128}
-                height={128}
-              />
-            </div>
-            <div className="flex items-center justify-between w-full mt-2">
+          <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center w-full gap-4">
               {backUrl ? (
-                <div className="flex items-center">
-                  <Link to={backUrl} className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
-                    <ArrowLeft size={20} className="ml-2" />
-                    <span>بازگشت</span>
-                  </Link>
-                </div>
+                <Link to={backUrl} className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
+                  <ArrowLeft size={20} className="ml-2" />
+                  <span>بازگشت</span>
+                </Link>
               ) : (
                 <Link to="/" className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center">
                   <Home size={20} className="ml-2" />
@@ -60,12 +48,21 @@ export function Layout({
                 </Link>
               )}
 
-              {title && <h1 className="text-lg font-medium text-gray-800">{title}</h1>}
+              {/* Logo in the same row */}
+              <img
+                src="/lovable-uploads/a29ccf04-1313-4fd1-8c7f-3303f18ee22f.png"
+                alt="Laangar Logo"
+                className="h-12 w-auto mx-2"
+                loading="eager"
+                width={48}
+                height={48}
+              />
 
-              <Link to="/settings" className="text-gray-600 hover:text-primary transition-colors duration-300">
+              <Link to="/settings" className="text-gray-600 hover:text-primary transition-colors duration-300 ml-auto flex items-center">
                 <Settings size={22} />
               </Link>
             </div>
+            {title && <h1 className="text-lg font-medium text-gray-800 mt-2">{title}</h1>}
           </div>
         </div>
       </header>
