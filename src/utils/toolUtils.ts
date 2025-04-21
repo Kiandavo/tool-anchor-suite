@@ -1,26 +1,66 @@
-
 export const finglishMap: Record<string, string> = {
-  a: "ا", aa: "آ", b: "ب", c: "ک", d: "د", e: "ه", ee: "ی", f: "ف",
-  g: "گ", gh: "ق", h: "ه", i: "ی", j: "ج", k: "ک", kh: "خ", l: "ل",
-  m: "م", n: "ن", o: "و", oo: "و", p: "پ", q: "ق", r: "ر", s: "س", sh: "ش",
-  t: "ت", u: "و", v: "و", w: "و", x: "خ", y: "ی", z: "ز", zh: "ژ", ch: "چ",
-  '.' : "‌.", ',' : "،", '?' : "؟", "'" : "‌", ' ' : " ",
+  // Single character mappings
+  'a': 'ا', 'b': 'ب', 'c': 'س', 'd': 'د', 'e': 'ه',
+  'f': 'ف', 'g': 'گ', 'h': 'ه', 'i': 'ی', 'j': 'ج',
+  'k': 'ک', 'l': 'ل', 'm': 'م', 'n': 'ن', 'o': 'و',
+  'p': 'پ', 'q': 'ق', 'r': 'ر', 's': 'س', 't': 'ت',
+  'u': 'و', 'v': 'و', 'w': 'و', 'x': 'کس', 'y': 'ی',
+  'z': 'ز', '?': '؟', ',': '،', ';': '؛',
+  
+  // Multi-character mappings (must come before single chars in processing)
+  'aa': 'آ', 'ch': 'چ', 'gh': 'ق', 'kh': 'خ', 'sh': 'ش',
+  'zh': 'ژ', 'ee': 'ی', 'oo': 'و', 'ou': 'و',
+  
+  // Special positional rules (beginning/middle/end)
+  '_b_a': 'ا', '_b_i': 'ای', '_m_a': 'ا', '_m_i': 'ی', '_e_a': 'ا', '_e_i': 'ی',
+  '_b_o': 'ا', '_m_o': 'و', '_e_o': 'و', '_b_e': 'ا', '_m_e': 'ه', '_e_e': 'ه',
 };
 
 export function finglishToPersian(finglish: string): string {
-  let out = "";
+  if (!finglish || !finglish.trim()) return '';
+  
+  // Normalize the input
+  finglish = finglish.toLowerCase().trim();
+  
+  // Process the input
+  let output = '';
   let i = 0;
-  finglish = finglish.toLowerCase();
+  
   while (i < finglish.length) {
+    // Try two-character mappings first
     if (i < finglish.length - 1) {
-      const two = finglish.slice(i, i + 2);
-      if (finglishMap[two]) { out += finglishMap[two]; i += 2; continue; }
+      const twoChars = finglish.substring(i, i + 2);
+      if (finglishMap[twoChars]) {
+        output += finglishMap[twoChars];
+        i += 2;
+        continue;
+      }
     }
-    const one = finglish[i];
-    out += finglishMap[one] || one;
+    
+    // If no two-character mapping found, use single character mapping
+    const char = finglish[i];
+    
+    // Handle special cases like space
+    if (char === ' ') {
+      output += ' ';
+    } else if (finglishMap[char]) {
+      output += finglishMap[char];
+    } else {
+      // If no mapping found, keep the original character
+      output += char;
+    }
+    
     i++;
   }
-  return out;
+  
+  // Apply some post-processing rules
+  output = output
+    // Fix common issues
+    .replace(/سه/g, 'چ')  // Fix 'ch' that might have been parsed as 'c' + 'h'
+    .replace(/که/g, 'خ')  // Fix 'kh' that might have been parsed as 'k' + 'h'
+    .replace(/\u200C{2,}/g, '\u200C'); // Remove duplicate ZWNJ characters
+
+  return output;
 }
 
 export function countCharacters(text: string): number {

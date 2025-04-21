@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
@@ -113,7 +114,7 @@ const Index = () => {
             <Sparkles size={20} className="text-[#8cc55b] ml-2" />
             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">ابزارهای جدید</h2>
           </div>
-          <Link to="/all-tools" className="text-[#7c9c36] flex items-center text-sm font-bold hover:underline">
+          <Link to="/all-tools" className="text-[#8cc55b] flex items-center text-sm font-bold hover:underline">
             مشاهده همه
             <ChevronLeft size={16} className="mr-1" />
           </Link>
