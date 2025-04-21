@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { tools, Tool as ToolType } from '@/data/tools';
@@ -23,6 +24,9 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 // -- Simple map for demonstration (extend for better coverage) --
 const finglishMap: Record<string, string> = {
@@ -83,6 +87,40 @@ function finglishToPersian(finglish: string): string {
   return out;
 }
 
+// Text counter functions
+function countCharacters(text: string): number {
+  return text.length;
+}
+
+function countWords(text: string): number {
+  const trimmedText = text.trim();
+  if (!trimmedText) return 0;
+  
+  // Handle both Latin and Persian text
+  return trimmedText.split(/\s+/).filter(word => word.length > 0).length;
+}
+
+function countSentences(text: string): number {
+  if (!text.trim()) return 0;
+  
+  // Handle both Latin and Persian sentences
+  const sentenceEndings = text.match(/[.!?؟\.\n]+/g);
+  return sentenceEndings ? sentenceEndings.length : 1;
+}
+
+function countParagraphs(text: string): number {
+  if (!text.trim()) return 0;
+  
+  // Count paragraphs by looking for line breaks
+  return text.split(/\n+/).filter(para => para.trim().length > 0).length;
+}
+
+function calculateReadingTime(text: string): number {
+  // Average reading speed: 200 words per minute
+  const words = countWords(text);
+  return Math.ceil(words / 200);
+}
+
 // Map icon strings to Lucide components
 const iconMap = {
   'text-size': TextIcon,
@@ -109,6 +147,31 @@ const Tool = () => {
   const [finglishInput, setFinglishInput] = useState("");
   const [persianOutput, setPersianOutput] = useState("");
   
+  // Text counter state
+  const [textInput, setTextInput] = useState("");
+  const [textStats, setTextStats] = useState({
+    characters: 0,
+    charactersNoSpaces: 0,
+    words: 0,
+    sentences: 0,
+    paragraphs: 0,
+    readingTimeMinutes: 0
+  });
+  
+  // Calculate text stats on input change
+  useEffect(() => {
+    if (slug === 'text-counter') {
+      setTextStats({
+        characters: countCharacters(textInput),
+        charactersNoSpaces: countCharacters(textInput.replace(/\s+/g, '')),
+        words: countWords(textInput),
+        sentences: countSentences(textInput),
+        paragraphs: countParagraphs(textInput),
+        readingTimeMinutes: calculateReadingTime(textInput)
+      });
+    }
+  }, [textInput, slug]);
+  
   // Find the tool by slug
   const tool = tools.find(t => t.slug === slug) as ToolType;
   
@@ -126,16 +189,27 @@ const Tool = () => {
   const IconComponent = iconMap[tool.icon as keyof typeof iconMap] || TextIcon;
   
   const handleCopy = () => {
-    setCopied(true);
-    toast({
-      title: "کپی شد!",
-      description: "نتیجه با موفقیت در کلیپ‌بورد کپی شد.",
-      duration: 2000,
-    });
+    let textToCopy = "";
     
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+    if (slug === 'latin-to-persian-convertor') {
+      textToCopy = persianOutput;
+    } else if (slug === 'text-counter') {
+      textToCopy = JSON.stringify(textStats, null, 2);
+    }
+    
+    if (textToCopy) {
+      navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      toast({
+        title: "کپی شد!",
+        description: "نتیجه با موفقیت در کلیپ‌بورد کپی شد.",
+        duration: 2000,
+      });
+      
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    }
   };
   
   const handleDownload = () => {
@@ -165,6 +239,7 @@ const Tool = () => {
 
   // Feature UI for Finglish-to-Farsi Tool
   const isFinglishTool = tool.slug === 'latin-to-persian-convertor';
+  const isTextCounterTool = tool.slug === 'text-counter';
 
   const handleConvertFinglish = () => {
     setPersianOutput(finglishToPersian(finglishInput));
@@ -201,7 +276,7 @@ const Tool = () => {
         </div>
       </div>
       
-      {/* Tool Canvas - Custom for Finglish converter */}
+      {/* Tool Canvas - Custom for different tools */}
       <div className="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in animate-delay-100">
         {isFinglishTool ? (
           <div dir="rtl" className="flex flex-col items-stretch gap-4">
@@ -237,6 +312,74 @@ const Tool = () => {
                 </div>
               </div>
             )}
+          </div>
+        ) : isTextCounterTool ? (
+          <div dir="rtl" className="flex flex-col gap-5">
+            <div>
+              <label htmlFor="text-input" className="block mb-2 text-right font-medium text-gray-700">
+                متن خود را وارد کنید:
+              </label>
+              <Textarea
+                id="text-input"
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                placeholder="متن خود را اینجا وارد کنید..."
+                className="border border-gray-200 rounded-lg p-3 min-h-[150px] w-full focus:outline-none focus:ring-2 focus:ring-primary/20"
+                dir="auto"
+              />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
+                <CardContent className="p-4 text-center">
+                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد کاراکترها</p>
+                  <p className="text-3xl font-bold text-primary">{textStats.characters}</p>
+                  <p className="text-sm text-gray-400 mt-1">بدون فاصله: {textStats.charactersNoSpaces}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
+                <CardContent className="p-4 text-center">
+                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد کلمات</p>
+                  <p className="text-3xl font-bold text-primary">{textStats.words}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
+                <CardContent className="p-4 text-center">
+                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد جملات</p>
+                  <p className="text-3xl font-bold text-primary">{textStats.sentences}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
+                <CardContent className="p-4 text-center">
+                  <p className="text-lg font-medium text-gray-500 mb-1">تعداد پاراگراف‌ها</p>
+                  <p className="text-3xl font-bold text-primary">{textStats.paragraphs}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
+                <CardContent className="p-4 text-center">
+                  <p className="text-lg font-medium text-gray-500 mb-1">زمان مطالعه</p>
+                  <p className="text-3xl font-bold text-primary">{textStats.readingTimeMinutes}</p>
+                  <p className="text-sm text-gray-400 mt-1">دقیقه</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border border-gray-200 hover:border-primary/30 transition-colors duration-300">
+                <CardContent className="p-4 flex items-center justify-center">
+                  <Button 
+                    onClick={handleCopy}
+                    className="w-full"
+                    variant="outline"
+                  >
+                    {copied ? <CheckCircle2 size={16} className="ml-2" /> : <Copy size={16} className="ml-2" />}
+                    {copied ? 'کپی شد' : 'کپی آمار'}
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         ) : (
           <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-lg hover:border-primary/30 transition-colors duration-300">
