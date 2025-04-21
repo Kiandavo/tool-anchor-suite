@@ -6,9 +6,10 @@ import { tools, Tool as ToolType } from '@/data/tools';
 import TextTool from './ToolTypes/TextTool';
 import ImageTool from './ToolTypes/ImageTool';
 import RandomPasswordTool from './ToolTypes/RandomPasswordTool';
+import PrimeCheckerTool from './ToolTypes/PrimeCheckerTool';
 import ToolNotImplemented from './ToolTypes/ToolNotImplemented';
 
-const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password'> = {
+const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker'> = {
   // Text tools
   'latin-to-persian-convertor': 'text',
   'text-counter': 'text',
@@ -34,6 +35,7 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password'> = {
   'image-blur': 'image',
   // Special tools with dedicated components
   'random-password': 'random-password',
+  'prime-checker': 'prime-checker',
 };
 
 export default function Tool() {
@@ -62,6 +64,8 @@ export default function Tool() {
           <ImageTool slug={tool.slug} />
         ) : toolTypeBySlug[tool.slug] === "random-password" ? (
           <RandomPasswordTool />
+        ) : toolTypeBySlug[tool.slug] === "prime-checker" ? (
+          <PrimeCheckerTool />
         ) : (
           <ToolNotImplemented />
         )}
