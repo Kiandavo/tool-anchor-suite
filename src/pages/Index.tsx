@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ToolCard } from '@/components/ToolCard';
@@ -12,8 +13,16 @@ import {
 } from '@/data/tools';
 import { ChevronLeft, Sparkles, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { finglishToPersian } from '@/utils/toolUtils';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 
 const Index = () => {
+  // Finglish to Farsi (Home page instant converter state)
+  const [finglishInput, setFinglishInput] = useState('');
+  const persianOutput = finglishToPersian(finglishInput);
+  const [copyClicked, setCopyClicked] = useState(false);
+  
   // Get counts for each category
   const categories = Object.keys(categoryLabels) as ToolCategory[];
   const categoryCounts = categories.map(category => ({
@@ -24,6 +33,15 @@ const Index = () => {
   // Get new and popular tools
   const newTools = getNewTools();
   const popularTools = getPopularTools();
+
+  // Copy handler
+  const handleCopyFarsi = () => {
+    if (persianOutput) {
+      navigator.clipboard.writeText(persianOutput);
+      setCopyClicked(true);
+      setTimeout(() => setCopyClicked(false), 1200);
+    }
+  };
   
   return (
     <Layout>
@@ -33,6 +51,37 @@ const Index = () => {
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           بیش از ۱۲۰ ابزار رایگان تحت وب، بدون نیاز به ثبت‌نام و با حفظ حریم خصوصی شما
         </p>
+      </section>
+
+      {/* Typewriting - Instant Finglish to Farsi */}
+      <section className="mb-8 mx-auto w-full max-w-2xl bg-[#F2FCE2] border border-[#8cc55b]/20 rounded-xl shadow p-6 flex flex-col gap-4 items-stretch animate-fade-in">
+        <h2 className="text-xl font-bold text-[#8cc55b] mb-2 flex items-center gap-2">
+          <span className="inline-block">🔤</span> تبدیل سریع فینگلیش به فارسی
+        </h2>
+        <Textarea
+          placeholder="متن فینگلیش خود را وارد کنید (مانند: salam chetori)"
+          dir="ltr"
+          value={finglishInput}
+          minRows={1}
+          onChange={e => setFinglishInput(e.target.value)}
+          className="mb-1"
+        />
+        <div className="flex items-center gap-2 mb-2">
+          <Textarea
+            readOnly
+            value={persianOutput}
+            placeholder="خروجی فارسی در اینجا نمایش داده می‌شود"
+            dir="rtl"
+            minRows={1}
+            className="flex-1"
+          />
+          <Button type="button" variant="outline" onClick={handleCopyFarsi} className="min-w-[70px]">
+            {copyClicked ? "کپی شد!" : "کپی"}
+          </Button>
+        </div>
+        <div className="text-xs text-[#7c9c36] font-medium opacity-90">
+          این ابزار تبدیل سریع متن فینگلیش به فارسی است.
+        </div>
       </section>
       
       {/* Categories */}
