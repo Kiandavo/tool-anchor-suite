@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
@@ -8,6 +7,7 @@ import AgeCalculator from './CalculatorTools/AgeCalculator';
 import BmiCalculator from './CalculatorTools/BmiCalculator';
 import DiscountCalculator from './CalculatorTools/DiscountCalculator';
 import SalaryTaxCalculator from './CalculatorTools/SalaryTaxCalculator';
+import TipCalculator from './CalculatorTools/TipCalculator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -31,6 +31,8 @@ export default function CalculatorTool({ slug }: CalculatorToolProps) {
         return <DiscountCalculator />;
       case 'salary-tax-calculator':
         return <SalaryTaxCalculator />;
+      case 'tip-calculator':
+        return <TipCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

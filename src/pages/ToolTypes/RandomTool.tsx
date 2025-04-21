@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
@@ -16,8 +15,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { generateRandomString, pickRandomFromList, getRandomQuote, quoteCategories } from '@/utils/textUtils';
-import { Quote, List, Shuffle } from 'lucide-react';
+import { generateRandomDate, generateRandomEmoji, rollDice, generateRandomWord, copyToClipboard } from '@/utils/randomUtils';
+import { Quote, List, Dice, Calendar, Type } from 'lucide-react';
 import { toast } from 'sonner';
+import { format } from 'date-fns';
 
 interface RandomToolProps {
   slug: string;
@@ -31,6 +32,10 @@ export default function RandomTool({ slug }: RandomToolProps) {
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [quote, setQuote] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [randomDate, setRandomDate] = useState<Date | null>(null);
+  const [emoji, setEmoji] = useState<string>('');
+  const [diceResult, setDiceResult] = useState<number | null>(null);
+  const [randomWord, setRandomWord] = useState<string>('');
 
   const handleGenerateString = () => {
     const newString = generateRandomString(stringLength);
@@ -55,9 +60,30 @@ export default function RandomTool({ slug }: RandomToolProps) {
     toast.success("جمله قصار جدید تولید شد");
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast.success("در حافظه کپی شد");
+  const handleGenerateDate = () => {
+    const start = new Date(1970, 0, 1);
+    const end = new Date();
+    const newDate = generateRandomDate(start, end);
+    setRandomDate(newDate);
+    toast.success("تاریخ تصادفی تولید شد");
+  };
+
+  const handleGenerateEmoji = () => {
+    const newEmoji = generateRandomEmoji();
+    setEmoji(newEmoji);
+    toast.success("ایموجی تصادفی تولید شد");
+  };
+
+  const handleRollDice = () => {
+    const result = rollDice();
+    setDiceResult(result);
+    toast.success(`تاس انداخته شد: ${result}`);
+  };
+
+  const handleGenerateWord = () => {
+    const word = generateRandomWord();
+    setRandomWord(word);
+    toast.success("کلمه تصادفی تولید شد");
   };
 
   if (!toolMeta) return null;
@@ -85,7 +111,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
                 className="w-32"
               />
               <Button onClick={handleGenerateString} className="flex items-center gap-2">
-                <Shuffle size={18} />
+                <Type size={18} />
                 تولید رشته تصادفی
               </Button>
             </div>
@@ -99,25 +125,70 @@ export default function RandomTool({ slug }: RandomToolProps) {
             )}
           </CardContent>
         </Card>
-      ) : slug === 'random-picker' ? (
+      ) : slug === 'random-date' ? (
         <Card>
           <CardContent className="p-6 space-y-4">
-            <Textarea
-              placeholder="هر مورد را در یک خط جداگانه وارد کنید..."
-              value={itemsList}
-              onChange={(e) => setItemsList(e.target.value)}
-              rows={5}
-            />
-            <Button onClick={handleRandomPick} className="flex items-center gap-2">
-              <List size={18} />
-              انتخاب تصادفی
+            <Button onClick={handleGenerateDate} className="flex items-center gap-2">
+              <Calendar size={18} />
+              تولید تاریخ تصادفی
             </Button>
-            {selectedItem && (
+            {randomDate && (
               <div 
-                className="p-4 bg-muted rounded-lg cursor-pointer"
-                onClick={() => copyToClipboard(selectedItem)}
+                className="p-4 bg-muted rounded-lg cursor-pointer text-center"
+                onClick={() => copyToClipboard(format(randomDate, 'yyyy/MM/dd'))}
               >
-                {selectedItem}
+                {format(randomDate, 'yyyy/MM/dd')}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : slug === 'random-emoji-generator' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Button onClick={handleGenerateEmoji} className="flex items-center gap-2">
+              <Type size={18} />
+              تولید ایموجی تصادفی
+            </Button>
+            {emoji && (
+              <div 
+                className="p-4 bg-muted rounded-lg cursor-pointer text-center text-4xl"
+                onClick={() => copyToClipboard(emoji)}
+              >
+                {emoji}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : slug === 'dice-roller' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Button onClick={handleRollDice} className="flex items-center gap-2">
+              <Dice size={18} />
+              پرتاب تاس
+            </Button>
+            {diceResult && (
+              <div 
+                className="p-4 bg-muted rounded-lg cursor-pointer text-center text-4xl"
+                onClick={() => copyToClipboard(diceResult.toString())}
+              >
+                {diceResult}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : slug === 'random-word-generator' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Button onClick={handleGenerateWord} className="flex items-center gap-2">
+              <Type size={18} />
+              تولید کلمه تصادفی
+            </Button>
+            {randomWord && (
+              <div 
+                className="p-4 bg-muted rounded-lg cursor-pointer text-center text-xl"
+                onClick={() => copyToClipboard(randomWord)}
+              >
+                {randomWord}
               </div>
             )}
           </CardContent>
@@ -126,39 +197,6 @@ export default function RandomTool({ slug }: RandomToolProps) {
         <Card>
           <CardContent className="p-6">
             <CoinFlip />
-          </CardContent>
-        </Card>
-      ) : slug === 'random-quote-generator' ? (
-        <Card>
-          <CardContent className="p-6 space-y-4">
-            <Select
-              value={selectedCategory}
-              onValueChange={setSelectedCategory}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="انتخاب دسته‌بندی (همه)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">همه دسته‌بندی‌ها</SelectItem>
-                {quoteCategories.map((category) => (
-                  <SelectItem key={category.id} value={category.id}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button onClick={handleGenerateQuote} className="flex items-center gap-2">
-              <Quote size={18} />
-              دریافت جمله قصار جدید
-            </Button>
-            {quote && (
-              <div 
-                className="p-4 bg-muted rounded-lg cursor-pointer text-lg text-center"
-                onClick={() => copyToClipboard(quote)}
-              >
-                {quote}
-              </div>
-            )}
           </CardContent>
         </Card>
       ) : (
