@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
@@ -13,54 +12,14 @@ import {
 } from '@/data/tools';
 import { ChevronLeft, Sparkles, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
-// import { finglishToPersian } from '@/utils/toolUtils'; // Not used anymore
+import { finglishToPersian } from '@/utils/toolUtils'; // Use our utility
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
 const Index = () => {
   // Finglish to Farsi (Home page instant converter state)
   const [finglishInput, setFinglishInput] = useState('');
-  const [persianOutput, setPersianOutput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [translateError, setTranslateError] = useState<string | null>(null);
   const [copyClicked, setCopyClicked] = useState(false);
-
-  // Google Translate simple endpoint
-  // Note: This is for demonstration only, for production use the official API
-  async function finglishToFarsiByGoogle(text: string) {
-    if (!text.trim()) {
-      setPersianOutput('');
-      setTranslateError(null);
-      return;
-    }
-    setLoading(true);
-    setTranslateError(null);
-    try {
-      const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=fa&dt=t&q=${encodeURIComponent(text)}`);
-      if (!res.ok) throw new Error('Failed to translate');
-      const data = await res.json();
-      if (Array.isArray(data) && data[0] && Array.isArray(data[0][0])) {
-        setPersianOutput(data[0].map((item: any) => item[0]).join(' '));
-      } else {
-        setPersianOutput('');
-        setTranslateError('خطا در دریافت ترجمه');
-      }
-    } catch (e) {
-      setPersianOutput('');
-      setTranslateError('خطا در ارتباط با سرویس ترجمه');
-    } finally {
-      setLoading(false);
-    }
-  }
-  
-  // Whenever finglishInput changes, try to convert it (debounced for usability)
-  React.useEffect(() => {
-    const handler = setTimeout(() => {
-      finglishToFarsiByGoogle(finglishInput);
-    }, 600);
-    return () => clearTimeout(handler);
-    // eslint-disable-next-line
-  }, [finglishInput]);
 
   // Get counts for each category
   const categories = Object.keys(categoryLabels) as ToolCategory[];
@@ -72,6 +31,9 @@ const Index = () => {
   // Get new and popular tools
   const newTools = getNewTools();
   const popularTools = getPopularTools();
+
+  // Output instantly using the utility
+  const persianOutput = finglishToPersian(finglishInput);
 
   // Copy handler
   const handleCopyFarsi = () => {
@@ -92,10 +54,10 @@ const Index = () => {
         </p>
       </section>
 
-      {/* Typewriting - Instant Finglish to Farsi (with Google Translate) */}
+      {/* Typewriting - Instant Finglish to Farsi (utility) */}
       <section className="mb-8 mx-auto w-full max-w-2xl bg-[#F2FCE2] border border-[#8cc55b]/20 rounded-xl shadow p-6 flex flex-col gap-4 items-stretch animate-fade-in">
         <h2 className="text-xl font-bold text-[#8cc55b] mb-2 flex items-center gap-2">
-          <span className="inline-block">🔤</span> تبدیل سریع فینگلیش به فارسی (Google Translate)
+          <span className="inline-block">🔤</span> تبدیل سریع فینگلیش به فارسی
         </h2>
         <Textarea
           placeholder="متن فینگلیش خود را وارد کنید (مانند: salam chetori)"
@@ -108,7 +70,7 @@ const Index = () => {
         <div className="flex items-center gap-2 mb-2">
           <Textarea
             readOnly
-            value={loading ? "در حال ترجمه..." : (persianOutput || '')}
+            value={persianOutput}
             placeholder="خروجی فارسی در اینجا نمایش داده می‌شود"
             dir="rtl"
             minRows={1}
@@ -118,17 +80,14 @@ const Index = () => {
             type="button"
             variant="outline"
             onClick={handleCopyFarsi}
-            disabled={!persianOutput || loading}
+            disabled={!persianOutput}
             className="min-w-[70px]"
           >
             {copyClicked ? "کپی شد!" : "کپی"}
           </Button>
         </div>
-        {translateError && (
-          <div className="text-sm text-red-500">{translateError}</div>
-        )}
         <div className="text-xs text-[#7c9c36] font-medium opacity-90">
-          این ابزار از Google Translate برای تبدیل سریع فینگلیش به فارسی استفاده می‌کند.
+          این تبدیل با یک الگوریتم داخلی انجام می‌شود و به اینترنت نیاز ندارد.
         </div>
       </section>
       
@@ -193,4 +152,3 @@ const Index = () => {
 };
 
 export default Index;
-
