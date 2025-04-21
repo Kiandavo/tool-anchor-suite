@@ -11,6 +11,7 @@ import SeoTool from './ToolTypes/SeoTool';
 import RandomTool from './ToolTypes/RandomTool';
 import NumberTool from './ToolTypes/NumberTool';
 import ToolNotImplemented from './ToolTypes/ToolNotImplemented';
+import ResumeBuilder from './ToolTypes/ResumeTools/ResumeBuilder';
 
 const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'resume'> = {
   // Text tools
@@ -137,7 +138,7 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'pri
   'duplicate-number-finder': 'number',
   
   // Resume tools
-  'resume-builder': 'text',
+  'resume-builder': 'resume',
   'cv-template': 'text',
   'cover-letter': 'text',
   'resume-analyzer': 'text',
@@ -180,6 +181,8 @@ export default function Tool() {
           <RandomTool slug={tool.slug} />
         ) : toolTypeBySlug[tool.slug] === "number" ? (
           <NumberTool slug={tool.slug} />
+        ) : toolTypeBySlug[tool.slug] === "resume" ? (
+          <ResumeBuilder />
         ) : (
           <ToolNotImplemented />
         )}
