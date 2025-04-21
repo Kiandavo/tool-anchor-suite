@@ -35,7 +35,11 @@ export function Layout({
       <header className={`bg-white shadow-sm py-4 sticky top-0 z-10 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center">
-            <div className="flex items-center justify-center w-full gap-4">
+            <div className="flex items-center justify-between w-full gap-4">
+              <Link to="/settings" className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
+                <Settings size={22} />
+              </Link>
+
               {backUrl ? (
                 <Link to={backUrl} className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center">
                   <ArrowLeft size={20} className="ml-2" />
@@ -47,20 +51,6 @@ export function Layout({
                   لنگر
                 </Link>
               )}
-
-              {/* Logo in the same row */}
-              <img
-                src="/lovable-uploads/a29ccf04-1313-4fd1-8c7f-3303f18ee22f.png"
-                alt="Laangar Logo"
-                className="h-12 w-auto mx-2"
-                loading="eager"
-                width={48}
-                height={48}
-              />
-
-              <Link to="/settings" className="text-gray-600 hover:text-primary transition-colors duration-300 ml-auto flex items-center">
-                <Settings size={22} />
-              </Link>
             </div>
             {title && <h1 className="text-lg font-medium text-gray-800 mt-2">{title}</h1>}
           </div>
@@ -87,3 +77,4 @@ export function Layout({
     </div>
   );
 }
+
