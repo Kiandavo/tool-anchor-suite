@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
@@ -8,6 +9,9 @@ import BmiCalculator from './CalculatorTools/BmiCalculator';
 import DiscountCalculator from './CalculatorTools/DiscountCalculator';
 import SalaryTaxCalculator from './CalculatorTools/SalaryTaxCalculator';
 import TipCalculator from './CalculatorTools/TipCalculator';
+import CurrencyConverter from './CalculatorTools/CurrencyConverter';
+import AreaCalculator from './CalculatorTools/AreaCalculator';
+import UnitListGenerator from './CalculatorTools/UnitListGenerator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -16,7 +20,6 @@ interface CalculatorToolProps {
 export default function CalculatorTool({ slug }: CalculatorToolProps) {
   const toolMeta = tools.find((t) => t.slug === slug);
   
-  // Check which calculator tool to render based on slug
   const renderCalculatorTool = () => {
     switch (slug) {
       case 'percentage-calculator':
@@ -33,6 +36,12 @@ export default function CalculatorTool({ slug }: CalculatorToolProps) {
         return <SalaryTaxCalculator />;
       case 'tip-calculator':
         return <TipCalculator />;
+      case 'currency-converter':
+        return <CurrencyConverter />;
+      case 'area-calculator':
+        return <AreaCalculator />;
+      case 'unit-list-generator':
+        return <UnitListGenerator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

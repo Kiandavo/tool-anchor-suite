@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select";
 import { generateRandomString, pickRandomFromList, getRandomQuote, quoteCategories } from '@/utils/textUtils';
 import { generateRandomDate, generateRandomEmoji, rollDice, generateRandomWord, copyToClipboard } from '@/utils/randomUtils';
-import { Quote, List, Dice, Calendar, Type } from 'lucide-react';
+import { List, "grid-2x2" as Grid2x2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
@@ -111,7 +111,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
                 className="w-32"
               />
               <Button onClick={handleGenerateString} className="flex items-center gap-2">
-                <Type size={18} />
+                <Grid2x2 size={18} />
                 تولید رشته تصادفی
               </Button>
             </div>
@@ -146,7 +146,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
         <Card>
           <CardContent className="p-6 space-y-4">
             <Button onClick={handleGenerateEmoji} className="flex items-center gap-2">
-              <Type size={18} />
+              <Grid2x2 size={18} />
               تولید ایموجی تصادفی
             </Button>
             {emoji && (
@@ -180,7 +180,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
         <Card>
           <CardContent className="p-6 space-y-4">
             <Button onClick={handleGenerateWord} className="flex items-center gap-2">
-              <Type size={18} />
+              <Grid2x2 size={18} />
               تولید کلمه تصادفی
             </Button>
             {randomWord && (

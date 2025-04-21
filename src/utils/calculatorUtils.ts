@@ -35,7 +35,15 @@ export const lengthUnits: Unit[] = [
   { name: 'کیلومتر', value: 1000, symbol: 'km' },
 ];
 
+export const currencies: Unit[] = [
+  { name: 'تومان', value: 1, symbol: 'تومان' },
+  { name: 'دلار', value: 52000, symbol: '$' },
+  { name: 'یورو', value: 56000, symbol: '€' },
+  { name: 'پوند', value: 65000, symbol: '£' },
+];
+
 export const convertUnit = (value: number, fromUnit: Unit, toUnit: Unit): number => {
   const baseValue = value * fromUnit.value;
   return Number((baseValue / toUnit.value).toFixed(4));
 };
+
