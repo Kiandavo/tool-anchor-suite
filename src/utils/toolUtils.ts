@@ -6,4 +6,5 @@ export * from './lineUtils';
 export * from './imageUtils';
 export * from './colorUtils';
 export * from './calculatorUtils';
+export * from './randomUtils';
 

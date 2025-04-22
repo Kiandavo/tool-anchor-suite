@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Quote } from 'lucide-react';
-import { pickRandomBibleVerse, copyToClipboard } from '@/utils/randomUtils';
+import { generateRandomQuote, copyToClipboard } from '@/utils/randomUtils';
 import { toast } from 'sonner';
 
 export function RandomQuote() {
   const [quote, setQuote] = useState<string>('');
 
   const handleGenerateQuote = () => {
-    const newQuote = pickRandomBibleVerse();
+    const newQuote = generateRandomQuote();
     setQuote(newQuote);
     toast.success("نقل قول تصادفی تولید شد");
   };

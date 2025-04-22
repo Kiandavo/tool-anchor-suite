@@ -1,3 +1,4 @@
+
 import { toast } from 'sonner';
 
 export const generateRandomDate = (start: Date, end: Date): Date => {
@@ -66,6 +67,21 @@ export const pickRandomBibleVerse = (): string => {
   ];
   
   return verses[Math.floor(Math.random() * verses.length)];
+};
+
+export const generateRandomQuote = (): string => {
+  const quotes = [
+    "سخت‌ترین کارها، آغاز کردن آنهاست. - دیل کارنگی",
+    "هر روز فرصتی است برای تغییر کردن. - اُپرا وینفری",
+    "موفقیت در زندگی به این نیست که هرگز نیفتیم، بلکه این است که هر بار که می‌افتیم، بلند شویم. - نلسون ماندلا",
+    "دنیا را همان‌گونه که هست ببینید، نه آن‌گونه که می‌خواهید باشد. - جک نیکلسون",
+    "انسان هر آنچه را که باور کند، قادر به انجام آن است. - ناپلئون هیل",
+    "هیچ‌گاه برای شروع دوباره دیر نیست. - مایا آنجلو",
+    "من زندگی را با شمارش نفس‌هایم نمی‌سنجم، بلکه با لحظاتی که نفسم را بند می‌آورند. - مایا آنجلو",
+    "خوشبختی وقتی معنا پیدا می‌کند که با کسی تقسیمش کنی. - مارک تواین"
+  ];
+  
+  return quotes[Math.floor(Math.random() * quotes.length)];
 };
 
 export const suggestRandomMovie = (): string => {

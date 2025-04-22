@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Star } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { suggestRandomRecipe, copyToClipboard } from '@/utils/randomUtils';
 import { toast } from 'sonner';
 
@@ -19,7 +19,7 @@ export function RandomRecipe() {
     <Card>
       <CardContent className="p-6 space-y-4">
         <Button onClick={handleGenerateRecipe} className="flex items-center gap-2 w-full">
-          <Star size={18} />
+          <Sparkles size={18} />
           پیشنهاد دستور پخت تصادفی
         </Button>
         {recipe && (
