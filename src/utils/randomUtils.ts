@@ -1,4 +1,3 @@
-
 import { toast } from 'sonner';
 
 export const generateRandomDate = (start: Date, end: Date): Date => {
@@ -110,4 +109,27 @@ export const suggestRandomRecipe = (): string => {
   ];
   
   return recipes[Math.floor(Math.random() * recipes.length)];
+};
+
+export const makeRandomPick = (items: string[]): string => {
+  if (!items.length) return '';
+  return items[Math.floor(Math.random() * items.length)];
+};
+
+export const makeRandomDecision = (): string => {
+  const decisions = ['بله', 'خیر', 'شاید', 'بعداً تصمیم بگیر', 'قطعاً', 'اصلاً'];
+  return decisions[Math.floor(Math.random() * decisions.length)];
+};
+
+export const generateRandomTeams = (members: string[], numberOfTeams: number): string[][] => {
+  if (!members.length || numberOfTeams <= 0) return [];
+  
+  const shuffled = [...members].sort(() => Math.random() - 0.5);
+  const teams: string[][] = Array.from({ length: numberOfTeams }, () => []);
+  
+  shuffled.forEach((member, index) => {
+    teams[index % numberOfTeams].push(member);
+  });
+  
+  return teams;
 };

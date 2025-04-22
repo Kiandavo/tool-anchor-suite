@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
@@ -14,6 +13,10 @@ import { RandomMovie } from '@/components/random-tools/RandomMovie';
 import { RandomRecipe } from '@/components/random-tools/RandomRecipe';
 import RandomColorGenerator from '@/components/RandomColorGenerator';
 import CoinFlip from '@/components/CoinFlip';
+import { RandomPicker } from '@/components/random-tools/RandomPicker';
+import { RandomNickname } from '@/components/random-tools/RandomNickname';
+import { RandomDecision } from '@/components/random-tools/RandomDecision';
+import { RandomTeam } from '@/components/random-tools/RandomTeam';
 
 interface RandomToolProps {
   slug: string;
@@ -50,6 +53,14 @@ export default function RandomTool({ slug }: RandomToolProps) {
         return <RandomRecipe />;
       case 'coin-flip':
         return <CoinFlip />;
+      case 'random-picker':
+        return <RandomPicker />;
+      case 'random-nickname-generator':
+        return <RandomNickname />;
+      case 'random-decision-maker':
+        return <RandomDecision />;
+      case 'random-team-generator':
+        return <RandomTeam />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
