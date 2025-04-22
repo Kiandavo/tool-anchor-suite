@@ -172,4 +172,58 @@ export const seoTools: Tool[] = [
     isNew: false,
     icon: "filter"
   },
+  {
+    id: "120",
+    slug: "html-heading-extractor",
+    name: "استخراج هدینگ‌ها",
+    category: "seo",
+    description: "استخراج ساختار هدینگ‌های HTML",
+    isNew: true,
+    icon: "code"
+  },
+  {
+    id: "121",
+    slug: "social-tags-generator",
+    name: "تگ‌های شبکه‌های اجتماعی",
+    category: "seo",
+    description: "تولید تگ‌های مورد نیاز شبکه‌های اجتماعی",
+    isNew: true,
+    icon: "code"
+  },
+  {
+    id: "122",
+    slug: "meta-refresh-generator",
+    name: "تولید Meta Refresh",
+    category: "seo",
+    description: "ایجاد تگ meta برای ریدایرکت",
+    isNew: true,
+    icon: "code"
+  },
+  {
+    id: "123",
+    slug: "schema-generator",
+    name: "تولید Schema.org",
+    category: "seo",
+    description: "ایجاد کد Schema.org برای محتوا",
+    isNew: true,
+    icon: "code"
+  },
+  {
+    id: "124",
+    slug: "html-lang-checker",
+    name: "بررسی زبان HTML",
+    category: "seo",
+    description: "بررسی تگ lang در HTML",
+    isNew: true,
+    icon: "code"
+  },
+  {
+    id: "125",
+    slug: "meta-keywords-extractor",
+    name: "استخراج کلمات کلیدی",
+    category: "seo",
+    description: "استخراج متا کلمات کلیدی از HTML",
+    isNew: true,
+    icon: "code"
+  }
 ];
