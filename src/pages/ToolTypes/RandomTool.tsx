@@ -88,6 +88,76 @@ export default function RandomTool({ slug }: RandomToolProps) {
     toast.success("کلمه تصادفی تولید شد");
   };
 
+  // New state for additional tools
+  const [array, setArray] = useState<string>('');
+  const [shuffledArray, setShuffledArray] = useState<string[]>([]);
+  const [lotteryNumbers, setLotteryNumbers] = useState<number[]>([]);
+  const [teamMembers, setTeamMembers] = useState<string>('');
+  const [teams, setTeams] = useState<string[][]>([]);
+  const [selectedCard, setSelectedCard] = useState<string>('');
+  const [giftSuggestion, setGiftSuggestion] = useState<string>('');
+
+  // Function to shuffle array
+  const handleArrayShuffle = () => {
+    const items = array.split('\n').filter(item => item.trim() !== '');
+    const shuffled = [...items].sort(() => Math.random() - 0.5);
+    setShuffledArray(shuffled);
+    toast.success("آرایه با موفقیت مرتب شد");
+  };
+
+  // Function to generate lottery numbers
+  const generateLotteryNumbers = () => {
+    const numbers = new Set<number>();
+    while (numbers.size < 6) {
+      numbers.add(Math.floor(Math.random() * 49) + 1);
+    }
+    setLotteryNumbers(Array.from(numbers));
+    toast.success("اعداد لاتاری تولید شدند");
+  };
+
+  // Function to generate random teams
+  const generateRandomTeams = () => {
+    const members = teamMembers.split('\n').filter(member => member.trim() !== '');
+    const shuffled = [...members].sort(() => Math.random() - 0.5);
+    const numTeams = Math.min(Math.ceil(members.length / 4), Math.floor(members.length / 2));
+    const result: string[][] = Array(numTeams).fill([]).map(() => []);
+    
+    shuffled.forEach((member, index) => {
+      result[index % numTeams].push(member);
+    });
+    
+    setTeams(result);
+    toast.success("تیم‌ها با موفقیت ایجاد شدند");
+  };
+
+  // Function to pick a random card
+  const pickRandomCard = () => {
+    const suits = ['♠️', '♥️', '♦️', '♣️'];
+    const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    const randomSuit = suits[Math.floor(Math.random() * suits.length)];
+    const randomValue = values[Math.floor(Math.random() * values.length)];
+    setSelectedCard(`${randomValue}${randomSuit}`);
+    toast.success("یک کارت انتخاب شد");
+  };
+
+  // Function to suggest a random gift
+  const suggestRandomGift = () => {
+    const gifts = [
+      "کتاب",
+      "ساعت هوشمند",
+      "هدفون بی‌سیم",
+      "عطر",
+      "کیف چرم",
+      "ست لوازم نوشت‌افزار",
+      "گیاه آپارتمانی",
+      "ماگ سرامیکی",
+      "کارت هدیه",
+      "آلبوم موسیقی"
+    ];
+    setGiftSuggestion(gifts[Math.floor(Math.random() * gifts.length)]);
+    toast.success("یک هدیه پیشنهاد شد");
+  };
+
   if (!toolMeta) return null;
 
   return (
@@ -199,6 +269,92 @@ export default function RandomTool({ slug }: RandomToolProps) {
         <Card>
           <CardContent className="p-6">
             <CoinFlip />
+          </CardContent>
+        </Card>
+      ) : slug === 'random-array-shuffler' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Textarea
+              placeholder="هر آیتم را در یک خط جدید وارد کنید"
+              value={array}
+              onChange={(e) => setArray(e.target.value)}
+              className="min-h-[100px]"
+            />
+            <Button onClick={handleArrayShuffle} className="w-full">مرتب‌سازی تصادفی</Button>
+            {shuffledArray.length > 0 && (
+              <div className="p-4 bg-muted rounded-lg space-y-2">
+                {shuffledArray.map((item, index) => (
+                  <div key={index} className="p-2 bg-background rounded">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : slug === 'random-lottery-numbers' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Button onClick={generateLotteryNumbers} className="w-full">تولید اعداد لاتاری</Button>
+            {lotteryNumbers.length > 0 && (
+              <div className="grid grid-cols-3 gap-4">
+                {lotteryNumbers.map((num, index) => (
+                  <div key={index} className="p-4 bg-muted rounded-lg text-center text-2xl font-bold">
+                    {num}
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : slug === 'random-team-generator' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Textarea
+              placeholder="نام هر نفر را در یک خط جدید وارد کنید"
+              value={teamMembers}
+              onChange={(e) => setTeamMembers(e.target.value)}
+              className="min-h-[100px]"
+            />
+            <Button onClick={generateRandomTeams} className="w-full">تولید تیم‌ها</Button>
+            {teams.length > 0 && (
+              <div className="space-y-4">
+                {teams.map((team, index) => (
+                  <div key={index} className="p-4 bg-muted rounded-lg">
+                    <h3 className="font-bold mb-2">تیم {index + 1}</h3>
+                    <div className="space-y-1">
+                      {team.map((member, memberIndex) => (
+                        <div key={memberIndex} className="p-2 bg-background rounded">
+                          {member}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : slug === 'random-card-picker' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Button onClick={pickRandomCard} className="w-full">انتخاب کارت</Button>
+            {selectedCard && (
+              <div className="p-8 bg-muted rounded-lg text-center">
+                <span className="text-6xl">{selectedCard}</span>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      ) : slug === 'random-gift-picker' ? (
+        <Card>
+          <CardContent className="p-6 space-y-4">
+            <Button onClick={suggestRandomGift} className="w-full">پیشنهاد هدیه</Button>
+            {giftSuggestion && (
+              <div className="p-4 bg-muted rounded-lg text-center text-xl">
+                {giftSuggestion}
+              </div>
+            )}
           </CardContent>
         </Card>
       ) : (

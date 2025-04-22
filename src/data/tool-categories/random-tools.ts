@@ -135,5 +135,140 @@ export const randomTools: Tool[] = [
     description: "تولید کد QR برای هر مقدار تصادفی",
     isNew: false,
     icon: "dice"
+  },
+  {
+    id: "107",
+    slug: "random-array-shuffler",
+    name: "مرتب‌سازی تصادفی آرایه",
+    category: "random",
+    description: "آرایه‌ای از اعداد یا متن را به صورت تصادفی مرتب کنید",
+    isNew: true,
+    icon: "shuffle"
+  },
+  {
+    id: "108",
+    slug: "random-lottery-numbers",
+    name: "اعداد لاتاری تصادفی",
+    category: "random",
+    description: "تولید اعداد تصادفی برای لاتاری",
+    isNew: true,
+    icon: "star"
+  },
+  {
+    id: "109",
+    slug: "random-team-generator",
+    name: "تولید تیم تصادفی",
+    category: "random",
+    description: "افراد را به صورت تصادفی به تیم‌ها تقسیم کنید",
+    isNew: true,
+    icon: "dices"
+  },
+  {
+    id: "110",
+    slug: "random-card-picker",
+    name: "انتخاب کارت تصادفی",
+    category: "random",
+    description: "یک کارت تصادفی از بازی ورق انتخاب کنید",
+    isNew: true,
+    icon: "random"
+  },
+  {
+    id: "111",
+    slug: "random-gift-picker",
+    name: "انتخاب هدیه تصادفی",
+    category: "random",
+    description: "برای مناسبت‌های مختلف هدیه تصادفی پیشنهاد می‌دهد",
+    isNew: true,
+    icon: "gift"
+  },
+  {
+    id: "112",
+    slug: "random-nickname-generator",
+    name: "تولید نام مستعار تصادفی",
+    category: "random",
+    description: "یک نام مستعار جالب و تصادفی بسازید",
+    isNew: true,
+    icon: "sparkles"
+  },
+  {
+    id: "113",
+    slug: "random-decision-maker",
+    name: "تصمیم‌گیری تصادفی",
+    category: "random",
+    description: "بین چند گزینه به صورت تصادفی تصمیم‌گیری کنید",
+    isNew: true,
+    icon: "dices"
+  },
+  {
+    id: "114",
+    slug: "random-tournament-bracket",
+    name: "جدول مسابقات تصادفی",
+    category: "random",
+    description: "یک جدول مسابقات با جایگیری تصادفی بسازید",
+    isNew: true,
+    icon: "award"
+  },
+  {
+    id: "115",
+    slug: "random-map-location",
+    name: "مکان تصادفی روی نقشه",
+    category: "random",
+    description: "یک نقطه تصادفی روی نقشه جهان پیدا کنید",
+    isNew: true,
+    icon: "random"
+  },
+  {
+    id: "116",
+    slug: "random-prize-wheel",
+    name: "چرخ شانس",
+    category: "random",
+    description: "یک چرخ شانس با گزینه‌های سفارشی بسازید",
+    isNew: true,
+    icon: "rotate-cw"
+  },
+  {
+    id: "117",
+    slug: "random-character-generator",
+    name: "تولید شخصیت تصادفی",
+    category: "random",
+    description: "یک شخصیت تصادفی با ویژگی‌های مختلف بسازید",
+    isNew: true,
+    icon: "sparkles"
+  },
+  {
+    id: "118",
+    slug: "random-task-assigner",
+    name: "تخصیص تصادفی وظایف",
+    category: "random",
+    description: "وظایف را به صورت تصادفی بین افراد تقسیم کنید",
+    isNew: true,
+    icon: "dices"
+  },
+  {
+    id: "119",
+    slug: "random-bible-verse",
+    name: "آیه تصادفی کتاب مقدس",
+    category: "random",
+    description: "یک آیه تصادفی از کتاب مقدس را نمایش دهید",
+    isNew: true,
+    icon: "star"
+  },
+  {
+    id: "120",
+    slug: "random-movie-picker",
+    name: "انتخاب فیلم تصادفی",
+    category: "random",
+    description: "یک فیلم تصادفی برای تماشا پیشنهاد می‌دهد",
+    isNew: true,
+    icon: "sparkles"
+  },
+  {
+    id: "121",
+    slug: "random-recipe-generator",
+    name: "دستور پخت تصادفی",
+    category: "random",
+    description: "یک دستور پخت تصادفی برای آشپزی پیشنهاد می‌دهد",
+    isNew: true,
+    icon: "sparkles"
   }
 ];
