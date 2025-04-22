@@ -153,5 +153,50 @@ export const imageTools: Tool[] = [
     description: "فرمت SVG عکس را به PNG تبدیل کنید",
     isNew: false,
     icon: "image"
+  },
+  {
+    id: "110",
+    slug: "image-invert",
+    name: "معکوس کردن رنگ تصویر",
+    category: "image",
+    description: "رنگ‌های تصویر را معکوس کنید",
+    isNew: true,
+    icon: "image"
+  },
+  {
+    id: "111",
+    slug: "image-contrast",
+    name: "تنظیم کنتراست تصویر",
+    category: "image",
+    description: "کنتراست تصویر را تغییر دهید",
+    isNew: true,
+    icon: "image"
+  },
+  {
+    id: "112",
+    slug: "image-brightness",
+    name: "تنظیم روشنایی تصویر",
+    category: "image",
+    description: "روشنایی تصویر را تغییر دهید",
+    isNew: true,
+    icon: "image"
+  },
+  {
+    id: "113",
+    slug: "image-saturate",
+    name: "تنظیم اشباع رنگ تصویر",
+    category: "image",
+    description: "میزان اشباع رنگ‌های تصویر را تغییر دهید",
+    isNew: true,
+    icon: "image"
+  },
+  {
+    id: "114",
+    slug: "image-hue-rotate",
+    name: "چرخش رنگ تصویر",
+    category: "image",
+    description: "رنگ‌های تصویر را به صورت دورانی تغییر دهید",
+    isNew: true,
+    icon: "image"
   }
 ];

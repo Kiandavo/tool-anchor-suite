@@ -201,3 +201,129 @@ export const applyBlur = (file: File, blurAmount: number): Promise<Blob> => {
     reader.readAsDataURL(file);
   });
 };
+
+export const invertImage = (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
+        ctx.drawImage(img, 0, 0);
+        ctx.filter = 'invert(100%)';
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
+          'image/jpeg', 0.9
+        );
+      };
+      img.onerror = () => { reject(new Error('Failed to load image')); };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => { reject(new Error('Failed to read file')); };
+    reader.readAsDataURL(file);
+  });
+};
+
+export const adjustContrast = (file: File, contrast: number): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
+        ctx.filter = `contrast(${contrast}%)`;
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
+          'image/jpeg', 0.9
+        );
+      };
+      img.onerror = () => { reject(new Error('Failed to load image')); };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => { reject(new Error('Failed to read file')); };
+    reader.readAsDataURL(file);
+  });
+};
+
+export const adjustBrightness = (file: File, brightness: number): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
+        ctx.filter = `brightness(${brightness}%)`;
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
+          'image/jpeg', 0.9
+        );
+      };
+      img.onerror = () => { reject(new Error('Failed to load image')); };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => { reject(new Error('Failed to read file')); };
+    reader.readAsDataURL(file);
+  });
+};
+
+export const adjustSaturation = (file: File, saturation: number): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
+        ctx.filter = `saturate(${saturation}%)`;
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
+          'image/jpeg', 0.9
+        );
+      };
+      img.onerror = () => { reject(new Error('Failed to load image')); };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => { reject(new Error('Failed to read file')); };
+    reader.readAsDataURL(file);
+  });
+};
+
+export const adjustHueRotate = (file: File, degrees: number): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
+        ctx.filter = `hue-rotate(${degrees}deg)`;
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
+          'image/jpeg', 0.9
+        );
+      };
+      img.onerror = () => { reject(new Error('Failed to load image')); };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => { reject(new Error('Failed to read file')); };
+    reader.readAsDataURL(file);
+  });
+};

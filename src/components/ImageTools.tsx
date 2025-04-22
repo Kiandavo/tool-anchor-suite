@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { compressImage, resizeImage, convertToFormat, rotateImage, flipImage, applyGrayscale, applyBlur } from "@/utils/toolUtils";
+import { compressImage, resizeImage, convertToFormat, rotateImage, flipImage, applyGrayscale, applyBlur, invertImage, adjustContrast, adjustBrightness, adjustSaturation, adjustHueRotate } from "@/utils/imageUtils";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -34,6 +34,10 @@ export default function ImageTools({ slug }: ImageToolsProps) {
   const [blurAmount, setBlurAmount] = useState(5);
   const toolMeta = tools.find((t) => t.slug === slug);
   const [outcomeMsg, setOutcomeMsg] = useState<string | null>(null);
+  const [contrast, setContrast] = useState(100);
+  const [brightness, setBrightness] = useState(100);
+  const [saturation, setSaturation] = useState(100);
+  const [hueRotate, setHueRotate] = useState(0);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -57,19 +61,19 @@ export default function ImageTools({ slug }: ImageToolsProps) {
     try {
       switch (slug) {
         case 'image-compressor':
-          processedBlob = await compressImage(selectedFile, imageQuality / 100); 
+          processedBlob = await compressImage(selectedFile, imageQuality / 100);
           setOutcomeMsg("تصویر با موفقیت فشرده شد.");
           break;
         case 'image-resizer':
-          processedBlob = await resizeImage(selectedFile, imageWidth, imageHeight); 
+          processedBlob = await resizeImage(selectedFile, imageWidth, imageHeight);
           setOutcomeMsg("اندازه تصویر با موفقیت تغییر یافت.");
           break;
         case 'image-to-webp':
-          processedBlob = await convertToFormat(selectedFile, 'webp'); 
+          processedBlob = await convertToFormat(selectedFile, 'webp');
           setOutcomeMsg("فرمت تصویر به WebP تغییر یافت.");
           break;
         case 'image-to-jpg':
-          processedBlob = await convertToFormat(selectedFile, 'jpg'); 
+          processedBlob = await convertToFormat(selectedFile, 'jpg');
           setOutcomeMsg("فرمت تصویر به JPG تغییر یافت.");
           break;
         case 'image-to-png':
@@ -77,20 +81,40 @@ export default function ImageTools({ slug }: ImageToolsProps) {
           setOutcomeMsg("فرمت تصویر به PNG تغییر یافت.");
           break;
         case 'image-rotate':
-          processedBlob = await rotateImage(selectedFile, rotationDegrees); 
+          processedBlob = await rotateImage(selectedFile, rotationDegrees);
           setOutcomeMsg(`تصویر ${rotationDegrees} درجه چرخیده شد.`);
           break;
         case 'image-flip':
-          processedBlob = await flipImage(selectedFile, flipDirection); 
+          processedBlob = await flipImage(selectedFile, flipDirection);
           setOutcomeMsg(`تصویر به صورت ${flipDirection === "horizontal" ? "افقی" : "عمودی"} وارونه شد.`);
           break;
         case 'image-grayscale':
-          processedBlob = await applyGrayscale(selectedFile); 
+          processedBlob = await applyGrayscale(selectedFile);
           setOutcomeMsg("تصویر سیاه و سفید شد.");
           break;
         case 'image-blur':
-          processedBlob = await applyBlur(selectedFile, blurAmount); 
+          processedBlob = await applyBlur(selectedFile, blurAmount);
           setOutcomeMsg(`افکت محوشدگی (${blurAmount}px) روی تصویر اعمال شد.`);
+          break;
+        case 'image-invert':
+          processedBlob = await invertImage(selectedFile);
+          setOutcomeMsg("رنگ‌های تصویر معکوس شد.");
+          break;
+        case 'image-contrast':
+          processedBlob = await adjustContrast(selectedFile, contrast);
+          setOutcomeMsg(`کنتراست تصویر به ${contrast}% تغییر یافت.`);
+          break;
+        case 'image-brightness':
+          processedBlob = await adjustBrightness(selectedFile, brightness);
+          setOutcomeMsg(`روشنایی تصویر به ${brightness}% تغییر یافت.`);
+          break;
+        case 'image-saturate':
+          processedBlob = await adjustSaturation(selectedFile, saturation);
+          setOutcomeMsg(`اشباع رنگ تصویر به ${saturation}% تغییر یافت.`);
+          break;
+        case 'image-hue-rotate':
+          processedBlob = await adjustHueRotate(selectedFile, hueRotate);
+          setOutcomeMsg(`چرخش رنگ تصویر به ${hueRotate} درجه تغییر یافت.`);
           break;
         default:
           toast({
@@ -175,6 +199,34 @@ export default function ImageTools({ slug }: ImageToolsProps) {
             <Label>میزان تاری:</Label>
             <Slider min={1} max={30} step={1} value={[blurAmount]} onValueChange={values => setBlurAmount(values[0])} />
             <span>{blurAmount}px</span>
+          </div>
+        )}
+        {slug === "image-contrast" && (
+          <div className="flex items-center gap-4">
+            <Label>کنتراست:</Label>
+            <Slider min={0} max={200} step={1} value={[contrast]} onValueChange={values => setContrast(values[0])} />
+            <span>{contrast}%</span>
+          </div>
+        )}
+        {slug === "image-brightness" && (
+          <div className="flex items-center gap-4">
+            <Label>روشنایی:</Label>
+            <Slider min={0} max={200} step={1} value={[brightness]} onValueChange={values => setBrightness(values[0])} />
+            <span>{brightness}%</span>
+          </div>
+        )}
+        {slug === "image-saturate" && (
+          <div className="flex items-center gap-4">
+            <Label>اشباع رنگ:</Label>
+            <Slider min={0} max={200} step={1} value={[saturation]} onValueChange={values => setSaturation(values[0])} />
+            <span>{saturation}%</span>
+          </div>
+        )}
+        {slug === "image-hue-rotate" && (
+          <div className="flex items-center gap-4">
+            <Label>چرخش رنگ:</Label>
+            <Slider min={0} max={360} step={1} value={[hueRotate]} onValueChange={values => setHueRotate(values[0])} />
+            <span>{hueRotate}°</span>
           </div>
         )}
         <Button
