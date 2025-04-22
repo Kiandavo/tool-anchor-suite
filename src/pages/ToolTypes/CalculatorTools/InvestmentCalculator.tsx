@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Radio, RadioGroup, RadioIndicator, RadioItem } from "@/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { calculateInvestment } from '@/utils/calculatorUtils';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
 import { Calculator, TrendingUp } from 'lucide-react';
@@ -134,11 +134,11 @@ export default function InvestmentCalculator() {
               className="flex"
             >
               <div className="flex items-center space-x-2 space-x-reverse ml-6">
-                <RadioItem value="monthly" id="monthly" className="peer"/>
+                <RadioGroupItem value="monthly" id="monthly" />
                 <Label htmlFor="monthly" className="cursor-pointer">ماهیانه</Label>
               </div>
               <div className="flex items-center space-x-2 space-x-reverse">
-                <RadioItem value="yearly" id="yearly" className="peer"/>
+                <RadioGroupItem value="yearly" id="yearly" />
                 <Label htmlFor="yearly" className="cursor-pointer">سالیانه</Label>
               </div>
             </RadioGroup>
