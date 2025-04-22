@@ -1,25 +1,23 @@
 import React, { useRef, useState } from 'react';
-import {
-  compressImage, resizeImage, convertToFormat, rotateImage, flipImage,
-  applyGrayscale, applyBlur
-} from "@/utils/toolUtils";
+import { compressImage, resizeImage, convertToFormat, rotateImage, flipImage, applyGrayscale, applyBlur } from "@/utils/toolUtils";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { ImageUploader } from "./ImageUploader";
 import { ToolInfoCard } from "./ToolInfoCard";
 import { OutcomeInfoCard } from "./OutcomeInfoCard";
 import { tools } from "@/data/tools";
 
-interface ImageToolsProps {
-  slug: string;
-}
-
 const TOOLS_WITH_PARAMS = [
   'image-compressor', 'image-resizer', 'image-rotate', 'image-flip', 'image-blur'
 ];
+
+interface ImageToolsProps {
+  slug: string;
+}
 
 export default function ImageTools({ slug }: ImageToolsProps) {
   const { toast } = useToast();
@@ -134,17 +132,14 @@ export default function ImageTools({ slug }: ImageToolsProps) {
       )}
       <div className="flex flex-col gap-4">
         <Card>
-          <CardContent>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleFileSelect}
-              className="mb-3"
+          <CardContent className="pt-6">
+            <ImageUploader
+              onFileSelect={handleFileSelect}
+              selectedFile={selectedFile}
             />
           </CardContent>
         </Card>
-        {/* Tool-dependent parameters */}
+
         {slug === "image-compressor" && (
           <div className="flex items-center gap-4">
             <Label>کیفیت:</Label>
