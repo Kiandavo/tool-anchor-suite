@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
@@ -11,9 +12,8 @@ import SeoTool from './ToolTypes/SeoTool';
 import RandomTool from './ToolTypes/RandomTool';
 import NumberTool from './ToolTypes/NumberTool';
 import ToolNotImplemented from './ToolTypes/ToolNotImplemented';
-import ResumeBuilder from './ToolTypes/ResumeTools/ResumeBuilder';
 
-const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'resume'> = {
+const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number'> = {
   // Text tools
   'latin-to-persian-convertor': 'text',
   'text-counter': 'text',
@@ -127,7 +127,7 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'pri
   'decimal-hex-converter': 'number',
   'decimal-octal-converter': 'number',
   'even-odd-checker': 'number',
-  'sum-calculator': 'calculator',
+  'sum-calculator': 'number',
   'random-number-picker': 'number',
   'fibonacci-finder': 'number',
   'even-number-list': 'number',
@@ -135,14 +135,7 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'pri
   'decimal-to-roman': 'number',
   'number-shuffler': 'number',
   'number-comparator': 'number',
-  'duplicate-number-finder': 'number',
-  
-  // Resume tools
-  'resume-builder': 'resume',
-  'cv-template': 'text',
-  'cover-letter': 'text',
-  'resume-analyzer': 'text',
-  'linkedin-optimizer': 'text',
+  'duplicate-number-finder': 'number'
 };
 
 export default function Tool() {
@@ -181,8 +174,6 @@ export default function Tool() {
           <RandomTool slug={tool.slug} />
         ) : toolTypeBySlug[tool.slug] === "number" ? (
           <NumberTool slug={tool.slug} />
-        ) : toolTypeBySlug[tool.slug] === "resume" ? (
-          <ResumeBuilder />
         ) : (
           <ToolNotImplemented />
         )}

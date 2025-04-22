@@ -8,8 +8,7 @@ import {
   Search, 
   Calculator, 
   Hash, 
-  Dice6,
-  FileText
+  Dice6 
 } from 'lucide-react';
 
 // Map categories to their respective icons
@@ -19,8 +18,7 @@ const categoryIcons = {
   seo: Search,
   calculators: Calculator,
   number: Hash,
-  random: Dice6,
-  resume: FileText  // Added the icon for resume category
+  random: Dice6
 };
 
 interface CategoryCardProps {

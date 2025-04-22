@@ -5,7 +5,6 @@ import { seoTools } from './tool-categories/seo-tools';
 import { calculatorTools } from './tool-categories/calculator-tools';
 import { numberTools } from './tool-categories/number-tools';
 import { randomTools } from './tool-categories/random-tools';
-import { resumeTools } from './tool-categories/resume-tools';
 import { categoryLabels } from '@/types/tool-types';
 
 // Combine all tools
@@ -15,8 +14,7 @@ export const tools: Tool[] = [
   ...seoTools,
   ...calculatorTools,
   ...numberTools,
-  ...randomTools,
-  ...resumeTools
+  ...randomTools
 ];
 
 // Re-export types and labels
