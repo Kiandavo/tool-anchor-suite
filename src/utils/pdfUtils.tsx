@@ -1,3 +1,4 @@
+
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
   }
 });
 
+// Update the interface to match with ResumeFormValues (optional fields)
 export interface ResumeData {
   fullName: string;
   jobTitle: string;

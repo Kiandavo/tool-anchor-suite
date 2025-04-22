@@ -3,11 +3,10 @@ import React from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
 import { ToolInfoCard } from '@/components/ToolInfoCard';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import { ResumePDF } from '@/utils/pdfUtils';
+import { ResumePDF, type ResumeData } from '@/utils/pdfUtils';
 import { Download, FileText, Book, Briefcase, Star } from 'lucide-react';
 import { resumeFormSchema, type ResumeFormValues } from './schema';
 import { PersonalInfoFields } from './components/PersonalInfoFields';
@@ -30,6 +29,18 @@ const ResumeBuilder = () => {
   });
 
   const formValues = form.watch();
+  
+  // Create a safe version of formValues that ensures all required fields have at least an empty string
+  const safeFormValues: ResumeData = {
+    fullName: formValues.fullName || "",
+    jobTitle: formValues.jobTitle || "",
+    email: formValues.email || "",
+    phone: formValues.phone || "",
+    about: formValues.about || "",
+    education: formValues.education || "",
+    experience: formValues.experience || "",
+    skills: formValues.skills || ""
+  };
 
   return (
     <div className="space-y-6">
@@ -73,7 +84,7 @@ const ResumeBuilder = () => {
               />
 
               <PDFDownloadLink
-                document={<ResumePDF data={formValues as ResumeFormValues} />}
+                document={<ResumePDF data={safeFormValues} />}
                 fileName={`${formValues.fullName || 'resume'}.pdf`}
                 className="block w-full"
               >
