@@ -162,5 +162,68 @@ export const numberTools: Tool[] = [
     description: "اعداد تکراری را در لیست شناسایی کنید",
     isNew: false,
     icon: "binary"
+  },
+  {
+    id: "100",
+    slug: "perfect-number-checker",
+    name: "بررسی عدد کامل",
+    category: "number",
+    description: "بررسی کنید آیا عدد مورد نظر یک عدد کامل است یا خیر",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "101",
+    slug: "palindrome-number-checker",
+    name: "بررسی عدد متقارن",
+    category: "number",
+    description: "بررسی کنید آیا عدد از چپ و راست یکسان است",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "102",
+    slug: "armstrong-number-checker",
+    name: "بررسی عدد آرمسترانگ",
+    category: "number",
+    description: "بررسی کنید آیا عدد یک عدد آرمسترانگ است",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "103",
+    slug: "gcd-calculator",
+    name: "محاسبه ب.م.م",
+    category: "number",
+    description: "محاسبه بزرگترین مقسوم علیه مشترک دو عدد",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "104",
+    slug: "lcm-calculator",
+    name: "محاسبه ک.م.م",
+    category: "number",
+    description: "محاسبه کوچکترین مضرب مشترک دو عدد",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "105",
+    slug: "factors-finder",
+    name: "یافتن مقسوم‌علیه‌ها",
+    category: "number",
+    description: "لیست تمام مقسوم‌علیه‌های یک عدد",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "106",
+    slug: "binary-operations",
+    name: "عملیات‌های دودویی",
+    category: "number", 
+    description: "انجام عملیات‌های AND, OR, XOR روی اعداد دودویی",
+    isNew: true,
+    icon: "calculator"
   }
 ];
