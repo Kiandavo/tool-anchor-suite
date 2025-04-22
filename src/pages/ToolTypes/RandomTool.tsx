@@ -20,7 +20,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { generateRandomString, pickRandomFromList, getRandomQuote, quoteCategories } from '@/utils/textUtils';
 import { generateRandomDate, generateRandomEmoji, rollDice, generateRandomWord, copyToClipboard, generateRandomUsername, generateRandomNickname, pickRandomBibleVerse, suggestRandomMovie, suggestRandomRecipe } from '@/utils/randomUtils';
-import { Grid2x2, CalendarDays, Dice5, Gift, Award, Star, Random, Sparkles, Shuffle, RotateCw, Calendar } from 'lucide-react';
+import { Grid2x2, CalendarDays, Dice5, Gift, Award, Star, Sparkles, Shuffle, RotateCw, Calendar, Dices } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
@@ -405,7 +405,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
                   placeholder="طول رشته"
                 />
                 <Button onClick={handleGenerateString} className="flex items-center gap-2">
-                  <Random size={18} />
+                  <Dices size={18} />
                   تولید رشته تصادفی
                 </Button>
               </div>
@@ -486,7 +486,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
           <Card>
             <CardContent className="p-6 space-y-4">
               <Button onClick={handleGenerateWord} className="flex items-center gap-2 w-full">
-                <Random size={18} />
+                <Dices size={18} />
                 تولید کلمه تصادفی
               </Button>
               {randomWord && (
@@ -1017,7 +1017,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
           <Card>
             <CardContent className="p-6 space-y-4">
               <Button onClick={getRandomMovie} className="w-full flex gap-2 items-center">
-                <Random size={18} />
+                <Dices size={18} />
                 پیشنهاد فیلم تصادفی
               </Button>
               {movieSuggestion && (
@@ -1035,7 +1035,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
           <Card>
             <CardContent className="p-6 space-y-4">
               <Button onClick={getRandomRecipe} className="w-full flex gap-2 items-center">
-                <Random size={18} />
+                <Dices size={18} />
                 دریافت دستور پخت تصادفی
               </Button>
               {recipeSuggestion && (
