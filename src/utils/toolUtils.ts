@@ -5,3 +5,5 @@ export * from './textUtils';
 export * from './lineUtils';
 export * from './imageUtils';
 export * from './colorUtils';
+export * from './calculatorUtils';
+

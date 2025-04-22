@@ -1,3 +1,4 @@
+
 import { Tool } from '@/types/tool-types';
 
 export const calculatorTools: Tool[] = [
@@ -136,4 +137,95 @@ export const calculatorTools: Tool[] = [
     isNew: false,
     icon: "calculator"
   },
+  // Adding 10 new calculator tools
+  {
+    id: "105",
+    slug: "calorie-calculator",
+    name: "محاسبه کالری",
+    category: "calculators",
+    description: "کالری مورد نیاز روزانه خود را محاسبه کنید",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "106",
+    slug: "weight-converter",
+    name: "تبدیل واحدهای وزن",
+    category: "calculators",
+    description: "تبدیل بین واحدهای مختلف وزن",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "107",
+    slug: "length-converter",
+    name: "تبدیل واحدهای طول",
+    category: "calculators",
+    description: "تبدیل بین واحدهای مختلف طول",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "108",
+    slug: "speed-calculator",
+    name: "محاسبه سرعت",
+    category: "calculators",
+    description: "محاسبه سرعت، زمان و مسافت",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "109",
+    slug: "time-calculator",
+    name: "محاسبه زمان",
+    category: "calculators",
+    description: "جمع و تفریق زمان‌ها",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "110",
+    slug: "mortgage-calculator",
+    name: "محاسبه گر رهن و اجاره",
+    category: "calculators",
+    description: "تبدیل رهن به اجاره و بالعکس",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "111",
+    slug: "investment-calculator",
+    name: "محاسبه گر سرمایه‌گذاری",
+    category: "calculators",
+    description: "محاسبه سود سرمایه‌گذاری",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "112",
+    slug: "power-calculator",
+    name: "محاسبه گر توان",
+    category: "calculators",
+    description: "محاسبه ولتاژ، جریان و توان الکتریکی",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "113",
+    slug: "gpa-calculator",
+    name: "محاسبه گر معدل",
+    category: "calculators",
+    description: "محاسبه معدل تحصیلی",
+    isNew: true,
+    icon: "calculator"
+  },
+  {
+    id: "114",
+    slug: "scientific-calculator",
+    name: "ماشین حساب علمی",
+    category: "calculators",
+    description: "انجام محاسبات پیچیده علمی",
+    isNew: true,
+    icon: "calculator"
+  }
 ];

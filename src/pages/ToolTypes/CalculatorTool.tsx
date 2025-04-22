@@ -12,6 +12,11 @@ import TipCalculator from './CalculatorTools/TipCalculator';
 import CurrencyConverter from './CalculatorTools/CurrencyConverter';
 import AreaCalculator from './CalculatorTools/AreaCalculator';
 import UnitListGenerator from './CalculatorTools/UnitListGenerator';
+import CalorieCalculator from './CalculatorTools/CalorieCalculator';
+import WeightConverter from './CalculatorTools/WeightConverter';
+import TimeCalculator from './CalculatorTools/TimeCalculator';
+import MortgageCalculator from './CalculatorTools/MortgageCalculator';
+import InvestmentCalculator from './CalculatorTools/InvestmentCalculator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -42,6 +47,17 @@ export default function CalculatorTool({ slug }: CalculatorToolProps) {
         return <AreaCalculator />;
       case 'unit-list-generator':
         return <UnitListGenerator />;
+      // Added new calculators
+      case 'calorie-calculator':
+        return <CalorieCalculator />;
+      case 'weight-converter':
+        return <WeightConverter />;
+      case 'time-calculator':
+        return <TimeCalculator />;
+      case 'mortgage-calculator':
+        return <MortgageCalculator />;
+      case 'investment-calculator':
+        return <InvestmentCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
