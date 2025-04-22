@@ -1,3 +1,4 @@
+
 import { Tool } from '@/types/tool-types';
 
 export const randomTools: Tool[] = [
@@ -35,7 +36,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "تولید یک تاریخ تصادفی",
     isNew: false,
-    icon: "dice"
+    icon: "calendar"
   },
   {
     id: "11",
@@ -71,7 +72,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "هر بار یک ایموجی جدید",
     isNew: false,
-    icon: "dice"
+    icon: "sparkles"
   },
   {
     id: "70",
@@ -80,7 +81,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "تولید یک کلمه یا اسم تصادفی",
     isNew: false,
-    icon: "dice"
+    icon: "random"
   },
   {
     id: "71",
@@ -107,12 +108,12 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "عبارت یا نقل‌قول انگیزشی هر بار!",
     isNew: false,
-    icon: "dice"
+    icon: "sparkles"
   },
   {
     id: "101",
     slug: "random-username-generator",
-    name: "تولید نام کاربری تصادفی ویژه",
+    name: "تولید نام کاربری تصادفی",
     category: "random",
     description: "نام کاربری تصادفی خلق کنید",
     isNew: false,
@@ -134,7 +135,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "تولید کد QR برای هر مقدار تصادفی",
     isNew: false,
-    icon: "dice"
+    icon: "random"
   },
   {
     id: "107",
@@ -161,7 +162,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "افراد را به صورت تصادفی به تیم‌ها تقسیم کنید",
     isNew: true,
-    icon: "dices"
+    icon: "random"
   },
   {
     id: "110",
@@ -197,7 +198,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "بین چند گزینه به صورت تصادفی تصمیم‌گیری کنید",
     isNew: true,
-    icon: "dices"
+    icon: "random"
   },
   {
     id: "114",
@@ -224,7 +225,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک چرخ شانس با گزینه‌های سفارشی بسازید",
     isNew: true,
-    icon: "rotate-cw"
+    icon: "random"
   },
   {
     id: "117",
@@ -242,7 +243,7 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "وظایف را به صورت تصادفی بین افراد تقسیم کنید",
     isNew: true,
-    icon: "dices"
+    icon: "random"
   },
   {
     id: "119",
