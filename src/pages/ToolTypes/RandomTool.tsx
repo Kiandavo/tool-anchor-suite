@@ -5,6 +5,13 @@ import { ToolInfoCard } from '@/components/ToolInfoCard';
 import { RandomString } from '@/components/random-tools/RandomString';
 import { RandomDate } from '@/components/random-tools/RandomDate';
 import { RandomEmoji } from '@/components/random-tools/RandomEmoji';
+import { RandomWord } from '@/components/random-tools/RandomWord';
+import { RandomUsername } from '@/components/random-tools/RandomUsername';
+import { RandomQuote } from '@/components/random-tools/RandomQuote';
+import { RandomDice } from '@/components/random-tools/RandomDice';
+import { RandomBibleVerse } from '@/components/random-tools/RandomBibleVerse';
+import { RandomMovie } from '@/components/random-tools/RandomMovie';
+import { RandomRecipe } from '@/components/random-tools/RandomRecipe';
 import RandomColorGenerator from '@/components/RandomColorGenerator';
 import CoinFlip from '@/components/CoinFlip';
 
@@ -27,12 +34,22 @@ export default function RandomTool({ slug }: RandomToolProps) {
         return <RandomDate />;
       case 'random-emoji-generator':
         return <RandomEmoji />;
+      case 'random-word-generator':
+        return <RandomWord />;
+      case 'random-username-generator':
+        return <RandomUsername />;
+      case 'random-quote-generator':
+        return <RandomQuote />;
+      case 'dice-roller':
+        return <RandomDice />;
+      case 'random-bible-verse':
+        return <RandomBibleVerse />;
+      case 'random-movie-picker':
+        return <RandomMovie />;
+      case 'random-recipe-generator':
+        return <RandomRecipe />;
       case 'coin-flip':
-        return (
-          <div className="card">
-            <CoinFlip />
-          </div>
-        );
+        return <CoinFlip />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
