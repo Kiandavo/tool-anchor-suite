@@ -1,4 +1,3 @@
-
 import { toast } from 'sonner';
 
 export const generateRandomDate = (start: Date, end: Date): Date => {
@@ -148,4 +147,19 @@ export const generateRandomTeams = (members: string[], numberOfTeams: number): s
   });
   
   return teams;
+};
+
+export const generateLotteryNumbers = (count: number, max: number): number[] => {
+  // Generate unique random numbers for lottery
+  const numbers: number[] = [];
+  
+  while (numbers.length < count) {
+    const randomNumber = Math.floor(Math.random() * max) + 1;
+    if (!numbers.includes(randomNumber)) {
+      numbers.push(randomNumber);
+    }
+  }
+  
+  // Sort numbers in ascending order
+  return numbers.sort((a, b) => a - b);
 };

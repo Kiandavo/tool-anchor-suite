@@ -18,6 +18,7 @@ import { RandomPicker } from '@/components/random-tools/RandomPicker';
 import { RandomNickname } from '@/components/random-tools/RandomNickname';
 import { RandomDecision } from '@/components/random-tools/RandomDecision';
 import { RandomTeam } from '@/components/random-tools/RandomTeam';
+import { RandomLotteryNumbers } from '@/components/random-tools/RandomLotteryNumbers';
 
 interface RandomToolProps {
   slug: string;
@@ -62,6 +63,8 @@ export default function RandomTool({ slug }: RandomToolProps) {
         return <RandomDecision />;
       case 'random-team-generator':
         return <RandomTeam />;
+      case 'random-lottery-numbers':
+        return <RandomLotteryNumbers />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
