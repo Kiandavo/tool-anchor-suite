@@ -12,8 +12,10 @@ import SeoTool from './ToolTypes/SeoTool';
 import RandomTool from './ToolTypes/RandomTool';
 import NumberTool from './ToolTypes/NumberTool';
 import ToolNotImplemented from './ToolTypes/ToolNotImplemented';
+import InvestmentCalculator from './ToolTypes/CalculatorTools/InvestmentCalculator';
+import MortgageCalculator from './ToolTypes/CalculatorTools/MortgageCalculator';
 
-const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number'> = {
+const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator'> = {
   // Text tools
   'latin-to-persian-convertor': 'text',
   'text-counter': 'text',
@@ -80,6 +82,8 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'pri
   'font-size-calculator': 'calculator',
   'range-calculator': 'calculator',
   'unit-list-generator': 'calculator',
+  'investment-calculator': 'investment-calculator',
+  'mortgage-calculator': 'mortgage-calculator',
   
   // SEO tools
   'meta-tag-generator': 'seo',
@@ -174,6 +178,10 @@ export default function Tool() {
           <RandomTool slug={tool.slug} />
         ) : toolTypeBySlug[tool.slug] === "number" ? (
           <NumberTool slug={tool.slug} />
+        ) : toolTypeBySlug[tool.slug] === "investment-calculator" ? (
+          <InvestmentCalculator />
+        ) : toolTypeBySlug[tool.slug] === "mortgage-calculator" ? (
+          <MortgageCalculator />
         ) : (
           <ToolNotImplemented />
         )}
