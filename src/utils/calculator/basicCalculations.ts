@@ -23,3 +23,12 @@ export const calculateArea = (shape: Shape, dimensions: number[]): number => {
       return 0;
   }
 };
+
+// Add input validation helpers
+export const isValidNumber = (value: any): boolean => {
+  return !isNaN(parseFloat(value)) && isFinite(value);
+};
+
+export const isPositiveNumber = (value: any): boolean => {
+  return isValidNumber(value) && parseFloat(value) > 0;
+};

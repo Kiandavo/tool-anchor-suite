@@ -1,4 +1,6 @@
 
+import { FinancialResult } from './types';
+
 export const calculateMortgageRent = (amount: number, interestRate: number, type: 'mortgage-to-rent' | 'rent-to-mortgage'): number => {
   const monthlyInterestRate = interestRate / 12 / 100;
   
@@ -15,11 +17,7 @@ export const calculateInvestment = (
   years: number,
   contributionAmount: number,
   contributionFrequency: 'monthly' | 'yearly'
-): {
-  finalAmount: number;
-  totalContributions: number;
-  totalInterest: number;
-} => {
+): FinancialResult => {
   const monthlyRate = annualRate / 100 / 12;
   const totalMonths = years * 12;
   let balance = principal;
@@ -40,9 +38,11 @@ export const calculateInvestment = (
     }
   }
 
+  const finalAmount = Math.round(balance);
+  
   return {
-    finalAmount: Math.round(balance),
+    finalAmount,
     totalContributions: Math.round(totalContributions),
-    totalInterest: Math.round(balance - totalContributions)
+    totalInterest: Math.round(finalAmount - totalContributions)
   };
 };
