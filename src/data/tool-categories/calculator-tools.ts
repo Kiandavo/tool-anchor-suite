@@ -262,5 +262,14 @@ export const calculatorTools: Tool[] = [
     description: "محاسبه سود سپرده و وام",
     isNew: true,
     icon: "calculator"
-  }
+  },
+  {
+    id: "119",
+    slug: "scientific-calculator",
+    name: "ماشین حساب علمی",
+    category: "calculators",
+    description: "انجام محاسبات پیچیده علمی",
+    isNew: true,
+    icon: "calculator"
+  },
 ];

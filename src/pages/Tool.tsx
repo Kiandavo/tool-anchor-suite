@@ -17,8 +17,9 @@ import TodayDateConverter from './ToolTypes/CalculatorTools/TodayDateConverter';
 import DateDifferenceCalculator from './ToolTypes/CalculatorTools/DateDifferenceCalculator';
 import WorldTimeConverter from './ToolTypes/CalculatorTools/WorldTimeConverter';
 import ProfitCalculator from './ToolTypes/CalculatorTools/ProfitCalculator';
+import ScientificCalculator from './ToolTypes/CalculatorTools/ScientificCalculator';
 
-const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit'> = {
+const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit' | 'scientific-calculator'> = {
   // Text tools
   'latin-to-persian-convertor': 'text',
   'text-counter': 'text',
@@ -149,6 +150,7 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'pri
   'date-difference-calculator': 'date-difference',
   'world-time-converter': 'world-time',
   'profit-calculator': 'profit',
+  'scientific-calculator': 'scientific-calculator',
 };
 
 export default function Tool() {
@@ -171,38 +173,40 @@ export default function Tool() {
       <div className="max-w-2xl mx-auto py-6">
         <h1 className="text-2xl font-bold text-primary mb-4">{tool.name}</h1>
         <p className="mb-6 text-muted-foreground">{tool.description}</p>
-        {toolTypeBySlug[tool.slug] === "text" ? (
-          <TextTool slug={tool.slug} />
-        ) : toolTypeBySlug[tool.slug] === "image" ? (
-          <ImageTool slug={tool.slug} />
-        ) : toolTypeBySlug[tool.slug] === "random-password" ? (
-          <RandomPasswordTool />
-        ) : toolTypeBySlug[tool.slug] === "prime-checker" ? (
-          <PrimeCheckerTool />
-        ) : toolTypeBySlug[tool.slug] === "calculator" ? (
-          <CalculatorTool slug={tool.slug} />
-        ) : toolTypeBySlug[tool.slug] === "seo" ? (
-          <SeoTool slug={tool.slug} />
-        ) : toolTypeBySlug[tool.slug] === "random" ? (
-          <RandomTool slug={tool.slug} />
-        ) : toolTypeBySlug[tool.slug] === "number" ? (
-          <NumberTool slug={tool.slug} />
-        ) : toolTypeBySlug[tool.slug] === "investment-calculator" ? (
-          <InvestmentCalculator />
-        ) : toolTypeBySlug[tool.slug] === "mortgage-calculator" ? (
-          <MortgageCalculator />
-        ) : toolTypeBySlug[tool.slug] === "today-date" ? (
-          <TodayDateConverter />
-        ) : toolTypeBySlug[tool.slug] === "date-difference" ? (
-          <DateDifferenceCalculator />
-        ) : toolTypeBySlug[tool.slug] === "world-time" ? (
-          <WorldTimeConverter />
-        ) : toolTypeBySlug[tool.slug] === "profit" ? (
-          <ProfitCalculator />
-        ) : (
-          <ToolNotImplemented />
-        )}
-      </div>
-    </Layout>
-  );
+      {toolTypeBySlug[tool.slug] === "text" ? (
+        <TextTool slug={tool.slug} />
+      ) : toolTypeBySlug[tool.slug] === "image" ? (
+        <ImageTool slug={tool.slug} />
+      ) : toolTypeBySlug[tool.slug] === "random-password" ? (
+        <RandomPasswordTool />
+      ) : toolTypeBySlug[tool.slug] === "prime-checker" ? (
+        <PrimeCheckerTool />
+      ) : toolTypeBySlug[tool.slug] === "calculator" ? (
+        <CalculatorTool slug={tool.slug} />
+      ) : toolTypeBySlug[tool.slug] === "seo" ? (
+        <SeoTool slug={tool.slug} />
+      ) : toolTypeBySlug[tool.slug] === "random" ? (
+        <RandomTool slug={tool.slug} />
+      ) : toolTypeBySlug[tool.slug] === "number" ? (
+        <NumberTool slug={tool.slug} />
+      ) : toolTypeBySlug[tool.slug] === "investment-calculator" ? (
+        <InvestmentCalculator />
+      ) : toolTypeBySlug[tool.slug] === "mortgage-calculator" ? (
+        <MortgageCalculator />
+      ) : toolTypeBySlug[tool.slug] === "today-date" ? (
+        <TodayDateConverter />
+      ) : toolTypeBySlug[tool.slug] === "date-difference" ? (
+        <DateDifferenceCalculator />
+      ) : toolTypeBySlug[tool.slug] === "world-time" ? (
+        <WorldTimeConverter />
+      ) : toolTypeBySlug[tool.slug] === "profit" ? (
+        <ProfitCalculator />
+      ) : toolTypeBySlug[tool.slug] === "scientific-calculator" ? (
+        <ScientificCalculator />
+      ) : (
+        <ToolNotImplemented />
+      )}
+    </div>
+  </Layout>
+);
 }
