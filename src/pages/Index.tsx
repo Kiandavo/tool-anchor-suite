@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
@@ -6,7 +5,7 @@ import { ToolCard } from '@/components/ToolCard';
 import { tools, ToolCategory, categoryLabels, getToolsByCategory, getNewTools, getPopularTools } from '@/data/tools';
 import { ChevronLeft, Sparkles, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { finglishToPersian } from '@/utils/toolUtils'; // Use our utility
+import { finglishToPersian } from '@/utils/toolUtils';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -53,26 +52,28 @@ const Index = () => {
       </section>
 
       {/* Random Tool Showcase Section */}
-      <section className="mb-8 flex flex-col items-center max-w-2xl mx-auto w-full animate-fade-in" style={{animationDelay: '0.1s'}}>
+      <section className="mb-6 max-w-2xl mx-auto w-full animate-fade-in" style={{animationDelay: '0.1s'}}>
         <div className="w-full">
           <div className="flex items-center gap-2 text-primary mb-2 mr-2">
-            <span className="font-semibold text-base">ابزار تصادفی امروز</span>
+            <span className="font-semibold text-sm">ابزار تصادفی امروز</span>
             <span className="text-xs bg-primary/10 text-primary rounded px-2 py-0.5">{randomTool.category && categoryLabels[randomTool.category]}</span>
           </div>
-          <ToolCard tool={randomTool} highlight />
+          <ToolCard tool={randomTool} highlight compact />
         </div>
-        <Link
-          to={`/tool/${randomTool.slug}`}
-          className="mt-3 w-full sm:w-auto"
-        >
-          <Button className="w-full sm:w-auto text-base">شروع ابزار</Button>
-        </Link>
-        <Link
-          to="/all-tools"
-          className="mt-1 text-sm text-primary/80 hover:underline transition underline-offset-2"
-        >
-          مشاهده همه ابزارها
-        </Link>
+        <div className="flex justify-between items-center mt-2">
+          <Link
+            to={`/tool/${randomTool.slug}`}
+            className="w-full sm:w-auto"
+          >
+            <Button variant="outline" className="w-full sm:w-auto text-sm py-1 px-3">شروع ابزار</Button>
+          </Link>
+          <Link
+            to="/all-tools"
+            className="text-sm text-primary/80 hover:underline transition underline-offset-2 mr-2"
+          >
+            مشاهده همه ابزارها
+          </Link>
+        </div>
       </section>
 
       {/* Finglish to Persian UI improvement */}
@@ -170,4 +171,3 @@ const Index = () => {
 };
 
 export default Index;
-
