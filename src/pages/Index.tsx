@@ -38,6 +38,9 @@ const Index = () => {
     }
   };
 
+  // --- Random Tool Section ---
+  const randomTool = tools[Math.floor(Math.random() * tools.length)];
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -47,6 +50,29 @@ const Index = () => {
           بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. 
           از ابزارهای متنی و تصویری گرفته تا محاسبه‌گرها و ابزارهای SEO، همه چیز در یک پلتفرم ساده.
         </p>
+      </section>
+
+      {/* Random Tool Showcase Section */}
+      <section className="mb-8 flex flex-col items-center max-w-2xl mx-auto w-full animate-fade-in" style={{animationDelay: '0.1s'}}>
+        <div className="w-full">
+          <div className="flex items-center gap-2 text-primary mb-2 mr-2">
+            <span className="font-semibold text-base">ابزار تصادفی امروز</span>
+            <span className="text-xs bg-primary/10 text-primary rounded px-2 py-0.5">{randomTool.category && categoryLabels[randomTool.category]}</span>
+          </div>
+          <ToolCard tool={randomTool} highlight />
+        </div>
+        <Link
+          to={`/tool/${randomTool.slug}`}
+          className="mt-3 w-full sm:w-auto"
+        >
+          <Button className="w-full sm:w-auto text-base">شروع ابزار</Button>
+        </Link>
+        <Link
+          to="/all-tools"
+          className="mt-1 text-sm text-primary/80 hover:underline transition underline-offset-2"
+        >
+          مشاهده همه ابزارها
+        </Link>
       </section>
 
       {/* Finglish to Persian UI improvement */}
@@ -144,3 +170,4 @@ const Index = () => {
 };
 
 export default Index;
+
