@@ -1,4 +1,3 @@
-
 import { Tool } from '@/types/tool-types';
 
 export const calculatorTools: Tool[] = [
@@ -225,6 +224,42 @@ export const calculatorTools: Tool[] = [
     name: "ماشین حساب علمی",
     category: "calculators",
     description: "انجام محاسبات پیچیده علمی",
+    isNew: true,
+    icon: "calculator"
+  },
+{
+    id: "115",
+    slug: "today-date-converter",
+    name: "تبدیل تاریخ امروز",
+    category: "calculators",
+    description: "تبدیل تاریخ امروز به شمسی، قمری و میلادی",
+    isNew: true,
+    icon: "calendar"
+  },
+  {
+    id: "116",
+    slug: "date-difference-calculator",
+    name: "محاسبه اختلاف تاریخ",
+    category: "calculators",
+    description: "محاسبه اختلاف بین دو تاریخ",
+    isNew: true,
+    icon: "calendar"
+  },
+  {
+    id: "117",
+    slug: "world-time-converter",
+    name: "ساعت جهانی",
+    category: "calculators",
+    description: "نمایش ساعت در نقاط مختلف جهان",
+    isNew: true,
+    icon: "clock"
+  },
+  {
+    id: "118",
+    slug: "profit-calculator",
+    name: "محاسبه سود و بهره",
+    category: "calculators",
+    description: "محاسبه سود سپرده و وام",
     isNew: true,
     icon: "calculator"
   }

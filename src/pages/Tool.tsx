@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
@@ -14,8 +13,12 @@ import NumberTool from './ToolTypes/NumberTool';
 import ToolNotImplemented from './ToolTypes/ToolNotImplemented';
 import InvestmentCalculator from './ToolTypes/CalculatorTools/InvestmentCalculator';
 import MortgageCalculator from './ToolTypes/CalculatorTools/MortgageCalculator';
+import TodayDateConverter from './ToolTypes/CalculatorTools/TodayDateConverter';
+import DateDifferenceCalculator from './ToolTypes/CalculatorTools/DateDifferenceCalculator';
+import WorldTimeConverter from './ToolTypes/CalculatorTools/WorldTimeConverter';
+import ProfitCalculator from './ToolTypes/CalculatorTools/ProfitCalculator';
 
-const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator'> = {
+const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit'> = {
   // Text tools
   'latin-to-persian-convertor': 'text',
   'text-counter': 'text',
@@ -139,7 +142,13 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'pri
   'decimal-to-roman': 'number',
   'number-shuffler': 'number',
   'number-comparator': 'number',
-  'duplicate-number-finder': 'number'
+  'duplicate-number-finder': 'number',
+  
+  // Add new mappings
+  'today-date-converter': 'today-date',
+  'date-difference-calculator': 'date-difference',
+  'world-time-converter': 'world-time',
+  'profit-calculator': 'profit',
 };
 
 export default function Tool() {
@@ -182,6 +191,14 @@ export default function Tool() {
           <InvestmentCalculator />
         ) : toolTypeBySlug[tool.slug] === "mortgage-calculator" ? (
           <MortgageCalculator />
+        ) : toolTypeBySlug[tool.slug] === "today-date" ? (
+          <TodayDateConverter />
+        ) : toolTypeBySlug[tool.slug] === "date-difference" ? (
+          <DateDifferenceCalculator />
+        ) : toolTypeBySlug[tool.slug] === "world-time" ? (
+          <WorldTimeConverter />
+        ) : toolTypeBySlug[tool.slug] === "profit" ? (
+          <ProfitCalculator />
         ) : (
           <ToolNotImplemented />
         )}
