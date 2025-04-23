@@ -7,18 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { calculateMortgageRent } from '@/utils/calculatorUtils';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
-import { Calculator, Home } from 'lucide-react';
+import { Calculator, Home, Info } from 'lucide-react';
 import { Slider } from "@/components/ui/slider";
 
 export default function MortgageCalculator() {
   // Mortgage to Rent
   const [mortgageAmount, setMortgageAmount] = useState<string>('');
   const [interestRateM2R, setInterestRateM2R] = useState<number>(24);
+  const [durationM2R, setDurationM2R] = useState<number>(12);
   const [mortgageResult, setMortgageResult] = useState<string | null>(null);
   
   // Rent to Mortgage
   const [rentAmount, setRentAmount] = useState<string>('');
   const [interestRateR2M, setInterestRateR2M] = useState<number>(24);
+  const [durationR2M, setDurationR2M] = useState<number>(12);
   const [rentResult, setRentResult] = useState<string | null>(null);
   
   const formatCurrency = (value: number) => {
@@ -32,8 +34,12 @@ export default function MortgageCalculator() {
       return;
     }
     
-    const monthlyRent = calculateMortgageRent(amount, interestRateM2R, 'mortgage-to-rent');
-    setMortgageResult(`با تبدیل ${formatCurrency(amount)} رهن کامل با نرخ ${interestRateM2R}٪، مبلغ اجاره ماهیانه معادل ${formatCurrency(monthlyRent)} خواهد بود.`);
+    // Calculate monthly rent with duration factor
+    const monthlyInterestRate = interestRateM2R / 12 / 100;
+    const monthlyRent = Math.round(amount * monthlyInterestRate);
+    const adjustedRent = durationM2R === 12 ? monthlyRent : Math.round(monthlyRent * (durationM2R / 12));
+    
+    setMortgageResult(`با تبدیل ${formatCurrency(amount)} رهن کامل با نرخ سالانه ${interestRateM2R}٪ و مدت ${durationM2R} ماه، مبلغ اجاره ${formatCurrency(adjustedRent)} خواهد بود.`);
   };
 
   const handleRentToMortgage = () => {
@@ -43,8 +49,12 @@ export default function MortgageCalculator() {
       return;
     }
     
-    const depositAmount = calculateMortgageRent(amount, interestRateR2M, 'rent-to-mortgage');
-    setRentResult(`با تبدیل ${formatCurrency(amount)} اجاره ماهیانه با نرخ ${interestRateR2M}٪، مبلغ رهن کامل معادل ${formatCurrency(depositAmount)} خواهد بود.`);
+    // Calculate deposit amount with duration factor
+    const monthlyInterestRate = interestRateR2M / 12 / 100;
+    const baseDepositAmount = Math.round(amount / monthlyInterestRate);
+    const adjustedDeposit = durationR2M === 12 ? baseDepositAmount : Math.round(baseDepositAmount * (12 / durationR2M));
+    
+    setRentResult(`با تبدیل ${formatCurrency(amount)} اجاره ماهیانه با نرخ سالانه ${interestRateR2M}٪ و مدت ${durationR2M} ماه، مبلغ رهن کامل ${formatCurrency(adjustedDeposit)} خواهد بود.`);
   };
 
   // Format input for currency
@@ -56,6 +66,25 @@ export default function MortgageCalculator() {
     setter(formattedValue);
   };
 
+  const renderInfoCard = () => (
+    <Card className="mb-6 border-primary/10 bg-primary/5">
+      <CardContent className="p-4 flex gap-3">
+        <div className="mt-1">
+          <Info className="h-5 w-5 text-primary" />
+        </div>
+        <div className="text-sm">
+          <p className="mb-2 font-medium">اطلاعات مفید درباره رهن و اجاره:</p>
+          <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+            <li>در محاسبه رهن و اجاره معمولاً نرخ سالیانه بین ۲۰٪ تا ۳۰٪ در نظر گرفته می‌شود.</li>
+            <li>مدت قرارداد اجاره معمولاً ۱۲ ماه است اما می‌توانید برای مدت‌های مختلف محاسبه کنید.</li>
+            <li>فرمول محاسبه: اجاره ماهیانه = مبلغ رهن × نرخ سالیانه ÷ ۱۲ ÷ ۱۰۰</li>
+            <li>با افزایش مبلغ رهن، اجاره ماهیانه کاهش می‌یابد و بالعکس.</li>
+          </ul>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -65,6 +94,8 @@ export default function MortgageCalculator() {
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {renderInfoCard()}
+        
         <Tabs defaultValue="mortgage-to-rent">
           <TabsList className="w-full mb-6">
             <TabsTrigger value="mortgage-to-rent" className="flex-1">تبدیل رهن به اجاره</TabsTrigger>
@@ -102,6 +133,26 @@ export default function MortgageCalculator() {
                   <span>۱۲٪</span>
                   <span>۲۴٪</span>
                   <span>۳۶٪</span>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <Label htmlFor="durationM2R">مدت قرارداد (ماه)</Label>
+                  <span className="text-sm font-medium">{durationM2R} ماه</span>
+                </div>
+                <Slider
+                  id="durationM2R"
+                  min={1}
+                  max={24}
+                  step={1}
+                  value={[durationM2R]}
+                  onValueChange={(value) => setDurationM2R(value[0])}
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>۱ ماه</span>
+                  <span>۱۲ ماه</span>
+                  <span>۲۴ ماه</span>
                 </div>
               </div>
               
@@ -145,6 +196,26 @@ export default function MortgageCalculator() {
                   <span>۱۲٪</span>
                   <span>۲۴٪</span>
                   <span>۳۶٪</span>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <Label htmlFor="durationR2M">مدت قرارداد (ماه)</Label>
+                  <span className="text-sm font-medium">{durationR2M} ماه</span>
+                </div>
+                <Slider
+                  id="durationR2M"
+                  min={1}
+                  max={24}
+                  step={1}
+                  value={[durationR2M]}
+                  onValueChange={(value) => setDurationR2M(value[0])}
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>۱ ماه</span>
+                  <span>۱۲ ماه</span>
+                  <span>۲۴ ماه</span>
                 </div>
               </div>
               
