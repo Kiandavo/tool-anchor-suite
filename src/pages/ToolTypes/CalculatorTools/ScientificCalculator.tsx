@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calculator, Pi, Equal, SquareRoot } from 'lucide-react';
+import { Calculator, Pi, Equal, Hash } from 'lucide-react';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
 
 export default function ScientificCalculator() {
