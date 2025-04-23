@@ -4,23 +4,25 @@ import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
-import { Calculator, CirclePercent, Calendar } from 'lucide-react';
+import { Calculator, CirclePercent, Calendar, CreditCard } from 'lucide-react';
 import { formatToToman, convertNumberToPersianWords } from '@/utils/calculatorUtils';
 import { cn } from '@/lib/utils';
+import { Slider } from '@/components/ui/slider';
 
 export default function LoanCalculator() {
   const [loanAmount, setLoanAmount] = useState<string>('');
   const [interestRate, setInterestRate] = useState<string>('');
-  const [loanTerm, setLoanTerm] = useState<string>('');
+  const [loanTerm, setLoanTerm] = useState<number>(5);
   const [result, setResult] = useState<string | null>(null);
   const [amountInWords, setAmountInWords] = useState<string | null>(null);
   const [paymentSchedule, setPaymentSchedule] = useState<Array<{ month: number; payment: number; interest: number; principal: number; remainingBalance: number }> | null>(null);
   const [extendedSchedule, setExtendedSchedule] = useState<Array<{ year: number; month: number; totalPaid: number; remainingBalance: number }> | null>(null);
 
   const calculate = () => {
+    // Parse the loan amount by removing commas
     const amount = parseFloat(loanAmount.replace(/,/g, ''));
     const rate = parseFloat(interestRate) / 100 / 12; // Convert annual rate to monthly
-    const term = parseInt(loanTerm) * 12; // Convert years to months
+    const term = loanTerm * 12; // Convert years to months
 
     if (isNaN(amount) || isNaN(rate) || isNaN(term) || amount <= 0 || rate <= 0 || term <= 0) {
       return;
@@ -91,20 +93,22 @@ export default function LoanCalculator() {
     setExtendedSchedule(extended);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
-    if (setter === setLoanAmount) {
-      // Allow numbers only and format with commas
-      const value = e.target.value.replace(/[^\d]/g, '');
-      if (value) {
-        setter(Number(value).toLocaleString('fa-IR'));
-      } else {
-        setter('');
-      }
+  // Fix for loan amount input handling
+  const handleLoanAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Get the raw value without any formatting
+    const rawValue = e.target.value.replace(/[^\d]/g, '');
+    
+    if (rawValue) {
+      // Format the value with commas and update state
+      setLoanAmount(Number(rawValue).toLocaleString());
     } else {
-      // For other inputs (rate and term), just allow numbers and decimals
-      const value = e.target.value.replace(/[^0-9.]/g, '');
-      setter(value);
+      setLoanAmount('');
     }
+  };
+
+  // Slider handler for loan term
+  const handleLoanTermChange = (value: number[]) => {
+    setLoanTerm(value[0]);
   };
 
   return (
@@ -116,39 +120,61 @@ export default function LoanCalculator() {
             <h2 className="text-xl font-bold text-center">ماشین حساب وام</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="loanAmount">مبلغ وام (تومان)</Label>
-              <Input
-                id="loanAmount"
-                value={loanAmount}
-                onChange={(e) => handleInputChange(e, setLoanAmount)}
-                placeholder="مثال: 100,000,000"
-                type="text"
-                dir="ltr"
-              />
+              <div className="relative">
+                <Input
+                  id="loanAmount"
+                  value={loanAmount}
+                  onChange={handleLoanAmountChange}
+                  placeholder="مثال: 100,000,000"
+                  className="pl-12 text-left"
+                  dir="ltr"
+                />
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <CreditCard className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </div>
             </div>
+            
             <div className="space-y-2">
               <Label htmlFor="interestRate">نرخ بهره سالیانه (%)</Label>
               <Input
                 id="interestRate"
                 value={interestRate}
-                onChange={(e) => handleInputChange(e, setInterestRate)}
+                onChange={(e) => setInterestRate(e.target.value.replace(/[^0-9.]/g, ''))}
                 placeholder="مثال: 18"
                 type="text"
                 dir="ltr"
               />
             </div>
-            <div className="space-y-2">
+          </div>
+
+          {/* Improved loan term UI with slider */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
               <Label htmlFor="loanTerm">مدت وام (سال)</Label>
-              <Input
-                id="loanTerm"
-                value={loanTerm}
-                onChange={(e) => handleInputChange(e, setLoanTerm)}
-                placeholder="مثال: 5"
-                type="text"
-                dir="ltr"
-              />
+              <span className="font-medium text-lg bg-primary/10 text-primary px-3 py-1 rounded-full">
+                {loanTerm} سال
+              </span>
+            </div>
+            
+            <Slider 
+              id="loanTerm"
+              defaultValue={[5]} 
+              min={1} 
+              max={30}
+              step={1}
+              value={[loanTerm]}
+              onValueChange={handleLoanTermChange}
+              className="py-4"
+            />
+            
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>۱ سال</span>
+              <span>۱۵ سال</span>
+              <span>۳۰ سال</span>
             </div>
           </div>
 
