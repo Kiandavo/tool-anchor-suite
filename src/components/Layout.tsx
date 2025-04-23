@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Settings, Home } from 'lucide-react';
 
 interface LayoutProps {
@@ -31,7 +30,42 @@ export function Layout({
     };
   }, []);
 
-  // Automatic "Back" when not on home and not given a backUrl (for deep/nested routes)
+  const handleBack = () => {
+    if (backUrl) {
+      navigate(backUrl);
+    } else if (location.pathname.startsWith('/tool/')) {
+      // If we're in a tool page, check if we came from a category
+      const referrer = document.referrer;
+      if (referrer && referrer.includes('/category/')) {
+        // Extract the category from the referrer
+        const category = referrer.split('/category/')[1];
+        navigate(`/category/${category}`);
+      } else {
+        // If no category referrer, try to determine the tool's category
+        const toolPath = location.pathname.split('/tool/')[1];
+        if (toolPath && toolPath.includes('calculator')) {
+          navigate('/category/calculator');
+        } else if (toolPath.includes('text')) {
+          navigate('/category/text');
+        } else if (toolPath.includes('image')) {
+          navigate('/category/image');
+        } else if (toolPath.includes('random')) {
+          navigate('/category/random');
+        } else if (toolPath.includes('seo')) {
+          navigate('/category/seo');
+        } else if (toolPath.includes('number')) {
+          navigate('/category/number');
+        } else {
+          navigate(-1);
+        }
+      }
+    } else {
+      // For other pages, use the browser's back functionality
+      navigate(-1);
+    }
+  };
+
+  // Automatic "Back" when not on home and not given a backUrl
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
   return (
@@ -60,7 +94,7 @@ export function Layout({
                 {/* Back button if needed */}
                 {showBackButton ? (
                   <button
-                    onClick={() => backUrl ? navigate(backUrl) : navigate(-1)}
+                    onClick={handleBack}
                     className="flex items-center font-medium text-primary hover:text-primary/70 text-sm px-2 sm:px-3 py-1.5 rounded transition-colors duration-200 border border-transparent hover:border-primary outline-none"
                   >
                     <ArrowLeft size={20} className="ml-2" />
