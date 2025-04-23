@@ -4,17 +4,21 @@ import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
-import { Calculator, CirclePercent } from 'lucide-react';
+import { Calculator, CirclePercent, Calendar } from 'lucide-react';
+import { formatToToman, convertNumberToPersianWords } from '@/utils/calculatorUtils';
+import { cn } from '@/lib/utils';
 
 export default function LoanCalculator() {
   const [loanAmount, setLoanAmount] = useState<string>('');
   const [interestRate, setInterestRate] = useState<string>('');
   const [loanTerm, setLoanTerm] = useState<string>('');
   const [result, setResult] = useState<string | null>(null);
+  const [amountInWords, setAmountInWords] = useState<string | null>(null);
   const [paymentSchedule, setPaymentSchedule] = useState<Array<{ month: number; payment: number; interest: number; principal: number; remainingBalance: number }> | null>(null);
+  const [extendedSchedule, setExtendedSchedule] = useState<Array<{ year: number; month: number; totalPaid: number; remainingBalance: number }> | null>(null);
 
   const calculate = () => {
-    const amount = parseFloat(loanAmount);
+    const amount = parseFloat(loanAmount.replace(/,/g, ''));
     const rate = parseFloat(interestRate) / 100 / 12; // Convert annual rate to monthly
     const term = parseInt(loanTerm) * 12; // Convert years to months
 
@@ -27,9 +31,13 @@ export default function LoanCalculator() {
     const totalPayment = monthlyPayment * term;
     const totalInterest = totalPayment - amount;
 
-    setResult(`پرداخت ماهیانه: ${monthlyPayment.toLocaleString('fa-IR')} - کل پرداختی: ${totalPayment.toLocaleString('fa-IR')} - کل بهره: ${totalInterest.toLocaleString('fa-IR')}`);
+    // Format numbers and set result
+    setResult(`پرداخت ماهیانه: ${formatToToman(monthlyPayment)} تومان - کل پرداختی: ${formatToToman(totalPayment)} تومان - کل بهره: ${formatToToman(totalInterest)} تومان`);
+    
+    // Convert amount to Persian words
+    setAmountInWords(`مبلغ وام به حروف: ${convertNumberToPersianWords(amount)} تومان`);
 
-    // Generate payment schedule for first 12 months or full term if less than 12
+    // Generate payment schedule for first 12 months
     const schedule = [];
     let remainingBalance = amount;
     
@@ -48,12 +56,55 @@ export default function LoanCalculator() {
     }
     
     setPaymentSchedule(schedule);
+
+    // Generate extended schedule up to 10 years
+    const extended = [];
+    let extendedBalance = amount;
+    let totalPaid = 0;
+    
+    const maxYears = 10;
+    const maxMonths = maxYears * 12;
+    const yearsToShow = Math.min(Math.ceil(term / 12), maxYears);
+    
+    for (let year = 1; year <= yearsToShow; year++) {
+      for (let month = 1; month <= 12; month++) {
+        const overallMonth = (year - 1) * 12 + month;
+        
+        if (overallMonth > term) break;
+        
+        const interestForMonth = extendedBalance * rate;
+        const principalForMonth = monthlyPayment - interestForMonth;
+        extendedBalance -= principalForMonth;
+        totalPaid += monthlyPayment;
+
+        if (month === 12 || overallMonth === term) {
+          extended.push({
+            year,
+            month: overallMonth,
+            totalPaid,
+            remainingBalance: extendedBalance > 0 ? extendedBalance : 0
+          });
+        }
+      }
+    }
+    
+    setExtendedSchedule(extended);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
-    // Only allow numbers and decimals
-    const value = e.target.value.replace(/[^0-9.]/g, '');
-    setter(value);
+    if (setter === setLoanAmount) {
+      // Allow numbers only and format with commas
+      const value = e.target.value.replace(/[^\d]/g, '');
+      if (value) {
+        setter(Number(value).toLocaleString('fa-IR'));
+      } else {
+        setter('');
+      }
+    } else {
+      // For other inputs (rate and term), just allow numbers and decimals
+      const value = e.target.value.replace(/[^0-9.]/g, '');
+      setter(value);
+    }
   };
 
   return (
@@ -67,12 +118,12 @@ export default function LoanCalculator() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="loanAmount">مبلغ وام</Label>
+              <Label htmlFor="loanAmount">مبلغ وام (تومان)</Label>
               <Input
                 id="loanAmount"
                 value={loanAmount}
                 onChange={(e) => handleInputChange(e, setLoanAmount)}
-                placeholder="مثال: 100000000"
+                placeholder="مثال: 100,000,000"
                 type="text"
                 dir="ltr"
               />
@@ -110,6 +161,12 @@ export default function LoanCalculator() {
           </button>
 
           {result && <OutcomeInfoCard outcome={result} />}
+          
+          {amountInWords && (
+            <div className="bg-primary/5 text-primary p-3 rounded-lg text-center text-sm">
+              {amountInWords}
+            </div>
+          )}
 
           {paymentSchedule && (
             <div className="mt-6 border rounded-lg overflow-hidden">
@@ -131,10 +188,41 @@ export default function LoanCalculator() {
                     {paymentSchedule.map((item) => (
                       <tr key={item.month} className="border-t">
                         <td className="px-4 py-2">{item.month.toLocaleString('fa-IR')}</td>
-                        <td className="px-4 py-2">{item.payment.toLocaleString('fa-IR')}</td>
-                        <td className="px-4 py-2">{item.interest.toLocaleString('fa-IR')}</td>
-                        <td className="px-4 py-2">{item.principal.toLocaleString('fa-IR')}</td>
-                        <td className="px-4 py-2">{item.remainingBalance.toLocaleString('fa-IR')}</td>
+                        <td className="px-4 py-2">{formatToToman(item.payment)}</td>
+                        <td className="px-4 py-2">{formatToToman(item.interest)}</td>
+                        <td className="px-4 py-2">{formatToToman(item.principal)}</td>
+                        <td className="px-4 py-2">{formatToToman(item.remainingBalance)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {extendedSchedule && (
+            <div className="mt-6 border rounded-lg overflow-hidden">
+              <div className="bg-gray-50 p-3 border-b flex items-center space-x-2 space-x-reverse">
+                <Calendar className="h-4 w-4 text-primary ml-1" />
+                <h3 className="font-medium">پیش‌بینی بازپرداخت تا 10 سال</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-2 text-right">سال</th>
+                      <th className="px-4 py-2 text-right">ماه</th>
+                      <th className="px-4 py-2 text-right">کل پرداختی</th>
+                      <th className="px-4 py-2 text-right">مانده بدهی</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {extendedSchedule.map((item, index) => (
+                      <tr key={index} className={cn("border-t", item.year % 2 === 0 ? "bg-gray-50/50" : "")}>
+                        <td className="px-4 py-2">{item.year.toLocaleString('fa-IR')}</td>
+                        <td className="px-4 py-2">{item.month.toLocaleString('fa-IR')}</td>
+                        <td className="px-4 py-2">{formatToToman(item.totalPaid)}</td>
+                        <td className="px-4 py-2">{formatToToman(item.remainingBalance)}</td>
                       </tr>
                     ))}
                   </tbody>

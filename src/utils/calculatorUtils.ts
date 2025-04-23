@@ -1,4 +1,3 @@
-
 export const calculateTip = (amount: number, tipPercentage: number): { tip: number; total: number } => {
   const tip = (amount * tipPercentage) / 100;
   return {
@@ -164,4 +163,86 @@ export const calculateInvestment = (
     totalContributions: Math.round(totalContributions),
     totalInterest: Math.round(balance - totalContributions)
   };
+};
+
+// Format number to Toman with thousands separator
+export const formatToToman = (num: number): string => {
+  return Math.round(num).toLocaleString('fa-IR');
+};
+
+// Persian digits
+const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+
+// Convert number to Persian words
+export const convertNumberToPersianWords = (num: number): string => {
+  if (num === 0) return 'صفر';
+  
+  const units = ['', 'یک', 'دو', 'سه', 'چهار', 'پنج', 'شش', 'هفت', 'هشت', 'نه'];
+  const teens = ['ده', 'یازده', 'دوازده', 'سیزده', 'چهارده', 'پانزده', 'شانزده', 'هفده', 'هجده', 'نوزده'];
+  const tens = ['', 'ده', 'بیست', 'سی', 'چهل', 'پنجاه', 'شصت', 'هفتاد', 'هشتاد', 'نود'];
+  const hundreds = ['', 'صد', 'دویست', 'سیصد', 'چهارصد', 'پانصد', 'ششصد', 'هفتصد', 'هشتصد', 'نهصد'];
+  const thousands = ['', 'هزار', 'میلیون', 'میلیارد', 'تریلیون'];
+  
+  // Round the number and remove decimal parts
+  num = Math.round(num);
+  
+  // Convert to string and process by groups of 3 digits
+  const numStr = Math.abs(num).toString();
+  const chunks = [];
+  
+  // Split the number into chunks of 3 digits from right to left
+  for (let i = numStr.length; i > 0; i -= 3) {
+    chunks.push(numStr.substring(Math.max(0, i - 3), i));
+  }
+  chunks.reverse();
+  
+  const result: string[] = [];
+  
+  // Process each chunk
+  chunks.forEach((chunk, index) => {
+    const chunkValue = parseInt(chunk);
+    if (chunkValue === 0) return; // Skip if chunk is zero
+    
+    const chunkStr: string[] = [];
+    
+    // Process hundreds
+    if (chunk.length === 3 && chunk[0] !== '0') {
+      chunkStr.push(hundreds[parseInt(chunk[0])]);
+    }
+    
+    // Process tens and units
+    if (chunk.length > 1) {
+      const tensValue = parseInt(chunk.slice(-2));
+      if (tensValue > 0) {
+        if (tensValue < 10) {
+          chunkStr.push(units[tensValue]);
+        } else if (tensValue < 20) {
+          chunkStr.push(teens[tensValue - 10]);
+        } else {
+          const tensDigit = Math.floor(tensValue / 10);
+          const unitsDigit = tensValue % 10;
+          
+          chunkStr.push(tens[tensDigit]);
+          if (unitsDigit > 0) {
+            chunkStr.push('و');
+            chunkStr.push(units[unitsDigit]);
+          }
+        }
+      }
+    } else if (chunk.length === 1 && chunk[0] !== '0') {
+      chunkStr.push(units[parseInt(chunk)]);
+    }
+    
+    // Add the multiplier (thousand, million, etc.) if this isn't the last chunk
+    if (chunkStr.length > 0) {
+      const positionValue = thousands[chunks.length - index - 1];
+      if (positionValue) {
+        chunkStr.push(positionValue);
+      }
+      result.push(chunkStr.join(' '));
+    }
+  });
+  
+  // Join all parts with "و"
+  return result.length > 0 ? result.join(' و ') : 'صفر';
 };
