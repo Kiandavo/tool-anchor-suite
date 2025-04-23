@@ -18,8 +18,9 @@ import DateDifferenceCalculator from './ToolTypes/CalculatorTools/DateDifference
 import WorldTimeConverter from './ToolTypes/CalculatorTools/WorldTimeConverter';
 import ProfitCalculator from './ToolTypes/CalculatorTools/ProfitCalculator';
 import ScientificCalculator from './ToolTypes/CalculatorTools/ScientificCalculator';
+import RentFactorsCalculator from './ToolTypes/CalculatorTools/RentFactorsCalculator';
 
-const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit' | 'scientific-calculator'> = {
+const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit' | 'scientific-calculator' | 'rent-factors'> = {
   // Text tools
   'latin-to-persian-convertor': 'text',
   'text-counter': 'text',
@@ -151,6 +152,7 @@ const toolTypeBySlug: Record<string, 'text' | 'image' | 'random-password' | 'pri
   'world-time-converter': 'world-time',
   'profit-calculator': 'profit',
   'scientific-calculator': 'scientific-calculator',
+  'rent-factors-calculator': 'rent-factors',
 };
 
 export default function Tool() {
@@ -203,10 +205,12 @@ export default function Tool() {
         <ProfitCalculator />
       ) : toolTypeBySlug[tool.slug] === "scientific-calculator" ? (
         <ScientificCalculator />
+      ) : toolTypeBySlug[tool.slug] === "rent-factors" ? (
+        <RentFactorsCalculator />
       ) : (
         <ToolNotImplemented />
       )}
     </div>
   </Layout>
-);
+  );
 }

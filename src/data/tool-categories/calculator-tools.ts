@@ -272,4 +272,13 @@ export const calculatorTools: Tool[] = [
     isNew: true,
     icon: "calculator"
   },
+  {
+    id: "120",
+    slug: "rent-factors-calculator",
+    name: "محاسبه عوامل اجاره",
+    category: "calculators",
+    description: "محاسبه عوامل مختلف اجاره مانند درآمد موردنیاز و هزینه‌های جانبی",
+    isNew: true,
+    icon: "calculator"
+  },
 ];
