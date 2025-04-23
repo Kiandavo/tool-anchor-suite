@@ -15,16 +15,16 @@ const groupedTools: Record<ToolCategory, typeof tools> = categories.reduce((acc,
 const AllTools = () => {
   return (
     <Layout title="همه ابزارها" backUrl="/">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">همه ابزارها بر اساس دسته‌بندی</h1>
-      <div className="flex flex-col gap-12">
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">همه ابزارها بر اساس دسته‌بندی</h1>
+      <div className="flex flex-col gap-8 sm:gap-12">
         {categories.map((category) =>
           groupedTools[category].length > 0 ? (
             <section key={category}>
-              <div className="flex items-center mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">{categoryLabels[category]}</h2>
+              <div className="flex items-center mb-2 sm:mb-4">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900">{categoryLabels[category]}</h2>
                 <span className="ml-2 text-xs text-gray-500 bg-gray-100 rounded-full px-2 py-0.5">{groupedTools[category].length} ابزار</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
                 {groupedTools[category].map((tool) => (
                   <ToolCard tool={tool} key={tool.id} />
                 ))}
