@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Layout } from '@/components/Layout';
-import { Moon, Sun, Languages, Mail, Heart, InfoIcon, Shield, Globe } from 'lucide-react';
+import { Moon, Sun, Languages, Mail, Heart, InfoIcon, Shield, Globe, Instagram } from 'lucide-react';
+
 const Settings = () => {
   // Get the initial dark mode value from localStorage, defaulting to false if not set
   const [darkMode, setDarkMode] = useState(() => {
@@ -29,7 +30,19 @@ const Settings = () => {
         
         <div className="space-y-6">
           {/* Theme Toggle */}
-          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              {darkMode ? <Sun size={22} className="ml-3 text-primary" /> : <Moon size={22} className="ml-3 text-primary" />}
+              <div>
+                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100">حالت تاریک</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">فعال یا غیرفعال کردن حالت تاریک</p>
+              </div>
+            </div>
+            <button onClick={handleDarkModeToggle} className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-700">
+              <span className="sr-only">Enable notifications</span>
+              <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${darkMode ? 'translate-x-6 dark:bg-gray-300' : 'translate-x-1 dark:bg-gray-500'}`}></span>
+            </button>
+          </div>
           
           {/* Language Setting */}
           <div className="flex items-center justify-between">
@@ -71,6 +84,21 @@ const Settings = () => {
             <div className="text-sm text-gray-600 dark:text-gray-300 flex items-center pr-9">
               <span className="ml-2">info@helpfuladvertising.com</span>
             </div>
+
+            <div className="flex items-center mb-4 mt-6">
+              <Instagram size={22} className="ml-3 text-primary" />
+              <h4 className="text-md font-medium text-gray-800 dark:text-gray-100">اینستاگرام</h4>
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-300 flex items-center pr-9">
+              <a 
+                href="https://www.instagram.com/kiandavo" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-primary hover:underline"
+              >
+                @kiandavo
+              </a>
+            </div>
             
             <div className="flex items-center justify-center mt-8">
               <Heart size={16} className="ml-2 text-red-500" />
@@ -81,4 +109,5 @@ const Settings = () => {
       </div>
     </Layout>;
 };
+
 export default Settings;

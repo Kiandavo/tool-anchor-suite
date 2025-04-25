@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Settings, Home, ChevronUp } from 'lucide-react';
+import { ArrowLeft, Settings, Home, ChevronUp, Instagram } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface LayoutProps {
@@ -152,7 +151,17 @@ export function Layout({
             <p className="text-gray-500 text-sm mb-1 md:mb-0">
               تمامی ابزارها رایگان و بدون نیاز به ثبت‌نام ارائه می‌شوند.
             </p>
-            <p className="text-gray-500 text-xs sm:text-sm">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
+            <div className="flex items-center space-x-3">
+              <a 
+                href="https://www.instagram.com/kiandavo" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-500 hover:text-primary transition-colors"
+              >
+                <Instagram size={20} />
+              </a>
+              <p className="text-gray-500 text-xs sm:text-sm">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
+            </div>
             <p className="text-gray-500 text-xs sm:text-sm">ساخته شده با ❤️ توسط کیان</p>
           </div>
         </div>
