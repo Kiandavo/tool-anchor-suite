@@ -5,6 +5,7 @@ import { Layout } from '@/components/Layout';
 import { ToolCard } from '@/components/ToolCard';
 import { searchTools, Tool, categoryLabels, ToolCategory } from '@/data/tools';
 import { Search as SearchIcon, Filter, X } from 'lucide-react';
+import { SearchBar } from '@/components/SearchBar';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,18 +38,35 @@ const Search = () => {
   const clearSearch = () => {
     setSearchParams({});
   };
+
+  const handleSearch = (searchQuery: string) => {
+    setSearchParams({ q: searchQuery });
+  };
+
+  // Function to get search results for inline display
+  const getSearchResults = (searchQuery: string) => {
+    return searchTools(searchQuery).slice(0, 5);
+  };
   
   return (
-    <Layout backUrl="/" showSearch={true}>
+    <Layout backUrl="/" showSearch={false}>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">نتایج جستجو</h1>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <p className="text-gray-600">
             {results.length > 0 ? 
               `${results.length} ابزار برای "${query}" یافت شد` : 
               `نتیجه‌ای برای "${query}" یافت نشد`
             }
           </p>
+          <div className="max-w-md w-full">
+            <SearchBar 
+              onSearch={handleSearch} 
+              placeholder="جستجوی مجدد..." 
+              getResults={getSearchResults}
+              showInlineResults={true}
+            />
+          </div>
           {query && (
             <button 
               onClick={clearSearch} 

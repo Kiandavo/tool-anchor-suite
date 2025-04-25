@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
 import { ToolCard } from '@/components/ToolCard';
-import { tools, ToolCategory, categoryLabels, getToolsByCategory, getNewTools, getPopularTools } from '@/data/tools';
+import { tools, ToolCategory, categoryLabels, getToolsByCategory, getNewTools, getPopularTools, searchTools } from '@/data/tools';
 import { ChevronLeft, Sparkles, TrendingUp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { finglishToPersian } from '@/utils/toolUtils';
@@ -47,6 +48,11 @@ const Index = () => {
       navigate(`/search?q=${encodeURIComponent(query)}`);
     }
   };
+  
+  // Function to get search results for inline display
+  const getSearchResults = (query: string) => {
+    return searchTools(query).slice(0, 5); // Limit to 5 results for the dropdown
+  };
 
   return (
     <Layout>
@@ -63,7 +69,12 @@ const Index = () => {
       <section className="max-w-2xl mx-auto mb-8 animate-fade-in" style={{animationDelay: '0.05s'}}>
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 text-center">جستجوی ابزار</h2>
-          <SearchBar onSearch={handleSearch} placeholder="نام ابزار مورد نظر را وارد کنید..." />
+          <SearchBar 
+            onSearch={handleSearch} 
+            placeholder="نام ابزار مورد نظر را وارد کنید..." 
+            getResults={getSearchResults}
+            showInlineResults={true}
+          />
         </div>
       </section>
 
