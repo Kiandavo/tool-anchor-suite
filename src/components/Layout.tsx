@@ -80,7 +80,16 @@ export function Layout({
         <div className="container mx-auto px-2 sm:px-4">
           <div className="flex flex-col items-center">
             <div className="flex items-center justify-between w-full gap-2">
-              {/* Settings on the left */}
+              {/* Add Logo to the left */}
+              <Link
+                to="/"
+                className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center ml-auto"
+              >
+                <Home size={20} className="ml-2" />
+                <span className="hidden md:inline">لنگر</span>
+              </Link>
+
+              {/* Settings on the right */}
               <Link
                 to="/settings"
                 className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center"
@@ -106,15 +115,7 @@ export function Layout({
                     <ArrowLeft size={20} className="ml-2" />
                     <span className="hidden sm:inline">بازگشت</span>
                   </button>
-                ) : (
-                  <Link
-                    to="/"
-                    className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center ml-auto"
-                  >
-                    <Home size={20} className="ml-2" />
-                    <span className="hidden md:inline">لنگر</span>
-                  </Link>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
