@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Layout } from '@/components/Layout';
-import { Moon, Sun, Languages, Mail, Heart, InfoIcon, Shield, Globe, Instagram } from 'lucide-react';
+import { Moon, Sun, Globe } from 'lucide-react';
+import AboutSection from '@/components/settings/AboutSection';
+import ContactSection from '@/components/settings/ContactSection';
 
 const Settings = () => {
   // Get the initial dark mode value from localStorage, defaulting to false if not set
@@ -24,7 +26,9 @@ const Settings = () => {
   const handleDarkModeToggle = () => {
     setDarkMode(prev => !prev);
   };
-  return <Layout title="تنظیمات" backUrl="/" showSearch={false}>
+
+  return (
+    <Layout title="تنظیمات" backUrl="/" showSearch={false}>
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">تنظیمات</h1>
         
@@ -61,53 +65,13 @@ const Settings = () => {
           
           {/* About Section */}
           <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex items-center mb-4">
-              <InfoIcon size={22} className="ml-3 text-primary" />
-              <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100">درباره لنگر</h3>
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 pr-9">
-              لنگر مجموعه‌ای از بیش از ۱۲۰ ابزار رایگان تحت وب است که بدون نیاز به ثبت‌نام و با حفظ حریم خصوصی شما ارائه می‌شود.
-            </p>
-            
-            <div className="flex items-center mb-4 mt-6">
-              <Shield size={22} className="ml-3 text-primary" />
-              <h4 className="text-md font-medium text-gray-800 dark:text-gray-100">حریم خصوصی</h4>
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 pr-9">
-              تمامی پردازش‌ها در مرورگر شما انجام می‌شود و هیچ داده‌ای به سرور ارسال نمی‌شود.
-            </p>
-            
-            <div className="flex items-center mb-4 mt-6">
-              <Mail size={22} className="ml-3 text-primary" />
-              <h4 className="text-md font-medium text-gray-800 dark:text-gray-100">تماس با ما</h4>
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-300 flex items-center pr-9">
-              <span className="ml-2">info@helpfuladvertising.com</span>
-            </div>
-
-            <div className="flex items-center mb-4 mt-6">
-              <Instagram size={22} className="ml-3 text-primary" />
-              <h4 className="text-md font-medium text-gray-800 dark:text-gray-100">اینستاگرام</h4>
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-300 flex items-center pr-9">
-              <a 
-                href="https://www.instagram.com/kiandavo" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-primary hover:underline"
-              >
-                @kiandavo
-              </a>
-            </div>
-            
-            <div className="flex items-center justify-center mt-8">
-              <Heart size={16} className="ml-2 text-red-500" />
-              <span className="text-sm text-gray-500 dark:text-gray-400">ساخته شده با عشق برای کاربران فارسی‌زبان</span>
-            </div>
+            <AboutSection />
+            <ContactSection />
           </div>
         </div>
       </div>
-    </Layout>;
+    </Layout>
+  );
 };
 
 export default Settings;
