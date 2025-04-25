@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { finglishToPersian } from '@/utils/toolUtils';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import ScientificCalculator from './ToolTypes/CalculatorTools/ScientificCalculator';
 
 const Index = () => {
   // Finglish to Farsi (Home page instant converter state)
@@ -51,7 +52,12 @@ const Index = () => {
         </p>
       </section>
 
-      {/* Random Tool Showcase Section */}
+      {/* Calculator Section */}
+      <section className="mb-8 max-w-2xl mx-auto w-full animate-fade-in">
+        <ScientificCalculator />
+      </section>
+
+      {/* Random Tool Section */}
       <section className="mb-6 max-w-2xl mx-auto w-full animate-fade-in" style={{animationDelay: '0.1s'}}>
         <div className="w-full">
           <div className="flex items-center gap-2 text-primary mb-2 mr-2">
@@ -76,7 +82,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Finglish to Persian UI improvement */}
+      {/* Finglish to Persian Section */}
       <section className="rounded-xl bg-[#eaf1ff] dark:bg-[#19212c] border mb-10 p-4 sm:p-6 shadow-sm max-w-2xl mx-auto text-center">
         <h2 className="text-lg font-bold text-primary mb-1 sm:mb-2">تبدیل فوری فینگلیش به فارسی ✨</h2>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-start">
@@ -103,7 +109,7 @@ const Index = () => {
         </Button>
       </section>
 
-      {/* Categories */}
+      {/* Categories Section */}
       <section className="mb-8 sm:mb-12 animate-slide-up">
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800 dark:text-gray-100">دسته‌بندی‌ها</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
@@ -117,7 +123,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* New Tools */}
+      {/* New Tools Section */}
       <section className="mb-10 sm:mb-12 animate-slide-up rounded-xl border border-[#8cc55b]/30 bg-[#F2FCE2]" style={{
         animationDelay: '0.2s'
       }}>
@@ -142,7 +148,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Popular Tools */}
+      {/* Popular Tools Section */}
       <section className="mb-10 sm:mb-12 animate-slide-up" style={{
         animationDelay: '0.4s'
       }}>
