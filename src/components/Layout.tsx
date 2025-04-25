@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Settings, Home } from 'lucide-react';
+import { ArrowLeft, Settings, Home, ChevronUp } from 'lucide-react';
+import { Button } from './ui/button';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,10 +20,12 @@ export function Layout({
   const navigate = useNavigate();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      setShowScrollTop(window.scrollY > 300);
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -63,6 +66,10 @@ export function Layout({
       // For other pages, use the browser's back functionality
       navigate(-1);
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Automatic "Back" when not on home and not given a backUrl
@@ -115,9 +122,29 @@ export function Layout({
         </div>
       </header>
 
-      <main className="flex-1 container mx-auto px-2 sm:px-4 py-4 sm:py-6">
+      <main className="flex-1 container mx-auto px-2 sm:px-4 py-4 sm:py-6 mt-0">
         {children}
       </main>
+
+      {/* Scroll Indicator */}
+      <div
+        className="fixed bottom-0 left-0 h-1 bg-primary transition-all duration-300"
+        style={{
+          width: `${(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100}%`,
+          opacity: isScrolled ? 1 : 0
+        }}
+      />
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <Button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 rounded-full p-3 bg-primary/90 hover:bg-primary transition-all duration-300 animate-fade-in shadow-lg"
+          size="icon"
+        >
+          <ChevronUp className="h-6 w-6 text-white" />
+        </Button>
+      )}
 
       <footer className="mt-auto py-4 sm:py-6 bg-white border-t">
         <div className="container mx-auto px-2 sm:px-4">
