@@ -3,40 +3,19 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useScrollToTop } from "./hooks/useScrollToTop";
-import Index from "./pages/Index";
-import Category from "./pages/Category";
-import Tool from "./pages/Tool";
-import Search from "./pages/Search";
-import Settings from "./pages/Settings";
-import NotFound from "./pages/NotFound";
-import AllTools from "./pages/AllTools";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "@/components/AppRoutes";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const ScrollToTop = () => {
-    useScrollToTop();
-    return null;
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/category/:categoryId" element={<Category />} />
-            <Route path="/tool/:slug" element={<Tool />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/all-tools" element={<AllTools />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppRoutes />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
@@ -44,3 +23,4 @@ const App = () => {
 };
 
 export default App;
+
