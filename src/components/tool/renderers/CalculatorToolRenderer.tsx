@@ -1,14 +1,10 @@
 
 import React from 'react';
-import CalculatorTool from '@/pages/ToolTypes/CalculatorTool';
-import InvestmentCalculator from '@/pages/ToolTypes/CalculatorTools/InvestmentCalculator';
-import MortgageCalculator from '@/pages/ToolTypes/CalculatorTools/MortgageCalculator';
-import TodayDateConverter from '@/pages/ToolTypes/CalculatorTools/TodayDateConverter';
-import DateDifferenceCalculator from '@/pages/ToolTypes/CalculatorTools/DateDifferenceCalculator';
-import WorldTimeConverter from '@/pages/ToolTypes/CalculatorTools/WorldTimeConverter';
-import ProfitCalculator from '@/pages/ToolTypes/CalculatorTools/ProfitCalculator';
-import ScientificCalculator from '@/pages/ToolTypes/CalculatorTools/ScientificCalculator';
-import RentFactorsCalculator from '@/pages/ToolTypes/CalculatorTools/RentFactorsCalculator';
+import { BasicCalculatorRenderer } from './calculator/BasicCalculatorRenderer';
+import { InvestmentCalculatorRenderer } from './calculator/InvestmentCalculatorRenderer';
+import { TimeCalculatorRenderer } from './calculator/TimeCalculatorRenderer';
+import { FinanceCalculatorRenderer } from './calculator/FinanceCalculatorRenderer';
+import { ScientificCalculatorRenderer } from './calculator/ScientificCalculatorRenderer';
 
 interface CalculatorToolRendererProps {
   slug: string;
@@ -17,26 +13,25 @@ interface CalculatorToolRendererProps {
 }
 
 export const CalculatorToolRenderer: React.FC<CalculatorToolRendererProps> = ({ slug, type }) => {
+  // Time-related calculators
+  if (type === 'today-date' || type === 'date-difference' || type === 'world-time') {
+    return <TimeCalculatorRenderer type={type} />;
+  }
+
+  // Financial calculators
+  if (type === 'profit' || type === 'mortgage-calculator' || type === 'rent-factors') {
+    return <FinanceCalculatorRenderer type={type} />;
+  }
+
+  // Specific calculator types
   switch (type) {
     case 'calculator':
-      return <CalculatorTool slug={slug} />;
+      return <BasicCalculatorRenderer slug={slug} />;
     case 'investment-calculator':
-      return <InvestmentCalculator />;
-    case 'mortgage-calculator':
-      return <MortgageCalculator />;
-    case 'today-date':
-      return <TodayDateConverter />;
-    case 'date-difference':
-      return <DateDifferenceCalculator />;
-    case 'world-time':
-      return <WorldTimeConverter />;
-    case 'profit':
-      return <ProfitCalculator />;
+      return <InvestmentCalculatorRenderer />;
     case 'scientific-calculator':
-      return <ScientificCalculator />;
-    case 'rent-factors':
-      return <RentFactorsCalculator />;
+      return <ScientificCalculatorRenderer />;
     default:
-      return <CalculatorTool slug={slug} />;
+      return <BasicCalculatorRenderer slug={slug} />;
   }
 };
