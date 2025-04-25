@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
@@ -17,6 +16,8 @@ import WeightConverter from './CalculatorTools/WeightConverter';
 import TimeCalculator from './CalculatorTools/TimeCalculator';
 import MortgageCalculator from './CalculatorTools/MortgageCalculator';
 import InvestmentCalculator from './CalculatorTools/InvestmentCalculator';
+import VolumeCalculator from './CalculatorTools/VolumeCalculator';
+import RangeCalculator from './CalculatorTools/RangeCalculator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -58,6 +59,10 @@ export default function CalculatorTool({ slug }: CalculatorToolProps) {
         return <MortgageCalculator />;
       case 'investment-calculator':
         return <InvestmentCalculator />;
+      case 'volume-calculator':
+        return <VolumeCalculator />;
+      case 'range-calculator':
+        return <RangeCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
