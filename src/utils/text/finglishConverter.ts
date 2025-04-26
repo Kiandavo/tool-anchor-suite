@@ -1,3 +1,4 @@
+
 export const finglishMap: Record<string, string> = {
   // Multi-character mappings (must come first in processing)
   'kh': 'خ',
@@ -21,7 +22,7 @@ export const finglishMap: Record<string, string> = {
   'gha': 'غا',
   'sha': 'شا',
 
-  // Single character mappings
+  // Single character mappings with special rules
   'a': 'ا',
   'b': 'ب',
   'c': 'س',
@@ -63,6 +64,9 @@ export const finglishMap: Record<string, string> = {
   '0': '۰',
 };
 
+// Characters that should not be duplicated in Persian
+const noDuplicationChars = new Set(['ا', 'و', 'ی']);
+
 export function finglishToPersian(finglish: string): string {
   console.log(`Input: ${finglish}`);
   
@@ -74,6 +78,7 @@ export function finglishToPersian(finglish: string): string {
   // Process the input
   let output = '';
   let i = 0;
+  let lastChar = '';
   
   while (i < finglish.length) {
     let matched = false;
@@ -82,7 +87,12 @@ export function finglishToPersian(finglish: string): string {
     if (i < finglish.length - 2) {
       const threeChars = finglish.substring(i, i + 3);
       if (finglishMap[threeChars]) {
-        output += finglishMap[threeChars];
+        const persianChar = finglishMap[threeChars];
+        // Check if we should skip duplication
+        if (!noDuplicationChars.has(persianChar) || persianChar !== lastChar) {
+          output += persianChar;
+          lastChar = persianChar;
+        }
         i += 3;
         matched = true;
         continue;
@@ -93,7 +103,12 @@ export function finglishToPersian(finglish: string): string {
     if (i < finglish.length - 1 && !matched) {
       const twoChars = finglish.substring(i, i + 2);
       if (finglishMap[twoChars]) {
-        output += finglishMap[twoChars];
+        const persianChar = finglishMap[twoChars];
+        // Check if we should skip duplication
+        if (!noDuplicationChars.has(persianChar) || persianChar !== lastChar) {
+          output += persianChar;
+          lastChar = persianChar;
+        }
         i += 2;
         matched = true;
         continue;
@@ -105,11 +120,18 @@ export function finglishToPersian(finglish: string): string {
       const char = finglish[i];
       if (char === ' ') {
         output += ' ';
+        lastChar = ' ';
       } else if (finglishMap[char]) {
-        output += finglishMap[char];
+        const persianChar = finglishMap[char];
+        // Check if we should skip duplication
+        if (!noDuplicationChars.has(persianChar) || persianChar !== lastChar) {
+          output += persianChar;
+          lastChar = persianChar;
+        }
       } else {
         // Keep other characters unchanged
         output += char;
+        lastChar = char;
       }
       i++;
     }
