@@ -17,6 +17,9 @@ export const finglishMap: Record<string, string> = {
 };
 
 export function finglishToPersian(finglish: string): string {
+  // Add some detailed logging to help diagnose the conversion
+  console.log(`Input: ${finglish}`);
+  
   if (!finglish || !finglish.trim()) return '';
   
   // Normalize the input
@@ -60,6 +63,7 @@ export function finglishToPersian(finglish: string): string {
     .replace(/که/g, 'خ')  // Fix 'kh' that might have been parsed as 'k' + 'h'
     .replace(/\u200C{2,}/g, '\u200C'); // Remove duplicate ZWNJ characters
 
+  console.log(`Output: ${output}`);
   return output;
 }
 
