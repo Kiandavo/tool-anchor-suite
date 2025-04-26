@@ -99,6 +99,12 @@ export const toolTypeBySlug: Record<string, ToolType> = {
   'bulk-url-checker': 'seo',
   'seo-redirect-generator': 'seo',
   'meta-viewport-checker': 'seo',
+  'html-heading-extractor': 'seo',
+  'html-lang-checker': 'seo',
+  'schema-generator': 'seo',
+  'meta-refresh-generator': 'seo',
+  'social-tags-generator': 'seo',
+  'meta-keywords-extractor': 'seo',
   
   // Random tools
   'random-color-generator': 'random',
