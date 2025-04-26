@@ -28,6 +28,43 @@ export const textTools: Tool[] = [
     isNew: false,
     icon: "type"
   },
+  // New Persian Text Tools
+  {
+    id: "201",
+    slug: "persian-half-space-corrector",
+    name: "تصحیح‌کننده نیم‌فاصله",
+    category: "text",
+    description: "نیم‌فاصله‌های متن فارسی را اصلاح کنید",
+    isNew: true,
+    icon: "edit"
+  },
+  {
+    id: "202",
+    slug: "persian-keyboard-converter",
+    name: "تبدیل صفحه‌کلید فارسی",
+    category: "text",
+    description: "متنی که با صفحه‌کلید فارسی تایپ شده را تبدیل کنید",
+    isNew: true,
+    icon: "settings"
+  },
+  {
+    id: "203",
+    slug: "persian-number-converter",
+    name: "تبدیل اعداد فارسی/انگلیسی",
+    category: "text",
+    description: "اعداد فارسی به انگلیسی و برعکس",
+    isNew: true,
+    icon: "edit"
+  },
+  {
+    id: "204",
+    slug: "persian-text-standardizer",
+    name: "استانداردساز متن فارسی",
+    category: "text",
+    description: "متن فارسی را بر اساس استانداردهای نگارش اصلاح کنید",
+    isNew: true,
+    icon: "file-text"
+  },
   {
     id: "15",
     slug: "remove-duplicate-lines",

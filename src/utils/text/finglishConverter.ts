@@ -1,4 +1,3 @@
-
 export const finglishMap: Record<string, string> = {
   // Multi-character mappings (must come first in processing)
   'kh': 'خ',
@@ -9,8 +8,18 @@ export const finglishMap: Record<string, string> = {
   'aa': 'آ',
   'ee': 'ی',
   'oo': 'و',
-  'ou': 'و',
+  'ou': 'او',
   'th': 'ث',
+  'ph': 'ف',
+  'ck': 'ک',
+  'sk': 'سک',
+  'dh': 'ذ',
+  'ea': 'ی',
+  'ei': 'ای',
+  'ey': 'ای',
+  'kha': 'خا',
+  'gha': 'غا',
+  'sha': 'شا',
 
   // Single character mappings
   'a': 'ا',
@@ -42,6 +51,16 @@ export const finglishMap: Record<string, string> = {
   '?': '؟',
   ',': '،',
   ';': '؛',
+  '1': '۱',
+  '2': '۲',
+  '3': '۳',
+  '4': '۴',
+  '5': '۵',
+  '6': '۶',
+  '7': '۷',
+  '8': '۸',
+  '9': '۹',
+  '0': '۰',
 };
 
 export function finglishToPersian(finglish: string): string {
@@ -59,8 +78,19 @@ export function finglishToPersian(finglish: string): string {
   while (i < finglish.length) {
     let matched = false;
     
-    // Try multi-character mappings first (up to 2 chars)
-    if (i < finglish.length - 1) {
+    // Try multi-character mappings first (up to 3 chars)
+    if (i < finglish.length - 2) {
+      const threeChars = finglish.substring(i, i + 3);
+      if (finglishMap[threeChars]) {
+        output += finglishMap[threeChars];
+        i += 3;
+        matched = true;
+        continue;
+      }
+    }
+    
+    // Try two-char mappings
+    if (i < finglish.length - 1 && !matched) {
       const twoChars = finglish.substring(i, i + 2);
       if (finglishMap[twoChars]) {
         output += finglishMap[twoChars];
@@ -78,13 +108,8 @@ export function finglishToPersian(finglish: string): string {
       } else if (finglishMap[char]) {
         output += finglishMap[char];
       } else {
-        // Special handling for numbers and other characters
-        if (/[0-9]/.test(char)) {
-          // Convert English numbers to Persian numbers
-          output += char.replace(/[0-9]/g, d => String.fromCharCode(0x06F0 + parseInt(d)));
-        } else {
-          output += char; // Keep other characters unchanged
-        }
+        // Keep other characters unchanged
+        output += char;
       }
       i++;
     }

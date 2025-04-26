@@ -1,4 +1,3 @@
-
 export type ToolType = 'text' | 'image' | 'random-password' | 'prime-checker' | 'calculator' | 'seo' | 'random' | 'number' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit' | 'scientific-calculator' | 'rent-factors';
 
 export const toolTypeBySlug: Record<string, ToolType> = {
@@ -28,8 +27,13 @@ export const toolTypeBySlug: Record<string, ToolType> = {
   'mirror-text': 'text',
   'special-character-finder': 'text',
   'remove-accent-tool': 'text',
+  // New Persian Text Tools
+  'persian-half-space-corrector': 'text',
+  'persian-keyboard-converter': 'text',
+  'persian-number-converter': 'text',
+  'persian-text-standardizer': 'text',
   
-  // Image tools
+  // image tools
   'image-compressor': 'image',
   'image-resizer': 'image',
   'image-to-webp': 'image',
@@ -131,4 +135,3 @@ export const toolTypeBySlug: Record<string, ToolType> = {
   'number-comparator': 'number',
   'duplicate-number-finder': 'number',
 };
-

@@ -5,3 +5,4 @@ export * from './caseTransform';
 export * from './textCleaner';
 export * from './randomText';
 export * from './quotes';
+export * from './persianUtils'; // Add the new Persian utilities
