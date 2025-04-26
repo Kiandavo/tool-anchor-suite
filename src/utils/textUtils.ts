@@ -1,28 +1,54 @@
 export const finglishMap: Record<string, string> = {
+  // Multi-character mappings (must come first in processing)
+  'kh': 'خ',
+  'gh': 'غ',
+  'ch': 'چ',
+  'sh': 'ش',
+  'zh': 'ژ',
+  'aa': 'آ',
+  'ee': 'ی',
+  'oo': 'و',
+  'ou': 'و',
+  'th': 'ث',
+
   // Single character mappings
-  'a': 'ا', 'b': 'ب', 'c': 'س', 'd': 'د', 'e': 'ه',
-  'f': 'ف', 'g': 'گ', 'h': 'ه', 'i': 'ی', 'j': 'ج',
-  'k': 'ک', 'l': 'ل', 'm': 'م', 'n': 'ن', 'o': 'و',
-  'p': 'پ', 'q': 'ق', 'r': 'ر', 's': 'س', 't': 'ت',
-  'u': 'و', 'v': 'و', 'w': 'و', 'x': 'کس', 'y': 'ی',
-  'z': 'ز', '?': '؟', ',': '،', ';': '؛',
-  
-  // Multi-character mappings (must come before single chars in processing)
-  'aa': 'آ', 'ch': 'چ', 'gh': 'ق', 'kh': 'خ', 'sh': 'ش',
-  'zh': 'ژ', 'ee': 'ی', 'oo': 'و', 'ou': 'و',
-  
-  // Special positional rules (beginning/middle/end)
-  '_b_a': 'ا', '_b_i': 'ای', '_m_a': 'ا', '_m_i': 'ی', '_e_a': 'ا', '_e_i': 'ی',
-  '_b_o': 'ا', '_m_o': 'و', '_e_o': 'و', '_b_e': 'ا', '_m_e': 'ه', '_e_e': 'ه',
+  'a': 'ا',
+  'b': 'ب',
+  'c': 'س',
+  'd': 'د',
+  'e': 'ه',
+  'f': 'ف',
+  'g': 'گ',
+  'h': 'ه',
+  'i': 'ی',
+  'j': 'ج',
+  'k': 'ک',
+  'l': 'ل',
+  'm': 'م',
+  'n': 'ن',
+  'o': 'و',
+  'p': 'پ',
+  'q': 'ق',
+  'r': 'ر',
+  's': 'س',
+  't': 'ت',
+  'u': 'و',
+  'v': 'و',
+  'w': 'و',
+  'x': 'کس',
+  'y': 'ی',
+  'z': 'ز',
+  '?': '؟',
+  ',': '،',
+  ';': '؛',
 };
 
 export function finglishToPersian(finglish: string): string {
-  // Add some detailed logging to help diagnose the conversion
   console.log(`Input: ${finglish}`);
   
   if (!finglish || !finglish.trim()) return '';
   
-  // Normalize the input
+  // Normalize the input: convert to lowercase and trim spaces
   finglish = finglish.toLowerCase().trim();
   
   // Process the input
@@ -30,39 +56,53 @@ export function finglishToPersian(finglish: string): string {
   let i = 0;
   
   while (i < finglish.length) {
-    // Try two-character mappings first
+    let matched = false;
+    
+    // Try multi-character mappings first (up to 2 chars)
     if (i < finglish.length - 1) {
       const twoChars = finglish.substring(i, i + 2);
       if (finglishMap[twoChars]) {
         output += finglishMap[twoChars];
         i += 2;
+        matched = true;
         continue;
       }
     }
     
-    // If no two-character mapping found, use single character mapping
-    const char = finglish[i];
-    
-    // Handle special cases like space
-    if (char === ' ') {
-      output += ' ';
-    } else if (finglishMap[char]) {
-      output += finglishMap[char];
-    } else {
-      // If no mapping found, keep the original character
-      output += char;
+    // If no multi-character mapping found, try single character
+    if (!matched) {
+      const char = finglish[i];
+      if (char === ' ') {
+        output += ' ';
+      } else if (finglishMap[char]) {
+        output += finglishMap[char];
+      } else {
+        // Special handling for numbers and other characters
+        if (/[0-9]/.test(char)) {
+          // Convert English numbers to Persian numbers
+          output += char.replace(/[0-9]/g, d => String.fromCharCode(0x06F0 + parseInt(d)));
+        } else {
+          output += char; // Keep other characters unchanged
+        }
+      }
+      i++;
     }
-    
-    i++;
   }
   
-  // Apply some post-processing rules
+  // Post-processing improvements
   output = output
-    // Fix common issues
-    .replace(/سه/g, 'چ')  // Fix 'ch' that might have been parsed as 'c' + 'h'
-    .replace(/که/g, 'خ')  // Fix 'kh' that might have been parsed as 'k' + 'h'
+    // Fix common compound characters that might have been parsed incorrectly
+    .replace(/سه/g, 'چ')    // Fix 'ch'
+    .replace(/که/g, 'خ')    // Fix 'kh'
+    .replace(/قه/g, 'غ')    // Fix 'gh'
+    .replace(/شه/g, 'ش')   // Fix 'sh'
+    // Handle special cases for vowels
+    .replace(/اا/g, 'آ')    // Convert double alef to آ
+    .replace(/یی/g, 'ی')    // Remove duplicate ی
+    .replace(/وو/g, 'و')    // Remove duplicate و
+    // Clean up
     .replace(/\u200C{2,}/g, '\u200C'); // Remove duplicate ZWNJ characters
-
+  
   console.log(`Output: ${output}`);
   return output;
 }
