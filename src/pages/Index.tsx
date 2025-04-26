@@ -5,7 +5,7 @@ import { ToolCard } from '@/components/ToolCard';
 import { tools, ToolCategory, categoryLabels, getToolsByCategory, getNewTools, getPopularTools, searchTools } from '@/data/tools';
 import { ChevronLeft, Sparkles, TrendingUp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { finglishToPersian } from '@/utils/toolUtils';
+import { finglishToPersian } from '@/utils/textUtils';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { SearchBar } from '@/components/SearchBar';
@@ -26,8 +26,8 @@ const Index = () => {
   const newTools = getNewTools();
   const popularTools = getPopularTools();
 
-  // Output instantly using the utility
-  const persianOutput = finglishToPersian(finglishInput);
+  // Output instantly using the utility (directly from textUtils for most up-to-date implementation)
+  const persianOutput = finglishInput ? finglishToPersian(finglishInput) : '';
 
   // Copy handler
   const handleCopyFarsi = () => {
