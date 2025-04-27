@@ -17,14 +17,22 @@
   }
   
   .icon-container {
-    @apply w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-apple-blue/10 to-apple-blue/5;
+    @apply w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-primary/20 to-primary/5;
   }
 
   .glass-effect {
     @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm;
   }
 
-  .apple-gradient {
-    @apply bg-gradient-to-br from-apple-blue/20 to-apple-blue/5;
+  .vibrant-gradient {
+    @apply bg-gradient-to-br from-primary/20 to-accent/10;
+  }
+  
+  .vibrant-button {
+    @apply bg-gradient-to-r from-primary to-accent text-white font-medium px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300;
+  }
+  
+  .vibrant-card {
+    @apply bg-white rounded-2xl shadow-sm border-t border-l border-white/50 border-b border-r border-white/20 p-6 transition-all duration-300 hover:shadow-md;
   }
 }

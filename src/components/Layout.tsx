@@ -48,6 +48,18 @@ export function Layout({
     };
   }, []);
 
+  // Security: Add Content Security Policy meta tag
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.httpEquiv = 'Content-Security-Policy';
+    meta.content = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://*.api.com;";
+    document.head.appendChild(meta);
+
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50/30 pb-16 font-sf">
       <MemoizedHeader title={title} backUrl={backUrl} isScrolled={isScrolled} />

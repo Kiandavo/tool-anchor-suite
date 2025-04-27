@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Settings, Home } from 'lucide-react';
@@ -57,7 +58,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
           <div className="flex items-center justify-between w-full gap-4">
             <Link
               to="/"
-              className="text-xl font-semibold text-apple-blue hover:text-apple-blue/80 transition-colors duration-300 flex items-center"
+              className="text-xl font-semibold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center"
             >
               <Home size={22} className="ml-2" />
               <span className="hidden md:inline">لنگر</span>
@@ -72,7 +73,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="flex gap-4 items-center">
               <Link
                 to="/settings"
-                className="text-gray-600 hover:text-apple-blue transition-colors duration-300 flex items-center"
+                className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center"
                 aria-label="تنظیمات"
               >
                 <Settings size={22} />
@@ -81,7 +82,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="flex items-center font-medium text-apple-blue hover:text-apple-blue/70 text-sm px-4 py-2 rounded-full transition-colors duration-200 border border-apple-blue/20 hover:bg-apple-blue/10"
+                  className="flex items-center font-medium text-primary hover:text-primary/70 text-sm px-4 py-2 rounded-full transition-colors duration-200 border border-primary/20 hover:bg-primary/10"
                 >
                   <ArrowLeft size={18} className="ml-2" />
                   <span className="hidden sm:inline">بازگشت</span>

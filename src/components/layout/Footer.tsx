@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="mt-auto py-6 sm:py-8 backdrop-blur-lg bg-white/70 border-t border-slate-200/50 print:hidden">
       <div className="container mx-auto px-3 sm:px-6">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-center text-center md:text-right gap-3">
-          <p className="text-apple-gray text-sm mb-1 md:mb-0 max-w-md">
+          <p className="text-gray-600 text-sm mb-1 md:mb-0 max-w-md">
             تمامی ابزارها رایگان و بدون نیاز به ثبت‌نام ارائه می‌شوند.
           </p>
           <div className="flex items-center space-x-3">
@@ -15,14 +15,15 @@ export function Footer() {
               href="https://www.instagram.com/kiandavo" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-apple-gray hover:text-apple-blue transition-colors"
+              className="text-primary hover:text-accent transition-colors"
               aria-label="اینستاگرام لنگر"
+              rel="noopener"
             >
               <Instagram size={20} className="px-0 py-0 my-[17px] mx-[7px]" />
             </a>
-            <p className="text-apple-gray text-xs sm:text-sm">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
+            <p className="text-gray-600 text-xs sm:text-sm">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
           </div>
-          <p className="text-apple-gray text-xs sm:text-sm">ساخته شده با ❤️ توسط کیان</p>
+          <p className="text-accent text-xs sm:text-sm font-medium">ساخته شده با ❤️ توسط کیان</p>
         </div>
       </div>
     </footer>
