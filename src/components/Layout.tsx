@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, memo } from 'react';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
@@ -65,10 +64,16 @@ export function Layout({
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50/30 pb-16 font-sf" dir="rtl">
+    <div className="min-h-screen flex flex-col pb-16 font-sf relative overflow-hidden" dir="rtl">
+      {/* Decorative gradient orbs */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full filter blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 rounded-full filter blur-3xl" />
+      </div>
+
       <MemoizedHeader title={title} backUrl={backUrl} isScrolled={isScrolled} />
       
-      <main className="flex-1 container mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16 mt-0 max-w-[1400px]">
+      <main className="flex-1 container mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16 mt-0 max-w-[1400px] relative">
         {children}
       </main>
 

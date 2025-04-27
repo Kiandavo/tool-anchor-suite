@@ -1,4 +1,3 @@
-
 @layer components {
   .glass-effect {
     @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm;
@@ -30,28 +29,41 @@
   
   .tool-card {
     @apply glass-card rounded-2xl transition-all duration-300 hover:-translate-y-1 p-6 h-full;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
   }
   
   .category-card {
     @apply glass-card rounded-2xl p-7 flex flex-col items-center hover:-translate-y-1;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+    border: 1px solid rgba(255,255,255,0.3);
   }
   
   .icon-container {
-    @apply w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-primary/20 to-primary/5;
+    @apply w-16 h-16 rounded-full flex items-center justify-center mb-4;
+    background: linear-gradient(135deg, rgba(var(--primary) / 0.2), rgba(var(--accent) / 0.1));
+    box-shadow: 0 4px 12px rgba(var(--primary) / 0.1);
   }
 
   .vibrant-gradient {
-    @apply bg-gradient-to-br from-primary/20 to-accent/10;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    @apply text-transparent bg-clip-text animate-gradient;
   }
   
   .vibrant-button {
-    @apply bg-gradient-to-r from-primary to-accent text-white font-medium px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300;
+    @apply relative overflow-hidden rounded-full px-6 py-2 font-medium text-white transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    box-shadow: 0 4px 12px rgba(var(--primary) / 0.2);
   }
   
   .vibrant-card {
-    @apply neo-glass rounded-2xl p-6 transition-all duration-300 hover:shadow-md;
+    @apply neo-glass rounded-2xl p-6 transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   }
-  
+
   /* RTL specific utility classes */
   .rtl-flip {
     @apply scale-x-[-1];
@@ -63,5 +75,21 @@
   
   .rtl-margin {
     @apply mr-auto ml-0;
+  }
+
+  /* Animations */
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
   }
 }
