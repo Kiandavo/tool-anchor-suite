@@ -1,18 +1,9 @@
 
-// THIS FILE ONLY RE-EXPORTS FROM INDIVIDUAL UTILITY MODULES FOR BACKWARD COMPATIBILITY
+// Re-export everything from the text module
+// But avoid conflicting exports by importing and re-exporting manually
+import * as TextUtils from './text';
 
-// Re-export everything from these modules
-export * from './textUtils';
-export * from './lineUtils';
-export * from './imageUtils';
-export * from './calculatorUtils';
+// Export everything from TextUtils
+export { TextUtils };
 
-// Re-export everything from colorUtils except copyToClipboard
-export { 
-  generateRandomColor,
-  isLightColor,
-  // Excluding copyToClipboard
-} from './colorUtils';
-
-// Export all from randomUtils (including its version of copyToClipboard)
-export * from './randomUtils';
+// No need to re-export from './textUtils' since we're exporting the namespace

@@ -42,7 +42,6 @@ export const finglishWordDatabase: Record<string, string> = {
   'garm': 'گرم',
   
   // Common nouns
-  'ketab': 'کتاب',
   'khane': 'خانه',
   'mashin': 'ماشین',
   'doost': 'دوست',
@@ -101,7 +100,7 @@ export const finglishWordDatabase: Record<string, string> = {
   'mamnoonam': 'ممنونم',
   'khaste nabashid': 'خسته نباشید',
   'khoosh ghalb': 'خوش قلب',
-  'eshgh': 'عشق',
+  'eshgh_1': 'عشق',
   'delam barat tang shode': 'دلم برات تنگ شده',
   'doset daram': 'دوستت دارم',
   'ghabel nadare': 'قابل نداره',
@@ -116,7 +115,7 @@ export const finglishWordDatabase: Record<string, string> = {
   'komak': 'کمک',
   'chera ke na': 'چرا که نه',
   'cheghadr': 'چقدر',
-  'khaste': 'خسته',
+  'khaste_1': 'خسته',
   'gorosne': 'گرسنه',
   'teshne': 'تشنه',
   
@@ -131,7 +130,7 @@ export const finglishWordDatabase: Record<string, string> = {
   'chai': 'چای',
   'ghahve': 'قهوه',
   'shir': 'شیر',
-  'ab': 'آب',
+  'ab_1': 'آب',
   'abmive': 'آبمیوه',
   
   // Places
@@ -145,8 +144,8 @@ export const finglishWordDatabase: Record<string, string> = {
   'restoran': 'رستوران',
   'hotel': 'هتل',
   'foroodgah': 'فرودگاه',
-  'sahel': 'ساحل',
-  'kharid': 'خرید',
+  'sahel_1': 'ساحل',
+  'kharid_1': 'خرید',
   
   // Professions
   'moalem': 'معلم',
@@ -174,7 +173,7 @@ export const finglishWordDatabase: Record<string, string> = {
   'bazi': 'بازی',
   
   // Academic terms
-  'ketab': 'کتاب',
+  'ketab_1': 'کتاب',
   'daneshjo': 'دانشجو',
   'ostad': 'استاد',
   'emtehan': 'امتحان',
@@ -190,25 +189,25 @@ export const finglishWordDatabase: Record<string, string> = {
   'khoshhal': 'خوشحال',
   'narahat': 'ناراحت',
   'asabani': 'عصبانی',
-  'khooshhal': 'خوشحال',
+  'khooshhal_1': 'خوشحال',
   'ghamgin': 'غمگین',
   'heyejan zade': 'هیجان‌زده',
-  'khaste': 'خسته',
+  'khaste_2': 'خسته',
   'aramesh': 'آرامش',
   'stress': 'استرس',
-  'eshgh': 'عشق',
+  'eshgh_2': 'عشق',
   'nefrat': 'نفرت',
   
   // Nature
   'derakht': 'درخت',
-  'gol': 'گل',
+  'gol_1': 'گل',
   'jangal': 'جنگل',
   'kuh': 'کوه',
   'darya': 'دریا',
-  'sahel': 'ساحل',
+  'sahel_2': 'ساحل',
   'asman': 'آسمان',
   'khorshid': 'خورشید',
-  'mah': 'ماه',
+  'mah_1': 'ماه',
   'setare': 'ستاره',
   'barf': 'برف',
   'baran': 'باران',
@@ -219,8 +218,8 @@ export const finglishWordDatabase: Record<string, string> = {
   'halet chetore': 'حالت چطوره',
   'khoob hastam': 'خوب هستم',
   'mamnoon az shoma': 'ممنون از شما',
-  'khahesh mikonam': 'خواهش می‌کنم',
-  'bebakhshid': 'ببخشید',
+  'khahesh mikonam_1': 'خواهش می‌کنم',
+  'bebakhshid_1': 'ببخشید',
   'eshtebah kardam': 'اشتباه کردم',
   'fekr mikonam ke': 'فکر می‌کنم که',
   'nazare shoma chist': 'نظر شما چیست',
@@ -230,7 +229,7 @@ export const finglishWordDatabase: Record<string, string> = {
   
   // Calendar and time
   'sal': 'سال',
-  'mah': 'ماه',
+  'mah_2': 'ماه',
   'hafte': 'هفته',
   'rooz': 'روز',
   'saat': 'ساعت',
@@ -260,7 +259,7 @@ export const finglishWordDatabase: Record<string, string> = {
   'talayi': 'طلایی',
   
   // Housing and furniture
-  'khane': 'خانه',
+  'khane_1': 'خانه',
   'apartment': 'آپارتمان',
   'otagh': 'اتاق',
   'ashpazkhane': 'آشپزخانه',
@@ -274,7 +273,7 @@ export const finglishWordDatabase: Record<string, string> = {
   'farsh': 'فرش',
   
   // Transportation
-  'mashin': 'ماشین',
+  'mashin_1': 'ماشین',
   'autobus': 'اتوبوس',
   'taxi': 'تاکسی',
   'metro': 'مترو',
@@ -295,7 +294,7 @@ export const finglishWordDatabase: Record<string, string> = {
   'shenidan': 'شنیدن',
   'khabidan': 'خوابیدن',
   'david': 'دوید',
-  'kharid': 'خرید',
+  'kharid_2': 'خرید',
   'foroosh': 'فروش',
   'baz kardan': 'باز کردن',
   'bastan': 'بستن',
