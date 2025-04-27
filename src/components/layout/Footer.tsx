@@ -4,7 +4,7 @@ import { Instagram } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="mt-auto py-6 sm:py-8 backdrop-blur-lg bg-white/70 border-t border-slate-200/50 print:hidden">
+    <footer className="mt-auto py-6 sm:py-8 glass-nav">
       <div className="container mx-auto px-3 sm:px-6">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-center text-center md:text-right gap-3">
           <p className="text-gray-600 text-sm mb-1 md:mb-0 max-w-md">
@@ -17,7 +17,6 @@ export function Footer() {
               rel="noopener noreferrer" 
               className="text-primary hover:text-accent transition-colors"
               aria-label="اینستاگرام لنگر"
-              rel="noopener"
             >
               <Instagram size={20} className="px-0 py-0 my-[17px] mx-[7px]" />
             </a>

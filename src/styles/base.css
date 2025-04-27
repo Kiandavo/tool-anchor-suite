@@ -56,6 +56,6 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sf transition-colors duration-200;
+    @apply bg-gradient-to-br from-background via-background/95 to-background/90 text-foreground font-sf transition-colors duration-200 min-h-screen;
   }
 }

@@ -52,7 +52,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
   return (
-    <header className={`backdrop-blur-lg bg-white/70 py-5 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-sm' : ''}`}>
+    <header className={`glass-nav py-5 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
       <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px]">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-between w-full gap-4">

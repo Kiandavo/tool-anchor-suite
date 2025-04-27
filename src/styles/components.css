@@ -1,5 +1,25 @@
 
 @layer components {
+  .glass-effect {
+    @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm;
+  }
+
+  .neo-glass {
+    @apply backdrop-blur-xl bg-white/90 border border-white/40 shadow-lg;
+  }
+
+  .frost-glass {
+    @apply backdrop-blur-md bg-white/60 border border-white/10;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-md bg-white/70 border border-white/30 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  .glass-nav {
+    @apply backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm;
+  }
+
   .card-hover {
     @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
   }
@@ -9,19 +29,15 @@
   }
   
   .tool-card {
-    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/50 transition-all duration-300 hover:shadow-md p-6 h-full hover:-translate-y-1 dark:border-gray-700;
+    @apply glass-card rounded-2xl transition-all duration-300 hover:-translate-y-1 p-6 h-full;
   }
   
   .category-card {
-    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/50 transition-all duration-300 hover:shadow-md p-7 flex flex-col items-center hover:-translate-y-1 dark:border-gray-700;
+    @apply glass-card rounded-2xl p-7 flex flex-col items-center hover:-translate-y-1;
   }
   
   .icon-container {
     @apply w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-primary/20 to-primary/5;
-  }
-
-  .glass-effect {
-    @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm;
   }
 
   .vibrant-gradient {
@@ -33,6 +49,6 @@
   }
   
   .vibrant-card {
-    @apply bg-white rounded-2xl shadow-sm border-t border-l border-white/50 border-b border-r border-white/20 p-6 transition-all duration-300 hover:shadow-md;
+    @apply neo-glass rounded-2xl p-6 transition-all duration-300 hover:shadow-md;
   }
 }
