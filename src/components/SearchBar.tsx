@@ -74,10 +74,10 @@ export function SearchBar({
   };
   
   return (
-    <div className="relative w-full max-w-md mx-auto">
-      <div className={`relative transition-all duration-300 ${isFocused ? 'ring-2 ring-primary/20 scale-102' : ''}`}>
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 transition-colors duration-300 group-focus-within:text-primary">
-          <Search size={18} />
+    <div className="relative w-full max-w-lg mx-auto">
+      <div className={`relative transition-all duration-300 ${isFocused ? 'ring-2 ring-apple-blue/30 scale-102' : ''}`}>
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-apple-gray transition-colors duration-300 group-focus-within:text-apple-blue">
+          <Search size={20} />
         </div>
         <input
           ref={inputRef}
@@ -86,12 +86,12 @@ export function SearchBar({
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           placeholder={placeholder}
-          className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pr-10 pl-10 text-sm text-gray-700 placeholder:text-gray-400 focus:border-primary/30 focus:outline-none transition-all duration-300"
+          className="w-full rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm py-3 pr-12 pl-12 text-base text-apple-dark-gray placeholder:text-apple-gray focus:border-apple-blue/30 focus:outline-none transition-all duration-300"
           dir="rtl"
         />
         {query && (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer" onClick={handleClear}>
-            <X size={16} className="text-gray-400 hover:text-gray-600" />
+          <div className="absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer" onClick={handleClear}>
+            <X size={18} className="text-apple-gray hover:text-apple-dark-gray" />
           </div>
         )}
       </div>
@@ -100,21 +100,21 @@ export function SearchBar({
       {showInlineResults && results.length > 0 && isFocused && (
         <div 
           ref={resultsRef}
-          className="absolute z-50 mt-2 w-full bg-white rounded-lg border border-gray-200 shadow-lg max-h-80 overflow-y-auto"
+          className="absolute z-50 mt-2 w-full bg-white/90 backdrop-blur-lg rounded-2xl border border-slate-100 shadow-lg max-h-80 overflow-y-auto"
         >
           <div className="p-2">
-            <p className="text-xs text-gray-500 mb-2 px-2">{results.length} نتیجه یافت شد</p>
+            <p className="text-xs text-apple-gray mb-2 px-3">{results.length} نتیجه یافت شد</p>
             {results.map((tool) => (
               <Link
                 key={tool.id}
                 to={`/tool/${tool.slug}`}
-                className="block px-3 py-2 hover:bg-gray-100 rounded-md transition-colors"
+                className="block px-4 py-3 hover:bg-apple-light-gray rounded-xl transition-colors"
                 onClick={handleItemClick}
               >
                 <div className="flex items-center">
-                  <span className="font-medium text-gray-800">{tool.name}</span>
+                  <span className="font-medium text-apple-dark-gray">{tool.name}</span>
                 </div>
-                <p className="text-xs text-gray-500 line-clamp-1">{tool.description}</p>
+                <p className="text-xs text-apple-gray line-clamp-1 mt-1">{tool.description}</p>
               </Link>
             ))}
           </div>

@@ -31,12 +31,12 @@ export function CategoryCard({ category, count }: CategoryCardProps) {
   
   return (
     <Link to={`/category/${category}`} className="block transition-all duration-300">
-      <div className="category-card group">
-        <div className="icon-container bg-primary/10 transform transition-transform duration-300 group-hover:scale-110">
-          <IconComponent className="text-primary transition-colors duration-300" size={24} />
+      <div className="glass-effect rounded-3xl p-6 flex flex-col items-center group hover:-translate-y-1 hover:shadow-md">
+        <div className="icon-container transform transition-transform duration-300 group-hover:scale-110 rounded-2xl">
+          <IconComponent className="text-apple-blue transition-colors duration-300" size={28} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-1">{categoryLabels[category]}</h3>
-        <p className="text-sm text-gray-500 text-center">{count} ابزار</p>
+        <h3 className="text-lg font-medium text-apple-dark-gray mb-1">{categoryLabels[category]}</h3>
+        <p className="text-sm text-apple-gray text-center">{count} ابزار</p>
       </div>
     </Link>
   );

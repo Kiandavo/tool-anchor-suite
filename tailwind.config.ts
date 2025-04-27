@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,6 +20,7 @@ export default {
 		},
 		fontFamily: {
 			'vazirmatn': ['Vazirmatn', 'sans-serif'],
+			'sf': ['"SF Pro Display"', 'Vazirmatn', 'sans-serif'],
 		},
 		extend: {
 			colors: {
@@ -64,6 +66,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				apple: {
+					blue: '#007AFF',
+					gray: '#8E9196',
+					'light-gray': '#F6F6F7',
+					'dark-gray': '#333333',
+					black: '#000000',
+					white: '#FFFFFF',
 				}
 			},
 			borderRadius: {
@@ -95,13 +105,18 @@ export default {
 				'slide-up': {
 					'0%': { opacity: '0', transform: 'translateY(20px)' },
 					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
-				'slide-up': 'slide-up 0.6s ease-out'
+				'slide-up': 'slide-up 0.6s ease-out',
+				'float': 'float 3s ease-in-out infinite'
 			}
 		}
 	},

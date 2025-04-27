@@ -33,10 +33,10 @@ export function Layout({
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 pb-10">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-apple-light-gray/50 pb-10 font-sf">
       <Header title={title} backUrl={backUrl} isScrolled={isScrolled} />
       
-      <main className="flex-1 container mx-auto px-2 sm:px-4 py-4 sm:py-6 mt-0">
+      <main className="flex-1 container mx-auto px-3 sm:px-6 py-6 sm:py-10 mt-0">
         {children}
       </main>
 

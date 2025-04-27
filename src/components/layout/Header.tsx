@@ -52,22 +52,22 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
   return (
-    <header className={`bg-white shadow-sm py-3 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
-      <div className="container mx-auto px-2 sm:px-4">
+    <header className={`backdrop-blur-lg bg-white/80 py-4 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
+      <div className="container mx-auto px-3 sm:px-6">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-between w-full gap-2">
             {/* Logo on the left */}
             <Link
               to="/"
-              className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center"
+              className="text-xl font-bold text-apple-blue hover:text-apple-blue/80 transition-colors duration-300 flex items-center"
             >
-              <Home size={20} className="ml-2" />
+              <Home size={22} className="ml-2" />
               <span className="hidden md:inline">لنگر</span>
             </Link>
 
             {/* Centered Title */}
             {title && (
-              <h1 className="flex-1 text-base sm:text-lg font-semibold text-gray-800 text-center truncate px-1">
+              <h1 className="flex-1 text-base sm:text-lg font-semibold text-apple-dark-gray text-center truncate px-1">
                 {title}
               </h1>
             )}
@@ -76,7 +76,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {/* Settings on the right */}
               <Link
                 to="/settings"
-                className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center"
+                className="text-apple-gray hover:text-apple-blue transition-colors duration-300 flex items-center"
                 aria-label="تنظیمات"
               >
                 <Settings size={22} />
@@ -86,7 +86,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="flex items-center font-medium text-primary hover:text-primary/70 text-sm px-2 sm:px-3 py-1.5 rounded transition-colors duration-200 border border-transparent hover:border-primary outline-none"
+                  className="flex items-center font-medium text-apple-blue hover:text-apple-blue/70 text-sm px-3 sm:px-4 py-1.5 rounded-full transition-colors duration-200 border border-apple-blue/20 hover:bg-apple-blue/10 outline-none"
                 >
                   <ArrowLeft size={20} className="ml-2" />
                   <span className="hidden sm:inline">بازگشت</span>
