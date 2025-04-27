@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
@@ -56,15 +55,20 @@ const Index = () => {
   
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="text-center py-12 sm:py-16 mb-10 sm:mb-16 glass-effect rounded-3xl animate-fade-in">
-        <h1 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-apple-blue via-apple-blue/90 to-apple-blue/80 bg-clip-text text-transparent">
-          لنگر - مجموعه ابزارهای آنلاین
-        </h1>
-        <p className="text-base max-w-3xl mx-auto leading-relaxed text-apple-dark-gray sm:text-lg px-4">
-          بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. 
-          از ابزارهای متنی و تصویری گرفته تا محاسبه‌گرها و ابزارهای SEO، همه چیز در یک پلتفرم ساده.
-        </p>
+      {/* Hero Section - Updated with more vertical spacing and refined styling */}
+      <section className="text-center py-16 sm:py-20 mb-12 sm:mb-16 glass-effect rounded-3xl animate-fade-in relative overflow-hidden">
+        {/* Decorative gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-apple-blue/5 to-apple-blue/10 opacity-50 -z-10" />
+        
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-apple-blue via-apple-blue/90 to-apple-blue/80 bg-clip-text text-transparent leading-tight">
+            لنگر - مجموعه ابزارهای آنلاین
+          </h1>
+          <p className="text-base max-w-2xl mx-auto leading-relaxed text-apple-dark-gray sm:text-lg px-4 mb-8 opacity-90">
+            بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. 
+            از ابزارهای متنی و تصویری گرفته تا محاسبه‌گرها و ابزارهای SEO، همه چیز در یک پلتفرم ساده.
+          </p>
+        </div>
       </section>
 
       {/* Search Section */}
