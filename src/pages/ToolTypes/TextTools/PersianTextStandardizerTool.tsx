@@ -6,55 +6,47 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { ToolInfoCard } from "@/components/ToolInfoCard";
 import { OutcomeInfoCard } from "@/components/OutcomeInfoCard";
-import { 
-  standardizePersianText, 
-  correctHalfSpaces, 
-  arabicToPersian, 
-  removePersianDiacritics 
-} from "@/utils/textUtils";
 import { useToast } from "@/hooks/use-toast";
+import {
+  standardizePersianText,
+  correctHalfSpaces,
+  arabicToPersian,
+  removePersianDiacritics
+} from '@/utils/text';
 
 export default function PersianTextStandardizerTool() {
   const { toast } = useToast();
-  const [textInput, setTextInput] = useState("");
-  const [textOutput, setTextOutput] = useState("");
-  const [options, setOptions] = useState({
-    fixHalfSpaces: true,
-    convertArabicChars: true,
-    removeDiacritics: false,
-    normalizeSpacing: true
-  });
+  const [textInput, setTextInput] = useState<string>("");
+  const [textOutput, setTextOutput] = useState<string>("");
   const [outcomeMsg, setOutcomeMsg] = useState<string | null>(null);
+  const [options, setOptions] = useState({
+    correctSpaces: true,
+    fixArabicChars: true,
+    removeDiacritics: false,
+  });
 
   const handleProcess = () => {
     if (!textInput.trim()) {
       setOutcomeMsg("لطفاً متن مورد نظر را وارد کنید.");
       return;
     }
-    
-    let result = textInput;
-    
-    if (options.convertArabicChars) {
-      result = arabicToPersian(result);
+
+    let processedText = textInput;
+
+    if (options.fixArabicChars) {
+      processedText = arabicToPersian(processedText);
     }
-    
-    if (options.fixHalfSpaces) {
-      result = correctHalfSpaces(result);
+
+    if (options.correctSpaces) {
+      processedText = correctHalfSpaces(processedText);
     }
-    
+
     if (options.removeDiacritics) {
-      result = removePersianDiacritics(result);
+      processedText = removePersianDiacritics(processedText);
     }
-    
-    if (options.normalizeSpacing) {
-      // Normalize spaces
-      result = result.replace(/\s+/g, ' ');
-      // Add space after punctuation if not present
-      result = result.replace(/([.،؛:!؟])([\S])/g, '$1 $2');
-    }
-    
-    setTextOutput(result);
-    setOutcomeMsg("متن فارسی با موفقیت استاندارد شد.");
+
+    setTextOutput(processedText);
+    setOutcomeMsg("متن با موفقیت استاندارد سازی شد.");
   };
 
   const handleCopy = () => {
@@ -68,75 +60,64 @@ export default function PersianTextStandardizerTool() {
     }
   };
 
-  const toggleOption = (option: keyof typeof options) => {
-    setOptions(prev => ({
-      ...prev,
-      [option]: !prev[option]
-    }));
-  };
-
   return (
     <div dir="rtl" className="flex flex-col items-stretch gap-4">
       <ToolInfoCard
         name="استانداردسازی متن فارسی"
-        description="این ابزار متن فارسی را بر اساس استانداردهای نگارش فارسی اصلاح می‌کند. شما می‌توانید انتخاب کنید کدام ویژگی‌های استانداردسازی اعمال شوند."
+        description="این ابزار متن فارسی را با توجه به انتخاب‌های شما استاندارد می‌کند. می‌توانید تصحیح نیم‌فاصله‌ها، تبدیل کاراکترهای عربی به فارسی و حذف اعراب را انتخاب کنید."
       />
-      
-      <div className="flex flex-col gap-2 p-4 bg-gray-50 rounded-md">
-        <div className="text-lg font-semibold mb-2">گزینه‌های استانداردسازی:</div>
-        <div className="flex items-center space-x-2 space-x-reverse">
-          <Checkbox 
-            id="fixHalfSpaces" 
-            checked={options.fixHalfSpaces} 
-            onCheckedChange={() => toggleOption('fixHalfSpaces')} 
-          />
-          <Label htmlFor="fixHalfSpaces">تصحیح نیم‌فاصله‌ها</Label>
-        </div>
-        
-        <div className="flex items-center space-x-2 space-x-reverse">
-          <Checkbox 
-            id="convertArabicChars" 
-            checked={options.convertArabicChars} 
-            onCheckedChange={() => toggleOption('convertArabicChars')} 
-          />
-          <Label htmlFor="convertArabicChars">تبدیل حروف عربی به فارسی (ي به ی، ك به ک)</Label>
-        </div>
-        
-        <div className="flex items-center space-x-2 space-x-reverse">
-          <Checkbox 
-            id="removeDiacritics" 
-            checked={options.removeDiacritics} 
-            onCheckedChange={() => toggleOption('removeDiacritics')} 
-          />
-          <Label htmlFor="removeDiacritics">حذف اِعراب (فتحه، کسره، ضمه و...)</Label>
-        </div>
-        
-        <div className="flex items-center space-x-2 space-x-reverse">
-          <Checkbox 
-            id="normalizeSpacing" 
-            checked={options.normalizeSpacing} 
-            onCheckedChange={() => toggleOption('normalizeSpacing')} 
-          />
-          <Label htmlFor="normalizeSpacing">استانداردسازی فاصله‌ها (بعد از نقطه و علائم نگارشی)</Label>
-        </div>
-      </div>
-      
+
       <Textarea
         placeholder="متن فارسی خود را وارد کنید..."
         value={textInput}
         onChange={(e) => setTextInput(e.target.value)}
         rows={7}
       />
-      <Button type="button" onClick={handleProcess}>استانداردسازی متن</Button>
+
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center space-x-2 space-x-reverse">
+          <Checkbox 
+            id="correctSpaces" 
+            checked={options.correctSpaces}
+            onCheckedChange={(checked) => setOptions({...options, correctSpaces: !!checked})}
+          />
+          <Label htmlFor="correctSpaces">تصحیح نیم‌فاصله‌ها</Label>
+        </div>
+        
+        <div className="flex items-center space-x-2 space-x-reverse">
+          <Checkbox 
+            id="fixArabicChars" 
+            checked={options.fixArabicChars}
+            onCheckedChange={(checked) => setOptions({...options, fixArabicChars: !!checked})}
+          />
+          <Label htmlFor="fixArabicChars">تبدیل کاراکترهای عربی به فارسی</Label>
+        </div>
+        
+        <div className="flex items-center space-x-2 space-x-reverse">
+          <Checkbox 
+            id="removeDiacritics" 
+            checked={options.removeDiacritics}
+            onCheckedChange={(checked) => setOptions({...options, removeDiacritics: !!checked})}
+          />
+          <Label htmlFor="removeDiacritics">حذف اعراب (حرکت‌های حروف)</Label>
+        </div>
+      </div>
+
+      <Button type="button" onClick={handleProcess}>
+        استانداردسازی متن
+      </Button>
+      
       <Textarea
         value={textOutput}
         readOnly
         rows={7}
-        placeholder="متن استاندارد شده اینجا نمایش داده خواهد شد..."
+        placeholder="خروجی اینجا نمایش داده خواهد شد..."
       />
+      
       <Button type="button" variant="outline" onClick={handleCopy} disabled={!textOutput}>
         کپی متن استاندارد شده
       </Button>
+      
       {outcomeMsg && <OutcomeInfoCard outcome={outcomeMsg} />}
     </div>
   );

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Textarea } from "@/components/ui/textarea";
-import { countCharacters, countWords, countSentences, countParagraphs, calculateReadingTime } from "@/utils/text";
+import { countChars, countWords, countSentences, countParagraphs, calculateReadingTime } from "@/utils/text";
 
 interface TextCounterProps {
   textInput: string;
@@ -10,8 +10,8 @@ interface TextCounterProps {
 
 export function TextCounter({ textInput, setTextInput }: TextCounterProps) {
   const textStats = {
-    characters: countCharacters(textInput),
-    charactersNoSpaces: countCharacters(textInput.replace(/\s+/g, '')),
+    characters: countChars(textInput),
+    charactersNoSpaces: countChars(textInput.replace(/\s+/g, '')),
     words: countWords(textInput),
     sentences: countSentences(textInput),
     paragraphs: countParagraphs(textInput),

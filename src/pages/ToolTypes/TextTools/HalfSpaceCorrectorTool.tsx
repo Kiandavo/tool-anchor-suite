@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ToolInfoCard } from "@/components/ToolInfoCard";
 import { OutcomeInfoCard } from "@/components/OutcomeInfoCard";
-import { correctHalfSpaces } from "@/utils/textUtils";
+import { correctHalfSpaces } from "@/utils/text";
 import { useToast } from "@/hooks/use-toast";
 
 export default function HalfSpaceCorrectorTool() {

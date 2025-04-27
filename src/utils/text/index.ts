@@ -15,7 +15,16 @@ import {
   calculateReadingTime 
 } from './textStats';
 import { finglishToPersian } from './finglishConverter';
-import { generateRandomText } from './randomText';
+import { generateRandomString, generateRandomText, pickRandomFromList } from './randomText';
+import {
+  persianToEnglishNumbers,
+  englishToPersianNumbers,
+  correctHalfSpaces,
+  persianKeyboardConverter,
+  standardizePersianText,
+  arabicToPersian,
+  removePersianDiacritics
+} from './persianTextUtils';
 import { 
   calculateWordCount,
   calculateCharacterCount,
@@ -41,7 +50,8 @@ import {
   englishNumberToPersian,
   removeNonPersianCharacters,
   normalizePersianText,
-  generateLoremIpsum
+  generateLoremIpsum,
+  countSentences as textUtilsCountSentences
 } from './textUtils';
 
 // We rename the imported functions to avoid conflicts
@@ -66,7 +76,9 @@ export {
   
   // Special utilities
   finglishToPersian,
+  generateRandomString,
   generateRandomText,
+  pickRandomFromList,
   
   // Export from textUtils.ts
   calculateWordCount,
@@ -94,8 +106,17 @@ export {
   englishNumberToPersian,
   removeNonPersianCharacters,
   normalizePersianText,
-  generateLoremIpsum
+  generateLoremIpsum,
+  
+  // Persian utilities
+  persianToEnglishNumbers,
+  englishToPersianNumbers,
+  correctHalfSpaces,
+  persianKeyboardConverter,
+  standardizePersianText,
+  arabicToPersian,
+  removePersianDiacritics
 };
 
 // Export countSentences only from textUtils to avoid conflicts
-export { countSentences } from './textUtils';
+export { textUtilsCountSentences as countSentences };
