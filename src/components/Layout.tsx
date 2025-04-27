@@ -54,6 +54,10 @@ export function Layout({
     meta.httpEquiv = 'Content-Security-Policy';
     meta.content = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://*.api.com;";
     document.head.appendChild(meta);
+    
+    // Set RTL direction dynamically
+    document.documentElement.dir = "rtl";
+    document.body.classList.add("rtl");
 
     return () => {
       document.head.removeChild(meta);
@@ -61,7 +65,7 @@ export function Layout({
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50/30 pb-16 font-sf">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50/30 pb-16 font-sf" dir="rtl">
       <MemoizedHeader title={title} backUrl={backUrl} isScrolled={isScrolled} />
       
       <main className="flex-1 container mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16 mt-0 max-w-[1400px]">

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Settings, Home } from 'lucide-react';
+import { ArrowRight, Settings, Home } from 'lucide-react';
 
 interface HeaderProps {
   title?: string;
@@ -84,7 +84,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                   onClick={handleBack}
                   className="flex items-center font-medium text-primary hover:text-primary/70 text-sm px-4 py-2 rounded-full transition-colors duration-200 border border-primary/20 hover:bg-primary/10"
                 >
-                  <ArrowLeft size={18} className="ml-2" />
+                  <ArrowRight size={18} className="ml-2" />
                   <span className="hidden sm:inline">بازگشت</span>
                 </button>
               ) : null}

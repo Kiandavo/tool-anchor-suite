@@ -51,4 +51,17 @@
   .vibrant-card {
     @apply neo-glass rounded-2xl p-6 transition-all duration-300 hover:shadow-md;
   }
+  
+  /* RTL specific utility classes */
+  .rtl-flip {
+    @apply scale-x-[-1];
+  }
+  
+  .rtl-space-x {
+    @apply space-x-reverse;
+  }
+  
+  .rtl-margin {
+    @apply mr-auto ml-0;
+  }
 }
