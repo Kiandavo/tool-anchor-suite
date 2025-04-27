@@ -14,13 +14,12 @@ export const characterMappings: Record<string, string> = {
   'th': 'ث',
   
   // Special Persian characters
-  'gh': 'ق',
+  'q': 'ق',
   's\'': 'ص',
   'z\'': 'ض',
   't\'': 'ط',
   'h\'': 'ح',
   'kh\'': 'خ',
-  'zh': 'ژ',
   'ä': 'ع',
   '\'': 'ع',
   
@@ -41,7 +40,6 @@ export const characterMappings: Record<string, string> = {
   'n': 'ن',
   'o': 'و',
   'p': 'پ',
-  'q': 'ق',
   'r': 'ر',
   's': 'س',
   't': 'ت',
