@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
-// Using public path for the image
-import laangarLogo from '../../assets/logo.png';
+import laangarLogo from '@/assets/logo.svg';
 
 interface HeaderProps {
   title?: string;
@@ -66,16 +65,18 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
             {/* Logo in the center */}
             <div className="absolute left-1/2 transform -translate-x-1/2">
-              {/* Fallback to placeholder image if logo can't be loaded */}
-              <img 
-                src="https://via.placeholder.com/150x50?text=Laangar" 
-                alt="Laangar Logo" 
-                className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-300"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "https://via.placeholder.com/150x50?text=Laangar";
-                }}
-              />
+              <Link to="/">
+                <img 
+                  src={laangarLogo}
+                  alt="Langar Logo" 
+                  className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.onerror = null;
+                    target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='50'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui' font-size='16' fill='%23666'%3ELangar%3C/text%3E%3C/svg%3E";
+                  }}
+                />
+              </Link>
             </div>
 
             <div className="flex gap-4 items-center">
