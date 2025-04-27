@@ -101,35 +101,35 @@ export const HafezFortune = () => {
       <div className="grid md:grid-cols-2 gap-3">
         {/* Hafez Fortune Card */}
         <Card className="bg-[#f7f1e3] border-[#d1b980] shadow-sm overflow-hidden">
-          <CardHeader className="bg-[#d1b980] text-center pb-2">
+          <CardHeader className="bg-[#d1b980] text-center pb-2 py-2">
             <div className="flex items-center justify-center">
-              <Book className="text-[#5c3f14] mr-2" size={18} />
-              <h2 className="text-base font-bold text-[#5c3f14]">فال حافظ</h2>
+              <Book className="text-[#5c3f14] mr-2" size={16} />
+              <h2 className="text-sm font-bold text-[#5c3f14]">فال حافظ</h2>
             </div>
           </CardHeader>
           
-          <CardContent className="pt-3 px-3 md:px-4 min-h-[120px] flex flex-col justify-center">
+          <CardContent className="pt-2 px-3 min-h-[100px] flex flex-col justify-center">
             {currentPoem ? (
-              <div className={`text-center space-y-3 ${isAnimating ? 'opacity-50' : ''}`}>
-                <p className="text-[#5c3f14] text-sm font-medium leading-6">{currentPoem.verse}</p>
-                <div className="h-px bg-[#d1b980] my-1.5 mx-auto w-2/3"></div>
-                <p className="text-gray-700 text-xs">{currentPoem.interpretation}</p>
+              <div className={`text-center space-y-2 ${isAnimating ? 'opacity-50' : ''}`}>
+                <p className="text-[#5c3f14] text-xs font-medium leading-5">{currentPoem.verse}</p>
+                <div className="h-px bg-[#d1b980] my-1 mx-auto w-2/3"></div>
+                <p className="text-gray-700 text-[10px]">{currentPoem.interpretation}</p>
               </div>
             ) : (
-              <div className="text-center text-gray-600 text-sm">
+              <div className="text-center text-gray-600 text-xs">
                 <p>برای گرفتن فال حافظ، نیت کنید و دکمه زیر را بزنید.</p>
               </div>
             )}
           </CardContent>
           
-          <CardFooter className="flex justify-between pt-2 pb-3">
+          <CardFooter className="flex justify-between pt-1 pb-2">
             <Button 
               onClick={getRandomHafezFortune} 
               disabled={isAnimating}
               size="sm" 
-              className="bg-[#d1b980] hover:bg-[#c4a76b] text-[#5c3f14] text-xs"
+              className="bg-[#d1b980] hover:bg-[#c4a76b] text-[#5c3f14] text-[10px] h-7 px-2"
             >
-              {isAnimating ? <RefreshCw className="animate-spin mr-1" size={14} /> : null}
+              {isAnimating ? <RefreshCw className="animate-spin mr-1" size={12} /> : null}
               گرفتن فال
             </Button>
             
@@ -138,9 +138,9 @@ export const HafezFortune = () => {
                 variant="outline"
                 size="sm"
                 onClick={copyPoem} 
-                className="border-[#d1b980] text-[#5c3f14] text-xs"
+                className="border-[#d1b980] text-[#5c3f14] text-[10px] h-7 px-2"
               >
-                <Copy size={14} className="mr-1" />
+                <Copy size={12} className="mr-1" />
                 کپی فال
               </Button>
             )}
@@ -149,33 +149,33 @@ export const HafezFortune = () => {
         
         {/* Daily Fortune Card */}
         <Card className="bg-[#e3f0f7] border-[#80abd1] shadow-sm overflow-hidden">
-          <CardHeader className="bg-[#80abd1] text-center pb-2">
+          <CardHeader className="bg-[#80abd1] text-center pb-2 py-2">
             <div className="flex items-center justify-center">
-              <span className="mr-2 text-[#143a5c]">✨</span>
-              <h2 className="text-base font-bold text-[#143a5c]">شانس روزانه</h2>
+              <span className="mr-2 text-[#143a5c] text-sm">✨</span>
+              <h2 className="text-sm font-bold text-[#143a5c]">شانس روزانه</h2>
             </div>
           </CardHeader>
           
-          <CardContent className="pt-3 px-3 md:px-4 min-h-[120px] flex flex-col justify-center">
+          <CardContent className="pt-2 px-3 min-h-[100px] flex flex-col justify-center">
             {dailyFortune ? (
               <div className={`text-center ${isAnimating ? 'opacity-50' : ''}`}>
-                <p className="text-[#143a5c] text-sm font-medium leading-6">{dailyFortune}</p>
+                <p className="text-[#143a5c] text-xs font-medium leading-5">{dailyFortune}</p>
               </div>
             ) : (
-              <div className="text-center text-gray-600 text-sm">
+              <div className="text-center text-gray-600 text-xs">
                 <p>برای دیدن شانس امروز خود، دکمه زیر را بزنید.</p>
               </div>
             )}
           </CardContent>
           
-          <CardFooter className="flex justify-center pt-2 pb-3">
+          <CardFooter className="flex justify-center pt-1 pb-2">
             <Button 
               onClick={getDailyFortune} 
               disabled={isAnimating}
               size="sm"
-              className="bg-[#80abd1] hover:bg-[#6b94c4] text-[#143a5c] text-xs"
+              className="bg-[#80abd1] hover:bg-[#6b94c4] text-[#143a5c] text-[10px] h-7 px-2"
             >
-              {isAnimating ? <RefreshCw className="animate-spin mr-1" size={14} /> : null}
+              {isAnimating ? <RefreshCw className="animate-spin mr-1" size={12} /> : null}
               شانس امروز من
             </Button>
           </CardFooter>
