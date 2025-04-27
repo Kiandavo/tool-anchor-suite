@@ -1,6 +1,6 @@
 
 export const characterMappings: Record<string, string> = {
-  // Multi-character mappings
+  // Multi-character mappings (must be processed first)
   'kh': 'خ',
   'gh': 'غ',
   'ch': 'چ',
@@ -10,6 +10,19 @@ export const characterMappings: Record<string, string> = {
   'ee': 'ی',
   'oo': 'و',
   'ou': 'و',
+  'ph': 'ف',
+  'th': 'ث',
+  
+  // Special Persian characters
+  'gh': 'ق',
+  's\'': 'ص',
+  'z\'': 'ض',
+  't\'': 'ط',
+  'h\'': 'ح',
+  'kh\'': 'خ',
+  'zh': 'ژ',
+  'ä': 'ع',
+  '\'': 'ع',
   
   // Single character mappings
   'a': 'ا',
@@ -39,6 +52,18 @@ export const characterMappings: Record<string, string> = {
   'y': 'ی',
   'z': 'ز',
   
+  // Vowels variations
+  'ā': 'آ',
+  'â': 'آ',
+  'ō': 'او',
+  'ū': 'او',
+  'ī': 'ای',
+  'ē': 'ای',
+  'é': 'ای',
+  'è': 'ه',
+  'ö': 'او',
+  'ü': 'او',
+  
   // Numbers and punctuation
   '?': '؟',
   ',': '،',
@@ -53,4 +78,14 @@ export const characterMappings: Record<string, string> = {
   '8': '۸',
   '9': '۹',
   '0': '۰',
+  
+  // Special connectors
+  '-e': '‌ی ',
+  '-ye': '‌یی ',
+  '-am': '‌ام',
+  '-at': '‌ات',
+  '-ash': '‌اش',
+  '-eman': '‌مان',
+  '-etan': '‌تان',
+  '-eshan': '‌شان',
 };

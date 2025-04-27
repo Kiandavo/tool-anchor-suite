@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { CategoryCard } from '@/components/CategoryCard';
@@ -9,6 +10,8 @@ import { finglishToPersian } from '@/utils/textUtils';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { SearchBar } from '@/components/SearchBar';
+import { HafezFortune } from '@/components/HafezFortune';
+
 const Index = () => {
   const navigate = useNavigate();
   // Finglish to Farsi (Home page instant converter state)
@@ -50,7 +53,9 @@ const Index = () => {
   const getSearchResults = (query: string) => {
     return searchTools(query).slice(0, 5); // Limit to 5 results for the dropdown
   };
-  return <Layout>
+  
+  return (
+    <Layout>
       {/* Hero Section */}
       <section className="text-center py-8 sm:py-12 mb-8 sm:mb-10 bg-white dark:bg-gray-800 rounded-xl shadow-sm animate-fade-in">
         <h1 className="text-3xl sm:text-4xl font-bold mb-2 sm:mb-4 text-blue-700">لنگر - مجموعه ابزارهای آنلاین</h1>
@@ -62,18 +67,21 @@ const Index = () => {
 
       {/* Search Section */}
       <section className="max-w-2xl mx-auto mb-8 animate-fade-in" style={{
-      animationDelay: '0.05s'
-    }}>
+        animationDelay: '0.05s'
+      }}>
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 text-center">جستجوی ابزار</h2>
           <SearchBar onSearch={handleSearch} placeholder="نام ابزار مورد نظر را وارد کنید..." getResults={getSearchResults} showInlineResults={true} />
         </div>
       </section>
 
+      {/* Hafez Fortune and Daily Luck Section */}
+      <HafezFortune />
+
       {/* Random Tool Section */}
       <section className="mb-6 max-w-2xl mx-auto w-full animate-fade-in" style={{
-      animationDelay: '0.1s'
-    }}>
+        animationDelay: '0.1s'
+      }}>
         <div className="w-full">
           <div className="flex items-center gap-2 text-primary mb-2 mr-2">
             <span className="font-semibold text-sm">ابزار تصادفی امروز</span>
@@ -109,20 +117,20 @@ const Index = () => {
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800 dark:text-gray-100">دسته‌بندی‌ها</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
           {categoryCounts.map(({
-          category,
-          count
-        }, index) => <div key={category} className="animate-fade-in" style={{
-          animationDelay: `${index * 0.1}s`
-        }}>
-              <CategoryCard category={category} count={count} />
-            </div>)}
+            category,
+            count
+          }, index) => <div key={category} className="animate-fade-in" style={{
+            animationDelay: `${index * 0.1}s`
+          }}>
+                <CategoryCard category={category} count={count} />
+              </div>)}
         </div>
       </section>
 
       {/* New Tools */}
       <section className="mb-10 sm:mb-12 animate-slide-up rounded-xl border border-[#8cc55b]/30 bg-[#F2FCE2]" style={{
-      animationDelay: '0.2s'
-    }}>
+        animationDelay: '0.2s'
+      }}>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-3 sm:mb-6 px-4 sm:px-6 pt-6">
           <div className="flex items-center">
             <Sparkles size={20} className="text-[#8cc55b] ml-2" />
@@ -135,17 +143,17 @@ const Index = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6 pb-6">
           {newTools.map((tool, index) => <div key={tool.id} className="animate-fade-in" style={{
-          animationDelay: `${0.3 + index * 0.1}s`
-        }}>
-              <ToolCard tool={tool} highlight />
-            </div>)}
+            animationDelay: `${0.3 + index * 0.1}s`
+          }}>
+                <ToolCard tool={tool} highlight />
+              </div>)}
         </div>
       </section>
 
       {/* Popular Tools */}
       <section className="mb-10 sm:mb-12 animate-slide-up" style={{
-      animationDelay: '0.4s'
-    }}>
+        animationDelay: '0.4s'
+      }}>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-3 sm:mb-6">
           <div className="flex items-center">
             <TrendingUp size={20} className="text-primary ml-2" />
@@ -158,12 +166,13 @@ const Index = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {popularTools.map((tool, index) => <div key={tool.id} className="animate-fade-in" style={{
-          animationDelay: `${0.5 + index * 0.1}s`
-        }}>
-              <ToolCard tool={tool} />
-            </div>)}
+            animationDelay: `${0.5 + index * 0.1}s`
+          }}>
+                <ToolCard tool={tool} />
+              </div>)}
         </div>
       </section>
-    </Layout>;
+    </Layout>
+  );
 };
 export default Index;

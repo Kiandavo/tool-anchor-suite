@@ -4,263 +4,361 @@ export const textTools: Tool[] = [
   {
     id: "1",
     slug: "text-counter",
-    name: "شمارشگر متن",
+    name: "شمارنده متن",
     category: "text",
-    description: "تعداد کلمات، حروف و پاراگراف ها را بشمارید",
-    isNew: true,
-    icon: "text-size"
-  },
-  {
-    id: "13",
-    slug: "text-reverse",
-    name: "معکوس کننده متن",
-    category: "text",
-    description: "متن را وارونه کنید",
+    description: "شمارش تعداد کلمات و حروف متن",
     isNew: false,
-    icon: "type"
+    icon: "pilcrow"
   },
   {
-    id: "14",
-    slug: "latin-to-persian-convertor",
-    name: "تبدیل لاتین به فارسی",
+    id: "2",
+    slug: "case-converter",
+    name: "تبدیل کننده حروف",
     category: "text",
-    description: "متون فینگلیش را به فارسی تبدیل کنید",
+    description: "تغییر حالت حروف متن (بزرگ، کوچک و ...)",
     isNew: false,
-    icon: "type"
-  },
-  // New Persian Text Tools
-  {
-    id: "201",
-    slug: "persian-half-space-corrector",
-    name: "تصحیح‌کننده نیم‌فاصله",
-    category: "text",
-    description: "نیم‌فاصله‌های متن فارسی را اصلاح کنید",
-    isNew: true,
-    icon: "edit"
+    icon: "arrow-up-down"
   },
   {
-    id: "202",
-    slug: "persian-keyboard-converter",
-    name: "تبدیل صفحه‌کلید فارسی",
-    category: "text",
-    description: "متنی که با صفحه‌کلید فارسی تایپ شده را تبدیل کنید",
-    isNew: true,
-    icon: "settings"
-  },
-  {
-    id: "203",
-    slug: "persian-number-converter",
-    name: "تبدیل اعداد فارسی/انگلیسی",
-    category: "text",
-    description: "اعداد فارسی به انگلیسی و برعکس",
-    isNew: true,
-    icon: "edit"
-  },
-  {
-    id: "204",
-    slug: "persian-text-standardizer",
-    name: "استانداردساز متن فارسی",
-    category: "text",
-    description: "متن فارسی را بر اساس استانداردهای نگارش اصلاح کنید",
-    isNew: true,
-    icon: "file-text"
-  },
-  {
-    id: "15",
-    slug: "remove-duplicate-lines",
-    name: "حذف خطوط تکراری",
-    category: "text",
-    description: "خطوط تکراری را از متن حذف کنید",
-    isNew: false,
-    icon: "filter"
-  },
-  {
-    id: "16",
-    slug: "text-sorter",
-    name: "مرتب‌ساز خطوط متن",
-    category: "text",
-    description: "خطوط متنی را مرتب کنید",
-    isNew: false,
-    icon: "filter"
-  },
-  {
-    id: "17",
-    slug: "text-trimmer",
-    name: "حذف فاصله‌ها",
-    category: "text",
-    description: "حذف فاصله‌های ابتدا و انتهای هر خط متن",
-    isNew: false,
-    icon: "type"
-  },
-  {
-    id: "18",
-    slug: "slug-generator",
-    name: "ایجاد اسلاگ",
-    category: "text",
-    description: "تولید اسلاگ URL-friendly از متن",
-    isNew: false,
-    icon: "hash"
-  },
-  {
-    id: "19",
-    slug: "text-uppercasing",
-    name: "تبدیل به حروف بزرگ",
-    category: "text",
-    description: "تبدیل متن به حالت حروف بزرگ",
-    isNew: false,
-    icon: "type"
-  },
-  {
-    id: "20",
-    slug: "text-lowercasing",
-    name: "تبدیل به حروف کوچک",
-    category: "text",
-    description: "تبدیل متن به حالت حروف کوچک",
-    isNew: false,
-    icon: "type"
-  },
-  {
-    id: "21",
-    slug: "text-titlecase",
-    name: "حالت عنوان",
-    category: "text",
-    description: "هر کلمه با حرف بزرگ شروع شود",
-    isNew: false,
-    icon: "type"
-  },
-  {
-    id: "22",
+    id: "3",
     slug: "remove-empty-lines",
     name: "حذف خطوط خالی",
     category: "text",
-    description: "خطوط خالی را از متن حذف کنید",
+    description: "حذف خطوط خالی و اضافی از متن",
     isNew: false,
-    icon: "filter"
+    icon: "minus"
   },
   {
-    id: "23",
-    slug: "emoji-remover",
-    name: "حذف ایموجی از متن",
+    id: "4",
+    slug: "text-reverse",
+    name: "معکوس کننده متن",
     category: "text",
-    description: "ایموجی‌های متن را حذف کنید",
+    description: "معکوس کردن ترتیب حروف یا کلمات متن",
     isNew: false,
-    icon: "filter"
+    icon: "rotate-ccw"
   },
   {
-    id: "75",
-    slug: "uppercase-finder",
-    name: "تبدیل به حروف بزرگ ویژه",
+    id: "5",
+    slug: "text-repeater",
+    name: "تکرار کننده متن",
     category: "text",
-    description: "متن خود را به فرمت حروف بزرگ ویژه تبدیل کنید",
+    description: "تکرار یک متن به تعداد دلخواه",
     isNew: false,
-    icon: "type"
+    icon: "redo"
   },
   {
-    id: "86",
-    slug: "character-remover",
-    name: "حذف کاراکتر خاص",
+    id: "7",
+    slug: "random-text-generator",
+    name: "تولید کننده متن تصادفی",
     category: "text",
-    description: "هر کاراکتری که بخواهید را از متن حذف کنید",
-    isNew: false,
-    icon: "filter"
-  },
-  {
-    id: "87",
-    slug: "word-replacer",
-    name: "جایگزین‌گر واژه",
-    category: "text",
-    description: "یک واژه را با واژه‌ای دیگر جایگزین کنید",
-    isNew: false,
-    icon: "filter"
-  },
-  {
-    id: "89",
-    slug: "random-paragraph-generator",
-    name: "تولید پاراگراف تصادفی",
-    category: "text",
-    description: "تولید خودکار پاراگراف برای تست و محتوا",
+    description: "ایجاد متن تصادفی برای نمونه سازی و تست",
     isNew: false,
     icon: "dice"
   },
   {
-    id: "93",
-    slug: "capitalize-tool",
-    name: "ابزار بزرگ‌کردن حروف اول",
+    id: "8",
+    slug: "quotes-generator",
+    name: "تولید کننده نقل قول",
     category: "text",
-    description: "حرف اول هر واژه را بزرگ کنید",
+    description: "نمایش نقل قول های تصادفی از افراد مشهور",
     isNew: false,
-    icon: "type"
+    icon: "open-quote"
+  },
+  {
+    id: "9",
+    slug: "persian-text-analyzer",
+    name: "تحلیلگر متن فارسی",
+    category: "text",
+    description: "تحلیل و بررسی ویژگی های متن فارسی",
+    isNew: false,
+    icon: "activity"
+  },
+  {
+    id: "10",
+    slug: "persian-word-counter",
+    name: "شمارشگر کلمات فارسی",
+    category: "text",
+    description: "شمارش تعداد کلمات در متن فارسی",
+    isNew: false,
+    icon: "list"
+  },
+  {
+    id: "74",
+    slug: "url-encoder",
+    name: "انکودر URL",
+    category: "text",
+    description: "تبدیل متن به فرمت URL-encoded",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "75",
+    slug: "url-decoder",
+    name: "دی‌کودر URL",
+    category: "text",
+    description: "تبدیل URL-encoded به متن اصلی",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "76",
+    slug: "html-encoder",
+    name: "انکودر HTML",
+    category: "text",
+    description: "تبدیل متن به فرمت HTML-encoded",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "78",
+    slug: "html-decoder",
+    name: "دی‌کودر HTML",
+    category: "text",
+    description: "تبدیل HTML-encoded به متن اصلی",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "79",
+    slug: "base64-encoder",
+    name: "انکودر Base64",
+    category: "text",
+    description: "تبدیل متن به فرمت Base64",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "80",
+    slug: "base64-decoder",
+    name: "دی‌کودر Base64",
+    category: "text",
+    description: "تبدیل Base64 به متن اصلی",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "81",
+    slug: "json-formatter",
+    name: "فرمت‌دهی JSON",
+    category: "text",
+    description: "فرمت‌دهی و خوانا کردن کد JSON",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "82",
+    slug: "css-formatter",
+    name: "فرمت‌دهی CSS",
+    category: "text",
+    description: "فرمت‌دهی و خوانا کردن کد CSS",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "83",
+    slug: "javascript-formatter",
+    name: "فرمت‌دهی JavaScript",
+    category: "text",
+    description: "فرمت‌دهی و خوانا کردن کد JavaScript",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "84",
+    slug: "sql-formatter",
+    name: "فرمت‌دهی SQL",
+    category: "text",
+    description: "فرمت‌دهی و خوانا کردن کد SQL",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "85",
+    slug: "xml-formatter",
+    name: "فرمت‌دهی XML",
+    category: "text",
+    description: "فرمت‌دهی و خوانا کردن کد XML",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "86",
+    slug: "markdown-formatter",
+    name: "فرمت‌دهی Markdown",
+    category: "text",
+    description: "فرمت‌دهی و خوانا کردن کد Markdown",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "87",
+    slug: "text-diff-checker",
+    name: "مقایسه متن",
+    category: "text",
+    description: "مقایسه دو متن و نمایش تفاوت‌ها",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "88",
+    slug: "lorem-ipsum-generator",
+    name: "تولید کننده Lorem Ipsum",
+    category: "text",
+    description: "تولید متن تصادفی Lorem Ipsum",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "89",
+    slug: "string-to-array",
+    name: "تبدیل رشته به آرایه",
+    category: "text",
+    description: "تبدیل یک رشته متنی به آرایه‌ای از کلمات یا کاراکترها",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "90",
+    slug: "array-to-string",
+    name: "تبدیل آرایه به رشته",
+    category: "text",
+    description: "تبدیل یک آرایه از کلمات یا کاراکترها به یک رشته متنی",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "91",
+    slug: "text-to-binary",
+    name: "تبدیل متن به باینری",
+    category: "text",
+    description: "تبدیل متن به کد باینری",
+    isNew: false,
+    icon: "code"
+  },
+  {
+   id: "93",
+    slug: "binary-to-text",
+    name: "تبدیل باینری به متن",
+    category: "text",
+    description: "تبدیل کد باینری به متن",
+    isNew: false,
+    icon: "code"
   },
   {
     id: "94",
-    slug: "advanced-text-analyzer",
-    name: "آنالیز متن پیشرفته",
+    slug: "celsius-to-fahrenheit",
+    name: "تبدیل سانتیگراد به فارنهایت",
     category: "text",
-    description: "آمار و داده های کامل متن را مشاهده کنید",
+    description: "تبدیل درجه حرارت از سانتیگراد به فارنهایت",
     isNew: false,
-    icon: "type"
+    icon: "code"
   },
   {
     id: "95",
-    slug: "bulk-slug-generator",
-    name: "تولید اسلاگ گروهی",
+    slug: "fahrenheit-to-celsius",
+    name: "تبدیل فارنهایت به سانتیگراد",
     category: "text",
-    description: "برای لیستی از متون اسلاگ تولید کنید",
+    description: "تبدیل درجه حرارت از فارنهایت به سانتیگراد",
     isNew: false,
-    icon: "hash"
+    icon: "code"
+  },
+  {
+    id: "96",
+    slug: "text-reverser",
+    name: "معکوس کننده متن",
+    category: "text",
+    description: "معکوس کردن متن",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "97",
+    slug: "word-counter",
+    name: "شمارشگر کلمات",
+    category: "text",
+    description: "شمارش تعداد کلمات در یک متن",
+    isNew: false,
+    icon: "code"
   },
   {
     id: "98",
-    slug: "filter-lines-tool",
-    name: "فیلترکننده خطوط",
+    slug: "character-counter",
+    name: "شمارشگر کاراکترها",
     category: "text",
-    description: "خطوط شامل یک عبارت خاص را فیلتر کنید",
+    description: "شمارش تعداد کاراکترها در یک متن",
     isNew: false,
-    icon: "filter"
+    icon: "code"
+  },
+  {
+    id: "99",
+    slug: "line-counter",
+    name: "شمارشگر خطوط",
+    category: "text",
+    description: "شمارش تعداد خطوط در یک متن",
+    isNew: false,
+    icon: "code"
+  },
+  {
+    id: "100",
+    slug: "paragraph-counter",
+    name: "شمارشگر پاراگراف‌ها",
+    category: "text",
+    description: "شمارش تعداد پاراگراف‌ها در یک متن",
+    isNew: false,
+    icon: "code"
   },
   {
     id: "102",
-    slug: "emoji-text-inserter",
-    name: "درج ایموجی به متن",
+    slug: "text-summarizer",
+    name: "خلاصه‌ساز متن",
     category: "text",
-    description: "به متن خود ایموجی اضافه کنید",
-    isNew: false,
-    icon: "filter"
+    description: "خلاصه‌سازی متون طولانی",
+    isNew: true,
+    icon: "code"
   },
   {
     id: "103",
-    slug: "remove-html-tags",
-    name: "حذف تگ HTML",
+    slug: "grammar-checker",
+    name: "بررسی کننده گرامر",
     category: "text",
-    description: "تگ های HTML را از متن حذف کنید",
-    isNew: false,
-    icon: "filter"
+    description: "بررسی و تصحیح گرامر متون",
+    isNew: true,
+    icon: "code"
   },
   {
-    id: "107",
-    slug: "mirror-text",
-    name: "متن آینه‌ای",
+    id: "104",
+    slug: "plagiarism-checker",
+    name: "تشخیص سرقت ادبی",
     category: "text",
-    description: "متن را به صورت آینه‌ای نمایش دهید",
-    isNew: false,
-    icon: "type"
+    description: "تشخیص سرقت ادبی در متون",
+    isNew: true,
+    icon: "code"
   },
   {
-    id: "108",
-    slug: "special-character-finder",
-    name: "یافتن کاراکتر ویژه",
+    id: "105",
+    slug: "text-translator",
+    name: "مترجم متن",
     category: "text",
-    description: "کاراکترهای غیر معمول را در متن پیدا کنید",
-    isNew: false,
-    icon: "filter"
+    description: "ترجمه متون بین زبان‌های مختلف",
+    isNew: true,
+    icon: "code"
   },
   {
-    id: "110",
-    slug: "remove-accent-tool",
-    name: "حذف اِعراب متون فارسی",
+    id: "106",
+    slug: "text-to-speech",
+    name: "تبدیل متن به گفتار",
     category: "text",
-    description: "اِعراب (فتحه و کسره و ...) را از متن حذف کنید",
-    isNew: false,
-    icon: "filter"
-  }
+    description: "تبدیل متن به فایل صوتی",
+    isNew: true,
+    icon: "code"
+  },
+  {
+    id: "123",
+    slug: "enhanced-finglish-converter",
+    name: "مبدل پیشرفته فینگلیش به فارسی",
+    category: "text",
+    description: "تبدیل دقیق و پیشرفته متن فینگلیش به فارسی با دیکشنری گسترده",
+    isNew: true,
+    icon: "book"
+  },
 ];
