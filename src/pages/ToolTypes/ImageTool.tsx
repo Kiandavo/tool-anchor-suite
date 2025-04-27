@@ -2,7 +2,7 @@
 import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
-import { ImageTools } from '@/components/ImageTools';
+import ImageTools from '@/components/ImageTools';  // Changed to default import
 import { SvgToPng } from '@/components/image-tools/SvgToPng';
 
 interface ImageToolProps {
@@ -19,7 +19,7 @@ export default function ImageTool({ slug }: ImageToolProps) {
       case "svg-to-png":
         return <SvgToPng />;
       default:
-        return <ImageTools slug={slug} />;
+        return <ImageTools slug={slug} />;  // Passed the slug prop
     }
   };
 
