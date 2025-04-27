@@ -6,7 +6,8 @@ import { TextFormatting } from './TextFormatting';
 import { CodeTools } from './CodeTools';
 import { TextTranslation } from './TextTranslation';
 import { TextAnalysis } from './TextAnalysis';
-import { FinglishConverter, EnhancedFinglishConverter } from '@/components/text-tools';
+import { FinglishConverter } from './FinglishConverter';
+import { EnhancedFinglishConverter } from './EnhancedFinglishConverter';
 
 export default function TextToolContainer({ slug }: { slug: string }) {
   const [text, setText] = useState("");
