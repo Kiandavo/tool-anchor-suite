@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Tool } from '@/data/tools';
 import { 
@@ -19,7 +19,7 @@ import {
   Calendar
 } from 'lucide-react';
 
-// Map icon strings to Lucide components
+// Map icon strings to Lucide components - moved outside component
 const iconMap = {
   'text-size': TextIcon,
   'image': Image,
@@ -43,15 +43,16 @@ interface ToolCardProps {
   compact?: boolean;
 }
 
-export function ToolCard({ tool, highlight = false, compact = false }: ToolCardProps) {
+// Memoized component to prevent unnecessary renders
+export const ToolCard = memo(function ToolCard({ tool, highlight = false, compact = false }: ToolCardProps) {
   const { slug, name, description, isNew, icon } = tool;
   const IconComponent = iconMap[icon as keyof typeof iconMap] || TextIcon;
 
   return (
-    <Link to={`/tool/${slug}`} className="block transition-all duration-300">
+    <Link to={`/tool/${slug}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
       <div
         className={
-          `rounded-3xl p-5 shadow-sm transition-all duration-300 border backdrop-blur-sm` +
+          `rounded-3xl p-5 shadow-sm transition-all duration-300 border backdrop-blur-sm will-change-transform` +
           ` ${highlight 
             ? "bg-[#F2FCE2]/80 border-[#8cc55b]/20 hover:border-[#8cc55b]/30 hover:shadow-md"
             : "bg-white/80 border-white/10 hover:border-apple-blue/10 hover:shadow-md"
@@ -85,4 +86,4 @@ export function ToolCard({ tool, highlight = false, compact = false }: ToolCardP
       </div>
     </Link>
   );
-}
+});

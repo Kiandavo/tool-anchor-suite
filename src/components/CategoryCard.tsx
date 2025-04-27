@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolCategory, categoryLabels } from '@/data/tools';
 import { 
@@ -11,7 +11,7 @@ import {
   Dice6 
 } from 'lucide-react';
 
-// Map categories to their respective icons
+// Map categories to their respective icons - moved outside component to prevent recreation
 const categoryIcons = {
   text: TextIcon,
   image: Image,
@@ -26,12 +26,13 @@ interface CategoryCardProps {
   count: number;
 }
 
-export function CategoryCard({ category, count }: CategoryCardProps) {
+// Memoized component to prevent unnecessary renders
+export const CategoryCard = memo(function CategoryCard({ category, count }: CategoryCardProps) {
   const IconComponent = categoryIcons[category];
   
   return (
-    <Link to={`/category/${category}`} className="block transition-all duration-300">
-      <div className="glass-effect rounded-3xl p-6 flex flex-col items-center group hover:-translate-y-1 hover:shadow-md">
+    <Link to={`/category/${category}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
+      <div className="glass-effect rounded-3xl p-6 flex flex-col items-center group hover:-translate-y-1 hover:shadow-md will-change-transform">
         <div className="icon-container transform transition-transform duration-300 group-hover:scale-110 rounded-2xl">
           <IconComponent className="text-apple-blue transition-colors duration-300" size={28} />
         </div>
@@ -40,4 +41,4 @@ export function CategoryCard({ category, count }: CategoryCardProps) {
       </div>
     </Link>
   );
-}
+});
