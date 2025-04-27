@@ -1,14 +1,21 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemaps
+Sitemap: https://langar.co/sitemap.xml
+
+# Common crawl directives
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*?*
+
+# Allow useful directories
+Allow: /tool/
+Allow: /category/
+Allow: /assets/
+Allow: /images/
+
+# Crawl-delay directive
+Crawl-delay: 1
