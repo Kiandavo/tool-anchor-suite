@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dices } from 'lucide-react';
-import { generateRandomString } from '@/utils/text';
+import { generateRandomString } from '@/utils/text/randomText';
 import { toast } from 'sonner';
 import { copyToClipboard } from '@/utils/randomUtils';
 
