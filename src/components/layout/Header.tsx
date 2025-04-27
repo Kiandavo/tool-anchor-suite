@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
+import laangarLogo from '/lovable-uploads/43b12fa7-e64a-4fd9-9826-4b6f061ae599.png';
 
 interface HeaderProps {
   title?: string;
@@ -48,12 +49,11 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
     }
   };
 
-  // Automatic "Back" when not on home and not given a backUrl
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
   return (
     <header className={`glass-nav py-5 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
-      <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px]">
+      <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px] relative">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-between w-full gap-4">
             <Link
@@ -61,14 +61,17 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               className="text-xl font-semibold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center"
             >
               <Home size={22} className="ml-2" />
-              <span className="hidden md:inline">لنگر</span>
+              <span className="hidden md:inline">خانه</span>
             </Link>
 
-            {title && (
-              <h1 className="flex-1 text-base sm:text-lg font-semibold text-gray-800 text-center truncate px-4">
-                {title}
-              </h1>
-            )}
+            {/* Logo in the center */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <img 
+                src={laangarLogo} 
+                alt="Laangar Logo" 
+                className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-300"
+              />
+            </div>
 
             <div className="flex gap-4 items-center">
               <Link
