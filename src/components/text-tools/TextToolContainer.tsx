@@ -8,6 +8,7 @@ import { TextTranslation } from './TextTranslation';
 import { TextAnalysis } from './TextAnalysis';
 import { FinglishConverter } from './FinglishConverter';
 import { EnhancedFinglishConverter } from './EnhancedFinglishConverter';
+import { SpecialCharRemover } from './SpecialCharRemover';
 
 export default function TextToolContainer({ slug }: { slug: string }) {
   const [text, setText] = useState("");
@@ -64,6 +65,10 @@ export default function TextToolContainer({ slug }: { slug: string }) {
             return <FinglishConverter outcomeMsg={outcomeMsg} setOutcomeMsg={setOutcomeMsg} />;
           case "enhanced-finglish-converter":
             return <EnhancedFinglishConverter />;
+            
+          // New tools
+          case "special-char-remover":
+            return <SpecialCharRemover text={text} setText={setText} outcomeMsg={outcomeMsg} setOutcomeMsg={setOutcomeMsg} />;
 
           default:
             return (
