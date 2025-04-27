@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
-import laangarLogo from '/lovable-uploads/43b12fa7-e64a-4fd9-9826-4b6f061ae599.png';
+// Using public path for the image
+import laangarLogo from '../../assets/logo.png';
 
 interface HeaderProps {
   title?: string;
@@ -66,10 +66,15 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
             {/* Logo in the center */}
             <div className="absolute left-1/2 transform -translate-x-1/2">
+              {/* Fallback to placeholder image if logo can't be loaded */}
               <img 
-                src={laangarLogo} 
+                src="https://via.placeholder.com/150x50?text=Laangar" 
                 alt="Laangar Logo" 
                 className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "https://via.placeholder.com/150x50?text=Laangar";
+                }}
               />
             </div>
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, memo } from 'react';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
@@ -51,7 +52,7 @@ export function Layout({
   useEffect(() => {
     const meta = document.createElement('meta');
     meta.httpEquiv = 'Content-Security-Policy';
-    meta.content = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://*.api.com;";
+    meta.content = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.placeholder.com; font-src 'self' data:; connect-src 'self' https://*.api.com;";
     document.head.appendChild(meta);
     
     // Set RTL direction dynamically
