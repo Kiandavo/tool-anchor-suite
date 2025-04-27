@@ -63,7 +63,7 @@ export function PasswordGenerator() {
               <Checkbox 
                 id="uppercase"
                 checked={includeUppercase}
-                onCheckedChange={setIncludeUppercase}
+                onCheckedChange={(checked) => setIncludeUppercase(checked === true)}
               />
               <label htmlFor="uppercase" className="text-sm font-medium">
                 شامل حروف بزرگ (A-Z)
@@ -76,7 +76,7 @@ export function PasswordGenerator() {
               <Checkbox 
                 id="lowercase"
                 checked={includeLowercase}
-                onCheckedChange={setIncludeLowercase}
+                onCheckedChange={(checked) => setIncludeLowercase(checked === true)}
               />
               <label htmlFor="lowercase" className="text-sm font-medium">
                 شامل حروف کوچک (a-z)
@@ -89,7 +89,7 @@ export function PasswordGenerator() {
               <Checkbox 
                 id="numbers"
                 checked={includeNumbers}
-                onCheckedChange={setIncludeNumbers}
+                onCheckedChange={(checked) => setIncludeNumbers(checked === true)}
               />
               <label htmlFor="numbers" className="text-sm font-medium">
                 شامل اعداد (0-9)
@@ -102,7 +102,7 @@ export function PasswordGenerator() {
               <Checkbox 
                 id="symbols"
                 checked={includeSymbols}
-                onCheckedChange={setIncludeSymbols}
+                onCheckedChange={(checked) => setIncludeSymbols(checked === true)}
               />
               <label htmlFor="symbols" className="text-sm font-medium">
                 شامل نمادها (!@#$%&)
