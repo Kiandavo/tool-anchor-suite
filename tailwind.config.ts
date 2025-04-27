@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,8 +18,8 @@ export default {
 			}
 		},
 		fontFamily: {
-			'vazirmatn': ['Vazirmatn', 'sans-serif'],
-			'sf': ['"SF Pro Display"', 'Vazirmatn', 'sans-serif'],
+			'vazirmatn': ['Vazirmatn', 'system-ui', 'sans-serif'],
+			'sf': ['"SF Pro Display"', 'Vazirmatn', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {

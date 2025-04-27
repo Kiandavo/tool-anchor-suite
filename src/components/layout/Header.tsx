@@ -58,7 +58,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
           <div className="flex items-center justify-between w-full gap-4">
             <Link
               to="/"
-              className="text-xl font-semibold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center"
+              className="text-xl font-semibold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center persian-text"
             >
               <Home size={22} className="ml-2" />
               <span className="hidden md:inline">خانه</span>
@@ -90,7 +90,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="flex items-center font-medium text-primary hover:text-primary/70 text-sm px-4 py-2 rounded-full transition-colors duration-200 border border-primary/20 hover:bg-primary/10"
+                  className="flex items-center font-medium text-primary hover:text-primary/70 text-sm px-4 py-2 rounded-full transition-colors duration-200 border border-primary/20 hover:bg-primary/10 persian-text"
                 >
                   <ArrowRight size={18} className="ml-2" />
                   <span className="hidden sm:inline">بازگشت</span>
