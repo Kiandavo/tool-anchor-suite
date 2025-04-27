@@ -6,6 +6,7 @@ import { MetaTagGenerator } from '@/components/seo/MetaTagGenerator';
 import { RobotsTxtGenerator } from '@/components/seo/RobotsTxtGenerator';
 import { KeywordDensity } from '@/components/seo/KeywordDensity';
 import { HtmlTools } from '@/components/seo/HtmlTools';
+import { KeywordExtractor } from '@/components/seo/KeywordExtractor';
 
 interface SeoToolProps {
   slug: string;
@@ -27,11 +28,12 @@ export default function SeoTool({ slug }: SeoToolProps) {
       {slug === 'meta-tag-generator' && <MetaTagGenerator />}
       {slug === 'robots-txt-generator' && <RobotsTxtGenerator />}
       {slug === 'keyword-density' && <KeywordDensity />}
+      {slug === 'meta-keywords-extractor' && <KeywordExtractor />}
       {(['html-heading-extractor', 'social-tags-generator', 'meta-refresh-generator', 'schema-generator', 'html-lang-checker'].includes(slug)) && (
         <HtmlTools />
       )}
       
-      {!['meta-tag-generator', 'robots-txt-generator', 'keyword-density', 'html-heading-extractor', 'social-tags-generator', 'meta-refresh-generator', 'schema-generator', 'html-lang-checker'].includes(slug) && (
+      {!['meta-tag-generator', 'robots-txt-generator', 'keyword-density', 'html-heading-extractor', 'social-tags-generator', 'meta-refresh-generator', 'schema-generator', 'html-lang-checker', 'meta-keywords-extractor'].includes(slug) && (
         <div className="rounded-lg border p-6 shadow-sm">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h3 className="text-lg font-medium">این ابزار در حال توسعه است</h3>
