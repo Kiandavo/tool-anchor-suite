@@ -1,0 +1,30 @@
+
+@layer components {
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+  }
+  
+  .badge-new {
+    @apply inline-flex items-center rounded-full text-xs font-medium bg-primary/15 text-primary;
+  }
+  
+  .tool-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/50 transition-all duration-300 hover:shadow-md p-6 h-full hover:-translate-y-1 dark:border-gray-700;
+  }
+  
+  .category-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100/50 transition-all duration-300 hover:shadow-md p-7 flex flex-col items-center hover:-translate-y-1 dark:border-gray-700;
+  }
+  
+  .icon-container {
+    @apply w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-apple-blue/10 to-apple-blue/5;
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm;
+  }
+
+  .apple-gradient {
+    @apply bg-gradient-to-br from-apple-blue/20 to-apple-blue/5;
+  }
+}
