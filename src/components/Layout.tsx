@@ -49,10 +49,10 @@ export function Layout({
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-apple-light-gray/50 pb-10 font-sf">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50/30 pb-16 font-sf">
       <MemoizedHeader title={title} backUrl={backUrl} isScrolled={isScrolled} />
       
-      <main className="flex-1 container mx-auto px-3 sm:px-6 py-6 sm:py-10 mt-0">
+      <main className="flex-1 container mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16 mt-0 max-w-[1400px]">
         {children}
       </main>
 

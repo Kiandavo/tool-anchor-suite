@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Settings, Home } from 'lucide-react';
@@ -52,43 +51,39 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
   return (
-    <header className={`backdrop-blur-lg bg-white/80 py-4 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
-      <div className="container mx-auto px-3 sm:px-6">
+    <header className={`backdrop-blur-lg bg-white/70 py-5 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-sm' : ''}`}>
+      <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px]">
         <div className="flex flex-col items-center">
-          <div className="flex items-center justify-between w-full gap-2">
-            {/* Logo on the left */}
+          <div className="flex items-center justify-between w-full gap-4">
             <Link
               to="/"
-              className="text-xl font-bold text-apple-blue hover:text-apple-blue/80 transition-colors duration-300 flex items-center"
+              className="text-xl font-semibold text-apple-blue hover:text-apple-blue/80 transition-colors duration-300 flex items-center"
             >
               <Home size={22} className="ml-2" />
               <span className="hidden md:inline">لنگر</span>
             </Link>
 
-            {/* Centered Title */}
             {title && (
-              <h1 className="flex-1 text-base sm:text-lg font-semibold text-apple-dark-gray text-center truncate px-1">
+              <h1 className="flex-1 text-base sm:text-lg font-semibold text-gray-800 text-center truncate px-4">
                 {title}
               </h1>
             )}
 
             <div className="flex gap-4 items-center">
-              {/* Settings on the right */}
               <Link
                 to="/settings"
-                className="text-apple-gray hover:text-apple-blue transition-colors duration-300 flex items-center"
+                className="text-gray-600 hover:text-apple-blue transition-colors duration-300 flex items-center"
                 aria-label="تنظیمات"
               >
                 <Settings size={22} />
               </Link>
               
-              {/* Back button if needed */}
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="flex items-center font-medium text-apple-blue hover:text-apple-blue/70 text-sm px-3 sm:px-4 py-1.5 rounded-full transition-colors duration-200 border border-apple-blue/20 hover:bg-apple-blue/10 outline-none"
+                  className="flex items-center font-medium text-apple-blue hover:text-apple-blue/70 text-sm px-4 py-2 rounded-full transition-colors duration-200 border border-apple-blue/20 hover:bg-apple-blue/10"
                 >
-                  <ArrowLeft size={20} className="ml-2" />
+                  <ArrowLeft size={18} className="ml-2" />
                   <span className="hidden sm:inline">بازگشت</span>
                 </button>
               ) : null}
