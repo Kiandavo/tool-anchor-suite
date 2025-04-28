@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
@@ -122,7 +121,7 @@ export const HafezFortune = () => {
             )}
           </CardContent>
           
-          <CardFooter className="flex justify-between pt-1 pb-2">
+          <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-1 pb-2">
             <Button 
               onClick={getRandomHafezFortune} 
               disabled={isAnimating}
@@ -184,4 +183,3 @@ export const HafezFortune = () => {
     </section>
   );
 };
-
