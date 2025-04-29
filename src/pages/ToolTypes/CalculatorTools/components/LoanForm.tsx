@@ -4,15 +4,25 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Calculator, CreditCard } from 'lucide-react';
+import { Calculator, CreditCard, CalendarDays } from 'lucide-react';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface LoanFormProps {
   loanAmount: string;
   interestRate: string;
   loanTerm: number;
+  paymentType?: 'monthly' | 'yearly';
+  advanced?: boolean;
   onLoanAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onInterestRateChange: (value: string) => void;
   onLoanTermChange: (value: number[]) => void;
+  onPaymentTypeChange?: (value: string) => void;
   onCalculate: () => void;
 }
 
@@ -20,9 +30,12 @@ export const LoanForm: React.FC<LoanFormProps> = ({
   loanAmount,
   interestRate,
   loanTerm,
+  paymentType = 'monthly',
+  advanced = false,
   onLoanAmountChange,
   onInterestRateChange,
   onLoanTermChange,
+  onPaymentTypeChange,
   onCalculate,
 }) => {
   return (
@@ -58,19 +71,33 @@ export const LoanForm: React.FC<LoanFormProps> = ({
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <Label htmlFor="loanTerm">مدت وام (سال)</Label>
-          <span className="font-medium text-lg bg-primary/10 text-primary px-3 py-1 rounded-full">
-            {loanTerm} سال
-          </span>
+          <Label htmlFor="loanTerm">مدت وام</Label>
+          <div className="flex items-center">
+            <span className="font-medium text-lg bg-primary/10 text-primary px-3 py-1 rounded-full ml-2">
+              {loanTerm} {paymentType === 'monthly' ? 'ماه' : 'سال'}
+            </span>
+            
+            {onPaymentTypeChange && (
+              <Select defaultValue={paymentType} onValueChange={onPaymentTypeChange}>
+                <SelectTrigger className="w-[100px]">
+                  <SelectValue placeholder="واحد زمان" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="monthly">ماه</SelectItem>
+                  <SelectItem value="yearly">سال</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          </div>
         </div>
         
         <Slider 
           id="loanTerm"
-          defaultValue={[5]} 
-          min={1} 
-          max={30}
+          defaultValue={[loanTerm]} 
+          min={paymentType === 'monthly' ? 1 : 1} 
+          max={paymentType === 'monthly' ? 360 : 30}
           step={1}
           value={[loanTerm]}
           onValueChange={(value) => onLoanTermChange(value)}
@@ -78,11 +105,53 @@ export const LoanForm: React.FC<LoanFormProps> = ({
         />
         
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>۱ سال</span>
-          <span>۱۵ سال</span>
-          <span>۳۰ سال</span>
+          {paymentType === 'monthly' ? (
+            <>
+              <span>۱ ماه</span>
+              <span>۱۸۰ ماه</span>
+              <span>۳۶۰ ماه</span>
+            </>
+          ) : (
+            <>
+              <span>۱ سال</span>
+              <span>۱۵ سال</span>
+              <span>۳۰ سال</span>
+            </>
+          )}
         </div>
       </div>
+
+      {advanced && (
+        <div className="space-y-4 border-t pt-4">
+          <h3 className="font-medium">تنظیمات پیشرفته</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="paymentDate">تاریخ اولین پرداخت</Label>
+              <div className="relative">
+                <Input
+                  id="paymentDate"
+                  type="date"
+                  className="pl-12"
+                  dir="ltr"
+                />
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <CalendarDays className="h-4 w-4 text-muted-foreground" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="additionalPayment">پرداخت اضافه ماهانه</Label>
+              <Input
+                id="additionalPayment"
+                placeholder="مثال: 1,000,000"
+                dir="ltr"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <Button
         onClick={onCalculate}

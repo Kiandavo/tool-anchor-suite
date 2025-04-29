@@ -46,3 +46,61 @@ export const calculateInvestment = (
     totalInterest: Math.round(finalAmount - totalContributions)
   };
 };
+
+export const calculateLoan = (
+  loanAmount: number, 
+  interestRate: number, 
+  loanTerm: number,
+  additionalMonthlyPayment: number = 0
+): {
+  monthlyPayment: number;
+  totalPayment: number;
+  totalInterest: number;
+  payoffTimeMonths: number;
+} => {
+  const monthlyRate = interestRate / 100 / 12;
+  const termMonths = loanTerm;
+  
+  // Standard loan payment calculation formula
+  const monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termMonths));
+  
+  // Calculate early payoff if additional payment is provided
+  let remainingBalance = loanAmount;
+  let monthsToPayoff = 0;
+  let totalPayment = 0;
+  
+  while (remainingBalance > 0 && monthsToPayoff < termMonths * 2) { // Prevent infinite loops
+    monthsToPayoff++;
+    
+    const interestForMonth = remainingBalance * monthlyRate;
+    let principalForMonth = monthlyPayment - interestForMonth;
+    
+    // Add additional payment
+    if (additionalMonthlyPayment > 0) {
+      principalForMonth += additionalMonthlyPayment;
+    }
+    
+    // Ensure we don't pay more than the remaining balance
+    if (principalForMonth > remainingBalance) {
+      principalForMonth = remainingBalance;
+    }
+    
+    remainingBalance -= principalForMonth;
+    totalPayment += (principalForMonth + interestForMonth);
+  }
+  
+  // If no additional payment, use the standard formula
+  if (additionalMonthlyPayment <= 0) {
+    totalPayment = monthlyPayment * termMonths;
+    monthsToPayoff = termMonths;
+  }
+  
+  const totalInterest = totalPayment - loanAmount;
+  
+  return {
+    monthlyPayment,
+    totalPayment,
+    totalInterest,
+    payoffTimeMonths: monthsToPayoff
+  };
+};

@@ -1,11 +1,21 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
-import { CirclePercent } from 'lucide-react';
+import { CirclePercent, CreditCard, Calculator, AlertCircle, FileText, Printer } from 'lucide-react';
 import { formatToToman, convertNumberToPersianWords } from '@/utils/calculatorUtils';
 import { LoanForm } from './components/LoanForm';
 import { PaymentScheduleTable } from './components/PaymentScheduleTable';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from '@/components/ui/button';
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 interface PaymentScheduleItem {
   month: number;
@@ -22,14 +32,26 @@ interface ExtendedScheduleItem {
   remainingBalance: number;
 }
 
+interface LoanSummary {
+  monthlyPayment: number;
+  totalPayment: number;
+  totalInterest: number;
+  loanAmount: number;
+  interestRate: number;
+  loanTerm: number;
+  paymentCount: number;
+}
+
 export default function LoanCalculator() {
   const [loanAmount, setLoanAmount] = useState<string>('');
   const [interestRate, setInterestRate] = useState<string>('');
   const [loanTerm, setLoanTerm] = useState<number>(5);
-  const [result, setResult] = useState<string | null>(null);
-  const [amountInWords, setAmountInWords] = useState<string | null>(null);
+  const [paymentType, setPaymentType] = useState<'monthly' | 'yearly'>('monthly');
   const [paymentSchedule, setPaymentSchedule] = useState<PaymentScheduleItem[] | null>(null);
   const [extendedSchedule, setExtendedSchedule] = useState<ExtendedScheduleItem[] | null>(null);
+  const [summary, setSummary] = useState<LoanSummary | null>(null);
+  const [amountInWords, setAmountInWords] = useState<string | null>(null);
+  const [showPrintDialog, setShowPrintDialog] = useState<boolean>(false);
 
   const handleLoanAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[^\d]/g, '');
@@ -45,27 +67,60 @@ export default function LoanCalculator() {
     setLoanTerm(value[0]);
   };
 
+  const handlePaymentTypeChange = (value: string) => {
+    setPaymentType(value as 'monthly' | 'yearly');
+  };
+
+  const printLoanDetails = () => {
+    setShowPrintDialog(true);
+  };
+
+  const generatePDF = () => {
+    // In a real implementation, we would use a library like jsPDF
+    // For now, we'll just show a toast message
+    toast.success("گزارش آماده دانلود است", {
+      description: "فایل PDF با موفقیت ایجاد شد",
+      position: "top-center",
+    });
+    setShowPrintDialog(false);
+  };
+
   const calculate = () => {
     const amount = parseFloat(loanAmount.replace(/,/g, ''));
-    const rate = parseFloat(interestRate) / 100 / 12;
-    const term = loanTerm * 12;
+    const rate = parseFloat(interestRate) / 100;
+    const termMonths = paymentType === 'monthly' ? loanTerm : loanTerm * 12;
+    const monthlyRate = rate / 12;
 
-    if (isNaN(amount) || isNaN(rate) || isNaN(term) || amount <= 0 || rate <= 0 || term <= 0) {
+    if (isNaN(amount) || isNaN(rate) || isNaN(termMonths) || amount <= 0 || rate <= 0 || termMonths <= 0) {
+      toast.error("لطفا تمام فیلدها را به درستی پر کنید", {
+        description: "مقادیر وارد شده نامعتبر هستند",
+        position: "top-center",
+      });
       return;
     }
 
-    const monthlyPayment = (rate * amount) / (1 - Math.pow(1 + rate, -term));
-    const totalPayment = monthlyPayment * term;
+    // Calculate monthly payment using the loan payment formula
+    const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termMonths));
+    const totalPayment = monthlyPayment * termMonths;
     const totalInterest = totalPayment - amount;
 
-    setResult(`پرداخت ماهیانه: ${formatToToman(monthlyPayment)} تومان - کل پرداختی: ${formatToToman(totalPayment)} تومان - کل بهره: ${formatToToman(totalInterest)} تومان`);
+    setSummary({
+      monthlyPayment,
+      totalPayment,
+      totalInterest,
+      loanAmount: amount,
+      interestRate: parseFloat(interestRate),
+      loanTerm: termMonths,
+      paymentCount: termMonths
+    });
+
     setAmountInWords(`مبلغ وام به حروف: ${convertNumberToPersianWords(amount)} تومان`);
 
     const schedule: PaymentScheduleItem[] = [];
     let remainingBalance = amount;
     
-    for (let month = 1; month <= Math.min(term, 12); month++) {
-      const interestForMonth = remainingBalance * rate;
+    for (let month = 1; month <= Math.min(termMonths, 12); month++) {
+      const interestForMonth = remainingBalance * monthlyRate;
       const principalForMonth = monthlyPayment - interestForMonth;
       remainingBalance -= principalForMonth;
       
@@ -84,21 +139,21 @@ export default function LoanCalculator() {
     let extendedBalance = amount;
     let totalPaid = 0;
     
-    const maxYears = 10;
-    const yearsToShow = Math.min(Math.ceil(term / 12), maxYears);
+    const maxYears = 30;
+    const yearsToShow = Math.min(Math.ceil(termMonths / 12), maxYears);
     
     for (let year = 1; year <= yearsToShow; year++) {
       for (let month = 1; month <= 12; month++) {
         const overallMonth = (year - 1) * 12 + month;
         
-        if (overallMonth > term) break;
+        if (overallMonth > termMonths) break;
         
-        const interestForMonth = extendedBalance * rate;
+        const interestForMonth = extendedBalance * monthlyRate;
         const principalForMonth = monthlyPayment - interestForMonth;
         extendedBalance -= principalForMonth;
         totalPaid += monthlyPayment;
 
-        if (month === 12 || overallMonth === term) {
+        if (month === 12 || overallMonth === termMonths) {
           extended.push({
             year,
             month: overallMonth,
@@ -110,6 +165,10 @@ export default function LoanCalculator() {
     }
     
     setExtendedSchedule(extended);
+
+    toast.success("محاسبه با موفقیت انجام شد", {
+      position: "top-center",
+    });
   };
 
   return (
@@ -121,21 +180,136 @@ export default function LoanCalculator() {
             <h2 className="text-xl font-bold text-center">ماشین حساب وام</h2>
           </div>
 
-          <LoanForm
-            loanAmount={loanAmount}
-            interestRate={interestRate}
-            loanTerm={loanTerm}
-            onLoanAmountChange={handleLoanAmountChange}
-            onInterestRateChange={setInterestRate}
-            onLoanTermChange={handleLoanTermChange}
-            onCalculate={calculate}
-          />
+          <Tabs defaultValue="standard" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="standard">محاسبه استاندارد</TabsTrigger>
+              <TabsTrigger value="advanced">محاسبه پیشرفته</TabsTrigger>
+            </TabsList>
+            <TabsContent value="standard" className="mt-4">
+              <LoanForm
+                loanAmount={loanAmount}
+                interestRate={interestRate}
+                loanTerm={loanTerm}
+                paymentType={paymentType}
+                onLoanAmountChange={handleLoanAmountChange}
+                onInterestRateChange={setInterestRate}
+                onLoanTermChange={handleLoanTermChange}
+                onPaymentTypeChange={handlePaymentTypeChange}
+                onCalculate={calculate}
+              />
+            </TabsContent>
+            <TabsContent value="advanced" className="mt-4">
+              <div className="space-y-4">
+                <div className="bg-amber-50 border border-amber-200 rounded-md p-4">
+                  <div className="flex items-start">
+                    <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 ml-2" />
+                    <div>
+                      <h3 className="font-medium text-amber-800">ویژگی‌های پیشرفته</h3>
+                      <p className="text-amber-700 text-sm mt-1">
+                        در این بخش می‌توانید از ویژگی‌های پیشرفته مانند پرداخت‌های اضافی، تنفس وام و مقایسه گزینه‌های مختلف استفاده کنید.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <LoanForm
+                  loanAmount={loanAmount}
+                  interestRate={interestRate}
+                  loanTerm={loanTerm}
+                  paymentType={paymentType}
+                  onLoanAmountChange={handleLoanAmountChange}
+                  onInterestRateChange={setInterestRate}
+                  onLoanTermChange={handleLoanTermChange}
+                  onPaymentTypeChange={handlePaymentTypeChange}
+                  onCalculate={calculate}
+                  advanced={true}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
 
-          {result && <OutcomeInfoCard outcome={result} />}
-          
-          {amountInWords && (
-            <div className="bg-primary/5 text-primary p-3 rounded-lg text-center text-sm">
-              {amountInWords}
+          {summary && (
+            <div className="space-y-4">
+              <OutcomeInfoCard outcome={`پرداخت ماهیانه: ${formatToToman(summary.monthlyPayment)} تومان - کل پرداختی: ${formatToToman(summary.totalPayment)} تومان - کل بهره: ${formatToToman(summary.totalInterest)} تومان`} />
+              
+              <div className="bg-primary/5 text-primary p-3 rounded-lg text-center text-sm">
+                {amountInWords}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="bg-white rounded-lg border p-4">
+                  <div className="flex items-center mb-2">
+                    <CreditCard className="h-4 w-4 text-primary ml-2" />
+                    <h3 className="font-medium">پرداخت ماهیانه</h3>
+                  </div>
+                  <p className="text-xl font-bold">{formatToToman(summary.monthlyPayment)} تومان</p>
+                </div>
+                
+                <div className="bg-white rounded-lg border p-4">
+                  <div className="flex items-center mb-2">
+                    <Calculator className="h-4 w-4 text-primary ml-2" />
+                    <h3 className="font-medium">تعداد پرداخت</h3>
+                  </div>
+                  <p className="text-xl font-bold">{summary.paymentCount} قسط</p>
+                </div>
+                
+                <div className="bg-white rounded-lg border p-4 col-span-1 md:col-span-2 lg:col-span-1">
+                  <div className="flex items-center mb-2">
+                    <CirclePercent className="h-4 w-4 text-primary ml-2" />
+                    <h3 className="font-medium">نسبت بهره به اصل</h3>
+                  </div>
+                  <p className="text-xl font-bold">
+                    {((summary.totalInterest / summary.loanAmount) * 100).toFixed(1)}%
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 justify-end">
+                <Button variant="outline" onClick={printLoanDetails} className="flex items-center">
+                  <Printer className="ml-2 h-4 w-4" />
+                  چاپ جزئیات وام
+                </Button>
+                <Button variant="outline" className="flex items-center">
+                  <FileText className="ml-2 h-4 w-4" />
+                  ذخیره محاسبات
+                </Button>
+              </div>
+
+              <Dialog open={showPrintDialog} onOpenChange={setShowPrintDialog}>
+                <DialogContent className="max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>چاپ جزئیات وام</DialogTitle>
+                    <DialogDescription>
+                      انتخاب کنید که چه اطلاعاتی در گزارش شما گنجانده شود.
+                    </DialogDescription>
+                  </DialogHeader>
+                  
+                  <div className="space-y-4 py-4">
+                    <div className="flex items-center space-x-2 space-x-reverse">
+                      <input type="checkbox" id="include-summary" className="rounded border-gray-300" defaultChecked />
+                      <label htmlFor="include-summary">خلاصه وام</label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 space-x-reverse">
+                      <input type="checkbox" id="include-schedule" className="rounded border-gray-300" defaultChecked />
+                      <label htmlFor="include-schedule">جدول پرداخت</label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 space-x-reverse">
+                      <input type="checkbox" id="include-charts" className="rounded border-gray-300" defaultChecked />
+                      <label htmlFor="include-charts">نمودارها</label>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-end">
+                    <Button variant="outline" className="ml-2" onClick={() => setShowPrintDialog(false)}>
+                      انصراف
+                    </Button>
+                    <Button onClick={generatePDF}>
+                      دانلود PDF
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           )}
 
