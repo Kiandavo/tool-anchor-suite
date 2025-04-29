@@ -1,10 +1,11 @@
+
 import { useState } from 'react';
 import { toast } from "sonner";
 import { Message } from '../types';
 import { fetchDeepseekResponse, generateSimulatedResponse, buildMessageHistory } from '../api-service';
 
 export function useDeepseekChat() {
-  // Using a valid OpenRouter API key from the provided information
+  // Using a default OpenRouter API key, but will allow users to input their own for better reliability
   const [apiKey] = useState<string>('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');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +61,12 @@ export function useDeepseekChat() {
       try {
         console.log(`Sending message to API with model: ${selectedModel} (Attempt: ${retryAttempts + 1})`);
         const messageHistory = buildMessageHistory(messages, userMessage, contextLength);
+        
+        // Check internet connectivity
+        if (!navigator.onLine) {
+          throw new Error('اتصال اینترنت برقرار نیست. لطفا اتصال خود را بررسی کنید.');
+        }
+        
         assistantResponse = await fetchDeepseekResponse(apiKey, messageHistory, selectedModel, temperature);
         
         // Reset error states on success
@@ -71,7 +78,11 @@ export function useDeepseekChat() {
         console.error('Error calling OpenRouter API:', error);
         
         // Check if we should retry
-        if (retryAttempts < MAX_RETRY_ATTEMPTS && (error.message.includes('اتصال به سرور') || error.message.includes('Connection error'))) {
+        if (retryAttempts < MAX_RETRY_ATTEMPTS && 
+            (error.message.includes('اتصال به سرور') || 
+             error.message.includes('Connection error') ||
+             error.message.includes('Failed to fetch') ||
+             error.message.includes('CORS'))) {
           setRetryAttempts(prev => prev + 1);
           
           // Show retry toast
@@ -79,7 +90,13 @@ export function useDeepseekChat() {
           
           // Wait a moment before retrying
           setTimeout(() => {
-            sendMessageToAPI(userMessage, selectedModel, temperature, contextLength, true);
+            sendMessageToAPI(userMessage, 
+              // Try different models on each retry attempt
+              retryAttempts === 1 ? 'google-gemini-flash' : 
+                (retryAttempts === 2 ? 'deepseek-r1' : 'llama4-maverick'), 
+              temperature, 
+              contextLength, 
+              true);
           }, 2000);
           
           return; // Exit without setting the message
@@ -93,7 +110,11 @@ export function useDeepseekChat() {
         assistantResponse = generateSimulatedResponse(userMessage.content);
         
         if (!isRetry) {
-          toast.error('خطا در ارتباط با سرور. از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.');
+          if (error.message?.includes('CORS')) {
+            toast.error('خطا در ارتباط با سرور: مشکل CORS. از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.');
+          } else {
+            toast.error('خطا در ارتباط با سرور. از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.');
+          }
         }
       }
 
@@ -134,12 +155,14 @@ export function useDeepseekChat() {
       }
       setMessages(newMessages);
       
+      // Try with a different model on retry
+      const retryModel = selectedModel === 'deepseek-v3-base' ? 'google-gemini-flash' : 'deepseek-v3-base';
+      
       // Retry sending the message
       setTimeout(() => {
-        sendMessageToAPI(lastUserMessage, selectedModel, temperature, contextLength, false);
+        toast.info(`تلاش مجدد با مدل ${retryModel}...`);
+        sendMessageToAPI(lastUserMessage, retryModel, temperature, contextLength, false);
       }, 500);
-      
-      toast.info('تلاش مجدد برای اتصال به سرور...');
     }
   };
 

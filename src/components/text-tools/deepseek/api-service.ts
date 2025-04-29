@@ -1,4 +1,3 @@
-
 import OpenAI from 'openai';
 import { Message } from './types';
 
@@ -12,6 +11,9 @@ const MODEL_MAPPING = {
   'llama4-maverick': 'meta-llama/llama-4-maverick:free'
 };
 
+// CORS Proxy for development
+const CORS_PROXY = 'https://corsproxy.io/?';
+
 export const fetchDeepseekResponse = async (
   apiKey: string, 
   messageHistory: any[], 
@@ -19,48 +21,96 @@ export const fetchDeepseekResponse = async (
   temperature: number
 ): Promise<string> => {
   try {
-    // Initialize OpenAI client with OpenRouter config
-    const openai = new OpenAI({
-      baseURL: "https://openrouter.ai/api/v1",
-      apiKey: apiKey,
-      defaultHeaders: {
-        "HTTP-Referer": "https://text-tools-demo.com", 
-        "X-Title": "Persian Text Tools"
-      },
-      dangerouslyAllowBrowser: true, // Add this option to allow browser usage
-      timeout: 30000 // Set timeout at the client level, not in individual requests
-    });
+    // Check for internet connectivity
+    if (!navigator.onLine) {
+      throw new Error('اتصال اینترنت برقرار نیست. لطفا اتصال خود را بررسی کنید.');
+    }
 
-    // Get the correct model identifier based on the UI selection
-    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'google/gemini-2.0-flash-exp:free';
+    console.log('Attempting API call with model:', selectedModel);
     
-    console.log('Attempting API call with model:', modelIdentifier);
-    
-    // Format messages for OpenAI client (OpenRouter follows the OpenAI format)
+    // Format messages for API
     const formattedMessages = messageHistory.map(msg => ({
       role: msg.role,
       content: msg.content
     }));
 
+    // Get the correct model identifier based on the UI selection
+    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'google/gemini-2.0-flash-exp:free';
+    
     try {
-      const completion = await openai.chat.completions.create({
-        model: modelIdentifier,
-        messages: formattedMessages,
-        temperature: temperature,
-        max_tokens: 2000,
-        top_p: 0.95
-        // Remove timeout property as it's not supported in the ChatCompletionCreateParams type
-      });
-      
-      // Extract text content from the response
-      const content = completion.choices[0].message.content;
-      if (!content) {
-        throw new Error('پاسخی از API دریافت نشد.');
+      // Method 1: Using OpenAI client with OpenRouter (with CORS handling)
+      try {
+        // Initialize OpenAI client with OpenRouter config
+        const openai = new OpenAI({
+          baseURL: "https://openrouter.ai/api/v1",
+          apiKey: apiKey,
+          defaultHeaders: {
+            "HTTP-Referer": "https://text-tools-demo.com", 
+            "X-Title": "Persian Text Tools"
+          },
+          dangerouslyAllowBrowser: true,
+          timeout: 30000
+        });
+        
+        const completion = await openai.chat.completions.create({
+          model: modelIdentifier,
+          messages: formattedMessages,
+          temperature: temperature,
+          max_tokens: 2000,
+          top_p: 0.95
+        });
+        
+        // Extract text content from the response
+        const content = completion.choices[0].message.content;
+        if (!content) {
+          throw new Error('پاسخی از API دریافت نشد.');
+        }
+        
+        return content;
+      } catch (error: any) {
+        console.error('OpenAI client error:', error);
+        
+        // If the error is likely CORS-related, try with fetch and CORS proxy
+        if (error.message && (error.message.includes('Failed to fetch') || error.message.includes('NetworkError'))) {
+          console.log('Trying with CORS proxy as fallback...');
+          
+          // Method 2: Direct fetch with CORS proxy
+          const response = await fetch(`${CORS_PROXY}https://openrouter.ai/api/v1/chat/completions`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${apiKey}`,
+              'HTTP-Referer': 'https://text-tools-demo.com',
+              'X-Title': 'Persian Text Tools',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              model: modelIdentifier,
+              messages: formattedMessages,
+              temperature: temperature,
+              max_tokens: 2000
+            })
+          });
+          
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            throw new Error(errorData?.error?.message || `خطای ${response.status}: ${response.statusText}`);
+          }
+          
+          const data = await response.json();
+          const content = data.choices[0]?.message?.content;
+          
+          if (!content) {
+            throw new Error('پاسخی از API دریافت نشد.');
+          }
+          
+          return content;
+        } 
+        
+        // Re-throw original error if not CORS-related
+        throw error;
       }
-      
-      return content;
     } catch (error: any) {
-      console.error('OpenRouter API error details:', error);
+      console.error('API request error details:', error);
       
       // Handle OpenAI API specific errors
       if (error.status === 401) {
@@ -71,12 +121,13 @@ export const fetchDeepseekResponse = async (
         throw new Error(`خطا در پارامترهای ارسالی: ${error.message || 'پارامترهای نامعتبر'}`);
       } else if (error.cause?.code === 'ECONNREFUSED' || error.cause?.code === 'ECONNRESET') {
         throw new Error('خطا در اتصال به سرور API. لطفا اتصال اینترنت خود را بررسی کنید.');
+      } else if (error.message && error.message.includes('Failed to fetch')) {
+        throw new Error('خطا در اتصال به سرور API: احتمالاً مشکل CORS. لطفاً از یک مرورگر دیگر یا VPN استفاده کنید.');
       } else {
         throw new Error(`خطا در درخواست به API: ${error.status || ''} ${error.message || ''}`);
       }
     }
   } catch (error: any) {
-    // Log detailed error information
     console.error('API request error details:', error);
     
     // Enhanced error check for network failures
