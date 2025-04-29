@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -63,6 +63,7 @@ export const TarotReading = () => {
   const [selectedCards, setSelectedCards] = useState<typeof tarotCards[number][]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
+  const [hasDrawn, setHasDrawn] = useState(false);
 
   const drawCards = () => {
     setIsAnimating(true);
@@ -76,6 +77,7 @@ export const TarotReading = () => {
       
       setSelectedCards(selectedThree);
       setIsAnimating(false);
+      setHasDrawn(true);
       toast.success("کارت‌های تاروت انتخاب شدند!");
     }, 1500);
   };
@@ -87,13 +89,45 @@ export const TarotReading = () => {
 
   const copyReading = () => {
     if (selectedCards.length > 0) {
-      const readingText = selectedCards.map((card, index) => 
-        `کارت ${index + 1}: ${card.name}\n${isRevealed ? card.description : "معنی هنوز آشکار نشده است."}`
-      ).join('\n\n');
+      const readingText = selectedCards.map((card, index) => {
+        const position = index === 0 ? "گذشته" : index === 1 ? "حال" : "آینده";
+        return `کارت ${position}: ${card.name}\n${isRevealed ? card.description : "معنی هنوز آشکار نشده است."}`;
+      }).join('\n\n');
       
       copyToClipboard(readingText);
     }
   };
+
+  // Add CSS class for card flip animation
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .perspective-card {
+        perspective: 1000px;
+      }
+      .tarot-card {
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+      .tarot-card-front, .tarot-card-back {
+        backface-visibility: hidden;
+      }
+      .tarot-card-back {
+        transform: rotateY(180deg);
+      }
+      .rotate-y-180 {
+        transform: rotateY(180deg);
+      }
+      .glass-card {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   return (
     <Card className="bg-[#e9f0f7] border-[#b0c8e6] shadow-sm overflow-hidden">
@@ -131,8 +165,23 @@ export const TarotReading = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center text-[#143a5c] text-xs">
+            <div className="text-center text-[#143a5c] text-xs py-4">
               <p>برای دریافت فال، دکمه کشیدن کارت را فشار دهید.</p>
+              <div className="mt-4 flex justify-center">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="text-[#143a5c] cursor-help text-xs inline-flex items-center">
+                        <CircleHelp size={14} className="mr-1" />
+                        راهنمای تاروت
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-white text-xs p-2 max-w-xs text-right">
+                      <p>کارت‌های تاروت فال باستانی هستند که برای پیش‌بینی آینده، درک گذشته و بصیرت در شرایط فعلی استفاده می‌شوند.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
           )}
         </div>
