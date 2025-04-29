@@ -18,12 +18,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, setSelecte
           <SelectValue placeholder="انتخاب مدل" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="deepseek-chat">DeepSeek Chat</SelectItem>
-          <SelectItem value="deepseek-coder">DeepSeek Coder</SelectItem>
-          <SelectItem value="mixtral-8x7b">Mixtral 8x7B</SelectItem>
-          <SelectItem value="deepseek-llm-67b">DeepSeek LLM 67B</SelectItem>
-          <SelectItem value="deepseek-chat-v2">DeepSeek Chat V2</SelectItem>
-          <SelectItem value="deepseek-coder-v2">DeepSeek Coder V2</SelectItem>
+          <SelectItem value="deepseek-v3-base">DeepSeek V3 Base (free)</SelectItem>
         </SelectContent>
       </Select>
     </div>

@@ -15,7 +15,7 @@ const DeepseekAIContainer: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('deepseek-chat-v2');
+  const [selectedModel, setSelectedModel] = useState('deepseek-v3-base');
   const [temperature, setTemperature] = useState(0.7);
   const [contextLength, setContextLength] = useState(5);
   const [hasApiError, setHasApiError] = useState(false);
