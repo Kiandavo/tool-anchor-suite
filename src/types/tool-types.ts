@@ -15,6 +15,7 @@ export interface Tool {
   description: string;
   isNew: boolean;
   icon: string;
+  isComingSoon?: boolean;
 }
 
 export const categoryLabels: Record<ToolCategory, string> = {
