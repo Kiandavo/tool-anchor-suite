@@ -1,3 +1,4 @@
+
 import OpenAI from 'openai';
 import { Message } from './types';
 
@@ -25,6 +26,7 @@ export const fetchDeepseekResponse = async (
         "HTTP-Referer": "https://text-tools-demo.com", 
         "X-Title": "Persian Text Tools"
       },
+      dangerouslyAllowBrowser: true // Add this option to allow browser usage
     });
 
     // Get the correct model identifier based on the UI selection
