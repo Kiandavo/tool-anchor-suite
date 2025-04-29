@@ -172,16 +172,18 @@ export default function LoanCalculator() {
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="p-6">
-        <div className="flex flex-col space-y-6">
-          <div className="flex items-center justify-center space-x-2 space-x-reverse mb-4">
-            <CirclePercent className="text-primary h-6 w-6 ml-2" />
+    <div className="space-y-6 animate-fade-in">
+      <Card className="vibrant-card overflow-hidden">
+        <div className="flex flex-col space-y-6 p-6">
+          <div className="flex items-center justify-center space-x-2 space-x-reverse mb-2">
+            <div className="icon-container">
+              <CirclePercent className="text-primary h-6 w-6" />
+            </div>
             <h2 className="text-xl font-bold text-center">ماشین حساب وام</h2>
           </div>
 
           <Tabs defaultValue="standard" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 glass-effect mb-2">
               <TabsTrigger value="standard">محاسبه استاندارد</TabsTrigger>
               <TabsTrigger value="advanced">محاسبه پیشرفته</TabsTrigger>
             </TabsList>
@@ -200,7 +202,7 @@ export default function LoanCalculator() {
             </TabsContent>
             <TabsContent value="advanced" className="mt-4">
               <div className="space-y-4">
-                <div className="bg-amber-50 border border-amber-200 rounded-md p-4">
+                <div className="glass-effect rounded-xl border-white/20 p-4 bg-amber-50/90">
                   <div className="flex items-start">
                     <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 ml-2" />
                     <div>
@@ -228,54 +230,54 @@ export default function LoanCalculator() {
           </Tabs>
 
           {summary && (
-            <div className="space-y-4">
+            <div className="space-y-4 animate-fade-in">
               <OutcomeInfoCard outcome={`پرداخت ماهیانه: ${formatToToman(summary.monthlyPayment)} تومان - کل پرداختی: ${formatToToman(summary.totalPayment)} تومان - کل بهره: ${formatToToman(summary.totalInterest)} تومان`} />
               
-              <div className="bg-primary/5 text-primary p-3 rounded-lg text-center text-sm">
+              <div className="glass-effect text-primary p-4 rounded-xl text-center text-sm">
                 {amountInWords}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="bg-white rounded-lg border p-4">
+                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-center mb-2">
-                    <CreditCard className="h-4 w-4 text-primary ml-2" />
+                    <CreditCard className="h-5 w-5 text-primary ml-2" />
                     <h3 className="font-medium">پرداخت ماهیانه</h3>
                   </div>
-                  <p className="text-xl font-bold">{formatToToman(summary.monthlyPayment)} تومان</p>
+                  <p className="text-xl font-bold vibrant-gradient">{formatToToman(summary.monthlyPayment)} تومان</p>
                 </div>
                 
-                <div className="bg-white rounded-lg border p-4">
+                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-center mb-2">
-                    <Calculator className="h-4 w-4 text-primary ml-2" />
+                    <Calculator className="h-5 w-5 text-primary ml-2" />
                     <h3 className="font-medium">تعداد پرداخت</h3>
                   </div>
-                  <p className="text-xl font-bold">{summary.paymentCount} قسط</p>
+                  <p className="text-xl font-bold vibrant-gradient">{summary.paymentCount} قسط</p>
                 </div>
                 
-                <div className="bg-white rounded-lg border p-4 col-span-1 md:col-span-2 lg:col-span-1">
+                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 col-span-1 md:col-span-2 lg:col-span-1">
                   <div className="flex items-center mb-2">
-                    <CirclePercent className="h-4 w-4 text-primary ml-2" />
+                    <CirclePercent className="h-5 w-5 text-primary ml-2" />
                     <h3 className="font-medium">نسبت بهره به اصل</h3>
                   </div>
-                  <p className="text-xl font-bold">
+                  <p className="text-xl font-bold vibrant-gradient">
                     {((summary.totalInterest / summary.loanAmount) * 100).toFixed(1)}%
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-2 justify-end">
-                <Button variant="outline" onClick={printLoanDetails} className="flex items-center">
+                <Button variant="outline" onClick={printLoanDetails} className="flex items-center glass-effect hover:-translate-y-1 transition-transform duration-300">
                   <Printer className="ml-2 h-4 w-4" />
                   چاپ جزئیات وام
                 </Button>
-                <Button variant="outline" className="flex items-center">
+                <Button variant="outline" className="flex items-center glass-effect hover:-translate-y-1 transition-transform duration-300">
                   <FileText className="ml-2 h-4 w-4" />
                   ذخیره محاسبات
                 </Button>
               </div>
 
               <Dialog open={showPrintDialog} onOpenChange={setShowPrintDialog}>
-                <DialogContent className="max-w-md">
+                <DialogContent className="max-w-md glass-card">
                   <DialogHeader>
                     <DialogTitle>چاپ جزئیات وام</DialogTitle>
                     <DialogDescription>
@@ -301,10 +303,10 @@ export default function LoanCalculator() {
                   </div>
                   
                   <div className="flex justify-end">
-                    <Button variant="outline" className="ml-2" onClick={() => setShowPrintDialog(false)}>
+                    <Button variant="outline" className="ml-2 glass-effect" onClick={() => setShowPrintDialog(false)}>
                       انصراف
                     </Button>
-                    <Button onClick={generatePDF}>
+                    <Button onClick={generatePDF} className="vibrant-button">
                       دانلود PDF
                     </Button>
                   </div>
@@ -314,10 +316,12 @@ export default function LoanCalculator() {
           )}
 
           {paymentSchedule && extendedSchedule && (
-            <PaymentScheduleTable
-              paymentSchedule={paymentSchedule}
-              extendedSchedule={extendedSchedule}
-            />
+            <div className="animate-fade-in">
+              <PaymentScheduleTable
+                paymentSchedule={paymentSchedule}
+                extendedSchedule={extendedSchedule}
+              />
+            </div>
           )}
         </div>
       </Card>

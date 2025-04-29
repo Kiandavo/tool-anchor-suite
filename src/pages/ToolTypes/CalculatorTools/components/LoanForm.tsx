@@ -49,7 +49,7 @@ export const LoanForm: React.FC<LoanFormProps> = ({
               value={loanAmount}
               onChange={onLoanAmountChange}
               placeholder="مثال: 100,000,000"
-              className="pl-12 text-left"
+              className="pl-12 text-left glass-effect"
               dir="ltr"
             />
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -67,6 +67,7 @@ export const LoanForm: React.FC<LoanFormProps> = ({
             placeholder="مثال: 18"
             type="text"
             dir="ltr"
+            className="glass-effect"
           />
         </div>
       </div>
@@ -81,7 +82,7 @@ export const LoanForm: React.FC<LoanFormProps> = ({
             
             {onPaymentTypeChange && (
               <Select defaultValue={paymentType} onValueChange={onPaymentTypeChange}>
-                <SelectTrigger className="w-[100px]">
+                <SelectTrigger className="w-[100px] glass-effect">
                   <SelectValue placeholder="واحد زمان" />
                 </SelectTrigger>
                 <SelectContent>
@@ -132,7 +133,7 @@ export const LoanForm: React.FC<LoanFormProps> = ({
                 <Input
                   id="paymentDate"
                   type="date"
-                  className="pl-12"
+                  className="pl-12 glass-effect"
                   dir="ltr"
                 />
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -147,6 +148,7 @@ export const LoanForm: React.FC<LoanFormProps> = ({
                 id="additionalPayment"
                 placeholder="مثال: 1,000,000"
                 dir="ltr"
+                className="glass-effect"
               />
             </div>
           </div>
@@ -155,7 +157,7 @@ export const LoanForm: React.FC<LoanFormProps> = ({
 
       <Button
         onClick={onCalculate}
-        className="flex items-center justify-center"
+        className="vibrant-button flex items-center justify-center hover:scale-105 transition-transform duration-300"
       >
         <Calculator className="ml-2 h-5 w-5" />
         محاسبه کن

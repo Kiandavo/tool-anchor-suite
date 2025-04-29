@@ -1,3 +1,4 @@
+
 @layer components {
   .glass-effect {
     @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm;
@@ -91,5 +92,23 @@
 
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105;
+  }
+  
+  /* Table styles */
+  .table-container {
+    @apply rounded-xl overflow-hidden neo-glass;
+  }
+  
+  .table-header {
+    @apply bg-primary/5 p-4 border-b border-white/20;
+  }
+  
+  .table-row {
+    @apply border-t border-white/10 hover:bg-primary/5 transition-colors duration-200;
+  }
+  
+  /* Results card styling */
+  .result-card {
+    @apply neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1;
   }
 }
