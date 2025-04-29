@@ -16,6 +16,7 @@ export interface Tool {
   isNew: boolean;
   icon: string;
   isComingSoon?: boolean;
+  isPremium?: boolean;
 }
 
 export const categoryLabels: Record<ToolCategory, string> = {
