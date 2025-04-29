@@ -54,6 +54,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     case 'profit':
     case 'scientific-calculator':
     case 'rent-factors':
+    case 'loan-calculator':
       return <CalculatorTool slug={slug} type={toolType} />;
     case 'random':
       return <UtilityToolRenderer slug={slug} type={toolType} />;
