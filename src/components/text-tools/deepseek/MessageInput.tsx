@@ -53,6 +53,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           size="icon"
           className="text-gray-500"
           disabled={messagesLength <= 1 || isLoading}
+          title="شروع گفتگوی جدید"
         >
           <Trash size={18} />
         </Button>

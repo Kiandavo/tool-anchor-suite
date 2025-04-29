@@ -30,7 +30,7 @@ export const fetchDeepseekResponse = async (
       const errorData = await response.json().catch(() => ({}));
       
       if (response.status === 401) {
-        throw new Error('کلید API نامعتبر است. لطفا کلید معتبر وارد کنید.');
+        throw new Error('خطا در احراز هویت API. لطفا بعدا دوباره تلاش کنید.');
       } else if (response.status === 429) {
         throw new Error('محدودیت درخواست‌ها به API رسیده است. لطفا کمی صبر کنید و دوباره تلاش کنید.');
       } else {
