@@ -22,7 +22,7 @@ const ApiErrorAlert: React.FC<ApiErrorAlertProps> = ({
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
           <AlertDescription>
-            خطا در اتصال به API دیپ‌سیک. در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
+            خطا در اتصال به API هوش مصنوعی. در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
             {errorMessage && (
               <div className="mt-1 text-xs opacity-75">{errorMessage}</div>
             )}

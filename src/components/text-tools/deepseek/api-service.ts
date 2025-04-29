@@ -5,8 +5,8 @@ import { Message } from './types';
  * Maps UI-friendly model names to actual API model identifiers
  */
 const MODEL_MAPPING = {
-  'deepseek-v3-base': 'gemini-2-flash-exp',
-  'google-gemini-flash': 'gemini-2-flash-exp'
+  'deepseek-v3-base': 'google/gemini-2.0-flash-exp:free',
+  'google-gemini-flash': 'google/gemini-2.0-flash-exp:free'
 };
 
 export const fetchDeepseekResponse = async (
@@ -17,29 +17,31 @@ export const fetchDeepseekResponse = async (
 ): Promise<string> => {
   try {
     // Get the correct model identifier based on the UI selection
-    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'gemini-2-flash-exp';
+    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'google/gemini-2.0-flash-exp:free';
     
-    // Updated API endpoint to use the Google Gemini API
-    const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2-flash-exp:generateContent';
+    // Updated API endpoint to use the OpenRouter API
+    const endpoint = 'https://openrouter.ai/api/v1/chat/completions';
     
-    // Format messages for Google's Gemini API
+    // Format messages for OpenRouter API (which uses OpenAI-compatible format)
     const formattedMessages = messageHistory.map(msg => ({
-      role: msg.role === 'assistant' ? 'model' : msg.role,
-      parts: [{ text: msg.content }]
+      role: msg.role,
+      content: msg.content
     }));
 
-    const response = await fetch(`${endpoint}?key=${apiKey}`, {
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'https://text-tools-demo.com', // Replace with your actual site URL
+        'X-Title': 'Persian Text Tools' // Replace with your site name
       },
       body: JSON.stringify({
-        contents: formattedMessages,
-        generationConfig: {
-          temperature: temperature,
-          maxOutputTokens: 2000,
-          topP: 0.95
-        }
+        model: modelIdentifier,
+        messages: formattedMessages,
+        temperature: temperature,
+        max_tokens: 2000,
+        top_p: 0.95
       })
     });
     
@@ -59,18 +61,18 @@ export const fetchDeepseekResponse = async (
     
     const data = await response.json();
     
-    // Validate response structure for Google Gemini API
-    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+    // OpenRouter uses OpenAI-compatible response format
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
       throw new Error('ساختار پاسخ API نامعتبر است.');
     }
     
     // Extract text content from the response
-    const content = data.candidates[0].content;
-    if (!content.parts || content.parts.length === 0) {
+    const content = data.choices[0].message.content;
+    if (!content) {
       throw new Error('پاسخی از API دریافت نشد.');
     }
     
-    return content.parts[0].text || '';
+    return content;
   } catch (error: any) {
     // Log detailed error information
     console.error('API request error details:', error);
