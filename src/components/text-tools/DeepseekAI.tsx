@@ -17,7 +17,8 @@ interface Message {
 }
 
 export const DeepseekAI = () => {
-  const [apiKey, setApiKey] = useState<string>('');
+  // Set the default API key to the provided one
+  const [apiKey, setApiKey] = useState<string>('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');
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +26,7 @@ export const DeepseekAI = () => {
   const [temperature, setTemperature] = useState(0.7);
   const [contextLength, setContextLength] = useState(5);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(true); // Set to true as we now have a default API key
   const [hasApiError, setHasApiError] = useState(false);
 
   // Load API key and messages from localStorage when component mounts
@@ -33,9 +34,12 @@ export const DeepseekAI = () => {
     const savedApiKey = localStorage.getItem('deepseek_api_key');
     const savedMessages = localStorage.getItem('deepseek_messages');
     
+    // If there's a saved API key, use it, otherwise use the default one
     if (savedApiKey) {
       setApiKey(savedApiKey);
-      setIsSaved(true);
+    } else {
+      // Save our default API key to localStorage
+      localStorage.setItem('deepseek_api_key', apiKey);
     }
     
     if (savedMessages) {
