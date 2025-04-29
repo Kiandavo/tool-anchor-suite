@@ -2,7 +2,7 @@
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
-import { HafezFortune } from '@/components/HafezFortune';
+import { FalSection } from '@/components/fal/FalSection';
 import { CategoriesSection } from '@/components/home/CategoriesSection';
 import { ToolsSection } from '@/components/home/ToolsSection';
 import { DeepseekPreview } from '@/components/home/DeepseekPreview';
@@ -12,7 +12,7 @@ const Index = () => {
     <Layout>
       <HeroSection />
       <DeepseekPreview />
-      <HafezFortune />
+      <FalSection />
       <CategoriesSection />
       <ToolsSection />
     </Layout>

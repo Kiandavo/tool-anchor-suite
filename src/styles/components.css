@@ -111,4 +111,30 @@
   .result-card {
     @apply neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1;
   }
+
+  /* Tarot card styling */
+  .perspective-card {
+    perspective: 1000px;
+  }
+  
+  .tarot-card {
+    transform-style: preserve-3d;
+  }
+  
+  .tarot-card-front,
+  .tarot-card-back {
+    backface-visibility: hidden;
+  }
+  
+  .tarot-card-back {
+    transform: rotateY(180deg);
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  
+  .rotateY-180 {
+    transform: rotateY(180deg);
+  }
 }
