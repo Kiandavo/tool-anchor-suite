@@ -11,10 +11,10 @@ const Index = () => {
   return (
     <Layout>
       <HeroSection />
+      <DeepseekPreview />
       <HafezFortune />
       <CategoriesSection />
       <ToolsSection />
-      <DeepseekPreview />
     </Layout>
   );
 };
