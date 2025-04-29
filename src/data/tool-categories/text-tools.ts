@@ -361,4 +361,13 @@ export const textTools: Tool[] = [
     isNew: true,
     icon: "book"
   },
+  {
+    id: "107",
+    slug: "deepseek-ai",
+    name: "هوش مصنوعی Deepseek",
+    category: "text",
+    description: "دستیار هوش مصنوعی چندمنظوره برای پاسخگویی به سوالات، نوشتن متن و کمک در کارها",
+    isNew: true,
+    icon: "sparkles"
+  },
 ];

@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Tool } from '@/data/tools';
@@ -16,7 +17,8 @@ import {
   Maximize, 
   Filter, 
   Activity,
-  Calendar
+  Calendar,
+  Sparkles
 } from 'lucide-react';
 
 // Map icon strings to Lucide components - moved outside component
@@ -34,7 +36,8 @@ const iconMap = {
   'dice': Dice6,
   'hash': Hash,
   'calendar': Calendar,
-  'calculator': Calculator
+  'calculator': Calculator,
+  'sparkles': Sparkles
 };
 
 interface ToolCardProps {
