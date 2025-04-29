@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Sparkles, Send, Trash, ClipboardCopy, Key, Loader } from "lucide-react";
+import { Sparkles, Send, Trash, ClipboardCopy, Key, Loader, Info } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -21,26 +22,54 @@ export const DeepseekAI = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState('deepseek-chat');
+  const [temperature, setTemperature] = useState(0.7);
+  const [contextLength, setContextLength] = useState(5);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [hasApiError, setHasApiError] = useState(false);
 
-  // Load API key from localStorage when component mounts
+  // Load API key and messages from localStorage when component mounts
   useEffect(() => {
     const savedApiKey = localStorage.getItem('deepseek_api_key');
+    const savedMessages = localStorage.getItem('deepseek_messages');
+    
     if (savedApiKey) {
       setApiKey(savedApiKey);
       setIsSaved(true);
     }
     
-    // Add system welcome message when first loaded
-    if (messages.length === 0) {
-      setMessages([{
-        role: 'assistant',
-        content: 'سلام! من دستیار هوشمند دیپ‌سیک هستم. چطور می‌توانم به شما کمک کنم؟',
-        timestamp: new Date()
-      }]);
+    if (savedMessages) {
+      try {
+        const parsedMessages = JSON.parse(savedMessages);
+        // Convert string timestamps back to Date objects
+        const processedMessages = parsedMessages.map((msg: any) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp)
+        }));
+        setMessages(processedMessages);
+      } catch (e) {
+        console.error('Error parsing saved messages', e);
+        initializeWithWelcomeMessage();
+      }
+    } else {
+      initializeWithWelcomeMessage();
     }
   }, []);
+
+  const initializeWithWelcomeMessage = () => {
+    setMessages([{
+      role: 'assistant',
+      content: 'سلام! من دستیار هوشمند دیپ‌سیک هستم. چطور می‌توانم به شما کمک کنم؟',
+      timestamp: new Date()
+    }]);
+  };
+
+  // Save messages to localStorage when they change
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem('deepseek_messages', JSON.stringify(messages));
+    }
+  }, [messages]);
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
@@ -56,6 +85,7 @@ export const DeepseekAI = () => {
       localStorage.setItem('deepseek_api_key', apiKey.trim());
       setIsSaved(true);
       toast.success('کلید API ذخیره شد');
+      setHasApiError(false);
     } else {
       toast.error('لطفا کلید API را وارد کنید');
     }
@@ -66,6 +96,26 @@ export const DeepseekAI = () => {
     setApiKey('');
     setIsSaved(false);
     toast.success('کلید API حذف شد');
+  };
+
+  const buildMessageHistory = (userMessage: Message) => {
+    // Get recent messages based on contextLength
+    const recentMessages = [...messages.slice(-contextLength * 2), userMessage];
+    
+    // Always include a system message at the beginning for better responses
+    const systemContext = {
+      role: 'system' as const,
+      content: 'شما یک دستیار هوشمند فارسی زبان هستید که به سوالات کاربران به زبان فارسی پاسخ می‌دهید. پاسخ‌های شما دقیق، کمک‌کننده و مودبانه است. لطفا همیشه به زبان فارسی پاسخ دهید و از اطلاعات دقیق و به‌روز استفاده کنید.'
+    };
+    
+    // Format messages for API
+    return [
+      systemContext,
+      ...recentMessages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }))
+    ];
   };
 
   const handleSendMessage = async () => {
@@ -90,8 +140,9 @@ export const DeepseekAI = () => {
       let assistantResponse;
 
       if (apiKey.startsWith('sk-')) {
-        // Real API call to Deepseek
         try {
+          const messageHistory = buildMessageHistory(userMessage);
+          
           const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -100,30 +151,44 @@ export const DeepseekAI = () => {
             },
             body: JSON.stringify({
               model: selectedModel,
-              messages: messages.concat(userMessage).map(msg => ({ 
-                role: msg.role, 
-                content: msg.content 
-              })),
-              temperature: 0.7,
-              max_tokens: 1000
+              messages: messageHistory,
+              temperature: temperature,
+              max_tokens: 2000,
+              top_p: 0.95,
+              frequency_penalty: 0.0,
+              presence_penalty: 0.0,
+              stream: false
             })
           });
           
           if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}`);
+            const errorData = await response.json().catch(() => ({}));
+            console.error('API error:', errorData);
+            
+            if (response.status === 401) {
+              throw new Error('کلید API نامعتبر است. لطفا کلید معتبر وارد کنید.');
+            } else if (response.status === 429) {
+              throw new Error('محدودیت درخواست‌ها به API رسیده است. لطفا کمی صبر کنید و دوباره تلاش کنید.');
+            } else {
+              throw new Error(`خطا در درخواست به API: ${response.status} ${errorData.error?.message || ''}`);
+            }
           }
           
           const data = await response.json();
           assistantResponse = data.choices[0].message.content;
-        } catch (error) {
+          setHasApiError(false);
+        } catch (error: any) {
           console.error('Error calling DeepseekAI API:', error);
+          setHasApiError(true);
+          toast.error(error.message || 'خطا در ارتباط با API دیپ‌سیک');
+          
           // Fall back to simulation if real API fails
           assistantResponse = generateSimulatedResponse(inputMessage);
-          toast.error('خطا در ارتباط با API دیپ‌سیک. از پاسخ شبیه‌سازی شده استفاده شد.');
+          toast.error('از پاسخ شبیه‌سازی شده استفاده شد.');
         }
       } else {
-        // Simulation mode
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Simulation mode with slightly delayed response for realism
+        await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
         assistantResponse = generateSimulatedResponse(inputMessage);
       }
 
@@ -175,6 +240,7 @@ export const DeepseekAI = () => {
       content: 'سلام! من دستیار هوشمند دیپ‌سیک هستم. چطور می‌توانم به شما کمک کنم؟',
       timestamp: new Date()
     }]);
+    localStorage.removeItem('deepseek_messages');
     toast.success('تاریخچه گفتگو پاک شد');
   };
 
@@ -196,6 +262,7 @@ export const DeepseekAI = () => {
       <Card>
         <CardContent className="pt-6">
           <div className="space-y-4">
+            {/* API Key Input */}
             <div className="space-y-2">
               <div className="flex flex-col md:flex-row md:items-end gap-3">
                 <div className="flex-1">
@@ -234,12 +301,66 @@ export const DeepseekAI = () => {
                     <SelectContent>
                       <SelectItem value="deepseek-chat">DeepSeek Chat</SelectItem>
                       <SelectItem value="deepseek-coder">DeepSeek Coder</SelectItem>
-                      <SelectItem value="deepseek-llm">DeepSeek LLM</SelectItem>
+                      <SelectItem value="mixtral-8x7b">Mixtral 8x7B</SelectItem>
+                      <SelectItem value="deepseek-llm-67b">DeepSeek LLM 67B</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                {/* Temperature Setting */}
+                <div className="sm:w-1/2">
+                  <label htmlFor="temperature" className="block text-xs font-medium text-gray-700 mb-1">
+                    خلاقیت (Temperature): {temperature.toFixed(1)}
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={temperature}
+                    onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>دقیق</span>
+                    <span>متعادل</span>
+                    <span>خلاق</span>
+                  </div>
+                </div>
+                
+                {/* Context Length Setting */}
+                <div className="sm:w-1/2">
+                  <label htmlFor="context" className="block text-xs font-medium text-gray-700 mb-1">
+                    طول حافظه: {contextLength} پیام
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    step="1"
+                    value={contextLength}
+                    onChange={(e) => setContextLength(parseInt(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>کوتاه</span>
+                    <span>متوسط</span>
+                    <span>بلند</span>
+                  </div>
+                </div>
+              </div>
             </div>
+            
+            {hasApiError && (
+              <Alert variant="destructive" className="bg-red-50 text-red-800 border-red-200">
+                <Info className="h-4 w-4" />
+                <AlertDescription>
+                  خطا در اتصال به API دیپ‌سیک. لطفا کلید API خود را بررسی کنید یا بعداً دوباره تلاش کنید. در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
+                </AlertDescription>
+              </Alert>
+            )}
 
             {/* Messages Area */}
             <div className="border rounded-lg bg-slate-50">
@@ -283,7 +404,7 @@ export const DeepseekAI = () => {
                       <div className="flex justify-start">
                         <div className="max-w-[80%] rounded-lg p-3 bg-white border text-gray-700">
                           <div className="flex items-center space-x-2">
-                            <Loader className="h-4 w-4 animate-spin mr-2" />
+                            <Loader className="h-4 w-4 animate-spin ml-2" />
                             <span className="text-sm">در حال نوشتن پاسخ...</span>
                           </div>
                         </div>
