@@ -1,4 +1,4 @@
-
+import OpenAI from 'openai';
 import { Message } from './types';
 
 /**
@@ -6,7 +6,8 @@ import { Message } from './types';
  */
 const MODEL_MAPPING = {
   'deepseek-v3-base': 'google/gemini-2.0-flash-exp:free',
-  'google-gemini-flash': 'google/gemini-2.0-flash-exp:free'
+  'google-gemini-flash': 'google/gemini-2.0-flash-exp:free',
+  'deepseek-chimera': 'tngtech/deepseek-r1t-chimera:free'
 };
 
 export const fetchDeepseekResponse = async (
@@ -16,63 +17,53 @@ export const fetchDeepseekResponse = async (
   temperature: number
 ): Promise<string> => {
   try {
+    // Initialize OpenAI client with OpenRouter config
+    const openai = new OpenAI({
+      baseURL: "https://openrouter.ai/api/v1",
+      apiKey: apiKey,
+      defaultHeaders: {
+        "HTTP-Referer": "https://text-tools-demo.com", 
+        "X-Title": "Persian Text Tools"
+      },
+    });
+
     // Get the correct model identifier based on the UI selection
     const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'google/gemini-2.0-flash-exp:free';
     
-    // Updated API endpoint to use the OpenRouter API
-    const endpoint = 'https://openrouter.ai/api/v1/chat/completions';
-    
-    // Format messages for OpenRouter API (which uses OpenAI-compatible format)
+    // Format messages for OpenAI client (OpenRouter follows the OpenAI format)
     const formattedMessages = messageHistory.map(msg => ({
       role: msg.role,
       content: msg.content
     }));
 
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-        'HTTP-Referer': 'https://text-tools-demo.com', // Replace with your actual site URL
-        'X-Title': 'Persian Text Tools' // Replace with your site name
-      },
-      body: JSON.stringify({
+    try {
+      const completion = await openai.chat.completions.create({
         model: modelIdentifier,
         messages: formattedMessages,
         temperature: temperature,
         max_tokens: 2000,
         top_p: 0.95
-      })
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      });
       
-      if (response.status === 401) {
+      // Extract text content from the response
+      const content = completion.choices[0].message.content;
+      if (!content) {
+        throw new Error('پاسخی از API دریافت نشد.');
+      }
+      
+      return content;
+    } catch (error: any) {
+      // Handle OpenAI API specific errors
+      if (error.status === 401) {
         throw new Error('خطا در احراز هویت API. لطفا بعدا دوباره تلاش کنید.');
-      } else if (response.status === 429) {
+      } else if (error.status === 429) {
         throw new Error('محدودیت درخواست‌ها به API رسیده است. لطفا کمی صبر کنید و دوباره تلاش کنید.');
-      } else if (response.status === 400) {
-        throw new Error(`خطا در پارامترهای ارسالی: ${errorData.error?.message || 'پارامترهای نامعتبر'}`);
+      } else if (error.status === 400) {
+        throw new Error(`خطا در پارامترهای ارسالی: ${error.message || 'پارامترهای نامعتبر'}`);
       } else {
-        throw new Error(`خطا در درخواست به API: ${response.status} ${errorData.error?.message || ''}`);
+        throw new Error(`خطا در درخواست به API: ${error.status || ''} ${error.message || ''}`);
       }
     }
-    
-    const data = await response.json();
-    
-    // OpenRouter uses OpenAI-compatible response format
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-      throw new Error('ساختار پاسخ API نامعتبر است.');
-    }
-    
-    // Extract text content from the response
-    const content = data.choices[0].message.content;
-    if (!content) {
-      throw new Error('پاسخی از API دریافت نشد.');
-    }
-    
-    return content;
   } catch (error: any) {
     // Log detailed error information
     console.error('API request error details:', error);
