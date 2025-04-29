@@ -5,6 +5,7 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { HafezFortune } from '@/components/HafezFortune';
 import { CategoriesSection } from '@/components/home/CategoriesSection';
 import { ToolsSection } from '@/components/home/ToolsSection';
+import { DeepseekPreview } from '@/components/home/DeepseekPreview';
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <HafezFortune />
       <CategoriesSection />
       <ToolsSection />
+      <DeepseekPreview />
     </Layout>
   );
 };
