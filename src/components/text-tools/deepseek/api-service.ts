@@ -27,7 +27,8 @@ export const fetchDeepseekResponse = async (
         "HTTP-Referer": "https://text-tools-demo.com", 
         "X-Title": "Persian Text Tools"
       },
-      dangerouslyAllowBrowser: true // Add this option to allow browser usage
+      dangerouslyAllowBrowser: true, // Add this option to allow browser usage
+      timeout: 30000 // Set timeout at the client level, not in individual requests
     });
 
     // Get the correct model identifier based on the UI selection
@@ -47,8 +48,8 @@ export const fetchDeepseekResponse = async (
         messages: formattedMessages,
         temperature: temperature,
         max_tokens: 2000,
-        top_p: 0.95,
-        timeout: 30000 // Increase timeout to 30 seconds
+        top_p: 0.95
+        // Remove timeout property as it's not supported in the ChatCompletionCreateParams type
       });
       
       // Extract text content from the response
