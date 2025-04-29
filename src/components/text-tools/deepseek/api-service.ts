@@ -8,14 +8,15 @@ export const fetchDeepseekResponse = async (
   temperature: number
 ): Promise<string> => {
   try {
-    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    // Using an API proxy to avoid CORS issues
+    const response = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: selectedModel,
+        model: "deepseek-ai/deepseek-v2", // Use compatible model mapping
         messages: messageHistory,
         temperature: temperature,
         max_tokens: 2000,
@@ -41,6 +42,7 @@ export const fetchDeepseekResponse = async (
     const data = await response.json();
     return data.choices[0].message.content;
   } catch (error) {
+    console.error('API request error details:', error);
     throw error;
   }
 };

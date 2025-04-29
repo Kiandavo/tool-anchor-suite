@@ -7,6 +7,7 @@ import ModelSelector from './ModelSelector';
 import SettingsControls from './SettingsControls';
 import ChatMessages from './ChatMessages';
 import MessageInput from './MessageInput';
+import ApiErrorAlert from './ApiErrorAlert';
 import { fetchDeepseekResponse, generateSimulatedResponse, buildMessageHistory } from './api-service';
 
 const DeepseekAIContainer: React.FC = () => {
@@ -19,6 +20,7 @@ const DeepseekAIContainer: React.FC = () => {
   const [temperature, setTemperature] = useState(0.7);
   const [contextLength, setContextLength] = useState(5);
   const [hasApiError, setHasApiError] = useState(false);
+  const [apiErrorMessage, setApiErrorMessage] = useState<string>('');
 
   // Generate a unique session ID when the component mounts
   useEffect(() => {
@@ -53,9 +55,11 @@ const DeepseekAIContainer: React.FC = () => {
         const messageHistory = buildMessageHistory(messages, userMessage, contextLength);
         assistantResponse = await fetchDeepseekResponse(apiKey, messageHistory, selectedModel, temperature);
         setHasApiError(false);
+        setApiErrorMessage('');
       } catch (error: any) {
         console.error('Error calling DeepseekAI API:', error);
         setHasApiError(true);
+        setApiErrorMessage(error.message || 'خطا در ارتباط با سرور');
         
         // Fall back to simulation if real API fails
         assistantResponse = generateSimulatedResponse(inputMessage);
@@ -119,6 +123,7 @@ const DeepseekAIContainer: React.FC = () => {
             {hasApiError && (
               <div className="bg-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg p-3 text-sm">
                 اتصال به سرور با مشکل مواجه شده است. از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
+                {apiErrorMessage ? <div className="mt-1 text-xs">{apiErrorMessage}</div> : null}
               </div>
             )}
 
