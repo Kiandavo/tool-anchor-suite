@@ -6,11 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Sparkles, Send, Trash, ClipboardCopy, Key } from "lucide-react";
+import { Sparkles, Send, Trash, ClipboardCopy, Key, Loader } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Message {
-  role: 'user' | 'assistant';
+  role: 'user' | 'assistant' | 'system';
   content: string;
   timestamp: Date;
 }
@@ -30,6 +30,15 @@ export const DeepseekAI = () => {
     if (savedApiKey) {
       setApiKey(savedApiKey);
       setIsSaved(true);
+    }
+    
+    // Add system welcome message when first loaded
+    if (messages.length === 0) {
+      setMessages([{
+        role: 'assistant',
+        content: 'سلام! من دستیار هوشمند دیپ‌سیک هستم. چطور می‌توانم به شما کمک کنم؟',
+        timestamp: new Date()
+      }]);
     }
   }, []);
 
@@ -78,50 +87,56 @@ export const DeepseekAI = () => {
     setIsLoading(true);
 
     try {
-      // This is where we would normally call the Deepseek API
-      // For now, we'll simulate a response after a delay
-      setTimeout(() => {
-        const assistantMessage: Message = {
-          role: 'assistant',
-          content: generateSimulatedResponse(inputMessage),
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 1500);
-      
-      // When you have the actual API key and endpoint, you would implement the real call here
-      /*
-      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: selectedModel,
-          messages: messages.map(msg => ({ role: msg.role, content: msg.content })),
-          temperature: 0.7,
-          max_tokens: 1000
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+      let assistantResponse;
+
+      if (apiKey.startsWith('sk-')) {
+        // Real API call to Deepseek
+        try {
+          const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model: selectedModel,
+              messages: messages.concat(userMessage).map(msg => ({ 
+                role: msg.role, 
+                content: msg.content 
+              })),
+              temperature: 0.7,
+              max_tokens: 1000
+            })
+          });
+          
+          if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+          }
+          
+          const data = await response.json();
+          assistantResponse = data.choices[0].message.content;
+        } catch (error) {
+          console.error('Error calling DeepseekAI API:', error);
+          // Fall back to simulation if real API fails
+          assistantResponse = generateSimulatedResponse(inputMessage);
+          toast.error('خطا در ارتباط با API دیپ‌سیک. از پاسخ شبیه‌سازی شده استفاده شد.');
+        }
+      } else {
+        // Simulation mode
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        assistantResponse = generateSimulatedResponse(inputMessage);
       }
-      
-      const data = await response.json();
+
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.choices[0].message.content,
+        content: assistantResponse,
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, assistantMessage]);
-      */
     } catch (error) {
-      console.error('Error calling DeepseekAI:', error);
-      toast.error('خطا در ارتباط با سرویس Deepseek');
+      console.error('Error in DeepseekAI:', error);
+      toast.error('خطا در پردازش پاسخ');
     } finally {
       setIsLoading(false);
     }
@@ -129,18 +144,37 @@ export const DeepseekAI = () => {
 
   const generateSimulatedResponse = (input: string) => {
     // This function simulates a response for demonstration purposes
-    const responses = [
-      `با توجه به سوال شما درباره "${input.slice(0, 20)}...", باید بگویم که این موضوع بسیار جالب است. در این زمینه نظرات مختلفی وجود دارد...`,
-      `سوال خوبی پرسیدید. در مورد "${input.slice(0, 20)}..." می‌توانم بگویم که طبق آخرین تحقیقات، این موضوع از جنبه‌های مختلفی قابل بررسی است...`,
-      `"${input.slice(0, 20)}..." سوال بسیار خوبی است. بر اساس داده‌های موجود، می‌توانم اینطور پاسخ دهم که...`,
-      `درباره "${input.slice(0, 20)}..." باید به چند نکته اساسی توجه کرد. اول اینکه این موضوع از دیدگاه‌های مختلفی قابل بررسی است...`,
+    const greetings = ['سلام', 'درود', 'خوش آمدید', 'چطور هستید'];
+    
+    if (input.toLowerCase().includes('سلام') || input.toLowerCase().includes('درود')) {
+      return `${greetings[Math.floor(Math.random() * greetings.length)]}! چطور می‌توانم به شما کمک کنم؟`;
+    }
+    
+    if (input.includes('?') || input.includes('؟')) {
+      const responses = [
+        `سوال خوبی پرسیدید. با توجه به سوال شما درباره "${input.slice(0, 20)}...", می‌توانم بگویم که این موضوع از جنبه‌های مختلفی قابل بررسی است. اول اینکه این مفهوم را می‌توان از دیدگاه علمی و همچنین فلسفی مورد تحلیل قرار داد. در منابع معتبر آمده است که...`,
+        `درباره "${input.slice(0, 20)}..." باید به چند نکته اساسی توجه کرد. بر اساس آخرین پژوهش‌های انجام شده در این زمینه، می‌توان گفت که عوامل متعددی در این فرآیند دخیل هستند. اگر بخواهیم به طور خلاصه اشاره کنیم، این عوامل شامل...`,
+        `در پاسخ به سوال شما درباره "${input.slice(0, 20)}..."، لازم است ابتدا تعریف دقیقی از این مفهوم ارائه دهیم. طبق تعاریف موجود در منابع معتبر، این مفهوم اشاره دارد به... این تعریف به ما کمک می‌کند تا درک بهتری از موضوع داشته باشیم.`,
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+    
+    const generalResponses = [
+      `"${input.slice(0, 20)}..." موضوع جالبی است. با توجه به داده‌های موجود، می‌توان گفت که این مبحث یکی از زمینه‌های مهم در عصر حاضر است. جنبه‌های مختلف آن را می‌توان اینگونه دسته‌بندی کرد...`,
+      `در زمینه "${input.slice(0, 20)}..." می‌توانم اطلاعات مفیدی ارائه دهم. این موضوع از دیدگاه‌های مختلفی مورد بررسی قرار گرفته و نظرات متفاوتی درباره آن وجود دارد. اگر بخواهیم به طور خلاصه به آن بپردازیم...`,
+      `موضوع "${input.slice(0, 20)}..." یکی از مباحث مهم در حوزه تخصصی مربوطه است. با توجه به تحقیقات انجام شده، می‌توان گفت که این موضوع از ابعاد گوناگونی قابل بررسی است. برخی از مهمترین جنبه‌های آن عبارتند از...`,
+      `در خصوص "${input.slice(0, 20)}..." نکات متعددی وجود دارد که می‌تواند مورد توجه قرار گیرد. با بررسی منابع معتبر در این زمینه، می‌توان به این نتیجه رسید که...`
     ];
     
-    return responses[Math.floor(Math.random() * responses.length)];
+    return generalResponses[Math.floor(Math.random() * generalResponses.length)];
   };
 
   const clearMessages = () => {
-    setMessages([]);
+    setMessages([{
+      role: 'assistant',
+      content: 'سلام! من دستیار هوشمند دیپ‌سیک هستم. چطور می‌توانم به شما کمک کنم؟',
+      timestamp: new Date()
+    }]);
     toast.success('تاریخچه گفتگو پاک شد');
   };
 
@@ -245,6 +279,16 @@ export const DeepseekAI = () => {
                         </div>
                       </div>
                     ))}
+                    {isLoading && (
+                      <div className="flex justify-start">
+                        <div className="max-w-[80%] rounded-lg p-3 bg-white border text-gray-700">
+                          <div className="flex items-center space-x-2">
+                            <Loader className="h-4 w-4 animate-spin mr-2" />
+                            <span className="text-sm">در حال نوشتن پاسخ...</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <div ref={messagesEndRef} />
                   </div>
                 )}
@@ -265,6 +309,7 @@ export const DeepseekAI = () => {
                       handleSendMessage();
                     }
                   }}
+                  disabled={isLoading}
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -273,14 +318,14 @@ export const DeepseekAI = () => {
                   disabled={isLoading || !inputMessage.trim()}
                   size="icon"
                 >
-                  <Send size={18} />
+                  {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : <Send size={18} />}
                 </Button>
                 <Button 
                   onClick={clearMessages}
                   variant="outline" 
                   size="icon"
                   className="text-gray-500"
-                  disabled={messages.length === 0}
+                  disabled={messages.length <= 1 || isLoading}
                 >
                   <Trash size={18} />
                 </Button>
