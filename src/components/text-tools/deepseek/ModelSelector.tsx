@@ -18,8 +18,10 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, setSelecte
           <SelectValue placeholder="انتخاب مدل" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="google-gemini-flash">Google Gemini 2.0 Flash (via OpenRouter)</SelectItem>
-          <SelectItem value="deepseek-chimera">DeepSeek Chimera (via OpenRouter)</SelectItem>
+          <SelectItem value="deepseek-v3-base">DeepSeek V3 0324 (free)</SelectItem>
+          <SelectItem value="deepseek-r1">DeepSeek R1 (free)</SelectItem>
+          <SelectItem value="google-gemini-flash">Google Gemini 2.0 Flash (free)</SelectItem>
+          <SelectItem value="llama4-maverick">Llama 4 Maverick (free)</SelectItem>
         </SelectContent>
       </Select>
       <p className="text-xs text-gray-500 mt-1">قدرت گرفته از OpenRouter</p>

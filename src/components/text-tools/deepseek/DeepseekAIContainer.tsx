@@ -5,7 +5,7 @@ import { useDeepseekChat } from './hooks/useDeepseekChat';
 
 const DeepseekAIContainer: React.FC = () => {
   const [inputMessage, setInputMessage] = useState('');
-  const [selectedModel, setSelectedModel] = useState('google-gemini-flash');
+  const [selectedModel, setSelectedModel] = useState('deepseek-v3-base'); // Default to DeepSeek V3
   const [temperature, setTemperature] = useState(0.7);
   const [contextLength, setContextLength] = useState(5);
   

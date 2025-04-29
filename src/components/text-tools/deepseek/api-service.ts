@@ -6,9 +6,10 @@ import { Message } from './types';
  * Maps UI-friendly model names to actual API model identifiers
  */
 const MODEL_MAPPING = {
-  'deepseek-v3-base': 'google/gemini-2.0-flash-exp:free',
+  'deepseek-v3-base': 'deepseek/deepseek-v3-0324:free',
+  'deepseek-r1': 'tngtech/deepseek-r1t-chimera:free',
   'google-gemini-flash': 'google/gemini-2.0-flash-exp:free',
-  'deepseek-chimera': 'tngtech/deepseek-r1t-chimera:free'
+  'llama4-maverick': 'meta-llama/llama-4-maverick:free'
 };
 
 export const fetchDeepseekResponse = async (
@@ -32,6 +33,8 @@ export const fetchDeepseekResponse = async (
     // Get the correct model identifier based on the UI selection
     const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'google/gemini-2.0-flash-exp:free';
     
+    console.log('Attempting API call with model:', modelIdentifier);
+    
     // Format messages for OpenAI client (OpenRouter follows the OpenAI format)
     const formattedMessages = messageHistory.map(msg => ({
       role: msg.role,
@@ -44,7 +47,8 @@ export const fetchDeepseekResponse = async (
         messages: formattedMessages,
         temperature: temperature,
         max_tokens: 2000,
-        top_p: 0.95
+        top_p: 0.95,
+        timeout: 30000 // Increase timeout to 30 seconds
       });
       
       // Extract text content from the response
@@ -55,6 +59,8 @@ export const fetchDeepseekResponse = async (
       
       return content;
     } catch (error: any) {
+      console.error('OpenRouter API error details:', error);
+      
       // Handle OpenAI API specific errors
       if (error.status === 401) {
         throw new Error('خطا در احراز هویت API. لطفا بعدا دوباره تلاش کنید.');
@@ -62,6 +68,8 @@ export const fetchDeepseekResponse = async (
         throw new Error('محدودیت درخواست‌ها به API رسیده است. لطفا کمی صبر کنید و دوباره تلاش کنید.');
       } else if (error.status === 400) {
         throw new Error(`خطا در پارامترهای ارسالی: ${error.message || 'پارامترهای نامعتبر'}`);
+      } else if (error.cause?.code === 'ECONNREFUSED' || error.cause?.code === 'ECONNRESET') {
+        throw new Error('خطا در اتصال به سرور API. لطفا اتصال اینترنت خود را بررسی کنید.');
       } else {
         throw new Error(`خطا در درخواست به API: ${error.status || ''} ${error.message || ''}`);
       }

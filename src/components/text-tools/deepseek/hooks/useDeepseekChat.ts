@@ -1,18 +1,17 @@
-
 import { useState } from 'react';
 import { toast } from "sonner";
 import { Message } from '../types';
 import { fetchDeepseekResponse, generateSimulatedResponse, buildMessageHistory } from '../api-service';
 
 export function useDeepseekChat() {
-  // Using OpenRouter API key for access to multiple AI models
-  const [apiKey] = useState<string>('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');
+  // Using a valid OpenRouter API key from the provided information
+  const [apiKey] = useState<string>('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');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasApiError, setHasApiError] = useState(false);
   const [apiErrorMessage, setApiErrorMessage] = useState<string>('');
   const [retryAttempts, setRetryAttempts] = useState(0);
-  const MAX_RETRY_ATTEMPTS = 2;
+  const MAX_RETRY_ATTEMPTS = 3;
 
   const initializeWithWelcomeMessage = () => {
     setMessages([{
@@ -59,6 +58,7 @@ export function useDeepseekChat() {
       let assistantResponse;
 
       try {
+        console.log(`Sending message to API with model: ${selectedModel} (Attempt: ${retryAttempts + 1})`);
         const messageHistory = buildMessageHistory(messages, userMessage, contextLength);
         assistantResponse = await fetchDeepseekResponse(apiKey, messageHistory, selectedModel, temperature);
         
@@ -66,11 +66,12 @@ export function useDeepseekChat() {
         setHasApiError(false);
         setApiErrorMessage('');
         
+        console.log('Received successful response from API');
       } catch (error: any) {
         console.error('Error calling OpenRouter API:', error);
         
         // Check if we should retry
-        if (retryAttempts < MAX_RETRY_ATTEMPTS && error.message.includes('اتصال به سرور')) {
+        if (retryAttempts < MAX_RETRY_ATTEMPTS && (error.message.includes('اتصال به سرور') || error.message.includes('Connection error'))) {
           setRetryAttempts(prev => prev + 1);
           
           // Show retry toast
