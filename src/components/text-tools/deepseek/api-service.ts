@@ -5,7 +5,7 @@ import { Message } from './types';
  * Maps UI-friendly model names to actual API model identifiers
  */
 const MODEL_MAPPING = {
-  'deepseek-v3-base': 'deepseek-ai/deepseek-v2'
+  'deepseek-v3-base': 'deepseek-chat'
 };
 
 export const fetchDeepseekResponse = async (
@@ -16,10 +16,10 @@ export const fetchDeepseekResponse = async (
 ): Promise<string> => {
   try {
     // Get the correct model identifier based on the UI selection
-    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'deepseek-ai/deepseek-v2';
+    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'deepseek-chat';
     
-    // API endpoint configuration
-    const endpoint = 'https://api.deepinfra.com/v1/openai/chat/completions';
+    // Updated API endpoint to use the official DeepSeek API
+    const endpoint = 'https://api.deepseek.com/chat/completions';
     
     const response = await fetch(endpoint, {
       method: 'POST',
