@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { toast } from "sonner";
-import { RefreshCw, Copy, Cards, CircleHelp } from "lucide-react";
+import { RefreshCw, Copy, CircleHelp, BookOpen } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { copyToClipboard } from "@/utils/randomUtils";
 
@@ -99,7 +99,7 @@ export const TarotReading = () => {
     <Card className="bg-[#e9f0f7] border-[#b0c8e6] shadow-sm overflow-hidden">
       <CardHeader className="bg-[#b0c8e6] text-center pb-2 py-2">
         <div className="flex items-center justify-center">
-          <Cards className="text-[#143a5c] mr-2" size={16} />
+          <BookOpen className="text-[#143a5c] mr-2" size={16} />
           <h2 className="text-sm font-bold text-[#143a5c]">فال تاروت</h2>
         </div>
       </CardHeader>
