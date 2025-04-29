@@ -25,25 +25,26 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
   return (
     <div 
-      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
     >
       <div 
-        className={`max-w-[80%] rounded-lg p-3 ${
+        className={`max-w-[85%] rounded-2xl p-4 ${
           message.role === 'user' 
-            ? 'bg-primary/10 text-gray-800' 
-            : 'bg-white border text-gray-700'
+            ? 'bg-primary/15 text-gray-800' 
+            : 'bg-white shadow-sm border border-slate-200 text-gray-700'
         }`}
       >
-        <div className="text-sm whitespace-pre-wrap">{message.content}</div>
-        <div className="flex justify-between items-center mt-1">
+        <div className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</div>
+        <div className="flex justify-between items-center mt-2">
           <span className="text-xs text-gray-500">{formatTime(message.timestamp)}</span>
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-5 w-5" 
+            className="h-6 w-6 hover:bg-slate-200/70 hover:text-primary" 
             onClick={() => copyToClipboard(message.content)}
+            title="کپی متن"
           >
-            <ClipboardCopy className="h-3 w-3" />
+            <ClipboardCopy className="h-3.5 w-3.5" />
           </Button>
         </div>
       </div>

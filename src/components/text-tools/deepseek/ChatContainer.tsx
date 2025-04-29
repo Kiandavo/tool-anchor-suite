@@ -6,6 +6,7 @@ import SettingsControls from './SettingsControls';
 import ChatMessages from './ChatMessages';
 import MessageInput from './MessageInput';
 import ApiErrorAlert from './ApiErrorAlert';
+import { Sparkles } from 'lucide-react';
 
 interface ChatContainerProps {
   messages: any[];
@@ -46,16 +47,24 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      <Card>
+      <Card className="border-none shadow-lg bg-white/80 backdrop-blur-sm">
         <CardContent className="pt-6">
-          <div className="space-y-4">
+          <div className="space-y-6">
+            {/* Header with Title */}
+            <div className="flex items-center justify-center mb-2">
+              <div className="bg-gradient-to-r from-primary/80 to-purple-600/80 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-md">
+                <Sparkles className="h-5 w-5" />
+                <h2 className="text-lg font-bold">دستیار هوش مصنوعی دیپ‌سیک</h2>
+              </div>
+            </div>
+            
             {/* Settings Section */}
-            <div className="space-y-2">
+            <div className="space-y-4">
               <div className="flex flex-col md:flex-row md:items-end gap-3">
                 <div className="flex-1">
                   <button 
                     onClick={startNewChat}
-                    className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90"
+                    className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
                   >
                     گفتگوی جدید
                   </button>
@@ -83,7 +92,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
             )}
 
             {/* Messages Area */}
-            <div className="border rounded-lg bg-slate-50">
+            <div className="border rounded-xl bg-slate-50 shadow-inner">
               <ChatMessages messages={messages} isLoading={isLoading} />
             </div>
             
@@ -97,7 +106,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
               messagesLength={messages.length}
             />
             
-            <div className="text-xs text-center text-gray-500 pt-2">
+            <div className="text-xs text-center text-gray-500 pt-2 bg-slate-50/50 rounded-md p-2">
               <p>این ابزار به صورت رایگان در اختیار شما قرار گرفته است</p>
               <p className="mt-1">برای شروع مجدد گفتگو از دکمه "گفتگوی جدید" استفاده کنید</p>
             </div>

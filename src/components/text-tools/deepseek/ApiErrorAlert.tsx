@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info, RefreshCw } from "lucide-react";
+import { Info, RefreshCw, WifiOff } from "lucide-react";
 
 interface ApiErrorAlertProps {
   hasApiError: boolean;
@@ -17,28 +17,45 @@ const ApiErrorAlert: React.FC<ApiErrorAlertProps> = ({
   if (!hasApiError) return null;
   
   const isCorsError = errorMessage?.toLowerCase().includes('cors');
+  const isNetworkError = errorMessage?.toLowerCase().includes('failed to fetch') || 
+                        !navigator.onLine;
   
   return (
-    <Alert variant="destructive" className="bg-red-50 text-red-800 border-red-200">
-      <div className="flex justify-between items-center">
+    <Alert variant="destructive" className="bg-red-50 text-red-800 border-red-200 mb-4">
+      <div className="flex justify-between items-start">
         <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
-          <AlertDescription>
-            {isCorsError ? (
+          {isNetworkError ? (
+            <WifiOff className="h-5 w-5 mt-0.5 flex-shrink-0 text-red-700" />
+          ) : (
+            <Info className="h-5 w-5 mt-0.5 flex-shrink-0 text-red-700" />
+          )}
+          <AlertDescription className="text-sm">
+            {isNetworkError ? (
               <>
-                خطا در اتصال به API هوش مصنوعی (مشکل CORS). در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
-                <div className="mt-1 text-xs opacity-75">
+                <span className="font-medium">خطای اتصال به اینترنت.</span> لطفا اتصال خود را بررسی کنید.
+                <div className="mt-1 text-xs opacity-90">
+                  در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
+                </div>
+              </>
+            ) : isCorsError ? (
+              <>
+                <span className="font-medium">خطا در اتصال به API هوش مصنوعی (مشکل CORS).</span>
+                <div className="mt-1 text-xs opacity-90">
                   برای رفع این مشکل می‌توانید از VPN یا مرورگر دیگری استفاده کنید.
+                  در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
                 </div>
               </>
             ) : (
               <>
-                خطا در اتصال به API هوش مصنوعی. در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
+                <span className="font-medium">خطا در اتصال به API هوش مصنوعی.</span>
+                <div className="mt-1 text-xs opacity-90">
+                  در حال حاضر از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
+                </div>
               </>
             )}
             
-            {errorMessage && (
-              <div className="mt-1 text-xs opacity-75">{errorMessage}</div>
+            {errorMessage && !isCorsError && !isNetworkError && (
+              <div className="mt-1 text-xs opacity-90">{errorMessage}</div>
             )}
           </AlertDescription>
         </div>
@@ -46,7 +63,7 @@ const ApiErrorAlert: React.FC<ApiErrorAlertProps> = ({
           onClick={onRetry}
           className="flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-md bg-red-100 hover:bg-red-200 text-red-800 transition-colors"
         >
-          <RefreshCw className="h-3 w-3" /> تلاش مجدد
+          <RefreshCw className="h-3 w-3 animate-spin-slow" /> تلاش مجدد
         </button>
       </div>
     </Alert>

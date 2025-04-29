@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Bot } from "lucide-react";
 
 interface ModelSelectorProps {
   selectedModel: string;
@@ -10,11 +11,12 @@ interface ModelSelectorProps {
 const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, setSelectedModel }) => {
   return (
     <div className="md:w-1/3">
-      <label htmlFor="model" className="block text-xs font-medium text-gray-700 mb-1">
-        انتخاب مدل
+      <label htmlFor="model" className="block text-xs font-medium text-gray-700 mb-1 flex items-center gap-1.5">
+        <Bot className="h-3.5 w-3.5 text-primary/80" />
+        انتخاب مدل هوش مصنوعی
       </label>
       <Select value={selectedModel} onValueChange={setSelectedModel}>
-        <SelectTrigger>
+        <SelectTrigger className="border-slate-200 bg-white/80 shadow-sm">
           <SelectValue placeholder="انتخاب مدل" />
         </SelectTrigger>
         <SelectContent>
@@ -24,7 +26,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, setSelecte
           <SelectItem value="llama4-maverick">Llama 4 Maverick (free)</SelectItem>
         </SelectContent>
       </Select>
-      <p className="text-xs text-gray-500 mt-1">قدرت گرفته از OpenRouter</p>
+      <p className="text-xs text-gray-500 mt-1 text-left ltr:pl-1">Powered by OpenRouter</p>
     </div>
   );
 };
