@@ -21,6 +21,8 @@ const DeepseekAIContainer: React.FC = () => {
   const [contextLength, setContextLength] = useState(5);
   const [hasApiError, setHasApiError] = useState(false);
   const [apiErrorMessage, setApiErrorMessage] = useState<string>('');
+  const [retryAttempts, setRetryAttempts] = useState(0);
+  const MAX_RETRY_ATTEMPTS = 2;
 
   // Generate a unique session ID when the component mounts
   useEffect(() => {
@@ -47,23 +49,51 @@ const DeepseekAIContainer: React.FC = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsLoading(true);
-
+    setRetryAttempts(0); // Reset retry attempts for new messages
+    
+    await sendMessageToAPI(userMessage);
+  };
+  
+  const sendMessageToAPI = async (userMessage: Message, isRetry = false) => {
     try {
       let assistantResponse;
 
       try {
         const messageHistory = buildMessageHistory(messages, userMessage, contextLength);
         assistantResponse = await fetchDeepseekResponse(apiKey, messageHistory, selectedModel, temperature);
+        
+        // Reset error states on success
         setHasApiError(false);
         setApiErrorMessage('');
+        
       } catch (error: any) {
         console.error('Error calling DeepseekAI API:', error);
+        
+        // Check if we should retry
+        if (retryAttempts < MAX_RETRY_ATTEMPTS && error.message.includes('اتصال به سرور')) {
+          setRetryAttempts(prev => prev + 1);
+          
+          // Show retry toast
+          toast.info(`تلاش مجدد برای اتصال... (${retryAttempts + 1}/${MAX_RETRY_ATTEMPTS})`);
+          
+          // Wait a moment before retrying
+          setTimeout(() => {
+            sendMessageToAPI(userMessage, true);
+          }, 2000);
+          
+          return; // Exit without setting the message
+        }
+        
+        // If we're out of retries or it's not a connection error, use fallback
         setHasApiError(true);
         setApiErrorMessage(error.message || 'خطا در ارتباط با سرور');
         
         // Fall back to simulation if real API fails
-        assistantResponse = generateSimulatedResponse(inputMessage);
-        toast.error('خطا در ارتباط با سرور. از پاسخ شبیه‌سازی شده استفاده شد.');
+        assistantResponse = generateSimulatedResponse(userMessage.content);
+        
+        if (!isRetry) {
+          toast.error('خطا در ارتباط با سرور. از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.');
+        }
       }
 
       const assistantMessage: Message = {
@@ -78,6 +108,33 @@ const DeepseekAIContainer: React.FC = () => {
       toast.error('خطا در پردازش پاسخ');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleRetryConnection = () => {
+    if (messages.length < 2) return; // Need at least one user message to retry
+    
+    const lastUserMessage = [...messages].reverse().find(msg => msg.role === 'user');
+    
+    if (lastUserMessage) {
+      setHasApiError(false); // Reset error state
+      setApiErrorMessage('');
+      setIsLoading(true);
+      setRetryAttempts(0); // Reset retry attempts
+      
+      // Remove the last assistant message if it exists
+      const newMessages = [...messages];
+      if (newMessages[newMessages.length - 1].role === 'assistant') {
+        newMessages.pop();
+      }
+      setMessages(newMessages);
+      
+      // Retry sending the message
+      setTimeout(() => {
+        sendMessageToAPI(lastUserMessage, false);
+      }, 500);
+      
+      toast.info('تلاش مجدد برای اتصال به سرور...');
     }
   };
 
@@ -122,8 +179,18 @@ const DeepseekAIContainer: React.FC = () => {
             
             {hasApiError && (
               <div className="bg-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg p-3 text-sm">
-                اتصال به سرور با مشکل مواجه شده است. از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
-                {apiErrorMessage ? <div className="mt-1 text-xs">{apiErrorMessage}</div> : null}
+                <div className="flex justify-between items-center">
+                  <div>
+                    اتصال به سرور با مشکل مواجه شده است. از پاسخ‌های شبیه‌سازی شده استفاده می‌شود.
+                    {apiErrorMessage ? <div className="mt-1 text-xs">{apiErrorMessage}</div> : null}
+                  </div>
+                  <button 
+                    onClick={handleRetryConnection}
+                    className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
+                  >
+                    تلاش مجدد
+                  </button>
+                </div>
               </div>
             )}
 

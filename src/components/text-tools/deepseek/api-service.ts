@@ -1,6 +1,13 @@
 
 import { Message } from './types';
 
+/**
+ * Maps UI-friendly model names to actual API model identifiers
+ */
+const MODEL_MAPPING = {
+  'deepseek-v3-base': 'deepseek-ai/deepseek-v2'
+};
+
 export const fetchDeepseekResponse = async (
   apiKey: string, 
   messageHistory: any[], 
@@ -8,15 +15,20 @@ export const fetchDeepseekResponse = async (
   temperature: number
 ): Promise<string> => {
   try {
-    // Using an API proxy to avoid CORS issues
-    const response = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
+    // Get the correct model identifier based on the UI selection
+    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'deepseek-ai/deepseek-v2';
+    
+    // API endpoint configuration
+    const endpoint = 'https://api.deepinfra.com/v1/openai/chat/completions';
+    
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "deepseek-ai/deepseek-v2", // Use compatible model mapping
+        model: modelIdentifier,
         messages: messageHistory,
         temperature: temperature,
         max_tokens: 2000,
@@ -34,15 +46,30 @@ export const fetchDeepseekResponse = async (
         throw new Error('خطا در احراز هویت API. لطفا بعدا دوباره تلاش کنید.');
       } else if (response.status === 429) {
         throw new Error('محدودیت درخواست‌ها به API رسیده است. لطفا کمی صبر کنید و دوباره تلاش کنید.');
+      } else if (response.status === 400) {
+        throw new Error(`خطا در پارامترهای ارسالی: ${errorData.error?.message || 'پارامترهای نامعتبر'}`);
       } else {
         throw new Error(`خطا در درخواست به API: ${response.status} ${errorData.error?.message || ''}`);
       }
     }
     
     const data = await response.json();
+    
+    // Validate response structure
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error('ساختار پاسخ API نامعتبر است.');
+    }
+    
     return data.choices[0].message.content;
-  } catch (error) {
+  } catch (error: any) {
+    // Log detailed error information
     console.error('API request error details:', error);
+    
+    // Enhanced error check for network failures
+    if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+      throw new Error('خطا در اتصال به سرور API. لطفا اتصال اینترنت خود را بررسی کنید.');
+    }
+    
     throw error;
   }
 };
