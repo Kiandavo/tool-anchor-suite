@@ -5,7 +5,7 @@ import { Message } from '../types';
 import { fetchDeepseekResponse, generateSimulatedResponse, buildMessageHistory } from '../api-service';
 
 export function useDeepseekChat() {
-  const [apiKey] = useState<string>('sk-1d3b5417ac15458c9d2e2a5a1837883c');
+  const [apiKey] = useState<string>('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');
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasApiError, setHasApiError] = useState(false);
@@ -16,7 +16,7 @@ export function useDeepseekChat() {
   const initializeWithWelcomeMessage = () => {
     setMessages([{
       role: 'assistant',
-      content: 'سلام! من دستیار هوشمند دیپ‌سیک هستم. چطور می‌توانم به شما کمک کنم؟',
+      content: 'سلام! من دستیار هوشمند گوگل جمینای هستم. چطور می‌توانم به شما کمک کنم؟',
       timestamp: new Date()
     }]);
   };
@@ -66,7 +66,7 @@ export function useDeepseekChat() {
         setApiErrorMessage('');
         
       } catch (error: any) {
-        console.error('Error calling DeepseekAI API:', error);
+        console.error('Error calling Gemini API:', error);
         
         // Check if we should retry
         if (retryAttempts < MAX_RETRY_ATTEMPTS && error.message.includes('اتصال به سرور')) {
@@ -103,7 +103,7 @@ export function useDeepseekChat() {
       
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error in DeepseekAI:', error);
+      console.error('Error in Gemini API:', error);
       toast.error('خطا در پردازش پاسخ');
     } finally {
       setIsLoading(false);

@@ -18,7 +18,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, setSelecte
           <SelectValue placeholder="انتخاب مدل" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="deepseek-v3-base">DeepSeek V3 Base (free)</SelectItem>
+          <SelectItem value="google-gemini-flash">Google Gemini 2.0 Flash Experimental (free)</SelectItem>
         </SelectContent>
       </Select>
     </div>

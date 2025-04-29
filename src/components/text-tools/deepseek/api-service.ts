@@ -5,7 +5,8 @@ import { Message } from './types';
  * Maps UI-friendly model names to actual API model identifiers
  */
 const MODEL_MAPPING = {
-  'deepseek-v3-base': 'deepseek-chat'
+  'deepseek-v3-base': 'gemini-2-flash-exp',
+  'google-gemini-flash': 'gemini-2-flash-exp'
 };
 
 export const fetchDeepseekResponse = async (
@@ -16,26 +17,29 @@ export const fetchDeepseekResponse = async (
 ): Promise<string> => {
   try {
     // Get the correct model identifier based on the UI selection
-    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'deepseek-chat';
+    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'gemini-2-flash-exp';
     
-    // Updated API endpoint to use the official DeepSeek API
-    const endpoint = 'https://api.deepseek.com/chat/completions';
+    // Updated API endpoint to use the Google Gemini API
+    const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2-flash-exp:generateContent';
     
-    const response = await fetch(endpoint, {
+    // Format messages for Google's Gemini API
+    const formattedMessages = messageHistory.map(msg => ({
+      role: msg.role === 'assistant' ? 'model' : msg.role,
+      parts: [{ text: msg.content }]
+    }));
+
+    const response = await fetch(`${endpoint}?key=${apiKey}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: modelIdentifier,
-        messages: messageHistory,
-        temperature: temperature,
-        max_tokens: 2000,
-        top_p: 0.95,
-        frequency_penalty: 0.0,
-        presence_penalty: 0.0,
-        stream: false
+        contents: formattedMessages,
+        generationConfig: {
+          temperature: temperature,
+          maxOutputTokens: 2000,
+          topP: 0.95
+        }
       })
     });
     
@@ -55,12 +59,18 @@ export const fetchDeepseekResponse = async (
     
     const data = await response.json();
     
-    // Validate response structure
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+    // Validate response structure for Google Gemini API
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
       throw new Error('ساختار پاسخ API نامعتبر است.');
     }
     
-    return data.choices[0].message.content;
+    // Extract text content from the response
+    const content = data.candidates[0].content;
+    if (!content.parts || content.parts.length === 0) {
+      throw new Error('پاسخی از API دریافت نشد.');
+    }
+    
+    return content.parts[0].text || '';
   } catch (error: any) {
     // Log detailed error information
     console.error('API request error details:', error);
