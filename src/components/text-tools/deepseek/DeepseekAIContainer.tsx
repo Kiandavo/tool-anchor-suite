@@ -10,8 +10,8 @@ import MessageInput from './MessageInput';
 import { fetchDeepseekResponse, generateSimulatedResponse, buildMessageHistory } from './api-service';
 
 const DeepseekAIContainer: React.FC = () => {
-  // Using a fixed API key that's hidden from users
-  const [apiKey] = useState<string>('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');
+  // Using the updated API key that's hidden from users
+  const [apiKey] = useState<string>('sk-1d3b5417ac15458c9d2e2a5a1837883c');
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
