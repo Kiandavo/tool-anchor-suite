@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
@@ -11,51 +10,63 @@ import { copyToClipboard } from "@/utils/randomUtils";
 const tarotCards = [
   {
     name: "برج",
-    description: "آغاز راه جدید، تغییرات ناگهانی، فروپاشی باورهای قدیمی. این کارت نشان‌دهنده تحولات بزرگ و گاه دردناک است که در نهایت به رشد می‌انجامد."
+    description: "آغاز راه جدید، تغییرات ناگهانی، فروپاشی باورهای قدیمی. این کارت نشان‌دهنده تحولات بزرگ و گاه دردناک است که در نهایت به رشد می‌انجامد.",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&h=500"
   },
   {
     name: "ماه",
-    description: "ناخودآگاه، رویاها، توهمات و ترس‌های پنهان. این کارت هشدار می‌دهد که همه چیز آن‌طور که به نظر می‌رسد نیست؛ به شهود درونی خود اعتماد کنید."
+    description: "ناخودآگاه، رویاها، توهمات و ترس‌های پنهان. این کارت هشدار می‌دهد که همه چیز آن‌طور که به نظر می‌رسد نیست؛ به شهود درونی خود اعتماد کنید.",
+    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=300&h=500"
   },
   {
     name: "خورشید",
-    description: "موفقیت، شادمانی، انرژی مثبت و خوش‌بینی. این کارت یکی از مثبت‌ترین کارت‌ها در تاروت است و نوید روزهای روشن می‌دهد."
+    description: "موفقیت، شادمانی، انرژی مثبت و خوش‌بینی. این کارت یکی از مثبت‌ترین کارت‌ها در تاروت است و نوید روزهای روشن می‌دهد.",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=300&h=500"
   },
   {
     name: "فرشته قضاوت",
-    description: "بازنگری، ارزیابی، بیداری معنوی و دگرگونی. این کارت شما را به بررسی گذشته و پذیرش مسئولیت اعمال خود فرا می‌خواند."
+    description: "بازنگری، ارزیابی، بیداری معنوی و دگرگونی. این کارت شما را به بررسی گذشته و پذیرش مسئولیت اعمال خود فرا می‌خواند.",
+    image: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=300&h=500"
   },
   {
     name: "جهان",
-    description: "تکمیل، موفقیت، دستاورد و تحقق. این کارت نشانگر پایان یک دوره و آغاز دوره‌ای جدید با آمادگی کامل است."
+    description: "تکمیل، موفقیت، دستاورد و تحقق. این کارت نشانگر پایان یک دوره و آغاز دوره‌ای جدید با آمادگی کامل است.",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&h=500&q=80"
   },
   {
     name: "جادوگر",
-    description: "خلاقیت، استعداد، مهارت و توانایی برقراری ارتباط بین دنیای مادی و معنوی. این کارت نشان می‌دهد که ابزار لازم برای موفقیت را در اختیار دارید."
+    description: "خلاقیت، استعداد، مهارت و توانایی برقراری ارتباط بین دنیای مادی و معنوی. این کارت نشان می‌دهد که ابزار لازم برای موفقیت را در اختیار دارید.",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=300&h=500&q=80"
   },
   {
     name: "ملکه کاهنه",
-    description: "بصیرت، شهود، دانش درونی و خرد پنهان. این کارت شما را به گوش دادن به ندای درون و اعتماد به شهودتان دعوت می‌کند."
+    description: "بصیرت، شهود، دانش درونی و خرد پنهان. این کارت شما را به گوش دادن به ندای درون و اعتماد به شهودتان دعوت می‌کند.",
+    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=300&h=500&q=80"
   },
   {
     name: "امپراتور",
-    description: "اقتدار، انضباط، رهبری و ساختار. این کارت نمادی از قدرت پدرانه، نظم و سازماندهی است."
+    description: "اقتدار، انضباط، رهبری و ساختار. این کارت نمادی از قدرت پدرانه، نظم و سازماندهی است.",
+    image: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=300&h=500&q=80"
   },
   {
     name: "عاشقان",
-    description: "عشق، هماهنگی، انتخاب‌های مهم و ارتباطات. این کارت نشانگر تصمیم‌گیری‌های قلبی و انتخاب بین دو مسیر است."
+    description: "عشق، هماهنگی، انتخاب‌های مهم و ارتباطات. این کارت نشانگر تصمیم‌گیری‌های قلبی و انتخاب بین دو مسیر است.",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&h=500&q=75"
   },
   {
     name: "ارابه",
-    description: "پیروزی، عزم راسخ، اراده قوی و غلبه بر موانع. این کارت نوید موفقیت از طریق تلاش و پشتکار می‌دهد."
+    description: "پیروزی، عزم راسخ، اراده قوی و غلبه بر موانع. این کارت نوید موفقیت از طریق تلاش و پشتکار می‌دهد.",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=300&h=500&q=75"
   },
   {
     name: "عدالت",
-    description: "تعادل، عدالت، صداقت و حقیقت. این کارت نشان می‌دهد که هر عملی پیامدی دارد و هر کس به اندازه اعمالش پاداش یا مجازات می‌شود."
+    description: "تعادل، عدالت، صداقت و حقیقت. این کارت نشان می‌دهد که هر عملی پیامدی دارد و هر کس به اندازه اعمالش پاداش یا مجازات می‌شود.",
+    image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?auto=format&fit=crop&w=300&h=500&q=75"
   },
   {
     name: "مرگ",
-    description: "پایان، تغییر، دگرگونی و تولد دوباره. این کارت نه به معنای مرگ فیزیکی، بلکه نشانگر پایان یک دوره و آغاز فصلی جدید است."
+    description: "پایان، تغییر، دگرگونی و تولد دوباره. این کارت نه به معنای مرگ فیزیکی، بلکه نشانگر پایان یک دوره و آغاز فصلی جدید است.",
+    image: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=300&h=500&q=75"
   }
 ];
 
@@ -111,6 +122,11 @@ export const TarotReading = () => {
       }
       .tarot-card-front, .tarot-card-back {
         backface-visibility: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
       }
       .tarot-card-back {
         transform: rotateY(180deg);
@@ -121,6 +137,25 @@ export const TarotReading = () => {
       .glass-card {
         backdrop-filter: blur(10px);
         background-color: rgba(255, 255, 255, 0.2);
+      }
+      .tarot-card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.375rem;
+        opacity: 0.8;
+      }
+      .tarot-card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(20, 58, 92, 0.3);
+        border-radius: 0.375rem;
       }
     `;
     document.head.appendChild(style);
@@ -148,10 +183,13 @@ export const TarotReading = () => {
                 <div key={index} className="flex flex-col items-center">
                   <div className="relative w-full aspect-[2/3] mb-1 perspective-card">
                     <div className={`tarot-card absolute w-full h-full transition-all duration-700 transform ${isRevealed ? 'rotate-y-180' : ''}`}>
-                      <div className="tarot-card-front absolute w-full h-full glass-card rounded-lg p-2 flex items-center justify-center border-2 border-[#b0c8e6]">
-                        <span className="text-[#143a5c] text-[10px] font-bold text-center">{card.name}</span>
+                      <div className="tarot-card-front absolute w-full h-full glass-card rounded-lg border-2 border-[#b0c8e6]">
+                        <img src={card.image} alt={card.name} className="tarot-card-image" />
+                        <div className="tarot-card-overlay">
+                          <span className="text-white text-[10px] font-bold text-center">{card.name}</span>
+                        </div>
                       </div>
-                      <div className="tarot-card-back absolute w-full h-full glass-card rounded-lg p-2 flex items-center justify-center border-2 border-[#b0c8e6] rotateY-180">
+                      <div className="tarot-card-back absolute w-full h-full glass-card rounded-lg p-2 flex items-center justify-center border-2 border-[#b0c8e6]">
                         <span className="text-[#143a5c] text-[8px] text-center overflow-auto max-h-full">
                           {isRevealed ? card.description : "..."}
                         </span>
