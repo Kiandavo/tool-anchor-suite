@@ -9,7 +9,8 @@ import { ScientificCalculatorRenderer } from './calculator/ScientificCalculatorR
 interface CalculatorToolRendererProps {
   slug: string;
   type: 'calculator' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 
-        'date-difference' | 'world-time' | 'profit' | 'scientific-calculator' | 'rent-factors';
+        'date-difference' | 'world-time' | 'profit' | 'scientific-calculator' | 'rent-factors' |
+        'loan-calculator';
 }
 
 export const CalculatorToolRenderer: React.FC<CalculatorToolRendererProps> = ({ slug, type }) => {
@@ -19,7 +20,7 @@ export const CalculatorToolRenderer: React.FC<CalculatorToolRendererProps> = ({ 
   }
 
   // Financial calculators
-  if (type === 'profit' || type === 'mortgage-calculator' || type === 'rent-factors') {
+  if (type === 'profit' || type === 'mortgage-calculator' || type === 'rent-factors' || type === 'loan-calculator') {
     return <FinanceCalculatorRenderer type={type} />;
   }
 

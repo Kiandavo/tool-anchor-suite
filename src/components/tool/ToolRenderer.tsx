@@ -7,6 +7,12 @@ import { ImageToolRenderer } from './renderers/ImageToolRenderer';
 import { CalculatorToolRenderer } from './renderers/CalculatorToolRenderer';
 import { UtilityToolRenderer } from './renderers/UtilityToolRenderer';
 import ToolNotImplemented from '@/pages/ToolTypes/ToolNotImplemented';
+import TextTool from '@/pages/ToolTypes/TextTool';
+import ImageTool from '@/pages/ToolTypes/ImageTool';
+import CalculatorTool from '@/pages/ToolTypes/CalculatorTool';
+import SeoTool from '@/pages/ToolTypes/SeoTool';
+import RandomPasswordTool from '@/pages/ToolTypes/RandomPasswordTool';
+import NumberTool from '@/pages/ToolTypes/NumberTool';
 
 interface ToolRendererProps {
   tool: Tool;
@@ -15,12 +21,30 @@ interface ToolRendererProps {
 
 export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   const toolType = toolTypeBySlug[slug];
-
+  
+  // First, check if the tool has a dedicated page
+  if (toolType === 'text') {
+    return <TextTool slug={slug} />;
+  }
+  
+  if (toolType === 'image') {
+    return <ImageTool slug={slug} />;
+  }
+  
+  if (toolType === 'seo') {
+    return <SeoTool slug={slug} />;
+  }
+  
+  if (toolType === 'number') {
+    return <NumberTool slug={slug} />;
+  }
+  
+  if (toolType === 'random-password') {
+    return <RandomPasswordTool />;
+  }
+  
+  // For calculator tools and others, use the specific renderers
   switch (toolType) {
-    case 'text':
-      return <TextToolRenderer slug={slug} />;
-    case 'image':
-      return <ImageToolRenderer slug={slug} />;
     case 'calculator':
     case 'investment-calculator':
     case 'mortgage-calculator':
@@ -30,12 +54,10 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     case 'profit':
     case 'scientific-calculator':
     case 'rent-factors':
-      return <CalculatorToolRenderer slug={slug} type={toolType} />;
-    case 'random-password':
-    case 'prime-checker':
-    case 'seo':
+      return <CalculatorTool slug={slug} type={toolType} />;
     case 'random':
-    case 'number':
+      return <UtilityToolRenderer slug={slug} type={toolType} />;
+    case 'prime-checker':
       return <UtilityToolRenderer slug={slug} type={toolType} />;
     default:
       return <ToolNotImplemented />;

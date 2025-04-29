@@ -53,6 +53,7 @@ export const toolTypeBySlug: Record<string, string> = {
   "today-date": "today-date",
   "rent-factors": "rent-factors",
   "world-time": "world-time",
+  "loan-calculator": "loan-calculator",
   
   // Random tools
   "random-password": "random-password",
