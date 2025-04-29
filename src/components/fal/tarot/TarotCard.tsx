@@ -6,20 +6,28 @@ interface TarotCardProps {
   card: TarotCardType;
   position: "گذشته" | "حال" | "آینده";
   isRevealed: boolean;
+  animationDelay?: number;
 }
 
-export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed }) => {
+export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed, animationDelay = 0 }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div 
+      className="flex flex-col items-center"
+      style={{ 
+        animation: `fade-in 0.8s ease-out forwards`,
+        animationDelay: `${animationDelay}ms`,
+        opacity: 0
+      }}
+    >
       <div className="relative w-full aspect-[2/3] mb-1 perspective-card">
         <div className={`tarot-card absolute w-full h-full transition-all duration-700 transform ${isRevealed ? 'rotate-y-180' : ''}`}>
-          <div className="tarot-card-front absolute w-full h-full glass-card rounded-lg border-2 border-[#b0c8e6]">
+          <div className="tarot-card-front absolute w-full h-full glass-card rounded-lg border-2 border-[#b0c8e6] hover:shadow-glow">
             <img src={card.image} alt={card.name} className="tarot-card-image" />
             <div className="tarot-card-overlay">
               <span className="text-white text-[10px] font-bold text-center">{card.name}</span>
             </div>
           </div>
-          <div className="tarot-card-back absolute w-full h-full glass-card rounded-lg p-2 flex items-center justify-center border-2 border-[#b0c8e6]">
+          <div className="tarot-card-back absolute w-full h-full glass-card rounded-lg p-2 flex items-center justify-center border-2 border-[#b0c8e6] hover:shadow-glow">
             <span className="text-[#143a5c] text-[8px] text-center overflow-auto max-h-full">
               {isRevealed ? card.description : "..."}
             </span>

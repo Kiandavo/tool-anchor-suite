@@ -14,6 +14,9 @@ export const useTarotReading = () => {
     setIsAnimating(true);
     setIsRevealed(false);
     
+    // Clear existing cards first with a fade-out effect
+    setSelectedCards([]);
+    
     // Simulate card drawing with a delay
     setTimeout(() => {
       // Shuffle the cards and select three
@@ -24,7 +27,7 @@ export const useTarotReading = () => {
       setIsAnimating(false);
       setHasDrawn(true);
       toast.success("کارت‌های تاروت انتخاب شدند!");
-    }, 1500);
+    }, 1000); // Slightly faster animation
   };
 
   const revealMeaning = () => {

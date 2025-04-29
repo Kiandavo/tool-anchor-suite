@@ -49,6 +49,7 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
           card={card}
           position={positions[index]}
           isRevealed={isRevealed}
+          animationDelay={index * 300} // Stagger the appearance of each card
         />
       ))}
     </div>
