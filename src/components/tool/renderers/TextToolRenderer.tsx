@@ -1,11 +1,7 @@
 
 import React from 'react';
-import TextTool from '@/pages/ToolTypes/TextTool';
+import TextToolContainer from '@/components/text-tools/TextToolContainer';
 
-interface TextToolRendererProps {
-  slug: string;
-}
-
-export const TextToolRenderer: React.FC<TextToolRendererProps> = ({ slug }) => {
-  return <TextTool slug={slug} />;
+export const TextToolRenderer = ({ slug }: { slug: string }) => {
+  return <TextToolContainer slug={slug} />;
 };
