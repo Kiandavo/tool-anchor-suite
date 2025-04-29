@@ -28,10 +28,10 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
     >
       <div 
-        className={`max-w-[85%] rounded-2xl p-4 ${
+        className={`max-w-[85%] rounded-2xl p-4 shadow-sm transition-all duration-300 ${
           message.role === 'user' 
-            ? 'bg-primary/15 text-gray-800' 
-            : 'bg-white shadow-sm border border-slate-200 text-gray-700'
+            ? 'bg-gradient-to-br from-primary/15 to-primary/5 text-gray-800 border border-primary/10' 
+            : 'neo-glass text-gray-700 border border-white/40'
         }`}
       >
         <div className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</div>
@@ -40,7 +40,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="h-6 w-6 hover:bg-slate-200/70 hover:text-primary" 
+            className="h-6 w-6 hover:bg-slate-200/70 hover:text-primary transition-colors" 
             onClick={() => copyToClipboard(message.content)}
             title="کپی متن"
           >

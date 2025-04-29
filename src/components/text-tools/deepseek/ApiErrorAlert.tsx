@@ -21,7 +21,7 @@ const ApiErrorAlert: React.FC<ApiErrorAlertProps> = ({
                         !navigator.onLine;
   
   return (
-    <Alert variant="destructive" className="bg-red-50 text-red-800 border-red-200 mb-4">
+    <Alert variant="destructive" className="frost-glass bg-red-50/90 text-red-800 border-red-200/50 mb-4 rounded-xl">
       <div className="flex justify-between items-start">
         <div className="flex items-start gap-2">
           {isNetworkError ? (
@@ -61,7 +61,7 @@ const ApiErrorAlert: React.FC<ApiErrorAlertProps> = ({
         </div>
         <button 
           onClick={onRetry}
-          className="flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-md bg-red-100 hover:bg-red-200 text-red-800 transition-colors"
+          className="flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-md vibrant-button bg-red-100 hover:bg-red-200 text-red-800 shadow-sm"
         >
           <RefreshCw className="h-3 w-3 animate-spin-slow" /> تلاش مجدد
         </button>

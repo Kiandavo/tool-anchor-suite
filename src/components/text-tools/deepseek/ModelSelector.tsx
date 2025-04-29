@@ -16,10 +16,10 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, setSelecte
         انتخاب مدل هوش مصنوعی
       </label>
       <Select value={selectedModel} onValueChange={setSelectedModel}>
-        <SelectTrigger className="border-slate-200 bg-white/80 shadow-sm">
+        <SelectTrigger className="glass-effect rounded-xl bg-white/60 border-slate-200/70 shadow-sm">
           <SelectValue placeholder="انتخاب مدل" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="rounded-xl glass-effect">
           <SelectItem value="deepseek-v3-base">DeepSeek V3 0324 (free)</SelectItem>
           <SelectItem value="deepseek-r1">DeepSeek R1 (free)</SelectItem>
           <SelectItem value="google-gemini-flash">Google Gemini 2.0 Flash (free)</SelectItem>

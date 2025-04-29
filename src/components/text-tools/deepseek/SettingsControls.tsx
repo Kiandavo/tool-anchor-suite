@@ -17,7 +17,7 @@ const SettingsControls: React.FC<SettingsControlsProps> = ({
   setContextLength 
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 bg-slate-50/70 p-4 rounded-xl shadow-inner">
+    <div className="flex flex-col sm:flex-row gap-4 frost-glass p-4 rounded-xl shadow-inner">
       {/* Temperature Setting */}
       <div className="sm:w-1/2 space-y-2">
         <label className="flex items-center gap-1.5 text-xs font-medium text-gray-700">
