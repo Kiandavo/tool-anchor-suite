@@ -1,32 +1,51 @@
+
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/randomUtils";
 import { tarotCards, TarotCardType } from './types';
+
+// Key for session storage to track previously drawn cards
+const TAROT_STATE_KEY = 'tarot_state';
+const DRAWN_CARDS_KEY = 'tarot_drawn_cards';
 
 export const useTarotReading = () => {
   const [selectedCards, setSelectedCards] = useState<TarotCardType[]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
-
-  // Key for session storage to track previously drawn cards
-  const DRAWN_CARDS_KEY = 'tarot_drawn_cards';
   
   useEffect(() => {
     // Check if we have previously drawn cards
-    const storedCardsJson = sessionStorage.getItem(DRAWN_CARDS_KEY);
-    if (storedCardsJson) {
+    const storedState = sessionStorage.getItem(TAROT_STATE_KEY);
+    if (storedState) {
       try {
-        const storedCards = JSON.parse(storedCardsJson);
+        const { cards, revealed } = JSON.parse(storedState);
         // If we have stored cards, use them
-        setSelectedCards(storedCards);
-        setHasDrawn(true);
+        if (cards && cards.length) {
+          console.log("Loaded saved tarot cards:", cards);
+          setSelectedCards(cards);
+          setHasDrawn(true);
+          if (revealed) {
+            setIsRevealed(true);
+          }
+        }
       } catch (e) {
         // If there's an error parsing JSON, ignore it
-        console.error("Error parsing stored tarot cards", e);
+        console.error("Error parsing stored tarot state", e);
       }
     }
   }, []);
+  
+  // Save state when it changes
+  useEffect(() => {
+    if (selectedCards.length > 0) {
+      const stateToSave = {
+        cards: selectedCards,
+        revealed: isRevealed
+      };
+      sessionStorage.setItem(TAROT_STATE_KEY, JSON.stringify(stateToSave));
+    }
+  }, [selectedCards, isRevealed]);
 
   const drawCards = () => {
     setIsAnimating(true);
@@ -53,8 +72,8 @@ export const useTarotReading = () => {
         cardsToShuffle = [...tarotCards];
       }
       
-      // Shuffle and select three cards
-      const shuffled = [...cardsToShuffle].sort(() => 0.5 - Math.random());
+      // Improved shuffling algorithm using Fisher-Yates
+      const shuffled = fisherYatesShuffle([...cardsToShuffle]);
       const selectedThree = shuffled.slice(0, 3);
       
       console.log('Selected cards:', selectedThree.map(card => card.name));
@@ -76,6 +95,18 @@ export const useTarotReading = () => {
       setIsRevealed(true);
       setIsAnimating(false);
       toast.success("معنای کارت‌ها آشکار شد!");
+      
+      // Update state in storage
+      const storedState = sessionStorage.getItem(TAROT_STATE_KEY);
+      if (storedState) {
+        try {
+          const state = JSON.parse(storedState);
+          state.revealed = true;
+          sessionStorage.setItem(TAROT_STATE_KEY, JSON.stringify(state));
+        } catch (e) {
+          console.error("Error updating tarot state", e);
+        }
+      }
     }, 500);
   };
 
@@ -121,10 +152,29 @@ export const useTarotReading = () => {
       const limitedCards = allCards.slice(Math.max(0, allCards.length - 10));
       
       // Store back to session storage
-      sessionStorage.setItem(DRAWN_CARDS_KEY, JSON.stringify(cards));
+      sessionStorage.setItem(DRAWN_CARDS_KEY, JSON.stringify(limitedCards));
     } catch (e) {
       console.error("Error storing drawn tarot cards", e);
     }
+  };
+  
+  // Fisher-Yates shuffle algorithm for better randomization
+  const fisherYatesShuffle = (array: TarotCardType[]) => {
+    let currentIndex = array.length;
+    let randomIndex;
+
+    // While there remain elements to shuffle
+    while (currentIndex > 0) {
+      // Pick a remaining element
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
   };
 
   return {

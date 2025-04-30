@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { zodiacSigns } from './useHoroscope';
 
@@ -10,6 +10,14 @@ interface ZodiacSelectorProps {
 
 export const ZodiacSelector: React.FC<ZodiacSelectorProps> = ({ selectedSign, onSelectSign }) => {
   console.log("ZodiacSelector rendering with selectedSign:", selectedSign);
+  
+  // Set a default zodiac sign if none is selected
+  useEffect(() => {
+    if (!selectedSign) {
+      console.log("No sign selected, setting default to 'aries'");
+      onSelectSign('aries');
+    }
+  }, [selectedSign, onSelectSign]);
   
   return (
     <div>

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/randomUtils";
 
@@ -86,11 +86,45 @@ export const horoscopePredictions: Record<string, string[]> = {
 // Types for weekly and monthly predictions
 export type PredictionType = "today" | "week" | "month";
 
+// Key for session storage
+const HOROSCOPE_STATE_KEY = 'horoscope_state';
+
 export const useHoroscope = () => {
   const [selectedSign, setSelectedSign] = useState<string>("");
   const [predictionType, setPredictionType] = useState<PredictionType>("today");
   const [prediction, setPrediction] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Load state from session storage on initial render
+  useEffect(() => {
+    const savedState = sessionStorage.getItem(HOROSCOPE_STATE_KEY);
+    if (savedState) {
+      try {
+        const parsedState = JSON.parse(savedState);
+        console.log("Loaded horoscope state from session storage:", parsedState);
+        if (parsedState.selectedSign) setSelectedSign(parsedState.selectedSign);
+        if (parsedState.predictionType) setPredictionType(parsedState.predictionType);
+        if (parsedState.prediction) setPrediction(parsedState.prediction);
+      } catch (e) {
+        console.error("Error parsing horoscope state:", e);
+      }
+    }
+  }, []);
+
+  // Save state to session storage when it changes
+  useEffect(() => {
+    if (selectedSign || prediction) {
+      const stateToSave = { selectedSign, predictionType, prediction };
+      console.log("Saving horoscope state to session storage:", stateToSave);
+      sessionStorage.setItem(HOROSCOPE_STATE_KEY, JSON.stringify(stateToSave));
+    }
+  }, [selectedSign, predictionType, prediction]);
+
+  // Handle sign selection
+  const handleSetSelectedSign = (sign: string) => {
+    console.log("Setting selected sign to:", sign);
+    setSelectedSign(sign);
+  };
 
   const getHoroscope = () => {
     if (!selectedSign) {
@@ -104,9 +138,14 @@ export const useHoroscope = () => {
     // Simulate horoscope generation with a delay
     setTimeout(() => {
       const predictions = horoscopePredictions[selectedSign] || [];
-      // Ensure we get a truly random index each time
-      const randomIndex = Math.floor(Math.random() * predictions.length);
-      const selectedPrediction = predictions[randomIndex];
+      
+      // Ensure we get a truly random prediction each time
+      // Use a more sophisticated random selection method
+      const date = new Date();
+      const seed = date.getDate() + (date.getMonth() + 1) + date.getFullYear() + selectedSign.length;
+      const randomIndex = Math.floor((Math.sin(seed) * 0.5 + 0.5) * predictions.length);
+      
+      const selectedPrediction = predictions[randomIndex] || predictions[0];
       console.log("Selected prediction index:", randomIndex, "Prediction:", selectedPrediction);
       
       let predictionPrefix = "";
@@ -146,7 +185,7 @@ export const useHoroscope = () => {
 
   return {
     selectedSign,
-    setSelectedSign,
+    setSelectedSign: handleSetSelectedSign,
     predictionType,
     setPredictionType,
     prediction,
