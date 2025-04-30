@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { MapPin, Phone, Instagram } from 'lucide-react';
-import { Card } from '@/components/ui/card';
 
 interface ShopProps {
   name: string;
@@ -54,63 +53,65 @@ export const AdvertisementSection = () => {
           </span>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="space-y-5">
           {shops.map((shop) => (
-            <Card key={shop.name} className="overflow-hidden neo-glass hover:shadow-lg transition-all duration-300">
-              <div className="p-4 md:p-6 flex flex-col md:flex-row md:items-start gap-4">
-                <div className="flex-shrink-0 mx-auto md:mx-0">
-                  <a href={shop.instagramUrl} target="_blank" rel="nofollow noopener" className="block">
-                    <img 
-                      src={imgErrors[shop.name] ? shop.fallbackImage : shop.imageUrl}
-                      alt={shop.name} 
-                      className="w-24 h-24 rounded-lg object-cover border border-white/30"
-                      width="150"
-                      height="150"
-                      loading="lazy"
-                      onError={() => handleImgError(shop.name)}
-                    />
-                  </a>
-                </div>
-                
-                <div className="flex-grow text-center md:text-right">
-                  <ul className="space-y-3">
-                    <li>
-                      <a 
-                        href="https://maps.app.goo.gl/uPn3GnJmhhqbVN9U6" 
-                        target="_blank" 
-                        rel="nofollow noopener"
-                        className="flex items-center justify-center md:justify-end gap-2 text-sm hover:text-primary transition-colors"
-                      >
-                        <MapPin className="w-4 h-4" />
-                        <span>تهران،‎تجریش کوچه خواجه‌نوری پ 34</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a 
-                        href="tel:+989102325291" 
-                        target="_blank" 
-                        rel="nofollow"
-                        className="flex items-center justify-center md:justify-end gap-2 text-sm hover:text-primary transition-colors"
-                      >
-                        <Phone className="w-4 h-4" />
-                        <span>09102325291</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a 
-                        href={shop.instagramUrl} 
-                        target="_blank" 
-                        rel="noopener"
-                        className="flex items-center justify-center md:justify-end gap-2 text-sm hover:text-primary transition-colors"
-                      >
-                        <Instagram className="w-4 h-4" />
-                        <span>{shop.instagramHandle}</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+            <div 
+              key={shop.name} 
+              className="bg-white rounded-xl p-5 flex flex-col md:flex-row items-center shadow-md hover:shadow-lg transition-shadow duration-300"
+            >
+              <a 
+                href={shop.instagramUrl} 
+                target="_blank" 
+                rel="noopener" 
+                className="flex-shrink-0 mb-4 md:mb-0 md:ml-5"
+              >
+                <img 
+                  src={imgErrors[shop.name] ? shop.fallbackImage : shop.imageUrl}
+                  alt={shop.name} 
+                  className="w-[150px] h-[150px] rounded-lg object-cover"
+                  width="150"
+                  height="150"
+                  loading="lazy"
+                  onError={() => handleImgError(shop.name)}
+                />
+              </a>
+              
+              <div className="flex-grow">
+                <ul className="space-y-3 list-none p-0 m-0">
+                  <li>
+                    <a 
+                      href="https://maps.app.goo.gl/uPn3GnJmhhqbVN9U6" 
+                      target="_blank" 
+                      rel="nofollow noopener"
+                      className="flex items-center text-gray-800 hover:text-primary transition-colors"
+                    >
+                      <MapPin className="w-5 h-5 ml-2 text-gray-600 flex-shrink-0" />
+                      <span>تهران، تجریش کوچه خواجه‌نوری پ 34</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      href="tel:+989102325291" 
+                      className="flex items-center text-gray-800 hover:text-primary transition-colors"
+                    >
+                      <Phone className="w-5 h-5 ml-2 text-gray-600 flex-shrink-0" />
+                      <span>09102325291</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      href={shop.instagramUrl} 
+                      target="_blank" 
+                      rel="noopener"
+                      className="flex items-center text-gray-800 hover:text-primary transition-colors"
+                    >
+                      <Instagram className="w-5 h-5 ml-2 text-gray-600 flex-shrink-0" />
+                      <span>{shop.instagramHandle}</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </div>
