@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
-// Instead of importing the image directly, we'll use it as a direct src in the img tag
 
 interface HeaderProps {
   title?: string;
@@ -13,19 +11,16 @@ interface HeaderProps {
 export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const handleBack = () => {
     if (backUrl) {
       navigate(backUrl);
     } else if (location.pathname.startsWith('/tool/')) {
-      // If we're in a tool page, check if we came from a category
       const referrer = document.referrer;
       if (referrer && referrer.includes('/category/')) {
-        // Extract the category from the referrer
         const category = referrer.split('/category/')[1];
         navigate(`/category/${category}`);
       } else {
-        // If no category referrer, try to determine the tool's category
         const toolPath = location.pathname.split('/tool/')[1];
         if (toolPath && toolPath.includes('calculator')) {
           navigate('/category/calculator');
@@ -44,11 +39,10 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
         }
       }
     } else {
-      // For other pages, use the browser's back functionality
       navigate(-1);
     }
   };
-  
+
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
   return (
@@ -70,7 +64,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src="/public/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
                   alt="Langar Logo" 
-                  className="h-10 w-auto object-contain hover:scale-150 transition-transform duration-300"
+                  className="h-20 w-auto object-contain hover:scale-150 transition-transform duration-300"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;
@@ -88,7 +82,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               >
                 <Settings size={22} />
               </Link>
-              
+
               {showBackButton ? (
                 <button
                   onClick={handleBack}
