@@ -9,13 +9,15 @@ interface ZodiacSelectorProps {
 }
 
 export const ZodiacSelector: React.FC<ZodiacSelectorProps> = ({ selectedSign, onSelectSign }) => {
+  console.log("ZodiacSelector rendering with selectedSign:", selectedSign);
+  
   return (
     <div>
       <label className="block text-[#5c3f14] text-xs mb-1 font-medium">ماه تولد خود را انتخاب کنید:</label>
       <Select 
         value={selectedSign} 
         onValueChange={(value) => {
-          console.log("Selected zodiac sign:", value);
+          console.log("Select value changed to:", value);
           onSelectSign(value);
         }}
       >

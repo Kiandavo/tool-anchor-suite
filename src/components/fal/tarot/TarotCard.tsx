@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { TarotCardType } from './types';
-import { LucideIcon, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 interface TarotCardProps {
   card: TarotCardType;
@@ -72,8 +72,7 @@ export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed
                 }}
               >
                 <div className="icon-container mb-2 rounded-full p-3 flex items-center justify-center bg-white/70 shadow-md border border-[#b0c8e6] relative">
-                  <IconComponent size={28} className="text-[#143a5c] relative z-10" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full"></div>
+                  {IconComponent && <IconComponent size={28} className="text-[#143a5c] relative z-10" />}
                 </div>
                 <div className="text-center">
                   <h3 className="text-[#143a5c] text-sm font-bold">{card.name}</h3>
