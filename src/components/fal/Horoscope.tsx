@@ -4,23 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Star, RefreshCw, Copy } from "lucide-react";
+import { Star, RefreshCw, Copy, Sparkles } from "lucide-react";
 import { copyToClipboard } from "@/utils/randomUtils";
 
-// Zodiac signs with Persian names
+// Zodiac signs with Persian names and symbols
 const zodiacSigns = [
-  { value: "aries", label: "فروردین (حمل)" },
-  { value: "taurus", label: "اردیبهشت (ثور)" },
-  { value: "gemini", label: "خرداد (جوزا)" },
-  { value: "cancer", label: "تیر (سرطان)" },
-  { value: "leo", label: "مرداد (اسد)" },
-  { value: "virgo", label: "شهریور (سنبله)" },
-  { value: "libra", label: "مهر (میزان)" },
-  { value: "scorpio", label: "آبان (عقرب)" },
-  { value: "sagittarius", label: "آذر (قوس)" },
-  { value: "capricorn", label: "دی (جدی)" },
-  { value: "aquarius", label: "بهمن (دلو)" },
-  { value: "pisces", label: "اسفند (حوت)" }
+  { value: "aries", label: "فروردین (حمل)", symbol: "♈" },
+  { value: "taurus", label: "اردیبهشت (ثور)", symbol: "♉" },
+  { value: "gemini", label: "خرداد (جوزا)", symbol: "♊" },
+  { value: "cancer", label: "تیر (سرطان)", symbol: "♋" },
+  { value: "leo", label: "مرداد (اسد)", symbol: "♌" },
+  { value: "virgo", label: "شهریور (سنبله)", symbol: "♍" },
+  { value: "libra", label: "مهر (میزان)", symbol: "♎" },
+  { value: "scorpio", label: "آبان (عقرب)", symbol: "♏" },
+  { value: "sagittarius", label: "آذر (قوس)", symbol: "♐" },
+  { value: "capricorn", label: "دی (جدی)", symbol: "♑" },
+  { value: "aquarius", label: "بهمن (دلو)", symbol: "♒" },
+  { value: "pisces", label: "اسفند (حوت)", symbol: "♓" }
 ];
 
 // Horoscope predictions for each sign
@@ -129,30 +129,53 @@ export const Horoscope = () => {
 
   const copyHoroscope = () => {
     if (prediction) {
-      copyToClipboard(`${selectedSign ? zodiacSigns.find(sign => sign.value === selectedSign)?.label : ''}\n\n${prediction}`);
+      const signInfo = selectedSign ? zodiacSigns.find(sign => sign.value === selectedSign) : null;
+      copyToClipboard(`${signInfo ? `${signInfo.label} ${signInfo.symbol}` : ''}\n\n${prediction}`);
+      toast.success("طالع بینی کپی شد!");
     }
   };
+  
+  // Get the symbol for the selected sign
+  const selectedZodiacSymbol = selectedSign ? 
+    zodiacSigns.find(sign => sign.value === selectedSign)?.symbol || "" : 
+    "";
 
   return (
-    <Card className="bg-[#fdf0e9] border-[#e6c8b0] shadow-sm overflow-hidden">
-      <CardHeader className="bg-[#e6c8b0] text-center pb-2 py-2">
+    <Card className="bg-[#fdf0e9] border-[#e6c8b0] shadow-md overflow-hidden relative">
+      {/* Decorative pattern */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div className="w-full h-full" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235c3f14' fill-opacity='0.4'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+      </div>
+      
+      <CardHeader className="bg-gradient-to-r from-[#e6c8b0] to-[#d2b095] text-center pb-2 py-2 relative border-b border-[#e6c8b0]">
         <div className="flex items-center justify-center">
           <Star className="text-[#5c3f14] mr-2" size={16} />
-          <h2 className="text-sm font-bold text-[#5c3f14]">طالع بینی</h2>
+          <h2 className="text-sm font-bold text-[#5c3f14] flex items-center">
+            طالع بینی
+            <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-[#5c3f14] opacity-70" /></span>
+          </h2>
         </div>
       </CardHeader>
       
       <CardContent className="pt-3 px-3">
         <div className="space-y-3">
           <div>
-            <label className="block text-[#5c3f14] text-xs mb-1">ماه تولد خود را انتخاب کنید:</label>
+            <label className="block text-[#5c3f14] text-xs mb-1 font-medium">ماه تولد خود را انتخاب کنید:</label>
             <Select value={selectedSign} onValueChange={setSelectedSign}>
-              <SelectTrigger className="glass-effect text-xs">
+              <SelectTrigger className="text-xs bg-white/50 border-[#e6c8b0]/50 shadow-sm">
                 <SelectValue placeholder="انتخاب ماه تولد" />
+                {selectedSign && (
+                  <span className="mr-1 text-[#5c3f14] text-sm">
+                    {zodiacSigns.find(sign => sign.value === selectedSign)?.symbol}
+                  </span>
+                )}
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[300px]">
                 {zodiacSigns.map((sign) => (
-                  <SelectItem key={sign.value} value={sign.value} className="text-xs">
+                  <SelectItem key={sign.value} value={sign.value} className="text-xs flex items-center">
+                    <span className="ml-1.5">{sign.symbol}</span>
                     {sign.label}
                   </SelectItem>
                 ))}
@@ -161,12 +184,12 @@ export const Horoscope = () => {
           </div>
           
           <div>
-            <label className="block text-[#5c3f14] text-xs mb-1">نوع پیش‌بینی:</label>
+            <label className="block text-[#5c3f14] text-xs mb-1 font-medium">نوع پیش‌بینی:</label>
             <div className="flex space-x-2 rtl-space-x">
               <Button 
                 size="sm"
                 variant={predictionType === "today" ? "default" : "outline"}
-                className={`text-[10px] h-7 px-2 ${predictionType === "today" ? "bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14]" : "border-[#e6c8b0] text-[#5c3f14]"}`}
+                className={`text-[10px] h-7 px-3 ${predictionType === "today" ? "bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14]" : "border-[#e6c8b0] text-[#5c3f14]"}`}
                 onClick={() => setPredictionType("today")}
               >
                 امروز
@@ -174,7 +197,7 @@ export const Horoscope = () => {
               <Button 
                 size="sm"
                 variant={predictionType === "week" ? "default" : "outline"}
-                className={`text-[10px] h-7 px-2 ${predictionType === "week" ? "bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14]" : "border-[#e6c8b0] text-[#5c3f14]"}`}
+                className={`text-[10px] h-7 px-3 ${predictionType === "week" ? "bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14]" : "border-[#e6c8b0] text-[#5c3f14]"}`}
                 onClick={() => setPredictionType("week")}
               >
                 هفته
@@ -182,7 +205,7 @@ export const Horoscope = () => {
               <Button 
                 size="sm"
                 variant={predictionType === "month" ? "default" : "outline"}
-                className={`text-[10px] h-7 px-2 ${predictionType === "month" ? "bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14]" : "border-[#e6c8b0] text-[#5c3f14]"}`}
+                className={`text-[10px] h-7 px-3 ${predictionType === "month" ? "bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14]" : "border-[#e6c8b0] text-[#5c3f14]"}`}
                 onClick={() => setPredictionType("month")}
               >
                 ماه
@@ -190,23 +213,72 @@ export const Horoscope = () => {
             </div>
           </div>
           
+          {/* Display the zodiac wheel for the selected sign */}
+          {selectedSign && !prediction && (
+            <div className="flex justify-center my-2">
+              <div className="w-16 h-16 rounded-full bg-white/40 border border-[#e6c8b0] flex items-center justify-center shadow-inner">
+                <span className="text-4xl text-[#5c3f14] animate-pulse-slow">
+                  {selectedZodiacSymbol}
+                </span>
+              </div>
+            </div>
+          )}
+          
           {prediction && (
-            <div className={`mt-3 text-center space-y-2 ${isAnimating ? 'opacity-50' : ''}`}>
-              <div className="h-px bg-[#e6c8b0] my-1 mx-auto w-2/3"></div>
-              <p className="text-[#5c3f14] text-xs font-medium leading-5">{prediction}</p>
+            <div className={`mt-3 space-y-2 ${isAnimating ? 'opacity-50' : 'reveal'}`} 
+                 style={{ transformOrigin: 'top center' }}>
+              <div className="flex justify-center">
+                <div className="w-16 h-0.5 bg-[#e6c8b0]/50"></div>
+              </div>
+              
+              {/* Sign symbol at top */}
+              {selectedSign && (
+                <div className="flex justify-center">
+                  <div className="w-10 h-10 rounded-full bg-white/40 border border-[#e6c8b0] flex items-center justify-center">
+                    <span className="text-xl text-[#5c3f14]">
+                      {selectedZodiacSymbol}
+                    </span>
+                  </div>
+                </div>
+              )}
+              
+              <div className="bg-white/30 p-4 rounded-lg border border-[#e6c8b0]/30 shadow-inner relative">
+                <div className="absolute top-0 left-0 w-full h-full opacity-5">
+                  <div className="w-full h-full" style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%235c3f14' fill-opacity='0.4' d='M8 0a8 8 0 100 16A8 8 0 008 0zm0 2a6 6 0 110 12A6 6 0 018 2z'/%3E%3C/svg%3E")`,
+                  }} />
+                </div>
+                <p className="text-[#5c3f14] text-xs font-medium leading-6 relative z-10">{prediction}</p>
+              </div>
+            </div>
+          )}
+          
+          {/* Empty state guidance */}
+          {!selectedSign && !prediction && (
+            <div className="text-center text-[#5c3f14] text-xs p-4 bg-white/30 rounded-md border border-[#e6c8b0]/20 shadow-inner my-3">
+              <p className="mb-3">برای مشاهده طالع خود، ابتدا ماه تولد را انتخاب کنید.</p>
+              <div className="flex justify-center mt-2">
+                <div className="animate-float">
+                  <Star size={18} className="text-[#e6c8b0] opacity-70" />
+                </div>
+              </div>
             </div>
           )}
         </div>
       </CardContent>
       
-      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-1 pb-2">
+      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-white/20 border-t border-[#e6c8b0]/20">
         <Button 
           onClick={getHoroscope} 
-          disabled={isAnimating}
+          disabled={isAnimating || !selectedSign}
           size="sm" 
-          className="bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14] text-[10px] h-7 px-2"
+          className="bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14] text-[10px] h-7 px-3 relative overflow-hidden group"
         >
-          {isAnimating ? <RefreshCw className="animate-spin mr-1" size={12} /> : null}
+          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
+          {isAnimating ? 
+            <RefreshCw className="animate-spin mr-1" size={12} /> : 
+            <Sparkles size={12} className="mr-1" />
+          }
           دریافت طالع
         </Button>
         
@@ -215,7 +287,7 @@ export const Horoscope = () => {
             variant="outline"
             size="sm"
             onClick={copyHoroscope} 
-            className="border-[#e6c8b0] text-[#5c3f14] text-[10px] h-7 px-2"
+            className="border-[#e6c8b0] text-[#5c3f14] text-[10px] h-7 px-3"
           >
             <Copy size={12} className="mr-1" />
             کپی طالع

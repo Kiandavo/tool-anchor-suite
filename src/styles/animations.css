@@ -24,6 +24,10 @@
   animation: fade-in 0.8s ease-out forwards;
 }
 
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -40,6 +44,16 @@
   animation: float 3s ease-in-out infinite;
 }
 
+@keyframes pulse-slow {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite; 
+}
+
 @keyframes mystical-glow {
   0% { box-shadow: 0 0 8px rgba(176, 200, 230, 0.5); }
   50% { box-shadow: 0 0 20px rgba(176, 200, 230, 0.8); }
@@ -48,4 +62,84 @@
 
 .mystical-glow {
   animation: mystical-glow 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s linear forwards;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.sparkle {
+  animation: sparkle 2s infinite;
+  transform-origin: center;
+  display: inline-block;
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotate-slow {
+  animation: rotate-slow 20s linear infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-5px) translateX(5px); }
+  50% { transform: translateY(0) translateX(10px); }
+  75% { transform: translateY(5px) translateX(5px); }
+}
+
+.drift {
+  animation: drift 10s ease-in-out infinite;
+}
+
+@keyframes reveal {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+.reveal {
+  animation: reveal 0.5s ease-out forwards;
+  transform-origin: top;
+}
+
+@keyframes shine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shine {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.2) 0%, 
+    rgba(255,255,255,0.8) 25%, 
+    rgba(255,255,255,0.2) 50%,
+    rgba(255,255,255,0.2) 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes cosmic-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.cosmic-spin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  animation: cosmic-spin 30s linear infinite;
 }

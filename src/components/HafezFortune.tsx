@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Book, RefreshCw, Copy } from "lucide-react";
+import { Book, RefreshCw, Copy, Sparkles } from "lucide-react";
 import { copyToClipboard } from "@/utils/randomUtils";
 
 const hafezPoems = [
@@ -92,6 +93,7 @@ export const HafezFortune = () => {
   const copyPoem = () => {
     if (currentPoem) {
       copyToClipboard(`${currentPoem.verse}\n\nتعبیر: ${currentPoem.interpretation}`);
+      toast.success("فال حافظ کپی شد!");
     }
   };
 
@@ -99,36 +101,69 @@ export const HafezFortune = () => {
     <section className="mb-8 space-y-4 animate-fade-in" style={{ animationDelay: '0.15s' }}>
       <div className="grid md:grid-cols-2 gap-3">
         {/* Hafez Fortune Card */}
-        <Card className="bg-[#f7f1e3] border-[#d1b980] shadow-sm overflow-hidden">
-          <CardHeader className="bg-[#d1b980] text-center pb-2 py-2">
+        <Card className="bg-[#f7f1e3] border-[#d1b980] shadow-md overflow-hidden relative">
+          {/* Decorative pattern */}
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="w-full h-full" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235c3f14' fill-opacity='0.4'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }} />
+          </div>
+          
+          <CardHeader className="bg-gradient-to-r from-[#d1b980] to-[#c4ad70] text-center pb-2 py-2 relative border-b border-[#d1b980]">
             <div className="flex items-center justify-center">
               <Book className="text-[#5c3f14] mr-2" size={16} />
-              <h2 className="text-sm font-bold text-[#5c3f14]">فال حافظ</h2>
+              <h2 className="text-sm font-bold text-[#5c3f14] flex items-center">
+                فال حافظ
+                <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-[#5c3f14] opacity-70" /></span>
+              </h2>
             </div>
           </CardHeader>
           
-          <CardContent className="pt-2 px-3 min-h-[100px] flex flex-col justify-center">
+          <CardContent className="pt-3 px-3 min-h-[180px] flex flex-col justify-center">
             {currentPoem ? (
-              <div className={`text-center space-y-2 ${isAnimating ? 'opacity-50' : ''}`}>
-                <p className="text-[#5c3f14] text-xs font-medium leading-5">{currentPoem.verse}</p>
-                <div className="h-px bg-[#d1b980] my-1 mx-auto w-2/3"></div>
-                <p className="text-gray-700 text-[10px]">{currentPoem.interpretation}</p>
+              <div className={`text-center space-y-2 ${isAnimating ? 'opacity-50' : 'reveal'}`} 
+                   style={{ transformOrigin: 'top center' }}>
+                <div className="flex justify-center">
+                  <div className="w-16 h-0.5 bg-[#d1b980]/50"></div>
+                </div>
+                <p className="text-[#5c3f14] text-xs font-medium leading-6 bg-white/30 p-3 rounded-md border border-[#d1b980]/30 shadow-inner relative">
+                  {/* Decorative corners */}
+                  <span className="absolute top-1 right-1 text-[#5c3f14]/20">❀</span>
+                  <span className="absolute bottom-1 left-1 text-[#5c3f14]/20">❀</span>
+                  {currentPoem.verse}
+                </p>
+                <div className="h-px bg-[#d1b980] my-2 mx-auto w-2/3 opacity-40"></div>
+                <div className="text-gray-700 text-[10px] bg-white/20 p-2 rounded-md border border-[#d1b980]/20 shadow-sm">
+                  <p className="leading-5">{currentPoem.interpretation}</p>
+                </div>
+                <div className="flex justify-center">
+                  <div className="w-16 h-0.5 bg-[#d1b980]/50"></div>
+                </div>
               </div>
             ) : (
-              <div className="text-center text-gray-600 text-xs">
-                <p>برای گرفتن فال حافظ، نیت کنید و دکمه زیر را بزنید.</p>
+              <div className="text-center text-[#5c3f14] text-xs p-4 bg-white/30 rounded-md border border-[#d1b980]/20 shadow-inner relative">
+                <p className="mb-3">برای گرفتن فال حافظ، نیت کنید و دکمه زیر را بزنید.</p>
+                <div className="flex justify-center">
+                  <div className="animate-float">
+                    <Book size={18} className="text-[#d1b980] opacity-70" />
+                  </div>
+                </div>
               </div>
             )}
           </CardContent>
           
-          <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-1 pb-2">
+          <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-white/20 border-t border-[#d1b980]/20">
             <Button 
               onClick={getRandomHafezFortune} 
               disabled={isAnimating}
               size="sm" 
-              className="bg-[#d1b980] hover:bg-[#c4a76b] text-[#5c3f14] text-[10px] h-7 px-2"
+              className="bg-[#d1b980] hover:bg-[#c4a76b] text-[#5c3f14] text-[10px] h-7 px-3 relative overflow-hidden group"
             >
-              {isAnimating ? <RefreshCw className="animate-spin mr-1" size={12} /> : null}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
+              {isAnimating ? 
+                <RefreshCw className="animate-spin mr-1" size={12} /> : 
+                <Sparkles size={12} className="mr-1" />
+              }
               گرفتن فال
             </Button>
             
@@ -137,7 +172,7 @@ export const HafezFortune = () => {
                 variant="outline"
                 size="sm"
                 onClick={copyPoem} 
-                className="border-[#d1b980] text-[#5c3f14] text-[10px] h-7 px-2"
+                className="border-[#d1b980] text-[#5c3f14] text-[10px] h-7 px-3 hover:bg-[#d1b980]/10"
               >
                 <Copy size={12} className="mr-1" />
                 کپی فال
@@ -147,34 +182,65 @@ export const HafezFortune = () => {
         </Card>
         
         {/* Daily Fortune Card */}
-        <Card className="bg-[#e3f0f7] border-[#80abd1] shadow-sm overflow-hidden">
-          <CardHeader className="bg-[#80abd1] text-center pb-2 py-2">
+        <Card className="bg-[#e3f0f7] border-[#80abd1] shadow-md overflow-hidden relative">
+          {/* Decorative pattern */}
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="w-full h-full" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23143a5c' fill-opacity='0.4'%3E%3Cpath d='M0 0h2v20H0V0zm4 0h2v20H4V0zm4 0h2v20H8V0zm4 0h2v20h-2V0zm4 0h2v20h-2V0z'/%3E%3C/g%3E%3C/svg%3E")`,
+            }} />
+          </div>
+          
+          <CardHeader className="bg-gradient-to-r from-[#80abd1] to-[#6b9fc9] text-center pb-2 py-2 relative border-b border-[#80abd1]">
             <div className="flex items-center justify-center">
               <span className="mr-2 text-[#143a5c] text-sm">✨</span>
-              <h2 className="text-sm font-bold text-[#143a5c]">شانس روزانه</h2>
+              <h2 className="text-sm font-bold text-[#143a5c] flex items-center">
+                شانس روزانه
+                <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-[#143a5c] opacity-70" /></span>
+              </h2>
             </div>
           </CardHeader>
           
-          <CardContent className="pt-2 px-3 min-h-[100px] flex flex-col justify-center">
+          <CardContent className="pt-3 px-3 min-h-[180px] flex flex-col justify-center">
             {dailyFortune ? (
-              <div className={`text-center ${isAnimating ? 'opacity-50' : ''}`}>
-                <p className="text-[#143a5c] text-xs font-medium leading-5">{dailyFortune}</p>
+              <div className={`text-center ${isAnimating ? 'opacity-50' : 'reveal'}`} 
+                   style={{ transformOrigin: 'top center' }}>
+                <div className="flex justify-center mb-3">
+                  <div className="w-16 h-0.5 bg-[#80abd1]/50"></div>
+                </div>
+                <div className="bg-white/30 p-4 rounded-lg border border-[#80abd1]/30 shadow-inner relative">
+                  {/* Decorative stars */}
+                  <span className="absolute top-2 right-2 text-[#143a5c]/20 text-xs sparkle">✧</span>
+                  <span className="absolute bottom-2 left-2 text-[#143a5c]/20 text-xs sparkle">✧</span>
+                  <p className="text-[#143a5c] text-xs font-medium leading-6">{dailyFortune}</p>
+                </div>
+                <div className="flex justify-center mt-3">
+                  <div className="w-16 h-0.5 bg-[#80abd1]/50"></div>
+                </div>
               </div>
             ) : (
-              <div className="text-center text-gray-600 text-xs">
-                <p>برای دیدن شانس امروز خود، دکمه زیر را بزنید.</p>
+              <div className="text-center text-[#143a5c] text-xs p-4 bg-white/30 rounded-md border border-[#80abd1]/20 shadow-inner">
+                <p className="mb-3">برای دیدن شانس امروز خود، دکمه زیر را بزنید.</p>
+                <div className="flex justify-center">
+                  <div className="animate-float">
+                    <Sparkles size={18} className="text-[#80abd1] opacity-70" />
+                  </div>
+                </div>
               </div>
             )}
           </CardContent>
           
-          <CardFooter className="flex justify-center pt-1 pb-2">
+          <CardFooter className="flex justify-center pt-3 pb-3 bg-white/20 border-t border-[#80abd1]/20">
             <Button 
               onClick={getDailyFortune} 
               disabled={isAnimating}
               size="sm"
-              className="bg-[#80abd1] hover:bg-[#6b94c4] text-[#143a5c] text-[10px] h-7 px-2"
+              className="bg-[#80abd1] hover:bg-[#6b94c4] text-[#143a5c] text-[10px] h-7 px-3 relative overflow-hidden group"
             >
-              {isAnimating ? <RefreshCw className="animate-spin mr-1" size={12} /> : null}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
+              {isAnimating ? 
+                <RefreshCw className="animate-spin mr-1" size={12} /> : 
+                <Sparkles size={12} className="mr-1" />
+              }
               شانس امروز من
             </Button>
           </CardFooter>
