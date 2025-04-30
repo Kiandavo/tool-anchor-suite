@@ -1,59 +1,13 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Book, Copy, RefreshCw, Sparkles } from "lucide-react";
 import { copyToClipboard } from "@/utils/randomUtils";
-
-// Hafez poems
-const hafezPoems = [
-  {
-    id: 1,
-    title: "غزل شماره ۱",
-    text: "الا یا ایها الساقی ادر کاساً و ناولها\nکه عشق آسان نمود اول ولی افتاد مشکل‌ها\nبه بوی نافه‌ای کاخر صبا زان طره بگشاید\nز تاب جعد مشکینش چه خون افتاد در دل‌ها",
-    interpretation: "این غزل درباره پیچیدگی عشق است. ابتدا ساده به نظر می‌رسد اما در ادامه مسیر، دشواری‌های آن آشکار می‌شود."
-  },
-  {
-    id: 2,
-    title: "غزل شماره ۲",
-    text: "صوفی نهاد دام و سر حقه باز کرد\nبنیاد مکر با فلک حقه‌باز کرد\nبازی چرخ بشکندش بیضه در کلاه\nزیرا که عرض شعبده با اهل راز کرد",
-    interpretation: "این غزل درباره فریبکاری و ریاکاری صوفی‌نمایان است که ظاهری دینی دارند اما در باطن اهل فریب هستند."
-  },
-  {
-    id: 3,
-    title: "غزل شماره ۳",
-    text: "اگر آن ترک شیرازی به دست آرد دل ما را\nبه خال هندویش بخشم سمرقند و بخارا را\nبده ساقی می باقی که در جنت نخواهی یافت\nکنار آب رکن‌آباد و گلگشت مصلا را",
-    interpretation: "این غزل به زیبایی شیراز و محبوب شیرازی اشاره دارد که ارزش آن از سمرقند و بخارا بیشتر است."
-  },
-  {
-    id: 4,
-    title: "غزل شماره ۴",
-    text: "دوش دیدم که ملائک در میخانه زدند\nگل آدم بسرشتند و به پیمانه زدند\nساکنان حرم ستر و عفاف ملکوت\nبا من راه نشین باده مستانه زدند",
-    interpretation: "این غزل به عشق الهی و مستی معنوی اشاره دارد که حتی فرشتگان نیز در آن شریک هستند."
-  },
-  {
-    id: 5,
-    title: "غزل شماره ۵",
-    text: "زلف آشفته و خوی کرده و خندان لب و مست\nپیرهن چاک و غزل‌خوان و صراحی در دست\nنرگسش عربده‌جوی و لبش افسوس‌کنان\nنیم شب دوش به بالین من آمد بنشست",
-    interpretation: "این غزل تصویری از معشوق مست و شوریده را به تصویر می‌کشد که نیمه‌شب به بالین شاعر می‌آید."
-  },
-  {
-    id: 6,
-    title: "غزل شماره ۶",
-    text: "دل و دینم شد و دلبر به ملامت برخاست\nگفت با ما منشین کز تو سلامت برخاست\nزهره با شعر تو میلم که به دستت دهد مِی\nبا کمال هنرت عشق به مصاحبت برخاست",
-    interpretation: "این غزل به قدرت عشق اشاره دارد که دین و ایمان را می‌برد و انسان را مست و شیدا می‌کند."
-  },
-  {
-    id: 7,
-    title: "غزل شماره ۷",
-    text: "صبا به لطف بگو آن غزال رعنا را\nکه سر به کوه و بیابان تو داده‌ای ما را\nشکرفروش که عمرش دراز باد چرا\nتفقدی نکند طوطی شکرخا را",
-    interpretation: "این غزل گله‌ای عاشقانه از معشوقی است که به عاشق بی‌توجهی می‌کند."
-  }
-];
+import { hafezGhazals, HafezPoem } from "@/data/hafez-ghazals";
 
 export const HafezFortune = () => {
-  const [poem, setPoem] = useState<typeof hafezPoems[0] | null>(null);
+  const [poem, setPoem] = useState<HafezPoem | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [hasNewFortune, setHasNewFortune] = useState(false);
@@ -81,12 +35,12 @@ export const HafezFortune = () => {
     let shownPoemIds: number[] = storedPoems ? JSON.parse(storedPoems) : [];
     
     // If all poems have been shown, reset the list
-    if (shownPoemIds.length >= hafezPoems.length) {
+    if (shownPoemIds.length >= hafezGhazals.length) {
       shownPoemIds = [];
     }
     
     // Find poems that haven't been shown yet
-    const availablePoems = hafezPoems.filter(p => !shownPoemIds.includes(p.id));
+    const availablePoems = hafezGhazals.filter(p => !shownPoemIds.includes(p.id));
     
     setTimeout(() => {
       // If we have available poems, pick one randomly
@@ -105,8 +59,8 @@ export const HafezFortune = () => {
         setTimeout(() => setHasNewFortune(false), 3000);
       } else {
         // This should never happen, but as a fallback...
-        const randomIndex = Math.floor(Math.random() * hafezPoems.length);
-        setPoem(hafezPoems[randomIndex]);
+        const randomIndex = Math.floor(Math.random() * hafezGhazals.length);
+        setPoem(hafezGhazals[randomIndex]);
       }
       
       setIsLoading(false);
