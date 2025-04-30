@@ -11,7 +11,7 @@ interface TarotCardProps {
 }
 
 export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed, animationDelay = 0 }) => {
-  // The issue is here - we need to ensure the icon is properly referenced
+  // The card.icon is already a valid Lucide icon component
   const IconComponent = card.icon;
   
   // Define card appearance based on position

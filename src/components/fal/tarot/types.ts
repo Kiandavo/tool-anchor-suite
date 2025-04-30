@@ -1,8 +1,7 @@
 
 import { 
   BookOpen, Moon, Sun, Scale, Skull, 
-  Wand, Crown, Book, Heart, Clock, 
-  Star, LucideIcon, Globe, Landmark
+  Crown, Heart, Star, LucideIcon, Globe, Landmark
 } from 'lucide-react';
 
 export interface TarotCardType {
