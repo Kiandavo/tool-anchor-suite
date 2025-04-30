@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "@/components/AppRoutes";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <GoogleAnalytics />
           <AppRoutes />
         </BrowserRouter>
       </TooltipProvider>
@@ -23,4 +25,3 @@ const App = () => {
 };
 
 export default App;
-
