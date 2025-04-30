@@ -4,7 +4,6 @@ import { TarotCard } from './TarotCard';
 import { TarotCardType } from './types';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { CircleHelp } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface TarotCardDisplayProps {
   selectedCards: TarotCardType[];

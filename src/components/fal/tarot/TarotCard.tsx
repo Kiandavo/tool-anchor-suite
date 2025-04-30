@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import { TarotCardType } from './types';
+import { LucideIcon } from 'lucide-react';
 
 interface TarotCardProps {
   card: TarotCardType;
@@ -9,19 +11,13 @@ interface TarotCardProps {
 }
 
 export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed, animationDelay = 0 }) => {
-  const [imageError, setImageError] = useState(false);
+  const IconComponent = card.icon;
   
-  // Use one of the uploaded images as the card back
-  const cardBackImage = "/lovable-uploads/da31002e-a0a8-4bb1-a8c9-397da973787d.png"; // The Tower card as back
-  
-  // Use another card as fallback in case of image loading errors
-  const fallbackImage = "/lovable-uploads/f620f1e8-c21a-4536-903a-7412e99615c0.png"; // The World card as fallback
-
-  const handleImageError = () => {
-    console.log(`Failed to load image for card: ${card.name}`);
-    setImageError(true);
-  };
-
+  // Define card appearance based on position
+  const positionColor = position === "گذشته" ? "#b0c8e6" : 
+                        position === "حال" ? "#95b1d6" : 
+                        "#7a97c2";
+                        
   return (
     <div 
       className="flex flex-col items-center"
@@ -35,29 +31,28 @@ export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed
         <div className={`tarot-card absolute w-full h-full transition-all duration-700 transform ${isRevealed ? 'rotate-y-180' : ''}`}>
           <div className="tarot-card-front absolute w-full h-full glass-card rounded-lg border-2 border-[#b0c8e6] hover:shadow-glow">
             {!isRevealed ? (
-              <>
-                <img 
-                  src={cardBackImage} 
-                  alt="Tarot Card Back" 
-                  className="tarot-card-image w-full h-full object-cover rounded-lg"
-                  onError={handleImageError}
-                />
-                <div className="tarot-card-overlay">
-                  <span className="text-white text-[16px] font-bold text-center">?</span>
+              <div className="relative w-full h-full flex flex-col items-center justify-center p-3 bg-gradient-to-b from-[#e9f0f7] to-[#d1e0f0]">
+                <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                  <div className="text-[120px] text-[#143a5c]">؟</div>
                 </div>
-              </>
+                <div className="border-2 border-[#b0c8e6] rounded-full p-3 bg-white/50 shadow-md">
+                  <div className="text-[#143a5c] text-2xl font-bold">؟</div>
+                </div>
+              </div>
             ) : (
-              <>
-                <img 
-                  src={imageError ? fallbackImage : card.image} 
-                  alt={card.name} 
-                  className="tarot-card-image w-full h-full object-cover rounded-lg" 
-                  onError={handleImageError}
-                />
-                <div className="tarot-card-overlay">
-                  <span className="text-white text-[16px] font-bold text-center">{card.name}</span>
+              <div 
+                className="w-full h-full flex flex-col items-center justify-center p-3"
+                style={{
+                  background: `linear-gradient(135deg, ${positionColor}40, ${positionColor}20)`
+                }}
+              >
+                <div className="icon-container mb-2 rounded-full p-3 flex items-center justify-center bg-white/70 shadow-md border border-[#b0c8e6]">
+                  <IconComponent size={28} className="text-[#143a5c]" />
                 </div>
-              </>
+                <div className="text-center">
+                  <h3 className="text-[#143a5c] text-sm font-bold">{card.name}</h3>
+                </div>
+              </div>
             )}
           </div>
           <div className="tarot-card-back absolute w-full h-full glass-card rounded-lg p-3 flex items-center justify-center border-2 border-[#b0c8e6] hover:shadow-glow">

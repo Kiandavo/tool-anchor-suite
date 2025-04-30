@@ -1,9 +1,7 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 export const TarotAnimation: React.FC = () => {
-  const [stylesLoaded, setStylesLoaded] = useState(false);
-
   useEffect(() => {
     // Create the style element for animations
     const style = document.createElement('style');
@@ -45,32 +43,12 @@ export const TarotAnimation: React.FC = () => {
         backdrop-filter: blur(10px);
         background-color: rgba(255, 255, 255, 0.3);
       }
-      .tarot-card-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 0.375rem;
-        opacity: 0.9;
-        transition: opacity 0.3s ease;
+      .icon-container {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
-      .tarot-card-image:hover {
-        opacity: 1;
-      }
-      .tarot-card-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(20, 58, 92, 0.4);
-        border-radius: 0.375rem;
-        transition: background-color 0.3s ease;
-      }
-      .tarot-card-front:hover .tarot-card-overlay {
-        background-color: rgba(20, 58, 92, 0.5);
+      .tarot-card-front:hover .icon-container {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(20, 58, 92, 0.2);
       }
       .hover-shadow-glow:hover {
         box-shadow: 0 0 15px rgba(176, 200, 230, 0.7);
@@ -107,9 +85,6 @@ export const TarotAnimation: React.FC = () => {
 
     // Append the style to document head
     document.head.appendChild(style);
-    
-    // Mark styles as loaded
-    setStylesLoaded(true);
     console.log('Tarot animation styles loaded');
     
     // Cleanup function
