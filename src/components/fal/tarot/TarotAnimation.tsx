@@ -43,14 +43,14 @@ export const TarotAnimation: React.FC = () => {
       }
       .glass-card {
         backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.3);
       }
       .tarot-card-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: 0.375rem;
-        opacity: 0.8;
+        opacity: 0.9;
         transition: opacity 0.3s ease;
       }
       .tarot-card-image:hover {
@@ -65,7 +65,7 @@ export const TarotAnimation: React.FC = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: rgba(20, 58, 92, 0.3);
+        background-color: rgba(20, 58, 92, 0.4);
         border-radius: 0.375rem;
         transition: background-color 0.3s ease;
       }

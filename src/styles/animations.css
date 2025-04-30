@@ -20,6 +20,10 @@
   }
 }
 
+.fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);

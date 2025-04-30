@@ -27,9 +27,9 @@ export const TarotControls: React.FC<TarotControlsProps> = ({
         onClick={onDrawCards} 
         disabled={isAnimating}
         size="sm" 
-        className="bg-[#b0c8e6] hover:bg-[#95b1d6] text-[#143a5c] text-[10px] h-7 px-2 transition-all duration-300 hover:shadow-md"
+        className="bg-[#b0c8e6] hover:bg-[#95b1d6] text-[#143a5c] text-[12px] h-8 px-3 transition-all duration-300 hover:shadow-md"
       >
-        {isAnimating ? <RefreshCw className="animate-spin mr-1" size={12} /> : null}
+        {isAnimating ? <RefreshCw className="animate-spin mr-1" size={14} /> : null}
         کشیدن کارت
       </Button>
       
@@ -38,9 +38,9 @@ export const TarotControls: React.FC<TarotControlsProps> = ({
           variant="outline"
           size="sm"
           onClick={onRevealMeaning} 
-          className="border-[#b0c8e6] text-[#143a5c] text-[10px] h-7 px-2 transition-all duration-300 hover:border-[#95b1d6] hover:shadow-md"
+          className="border-[#b0c8e6] text-[#143a5c] text-[12px] h-8 px-3 transition-all duration-300 hover:border-[#95b1d6] hover:shadow-md"
         >
-          <CircleHelp size={12} className="mr-1" />
+          <CircleHelp size={14} className="mr-1" />
           آشکار کردن معنی
         </Button>
       )}
@@ -50,9 +50,9 @@ export const TarotControls: React.FC<TarotControlsProps> = ({
           variant="outline"
           size="sm"
           onClick={onCopyReading} 
-          className="border-[#b0c8e6] text-[#143a5c] text-[10px] h-7 px-2 transition-all duration-300 hover:border-[#95b1d6] hover:shadow-md"
+          className="border-[#b0c8e6] text-[#143a5c] text-[12px] h-8 px-3 transition-all duration-300 hover:border-[#95b1d6] hover:shadow-md"
         >
-          <Copy size={12} className="mr-1" />
+          <Copy size={14} className="mr-1" />
           کپی فال
         </Button>
       )}

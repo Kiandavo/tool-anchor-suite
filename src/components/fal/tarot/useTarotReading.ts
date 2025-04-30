@@ -17,11 +17,18 @@ export const useTarotReading = () => {
       try {
         console.log('Preloading tarot card images...');
         
+        // Also preload the fallback and back card images
+        const fallbackImage = new Image();
+        fallbackImage.src = "/tarot-fallback.jpg";
+        
+        const backImage = new Image();
+        backImage.src = "/tarot-back.jpg";
+        
         const imagePromises = tarotCards.map((card) => {
           return new Promise<void>((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
-              console.log(`Successfully loaded: ${card.name}`);
+              console.log(`Successfully loaded: ${card.name} - ${card.image}`);
               resolve();
             };
             img.onerror = () => {
