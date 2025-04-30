@@ -1,8 +1,8 @@
 
 import { 
-  TowerControl, Moon, Sun, Scale, Skull, 
+  BookOpen, Moon, Sun, Scale, Skull, 
   Wand, Crown, Book, Heart, Clock, 
-  Sword, Star, LucideIcon, Globe, Landmark
+  Star, LucideIcon, Globe, Landmark
 } from 'lucide-react';
 
 export interface TarotCardType {
@@ -15,7 +15,7 @@ export const tarotCards: TarotCardType[] = [
   {
     name: "برج",
     description: "آغاز راه جدید، تغییرات ناگهانی، فروپاشی باورهای قدیمی. این کارت نشان‌دهنده تحولات بزرگ و گاه دردناک است که در نهایت به رشد می‌انجامد.",
-    icon: TowerControl
+    icon: BookOpen
   },
   {
     name: "ماه",
@@ -40,7 +40,7 @@ export const tarotCards: TarotCardType[] = [
   {
     name: "جادوگر",
     description: "خلاقیت، استعداد، مهارت و توانایی برقراری ارتباط بین دنیای مادی و معنوی. این کارت نشان می‌دهد که ابزار لازم برای موفقیت را در اختیار دارید.",
-    icon: Wand
+    icon: Star
   },
   {
     name: "ملکه کاهنه",
