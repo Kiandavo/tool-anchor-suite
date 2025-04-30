@@ -25,7 +25,7 @@ const TarotInstructions: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="text-[#143a5c] hover:bg-[#143a5c]/10 mb-4">
+        <Button variant="ghost" size="sm" className="text-[#143a5c] hover:bg-[#143a5c]/10">
           <Info size={16} className="mr-1" />
           راهنمای تاروت
         </Button>
@@ -109,11 +109,6 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
           }} />
         </div>
         <div className="relative">
-          {/* Add instruction button */}
-          <div className="flex justify-center mb-2">
-            <TarotInstructions />
-          </div>
-          
           <p className="text-[#143a5c] mb-3 font-medium">برای دریافت فال، دکمه کشیدن کارت را فشار دهید.</p>
           <div className="mt-5 flex justify-center">
             <TarotGuide />
@@ -122,6 +117,11 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
             <div className="animate-float">
               <Sparkles size={18} className="text-[#7a97c2] opacity-70" />
             </div>
+          </div>
+          
+          {/* Instruction button below empty state */}
+          <div className="flex justify-center mt-5">
+            <TarotInstructions />
           </div>
         </div>
       </div>
@@ -137,11 +137,6 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
         }} />
       </div>
       
-      {/* Add instruction button above cards when they're shown */}
-      <div className="absolute top-0 left-0 -mt-12 w-full flex justify-center">
-        <TarotInstructions />
-      </div>
-      
       {selectedCards.map((card, index) => (
         <TarotCard 
           key={index}
@@ -151,6 +146,11 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
           animationDelay={index * 300} // Stagger the appearance of each card
         />
       ))}
+      
+      {/* Instruction button moved below cards when they're shown */}
+      <div className="col-span-3 mt-6 flex justify-center">
+        <TarotInstructions />
+      </div>
     </div>
   );
 };

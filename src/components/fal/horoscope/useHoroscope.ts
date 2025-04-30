@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/randomUtils";
@@ -98,12 +99,15 @@ export const useHoroscope = () => {
     }
 
     setIsAnimating(true);
+    console.log("Getting horoscope for sign:", selectedSign, "with prediction type:", predictionType);
     
     // Simulate horoscope generation with a delay
     setTimeout(() => {
       const predictions = horoscopePredictions[selectedSign] || [];
       // Ensure we get a truly random index each time
       const randomIndex = Math.floor(Math.random() * predictions.length);
+      const selectedPrediction = predictions[randomIndex];
+      console.log("Selected prediction index:", randomIndex, "Prediction:", selectedPrediction);
       
       let predictionPrefix = "";
       switch(predictionType) {
@@ -117,7 +121,9 @@ export const useHoroscope = () => {
           predictionPrefix = "امروز: ";
       }
       
-      setPrediction(predictionPrefix + predictions[randomIndex]);
+      const finalPrediction = predictionPrefix + selectedPrediction;
+      console.log("Final prediction:", finalPrediction);
+      setPrediction(finalPrediction);
       setIsAnimating(false);
       toast.success("طالع بینی انجام شد!");
     }, 1000);
@@ -126,7 +132,9 @@ export const useHoroscope = () => {
   const copyHoroscope = () => {
     if (prediction) {
       const signInfo = selectedSign ? zodiacSigns.find(sign => sign.value === selectedSign) : null;
-      copyToClipboard(`${signInfo ? `${signInfo.label} ${signInfo.symbol}` : ''}\n\n${prediction}`);
+      const textToCopy = `${signInfo ? `${signInfo.label} ${signInfo.symbol}` : ''}\n\n${prediction}`;
+      console.log("Copying horoscope:", textToCopy);
+      copyToClipboard(textToCopy);
       toast.success("طالع بینی کپی شد!");
     }
   };

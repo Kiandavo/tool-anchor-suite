@@ -12,7 +12,13 @@ export const ZodiacSelector: React.FC<ZodiacSelectorProps> = ({ selectedSign, on
   return (
     <div>
       <label className="block text-[#5c3f14] text-xs mb-1 font-medium">ماه تولد خود را انتخاب کنید:</label>
-      <Select value={selectedSign} onValueChange={onSelectSign}>
+      <Select 
+        value={selectedSign} 
+        onValueChange={(value) => {
+          console.log("Selected zodiac sign:", value);
+          onSelectSign(value);
+        }}
+      >
         <SelectTrigger className="text-xs bg-white/50 border-[#e6c8b0]/50 shadow-sm">
           <SelectValue placeholder="انتخاب ماه تولد" />
           {selectedSign && (
