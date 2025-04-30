@@ -14,21 +14,21 @@ interface ShopProps {
 const shops: ShopProps[] = [
   {
     name: 'shemrun_outlet',
-    imageUrl: '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png',
+    imageUrl: '/lovable-uploads/a177cf05-4280-4681-b94f-08c52a0d39c0.png',
     instagramHandle: 'shemrun_outlet',
     instagramUrl: 'https://www.instagram.com/shemrun_outlet/',
     fallbackImage: '/placeholder.svg',
   },
   {
     name: 'shemrun_kicks',
-    imageUrl: '/lovable-uploads/a29ccf04-1313-4fd1-8c7f-3303f18ee22f.png',
+    imageUrl: '/lovable-uploads/3e290d5a-5677-4b4e-b12e-889f6b90c7e5.png',
     instagramHandle: 'shemrun_kicks',
     instagramUrl: 'https://www.instagram.com/shemrun_kicks/',
     fallbackImage: '/placeholder.svg',
   },
   {
     name: 'shem_run',
-    imageUrl: '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png',
+    imageUrl: '/lovable-uploads/d09d799c-1dc8-44fc-a423-f435a3ae8771.png',
     instagramHandle: 'shem_run',
     instagramUrl: 'https://www.instagram.com/shem_run/',
     fallbackImage: '/placeholder.svg',
