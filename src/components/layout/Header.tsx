@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
-import newLogo from '/lovable-uploads/6278f3e1-0aa9-4b4e-81aa-fffb85168983.png';
+import newLogo from '/public/lovable-uploads/6278f3e1-0aa9-4b4e-81aa-fffb85168983.png';
 
 interface HeaderProps {
   title?: string;
@@ -48,7 +47,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       navigate(-1);
     }
   };
-
+  
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
   return (
