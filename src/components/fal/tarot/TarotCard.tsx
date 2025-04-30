@@ -12,11 +12,11 @@ interface TarotCardProps {
 export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed, animationDelay = 0 }) => {
   const [imageError, setImageError] = useState(false);
   
-  // Card back image - using a more reliable static path
-  const cardBackImage = "/tarot-back.jpg";
+  // Use one of the uploaded images as the card back
+  const cardBackImage = "/public/lovable-uploads/da31002e-a0a8-4bb1-a8c9-397da973787d.png"; // The Tower card as back
   
-  // Fallback image in case the main image fails to load
-  const fallbackImage = "/tarot-fallback.jpg";
+  // Use another card as fallback in case of image loading errors
+  const fallbackImage = "/public/lovable-uploads/f620f1e8-c21a-4536-903a-7412e99615c0.png"; // The World card as fallback
 
   const handleImageError = () => {
     console.log(`Failed to load image for card: ${card.name}`);
