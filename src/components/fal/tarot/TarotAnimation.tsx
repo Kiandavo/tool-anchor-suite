@@ -91,6 +91,14 @@ export const TarotAnimation: React.FC = () => {
       .tarot-card-enter {
         animation: fade-in 0.8s ease-out forwards;
       }
+      @keyframes mystical-glow {
+        0% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
+        50% { box-shadow: 0 0 15px rgba(176, 200, 230, 0.7); }
+        100% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
+      }
+      .mystical-glow {
+        animation: mystical-glow 3s infinite;
+      }
     `;
     document.head.appendChild(style);
     return () => {

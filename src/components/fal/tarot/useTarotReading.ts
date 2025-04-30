@@ -17,7 +17,7 @@ export const useTarotReading = () => {
     // Clear existing cards first with a fade-out effect
     setSelectedCards([]);
     
-    // Simulate card drawing with a delay
+    // Simulate shuffling cards with a slightly longer delay for dramatic effect
     setTimeout(() => {
       // Shuffle the cards and select three
       const shuffled = [...tarotCards].sort(() => 0.5 - Math.random());
@@ -27,12 +27,17 @@ export const useTarotReading = () => {
       setIsAnimating(false);
       setHasDrawn(true);
       toast.success("کارت‌های تاروت انتخاب شدند!");
-    }, 1000); // Slightly faster animation
+    }, 1200); 
   };
 
   const revealMeaning = () => {
-    setIsRevealed(true);
-    toast.success("معنای کارت‌ها آشکار شد!");
+    // Add a small delay before revealing for dramatic effect
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsRevealed(true);
+      setIsAnimating(false);
+      toast.success("معنای کارت‌ها آشکار شد!");
+    }, 500);
   };
 
   const copyReading = () => {
