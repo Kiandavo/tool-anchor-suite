@@ -4,6 +4,7 @@ import { TarotCard } from './TarotCard';
 import { TarotCardType } from './types';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { CircleHelp } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface TarotCardDisplayProps {
   selectedCards: TarotCardType[];
@@ -20,18 +21,18 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
 
   if (selectedCards.length === 0) {
     return (
-      <div className="text-center text-[#143a5c] text-xs py-4">
+      <div className="text-center text-[#143a5c] text-sm py-4">
         <p>برای دریافت فال، دکمه کشیدن کارت را فشار دهید.</p>
         <div className="mt-4 flex justify-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="text-[#143a5c] cursor-help text-xs inline-flex items-center">
-                  <CircleHelp size={14} className="mr-1" />
+                <span className="text-[#143a5c] cursor-help text-sm inline-flex items-center">
+                  <CircleHelp size={16} className="mr-1" />
                   راهنمای تاروت
                 </span>
               </TooltipTrigger>
-              <TooltipContent className="bg-white text-xs p-2 max-w-xs text-right">
+              <TooltipContent className="bg-white text-sm p-2 max-w-xs text-right">
                 <p>کارت‌های تاروت فال باستانی هستند که برای پیش‌بینی آینده، درک گذشته و بصیرت در شرایط فعلی استفاده می‌شوند.</p>
               </TooltipContent>
             </Tooltip>

@@ -73,10 +73,10 @@ export const TarotAnimation: React.FC = () => {
         background-color: rgba(20, 58, 92, 0.5);
       }
       .hover-shadow-glow:hover {
-        box-shadow: 0 0 15px rgba(176, 200, 230, 0.5);
+        box-shadow: 0 0 15px rgba(176, 200, 230, 0.7);
       }
       .shadow-glow {
-        box-shadow: 0 0 10px rgba(176, 200, 230, 0.3);
+        box-shadow: 0 0 12px rgba(176, 200, 230, 0.5);
       }
       @keyframes float {
         0% {
@@ -96,9 +96,9 @@ export const TarotAnimation: React.FC = () => {
         animation: fade-in 0.8s ease-out forwards;
       }
       @keyframes mystical-glow {
-        0% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
-        50% { box-shadow: 0 0 15px rgba(176, 200, 230, 0.7); }
-        100% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
+        0% { box-shadow: 0 0 8px rgba(176, 200, 230, 0.5); }
+        50% { box-shadow: 0 0 20px rgba(176, 200, 230, 0.8); }
+        100% { box-shadow: 0 0 8px rgba(176, 200, 230, 0.5); }
       }
       .mystical-glow {
         animation: mystical-glow 3s infinite;

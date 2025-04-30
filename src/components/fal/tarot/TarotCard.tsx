@@ -44,7 +44,7 @@ export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed
                   onError={handleImageError}
                 />
                 <div className="tarot-card-overlay">
-                  <span className="text-white text-[14px] font-bold text-center">?</span>
+                  <span className="text-white text-[16px] font-bold text-center">?</span>
                 </div>
               </>
             ) : (
@@ -56,19 +56,19 @@ export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed
                   onError={handleImageError}
                 />
                 <div className="tarot-card-overlay">
-                  <span className="text-white text-[14px] font-bold text-center">{card.name}</span>
+                  <span className="text-white text-[16px] font-bold text-center">{card.name}</span>
                 </div>
               </>
             )}
           </div>
           <div className="tarot-card-back absolute w-full h-full glass-card rounded-lg p-3 flex items-center justify-center border-2 border-[#b0c8e6] hover:shadow-glow">
-            <span className="text-[#143a5c] text-[12px] text-center overflow-auto max-h-full">
+            <span className="text-[#143a5c] text-[14px] text-center overflow-auto max-h-full">
               {isRevealed ? card.description : "..."}
             </span>
           </div>
         </div>
       </div>
-      <span className="text-[12px] text-[#143a5c] text-center font-medium mt-1">
+      <span className="text-[14px] text-[#143a5c] text-center font-medium mt-1">
         {position}
       </span>
     </div>

@@ -41,9 +41,9 @@
 }
 
 @keyframes mystical-glow {
-  0% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
-  50% { box-shadow: 0 0 15px rgba(176, 200, 230, 0.7); }
-  100% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
+  0% { box-shadow: 0 0 8px rgba(176, 200, 230, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(176, 200, 230, 0.8); }
+  100% { box-shadow: 0 0 8px rgba(176, 200, 230, 0.5); }
 }
 
 .mystical-glow {

@@ -10,12 +10,14 @@ export const useTarotReading = () => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
   const [imagesPreloaded, setImagesPreloaded] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   // Preload all card images to avoid loading issues
   useEffect(() => {
     const preloadImages = async () => {
       try {
         console.log('Preloading tarot card images...');
+        setLoadingProgress(10);
         
         // Also preload the fallback and back card images
         const fallbackImage = new Image();
@@ -24,15 +26,26 @@ export const useTarotReading = () => {
         const backImage = new Image();
         backImage.src = "/tarot-back.jpg";
         
+        setLoadingProgress(30);
+        
+        const totalImages = tarotCards.length;
+        let loadedImages = 0;
+        
         const imagePromises = tarotCards.map((card) => {
           return new Promise<void>((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
-              console.log(`Successfully loaded: ${card.name} - ${card.image}`);
+              loadedImages++;
+              const progress = Math.min(30 + Math.floor((loadedImages / totalImages) * 70), 100);
+              setLoadingProgress(progress);
+              console.log(`Successfully loaded: ${card.name} - ${card.image} (${progress}%)`);
               resolve();
             };
             img.onerror = () => {
               console.error(`Failed to load image for: ${card.name} - ${card.image}`);
+              loadedImages++;
+              const progress = Math.min(30 + Math.floor((loadedImages / totalImages) * 70), 100);
+              setLoadingProgress(progress);
               // We'll resolve anyway to not block the loading process
               resolve();
             };
@@ -42,11 +55,13 @@ export const useTarotReading = () => {
         
         await Promise.all(imagePromises);
         setImagesPreloaded(true);
+        setLoadingProgress(100);
         console.log('All tarot card images preloaded');
       } catch (error) {
         console.error('Error preloading images:', error);
         // Mark as preloaded anyway to not block the UI
         setImagesPreloaded(true);
+        setLoadingProgress(100);
       }
     };
 
@@ -93,6 +108,7 @@ export const useTarotReading = () => {
       }).join('\n\n');
       
       copyToClipboard(readingText);
+      toast.success("فال کپی شد!");
     }
   };
 
@@ -102,6 +118,7 @@ export const useTarotReading = () => {
     isRevealed,
     hasDrawn,
     imagesPreloaded,
+    loadingProgress,
     drawCards,
     revealMeaning,
     copyReading
