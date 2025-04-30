@@ -8,3 +8,40 @@
 .animate-spin-slow {
   animation: spin-slow 2s linear infinite;
 }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes mystical-glow {
+  0% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(176, 200, 230, 0.7); }
+  100% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
+}
+
+.mystical-glow {
+  animation: mystical-glow 3s infinite;
+}

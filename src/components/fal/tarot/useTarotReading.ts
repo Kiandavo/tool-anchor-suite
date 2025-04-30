@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/randomUtils";
 import { tarotCards, TarotCardType } from './types';
@@ -9,6 +9,42 @@ export const useTarotReading = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
+  const [imagesPreloaded, setImagesPreloaded] = useState(false);
+
+  // Preload all card images to avoid loading issues
+  useEffect(() => {
+    const preloadImages = async () => {
+      try {
+        console.log('Preloading tarot card images...');
+        
+        const imagePromises = tarotCards.map((card) => {
+          return new Promise<void>((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+              console.log(`Successfully loaded: ${card.name}`);
+              resolve();
+            };
+            img.onerror = () => {
+              console.error(`Failed to load image for: ${card.name} - ${card.image}`);
+              // We'll resolve anyway to not block the loading process
+              resolve();
+            };
+            img.src = card.image;
+          });
+        });
+        
+        await Promise.all(imagePromises);
+        setImagesPreloaded(true);
+        console.log('All tarot card images preloaded');
+      } catch (error) {
+        console.error('Error preloading images:', error);
+        // Mark as preloaded anyway to not block the UI
+        setImagesPreloaded(true);
+      }
+    };
+
+    preloadImages();
+  }, []);
 
   const drawCards = () => {
     setIsAnimating(true);
@@ -22,6 +58,8 @@ export const useTarotReading = () => {
       // Shuffle the cards and select three
       const shuffled = [...tarotCards].sort(() => 0.5 - Math.random());
       const selectedThree = shuffled.slice(0, 3);
+      
+      console.log('Selected cards:', selectedThree.map(card => card.name));
       
       setSelectedCards(selectedThree);
       setIsAnimating(false);
@@ -56,6 +94,7 @@ export const useTarotReading = () => {
     isAnimating,
     isRevealed,
     hasDrawn,
+    imagesPreloaded,
     drawCards,
     revealMeaning,
     copyReading

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { TarotCardType } from './types';
 
 interface TarotCardProps {
@@ -10,8 +10,18 @@ interface TarotCardProps {
 }
 
 export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed, animationDelay = 0 }) => {
+  const [imageError, setImageError] = useState(false);
+  
   // Card back image - a mystical pattern that looks good for tarot cards
   const cardBackImage = "https://images.unsplash.com/photo-1572175613341-3d88a618dc22?auto=format&fit=crop&w=300&h=500";
+  
+  // Fallback image in case the main image fails to load
+  const fallbackImage = "https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&w=300&h=500";
+
+  const handleImageError = () => {
+    console.log(`Failed to load image for card: ${card.name}`);
+    setImageError(true);
+  };
 
   return (
     <div 
@@ -27,14 +37,24 @@ export const TarotCard: React.FC<TarotCardProps> = ({ card, position, isRevealed
           <div className="tarot-card-front absolute w-full h-full glass-card rounded-lg border-2 border-[#b0c8e6] hover:shadow-glow">
             {!isRevealed ? (
               <>
-                <img src={cardBackImage} alt="Tarot Card Back" className="tarot-card-image" />
+                <img 
+                  src={cardBackImage} 
+                  alt="Tarot Card Back" 
+                  className="tarot-card-image w-full h-full object-cover"
+                  onError={handleImageError}
+                />
                 <div className="tarot-card-overlay">
                   <span className="text-white text-[10px] font-bold text-center">?</span>
                 </div>
               </>
             ) : (
               <>
-                <img src={card.image} alt={card.name} className="tarot-card-image" />
+                <img 
+                  src={imageError ? fallbackImage : card.image} 
+                  alt={card.name} 
+                  className="tarot-card-image w-full h-full object-cover" 
+                  onError={handleImageError}
+                />
                 <div className="tarot-card-overlay">
                   <span className="text-white text-[10px] font-bold text-center">{card.name}</span>
                 </div>

@@ -1,10 +1,24 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const TarotAnimation: React.FC = () => {
+  const [stylesLoaded, setStylesLoaded] = useState(false);
+
   useEffect(() => {
+    // Create the style element for animations
     const style = document.createElement('style');
     style.innerHTML = `
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       .perspective-card {
         perspective: 1000px;
       }
@@ -78,16 +92,6 @@ export const TarotAnimation: React.FC = () => {
       .animate-float {
         animation: float 3s ease-in-out infinite;
       }
-      @keyframes fade-in {
-        0% {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
       .tarot-card-enter {
         animation: fade-in 0.8s ease-out forwards;
       }
@@ -100,7 +104,15 @@ export const TarotAnimation: React.FC = () => {
         animation: mystical-glow 3s infinite;
       }
     `;
+
+    // Append the style to document head
     document.head.appendChild(style);
+    
+    // Mark styles as loaded
+    setStylesLoaded(true);
+    console.log('Tarot animation styles loaded');
+    
+    // Cleanup function
     return () => {
       document.head.removeChild(style);
     };
