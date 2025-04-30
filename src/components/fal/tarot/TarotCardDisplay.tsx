@@ -3,7 +3,7 @@ import React from 'react';
 import { TarotCard } from './TarotCard';
 import { TarotCardType } from './types';
 import { TarotGuide } from './TarotGuide';
-import { Sparkles, InfoCircle } from "lucide-react";
+import { Sparkles, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -26,7 +26,7 @@ const TarotInstructions: React.FC = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm" className="text-[#143a5c] hover:bg-[#143a5c]/10 mb-4">
-          <InfoCircle size={16} className="mr-1" />
+          <Info size={16} className="mr-1" />
           راهنمای تاروت
         </Button>
       </DialogTrigger>
