@@ -9,61 +9,61 @@ export const tarotCards: TarotCardType[] = [
   {
     name: "برج",
     description: "آغاز راه جدید، تغییرات ناگهانی، فروپاشی باورهای قدیمی. این کارت نشان‌دهنده تحولات بزرگ و گاه دردناک است که در نهایت به رشد می‌انجامد.",
-    image: "/public/lovable-uploads/da31002e-a0a8-4bb1-a8c9-397da973787d.png"
+    image: "/lovable-uploads/da31002e-a0a8-4bb1-a8c9-397da973787d.png"
   },
   {
     name: "ماه",
     description: "ناخودآگاه، رویاها، توهمات و ترس‌های پنهان. این کارت هشدار می‌دهد که همه چیز آن‌طور که به نظر می‌رسد نیست؛ به شهود درونی خود اعتماد کنید.",
-    image: "/public/lovable-uploads/3e7c2574-5b72-4e5e-b907-58ace76fbd41.png"
+    image: "/lovable-uploads/3e7c2574-5b72-4e5e-b907-58ace76fbd41.png"
   },
   {
     name: "خورشید",
     description: "موفقیت، شادمانی، انرژی مثبت و خوش‌بینی. این کارت یکی از مثبت‌ترین کارت‌ها در تاروت است و نوید روزهای روشن می‌دهد.",
-    image: "/public/lovable-uploads/ef6e3f6d-d1a2-48a1-8356-aef7cb22dd46.png"
+    image: "/lovable-uploads/ef6e3f6d-d1a2-48a1-8356-aef7cb22dd46.png"
   },
   {
     name: "فرشته قضاوت",
     description: "بازنگری، ارزیابی، بیداری معنوی و دگرگونی. این کارت شما را به بررسی گذشته و پذیرش مسئولیت اعمال خود فرا می‌خواند.",
-    image: "/public/lovable-uploads/f7220eb6-f573-4a93-8719-d4a422546842.png"
+    image: "/lovable-uploads/f7220eb6-f573-4a93-8719-d4a422546842.png"
   },
   {
     name: "جهان",
     description: "تکمیل، موفقیت، دستاورد و تحقق. این کارت نشانگر پایان یک دوره و آغاز دوره‌ای جدید با آمادگی کامل است.",
-    image: "/public/lovable-uploads/f620f1e8-c21a-4536-903a-7412e99615c0.png"
+    image: "/lovable-uploads/f620f1e8-c21a-4536-903a-7412e99615c0.png"
   },
   {
     name: "جادوگر",
     description: "خلاقیت، استعداد، مهارت و توانایی برقراری ارتباط بین دنیای مادی و معنوی. این کارت نشان می‌دهد که ابزار لازم برای موفقیت را در اختیار دارید.",
-    image: "/public/lovable-uploads/bfdc06a1-c6e6-4221-91ff-f6656ab5fbe8.png"
+    image: "/lovable-uploads/bfdc06a1-c6e6-4221-91ff-f6656ab5fbe8.png"
   },
   {
     name: "ملکه کاهنه",
     description: "بصیرت، شهود، دانش درونی و خرد پنهان. این کارت شما را به گوش دادن به ندای درون و اعتماد به شهودتان دعوت می‌کند.",
-    image: "/public/lovable-uploads/36f8bf74-7215-4569-ac84-e41ce69c4c79.png"
+    image: "/lovable-uploads/36f8bf74-7215-4569-ac84-e41ce69c4c79.png"
   },
   {
     name: "امپراتور",
     description: "اقتدار، انضباط، رهبری و ساختار. این کارت نمادی از قدرت پدرانه، نظم و سازماندهی است.",
-    image: "/public/lovable-uploads/d3d3179a-b02d-407f-b508-6936110a6581.png"
+    image: "/lovable-uploads/d3d3179a-b02d-407f-b508-6936110a6581.png"
   },
   {
     name: "عاشقان",
     description: "عشق، هماهنگی، انتخاب‌های مهم و ارتباطات. این کارت نشانگر تصمیم‌گیری‌های قلبی و انتخاب بین دو مسیر است.",
-    image: "/public/lovable-uploads/f8dd74c1-b2c2-4f7d-b193-9bbe04a6d822.png"
+    image: "/lovable-uploads/f8dd74c1-b2c2-4f7d-b193-9bbe04a6d822.png"
   },
   {
     name: "ارابه",
     description: "پیروزی، عزم راسخ، اراده قوی و غلبه بر موانع. این کارت نوید موفقیت از طریق تلاش و پشتکار می‌دهد.",
-    image: "/public/lovable-uploads/f3ca7160-53d8-4789-8e1b-232684b17684.png"
+    image: "/lovable-uploads/f3ca7160-53d8-4789-8e1b-232684b17684.png"
   },
   {
     name: "عدالت",
     description: "تعادل، عدالت، صداقت و حقیقت. این کارت نشان می‌دهد که هر عملی پیامدی دارد و هر کس به اندازه اعمالش پاداش یا مجازات می‌شود.",
-    image: "/public/lovable-uploads/c67aa900-fc24-4b68-a53f-72230aad1bfd.png"
+    image: "/lovable-uploads/c67aa900-fc24-4b68-a53f-72230aad1bfd.png"
   },
   {
     name: "مرگ",
     description: "پایان، تغییر، دگرگونی و تولد دوباره. این کارت نه به معنای مرگ فیزیکی، بلکه نشانگر پایان یک دوره و آغاز فصلی جدید است.",
-    image: "/public/lovable-uploads/9250fe6a-8293-4b3b-842e-00e585dc9f79.png"
+    image: "/lovable-uploads/9250fe6a-8293-4b3b-842e-00e585dc9f79.png"
   }
 ];

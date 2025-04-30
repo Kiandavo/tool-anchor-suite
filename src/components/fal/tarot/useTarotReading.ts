@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/randomUtils";
@@ -21,10 +20,10 @@ export const useTarotReading = () => {
         
         // Also preload the fallback and back card images
         const fallbackImage = new Image();
-        fallbackImage.src = "/public/lovable-uploads/f620f1e8-c21a-4536-903a-7412e99615c0.png";
+        fallbackImage.src = "/lovable-uploads/f620f1e8-c21a-4536-903a-7412e99615c0.png";
         
         const backImage = new Image();
-        backImage.src = "/public/lovable-uploads/da31002e-a0a8-4bb1-a8c9-397da973787d.png";
+        backImage.src = "/lovable-uploads/da31002e-a0a8-4bb1-a8c9-397da973787d.png";
         
         setLoadingProgress(30);
         
