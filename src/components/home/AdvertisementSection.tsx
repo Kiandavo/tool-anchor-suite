@@ -57,13 +57,13 @@ export const AdvertisementSection = () => {
           {shops.map((shop) => (
             <div 
               key={shop.name} 
-              className="bg-white rounded-xl p-5 flex flex-col md:flex-row items-center shadow-md hover:shadow-lg transition-shadow duration-300"
+              className="bg-white rounded-xl p-5 flex items-center shadow-md hover:shadow-lg transition-shadow duration-300"
             >
               <a 
                 href={shop.instagramUrl} 
                 target="_blank" 
                 rel="noopener" 
-                className="flex-shrink-0 mb-4 md:mb-0 md:ml-5"
+                className="flex-shrink-0 ml-5"
               >
                 <img 
                   src={imgErrors[shop.name] ? shop.fallbackImage : shop.imageUrl}
@@ -77,7 +77,7 @@ export const AdvertisementSection = () => {
               </a>
               
               <div className="flex-grow">
-                <ul className="space-y-3 list-none p-0 m-0">
+                <ul className="flex items-center space-x-6 space-x-reverse list-none p-0 m-0">
                   <li>
                     <a 
                       href="https://maps.app.goo.gl/uPn3GnJmhhqbVN9U6" 
@@ -86,7 +86,7 @@ export const AdvertisementSection = () => {
                       className="flex items-center text-gray-800 hover:text-primary transition-colors"
                     >
                       <MapPin className="w-5 h-5 ml-2 text-gray-600 flex-shrink-0" />
-                      <span>تهران، تجریش کوچه خواجه‌نوری پ 34</span>
+                      <span className="text-sm md:text-base">تهران، تجریش کوچه خواجه‌نوری پ 34</span>
                     </a>
                   </li>
                   <li>
@@ -95,7 +95,7 @@ export const AdvertisementSection = () => {
                       className="flex items-center text-gray-800 hover:text-primary transition-colors"
                     >
                       <Phone className="w-5 h-5 ml-2 text-gray-600 flex-shrink-0" />
-                      <span>09102325291</span>
+                      <span className="text-sm md:text-base">09102325291</span>
                     </a>
                   </li>
                   <li>
@@ -106,7 +106,7 @@ export const AdvertisementSection = () => {
                       className="flex items-center text-gray-800 hover:text-primary transition-colors"
                     >
                       <Instagram className="w-5 h-5 ml-2 text-gray-600 flex-shrink-0" />
-                      <span>{shop.instagramHandle}</span>
+                      <span className="text-sm md:text-base">{shop.instagramHandle}</span>
                     </a>
                   </li>
                 </ul>
