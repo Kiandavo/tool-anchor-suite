@@ -68,7 +68,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <Link to="/">
                 <img 
-                  src="/lovable-uploads/6278f3e1-0aa9-4b4e-81aa-fffb85168983.png"
+                  src="/public/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
                   alt="Langar Logo" 
                   className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
