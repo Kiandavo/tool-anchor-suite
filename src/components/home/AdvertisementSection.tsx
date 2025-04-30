@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { MapPin, Phone, Instagram } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
@@ -8,30 +8,43 @@ interface ShopProps {
   imageUrl: string;
   instagramHandle: string;
   instagramUrl: string;
+  fallbackImage?: string;
 }
 
 const shops: ShopProps[] = [
   {
     name: 'shemrun_outlet',
-    imageUrl: 'https://shemrun.com/wp-content/uploads/2025/01/shemrun-outlet-150x150.jpg',
+    imageUrl: '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png',
     instagramHandle: 'shemrun_outlet',
     instagramUrl: 'https://www.instagram.com/shemrun_outlet/',
+    fallbackImage: '/placeholder.svg',
   },
   {
     name: 'shemrun_kicks',
-    imageUrl: 'https://shemrun.com/wp-content/uploads/2025/01/shemrun-kick-150x150.jpg',
+    imageUrl: '/lovable-uploads/a29ccf04-1313-4fd1-8c7f-3303f18ee22f.png',
     instagramHandle: 'shemrun_kicks',
     instagramUrl: 'https://www.instagram.com/shemrun_kicks/',
+    fallbackImage: '/placeholder.svg',
   },
   {
     name: 'shem_run',
-    imageUrl: 'https://shemrun.com/wp-content/uploads/2025/01/shem-run-150x150.jpg',
+    imageUrl: '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png',
     instagramHandle: 'shem_run',
     instagramUrl: 'https://www.instagram.com/shem_run/',
+    fallbackImage: '/placeholder.svg',
   },
 ];
 
 export const AdvertisementSection = () => {
+  const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
+  
+  const handleImgError = (shopName: string) => {
+    setImgErrors(prev => ({
+      ...prev,
+      [shopName]: true
+    }));
+  };
+
   return (
     <section className="py-8 md:py-12 mb-8 relative overflow-hidden animate-fade-in">
       <div className="container mx-auto px-4">
@@ -48,12 +61,13 @@ export const AdvertisementSection = () => {
                 <div className="flex-shrink-0 mx-auto md:mx-0">
                   <a href={shop.instagramUrl} target="_blank" rel="nofollow noopener" className="block">
                     <img 
-                      src={shop.imageUrl} 
+                      src={imgErrors[shop.name] ? shop.fallbackImage : shop.imageUrl}
                       alt={shop.name} 
                       className="w-24 h-24 rounded-lg object-cover border border-white/30"
                       width="150"
                       height="150"
                       loading="lazy"
+                      onError={() => handleImgError(shop.name)}
                     />
                   </a>
                 </div>
