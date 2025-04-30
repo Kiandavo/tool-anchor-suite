@@ -2,17 +2,6 @@ import { Tool } from '@/types/tool-types';
 
 export const textTools: Tool[] = [
   {
-    id: "deepseek-ai",
-    slug: "deepseek-ai",
-    name: "هوش مصنوعی Deepseek",
-    description: "دستیار هوش مصنوعی چندمنظوره برای پاسخگویی به سوالات، نوشتن متن و کمک در کارها",
-    category: "text",
-    icon: "sparkles",
-    isNew: true,
-    isPremium: false,
-    isComingSoon: false,
-  },
-  {
     id: "text-counter",
     slug: "text-counter",
     name: "شمارنده متن",

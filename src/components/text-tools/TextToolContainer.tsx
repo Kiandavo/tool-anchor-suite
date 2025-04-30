@@ -9,7 +9,6 @@ import { TextAnalysis } from './TextAnalysis';
 import { FinglishConverter } from './FinglishConverter';
 import { EnhancedFinglishConverter } from './EnhancedFinglishConverter';
 import { SpecialCharRemover } from './SpecialCharRemover';
-import DeepseekAI from './DeepseekAI';
 
 export default function TextToolContainer({ slug }: { slug: string }) {
   const [text, setText] = useState("");
@@ -70,10 +69,6 @@ export default function TextToolContainer({ slug }: { slug: string }) {
           // New tools
           case "special-char-remover":
             return <SpecialCharRemover text={text} setText={setText} outcomeMsg={outcomeMsg} setOutcomeMsg={setOutcomeMsg} />;
-            
-          // AI tools
-          case "deepseek-ai":
-            return <DeepseekAI />;
 
           default:
             return (

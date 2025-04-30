@@ -29,7 +29,6 @@ export const toolTypeBySlug: Record<string, string> = {
   "finglish-converter": "text",
   "enhanced-finglish-converter": "text",
   "special-char-remover": "text",
-  "deepseek-ai": "text",
   
   // Image tools
   "image-converter": "image",
