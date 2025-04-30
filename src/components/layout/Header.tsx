@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
-import newLogo from '/public/lovable-uploads/6278f3e1-0aa9-4b4e-81aa-fffb85168983.png';
+// Correct the import path - files in the public directory should be referenced directly from the root
+import newLogo from '/lovable-uploads/6278f3e1-0aa9-4b4e-81aa-fffb85168983.png';
 
 interface HeaderProps {
   title?: string;
