@@ -13,6 +13,7 @@ export const useTarotReading = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
+  const [drawCounter, setDrawCounter] = useState(0); // Counter to force re-renders
   
   useEffect(() => {
     // Check if we have previously drawn cards
@@ -50,6 +51,7 @@ export const useTarotReading = () => {
   const drawCards = () => {
     setIsAnimating(true);
     setIsRevealed(false);
+    setDrawCounter(prev => prev + 1); // Increment counter to force re-renders
     
     // Clear existing cards first with a fade-out effect
     setSelectedCards([]);
@@ -160,13 +162,20 @@ export const useTarotReading = () => {
   
   // Fisher-Yates shuffle algorithm for better randomization
   const fisherYatesShuffle = (array: TarotCardType[]) => {
+    // Use current timestamp as randomization seed
+    const seed = new Date().getTime();
+    const rng = () => {
+      const x = Math.sin(seed + array.length) * 10000;
+      return x - Math.floor(x);
+    };
+    
     let currentIndex = array.length;
     let randomIndex;
 
     // While there remain elements to shuffle
     while (currentIndex > 0) {
-      // Pick a remaining element
-      randomIndex = Math.floor(Math.random() * currentIndex);
+      // Pick a remaining element using our custom RNG
+      randomIndex = Math.floor(rng() * currentIndex);
       currentIndex--;
 
       // And swap it with the current element
@@ -184,6 +193,7 @@ export const useTarotReading = () => {
     hasDrawn,
     drawCards,
     revealMeaning,
-    copyReading
+    copyReading,
+    drawCounter
   };
 };

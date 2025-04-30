@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { zodiacSigns } from './useHoroscope';
 
@@ -11,17 +11,9 @@ interface ZodiacSelectorProps {
 export const ZodiacSelector: React.FC<ZodiacSelectorProps> = ({ selectedSign, onSelectSign }) => {
   console.log("ZodiacSelector rendering with selectedSign:", selectedSign);
   
-  // Set a default zodiac sign if none is selected
-  useEffect(() => {
-    if (!selectedSign) {
-      console.log("No sign selected, setting default to 'aries'");
-      onSelectSign('aries');
-    }
-  }, [selectedSign, onSelectSign]);
-  
   return (
-    <div>
-      <label className="block text-[#5c3f14] text-xs mb-1 font-medium">ماه تولد خود را انتخاب کنید:</label>
+    <div className="mb-3">
+      <label className="block text-[#5c3f14] text-xs mb-1.5 font-medium">ماه تولد خود را انتخاب کنید:</label>
       <Select 
         value={selectedSign} 
         onValueChange={(value) => {
@@ -29,19 +21,23 @@ export const ZodiacSelector: React.FC<ZodiacSelectorProps> = ({ selectedSign, on
           onSelectSign(value);
         }}
       >
-        <SelectTrigger className="text-xs bg-white/50 border-[#e6c8b0]/50 shadow-sm">
+        <SelectTrigger className="text-xs bg-white/50 border-[#e6c8b0]/50 shadow-sm hover:bg-white/70 transition-all">
           <SelectValue placeholder="انتخاب ماه تولد" />
           {selectedSign && (
-            <span className="mr-1 text-[#5c3f14] text-sm">
+            <span className="mr-2 text-[#5c3f14] text-lg">
               {zodiacSigns.find(sign => sign.value === selectedSign)?.symbol}
             </span>
           )}
         </SelectTrigger>
         <SelectContent className="max-h-[300px] bg-white border-[#e6c8b0]/50">
           {zodiacSigns.map((sign) => (
-            <SelectItem key={sign.value} value={sign.value} className="text-xs flex items-center">
-              <span className="ml-1.5">{sign.symbol}</span>
-              {sign.label}
+            <SelectItem 
+              key={sign.value} 
+              value={sign.value} 
+              className="text-xs flex items-center hover:bg-[#fdf0e9]/50 transition-all"
+            >
+              <span className="ml-2 text-lg">{sign.symbol}</span>
+              <span className="whitespace-nowrap text-xs">{sign.label}</span>
             </SelectItem>
           ))}
         </SelectContent>

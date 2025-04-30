@@ -144,7 +144,7 @@
   animation: cosmic-spin 30s linear infinite;
 }
 
-/* New animation for card flip */
+/* Card flip animation */
 @keyframes flip {
   0% { transform: rotateY(0deg); }
   100% { transform: rotateY(180deg); }
@@ -154,7 +154,7 @@
   animation: flip 0.8s ease-out forwards;
 }
 
-/* New animation for card hover effect */
+/* Card hover effect */
 @keyframes hover-glow {
   0% { box-shadow: 0 0 5px rgba(176, 200, 230, 0.3); }
   50% { box-shadow: 0 0 15px rgba(176, 200, 230, 0.6); }
@@ -163,4 +163,54 @@
 
 .hover-glow {
   animation: hover-glow 2s infinite;
+}
+
+/* Prediction appear animation */
+@keyframes prediction-appear {
+  0% { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.prediction-appear {
+  animation: prediction-appear 0.8s ease-out forwards;
+}
+
+/* Zodiac symbol pulse animation */
+@keyframes zodiac-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.zodiac-pulse {
+  animation: zodiac-pulse 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Tarot card shuffle animation */
+@keyframes shuffle {
+  0% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(-30px) rotate(-5deg); }
+  75% { transform: translateX(30px) rotate(5deg); }
+  100% { transform: translateX(0) rotate(0); }
+}
+
+.shuffle {
+  animation: shuffle 0.8s ease-in-out;
+}
+
+/* Background pattern subtle movement */
+@keyframes pattern-drift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+.pattern-drift {
+  animation: pattern-drift 60s linear infinite;
+  background-size: 200% 200%;
 }

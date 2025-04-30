@@ -21,13 +21,14 @@ export const Horoscope = () => {
     isAnimating,
     selectedZodiacSymbol,
     getHoroscope,
-    copyHoroscope
+    copyHoroscope,
+    lastRefreshTime
   } = useHoroscope();
 
   return (
     <Card className="bg-[#fdf0e9] border-[#e6c8b0] shadow-md overflow-hidden relative">
       {/* Decorative pattern */}
-      <div className="absolute inset-0 opacity-[0.03]">
+      <div className="absolute inset-0 opacity-[0.03] pattern-drift">
         <div className="w-full h-full" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235c3f14' fill-opacity='0.4'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
         }} />
@@ -77,6 +78,7 @@ export const Horoscope = () => {
               isAnimating={isAnimating} 
               selectedZodiacSymbol={selectedZodiacSymbol}
               selectedSign={selectedSign}
+              key={`prediction-${lastRefreshTime}`} // Force re-render on refresh
             />
           )}
         </div>
@@ -102,7 +104,7 @@ export const Horoscope = () => {
             variant="outline"
             size="sm"
             onClick={copyHoroscope} 
-            className="border-[#e6c8b0] text-[#5c3f14] text-[10px] h-7 px-3"
+            className="border-[#e6c8b0] text-[#5c3f14] text-[10px] h-7 px-3 hover:bg-[#fdf0e9]/50"
           >
             <Copy size={12} className="mr-1" />
             کپی طالع
