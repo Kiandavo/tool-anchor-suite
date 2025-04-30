@@ -2,8 +2,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
-// Correct the import path - files in the public directory should be referenced directly from the root
-import newLogo from '/lovable-uploads/6278f3e1-0aa9-4b4e-81aa-fffb85168983.png';
+// Instead of importing the image directly, we'll use it as a direct src in the img tag
 
 interface HeaderProps {
   title?: string;
@@ -69,7 +68,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <Link to="/">
                 <img 
-                  src={newLogo}
+                  src="/lovable-uploads/6278f3e1-0aa9-4b4e-81aa-fffb85168983.png"
                   alt="Langar Logo" 
                   className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
