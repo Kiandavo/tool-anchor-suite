@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
-import { copyToClipboard } from "@/utils/randomUtils";
+import { copyToClipboard } from "@/utils/copyUtils";
 import { tarotCards, TarotCardType } from './types';
 
 // Key for session storage to track previously drawn cards
@@ -116,7 +115,7 @@ export const useTarotReading = () => {
     if (selectedCards.length > 0) {
       const readingText = selectedCards.map((card, index) => {
         const position = index === 0 ? "گذشته" : index === 1 ? "حال" : "آینده";
-        return `کارت ${position}: ${card.name}\n${isRevealed ? card.description : "معنی هنوز آشکار نشده است."}`;
+        return `کارت ${position}: ${card.name}\n${isRevealed ? (card.meaning || card.description) : "معنی هنوز آشکار نشده است."}`;
       }).join('\n\n');
       
       copyToClipboard(readingText);

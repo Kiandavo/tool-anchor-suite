@@ -53,23 +53,25 @@ export const TarotCard: React.FC<TarotCardProps> = ({ card, isRevealed, isAnimat
       </motion.div>
       
       {/* Add CSS for 3D transforms */}
-      <style jsx>{`
-        .perspective-500 {
-          perspective: 1000px;
-        }
-        
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-        
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-        
-        .rotate-y-180 {
-          transform: rotateY(180deg);
-        }
-      `}</style>
+      <style>
+        {`
+          .perspective-500 {
+            perspective: 1000px;
+          }
+          
+          .preserve-3d {
+            transform-style: preserve-3d;
+          }
+          
+          .backface-hidden {
+            backface-visibility: hidden;
+          }
+          
+          .rotate-y-180 {
+            transform: rotateY(180deg);
+          }
+        `}
+      </style>
     </div>
   );
 };

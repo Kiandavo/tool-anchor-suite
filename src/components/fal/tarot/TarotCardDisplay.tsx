@@ -62,9 +62,9 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
             </h3>
             
             <div className="space-y-3 text-xs text-[#143a5c]/90 leading-6">
-              <p><span className="font-bold">گذشته ({selectedCards[0]?.name}):</span> {selectedCards[0]?.meaning}</p>
-              <p><span className="font-bold">حال ({selectedCards[1]?.name}):</span> {selectedCards[1]?.meaning}</p>
-              <p><span className="font-bold">آینده ({selectedCards[2]?.name}):</span> {selectedCards[2]?.meaning}</p>
+              <p><span className="font-bold">گذشته ({selectedCards[0]?.name}):</span> {selectedCards[0]?.meaning || selectedCards[0]?.description}</p>
+              <p><span className="font-bold">حال ({selectedCards[1]?.name}):</span> {selectedCards[1]?.meaning || selectedCards[1]?.description}</p>
+              <p><span className="font-bold">آینده ({selectedCards[2]?.name}):</span> {selectedCards[2]?.meaning || selectedCards[2]?.description}</p>
               
               <p className="mt-4 text-[#143a5c]/80 bg-[#e9f0f7]/50 p-2 rounded border border-[#b0c8e6]/20">
                 این سه کارت در کنار هم نشان‌دهنده مسیری هستند که از گذشته آغاز شده،
@@ -76,28 +76,30 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
       )}
       
       {/* Styling for the grid layout */}
-      <style jsx>{`
-        .tarot-card-grid {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 2rem;
-        }
-        
-        @media (min-width: 640px) {
+      <style>
+        {`
           .tarot-card-grid {
-            flex-direction: row;
-            justify-content: center;
-            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
           }
-        }
-        
-        .tarot-card-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-      `}</style>
+          
+          @media (min-width: 640px) {
+            .tarot-card-grid {
+              flex-direction: row;
+              justify-content: center;
+              gap: 1rem;
+            }
+          }
+          
+          .tarot-card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        `}
+      </style>
     </div>
   );
 };
