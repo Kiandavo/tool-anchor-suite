@@ -1,9 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/copyUtils";
-import { tarotCards, TarotCardType } from './types';
+import { tarotCards, TarotCardType, TarotReadingConfig, tarotReadingTypes } from './types';
 
-// Key for session storage to track previously drawn cards
+// Keys for session storage
 const TAROT_STATE_KEY = 'tarot_state';
 const DRAWN_CARDS_KEY = 'tarot_drawn_cards';
 
@@ -13,20 +14,40 @@ export const useTarotReading = () => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
   const [drawCounter, setDrawCounter] = useState(0); // Counter to force re-renders
+  const [readingType, setReadingType] = useState<TarotReadingConfig>(tarotReadingTypes[0]);
+  const [allowReversedCards, setAllowReversedCards] = useState(false);
+  const [reversedCards, setReversedCards] = useState<boolean[]>([]);
+  const [userQuestion, setUserQuestion] = useState("");
   
   useEffect(() => {
     // Check if we have previously drawn cards
     const storedState = sessionStorage.getItem(TAROT_STATE_KEY);
     if (storedState) {
       try {
-        const { cards, revealed } = JSON.parse(storedState);
+        const { cards, revealed, type, reversed, question } = JSON.parse(storedState);
         // If we have stored cards, use them
         if (cards && cards.length) {
           console.log("Loaded saved tarot cards:", cards);
           setSelectedCards(cards);
           setHasDrawn(true);
+          
           if (revealed) {
             setIsRevealed(true);
+          }
+          
+          if (type) {
+            const foundType = tarotReadingTypes.find(t => t.id === type);
+            if (foundType) {
+              setReadingType(foundType);
+            }
+          }
+          
+          if (reversed && Array.isArray(reversed)) {
+            setReversedCards(reversed);
+          }
+          
+          if (question) {
+            setUserQuestion(question);
           }
         }
       } catch (e) {
@@ -41,13 +62,39 @@ export const useTarotReading = () => {
     if (selectedCards.length > 0) {
       const stateToSave = {
         cards: selectedCards,
-        revealed: isRevealed
+        revealed: isRevealed,
+        type: readingType.id,
+        reversed: reversedCards,
+        question: userQuestion
       };
       sessionStorage.setItem(TAROT_STATE_KEY, JSON.stringify(stateToSave));
     }
-  }, [selectedCards, isRevealed]);
+  }, [selectedCards, isRevealed, readingType, reversedCards, userQuestion]);
+
+  const handleReadingTypeChange = (typeId: string) => {
+    const newType = tarotReadingTypes.find(type => type.id === typeId) || tarotReadingTypes[0];
+    setReadingType(newType);
+    
+    // Reset cards if reading type changes
+    setSelectedCards([]);
+    setIsRevealed(false);
+    setHasDrawn(false);
+  };
+
+  const toggleReversedCards = () => {
+    setAllowReversedCards(prev => !prev);
+  };
+
+  const handleQuestionChange = (question: string) => {
+    setUserQuestion(question);
+  };
 
   const drawCards = () => {
+    if (readingType.id === 'yes-no' && !userQuestion) {
+      toast.error("لطفاً سوال خود را وارد کنید");
+      return;
+    }
+    
     setIsAnimating(true);
     setIsRevealed(false);
     setDrawCounter(prev => prev + 1); // Increment counter to force re-renders
@@ -75,9 +122,17 @@ export const useTarotReading = () => {
       
       // Improved shuffling algorithm using Fisher-Yates
       const shuffled = fisherYatesShuffle([...cardsToShuffle]);
-      const selectedThree = shuffled.slice(0, 3);
+      const cardCount = readingType.cardCount;
+      const selectedThree = shuffled.slice(0, cardCount);
       
       console.log('Selected cards:', selectedThree.map(card => card.name));
+      
+      // Generate reversed status for each card if allowed
+      const newReversedCards = selectedThree.map(() => 
+        allowReversedCards ? Math.random() > 0.5 : false
+      );
+      
+      setReversedCards(newReversedCards);
       
       // Store the new cards in session storage
       storeDrawnCards(selectedThree);
@@ -113,9 +168,20 @@ export const useTarotReading = () => {
 
   const copyReading = () => {
     if (selectedCards.length > 0) {
-      const readingText = selectedCards.map((card, index) => {
-        const position = index === 0 ? "گذشته" : index === 1 ? "حال" : "آینده";
-        return `کارت ${position}: ${card.name}\n${isRevealed ? (card.meaning || card.description) : "معنی هنوز آشکار نشده است."}`;
+      let readingText = `فال تاروت - ${readingType.name}\n\n`;
+      
+      if (userQuestion && readingType.id === 'yes-no') {
+        readingText += `سوال: ${userQuestion}\n\n`;
+      }
+      
+      readingText += selectedCards.map((card, index) => {
+        const position = readingType.positions[index];
+        const isReversed = reversedCards[index];
+        const meaning = isRevealed ? 
+          (isReversed && card.reversedMeaning ? card.reversedMeaning : card.meaning || card.description) : 
+          "معنی هنوز آشکار نشده است.";
+        
+        return `کارت ${position}: ${card.name}${isReversed ? ' (معکوس)' : ''}\n${meaning}`;
       }).join('\n\n');
       
       copyToClipboard(readingText);
@@ -190,9 +256,16 @@ export const useTarotReading = () => {
     isAnimating,
     isRevealed,
     hasDrawn,
+    drawCounter,
+    readingType,
+    allowReversedCards,
+    reversedCards,
+    userQuestion,
     drawCards,
     revealMeaning,
     copyReading,
-    drawCounter
+    handleReadingTypeChange,
+    toggleReversedCards,
+    handleQuestionChange
   };
 };
