@@ -3,6 +3,7 @@ import React from 'react';
 import { HafezFortune } from '../HafezFortune';
 import { Horoscope } from './Horoscope';
 import { TarotReading } from './TarotReading';
+import { RumiIstikhara } from './RumiIstikhara';
 import { Star } from 'lucide-react';
 
 export const FalSection = () => {
@@ -18,10 +19,11 @@ export const FalSection = () => {
         <div className="h-0.5 bg-gradient-to-r from-[#b0c8e6] via-[#b0c8e6] to-transparent w-1/4"></div>
       </div>
       
-      {/* Hafez and Horoscope Row */}
-      <div className="grid md:grid-cols-2 gap-4 relative">
+      {/* Hafez, Horoscope, and Rumi Row */}
+      <div className="grid md:grid-cols-3 gap-4 relative">
         <HafezFortune />
         <Horoscope />
+        <RumiIstikhara />
       </div>
       
       {/* Tarot Reading Row */}
