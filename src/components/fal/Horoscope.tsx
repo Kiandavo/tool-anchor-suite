@@ -25,6 +25,8 @@ export const Horoscope = () => {
     lastRefreshTime
   } = useHoroscope();
 
+  console.log("Horoscope rendering with selectedSign:", selectedSign, "and predictionType:", predictionType);
+
   return (
     <Card className="bg-[#fdf0e9] border-[#e6c8b0] shadow-md overflow-hidden relative">
       {/* Decorative pattern */}

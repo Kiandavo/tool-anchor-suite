@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
-import { copyToClipboard } from "@/utils/randomUtils";
+import { copyToClipboard } from "@/utils/copyUtils";
 
 // Zodiac signs with Persian names and symbols
 export const zodiacSigns = [
@@ -234,7 +234,7 @@ export type PredictionType = "today" | "week" | "month";
 const HOROSCOPE_STATE_KEY = 'horoscope_state';
 
 export const useHoroscope = () => {
-  const [selectedSign, setSelectedSign] = useState<string>("aries"); // Set default sign
+  const [selectedSign, setSelectedSign] = useState<string>("");
   const [predictionType, setPredictionType] = useState<PredictionType>("today");
   const [prediction, setPrediction] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
@@ -269,6 +269,23 @@ export const useHoroscope = () => {
   const handleSetSelectedSign = (sign: string) => {
     console.log("Setting selected sign to:", sign);
     setSelectedSign(sign);
+    
+    // Clear prediction when sign changes
+    setPrediction("");
+  };
+  
+  // Handle prediction type selection - fixed to ensure it works properly
+  const handleSetPredictionType = (type: PredictionType) => {
+    console.log("Setting prediction type to:", type);
+    setPredictionType(type);
+    
+    // Clear prediction when type changes
+    setPrediction("");
+    
+    // If we have a sign selected, automatically get a new horoscope
+    if (selectedSign) {
+      setTimeout(() => getHoroscope(), 100);
+    }
   };
 
   const getHoroscope = () => {
@@ -329,7 +346,6 @@ export const useHoroscope = () => {
       const textToCopy = `${signInfo ? `${signInfo.label} ${signInfo.symbol}` : ''}\n\n${prediction}`;
       console.log("Copying horoscope:", textToCopy);
       copyToClipboard(textToCopy);
-      toast.success("طالع بینی کپی شد!");
     }
   };
   
@@ -342,7 +358,7 @@ export const useHoroscope = () => {
     selectedSign,
     setSelectedSign: handleSetSelectedSign,
     predictionType,
-    setPredictionType,
+    setPredictionType: handleSetPredictionType,
     prediction,
     isAnimating,
     selectedZodiacSymbol,

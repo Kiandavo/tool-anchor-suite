@@ -21,7 +21,7 @@ export const ZodiacSelector: React.FC<ZodiacSelectorProps> = ({ selectedSign, on
           onSelectSign(value);
         }}
       >
-        <SelectTrigger className="text-xs bg-white/50 border-[#e6c8b0]/50 shadow-sm hover:bg-white/70 transition-all">
+        <SelectTrigger className="text-xs bg-white/50 border-[#e6c8b0]/50 shadow-sm hover:bg-white/70 transition-all w-full">
           <SelectValue placeholder="انتخاب ماه تولد" />
           {selectedSign && (
             <span className="mr-2 text-[#5c3f14] text-lg">
@@ -29,7 +29,7 @@ export const ZodiacSelector: React.FC<ZodiacSelectorProps> = ({ selectedSign, on
             </span>
           )}
         </SelectTrigger>
-        <SelectContent className="max-h-[300px] bg-white border-[#e6c8b0]/50">
+        <SelectContent className="max-h-[300px] bg-white border-[#e6c8b0]/50 w-full min-w-[var(--radix-select-trigger-width)]">
           {zodiacSigns.map((sign) => (
             <SelectItem 
               key={sign.value} 

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home } from 'lucide-react';
@@ -45,6 +46,8 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
+  const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
+
   return (
     <header className={`glass-nav py-5 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
       <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px] relative">
@@ -62,7 +65,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <Link to="/">
                 <img 
-                  src="/public/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+                  src={logoUrl}
                   alt="Langar Logo" 
                   className="h-20 w-auto object-contain hover:scale-150 transition-transform duration-300"
                   onError={(e) => {

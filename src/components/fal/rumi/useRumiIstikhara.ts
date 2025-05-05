@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { rumiPoems, RumiPoem } from '@/data/rumi-poems';
 import { toast } from "sonner";
-import { copyToClipboard } from "@/utils/randomUtils";
 
 export const useRumiIstikhara = () => {
   const [poem, setPoem] = useState<RumiPoem | null>(null);
@@ -69,8 +68,17 @@ export const useRumiIstikhara = () => {
   
   const copyFortune = () => {
     if (poem) {
-      copyToClipboard(`استخاره با مولانا - ${poem.title}\n\n${poem.text}\n\nتفسیر:\n${poem.interpretation}`);
-      toast.success("استخاره کپی شد!");
+      // Fix: Use proper clipboard API for copying text
+      const textToCopy = `استخاره با مولانا - ${poem.title}\n\n${poem.text}\n\nتفسیر:\n${poem.interpretation}`;
+      
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          toast.success("استخاره کپی شد!");
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+          toast.error("کپی ناموفق بود!");
+        });
     }
   };
 

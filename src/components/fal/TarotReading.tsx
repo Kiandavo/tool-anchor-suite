@@ -6,6 +6,7 @@ import { TarotCardDisplay } from './tarot/TarotCardDisplay';
 import { TarotControls } from './tarot/TarotControls';
 import { TarotAnimation } from './tarot/TarotAnimation';
 import { useTarotReading } from './tarot/useTarotReading';
+import { TarotGuide } from './tarot/TarotGuide';
 
 export const TarotReading = () => {
   const {
@@ -36,6 +37,9 @@ export const TarotReading = () => {
             <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-[#143a5c] opacity-70" /></span>
           </h2>
         </div>
+        
+        {/* Only one guide button - fixed duplicate issue */}
+        <TarotGuide />
       </CardHeader>
       
       <CardContent className="pt-3 px-3 relative">
