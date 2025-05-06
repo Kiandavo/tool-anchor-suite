@@ -81,7 +81,8 @@ export const TarotCard: React.FC<TarotCardProps> = ({
       </motion.div>
       
       {/* Add CSS for 3D transforms */}
-      <style jsx>{`
+      <style>
+        {`
         .perspective-1000 {
           perspective: 1000px;
         }
@@ -106,7 +107,8 @@ export const TarotCard: React.FC<TarotCardProps> = ({
         .rotate-180 {
           transform: rotate(180deg);
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };

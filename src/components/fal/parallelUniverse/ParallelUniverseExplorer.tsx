@@ -27,6 +27,11 @@ export const ParallelUniverseExplorer = () => {
     copyUniverse
   } = useParallelUniverse();
 
+  // Fixed the type issue by creating a handler function that correctly types the value
+  const handleCategoryChange = (value: string) => {
+    setUniverseCategory(value as any);
+  };
+
   return (
     <Card className="bg-[#e5e0f7] border-[#a99af0] shadow-lg overflow-hidden relative">
       {/* Animated cosmic background */}
@@ -88,7 +93,7 @@ export const ParallelUniverseExplorer = () => {
           
           <div className="w-full">
             <label className="block text-xs text-[#2a1c64] mb-1">جهان را انتخاب کنید</label>
-            <Select onValueChange={setUniverseCategory} value={universeCategory}>
+            <Select onValueChange={handleCategoryChange} value={universeCategory}>
               <SelectTrigger className="w-full bg-white/70 border-[#a99af0]">
                 <SelectValue placeholder={universeCategories[0].name} />
               </SelectTrigger>

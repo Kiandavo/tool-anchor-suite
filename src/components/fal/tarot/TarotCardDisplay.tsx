@@ -82,7 +82,7 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
               {selectedCards.map((card, index) => {
                 const position = readingType.positions[index] || `کارت ${index + 1}`;
                 const isReversed = reversedCards[index];
-                const interpretation = isReversed ? card.reversedMeaning || card.meaning : card.meaning || card.description;
+                const interpretation = isReversed ? card.reversedMeaning || card.meaning : card.meaning;
                 
                 return (
                   <p key={index} className="pb-2 border-b border-[#b0c8e6]/20 last:border-0">
@@ -125,7 +125,8 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
       )}
       
       {/* Styling for the grid layout */}
-      <style jsx>{`
+      <style>
+        {`
         .tarot-card-grid {
           display: flex;
           flex-wrap: wrap;
@@ -144,7 +145,8 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
           flex-direction: column;
           align-items: center;
         }
-      `}</style>
+        `}
+      </style>
     </motion.div>
   );
 };
