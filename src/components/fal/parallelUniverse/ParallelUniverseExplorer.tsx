@@ -97,7 +97,7 @@ export const ParallelUniverseExplorer = () => {
               <SelectTrigger className="w-full bg-white/70 border-[#a99af0]">
                 <SelectValue placeholder={universeCategories[0].name} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="w-full min-w-[var(--radix-select-trigger-width)]">
                 {universeCategories.map(category => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}

@@ -284,7 +284,7 @@ export const useHoroscope = () => {
     
     // If we have a sign selected, automatically get a new horoscope
     if (selectedSign) {
-      setTimeout(() => getHoroscope(), 100);
+      getHoroscope();
     }
   };
 
@@ -346,6 +346,7 @@ export const useHoroscope = () => {
       const textToCopy = `${signInfo ? `${signInfo.label} ${signInfo.symbol}` : ''}\n\n${prediction}`;
       console.log("Copying horoscope:", textToCopy);
       copyToClipboard(textToCopy);
+      toast.success("طالع کپی شد!");
     }
   };
   

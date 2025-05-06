@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -14,17 +15,6 @@ export const HafezFortune = () => {
 
   // Session storage key for tracking shown poems
   const SHOWN_POEMS_KEY = 'hafez_shown_poems';
-  
-  useEffect(() => {
-    // On first load, check if we have a stored fortune or show a new one
-    const storedPoems = sessionStorage.getItem(SHOWN_POEMS_KEY);
-    const shownPoemIds = storedPoems ? JSON.parse(storedPoems) : [];
-    
-    // If we don't have a poem yet or if all poems have been shown, get a new one
-    if (!poem && (!storedPoems || shownPoemIds.length === 0)) {
-      getRandomPoem();
-    }
-  }, []);
   
   const getRandomPoem = () => {
     setIsLoading(true);
@@ -101,7 +91,7 @@ export const HafezFortune = () => {
             <div className="text-center text-gray-600 text-sm py-4">
               <p className="mb-3">برای دریافت فال، دکمه فال حافظ را فشار دهید.</p>
               <div className="mt-3 flex justify-center">
-                <div className="animate-float">
+                <div className="animate-pulse">
                   <Book size={20} className="text-gray-400" />
                 </div>
               </div>
@@ -143,7 +133,7 @@ export const HafezFortune = () => {
           onClick={getRandomPoem} 
           disabled={isLoading}
           size="sm" 
-          className="bg-[#6b7280] hover:bg-[#4b5563] text-white text-xs h-8 px-4 relative overflow-hidden group"
+          className="bg-[#6b7280] hover:bg-[#4b5563] text-white text-xs h-8 px-4 relative overflow-hidden group w-full sm:w-auto"
         >
           <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
           {isLoading ? 
@@ -158,7 +148,7 @@ export const HafezFortune = () => {
             variant="outline"
             size="sm"
             onClick={copyFortune} 
-            className="border-[#6b7280] text-[#4b5563] text-xs h-8 px-3"
+            className="border-[#6b7280] text-[#4b5563] text-xs h-8 px-3 w-full sm:w-auto"
           >
             <Copy size={14} className="mr-1" />
             کپی فال

@@ -67,7 +67,9 @@ export const useParallelUniverse = () => {
   const generateUniverse = () => {
     setIsLoading(true);
     
-    // Simulate loading time
+    // Simulate loading time with a variable delay to make it feel more natural
+    const loadingTime = 1200 + Math.random() * 800;
+    
     setTimeout(() => {
       let dataArray: ParallelUniverseData[] = [];
       
@@ -94,12 +96,26 @@ export const useParallelUniverse = () => {
       const randomIndex = Math.floor(Math.random() * dataArray.length);
       const selectedUniverse = dataArray[randomIndex];
       
-      setUniverseData(selectedUniverse);
+      // Add a small random variation to the probability to make it feel more unique
+      const adjustedProbability = Math.max(
+        0.1, 
+        Math.min(
+          99.9, 
+          selectedUniverse.probability + (Math.random() * 4 - 2)
+        )
+      ).toFixed(1);
+      
+      const universeWithAdjustedProbability = {
+        ...selectedUniverse,
+        probability: parseFloat(adjustedProbability)
+      };
+      
+      setUniverseData(universeWithAdjustedProbability);
       setIsGenerated(true);
       setIsLoading(false);
       
       toast.success("نسخه موازی شما کشف شد!");
-    }, 1500);
+    }, loadingTime);
   };
 
   const copyUniverse = () => {

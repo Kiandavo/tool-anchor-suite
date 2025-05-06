@@ -70,7 +70,7 @@ export const TarotCardDisplay: React.FC<TarotCardDisplayProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
         >
-          <div className="h-0.5 bg-gradient-to-r from-[#b0c8e6]/20 via-[#b0c8e6] to-[#b0c8e6]/20 w-full"></div>
+          <div className="h-0.5 bg-gradient-to-r from-transparent via-[#b0c8e6] to-[#b0c8e6]/20 w-full"></div>
           
           <div className="bg-white/40 p-4 rounded-lg border border-[#b0c8e6]/30 shadow-md">
             <h3 className="text-[#143a5c] text-sm font-medium mb-3 flex items-center">
