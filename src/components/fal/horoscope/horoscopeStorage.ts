@@ -1,5 +1,5 @@
 
-import { HoroscopeState, HOROSCOPE_STATE_KEY } from './horoscopeTypes';
+import { type HoroscopeState, HOROSCOPE_STATE_KEY } from './horoscopeTypes';
 
 // Load horoscope state from session storage
 export const loadHoroscopeState = (): Partial<HoroscopeState> => {
