@@ -2,7 +2,7 @@
 import React from 'react';
 import { type TarotCardType } from './types';
 import { motion } from 'framer-motion';
-import { Star, Sun, Moon, Skull, BookOpen, Heart, Sword, Crown, Balance } from 'lucide-react';
+import { Star, Sun, Moon, Skull, BookOpen, Heart, Sword, Crown, Scale } from 'lucide-react';
 
 interface TarotCardProps {
   card: TarotCardType;
@@ -20,7 +20,7 @@ const cardIconMap: Record<string, React.ReactNode> = {
   "مرگ": <Skull className="text-gray-600" size={40} />,
   "برج": <BookOpen className="text-indigo-600" size={40} />,
   "عاشقان": <Heart className="text-red-500" size={40} />,
-  "عدالت": <Balance className="text-blue-600" size={40} />,
+  "عدالت": <Scale className="text-blue-600" size={40} />,
   "شاه": <Crown className="text-yellow-600" size={40} />,
   "شمشیر": <Sword className="text-gray-500" size={40} />,
   // Fallback for all other cards
