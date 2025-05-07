@@ -2,6 +2,7 @@
 import React from 'react';
 import { type TarotCardType } from './types';
 import { motion } from 'framer-motion';
+import { Star, Sun, Moon, Skull, BookOpen, Heart, Sword, Crown, Balance } from 'lucide-react';
 
 interface TarotCardProps {
   card: TarotCardType;
@@ -10,6 +11,21 @@ interface TarotCardProps {
   index: number;
   isReversed?: boolean;
 }
+
+// Map of fallback icons for tarot cards when images aren't available
+const cardIconMap: Record<string, React.ReactNode> = {
+  "خورشید": <Sun className="text-amber-500" size={40} />,
+  "ماه": <Moon className="text-blue-400" size={40} />,
+  "ستاره": <Star className="text-yellow-300" size={40} />,
+  "مرگ": <Skull className="text-gray-600" size={40} />,
+  "برج": <BookOpen className="text-indigo-600" size={40} />,
+  "عاشقان": <Heart className="text-red-500" size={40} />,
+  "عدالت": <Balance className="text-blue-600" size={40} />,
+  "شاه": <Crown className="text-yellow-600" size={40} />,
+  "شمشیر": <Sword className="text-gray-500" size={40} />,
+  // Fallback for all other cards
+  "default": <Star className="text-purple-500" size={40} />
+};
 
 export const TarotCard: React.FC<TarotCardProps> = ({ 
   card, 
@@ -20,6 +36,17 @@ export const TarotCard: React.FC<TarotCardProps> = ({
 }) => {
   const cardBackImageUrl = "/tarot-back.jpg";
   const cardImageUrl = card.image || "/tarot-fallback.jpg";
+  
+  // Check if image exists or use fallback
+  const [imageError, setImageError] = React.useState(false);
+  
+  const handleImageError = () => {
+    console.log("Image error for card:", card.name);
+    setImageError(true);
+  };
+  
+  // Choose the icon for this card
+  const cardIcon = cardIconMap[card.name] || cardIconMap["default"];
   
   return (
     <div className="relative h-[200px] w-[120px] sm:h-[220px] sm:w-[140px] perspective-1000">
@@ -53,12 +80,33 @@ export const TarotCard: React.FC<TarotCardProps> = ({
         <div 
           className={`absolute inset-0 w-full h-full backface-hidden rounded-lg shadow-lg border-2 border-[#b0c8e6] rotate-y-180 overflow-hidden ${isReversed ? 'rotate-180' : ''}`}
           style={{
-            backgroundImage: `url(${cardImageUrl})`,
+            backgroundImage: imageError ? 'none' : `url(${cardImageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            boxShadow: '0 0 15px rgba(176, 200, 230, 0.7)'
+            boxShadow: '0 0 15px rgba(176, 200, 230, 0.7)',
+            backgroundColor: imageError ? '#e9f0f7' : undefined
           }}
         >
+          {/* If image failed to load, show fallback icon */}
+          {imageError && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#e9f0f7] to-[#b0c8e6]/30">
+              <div className={`transform ${isReversed ? 'rotate-180' : ''}`}>
+                {cardIcon}
+              </div>
+              <h3 className={`text-[#143a5c] font-bold mt-3 text-center px-2 transform ${isReversed ? 'rotate-180' : ''}`}>
+                {card.name}
+              </h3>
+            </div>
+          )}
+
+          {/* Image loader to detect errors */}
+          <img 
+            src={cardImageUrl} 
+            alt="" 
+            className="hidden" 
+            onError={handleImageError}
+          />
+
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 rounded-b-lg">
             <p className="text-white text-xs text-center font-medium drop-shadow-md">{card.name}</p>
             {isReversed && <p className="text-white/80 text-[10px] text-center">(معکوس)</p>}

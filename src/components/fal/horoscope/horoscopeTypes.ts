@@ -27,4 +27,5 @@ export interface HoroscopeState {
   predictionType: PredictionType;
   prediction: string;
   lastRefreshTime: number;
+  lastPredictionId?: string; // Added for tracking unique predictions
 }

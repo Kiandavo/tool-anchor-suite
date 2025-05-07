@@ -5,10 +5,14 @@ import { zodiacSigns } from './horoscopeTypes';
 import { horoscopePredictions } from './horoscopePredictions';
 import { PredictionType } from './horoscopeTypes';
 
+// Store previously shown predictions to avoid repetition in the same session
+const shownPredictions: Record<string, number[]> = {};
+
 // Get a horoscope prediction based on sign and prediction type
 export const generateHoroscopePrediction = (
   selectedSign: string, 
-  predictionType: PredictionType
+  predictionType: PredictionType,
+  forceNew: boolean = false
 ): string => {
   if (!selectedSign) {
     toast.error("لطفاً نشان ماه تولد خود را انتخاب کنید");
@@ -22,17 +26,51 @@ export const generateHoroscopePrediction = (
     toast.error("متأسفانه پیش‌بینی برای این ماه تولد در دسترس نیست");
     return "";
   }
+
+  // Create key for tracking shown predictions
+  const trackingKey = `${selectedSign}-${predictionType}`;
   
-  // Use the current timestamp as our source of randomness
+  // Initialize tracking array if it doesn't exist
+  if (!shownPredictions[trackingKey]) {
+    shownPredictions[trackingKey] = [];
+  }
+  
+  // If all predictions have been shown, reset the array
+  if (shownPredictions[trackingKey].length >= predictions.length || forceNew) {
+    shownPredictions[trackingKey] = [];
+  }
+  
+  // Get predictions that haven't been shown yet
+  const availablePredictions = predictions.filter((_, index) => 
+    !shownPredictions[trackingKey].includes(index)
+  );
+  
+  // Use the current timestamp + date info as our source of randomness
   const now = Date.now();
+  const today = new Date();
+  const dateValue = today.getDate() + today.getMonth() * 31;
   
-  // Use a combination of the current time and sign to generate a pseudo-random index
-  // This ensures we get different results even on quick successive clicks
-  const seed = now + selectedSign.charCodeAt(0) + predictionType.length;
-  const randomIndex = Math.floor(Math.abs(Math.sin(seed)) * predictions.length);
+  // Create a more unique seed based on date, sign and prediction type
+  const seed = now + dateValue + selectedSign.charCodeAt(0) + predictionType.length;
   
-  const selectedPrediction = predictions[randomIndex % predictions.length];
-  console.log("Selected prediction index:", randomIndex, "Prediction:", selectedPrediction);
+  let selectedIndex: number;
+  let selectedPrediction: string;
+  
+  if (availablePredictions.length > 0) {
+    // Get a random prediction from available ones
+    selectedIndex = Math.floor(Math.abs(Math.sin(seed)) * availablePredictions.length);
+    selectedPrediction = availablePredictions[selectedIndex % availablePredictions.length];
+    
+    // Find the original index in the full predictions array
+    const originalIndex = predictions.indexOf(selectedPrediction);
+    shownPredictions[trackingKey].push(originalIndex);
+  } else {
+    // This is a fallback that shouldn't normally happen
+    selectedIndex = Math.floor(Math.abs(Math.sin(seed)) * predictions.length);
+    selectedPrediction = predictions[selectedIndex % predictions.length];
+  }
+  
+  console.log("Selected prediction index:", selectedIndex, "Prediction:", selectedPrediction);
   
   let predictionPrefix = "";
   switch(predictionType) {

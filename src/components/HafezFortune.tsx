@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Book, Copy, RefreshCw, Sparkles } from "lucide-react";
 import { copyToClipboard } from "@/utils/randomUtils";
 import { hafezGhazals, HafezPoem } from "@/data/hafez-ghazals";
+import { HafezGuide } from "./fal/hafez/HafezGuide";
 
 export const HafezFortune = () => {
   const [poem, setPoem] = useState<HafezPoem | null>(null);
@@ -83,6 +84,9 @@ export const HafezFortune = () => {
             <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-white opacity-70" /></span>
           </h2>
         </div>
+        
+        {/* Add the new HafezGuide component */}
+        <HafezGuide />
       </CardHeader>
       
       <CardContent className="pt-3 px-3">
