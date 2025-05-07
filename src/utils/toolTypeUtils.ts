@@ -53,13 +53,16 @@ export const toolTypeBySlug: Record<string, string> = {
   "rent-factors": "rent-factors",
   "world-time": "world-time",
   "loan-calculator": "loan-calculator",
+  "power-calculator": "power-calculator", // Added
+  "salary-tax-calculator": "salary-tax-calculator", // Added
+  "range-calculator": "range-calculator", // Added
   
   // Random tools
   "random-password": "random-password",
   "random-number": "random",
   "random-string": "random",
   "random-date": "random",
-  "random-color": "random",
+  "random-color": "random-color", // Updated
   "random-name": "random",
   "random-email": "random",
   "random-username": "random",

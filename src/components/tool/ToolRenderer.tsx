@@ -13,6 +13,7 @@ import CalculatorTool from '@/pages/ToolTypes/CalculatorTool';
 import SeoTool from '@/pages/ToolTypes/SeoTool';
 import RandomPasswordTool from '@/pages/ToolTypes/RandomPasswordTool';
 import NumberTool from '@/pages/ToolTypes/NumberTool';
+import RandomColorGenerator from '@/pages/ToolTypes/RandomTools/RandomColorGenerator';
 
 interface ToolRendererProps {
   tool: Tool;
@@ -42,6 +43,10 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'random-password') {
     return <RandomPasswordTool />;
   }
+
+  if (toolType === 'random-color') {
+    return <RandomColorGenerator />;
+  }
   
   // For calculator tools and others, use the specific renderers
   switch (toolType) {
@@ -55,6 +60,9 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     case 'scientific-calculator':
     case 'rent-factors':
     case 'loan-calculator':
+    case 'power-calculator':     // Added
+    case 'salary-tax-calculator': // Added
+    case 'range-calculator':     // Added
       return <CalculatorTool slug={slug} type={toolType} />;
     case 'random':
       return <UtilityToolRenderer slug={slug} type={toolType} />;

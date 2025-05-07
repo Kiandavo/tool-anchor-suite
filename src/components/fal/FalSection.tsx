@@ -1,13 +1,43 @@
 
-import React from 'react';
-import { HafezFortune } from '../HafezFortune';
-import { Horoscope } from './Horoscope';
-import { TarotReading } from './TarotReading';
-import { RumiIstikhara } from './RumiIstikhara';
-import { ParallelUniverseExplorer } from './parallelUniverse/ParallelUniverseExplorer';
+import React, { useState, lazy, Suspense } from 'react';
 import { Star, Globe } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+
+// Lazy load components to avoid preloading before user interaction
+const HafezFortune = lazy(() => import('../HafezFortune').then(module => ({ default: module.default || module.HafezFortune })));
+const Horoscope = lazy(() => import('./Horoscope').then(module => ({ default: module.default || module.Horoscope })));
+const RumiIstikhara = lazy(() => import('./RumiIstikhara').then(module => ({ default: module.default || module.RumiIstikhara })));
+const TarotReading = lazy(() => import('./TarotReading').then(module => ({ default: module.default || module.TarotReading })));
+const ParallelUniverseExplorer = lazy(() => import('./parallelUniverse/ParallelUniverseExplorer').then(module => ({ default: module.default || module.ParallelUniverseExplorer })));
+
+// Loading component
+const LoadingPlaceholder = () => (
+  <div className="h-64 border rounded-lg flex items-center justify-center bg-gray-50/50">
+    <div className="text-center">
+      <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-2"></div>
+      <p className="text-sm text-muted-foreground">در حال بارگذاری...</p>
+    </div>
+  </div>
+);
 
 export const FalSection = () => {
+  // Track which fortune-telling sections have been loaded by user interaction
+  const [loadedComponents, setLoadedComponents] = useState({
+    hafez: false,
+    horoscope: false,
+    rumi: false,
+    tarot: false,
+    universe: false
+  });
+
+  // Handler to trigger loading a component when user interacts
+  const handleLoadComponent = (component: keyof typeof loadedComponents) => {
+    setLoadedComponents(prev => ({
+      ...prev,
+      [component]: true
+    }));
+  };
+
   return (
     <section className="mb-8 space-y-6 animate-fade-in" style={{ animationDelay: '0.15s' }}>
       {/* Section Header - Fortune Telling */}
@@ -22,9 +52,68 @@ export const FalSection = () => {
       
       {/* Hafez, Horoscope, and Rumi Row */}
       <div className="grid md:grid-cols-3 gap-4 relative">
-        <HafezFortune />
-        <Horoscope />
-        <RumiIstikhara />
+        {/* Hafez Fortune */}
+        <div>
+          {!loadedComponents.hafez ? (
+            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+              <h3 className="text-lg font-bold text-center mb-6">فال حافظ</h3>
+              <div className="flex justify-center">
+                <Button 
+                  onClick={() => handleLoadComponent('hafez')}
+                  className="bg-gradient-to-r from-primary/80 to-primary"
+                >
+                  نیت کرده و باز کنید
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <HafezFortune />
+            </Suspense>
+          )}
+        </div>
+        
+        {/* Horoscope */}
+        <div>
+          {!loadedComponents.horoscope ? (
+            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+              <h3 className="text-lg font-bold text-center mb-6">طالع بینی</h3>
+              <div className="flex justify-center">
+                <Button 
+                  onClick={() => handleLoadComponent('horoscope')}
+                  className="bg-gradient-to-r from-primary/80 to-primary"
+                >
+                  دیدن طالع بینی
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <Horoscope />
+            </Suspense>
+          )}
+        </div>
+        
+        {/* Rumi Istikhara */}
+        <div>
+          {!loadedComponents.rumi ? (
+            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+              <h3 className="text-lg font-bold text-center mb-6">استخاره با مولانا</h3>
+              <div className="flex justify-center">
+                <Button 
+                  onClick={() => handleLoadComponent('rumi')}
+                  className="bg-gradient-to-r from-primary/80 to-primary"
+                >
+                  انجام استخاره
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <RumiIstikhara />
+            </Suspense>
+          )}
+        </div>
       </div>
       
       {/* Section Header - Mystical Exploration */}
@@ -39,11 +128,46 @@ export const FalSection = () => {
       
       {/* Tarot Reading and Parallel Universe Row */}
       <div className="grid md:grid-cols-2 gap-6 relative">
+        {/* Tarot Reading */}
         <div>
-          <TarotReading />
+          {!loadedComponents.tarot ? (
+            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+              <h3 className="text-lg font-bold text-center mb-6">فال تاروت</h3>
+              <div className="flex justify-center">
+                <Button 
+                  onClick={() => handleLoadComponent('tarot')}
+                  className="bg-gradient-to-r from-[#143a5c]/80 to-[#143a5c]"
+                >
+                  انجام فال تاروت
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <TarotReading />
+            </Suspense>
+          )}
         </div>
+        
+        {/* Parallel Universe */}
         <div>
-          <ParallelUniverseExplorer />
+          {!loadedComponents.universe ? (
+            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+              <h3 className="text-lg font-bold text-center mb-6">جهان موازی</h3>
+              <div className="flex justify-center">
+                <Button 
+                  onClick={() => handleLoadComponent('universe')}
+                  className="bg-gradient-to-r from-[#143a5c]/80 to-[#143a5c]"
+                >
+                  کاوش جهان‌های موازی
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <ParallelUniverseExplorer />
+            </Suspense>
+          )}
         </div>
       </div>
       

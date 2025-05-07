@@ -16,6 +16,7 @@ import InvestmentCalculator from './CalculatorTools/InvestmentCalculator';
 import LoanCalculator from './CalculatorTools/LoanCalculator';
 import MortgageCalculator from './CalculatorTools/MortgageCalculator';
 import PercentageCalculator from './CalculatorTools/PercentageCalculator';
+import PowerCalculator from './CalculatorTools/PowerCalculator';
 import ProfitCalculator from './CalculatorTools/ProfitCalculator';
 import RangeCalculator from './CalculatorTools/RangeCalculator';
 import RentFactorsCalculator from './CalculatorTools/RentFactorsCalculator';
@@ -63,6 +64,8 @@ export default function CalculatorTool({ slug, type }: CalculatorToolProps) {
         return <MortgageCalculator />;
       case 'percentage-calculator':
         return <PercentageCalculator />;
+      case 'power-calculator':
+        return <PowerCalculator />;
       case 'profit':
       case 'profit-calculator':
         return <ProfitCalculator />;

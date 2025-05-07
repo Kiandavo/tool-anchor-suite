@@ -1,115 +1,227 @@
 
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { OutcomeInfoCard } from "@/components/OutcomeInfoCard";
-import { Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
+import { CreditCard, Landmark } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Tax brackets for 1403 (2024-2025, Iran)
-// You may adjust as needed
-const TAX_FREE = 120_000_000;
-const FIRST_STEP = 360_000_000;
-const SECOND_STEP = 480_000_000;
-
-function calculateSalaryTax(monthlySalary: number) {
-  // Convert monthly to yearly
-  const yearly = monthlySalary * 12;
-  let remaining = yearly;
-  let tax = 0;
-
-  if (yearly <= TAX_FREE) {
-    return 0;
-  }
-
-  // 0% for up to 120M
-  remaining -= TAX_FREE;
-
-  // 10% for next 240M
-  if (yearly > TAX_FREE && yearly <= FIRST_STEP) {
-    tax += remaining * 0.1;
-    remaining = 0;
-  }
-  else if (yearly > FIRST_STEP) {
-    tax += (FIRST_STEP - TAX_FREE) * 0.1;
-    remaining -= (FIRST_STEP - TAX_FREE);
-  }
-
-  // 15% for next 120M (from 360M to 480M)
-  if (yearly > FIRST_STEP && yearly <= SECOND_STEP) {
-    tax += remaining * 0.15;
-    remaining = 0;
-  }
-  else if (yearly > SECOND_STEP) {
-    tax += (SECOND_STEP - FIRST_STEP) * 0.15;
-    remaining -= (SECOND_STEP - FIRST_STEP);
-  }
-
-  // 20% for anything above 480M
-  if (yearly > SECOND_STEP) {
-    tax += remaining * 0.2;
-  }
-
-  return Math.floor(tax);
-}
+// Tax brackets for 1403 (Iranian fiscal year)
+const TAX_BRACKETS_1403 = [
+  { max: 8_800_000, rate: 0 },         // Up to 8.8M, 0%
+  { max: 13_200_000, rate: 0.10 },     // 8.8M to 13.2M, 10%
+  { max: 22_000_000, rate: 0.15 },     // 13.2M to 22M, 15%
+  { max: 30_800_000, rate: 0.20 },     // 22M to 30.8M, 20%
+  { max: Infinity, rate: 0.30 },       // Over 30.8M, 30%
+];
 
 export default function SalaryTaxCalculator() {
-  const [monthlySalary, setMonthlySalary] = useState<string>("");
+  const [salary, setSalary] = useState<string>('');
+  const [taxYear, setTaxYear] = useState<string>('1403');
+  const [calculationType, setCalculationType] = useState<string>('monthly');
   const [result, setResult] = useState<string | null>(null);
-
-  const handleCalculate = () => {
-    const monthly = parseInt(monthlySalary.replace(/,/g, ''));
-    if (isNaN(monthly) || monthly <= 0) {
-      setResult("لطفاً مبلغ حقوق ماهانه را به‌درستی وارد کنید.");
-      return;
+  const [taxDetails, setTaxDetails] = useState<{ bracket: string; amount: number; rate: number; }[]>([]);
+  
+  // Format input with thousands separator
+  const formatInput = (value: string): string => {
+    const plainNumber = value.replace(/[^\d]/g, '');
+    
+    if (plainNumber === '') {
+      return '';
     }
+    
+    return plainNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
 
-    const taxYear = calculateSalaryTax(monthly);
-    const taxMonth = Math.floor(taxYear / 12);
+  // Handle salary input change
+  const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatInput(e.target.value);
+    setSalary(formatted);
+  };
+  
+  // Format Rial amount to display
+  const formatRial = (amount: number): string => {
+    return new Intl.NumberFormat('fa-IR').format(amount) + ' تومان';
+  };
 
-    setResult(
-      `میزان مالیات سالانه شما: ${taxYear.toLocaleString("fa-IR")} تومان
-      معادل ${taxMonth.toLocaleString("fa-IR")} تومان در هر ماه`
-    );
+  // Calculate tax based on the provided salary
+  const calculateTax = () => {
+    try {
+      const salaryValue = parseFloat(salary.replace(/,/g, ''));
+      
+      if (isNaN(salaryValue) || salaryValue < 0) {
+        setResult('لطفاً مقدار معتبری برای حقوق وارد کنید.');
+        setTaxDetails([]);
+        return;
+      }
+
+      // Apply tax brackets
+      let totalTax = 0;
+      let remainingSalary = salaryValue;
+      const details: { bracket: string; amount: number; rate: number }[] = [];
+      let previousMax = 0;
+      
+      // Use appropriate tax brackets based on selected year
+      const brackets = TAX_BRACKETS_1403; // For now, only 1403
+      
+      // Apply each tax bracket
+      for (const bracket of brackets) {
+        const bracketRange = bracket.max - previousMax;
+        const taxableInBracket = Math.min(remainingSalary, bracketRange);
+        
+        if (taxableInBracket > 0) {
+          const taxForBracket = taxableInBracket * bracket.rate;
+          totalTax += taxForBracket;
+          
+          details.push({
+            bracket: `${formatRial(previousMax)} تا ${bracket.max !== Infinity ? formatRial(bracket.max) : 'بی‌نهایت'}`,
+            amount: taxableInBracket,
+            rate: bracket.rate * 100
+          });
+          
+          remainingSalary -= taxableInBracket;
+          
+          if (remainingSalary <= 0) {
+            break;
+          }
+        }
+        
+        previousMax = bracket.max;
+      }
+
+      // Calculate net salary
+      const netSalary = salaryValue - totalTax;
+      const taxRate = (totalTax / salaryValue) * 100;
+      
+      // Prepare the result message
+      let resultMsg = `نتیجه محاسبه مالیات حقوق ${calculationType === 'monthly' ? 'ماهانه' : 'سالانه'}:\n\n`;
+      resultMsg += `حقوق ناخالص: ${formatRial(salaryValue)}\n`;
+      resultMsg += `مالیات: ${formatRial(totalTax)} (${taxRate.toFixed(2)}٪)\n`;
+      resultMsg += `حقوق خالص: ${formatRial(netSalary)}\n`;
+      
+      // Add yearly equivalent if calculating monthly
+      if (calculationType === 'monthly') {
+        resultMsg += `\nمعادل سالیانه:\n`;
+        resultMsg += `حقوق ناخالص سالیانه: ${formatRial(salaryValue * 12)}\n`;
+        resultMsg += `مالیات سالیانه: ${formatRial(totalTax * 12)}\n`;
+        resultMsg += `حقوق خالص سالیانه: ${formatRial(netSalary * 12)}`;
+      } 
+      // Add monthly equivalent if calculating yearly
+      else {
+        resultMsg += `\nمعادل ماهیانه:\n`;
+        resultMsg += `حقوق ناخالص ماهیانه: ${formatRial(salaryValue / 12)}\n`;
+        resultMsg += `مالیات ماهیانه: ${formatRial(totalTax / 12)}\n`;
+        resultMsg += `حقوق خالص ماهیانه: ${formatRial(netSalary / 12)}`;
+      }
+      
+      setResult(resultMsg);
+      setTaxDetails(details);
+      
+    } catch (error) {
+      console.error('Error calculating tax:', error);
+      setResult('خطا در محاسبه مالیات. لطفاً مقادیر را بررسی کنید.');
+      setTaxDetails([]);
+    }
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="p-6">
-        <div className="flex flex-col space-y-6">
-          <div className="flex items-center justify-center space-x-2 space-x-reverse mb-4">
-            <Calculator className="text-primary h-6 w-6 ml-2" />
-            <h2 className="text-xl font-bold text-center">محاسبه‌گر مالیات حقوق</h2>
-          </div>
-          <div className="space-y-2 max-w-sm mx-auto">
-            <Label htmlFor="monthly-salary">حقوق ماهانه (تومان)</Label>
-            <Input
-              id="monthly-salary"
-              value={monthlySalary}
-              onChange={(e) => setMonthlySalary(e.target.value.replace(/[^0-9]/g, ""))}
-              placeholder="مثال: 25,000,000"
-              type="text"
-              dir="ltr"
-              inputMode="numeric"
-              autoComplete="off"
-            />
-          </div>
-          <Button
-            onClick={handleCalculate}
-            className="flex items-center justify-center"
-          >
-            <Calculator className="ml-2 h-5 w-5" />
-            محاسبه کن
-          </Button>
-          {result && <OutcomeInfoCard outcome={result} />}
-          <div className="bg-muted p-2 rounded text-xs text-muted-foreground text-center">
-            <span>
-              بر اساس بخشنامه مالیاتی سال ۱۴۰۳ (اعداد به تومان)
-            </span>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 justify-center">
+          <Landmark className="h-5 w-5" />
+          محاسبه‌گر مالیات حقوق
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="bg-muted/30 p-4 rounded-md">
+          <h3 className="font-medium mb-2 flex items-center gap-1">
+            <CreditCard size={16} className="text-primary" />
+            اطلاعات پلکان‌های مالیاتی سال ۱۴۰۳
+          </h3>
+          <div className="text-sm text-muted-foreground space-y-1">
+            <p>• تا ۸.۸ میلیون تومان در ماه: معاف از مالیات</p>
+            <p>• از ۸.۸ تا ۱۳.۲ میلیون تومان در ماه: ۱۰٪</p>
+            <p>• از ۱۳.۲ تا ۲۲ میلیون تومان در ماه: ۱۵٪</p>
+            <p>• از ۲۲ تا ۳۰.۸ میلیون تومان در ماه: ۲۰٪</p>
+            <p>• بیش از ۳۰.۸ میلیون تومان در ماه: ۳۰٪</p>
           </div>
         </div>
-      </Card>
-    </div>
+        
+        <Tabs defaultValue="monthly" value={calculationType} onValueChange={setCalculationType}>
+          <TabsList className="grid grid-cols-2 mb-4">
+            <TabsTrigger value="monthly">محاسبه ماهیانه</TabsTrigger>
+            <TabsTrigger value="yearly">محاسبه سالیانه</TabsTrigger>
+          </TabsList>
+          
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="tax-year">سال مالیاتی</Label>
+              <Select 
+                value={taxYear} 
+                onValueChange={setTaxYear}
+              >
+                <SelectTrigger id="tax-year" className="mt-1">
+                  <SelectValue placeholder="انتخاب سال مالیاتی" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1403">۱۴۰۳</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label htmlFor="salary">
+                حقوق {calculationType === 'monthly' ? 'ماهیانه' : 'سالیانه'} (تومان)
+              </Label>
+              <Input
+                id="salary"
+                value={salary}
+                onChange={handleSalaryChange}
+                placeholder={`مثلاً ${calculationType === 'monthly' ? '15,000,000' : '180,000,000'}`}
+                className="mt-1"
+                dir="ltr"
+              />
+            </div>
+            
+            <Button onClick={calculateTax} className="w-full">
+              محاسبه مالیات
+            </Button>
+          </div>
+        </Tabs>
+        
+        {result && <OutcomeInfoCard outcome={result} />}
+        
+        {taxDetails.length > 0 && (
+          <div className="mt-4">
+            <h3 className="text-sm font-medium mb-2">جزئیات محاسبه مالیات:</h3>
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white rounded-md">
+                <thead className="bg-muted/50">
+                  <tr>
+                    <th className="py-2 px-3 text-right text-xs">پله مالیاتی</th>
+                    <th className="py-2 px-3 text-right text-xs">مبلغ مشمول</th>
+                    <th className="py-2 px-3 text-right text-xs">نرخ</th>
+                    <th className="py-2 px-3 text-right text-xs">مالیات</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {taxDetails.map((detail, index) => (
+                    <tr key={index} className="text-sm">
+                      <td className="py-2 px-3">{detail.bracket}</td>
+                      <td className="py-2 px-3">{formatRial(detail.amount)}</td>
+                      <td className="py-2 px-3">{detail.rate}٪</td>
+                      <td className="py-2 px-3">{formatRial(detail.amount * detail.rate / 100)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
