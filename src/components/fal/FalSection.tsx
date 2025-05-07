@@ -4,11 +4,11 @@ import { Star, Globe } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 // Lazy load components to avoid preloading before user interaction
-const HafezFortune = lazy(() => import('../HafezFortune').then(module => ({ default: module.default || module.HafezFortune })));
-const Horoscope = lazy(() => import('./Horoscope').then(module => ({ default: module.default || module.Horoscope })));
-const RumiIstikhara = lazy(() => import('./RumiIstikhara').then(module => ({ default: module.default || module.RumiIstikhara })));
-const TarotReading = lazy(() => import('./TarotReading').then(module => ({ default: module.default || module.TarotReading })));
-const ParallelUniverseExplorer = lazy(() => import('./parallelUniverse/ParallelUniverseExplorer').then(module => ({ default: module.default || module.ParallelUniverseExplorer })));
+const HafezFortune = lazy(() => import('../../components/HafezFortune'));
+const Horoscope = lazy(() => import('./Horoscope'));
+const RumiIstikhara = lazy(() => import('./RumiIstikhara'));
+const TarotReading = lazy(() => import('./TarotReading'));
+const ParallelUniverseExplorer = lazy(() => import('./parallelUniverse/ParallelUniverseExplorer'));
 
 // Loading component
 const LoadingPlaceholder = () => (
