@@ -3,12 +3,12 @@ import React, { useState, lazy, Suspense } from 'react';
 import { Star, Globe } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
-// Lazy load components to avoid preloading before user interaction
-const HafezFortune = lazy(() => import('../../components/HafezFortune'));
-const Horoscope = lazy(() => import('./Horoscope'));
-const RumiIstikhara = lazy(() => import('./RumiIstikhara'));
-const TarotReading = lazy(() => import('./TarotReading'));
-const ParallelUniverseExplorer = lazy(() => import('./parallelUniverse/ParallelUniverseExplorer'));
+// Lazy load components with proper handling for named exports
+const HafezFortune = lazy(() => import('../../components/HafezFortune').then(module => ({ default: module.HafezFortune })));
+const Horoscope = lazy(() => import('./Horoscope').then(module => ({ default: module.Horoscope })));
+const RumiIstikhara = lazy(() => import('./RumiIstikhara').then(module => ({ default: module.RumiIstikhara })));
+const TarotReading = lazy(() => import('./TarotReading').then(module => ({ default: module.TarotReading })));
+const ParallelUniverseExplorer = lazy(() => import('./parallelUniverse/ParallelUniverseExplorer').then(module => ({ default: module.ParallelUniverseExplorer })));
 
 // Loading component
 const LoadingPlaceholder = () => (

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BookOpen, Sparkles } from "lucide-react";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";

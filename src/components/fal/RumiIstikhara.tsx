@@ -116,3 +116,5 @@ export const RumiIstikhara = () => {
     </Card>
   );
 };
+
+// No default export - just the named export

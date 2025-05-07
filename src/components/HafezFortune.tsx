@@ -162,3 +162,5 @@ export const HafezFortune = () => {
     </Card>
   );
 };
+
+// No default export - just the named export
