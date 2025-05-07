@@ -1,12 +1,13 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
-import { PredictionType } from './horoscopeTypes';
+import { type PredictionType } from './horoscopeTypes';
 import { zodiacSigns } from './horoscopeTypes';
 import { loadHoroscopeState, saveHoroscopeState } from './horoscopeStorage';
 import { generateHoroscopePrediction, copyHoroscope as copyHoroscopeText, getZodiacSymbol } from './horoscopeUtils';
 
-export { zodiacSigns, PredictionType };
+export { zodiacSigns };
+export type { PredictionType };
 
 export const useHoroscope = () => {
   const [selectedSign, setSelectedSign] = useState<string>("");
