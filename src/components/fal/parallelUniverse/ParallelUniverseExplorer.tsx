@@ -477,7 +477,7 @@ export const ParallelUniverseExplorer = () => {
       </CardFooter>
       
       {/* Animation styles */}
-      <style jsx>{`
+      <style>{`
         .universe-appear {
           animation: fadeIn 0.5s ease-out;
         }

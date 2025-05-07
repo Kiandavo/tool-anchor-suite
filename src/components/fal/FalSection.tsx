@@ -20,6 +20,14 @@ const LoadingPlaceholder = () => (
   </div>
 );
 
+// Component for section description
+const SectionDescription = ({ title, description }: { title: string, description: string }) => (
+  <div className="text-center">
+    <h3 className="text-lg font-bold mb-3">{title}</h3>
+    <p className="text-sm text-gray-600 mb-4 max-w-md mx-auto">{description}</p>
+  </div>
+);
+
 export const FalSection = () => {
   // Track which fortune-telling sections have been loaded by user interaction
   const [loadedComponents, setLoadedComponents] = useState({
@@ -56,7 +64,10 @@ export const FalSection = () => {
         <div>
           {!loadedComponents.hafez ? (
             <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
-              <h3 className="text-lg font-bold text-center mb-6">فال حافظ</h3>
+              <SectionDescription 
+                title="فال حافظ" 
+                description="با نیت قلبی و تمرکز، از دیوان حافظ شیرازی، شعری به عنوان راهنمایی و تفأل دریافت کنید. شعر حافظ پاسخی به نیت شما خواهد بود."
+              />
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('hafez')}
@@ -77,7 +88,10 @@ export const FalSection = () => {
         <div>
           {!loadedComponents.horoscope ? (
             <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
-              <h3 className="text-lg font-bold text-center mb-6">طالع بینی</h3>
+              <SectionDescription 
+                title="طالع بینی" 
+                description="با انتخاب برج تولد خود، پیش‌بینی‌های مربوط به زندگی، عشق، کار و سلامت خود را دریافت کنید. راهنمایی‌هایی برای آگاهی از مسیر پیش رو."
+              />
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('horoscope')}
@@ -98,7 +112,10 @@ export const FalSection = () => {
         <div>
           {!loadedComponents.rumi ? (
             <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
-              <h3 className="text-lg font-bold text-center mb-6">استخاره با مولانا</h3>
+              <SectionDescription 
+                title="استخاره با مولانا" 
+                description="با نیت و سؤال خود، به شعری از مولانا برای راهنمایی و مشورت دست یابید. کلمات عارف بزرگ، چراغی برای مسیر انتخاب شما خواهد بود."
+              />
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('rumi')}
@@ -132,7 +149,10 @@ export const FalSection = () => {
         <div>
           {!loadedComponents.tarot ? (
             <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
-              <h3 className="text-lg font-bold text-center mb-6">فال تاروت</h3>
+              <SectionDescription 
+                title="فال تاروت" 
+                description="با انتخاب کارت‌های تاروت، به بینش‌های عمیق درباره گذشته، حال و آینده‌ دست یابید. نمادهای باستانی، رازهای زندگی شما را آشکار می‌کنند."
+              />
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('tarot')}
@@ -153,7 +173,10 @@ export const FalSection = () => {
         <div>
           {!loadedComponents.universe ? (
             <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
-              <h3 className="text-lg font-bold text-center mb-6">جهان موازی</h3>
+              <SectionDescription 
+                title="جهان موازی" 
+                description="به جهان‌های موازی سفر کنید و نسخه‌های متفاوت زندگی خود را کشف کنید. جهان‌هایی با قوانین فیزیکی، اجتماعی و طبیعی کاملاً متفاوت."
+              />
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('universe')}
@@ -183,3 +206,4 @@ export const FalSection = () => {
     </section>
   );
 };
+
