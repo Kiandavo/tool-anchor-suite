@@ -94,18 +94,19 @@ export const ToolCard = memo(function ToolCard({ tool, highlight = false, compac
     <Link to={`/tool/${slug}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
       <div
         className={`
-          rounded-3xl p-5 shadow-sm transition-all duration-300 border backdrop-blur-sm will-change-transform
-          ${theme.gradient} border-white/10 hover:shadow-lg hover:scale-[1.02]
+          rounded-3xl shadow-sm transition-all duration-300 backdrop-blur-sm will-change-transform
+          border border-white/20 hover:shadow-lg hover:scale-[1.02]
           ${compact ? 'py-4' : 'p-6'}
+          ${theme.gradient}
         `}
       >
         <div className="flex items-start justify-between mb-3">
-          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 
-            bg-white/60 backdrop-blur-sm`}>
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 
+            bg-white/70 backdrop-blur-sm shadow-sm border border-white/40">
             <IconComponent className={theme.iconColor} size={22} />
           </div>
           {isNew && (
-            <span className={`rounded-full px-3 py-0.5 text-xs font-medium ${theme.badgeClass}`}>
+            <span className={`rounded-full px-3 py-0.5 text-xs font-medium ${theme.badgeClass} backdrop-blur-sm shadow-sm`}>
               جدید
             </span>
           )}

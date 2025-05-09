@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -73,6 +74,11 @@ export default {
 					'dark-gray': '#333333',
 					black: '#000000',
 					white: '#FFFFFF',
+					purple: '#9b87f5',
+					green: '#8cc55b',
+					orange: '#F97316',
+					yellow: '#F7C948',
+					pink: '#D946EF',
 				}
 			},
 			borderRadius: {
@@ -108,6 +114,14 @@ export default {
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-5px)' }
+				},
+				'pulse-subtle': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.85' }
+				},
+				'scale-subtle': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.02)' }
 				}
 			},
 			animation: {
@@ -115,7 +129,9 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
 				'slide-up': 'slide-up 0.6s ease-out',
-				'float': 'float 3s ease-in-out infinite'
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite',
+				'scale-subtle': 'scale-subtle 4s ease-in-out infinite'
 			}
 		}
 	},

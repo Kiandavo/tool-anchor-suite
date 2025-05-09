@@ -1,11 +1,10 @@
-
 @layer components {
   .glass-effect {
-    @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm;
+    @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm hover:shadow transition-all duration-300;
   }
 
   .neo-glass {
-    @apply backdrop-blur-xl bg-white/90 border border-white/40 shadow-lg;
+    @apply backdrop-blur-xl bg-white/90 border border-white/40 shadow-md;
   }
 
   .frost-glass {
@@ -17,7 +16,7 @@
   }
 
   .glass-nav {
-    @apply backdrop-blur-lg bg-white/80 border-b border-white/20 shadow-sm;
+    @apply backdrop-blur-xl bg-white/90 border-b border-white/10 shadow-sm;
   }
 
   .card-hover {
@@ -25,25 +24,25 @@
   }
   
   .badge-new {
-    @apply inline-flex items-center rounded-full text-xs font-medium bg-primary/15 text-primary;
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-primary/15 text-primary;
   }
   
   .tool-card {
     @apply glass-card rounded-2xl transition-all duration-300 hover:-translate-y-1 p-6 h-full;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
     border: 1px solid rgba(255,255,255,0.3);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
   }
   
   .category-card {
     @apply glass-card rounded-2xl p-7 flex flex-col items-center hover:-translate-y-1;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
     border: 1px solid rgba(255,255,255,0.3);
   }
   
   .icon-container {
     @apply w-16 h-16 rounded-full flex items-center justify-center mb-4;
-    background: linear-gradient(135deg, rgba(var(--primary) / 0.2), rgba(var(--accent) / 0.1));
+    background: linear-gradient(135deg, rgba(var(--primary) / 0.1), rgba(var(--accent) / 0.05));
     box-shadow: 0 4px 12px rgba(var(--primary) / 0.1);
   }
 
@@ -53,14 +52,14 @@
   }
   
   .vibrant-button {
-    @apply relative overflow-hidden rounded-full px-6 py-2 font-medium text-white transition-all duration-300;
+    @apply relative overflow-hidden rounded-full px-6 py-2.5 font-medium text-white transition-all duration-300;
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     box-shadow: 0 4px 12px rgba(var(--primary) / 0.2);
   }
   
   .vibrant-card {
     @apply neo-glass rounded-2xl p-6 transition-all duration-300;
-    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
     border: 1px solid rgba(255,255,255,0.4);
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   }
@@ -78,13 +77,42 @@
     @apply mr-auto ml-0;
   }
 
+  /* Apple-style button variants */
+  .button-apple-primary {
+    @apply rounded-full bg-gradient-to-b from-apple-blue to-apple-blue/90 text-white px-5 py-2.5 font-medium 
+    shadow-sm hover:shadow-md active:scale-[0.98] transition-all;
+  }
+  
+  .button-apple-secondary {
+    @apply rounded-full border border-apple-blue/20 text-apple-blue bg-white px-5 py-2.5 font-medium
+    shadow-sm hover:shadow hover:bg-apple-blue/5 transition-all;
+  }
+
+  /* Apple-style card variants */
+  .card-apple {
+    @apply rounded-2xl bg-white/90 backdrop-blur-lg border border-white/30 p-6 shadow-sm
+    hover:shadow-md transition-all;
+  }
+  
+  .card-apple-gradient {
+    @apply rounded-2xl backdrop-blur-md border border-white/20 p-6 shadow-sm
+    hover:shadow-md transition-all;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+  }
+
+  /* Apple-style dividers */
+  .divider-gradient {
+    @apply h-px w-full;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+  }
+
   /* Fortune telling specific components */
   .fortune-card {
-    @apply relative overflow-hidden transition-all duration-300;
+    @apply relative overflow-hidden transition-all duration-300 rounded-2xl border shadow-sm;
   }
   
   .fortune-card-header {
-    @apply relative z-10 border-b transition-colors duration-300;
+    @apply relative z-10 border-b transition-colors duration-300 bg-white/70 backdrop-blur-sm;
   }
   
   .fortune-card-content {
@@ -101,7 +129,7 @@
   
   .zodiac-wheel {
     @apply rounded-full flex items-center justify-center;
-    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 70%, rgba(255,255,255,0.2) 100%);
+    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 70%, rgba(255,255,255,0.5) 100%);
   }
   
   .mystical-border {
@@ -109,7 +137,7 @@
   }
   
   .prediction-container {
-    @apply bg-white/30 p-4 rounded-lg shadow-inner relative;
+    @apply bg-white/60 backdrop-blur-sm p-4 rounded-lg shadow-inner relative;
   }
   
   .animate-shimmer {
@@ -127,19 +155,28 @@
     background: linear-gradient(
       to bottom right,
       rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0.1) 50%,
+      rgba(255,255,255,0.2) 50%,
       rgba(255,255,255,0) 100%
     );
     transform: rotate(30deg);
     animation: shimmer 3s infinite;
   }
+
+  /* Apple-style badges */
+  .badge-apple {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-white/70 backdrop-blur-sm 
+    shadow-sm border border-white/40;
+  }
   
-  @keyframes shimmer {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+  .badge-apple-new {
+    @apply badge-apple bg-blue-50 text-blue-600 border-blue-100;
+  }
+  
+  .badge-apple-premium {
+    @apply badge-apple bg-purple-50 text-purple-600 border-purple-100;
   }
 
-  /* Animations */
+  /* Keep the rest of the existing code */
   @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }

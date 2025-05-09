@@ -40,8 +40,8 @@ export const CategoryCard = memo(function CategoryCard({ category, count }: Cate
   
   return (
     <Link to={`/category/${category}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
-      <div className="glass-effect rounded-3xl p-6 flex flex-col items-center group hover:-translate-y-1 hover:shadow-md will-change-transform">
-        <div className="icon-container transform transition-transform duration-300 group-hover:scale-110 rounded-2xl">
+      <div className="glass-effect rounded-3xl p-6 flex flex-col items-center group hover:-translate-y-1 hover:shadow-lg will-change-transform">
+        <div className="icon-container mb-4 bg-gradient-to-br from-white/90 to-white/60 shadow-sm border border-white/20 w-16 h-16 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
           <IconComponent className="text-apple-blue transition-colors duration-300" size={28} />
         </div>
         <h3 className="text-lg font-medium text-apple-dark-gray mb-1">{categoryLabels[category]}</h3>

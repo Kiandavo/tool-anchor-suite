@@ -1,6 +1,6 @@
 
 import React, { useState, lazy, Suspense } from 'react';
-import { Star, Globe } from 'lucide-react';
+import { Star, Globe, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 // Lazy load components with proper handling for named exports
@@ -12,7 +12,7 @@ const ParallelUniverseExplorer = lazy(() => import('./parallelUniverse/ParallelU
 
 // Loading component
 const LoadingPlaceholder = () => (
-  <div className="h-64 border rounded-lg flex items-center justify-center bg-gray-50/50">
+  <div className="h-64 border rounded-lg flex items-center justify-center bg-white/50 backdrop-blur-sm shadow-sm">
     <div className="text-center">
       <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-2"></div>
       <p className="text-sm text-muted-foreground">در حال بارگذاری...</p>
@@ -24,7 +24,7 @@ const LoadingPlaceholder = () => (
 const SectionDescription = ({ title, description }: { title: string, description: string }) => (
   <div className="text-center">
     <h3 className="text-lg font-bold mb-3">{title}</h3>
-    <p className="text-sm text-gray-600 mb-4 max-w-md mx-auto">{description}</p>
+    <p className="text-sm text-gray-600 mb-6 max-w-md mx-auto">{description}</p>
   </div>
 );
 
@@ -47,12 +47,12 @@ export const FalSection = () => {
   };
 
   return (
-    <section className="mb-8 space-y-6 animate-fade-in" style={{ animationDelay: '0.15s' }}>
+    <section className="mb-12 space-y-6 animate-fade-in rounded-3xl border border-[#b0c8e6]/30 bg-gradient-to-br from-white to-[#f8faff] shadow-sm p-8" style={{ animationDelay: '0.15s' }}>
       {/* Section Header - Fortune Telling */}
-      <div className="flex items-center justify-center mb-3">
+      <div className="flex items-center justify-center mb-6">
         <div className="h-0.5 bg-gradient-to-r from-transparent via-[#b0c8e6] to-transparent w-1/4"></div>
-        <h2 className="text-center text-[#143a5c] font-bold text-lg px-4 flex items-center">
-          <Star size={16} className="ml-2 text-[#b0c8e6]" />
+        <h2 className="text-center text-[#143a5c] font-bold text-xl px-4 flex items-center">
+          <Star size={20} className="ml-2 text-[#b0c8e6]" />
           فال و طالع بینی
         </h2>
         <div className="h-0.5 bg-gradient-to-r from-[#b0c8e6] via-[#b0c8e6] to-transparent w-1/4"></div>
@@ -63,7 +63,7 @@ export const FalSection = () => {
         {/* Hafez Fortune */}
         <div>
           {!loadedComponents.hafez ? (
-            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+            <div className="rounded-2xl border shadow-sm bg-white/80 backdrop-blur-sm p-5 h-64">
               <SectionDescription 
                 title="فال حافظ" 
                 description="با نیت قلبی و تمرکز، از دیوان حافظ شیرازی، شعری به عنوان راهنمایی و تفأل دریافت کنید. شعر حافظ پاسخی به نیت شما خواهد بود."
@@ -71,9 +71,12 @@ export const FalSection = () => {
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('hafez')}
-                  className="bg-gradient-to-r from-primary/80 to-primary"
+                  variant="apple"
+                  size="apple-sm"
+                  className="bg-gradient-to-b from-[#3a88f5] to-[#2b6dd1]"
                 >
                   نیت کرده و باز کنید
+                  <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
                 </Button>
               </div>
             </div>
@@ -87,7 +90,7 @@ export const FalSection = () => {
         {/* Horoscope */}
         <div>
           {!loadedComponents.horoscope ? (
-            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+            <div className="rounded-2xl border shadow-sm bg-white/80 backdrop-blur-sm p-5 h-64">
               <SectionDescription 
                 title="طالع بینی" 
                 description="با انتخاب برج تولد خود، پیش‌بینی‌های مربوط به زندگی، عشق، کار و سلامت خود را دریافت کنید. راهنمایی‌هایی برای آگاهی از مسیر پیش رو."
@@ -95,9 +98,12 @@ export const FalSection = () => {
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('horoscope')}
-                  className="bg-gradient-to-r from-primary/80 to-primary"
+                  variant="apple"
+                  size="apple-sm"
+                  className="bg-gradient-to-b from-[#3a88f5] to-[#2b6dd1]"
                 >
                   دیدن طالع بینی
+                  <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
                 </Button>
               </div>
             </div>
@@ -111,7 +117,7 @@ export const FalSection = () => {
         {/* Rumi Istikhara */}
         <div>
           {!loadedComponents.rumi ? (
-            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+            <div className="rounded-2xl border shadow-sm bg-white/80 backdrop-blur-sm p-5 h-64">
               <SectionDescription 
                 title="استخاره با مولانا" 
                 description="با نیت و سؤال خود، به شعری از مولانا برای راهنمایی و مشورت دست یابید. کلمات عارف بزرگ، چراغی برای مسیر انتخاب شما خواهد بود."
@@ -119,9 +125,12 @@ export const FalSection = () => {
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('rumi')}
-                  className="bg-gradient-to-r from-primary/80 to-primary"
+                  variant="apple"
+                  size="apple-sm"
+                  className="bg-gradient-to-b from-[#3a88f5] to-[#2b6dd1]"
                 >
                   انجام استخاره
+                  <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
                 </Button>
               </div>
             </div>
@@ -134,10 +143,10 @@ export const FalSection = () => {
       </div>
       
       {/* Section Header - Mystical Exploration */}
-      <div className="flex items-center justify-center mb-3 mt-10">
+      <div className="flex items-center justify-center mb-6 mt-10">
         <div className="h-0.5 bg-gradient-to-r from-transparent via-[#a99af0] to-transparent w-1/4"></div>
-        <h2 className="text-center text-[#2a1c64] font-bold text-lg px-4 flex items-center">
-          <Globe size={16} className="ml-2 text-[#a99af0]" />
+        <h2 className="text-center text-[#2a1c64] font-bold text-xl px-4 flex items-center">
+          <Globe size={20} className="ml-2 text-[#a99af0]" />
           اکتشافات عرفانی
         </h2>
         <div className="h-0.5 bg-gradient-to-r from-[#a99af0] via-[#a99af0] to-transparent w-1/4"></div>
@@ -148,7 +157,7 @@ export const FalSection = () => {
         {/* Tarot Reading */}
         <div>
           {!loadedComponents.tarot ? (
-            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+            <div className="rounded-2xl border shadow-sm bg-white/80 backdrop-blur-sm p-5 h-64">
               <SectionDescription 
                 title="فال تاروت" 
                 description="با انتخاب کارت‌های تاروت، به بینش‌های عمیق درباره گذشته، حال و آینده‌ دست یابید. نمادهای باستانی، رازهای زندگی شما را آشکار می‌کنند."
@@ -156,9 +165,12 @@ export const FalSection = () => {
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('tarot')}
-                  className="bg-gradient-to-r from-[#143a5c]/80 to-[#143a5c]"
+                  variant="apple"
+                  size="apple-sm"
+                  className="bg-gradient-to-b from-[#643ab0] to-[#4e2b8a]"
                 >
                   انجام فال تاروت
+                  <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
                 </Button>
               </div>
             </div>
@@ -172,7 +184,7 @@ export const FalSection = () => {
         {/* Parallel Universe */}
         <div>
           {!loadedComponents.universe ? (
-            <div className="rounded-lg border shadow-sm bg-white p-4 h-64">
+            <div className="rounded-2xl border shadow-sm bg-white/80 backdrop-blur-sm p-5 h-64">
               <SectionDescription 
                 title="جهان موازی" 
                 description="به جهان‌های موازی سفر کنید و نسخه‌های متفاوت زندگی خود را کشف کنید. جهان‌هایی با قوانین فیزیکی، اجتماعی و طبیعی کاملاً متفاوت."
@@ -180,9 +192,12 @@ export const FalSection = () => {
               <div className="flex justify-center">
                 <Button 
                   onClick={() => handleLoadComponent('universe')}
-                  className="bg-gradient-to-r from-[#143a5c]/80 to-[#143a5c]"
+                  variant="apple"
+                  size="apple-sm"
+                  className="bg-gradient-to-b from-[#643ab0] to-[#4e2b8a]"
                 >
                   کاوش جهان‌های موازی
+                  <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
                 </Button>
               </div>
             </div>
@@ -193,17 +208,6 @@ export const FalSection = () => {
           )}
         </div>
       </div>
-      
-      {/* Visual connector between the two components */}
-      <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 opacity-10 pointer-events-none">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="40" stroke="#6e42ca" strokeWidth="2" fill="none" />
-          <circle cx="50" cy="50" r="30" stroke="#143a5c" strokeWidth="1" fill="none" />
-          <line x1="10" y1="50" x2="90" y2="50" stroke="#6e42ca" strokeWidth="1" />
-          <line x1="50" y1="10" x2="50" y2="90" stroke="#143a5c" strokeWidth="1" />
-        </svg>
-      </div>
     </section>
   );
 };
-
