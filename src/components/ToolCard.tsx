@@ -18,7 +18,27 @@ import {
   Filter, 
   Activity,
   Calendar,
-  Sparkles
+  Sparkles,
+  BookOpen,
+  CheckSquare,
+  Palette,
+  BookMarked,
+  Pen,
+  User,
+  Book,
+  FileText,
+  Clock,
+  Pencil,
+  LayoutGrid,
+  Globe,
+  CalendarDays,
+  School,
+  PaintBucket,
+  Shuffle,
+  Star,
+  Gift,
+  Award,
+  Flame
 } from 'lucide-react';
 
 // Map icon strings to Lucide components - moved outside component
@@ -37,7 +57,26 @@ const iconMap = {
   'hash': Hash,
   'calendar': Calendar,
   'calculator': Calculator,
-  'sparkles': Sparkles
+  'sparkles': Sparkles,
+  'book-open': BookOpen,
+  'list-check': CheckSquare,
+  'paint-bucket': PaintBucket,
+  'pen': Pen,
+  'user': User,
+  'book': Book,
+  'file-text': FileText,
+  'clock': Clock,
+  'pencil': Pencil,
+  'layout-grid': LayoutGrid,
+  'globe': Globe,
+  'calendar-days': CalendarDays,
+  'school': School,
+  'shuffle': Shuffle,
+  'star': Star,
+  'gift': Gift,
+  'award': Award,
+  'flame': Flame,
+  'random': Dice6
 };
 
 interface ToolCardProps {
