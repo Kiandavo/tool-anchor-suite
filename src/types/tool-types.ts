@@ -5,7 +5,11 @@ export type ToolCategory =
   | "seo" 
   | "calculators" 
   | "number" 
-  | "random";
+  | "random"
+  | "educational"
+  | "productivity"
+  | "design"
+  | "persian-cultural";
 
 export interface Tool {
   id: string;
@@ -25,5 +29,9 @@ export const categoryLabels: Record<ToolCategory, string> = {
   seo: "سئو",
   calculators: "ماشین حساب",
   number: "اعداد",
-  random: "تصادفی"
+  random: "تصادفی",
+  educational: "آموزشی",
+  productivity: "بهره‌وری",
+  design: "طراحی",
+  "persian-cultural": "فرهنگ فارسی"
 };

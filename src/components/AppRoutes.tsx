@@ -8,6 +8,7 @@ import Search from "@/pages/Search";
 import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
 import AllTools from "@/pages/AllTools";
+import Community from "@/pages/Community";
 
 export const AppRoutes = () => {
   const ScrollToTop = () => {
@@ -25,9 +26,9 @@ export const AppRoutes = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/all-tools" element={<AllTools />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/community" element={<Community />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
 };
-

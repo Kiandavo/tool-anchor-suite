@@ -1,3 +1,4 @@
+
 import { Tool, ToolCategory } from '@/types/tool-types';
 import { textTools } from './tool-categories/text-tools';
 import { imageTools } from './tool-categories/image-tools';
@@ -5,6 +6,10 @@ import { seoTools } from './tool-categories/seo-tools';
 import { calculatorTools } from './tool-categories/calculator-tools';
 import { numberTools } from './tool-categories/number-tools';
 import { randomTools } from './tool-categories/random-tools';
+import { educationalTools } from './tool-categories/educational-tools';
+import { productivityTools } from './tool-categories/productivity-tools';
+import { designTools } from './tool-categories/design-tools';
+import { persianCulturalTools } from './tool-categories/persian-cultural-tools';
 import { categoryLabels } from '@/types/tool-types';
 
 // Combine all tools
@@ -14,7 +19,11 @@ export const tools: Tool[] = [
   ...seoTools,
   ...calculatorTools,
   ...numberTools,
-  ...randomTools
+  ...randomTools,
+  ...educationalTools,
+  ...productivityTools,
+  ...designTools,
+  ...persianCulturalTools
 ];
 
 // Re-export types and labels
