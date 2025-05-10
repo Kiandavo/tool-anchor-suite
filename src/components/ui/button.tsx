@@ -20,7 +20,10 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         apple: "bg-gradient-to-b from-apple-blue to-apple-blue/90 text-white hover:shadow-md active:scale-[0.98] shadow-sm",
-        "apple-outline": "border border-apple-blue/20 text-apple-blue bg-white hover:bg-apple-blue/5 shadow-sm"
+        "apple-outline": "border border-apple-blue/20 text-apple-blue bg-white hover:bg-apple-blue/5 shadow-sm",
+        "apple-secondary": "bg-gradient-to-b from-white to-gray-50 text-gray-800 border border-gray-200/60 hover:shadow-md",
+        "apple-destructive": "bg-gradient-to-b from-apple-red to-apple-red/90 text-white hover:shadow-md active:scale-[0.98] shadow-sm",
+        "apple-success": "bg-gradient-to-b from-apple-green to-apple-green/90 text-white hover:shadow-md active:scale-[0.98] shadow-sm",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -29,6 +32,8 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
         apple: "h-11 rounded-full px-8 py-2.5",
         "apple-sm": "h-9 rounded-full px-5 py-2",
+        "apple-xs": "h-7 rounded-full px-3 py-1 text-xs",
+        "apple-lg": "h-12 rounded-full px-10 py-3",
       },
     },
     defaultVariants: {

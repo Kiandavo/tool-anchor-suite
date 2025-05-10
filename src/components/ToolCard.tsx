@@ -95,9 +95,8 @@ export const ToolCard = memo(function ToolCard({ tool, highlight = false, compac
       <div
         className={`
           rounded-3xl shadow-sm transition-all duration-300 backdrop-blur-sm will-change-transform
-          border border-white/20 hover:shadow-lg hover:scale-[1.02]
+          border border-white/40 hover:shadow-lg hover:scale-[1.02] neo-glass
           ${compact ? 'py-4' : 'p-6'}
-          ${theme.gradient}
         `}
       >
         <div className="flex items-start justify-between mb-3">
@@ -106,7 +105,7 @@ export const ToolCard = memo(function ToolCard({ tool, highlight = false, compac
             <IconComponent className={theme.iconColor} size={22} />
           </div>
           {isNew && (
-            <span className={`rounded-full px-3 py-0.5 text-xs font-medium ${theme.badgeClass} backdrop-blur-sm shadow-sm`}>
+            <span className="rounded-full px-3 py-1 text-xs font-medium bg-white/70 backdrop-blur-sm shadow-sm border border-white/30 text-apple-blue">
               جدید
             </span>
           )}
@@ -114,7 +113,7 @@ export const ToolCard = memo(function ToolCard({ tool, highlight = false, compac
         <div className={`${compact ? 'space-y-1' : 'mb-2'}`}>
           <h3 className={`font-medium text-gray-800 line-clamp-1 ${compact ? 'text-base' : 'text-lg'}`}>{name}</h3>
           {!compact && (
-            <p className="text-sm text-gray-600 mt-2 line-clamp-2">{description}</p>
+            <p className="text-sm text-gray-600 mt-2 line-clamp-2 bg-white/30 p-1.5 rounded-md">{description}</p>
           )}
         </div>
       </div>

@@ -1,22 +1,23 @@
+
 @layer components {
   .glass-effect {
-    @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-sm hover:shadow transition-all duration-300;
+    @apply backdrop-blur-lg bg-white/80 border border-white/40 shadow-sm hover:shadow transition-all duration-300;
   }
 
   .neo-glass {
-    @apply backdrop-blur-xl bg-white/90 border border-white/40 shadow-md;
+    @apply backdrop-blur-xl bg-white/90 border border-white/40 shadow-sm;
   }
 
   .frost-glass {
-    @apply backdrop-blur-md bg-white/60 border border-white/10;
+    @apply backdrop-blur-md bg-white/70 border border-white/20;
   }
 
   .glass-card {
-    @apply backdrop-blur-md border border-white/30 shadow-sm hover:shadow-md transition-all duration-300;
+    @apply backdrop-blur-md border border-white/40 shadow-sm hover:shadow-md transition-all duration-300;
   }
 
   .glass-nav {
-    @apply backdrop-blur-xl bg-white/90 border-b border-white/10 shadow-sm;
+    @apply backdrop-blur-xl bg-white/90 border-b border-white/20 shadow-sm;
   }
 
   .card-hover {
@@ -29,19 +30,19 @@
   
   .tool-card {
     @apply glass-card rounded-2xl transition-all duration-300 hover:-translate-y-1 p-6 h-full;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-    border: 1px solid rgba(255,255,255,0.3);
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+    border: 1px solid rgba(255,255,255,0.5);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
   }
   
   .category-card {
     @apply glass-card rounded-2xl p-7 flex flex-col items-center hover:-translate-y-1;
-    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
-    border: 1px solid rgba(255,255,255,0.3);
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+    border: 1px solid rgba(255,255,255,0.5);
   }
   
   .icon-container {
-    @apply w-16 h-16 rounded-full flex items-center justify-center mb-4;
+    @apply w-16 h-16 rounded-xl flex items-center justify-center mb-4;
     background: linear-gradient(135deg, rgba(var(--primary) / 0.1), rgba(var(--accent) / 0.05));
     box-shadow: 0 4px 12px rgba(var(--primary) / 0.1);
   }
@@ -60,7 +61,7 @@
   .vibrant-card {
     @apply neo-glass rounded-2xl p-6 transition-all duration-300;
     background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
-    border: 1px solid rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.5);
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   }
 
@@ -90,12 +91,12 @@
 
   /* Apple-style card variants */
   .card-apple {
-    @apply rounded-2xl bg-white/90 backdrop-blur-lg border border-white/30 p-6 shadow-sm
+    @apply rounded-2xl bg-white/90 backdrop-blur-lg border border-white/40 p-6 shadow-sm
     hover:shadow-md transition-all;
   }
   
   .card-apple-gradient {
-    @apply rounded-2xl backdrop-blur-md border border-white/20 p-6 shadow-sm
+    @apply rounded-2xl backdrop-blur-md border border-white/30 p-6 shadow-sm
     hover:shadow-md transition-all;
     background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
   }
@@ -112,7 +113,7 @@
   }
   
   .fortune-card-header {
-    @apply relative z-10 border-b transition-colors duration-300 bg-white/70 backdrop-blur-sm;
+    @apply relative z-10 border-b transition-colors duration-300 bg-white/80 backdrop-blur-sm;
   }
   
   .fortune-card-content {
@@ -137,7 +138,7 @@
   }
   
   .prediction-container {
-    @apply bg-white/60 backdrop-blur-sm p-4 rounded-lg shadow-inner relative;
+    @apply bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-inner relative;
   }
   
   .animate-shimmer {
@@ -164,16 +165,16 @@
 
   /* Apple-style badges */
   .badge-apple {
-    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-white/70 backdrop-blur-sm 
-    shadow-sm border border-white/40;
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-white/80 backdrop-blur-sm 
+    shadow-sm border border-white/50;
   }
   
   .badge-apple-new {
-    @apply badge-apple bg-blue-50 text-blue-600 border-blue-100;
+    @apply badge-apple bg-blue-50 text-blue-600 border-blue-200;
   }
   
   .badge-apple-premium {
-    @apply badge-apple bg-purple-50 text-purple-600 border-purple-100;
+    @apply badge-apple bg-purple-50 text-purple-600 border-purple-200;
   }
 
   /* Keep the rest of the existing code */

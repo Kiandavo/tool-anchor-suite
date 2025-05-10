@@ -12,13 +12,15 @@ export const ToolsSection = () => {
   return (
     <>
       {/* New Tools */}
-      <section className="mb-16 sm:mb-24 animate-slide-up rounded-3xl border border-[#8cc55b]/20 bg-gradient-to-br from-[#F2FCE2] to-[#F7FDF0] shadow-sm" style={{ animationDelay: '0.2s' }}>
+      <section className="mb-16 sm:mb-24 animate-slide-up rounded-3xl border border-green-200/30 neo-glass shadow-sm" style={{ animationDelay: '0.2s' }}>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-10 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
-            <Sparkles size={24} className="text-[#5ca825] ml-3" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-apple-green/20 to-apple-green/10 flex items-center justify-center mr-3 shadow-sm">
+              <Sparkles size={20} className="text-apple-green" />
+            </div>
             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">ابزارهای جدید</h2>
           </div>
-          <Link to="/all-tools" className="text-[#5ca825] flex items-center text-sm font-medium hover:underline group mt-2 sm:mt-0">
+          <Link to="/all-tools" className="text-apple-green flex items-center text-sm font-medium bg-green-50 py-1.5 px-3 rounded-full hover:bg-green-100/70 transition-colors group mt-2 sm:mt-0">
             مشاهده همه
             <ChevronLeft size={18} className="mr-1 group-hover:translate-x-[-2px] transition-transform" />
           </Link>
@@ -33,13 +35,15 @@ export const ToolsSection = () => {
       </section>
 
       {/* Popular Tools */}
-      <section className="mb-16 sm:mb-24 animate-slide-up rounded-3xl border border-primary/10 bg-gradient-to-br from-[#F1F0FB] to-[#FBFAFF] shadow-sm" style={{ animationDelay: '0.4s' }}>
+      <section className="mb-16 sm:mb-24 animate-slide-up rounded-3xl border border-primary/10 neo-glass shadow-sm" style={{ animationDelay: '0.4s' }}>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-10 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
-            <TrendingUp size={24} className="text-primary ml-3" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mr-3 shadow-sm">
+              <TrendingUp size={20} className="text-primary" />
+            </div>
             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">ابزارهای محبوب</h2>
           </div>
-          <Link to="/all-tools" className="text-primary flex items-center text-sm font-medium hover:underline group mt-2 sm:mt-0">
+          <Link to="/all-tools" className="text-primary flex items-center text-sm font-medium bg-primary/5 py-1.5 px-3 rounded-full hover:bg-primary/10 transition-colors group mt-2 sm:mt-0">
             مشاهده همه
             <ChevronLeft size={18} className="mr-1 group-hover:translate-x-[-2px] transition-transform" />
           </Link>

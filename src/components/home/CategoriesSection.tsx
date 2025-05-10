@@ -17,13 +17,15 @@ export const CategoriesSection = () => {
     <section className="mb-16 sm:mb-24 animate-slide-up px-2">
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center">
-          <Grid3X3 size={24} className="text-primary ml-3" />
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-apple-blue/20 to-apple-blue/10 flex items-center justify-center mr-3 shadow-sm">
+            <Grid3X3 size={20} className="text-apple-blue" />
+          </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">
             دسته‌بندی‌ها
           </h2>
         </div>
         
-        <Link to="/all-tools" className="text-primary flex items-center text-sm font-medium hover:underline group">
+        <Link to="/all-tools" className="text-apple-blue flex items-center text-sm font-medium hover:underline group bg-apple-blue/5 py-1.5 px-3 rounded-full">
           مشاهده همه
           <ChevronLeft size={18} className="mr-1 group-hover:translate-x-[-2px] transition-transform" />
         </Link>
