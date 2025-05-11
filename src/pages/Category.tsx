@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ToolCard } from '@/components/ToolCard';
 import { getToolsByCategory, categoryLabels, ToolCategory } from '@/data/tools';
 import { Search, ArrowLeft } from 'lucide-react';
+import { SeoHead } from '@/components/seo/SeoHead';
 
 const Category = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -22,9 +23,60 @@ const Category = () => {
     : allTools;
 
   const categoryName = categoryLabels[category];
+  
+  // Generate SEO metadata based on category
+  const seoData = useMemo(() => {
+    let title = `${categoryName} - ابزارهای آنلاین لنگر | Langar Tools`;
+    let description = `مجموعه کامل ابزارهای آنلاین ${categoryName} در لنگر. ${allTools.length} ابزار کاربردی برای ${categoryName}.`;
+    let keywords = `ابزارهای ${categoryName}, لنگر, ابزار آنلاین, Langar Tools`;
+    
+    if (category === 'persian-cultural') {
+      title = 'ابزارهای فرهنگ و زبان فارسی - آموزش فارسی، تقویم، ضرب المثل و نام‌های ایرانی | لنگر';
+      description = 'مجموعه ابزارهای فرهنگ و زبان فارسی شامل آموزش زبان فارسی، تبدیل تاریخ، معانی نام‌های ایرانی، ریشه‌شناسی کلمات و ضرب‌المثل‌های فارسی';
+      keywords = 'آموزش زبان فارسی, تقویم شمسی, معانی نام‌های ایرانی, ریشه‌شناسی, ضرب المثل فارسی, فرهنگ فارسی, تمرین خوشنویسی';
+    }
+    
+    // Create schema.org structured data
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": title,
+      "description": description,
+      "url": `https://langar.co/category/${category}`,
+      "inLanguage": "fa-IR",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "لنگر - ابزارهای آنلاین",
+        "url": "https://langar.co"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": categoryName
+      },
+      "itemListElement": allTools.map((tool, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "WebApplication",
+          "name": tool.name,
+          "description": tool.description,
+          "url": `https://langar.co/tool/${tool.slug}`
+        }
+      }))
+    };
+    
+    return { title, description, keywords, schema };
+  }, [category, categoryName, allTools]);
 
   return (
     <Layout title={categoryName} backUrl="/">
+      <SeoHead 
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        schema={seoData.schema}
+      />
+
       <div className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">{categoryName}</h1>

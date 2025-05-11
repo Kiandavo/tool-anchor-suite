@@ -1,4 +1,6 @@
 
+# robots.txt for Langar.co
+
 User-agent: *
 Allow: /
 
@@ -11,11 +13,20 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /*?*
 
-# Allow useful directories
+# Allow useful directories 
 Allow: /tool/
 Allow: /category/
 Allow: /assets/
 Allow: /images/
+
+# Explicitly allow Persian cultural tools
+Allow: /tool/persian-calendar
+Allow: /tool/persian-names
+Allow: /tool/persian-proverbs
+Allow: /tool/persian-handwriting
+Allow: /tool/word-etymology
+Allow: /tool/farsi-learning
+Allow: /category/persian-cultural
 
 # Crawl-delay directive
 Crawl-delay: 1

@@ -21,6 +21,7 @@ export const PersianCulturalSection = () => {
           <Link 
             to="/category/persian-cultural" 
             className="text-violet-600 flex items-center text-sm font-medium bg-white/70 py-1.5 px-4 rounded-full hover:bg-violet-50 transition-all duration-300 mt-2 sm:mt-0 shadow-sm border border-violet-100/50 backdrop-blur-sm group"
+            aria-label="مشاهده همه ابزارهای فرهنگ و زبان فارسی"
           >
             مشاهده همه
             <ChevronLeft size={16} className="mr-1.5 group-hover:translate-x-[-2px] transition-transform" />
@@ -34,6 +35,27 @@ export const PersianCulturalSection = () => {
               style={{ animationDelay: `${0.4 + index * 0.1}s` }}
             >
               <ToolCard tool={tool} />
+            </div>
+          ))}
+        </div>
+        
+        {/* Added schema.org content for better SEO */}
+        <div itemScope itemType="https://schema.org/ItemList" style={{display: 'none'}}>
+          <meta itemProp="name" content="ابزارهای فرهنگ و زبان فارسی" />
+          <meta itemProp="description" content="مجموعه ابزارهای فرهنگ و زبان فارسی شامل آموزش زبان فارسی، تبدیل تاریخ، معانی نام‌های ایرانی و ضرب‌المثل‌های فارسی" />
+          {persianTools.map((tool, index) => (
+            <div 
+              key={`schema-${tool.id}`} 
+              itemProp="itemListElement" 
+              itemScope 
+              itemType="https://schema.org/ListItem"
+            >
+              <meta itemProp="position" content={`${index + 1}`} />
+              <div itemScope itemType="https://schema.org/Thing">
+                <meta itemProp="name" content={tool.name} />
+                <meta itemProp="description" content={tool.description} />
+                <meta itemProp="url" content={`https://langar.co/tool/${tool.slug}`} />
+              </div>
             </div>
           ))}
         </div>
