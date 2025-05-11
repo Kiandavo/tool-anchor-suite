@@ -50,6 +50,6 @@ export const persianCulturalTools: Tool[] = [
     description: "بررسی ریشه و تاریخچه کلمات فارسی",
     isNew: true,
     icon: "file-text",
-    isComingSoon: true
+    isComingSoon: false
   }
 ];

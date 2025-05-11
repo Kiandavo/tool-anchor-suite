@@ -328,5 +328,325 @@ export const persianNames: PersianName[] = [
     gender: "male",
     origin: "persian",
     popularity: "high"
+  },
+  {
+    id: 41,
+    name: "نیما",
+    meaning: "به معنی انسان والامقام و بزرگ",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 42,
+    name: "امیر",
+    meaning: "فرمانده، رئیس، پادشاه",
+    gender: "male",
+    origin: "arabic",
+    popularity: "high"
+  },
+  {
+    id: 43,
+    name: "بابک",
+    meaning: "کوچک پدر، نام یکی از قهرمانان ایرانی",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 44,
+    name: "پویا",
+    meaning: "پویایی، جوینده، سیر کننده",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 45,
+    name: "پرهام",
+    meaning: "پر مانند، پر شبیه، قدرتمند",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 46,
+    name: "دانیال",
+    meaning: "داوری خداوند، نام یکی از پیامبران الهی",
+    gender: "male",
+    origin: "arabic",
+    popularity: "high"
+  },
+  {
+    id: 47,
+    name: "سینا",
+    meaning: "پر تلألو، درخشان، رفیع",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 48,
+    name: "سروش",
+    meaning: "ندای آسمانی، فرشته وحی",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 49,
+    name: "شایان",
+    meaning: "شایسته، سزاوار، درخور",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 50,
+    name: "آیدا",
+    meaning: "سوغات، هدیه، بازگشت",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 51,
+    name: "آنیتا",
+    meaning: "معطر، خوشبو، دلپذیر",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 52,
+    name: "الناز",
+    meaning: "طناز، عشوه‌گر، کوکب زهره",
+    gender: "female",
+    origin: "turkish",
+    popularity: "high"
+  },
+  {
+    id: 53,
+    name: "الهام",
+    meaning: "وحی، درونداد، آنچه به دل افتد",
+    gender: "female",
+    origin: "arabic",
+    popularity: "medium"
+  },
+  {
+    id: 54,
+    name: "پانیذ",
+    meaning: "ریزش باران، شبنم، رطوبت",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 55,
+    name: "پرنیا",
+    meaning: "حریر، پارچه ابریشمی نازک",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 56,
+    name: "پگاه",
+    meaning: "بامداد، سحرگاه، طلوع آفتاب",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 57,
+    name: "پوریا",
+    meaning: "پیروز، موفق، فاتح",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 58,
+    name: "ترانه",
+    meaning: "سرود، آهنگ، نغمه",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 59,
+    name: "تارا",
+    meaning: "ستاره، درخشان، نام الهه در اساطیر هندی",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 60,
+    name: "دلارا",
+    meaning: "آرامش دهنده دل، دلربا",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 61,
+    name: "دریا",
+    meaning: "اقیانوس، دریای بزرگ",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 62,
+    name: "روناک",
+    meaning: "روشن، نورانی، درخشان",
+    gender: "female",
+    origin: "kurdish",
+    popularity: "medium"
+  },
+  {
+    id: 63,
+    name: "ژیلا",
+    meaning: "درخشان، شفاف، زلال",
+    gender: "female",
+    origin: "kurdish",
+    popularity: "medium"
+  },
+  {
+    id: 64,
+    name: "سارینا",
+    meaning: "ستاره درخشان، پاک و آرام",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 65,
+    name: "ساناز",
+    meaning: "آراسته، باناز، زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 66,
+    name: "شادی",
+    meaning: "خوشحالی، سرور، شادمانی",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 67,
+    name: "شقایق",
+    meaning: "نوعی گل سرخ، لاله",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 68,
+    name: "شمیم",
+    meaning: "رایحه، عطر، بوی خوش",
+    gender: "female",
+    origin: "arabic",
+    popularity: "medium"
+  },
+  {
+    id: 69,
+    name: "کیمیا",
+    meaning: "اکسیر، ماده گرانبها، چیز کمیاب",
+    gender: "female",
+    origin: "arabic",
+    popularity: "high"
+  },
+  {
+    id: 70,
+    name: "گیتی",
+    meaning: "جهان، دنیا، گیتی",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 71,
+    name: "نازنین",
+    meaning: "نازدار، زیبا، لطیف",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 72,
+    name: "نرگس",
+    meaning: "نام گلی زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 73,
+    name: "یاسمین",
+    meaning: "نوعی گل سفید و معطر",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 74,
+    name: "یلدا",
+    meaning: "شب بلند، شب چله",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 75,
+    name: "ارسلان",
+    meaning: "شیر، شجاع، دلاور",
+    gender: "male",
+    origin: "turkish",
+    popularity: "medium"
+  },
+  {
+    id: 76,
+    name: "هومن",
+    meaning: "خوش اندیشه، نیک منش",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 77,
+    name: "فرزاد",
+    meaning: "متولد با شکوه و فر",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 78,
+    name: "رضا",
+    meaning: "خشنودی، رضایت، قناعت",
+    gender: "male",
+    origin: "arabic",
+    popularity: "high"
+  },
+  {
+    id: 79,
+    name: "رامین",
+    meaning: "مظهر آرامش و خوشبختی",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 80,
+    name: "شاهین",
+    meaning: "پرنده شکاری، نام پرنده‌ای قدرتمند",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
   }
 ];

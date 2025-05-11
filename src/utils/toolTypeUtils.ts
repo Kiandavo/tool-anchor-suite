@@ -90,7 +90,7 @@ export const toolTypeBySlug: Record<string, string> = {
   "persian-names": "persian-names",
   "persian-proverbs": "persian-proverbs",
   "persian-handwriting": "persian-calligraphy",
-  "word-etymology": "text",
+  "word-etymology": "word-etymology",
   
   // Productivity tools
   "todo-list": "todo-list",
