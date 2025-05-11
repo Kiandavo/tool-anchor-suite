@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Pen, Grid, Download, Settings, Eye, Printer, Eraser, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -109,8 +108,8 @@ export default function PersianCalligraphy() {
       return;
     }
     
-    const style = document.createElement('style');
-    style.innerHTML = `
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = `
       @media print {
         body { 
           direction: rtl;
@@ -144,7 +143,7 @@ export default function PersianCalligraphy() {
       }
     `;
     
-    printWindow.document.head.appendChild(style);
+    printWindow.document.head.appendChild(styleElement);
     
     let content = '<div class="practice-sheet">';
     

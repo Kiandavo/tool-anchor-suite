@@ -130,7 +130,7 @@ function gregorianToHijri(year: number, month: number, day: number): [number, nu
   const hijriDays = Math.floor(timestamp / (1000 * 60 * 60 * 24) - (227023.7991));
   const hijriCycle = Math.floor(hijriDays / 10631);
   const hijriYearsInCycle = Math.floor((hijriDays - hijriCycle * 10631) / 354.367);
-  const hijriDaysInYear = Math.floor(hijriDays - hijriCycle * 10631 - hijriYearsInYear * 354.367);
+  const hijriDaysInYear = Math.floor(hijriDays - hijriCycle * 10631 - hijriYearsInCycle * 354.367);
   
   // Calculate month and day
   let hijriMonth = 1;

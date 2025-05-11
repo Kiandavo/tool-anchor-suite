@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Type, Minus, Plus, SliderHorizontal, Bold, Italic, Underline, Settings, Check, Copy, Plus as PlusIcon, Trash } from 'lucide-react';
+import { Type, Minus, Plus, SlidersHorizontal, Bold, Italic, Underline, Settings, Check, Copy, Plus as PlusIcon, Trash } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
