@@ -25,7 +25,7 @@ const categoryColors: Record<ProverbCategory, string> = {
 export default function PersianProverbs() {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<ProverbCategory | ''>('');
+  const [selectedCategory, setSelectedCategory] = useState<ProverbCategory | 'all'>('all');
   const [selectedProverb, setSelectedProverb] = useState<PersianProverb | null>(null);
 
   // Filter proverbs based on search query and category
@@ -35,7 +35,7 @@ export default function PersianProverbs() {
         proverb.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
         proverb.meaning.toLowerCase().includes(searchQuery.toLowerCase());
       
-      const matchesCategory = selectedCategory === '' || proverb.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'all' || proverb.category === selectedCategory;
       
       return matchesSearch && matchesCategory;
     });
@@ -82,7 +82,7 @@ export default function PersianProverbs() {
                 className="pl-10 pr-3"
               />
             </div>
-            <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as ProverbCategory | '')}>
+            <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as ProverbCategory | 'all')}>
               <SelectTrigger className="w-full sm:w-48">
                 <div className="flex items-center">
                   <Filter size={16} className="mr-2" />
@@ -90,7 +90,7 @@ export default function PersianProverbs() {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">همه دسته‌ها</SelectItem>
+                <SelectItem value="all">همه دسته‌ها</SelectItem>
                 {Object.entries(proverbCategories).map(([key, value]) => (
                   <SelectItem key={key} value={key}>
                     {value}
