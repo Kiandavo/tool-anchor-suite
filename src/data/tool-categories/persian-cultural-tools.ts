@@ -51,5 +51,15 @@ export const persianCulturalTools: Tool[] = [
     isNew: true,
     icon: "file-text",
     isComingSoon: false
+  },
+  {
+    id: "farsi-learning",
+    slug: "farsi-learning",
+    name: "آموزش زبان فارسی",
+    category: "persian-cultural",
+    description: "Learn Farsi for English speakers - Common phrases, alphabet and grammar",
+    isNew: true,
+    icon: "book-open",
+    isComingSoon: false
   }
 ];

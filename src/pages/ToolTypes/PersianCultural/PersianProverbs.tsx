@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { Book, Search, RefreshCw, Bookmark, Filter } from 'lucide-react';
+import { Book, Search, RefreshCw, Bookmark, Filter, GlobeIcon } from 'lucide-react';
 import { persianProverbs, proverbCategories, PersianProverb, ProverbCategory } from '@/data/persian-proverbs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
 
 const categoryColors: Record<ProverbCategory, string> = {
   'life-wisdom': 'bg-blue-100 text-blue-800 border-blue-200',
@@ -27,19 +28,21 @@ export default function PersianProverbs() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ProverbCategory | 'all'>('all');
   const [selectedProverb, setSelectedProverb] = useState<PersianProverb | null>(null);
+  const [showEnglish, setShowEnglish] = useState(false);
 
   // Filter proverbs based on search query and category
   const filteredProverbs = useMemo(() => {
     return persianProverbs.filter(proverb => {
       const matchesSearch = searchQuery === '' || 
         proverb.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        proverb.meaning.toLowerCase().includes(searchQuery.toLowerCase());
+        proverb.meaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (showEnglish && proverb.english.toLowerCase().includes(searchQuery.toLowerCase()));
       
       const matchesCategory = selectedCategory === 'all' || proverb.category === selectedCategory;
       
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, showEnglish]);
 
   // Get a random proverb
   const getRandomProverb = () => {
@@ -108,6 +111,23 @@ export default function PersianProverbs() {
             </Button>
           </div>
 
+          <div className="flex items-center gap-2 mb-6">
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="show-english"
+                checked={showEnglish}
+                onCheckedChange={setShowEnglish}
+              />
+              <label
+                htmlFor="show-english"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-1"
+              >
+                <GlobeIcon size={16} />
+                نمایش ترجمه انگلیسی
+              </label>
+            </div>
+          </div>
+
           <Tabs defaultValue="list">
             <TabsList className="grid w-full grid-cols-2 mb-4">
               <TabsTrigger value="list">فهرست</TabsTrigger>
@@ -133,6 +153,11 @@ export default function PersianProverbs() {
                           </Badge>
                         </div>
                         <p className="text-gray-600 text-sm line-clamp-2">{proverb.meaning}</p>
+                        {showEnglish && (
+                          <p className="text-gray-600 text-sm mt-2 italic line-clamp-2">
+                            <span className="font-medium">English: </span>{proverb.english}
+                          </p>
+                        )}
                       </CardContent>
                     </Card>
                   ))}
@@ -163,6 +188,11 @@ export default function PersianProverbs() {
                     <div>
                       <h3 className="text-sm font-medium text-gray-500 mb-2">معنی و مفهوم:</h3>
                       <p className="text-lg">{selectedProverb.meaning}</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-sm font-medium text-gray-500 mb-2">ترجمه انگلیسی:</h3>
+                      <p className="text-lg italic">{selectedProverb.english}</p>
                     </div>
                     
                     <div>

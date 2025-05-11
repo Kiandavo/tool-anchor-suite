@@ -18,6 +18,7 @@ import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
 import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
 import PersianProverbs from '@/pages/ToolTypes/PersianCultural/PersianProverbs';
 import PersianCalligraphy from '@/pages/ToolTypes/PersianCultural/PersianCalligraphy';
+import FarsiLearning from '@/pages/ToolTypes/PersianCultural/FarsiLearning';
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
 import ColorPalette from '@/pages/ToolTypes/DesignTools/ColorPalette';
@@ -71,6 +72,10 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   
   if (toolType === 'persian-calligraphy') {
     return <PersianCalligraphy />;
+  }
+  
+  if (toolType === 'farsi-learning') {
+    return <FarsiLearning />;
   }
   
   // Productivity tools
