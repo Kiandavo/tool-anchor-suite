@@ -10,7 +10,7 @@ export const designTools: Tool[] = [
     description: "ایجاد پالت‌های رنگی هماهنگ برای طراحی‌های گرافیکی",
     isNew: true,
     icon: "palette",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "simple-logo-maker",
@@ -40,6 +40,6 @@ export const designTools: Tool[] = [
     description: "مشاهده پیش‌نمایش متن با فونت‌های مختلف",
     isNew: true,
     icon: "type",
-    isComingSoon: true
+    isComingSoon: false
   }
 ];

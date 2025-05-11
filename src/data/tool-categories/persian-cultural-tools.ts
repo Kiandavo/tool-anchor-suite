@@ -10,7 +10,7 @@ export const persianCulturalTools: Tool[] = [
     description: "تبدیل تاریخ بین تقویم‌های شمسی، قمری و میلادی",
     isNew: true,
     icon: "calendar",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "persian-names",
@@ -20,7 +20,7 @@ export const persianCulturalTools: Tool[] = [
     description: "جستجو و دریافت معنی و ریشه نام‌های فارسی",
     isNew: true,
     icon: "user",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "persian-proverbs",
@@ -30,7 +30,7 @@ export const persianCulturalTools: Tool[] = [
     description: "مجموعه ضرب‌المثل‌ها و اصطلاحات فارسی با معانی",
     isNew: true,
     icon: "book",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "persian-handwriting",
@@ -40,7 +40,7 @@ export const persianCulturalTools: Tool[] = [
     description: "تولید صفحات تمرین برای خوشنویسی فارسی",
     isNew: true,
     icon: "pen",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "word-etymology",

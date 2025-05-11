@@ -53,16 +53,16 @@ export const toolTypeBySlug: Record<string, string> = {
   "rent-factors": "rent-factors",
   "world-time": "world-time",
   "loan-calculator": "loan-calculator",
-  "power-calculator": "power-calculator", // Added
-  "salary-tax-calculator": "salary-tax-calculator", // Added
-  "range-calculator": "range-calculator", // Added
+  "power-calculator": "power-calculator",
+  "salary-tax-calculator": "salary-tax-calculator",
+  "range-calculator": "range-calculator",
   
   // Random tools
   "random-password": "random-password",
   "random-number": "random",
   "random-string": "random",
   "random-date": "random",
-  "random-color": "random-color", // Updated
+  "random-color": "random-color",
   "random-name": "random",
   "random-email": "random",
   "random-username": "random",
@@ -84,4 +84,24 @@ export const toolTypeBySlug: Record<string, string> = {
   "robots-txt-generator": "seo",
   "keyword-density": "seo",
   "keyword-extractor": "seo",
+  
+  // Persian Cultural tools
+  "persian-calendar": "persian-calendar",
+  "persian-names": "persian-names",
+  "persian-proverbs": "persian-proverbs",
+  "persian-handwriting": "persian-calligraphy",
+  "word-etymology": "text",
+  
+  // Productivity tools
+  "todo-list": "todo-list",
+  "pomodoro-timer": "pomodoro-timer",
+  "note-taking": "note-taking",
+  "calendar-scheduler": "calendar-scheduler",
+  "project-board": "project-board",
+  
+  // Design tools
+  "color-palette": "color-palette",
+  "simple-logo-maker": "simple-logo-maker",
+  "social-media-template": "social-media-template",
+  "font-preview": "font-preview"
 };

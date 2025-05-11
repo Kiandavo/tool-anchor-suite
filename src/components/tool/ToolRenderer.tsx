@@ -14,6 +14,14 @@ import SeoTool from '@/pages/ToolTypes/SeoTool';
 import RandomPasswordTool from '@/pages/ToolTypes/RandomPasswordTool';
 import NumberTool from '@/pages/ToolTypes/NumberTool';
 import RandomColorGenerator from '@/pages/ToolTypes/RandomTools/RandomColorGenerator';
+import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
+import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
+import PersianProverbs from '@/pages/ToolTypes/PersianCultural/PersianProverbs';
+import PersianCalligraphy from '@/pages/ToolTypes/PersianCultural/PersianCalligraphy';
+import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
+import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
+import ColorPalette from '@/pages/ToolTypes/DesignTools/ColorPalette';
+import FontPreview from '@/pages/ToolTypes/DesignTools/FontPreview';
 
 interface ToolRendererProps {
   tool: Tool;
@@ -48,6 +56,41 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     return <RandomColorGenerator />;
   }
   
+  // Persian Cultural tools
+  if (toolType === 'persian-calendar') {
+    return <PersianCalendar />;
+  }
+  
+  if (toolType === 'persian-names') {
+    return <PersianNames />;
+  }
+  
+  if (toolType === 'persian-proverbs') {
+    return <PersianProverbs />;
+  }
+  
+  if (toolType === 'persian-calligraphy') {
+    return <PersianCalligraphy />;
+  }
+  
+  // Productivity tools
+  if (toolType === 'pomodoro-timer') {
+    return <PomodoroTimer />;
+  }
+  
+  if (toolType === 'project-board') {
+    return <ProjectBoard />;
+  }
+  
+  // Design tools
+  if (toolType === 'color-palette') {
+    return <ColorPalette />;
+  }
+  
+  if (toolType === 'font-preview') {
+    return <FontPreview />;
+  }
+  
   // For calculator tools and others, use the specific renderers
   switch (toolType) {
     case 'calculator':
@@ -60,9 +103,9 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     case 'scientific-calculator':
     case 'rent-factors':
     case 'loan-calculator':
-    case 'power-calculator':     // Added
-    case 'salary-tax-calculator': // Added
-    case 'range-calculator':     // Added
+    case 'power-calculator':
+    case 'salary-tax-calculator':
+    case 'range-calculator':
       return <CalculatorTool slug={slug} type={toolType} />;
     case 'random':
       return <UtilityToolRenderer slug={slug} type={toolType} />;

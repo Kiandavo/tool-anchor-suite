@@ -20,7 +20,7 @@ export const productivityTools: Tool[] = [
     description: "تایمر مبتنی بر روش پومودورو برای افزایش تمرکز و بهره‌وری",
     isNew: true,
     icon: "clock",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "note-taking",
@@ -50,6 +50,6 @@ export const productivityTools: Tool[] = [
     description: "مدیریت ساده پروژه به روش کانبان",
     isNew: true,
     icon: "layout-grid",
-    isComingSoon: true
+    isComingSoon: false
   }
 ];
