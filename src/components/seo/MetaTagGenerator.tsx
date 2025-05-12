@@ -8,7 +8,7 @@ import { MetaPreview } from './MetaPreview';
 import { generateMetaTags } from './utils/metaTagGenerator';
 
 export function MetaTagGenerator() {
-  // تب اصلی - Basic metadata state
+  // Basic metadata state
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [keywords, setKeywords] = useState('');
@@ -18,7 +18,7 @@ export function MetaTagGenerator() {
   const [canonical, setCanonical] = useState('');
   const [language, setLanguage] = useState('fa');
   
-  // تب شبکه‌های اجتماعی - Social metadata state
+  // Social metadata state
   const [ogTitle, setOgTitle] = useState('');
   const [ogDescription, setOgDescription] = useState('');
   const [ogImage, setOgImage] = useState('');
@@ -26,7 +26,7 @@ export function MetaTagGenerator() {
   const [ogType, setOgType] = useState('website');
   const [twitterCard, setTwitterCard] = useState('summary');
   
-  // تولید HTML کد متاتگ‌ها - Generate HTML meta tags
+  // Generate HTML meta tags
   const handleGenerateMetaTags = () => {
     return generateMetaTags({
       title,
