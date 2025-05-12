@@ -1,10 +1,10 @@
-
 import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { tools } from '@/data/tools';
 import { ToolRenderer } from '@/components/tool/ToolRenderer';
 import { SeoHead } from '@/components/seo/SeoHead';
+import { generateToolSchema, generateBreadcrumbSchema, combineSchemas } from '@/utils/schemaUtils';
 
 export default function Tool() {
   const { slug } = useParams<{ slug: string }>();
@@ -62,32 +62,28 @@ export default function Tool() {
     }
 
     // Create schema.org structured data
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": tool.name,
-      "description": seoDescription,
-      "url": `https://langar.co/tool/${tool.slug}`,
-      "applicationCategory": "UtilityApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "operatingSystem": "Any",
-      "inLanguage": "fa-IR",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "لنگر - ابزارهای آنلاین",
-        "url": "https://langar.co"
-      }
-    };
+    const toolSchema = generateToolSchema(
+      tool.name,
+      seoDescription,
+      tool.slug,
+      tool.category
+    );
+    
+    // Add breadcrumb schema
+    const breadcrumbSchema = generateBreadcrumbSchema([
+      { name: 'لنگر', url: 'https://langar.co/' },
+      { name: 'ابزارها', url: 'https://langar.co/tools' },
+      { name: tool.name, url: `https://langar.co/tool/${tool.slug}` }
+    ]);
+    
+    // Combine schemas
+    const combinedSchema = combineSchemas(toolSchema, breadcrumbSchema);
 
     return {
       title: seoTitle,
       description: seoDescription,
       keywords: seoKeywords,
-      schema
+      schema: combinedSchema
     };
   }, [tool, slug]);
 
@@ -98,6 +94,7 @@ export default function Tool() {
           title={seoData.title} 
           description={seoData.description} 
           keywords={seoData.keywords}
+          noindex={true}
         />
         <div className="text-center py-12">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">ابزار یافت نشد</h1>

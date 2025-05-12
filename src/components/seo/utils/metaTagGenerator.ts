@@ -58,8 +58,13 @@ export function generateMetaTags({
   
   if (robots) {
     metaTags += `<meta name="robots" content="index, follow">\n`;
+    // Add additional tags for better indexing
+    metaTags += `<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">\n`;
+    metaTags += `<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">\n`;
   } else {
     metaTags += `<meta name="robots" content="noindex, nofollow">\n`;
+    metaTags += `<meta name="googlebot" content="noindex, nofollow">\n`;
+    metaTags += `<meta name="bingbot" content="noindex, nofollow">\n`;
   }
   
   if (language) {
@@ -81,6 +86,9 @@ export function generateMetaTags({
   
   if (ogImage) {
     metaTags += `<meta property="og:image" content="${ogImage}">\n`;
+    metaTags += `<meta property="og:image:width" content="1200">\n`;
+    metaTags += `<meta property="og:image:height" content="630">\n`;
+    metaTags += `<meta property="og:image:alt" content="${ogTitle || title}">\n`;
   }
   
   if (ogUrl || canonical) {
@@ -89,11 +97,14 @@ export function generateMetaTags({
   
   if (ogType) {
     metaTags += `<meta property="og:type" content="${ogType}">\n`;
+    metaTags += `<meta property="og:site_name" content="لنگر - ابزارهای آنلاین">\n`;
+    metaTags += `<meta property="og:locale" content="${language}">\n`;
   }
   
   // Twitter meta tags
   if (twitterCard) {
     metaTags += `<meta name="twitter:card" content="${twitterCard}">\n`;
+    metaTags += `<meta name="twitter:site" content="@langar_app">\n`;
     
     if (ogTitle || title) {
       metaTags += `<meta name="twitter:title" content="${ogTitle || title}">\n`;
@@ -105,6 +116,7 @@ export function generateMetaTags({
     
     if (ogImage) {
       metaTags += `<meta name="twitter:image" content="${ogImage}">\n`;
+      metaTags += `<meta name="twitter:image:alt" content="${ogTitle || title}">\n`;
     }
   }
   

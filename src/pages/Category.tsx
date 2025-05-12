@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
@@ -6,6 +5,7 @@ import { ToolCard } from '@/components/ToolCard';
 import { getToolsByCategory, categoryLabels, ToolCategory } from '@/data/tools';
 import { Search, ArrowLeft } from 'lucide-react';
 import { SeoHead } from '@/components/seo/SeoHead';
+import { generateCategorySchema, generateBreadcrumbSchema, combineSchemas } from '@/utils/schemaUtils';
 
 const Category = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -37,35 +37,32 @@ const Category = () => {
     }
     
     // Create schema.org structured data
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": title,
-      "description": description,
-      "url": `https://langar.co/category/${category}`,
-      "inLanguage": "fa-IR",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "لنگر - ابزارهای آنلاین",
-        "url": "https://langar.co"
-      },
-      "about": {
-        "@type": "Thing",
-        "name": categoryName
-      },
-      "itemListElement": allTools.map((tool, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "item": {
-          "@type": "WebApplication",
-          "name": tool.name,
-          "description": tool.description,
-          "url": `https://langar.co/tool/${tool.slug}`
-        }
+    const categorySchema = generateCategorySchema(
+      categoryName,
+      description,
+      category,
+      allTools.map(tool => ({
+        name: tool.name,
+        slug: tool.slug,
+        description: tool.description
       }))
-    };
+    );
     
-    return { title, description, keywords, schema };
+    // Add breadcrumb schema
+    const breadcrumbSchema = generateBreadcrumbSchema([
+      { name: 'لنگر', url: 'https://langar.co/' },
+      { name: categoryName, url: `https://langar.co/category/${category}` }
+    ]);
+    
+    // Combine schemas
+    const combinedSchema = combineSchemas(categorySchema, breadcrumbSchema);
+    
+    return { 
+      title, 
+      description, 
+      keywords, 
+      schema: combinedSchema 
+    };
   }, [category, categoryName, allTools]);
 
   return (
