@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -253,7 +252,6 @@ module.exports = {
                 <Select 
                   value={previewSize} 
                   onValueChange={setPreviewSize}
-                  className="w-28"
                 >
                   <SelectTrigger>
                     <SelectValue />
