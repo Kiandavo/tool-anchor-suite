@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
 interface SeoHeadProps {
@@ -71,6 +71,10 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={`https://langar.co${image}`} />
       <meta property="twitter:site" content="@langar_app" />
+      
+      {/* Resource hints for performance */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       
       {/* Schema.org structured data */}
       {schema && (

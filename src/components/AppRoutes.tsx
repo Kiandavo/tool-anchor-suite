@@ -1,14 +1,25 @@
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
-import Index from "@/pages/Index";
-import Category from "@/pages/Category";
-import Tool from "@/pages/Tool";
-import Search from "@/pages/Search";
-import Settings from "@/pages/Settings";
-import NotFound from "@/pages/NotFound";
-import AllTools from "@/pages/AllTools";
-import Community from "@/pages/Community";
+import { Suspense, lazy } from "react";
+import { Spinner } from "@/components/ui/spinner";
+
+// Lazy load components
+const Index = lazy(() => import("@/pages/Index"));
+const Category = lazy(() => import("@/pages/Category"));
+const Tool = lazy(() => import("@/pages/Tool"));
+const Search = lazy(() => import("@/pages/Search"));
+const AllTools = lazy(() => import("@/pages/AllTools"));
+const Settings = lazy(() => import("@/pages/Settings"));
+const Community = lazy(() => import("@/pages/Community"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-[70vh]">
+    <Spinner className="h-12 w-12 text-primary" />
+  </div>
+);
 
 export const AppRoutes = () => {
   const ScrollToTop = () => {
@@ -19,16 +30,18 @@ export const AppRoutes = () => {
   return (
     <>
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/category/:categoryId" element={<Category />} />
-        <Route path="/tool/:slug" element={<Tool />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/all-tools" element={<AllTools />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/category/:categoryId" element={<Category />} />
+          <Route path="/tool/:slug" element={<Tool />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/all-tools" element={<AllTools />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };

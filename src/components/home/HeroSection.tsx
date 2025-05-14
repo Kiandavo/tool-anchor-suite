@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const HeroSection = () => {
   return (
@@ -27,16 +28,22 @@ export const HeroSection = () => {
               size="apple"
               variant="apple"
               className="shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] font-medium"
+              asChild
             >
-              مشاهده همه ابزارها
-              <ArrowRight className="h-5 w-5 mr-2 rtl:rotate-180" />
+              <Link to="/all-tools">
+                مشاهده همه ابزارها
+                <ArrowRight className="h-5 w-5 mr-2 rtl:rotate-180" />
+              </Link>
             </Button>
             <Button 
               variant="apple-outline"
               size="apple"
               className="shadow-sm hover:shadow-md hover:bg-primary/5 transition-all hover:scale-[1.02] font-medium"
+              asChild
             >
-              ابزارهای محبوب
+              <Link to="/#popular-tools">
+                ابزارهای محبوب
+              </Link>
             </Button>
           </div>
         </div>

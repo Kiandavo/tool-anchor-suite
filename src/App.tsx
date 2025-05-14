@@ -7,8 +7,17 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "@/components/AppRoutes";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { useEffect } from "react";
+import { HelmetProvider } from "@/providers/HelmetProvider";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000, // 1 minute
+      gcTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 const App = () => {
   // Apply saved theme on app load
@@ -25,14 +34,16 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <GoogleAnalytics />
-          <AppRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
+      <HelmetProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <GoogleAnalytics />
+            <AppRoutes />
+          </BrowserRouter>
+        </TooltipProvider>
+      </HelmetProvider>
     </QueryClientProvider>
   );
 };

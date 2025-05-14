@@ -14,6 +14,11 @@
     <meta name="author" content="Kian">
     <meta name="robots" content="index, follow">
     
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" as="style">
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://langar.com/">
@@ -35,6 +40,24 @@
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Critical CSS -->
+    <style>
+      /* Inline critical CSS */
+      :root {
+        --font-sans: 'Vazirmatn', sans-serif;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .rtl {
+        direction: rtl;
+        text-align: right;
+      }
+    </style>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5JG2WQN86"></script>

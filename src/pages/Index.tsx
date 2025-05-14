@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
 import { FalSection } from '@/components/fal/FalSection';
@@ -9,6 +9,12 @@ import { PersianCulturalSection } from '@/components/home/PersianCulturalSection
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateWebsiteSchema } from '@/utils/schemaUtils';
+
+// Memoize components that don't need to re-render
+const MemoizedFalSection = memo(FalSection);
+const MemoizedCategoriesSection = memo(CategoriesSection);
+const MemoizedPersianCulturalSection = memo(PersianCulturalSection);
+const MemoizedToolsSection = memo(ToolsSection);
 
 const Index = () => {
   // Generate homepage schema
@@ -24,10 +30,12 @@ const Index = () => {
       />
       <GoogleAnalytics />
       <HeroSection />
-      <FalSection />
-      <CategoriesSection />
-      <PersianCulturalSection />
-      <ToolsSection />
+      <MemoizedFalSection />
+      <MemoizedCategoriesSection />
+      <section id="popular-tools">
+        <MemoizedPersianCulturalSection />
+      </section>
+      <MemoizedToolsSection />
     </Layout>
   );
 };
