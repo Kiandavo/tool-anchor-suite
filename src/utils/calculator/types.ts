@@ -27,3 +27,23 @@ export interface TimeConversion {
   days: number;
   remainingHours: number;
 }
+
+// Length conversion types
+export interface LengthUnit extends Unit {}
+
+// Speed conversion types
+export interface SpeedUnit extends Unit {}
+
+// Academic calculation types
+export interface GradeEntry {
+  course: string;
+  grade: number;
+  credits: number;
+}
+
+// Font calculation types
+export interface FontSizeCalculation {
+  baseFontSize: number;
+  scaleFactor: number;
+  levels: Record<string, number>;
+}

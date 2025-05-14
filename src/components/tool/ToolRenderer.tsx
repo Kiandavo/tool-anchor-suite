@@ -23,6 +23,11 @@ import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
 import ColorPalette from '@/pages/ToolTypes/DesignTools/ColorPalette';
 import FontPreview from '@/pages/ToolTypes/DesignTools/FontPreview';
+import TodoList from '@/pages/ToolTypes/ProductivityTools/TodoList';
+import NoteTaking from '@/pages/ToolTypes/ProductivityTools/NoteTaking';
+import CalendarScheduler from '@/pages/ToolTypes/ProductivityTools/CalendarScheduler';
+import SimpleLogoMaker from '@/pages/ToolTypes/DesignTools/SimpleLogoMaker';
+import SocialMediaTemplate from '@/pages/ToolTypes/DesignTools/SocialMediaTemplate';
 
 interface ToolRendererProps {
   tool: Tool;
@@ -87,6 +92,18 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     return <ProjectBoard />;
   }
   
+  if (toolType === 'todo-list') {
+    return <TodoList />;
+  }
+  
+  if (toolType === 'note-taking') {
+    return <NoteTaking />;
+  }
+  
+  if (toolType === 'calendar-scheduler') {
+    return <CalendarScheduler />;
+  }
+  
   // Design tools
   if (toolType === 'color-palette') {
     return <ColorPalette />;
@@ -94,6 +111,14 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   
   if (toolType === 'font-preview') {
     return <FontPreview />;
+  }
+  
+  if (toolType === 'simple-logo-maker') {
+    return <SimpleLogoMaker />;
+  }
+  
+  if (toolType === 'social-media-template') {
+    return <SocialMediaTemplate />;
   }
   
   // For calculator tools and others, use the specific renderers

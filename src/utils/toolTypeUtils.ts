@@ -56,6 +56,10 @@ export const toolTypeBySlug: Record<string, string> = {
   "power-calculator": "power-calculator",
   "salary-tax-calculator": "salary-tax-calculator",
   "range-calculator": "range-calculator",
+  "length-converter": "calculator",
+  "speed-calculator": "calculator",
+  "gpa-calculator": "calculator",
+  "font-size-calculator": "calculator",
   
   // Random tools
   "random-password": "random-password",
