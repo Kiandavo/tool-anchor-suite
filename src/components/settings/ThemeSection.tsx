@@ -1,39 +1,17 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Sun, Moon, Monitor } from 'lucide-react';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useToast } from '@/hooks/use-toast';
+import { useDarkMode } from '@/hooks/useDarkMode';
 
 export const ThemeSection = () => {
-  // Check for system preference
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  // Get saved theme or default to 'system'
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return savedTheme || 'system';
-  });
-  
+  const { theme, setTheme } = useDarkMode();
   const { toast } = useToast();
 
-  useEffect(() => {
-    // Apply theme when component mounts or theme changes
-    applyTheme(theme);
-    // Save to localStorage
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const applyTheme = (selectedTheme: string) => {
-    if (selectedTheme === 'dark' || (selectedTheme === 'system' && systemPrefersDark)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
   const handleThemeChange = (value: string) => {
-    setTheme(value);
+    setTheme(value as 'dark' | 'light' | 'system');
     toast({
       title: "تم تغییر کرد",
       description: value === 'dark' ? 'تم تاریک فعال شد' : value === 'light' ? 'تم روشن فعال شد' : 'تم براساس سیستم تنظیم شد',
