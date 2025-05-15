@@ -10,6 +10,7 @@ import { educationalTools } from './tool-categories/educational-tools';
 import { productivityTools } from './tool-categories/productivity-tools';
 import { designTools } from './tool-categories/design-tools';
 import { persianCulturalTools } from './tool-categories/persian-cultural-tools';
+import { readingsTools } from './tool-categories/readings-tools'; // Added import for readings tools
 import { categoryLabels } from '@/types/tool-types';
 
 // Combine all tools
@@ -23,7 +24,8 @@ export const tools: Tool[] = [
   ...educationalTools,
   ...productivityTools,
   ...designTools,
-  ...persianCulturalTools
+  ...persianCulturalTools,
+  ...readingsTools // Added readings tools
 ];
 
 // Re-export types and labels

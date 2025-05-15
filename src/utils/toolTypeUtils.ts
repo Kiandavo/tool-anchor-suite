@@ -1,4 +1,3 @@
-
 export const toolTypeBySlug: Record<string, string> = {
   // Text tools
   "text-counter": "text",
@@ -108,5 +107,18 @@ export const toolTypeBySlug: Record<string, string> = {
   "color-palette": "color-palette",
   "simple-logo-maker": "simple-logo-maker",
   "social-media-template": "social-media-template",
-  "font-preview": "font-preview"
+  "font-preview": "font-preview",
+  
+  // Reading tools
+  "tarot-reading": "tarot-reading",
+  "horoscope": "horoscope",
+  "hafez-fortune": "hafez-fortune",
+  "rumi-istikhara": "rumi-istikhara",
+  "parallel-universe-explorer": "parallel-universe",
+  "aura-reading": "aura-reading",
+  "cartomancy": "cartomancy",
+  "cleromancy": "cleromancy",
+  "distant-reading": "distant-reading",
+  "lithomancy": "lithomancy",
+  "numerology": "numerology"
 };

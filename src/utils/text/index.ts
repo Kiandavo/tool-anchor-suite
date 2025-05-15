@@ -12,8 +12,14 @@ export * from './persianUtils';
 
 // Individual exports for the rest
 export * from './quotes';
-export * from './randomText';
-export * from './textCleaner';
+
+// Import and re-export specific non-conflicting functions
+import { generateLorem, generatePlaceholderText } from './randomText';
+export { generateLorem, generatePlaceholderText };
+
+import { removeEmojis, removeSpecialChars } from './textCleaner';
+export { removeEmojis, removeSpecialChars };
+
 export * from './textStats';
 export * from './textUtils';
 export * from './wordConverter';

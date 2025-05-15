@@ -9,7 +9,8 @@ export type ToolCategory =
   | "educational"
   | "productivity"
   | "design"
-  | "persian-cultural";
+  | "persian-cultural"
+  | "readings"; // Added new category
 
 export interface Tool {
   id: string;
@@ -33,5 +34,6 @@ export const categoryLabels: Record<ToolCategory, string> = {
   educational: "آموزشی",
   productivity: "بهره‌وری",
   design: "طراحی",
-  "persian-cultural": "فرهنگ فارسی"
+  "persian-cultural": "فرهنگ فارسی",
+  "readings": "فال و طالع‌بینی" // Added Persian translation for readings
 };

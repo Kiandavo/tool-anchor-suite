@@ -9,12 +9,14 @@ import { PersianCulturalSection } from '@/components/home/PersianCulturalSection
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateWebsiteSchema } from '@/utils/schemaUtils';
+import { ReadingsSection } from '@/components/readings/ReadingsSection';
 
 // Memoize components that don't need to re-render
 const MemoizedFalSection = memo(FalSection);
 const MemoizedCategoriesSection = memo(CategoriesSection);
 const MemoizedPersianCulturalSection = memo(PersianCulturalSection);
 const MemoizedToolsSection = memo(ToolsSection);
+const MemoizedReadingsSection = memo(ReadingsSection);
 
 const Index = () => {
   // Generate homepage schema
@@ -31,6 +33,7 @@ const Index = () => {
       <GoogleAnalytics />
       <HeroSection />
       <MemoizedFalSection />
+      <MemoizedReadingsSection />
       <MemoizedCategoriesSection />
       <section id="popular-tools">
         <MemoizedPersianCulturalSection />

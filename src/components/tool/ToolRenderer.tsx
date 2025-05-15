@@ -29,6 +29,18 @@ import CalendarScheduler from '@/pages/ToolTypes/ProductivityTools/CalendarSched
 import SimpleLogoMaker from '@/pages/ToolTypes/DesignTools/SimpleLogoMaker';
 import SocialMediaTemplate from '@/pages/ToolTypes/DesignTools/SocialMediaTemplate';
 
+// Import new reading components
+import AuraReading from '@/components/readings/AuraReading';
+import Cartomancy from '@/components/readings/Cartomancy';
+import Cleromancy from '@/components/readings/Cleromancy';
+import DistantReading from '@/components/readings/DistantReading';
+import Lithomancy from '@/components/readings/Lithomancy';
+import Numerology from '@/components/readings/Numerology';
+import { TarotReading } from '@/components/fal/TarotReading';
+import { Horoscope } from '@/components/fal/Horoscope';
+import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
+import { ParallelUniverseExplorer } from '@/components/fal/parallelUniverse/ParallelUniverseExplorer';
+
 interface ToolRendererProps {
   tool: Tool;
   slug: string;
@@ -37,7 +49,48 @@ interface ToolRendererProps {
 export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   const toolType = toolTypeBySlug[slug];
   
-  // First, check if the tool has a dedicated page
+  // First, check for readings tools
+  if (toolType === 'tarot-reading') {
+    return <TarotReading />;
+  }
+  
+  if (toolType === 'horoscope') {
+    return <Horoscope />;
+  }
+  
+  if (toolType === 'rumi-istikhara') {
+    return <RumiIstikhara />;
+  }
+  
+  if (toolType === 'parallel-universe') {
+    return <ParallelUniverseExplorer />;
+  }
+  
+  if (toolType === 'aura-reading') {
+    return <AuraReading />;
+  }
+  
+  if (toolType === 'cartomancy') {
+    return <Cartomancy />;
+  }
+  
+  if (toolType === 'cleromancy') {
+    return <Cleromancy />;
+  }
+  
+  if (toolType === 'distant-reading') {
+    return <DistantReading />;
+  }
+  
+  if (toolType === 'lithomancy') {
+    return <Lithomancy />;
+  }
+  
+  if (toolType === 'numerology') {
+    return <Numerology />;
+  }
+  
+  // Standard tool types
   if (toolType === 'text') {
     return <TextTool slug={slug} />;
   }
