@@ -1,26 +1,52 @@
 
-export function countCharacters(text: string): number {
-  return text.length;
+/**
+ * Count characters in a text
+ * @param text The text to count characters in
+ * @returns The number of characters in the text
+ */
+export function countChars(text: string): number {
+  return text ? text.length : 0;
 }
 
+/**
+ * Count words in a text
+ * @param text The text to count words in
+ * @returns The number of words in the text
+ */
 export function countWords(text: string): number {
-  const trimmedText = text.trim();
-  if (!trimmedText) return 0;
-  return trimmedText.split(/[\s\u200C]+/).filter(word => word.length > 0).length;
+  if (!text) return 0;
+  return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
+/**
+ * Count sentences in a text
+ * @param text The text to count sentences in
+ * @returns The number of sentences in the text
+ */
 export function countSentences(text: string): number {
-  if (!text.trim()) return 0;
-  const sentenceEndings = text.match(/[.!?؟\.\n]+/g);
-  return sentenceEndings ? sentenceEndings.length : 1;
+  if (!text) return 0;
+  // Split by period, exclamation mark, or question mark followed by a space or end of string
+  return text.split(/[.!?](?:\s|$)/).filter(Boolean).length;
 }
 
+/**
+ * Count paragraphs in a text
+ * @param text The text to count paragraphs in
+ * @returns The number of paragraphs in the text
+ */
 export function countParagraphs(text: string): number {
-  if (!text.trim()) return 0;
-  return text.split(/\n+/).filter(para => para.trim().length > 0).length;
+  if (!text) return 0;
+  return text.split(/\n+/).filter(Boolean).length;
 }
 
-export function calculateReadingTime(text: string): number {
+/**
+ * Calculate approximate reading time in minutes
+ * @param text The text to calculate reading time for
+ * @param wordsPerMinute Words per minute reading speed (default: 200)
+ * @returns Estimated reading time in minutes
+ */
+export function calculateReadingTime(text: string, wordsPerMinute = 200): number {
   const words = countWords(text);
-  return Math.ceil(words / 200);
+  const minutes = words / wordsPerMinute;
+  return Math.max(1, Math.round(minutes));
 }
