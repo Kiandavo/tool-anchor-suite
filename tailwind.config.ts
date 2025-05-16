@@ -19,8 +19,9 @@ export default {
 			}
 		},
 		fontFamily: {
-			'vazirmatn': ['Vazirmatn', 'system-ui', 'sans-serif'],
-			'sf': ['"SF Pro Display"', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			'vazirmatn': ['B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			'sf': ['"SF Pro Display"', 'B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			'byekan': ['B Yekan', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {
