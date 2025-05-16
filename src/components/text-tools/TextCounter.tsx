@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Textarea } from "@/components/ui/textarea";
-import { countChars, countWords, countSentences, countParagraphs, calculateReadingTime } from "@/utils/text/textStats";
+import { countChars, countWords, countSentences, countParagraphs, calculateReadingTime } from "@/utils/text";
 
 interface TextCounterProps {
   textInput: string;

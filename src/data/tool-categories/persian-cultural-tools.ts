@@ -61,5 +61,55 @@ export const persianCulturalTools: Tool[] = [
     isNew: true,
     icon: "book-open",
     isComingSoon: false
+  },
+  {
+    id: "persian-literature",
+    slug: "persian-literature",
+    name: "ادبیات فارسی",
+    category: "persian-cultural",
+    description: "مجموعه‌ای از شعرها و آثار ادبی مشهور فارسی",
+    isNew: true,
+    icon: "book",
+    isComingSoon: false
+  },
+  {
+    id: "persian-music",
+    slug: "persian-music",
+    name: "موسیقی ایرانی",
+    category: "persian-cultural",
+    description: "آشنایی با سازها، دستگاه‌ها و هنرمندان موسیقی سنتی ایران",
+    isNew: true,
+    icon: "music",
+    isComingSoon: false
+  },
+  {
+    id: "persian-cuisine",
+    slug: "persian-cuisine",
+    name: "آشپزی ایرانی",
+    category: "persian-cultural",
+    description: "دستور پخت غذاهای سنتی و معروف ایرانی",
+    isNew: true,
+    icon: "utensils",
+    isComingSoon: false
+  },
+  {
+    id: "persian-holidays",
+    slug: "persian-holidays",
+    name: "تعطیلات و مناسبت‌های ایرانی",
+    category: "persian-cultural",
+    description: "تقویم مناسبت‌ها، جشن‌ها و آیین‌های سنتی ایران",
+    isNew: true,
+    icon: "calendar-days",
+    isComingSoon: false
+  },
+  {
+    id: "persian-architecture",
+    slug: "persian-architecture",
+    name: "معماری ایرانی",
+    category: "persian-cultural",
+    description: "آشنایی با سبک‌ها و بناهای مهم معماری ایرانی",
+    isNew: true,
+    icon: "landmark",
+    isComingSoon: false
   }
 ];

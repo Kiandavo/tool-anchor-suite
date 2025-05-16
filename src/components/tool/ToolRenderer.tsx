@@ -18,6 +18,7 @@ import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
 import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
 import PersianProverbs from '@/pages/ToolTypes/PersianCultural/PersianProverbs';
 import PersianCalligraphy from '@/pages/ToolTypes/PersianCultural/PersianCalligraphy';
+import WordEtymology from '@/pages/ToolTypes/PersianCultural/WordEtymology';
 import FarsiLearning from '@/pages/ToolTypes/PersianCultural/FarsiLearning';
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
@@ -40,6 +41,13 @@ import { TarotReading } from '@/components/fal/TarotReading';
 import { Horoscope } from '@/components/fal/Horoscope';
 import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
 import { ParallelUniverseExplorer } from '@/components/fal/parallelUniverse/ParallelUniverseExplorer';
+
+// Import placeholders for new Persian cultural tools
+import PersianLiterature from '@/pages/ToolTypes/PersianCultural/PersianLiterature';
+import PersianMusic from '@/pages/ToolTypes/PersianCultural/PersianMusic';
+import PersianCuisine from '@/pages/ToolTypes/PersianCultural/PersianCuisine';
+import PersianHolidays from '@/pages/ToolTypes/PersianCultural/PersianHolidays';
+import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchitecture';
 
 interface ToolRendererProps {
   tool: Tool;
@@ -132,8 +140,33 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     return <PersianCalligraphy />;
   }
   
+  if (toolType === 'word-etymology') {
+    return <WordEtymology />;
+  }
+  
   if (toolType === 'farsi-learning') {
     return <FarsiLearning />;
+  }
+  
+  // New Persian cultural tools
+  if (toolType === 'persian-literature') {
+    return <PersianLiterature />;
+  }
+  
+  if (toolType === 'persian-music') {
+    return <PersianMusic />;
+  }
+  
+  if (toolType === 'persian-cuisine') {
+    return <PersianCuisine />;
+  }
+  
+  if (toolType === 'persian-holidays') {
+    return <PersianHolidays />;
+  }
+  
+  if (toolType === 'persian-architecture') {
+    return <PersianArchitecture />;
   }
   
   // Productivity tools

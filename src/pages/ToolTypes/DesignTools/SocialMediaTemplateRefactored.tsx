@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -27,7 +28,7 @@ const SocialMediaTemplateRefactored = () => {
     const file = e.target.files?.[0];
     if (file) {
       setTemplate(prev => ({ ...prev, image: file }));
-      const reader = new FileReader(""); // Pass empty string to fix TS error
+      const reader = new FileReader();
       reader.onloadend = () => {
         setTemplate(prev => ({ ...prev, imageUrl: reader.result as string }));
       };

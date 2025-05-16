@@ -57,5 +57,10 @@ export const categoryThemes: Record<ToolCategory, CategoryTheme> = {
     gradient: "bg-gradient-to-br from-[#F1F5F9]/80 to-[#94A3B8]/80",
     iconColor: "text-slate-600",
     badgeClass: "bg-slate-100 text-slate-600",
+  },
+  "readings": {
+    gradient: "bg-gradient-to-br from-[#E5DEFF]/80 to-[#9b87f5]/80",
+    iconColor: "text-violet-600",
+    badgeClass: "bg-violet-100 text-violet-600",
   }
 };

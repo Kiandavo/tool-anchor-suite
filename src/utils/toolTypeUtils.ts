@@ -1,3 +1,4 @@
+
 export const toolTypeBySlug: Record<string, string> = {
   // Text tools
   "text-counter": "text",
@@ -95,6 +96,11 @@ export const toolTypeBySlug: Record<string, string> = {
   "persian-handwriting": "persian-calligraphy",
   "word-etymology": "word-etymology",
   "farsi-learning": "farsi-learning",
+  "persian-literature": "persian-literature",
+  "persian-music": "persian-music",
+  "persian-cuisine": "persian-cuisine",
+  "persian-holidays": "persian-holidays",
+  "persian-architecture": "persian-architecture",
   
   // Productivity tools
   "todo-list": "todo-list",

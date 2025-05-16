@@ -122,13 +122,20 @@ const PATTERN_POSITIONS = {
   'five': ['موقعیت فعلی', 'چالش‌ها', 'نیروهای پنهان', 'توصیه', 'نتیجه نهایی']
 };
 
+// Define the Stone Interpretation type
+type StoneInterpretation = Array<{
+  stone: typeof STONES[0];
+  position: string;
+  meaning: string;
+}>;
+
 export const Lithomancy: React.FC = () => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedStones, setSelectedStones] = useState<typeof STONES[0][]>([]);
   const [readingPattern, setReadingPattern] = useState(READING_PATTERNS[0]);
   const [question, setQuestion] = useState('');
-  const [interpretation, setInterpretation] = useState('');
+  const [interpretation, setInterpretation] = useState<StoneInterpretation>([]);
   const [formattedReading, setFormattedReading] = useState('');
 
   const performReading = () => {
@@ -162,7 +169,7 @@ export const Lithomancy: React.FC = () => {
     }, 1500);
   };
   
-  const generateInterpretation = (stones: typeof STONES[0][], pattern: string) => {
+  const generateInterpretation = (stones: typeof STONES[0][], pattern: string): StoneInterpretation => {
     // This is simplified - a real interpretation would be more complex
     const positions = PATTERN_POSITIONS[pattern as keyof typeof PATTERN_POSITIONS];
     
@@ -214,7 +221,7 @@ export const Lithomancy: React.FC = () => {
   const resetReading = () => {
     setIsRevealed(false);
     setSelectedStones([]);
-    setInterpretation('');
+    setInterpretation([]);
   };
   
   const StoneDisplay: React.FC<{stone: typeof STONES[0], index: number}> = ({ stone, index }) => {

@@ -1,248 +1,174 @@
 
-import React, { useState, useMemo } from 'react';
-import { Book, Search, Clock, Globe, Sparkles, Filter } from 'lucide-react';
-import { etymologyWords, rootLanguageLabels, periodLabels, EtymologyWord } from '@/data/persian-word-etymology';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useToast } from '@/hooks/use-toast';
-import { Separator } from '@/components/ui/separator';
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Search, Book, Clock, Globe, FileText, History } from "lucide-react";
+import { toast } from "sonner";
 
-export default function WordEtymology() {
-  const { toast } = useToast();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [rootLanguageFilter, setRootLanguageFilter] = useState<string>('');
-  const [periodFilter, setPeriodFilter] = useState<string>('');
-  const [selectedWord, setSelectedWord] = useState<EtymologyWord | null>(null);
+// Import word etymology data (assumed to be in the project already)
+import { persianWordEtymology } from "@/data/persian-word-etymology";
 
-  // Filter words based on search query and filters
-  const filteredWords = useMemo(() => {
-    return etymologyWords.filter(word => {
-      const matchesSearch = searchQuery === '' || 
-        word.word.includes(searchQuery) ||
-        word.etymology.includes(searchQuery);
-      
-      const matchesRootLanguage = rootLanguageFilter === '' || word.rootLanguage === rootLanguageFilter;
-      const matchesPeriod = periodFilter === '' || word.period === periodFilter;
-      
-      return matchesSearch && matchesRootLanguage && matchesPeriod;
-    });
-  }, [searchQuery, rootLanguageFilter, periodFilter]);
+const WordEtymology = () => {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
-  // Get a random word
-  const getRandomWord = () => {
-    const randomIndex = Math.floor(Math.random() * etymologyWords.length);
-    setSelectedWord(etymologyWords[randomIndex]);
-    
-    // Switch to detail tab
-    const detailTab = document.querySelector('[data-value="detail"]') as HTMLButtonElement;
-    if (detailTab) detailTab.click();
+  const handleSearch = () => {
+    if (!query.trim()) {
+      toast.warning("لطفاً یک کلمه وارد کنید");
+      return;
+    }
+
+    setLoading(true);
+    setSearchPerformed(true);
+
+    // Simulate API delay (replace with real API call if needed)
+    setTimeout(() => {
+      const searchTerm = query.trim().toLowerCase();
+      const foundWords = persianWordEtymology.filter(word => 
+        word.word.toLowerCase().includes(searchTerm) || 
+        word.transliteration.toLowerCase().includes(searchTerm)
+      );
+
+      setResults(foundWords);
+      setLoading(false);
+
+      if (foundWords.length === 0) {
+        toast.info("کلمه‌ای با این مشخصات پیدا نشد");
+      }
+    }, 600);
   };
 
-  // Copy word to clipboard
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "کپی شد",
-      description: "واژه در کلیپ‌بورد کپی شد."
-    });
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <Card className="shadow-md mb-6">
-        <CardHeader className="bg-gradient-to-b from-blue-50 to-white">
-          <div className="flex items-center gap-3">
-            <Book className="w-6 h-6 text-blue-600" />
-            <CardTitle>ریشه‌شناسی کلمات فارسی</CardTitle>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row gap-2 mb-6">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <Input
-                type="text"
-                placeholder="جستجوی واژه..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-3"
-              />
-            </div>
-            <Button
-              variant="outline"
-              onClick={getRandomWord}
-              className="flex items-center gap-2 whitespace-nowrap"
-            >
-              <Sparkles size={16} />
-              واژه تصادفی
-            </Button>
-          </div>
-          
-          <div className="flex flex-wrap gap-2 mb-6">
-            <Select value={rootLanguageFilter} onValueChange={setRootLanguageFilter}>
-              <SelectTrigger className="w-36">
-                <div className="flex items-center">
-                  <Globe size={16} className="mr-2" />
-                  <SelectValue placeholder="ریشه زبانی" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">همه زبان‌ها</SelectItem>
-                {Object.entries(rootLanguageLabels).map(([key, value]) => (
-                  <SelectItem key={key} value={key}>{value}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            
-            <Select value={periodFilter} onValueChange={setPeriodFilter}>
-              <SelectTrigger className="w-36">
-                <div className="flex items-center">
-                  <Clock size={16} className="mr-2" />
-                  <SelectValue placeholder="دوره تاریخی" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">همه دوره‌ها</SelectItem>
-                {Object.entries(periodLabels).map(([key, value]) => (
-                  <SelectItem key={key} value={key}>{value}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+    <div className="max-w-4xl mx-auto p-4">
+      <div className="mb-6 text-center">
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">ریشه‌شناسی کلمات فارسی</h1>
+        <p className="text-gray-600 text-sm">ریشه و تاریخچه کلمات فارسی را کشف کنید</p>
+      </div>
 
-          <Tabs defaultValue="list">
-            <TabsList className="grid w-full grid-cols-2 mb-4">
-              <TabsTrigger value="list">فهرست واژگان</TabsTrigger>
-              <TabsTrigger value="detail" data-value="detail" disabled={!selectedWord}>
-                جزئیات ریشه‌شناسی
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="list">
-              {filteredWords.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-gray-500">واژه‌ای با این مشخصات یافت نشد.</p>
+      <div className="mb-8 flex flex-col sm:flex-row gap-2">
+        <Input
+          placeholder="کلمه مورد نظر خود را وارد کنید..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="flex-grow py-6 text-base focus-visible:ring-blue-500"
+        />
+        <Button 
+          onClick={handleSearch} 
+          disabled={loading} 
+          className="bg-blue-600 hover:bg-blue-700 text-white py-6"
+        >
+          {loading ? 'در حال جستجو...' : (
+            <>
+              <Search className="ml-2" size={18} />
+              جستجو
+            </>
+          )}
+        </Button>
+      </div>
+
+      {searchPerformed && results.length === 0 && !loading && (
+        <Card className="p-6 text-center bg-gray-50">
+          <div className="flex flex-col items-center">
+            <FileText size={48} className="text-gray-400 mb-2" />
+            <h3 className="font-medium text-lg">نتیجه‌ای یافت نشد</h3>
+            <p className="text-gray-500 text-sm mt-1">
+              کلمه دیگری را امتحان کنید یا املای کلمه را بررسی نمایید
+            </p>
+          </div>
+        </Card>
+      )}
+
+      {results.length > 0 && (
+        <div className="space-y-6">
+          {results.map((word, index) => (
+            <Card key={index} className="p-5 bg-white shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex flex-col space-y-4">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-xl font-bold text-gray-800">{word.word}</h2>
+                  <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                    {word.transliteration}
+                  </span>
                 </div>
-              ) : (
-                <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1">
-                  {filteredWords.map((word) => (
-                    <Card key={word.id} className="hover:bg-gray-50 transition-colors cursor-pointer" onClick={() => setSelectedWord(word)}>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <p className="font-medium text-lg mb-2">{word.word}</p>
-                          <Badge className="bg-blue-100 text-blue-800 border-blue-200 ml-2 whitespace-nowrap">
-                            {rootLanguageLabels[word.rootLanguage]}
-                          </Badge>
-                        </div>
-                        <p className="text-gray-600 text-sm line-clamp-2">{word.etymology}</p>
-                        {word.period && (
-                          <Badge variant="outline" className="mt-2 text-xs">
-                            {periodLabels[word.period]}
-                          </Badge>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </TabsContent>
-            
-            <TabsContent value="detail">
-              {selectedWord && (
-                <div className="border rounded-lg p-6 bg-white">
-                  <div className="flex justify-between items-start mb-4">
-                    <h2 className="text-2xl font-bold">{selectedWord.word}</h2>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => copyToClipboard(selectedWord.word)}
-                        className="h-8 w-8"
-                      >
-                        <Book size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <Separator className="mb-4" />
-                  
-                  <div className="space-y-4">
+
+                <div className="border-t border-gray-200 pt-3 grid md:grid-cols-2 gap-4">
+                  <div className="flex items-start">
+                    <Book className="ml-2 text-blue-600 mt-1" size={18} />
                     <div>
-                      <h3 className="text-sm font-medium text-gray-500 mb-2">ریشه‌شناسی:</h3>
-                      <p className="text-lg leading-relaxed">{selectedWord.etymology}</p>
+                      <h3 className="font-medium text-sm text-gray-700">معنی</h3>
+                      <p className="text-gray-600">{word.meaning}</p>
                     </div>
-                    
-                    <div className="flex flex-wrap gap-3">
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-2">ریشه زبانی:</h3>
-                        <Badge className="bg-blue-100 text-blue-800 border-blue-200">
-                          {rootLanguageLabels[selectedWord.rootLanguage]}
-                        </Badge>
-                      </div>
-                      
-                      {selectedWord.period && (
-                        <div>
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">دوره تاریخی:</h3>
-                          <Badge className="bg-amber-100 text-amber-800 border-amber-200">
-                            {periodLabels[selectedWord.period]}
-                          </Badge>
-                        </div>
-                      )}
-                    </div>
-                    
-                    {selectedWord.examples && selectedWord.examples.length > 0 && (
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-2">مثال‌های کاربرد:</h3>
-                        <ul className="list-disc list-inside space-y-1 pr-2">
-                          {selectedWord.examples.map((example, index) => (
-                            <li key={index} className="text-gray-700">{example}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {selectedWord.relatedWords && selectedWord.relatedWords.length > 0 && (
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-2">واژگان مرتبط:</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {selectedWord.relatedWords.map((word, index) => (
-                            <Badge key={index} variant="outline" className="bg-gray-50">
-                              {word}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
-                  
-                  <div className="flex gap-2 mt-6">
-                    <Button 
-                      variant="outline"
-                      onClick={() => setSelectedWord(null)}
-                      className="flex-1"
-                    >
-                      بازگشت به فهرست
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={getRandomWord}
-                      className="flex items-center gap-2"
-                    >
-                      <Sparkles size={16} />
-                      واژه تصادفی
-                    </Button>
+
+                  <div className="flex items-start">
+                    <Globe className="ml-2 text-green-600 mt-1" size={18} />
+                    <div>
+                      <h3 className="font-medium text-sm text-gray-700">ریشه زبانی</h3>
+                      <p className="text-gray-600">{word.origin}</p>
+                    </div>
                   </div>
                 </div>
-              )}
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+
+                <div className="border-t border-gray-200 pt-3 grid md:grid-cols-2 gap-4">
+                  <div className="flex items-start">
+                    <History className="ml-2 text-purple-600 mt-1" size={18} />
+                    <div>
+                      <h3 className="font-medium text-sm text-gray-700">تاریخچه</h3>
+                      <p className="text-gray-600 text-sm">{word.history}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <Clock className="ml-2 text-orange-600 mt-1" size={18} />
+                    <div>
+                      <h3 className="font-medium text-sm text-gray-700">دوره تاریخی</h3>
+                      <p className="text-gray-600">{word.era}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {word.relatedWords && word.relatedWords.length > 0 && (
+                  <div className="border-t border-gray-200 pt-3">
+                    <h3 className="font-medium text-sm text-gray-700 mb-2">کلمات مرتبط</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {word.relatedWords.map((related: string, i: number) => (
+                        <span 
+                          key={i} 
+                          className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm hover:bg-gray-200 cursor-pointer transition-colors"
+                          onClick={() => setQuery(related)}
+                        >
+                          {related}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {!searchPerformed && (
+        <div className="border rounded-lg p-6 bg-gray-50 border-dashed border-gray-300 text-center">
+          <Book className="mx-auto h-12 w-12 text-gray-400 mb-2" />
+          <h3 className="font-medium text-gray-700 mb-1">جستجوی ریشه کلمات فارسی</h3>
+          <p className="text-sm text-gray-500">
+            کلمه‌ای را در کادر بالا وارد کنید تا ریشه، تاریخچه و معنای آن را بیابید
+          </p>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default WordEtymology;

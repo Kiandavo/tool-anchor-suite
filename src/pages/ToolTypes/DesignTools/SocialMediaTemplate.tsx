@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -21,7 +22,7 @@ const SocialMediaTemplate = () => {
     const file = e.target.files?.[0];
 
     if (file) {
-      const reader = new FileReader(""); // Pass empty string to fix TS error
+      const reader = new FileReader();
 
       reader.onloadend = () => {
         setImageSrc(reader.result as string);

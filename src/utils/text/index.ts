@@ -13,13 +13,20 @@ export * from './persianUtils';
 // Individual exports for the rest
 export * from './quotes';
 
-// Import and re-export specific non-conflicting functions
-import { generateLorem, generatePlaceholderText } from './randomText';
-export { generateLorem, generatePlaceholderText };
+// Import and re-export specific functions from randomText
+import { generateRandomString, pickRandomFromList, generateRandomText, generateLorem, generatePlaceholderText } from './randomText';
+export { generateRandomString, pickRandomFromList, generateRandomText, generateLorem, generatePlaceholderText };
 
+// Import and re-export specific functions from textCleaner
 import { removeEmojis, removeSpecialChars } from './textCleaner';
 export { removeEmojis, removeSpecialChars };
 
-export * from './textStats';
+// Export specific functions from textStats to avoid duplicates
+import { calculateReadingTime, countChars, countWords, countParagraphs } from './textStats';
+export { calculateReadingTime, countChars, countWords, countParagraphs };
+// Explicitly export countSentences from textStats
+import { countSentences } from './textStats';
+export { countSentences };
+
 export * from './textUtils';
 export * from './wordConverter';
