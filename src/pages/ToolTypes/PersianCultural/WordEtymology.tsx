@@ -1,172 +1,124 @@
 
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import React, { useState, useEffect } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Book, Clock, Globe, FileText, History } from "lucide-react";
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { SearchIcon, InfoIcon } from "lucide-react";
+import { persianWordEtymology } from '@/data/persian-word-etymology';
 
-// Import word etymology data (assumed to be in the project already)
-import { persianWordEtymology } from "@/data/persian-word-etymology";
+interface WordData {
+  word: string;
+  root: string;
+  meaning: string;
+  description: string;
+  examples: string[];
+}
 
 const WordEtymology = () => {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [searchPerformed, setSearchPerformed] = useState(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<WordData[]>([]);
+  const [selectedWord, setSelectedWord] = useState<WordData | null>(null);
+  
+  useEffect(() => {
+    // Show random words on initial load
+    if (persianWordEtymology.length > 0) {
+      const randomWords = [...persianWordEtymology]
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3);
+      setSearchResults(randomWords);
+    }
+  }, []);
 
   const handleSearch = () => {
-    if (!query.trim()) {
-      toast.warning("لطفاً یک کلمه وارد کنید");
+    if (!searchTerm.trim()) {
       return;
     }
-
-    setLoading(true);
-    setSearchPerformed(true);
-
-    // Simulate API delay (replace with real API call if needed)
-    setTimeout(() => {
-      const searchTerm = query.trim().toLowerCase();
-      const foundWords = persianWordEtymology.filter(word => 
-        word.word.toLowerCase().includes(searchTerm) || 
-        word.transliteration.toLowerCase().includes(searchTerm)
-      );
-
-      setResults(foundWords);
-      setLoading(false);
-
-      if (foundWords.length === 0) {
-        toast.info("کلمه‌ای با این مشخصات پیدا نشد");
-      }
-    }, 600);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
+    
+    const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+    const results = persianWordEtymology.filter(item => 
+      item.word.toLowerCase().includes(normalizedSearchTerm) ||
+      item.examples.some(ex => ex.toLowerCase().includes(normalizedSearchTerm))
+    );
+    
+    setSearchResults(results);
+    setSelectedWord(null);
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="mb-6 text-center">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">ریشه‌شناسی کلمات فارسی</h1>
-        <p className="text-gray-600 text-sm">ریشه و تاریخچه کلمات فارسی را کشف کنید</p>
-      </div>
-
-      <div className="mb-8 flex flex-col sm:flex-row gap-2">
-        <Input
-          placeholder="کلمه مورد نظر خود را وارد کنید..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="flex-grow py-6 text-base focus-visible:ring-blue-500"
-        />
-        <Button 
-          onClick={handleSearch} 
-          disabled={loading} 
-          className="bg-blue-600 hover:bg-blue-700 text-white py-6"
-        >
-          {loading ? 'در حال جستجو...' : (
-            <>
-              <Search className="ml-2" size={18} />
-              جستجو
-            </>
-          )}
-        </Button>
-      </div>
-
-      {searchPerformed && results.length === 0 && !loading && (
-        <Card className="p-6 text-center bg-gray-50">
-          <div className="flex flex-col items-center">
-            <FileText size={48} className="text-gray-400 mb-2" />
-            <h3 className="font-medium text-lg">نتیجه‌ای یافت نشد</h3>
-            <p className="text-gray-500 text-sm mt-1">
-              کلمه دیگری را امتحان کنید یا املای کلمه را بررسی نمایید
-            </p>
-          </div>
-        </Card>
-      )}
-
-      {results.length > 0 && (
-        <div className="space-y-6">
-          {results.map((word, index) => (
-            <Card key={index} className="p-5 bg-white shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex flex-col space-y-4">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-bold text-gray-800">{word.word}</h2>
-                  <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                    {word.transliteration}
-                  </span>
-                </div>
-
-                <div className="border-t border-gray-200 pt-3 grid md:grid-cols-2 gap-4">
-                  <div className="flex items-start">
-                    <Book className="ml-2 text-blue-600 mt-1" size={18} />
-                    <div>
-                      <h3 className="font-medium text-sm text-gray-700">معنی</h3>
-                      <p className="text-gray-600">{word.meaning}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <Globe className="ml-2 text-green-600 mt-1" size={18} />
-                    <div>
-                      <h3 className="font-medium text-sm text-gray-700">ریشه زبانی</h3>
-                      <p className="text-gray-600">{word.origin}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border-t border-gray-200 pt-3 grid md:grid-cols-2 gap-4">
-                  <div className="flex items-start">
-                    <History className="ml-2 text-purple-600 mt-1" size={18} />
-                    <div>
-                      <h3 className="font-medium text-sm text-gray-700">تاریخچه</h3>
-                      <p className="text-gray-600 text-sm">{word.history}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <Clock className="ml-2 text-orange-600 mt-1" size={18} />
-                    <div>
-                      <h3 className="font-medium text-sm text-gray-700">دوره تاریخی</h3>
-                      <p className="text-gray-600">{word.era}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {word.relatedWords && word.relatedWords.length > 0 && (
-                  <div className="border-t border-gray-200 pt-3">
-                    <h3 className="font-medium text-sm text-gray-700 mb-2">کلمات مرتبط</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {word.relatedWords.map((related: string, i: number) => (
-                        <span 
-                          key={i} 
-                          className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm hover:bg-gray-200 cursor-pointer transition-colors"
-                          onClick={() => setQuery(related)}
-                        >
-                          {related}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </Card>
-          ))}
-        </div>
-      )}
-
-      {!searchPerformed && (
-        <div className="border rounded-lg p-6 bg-gray-50 border-dashed border-gray-300 text-center">
-          <Book className="mx-auto h-12 w-12 text-gray-400 mb-2" />
-          <h3 className="font-medium text-gray-700 mb-1">جستجوی ریشه کلمات فارسی</h3>
-          <p className="text-sm text-gray-500">
-            کلمه‌ای را در کادر بالا وارد کنید تا ریشه، تاریخچه و معنای آن را بیابید
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">ریشه‌شناسی کلمات فارسی</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground mb-6">
+            با این ابزار می‌توانید ریشه و تاریخچه کلمات فارسی را جستجو کنید و با معانی و تحولات تاریخی آن‌ها آشنا شوید.
           </p>
-        </div>
-      )}
+
+          <div className="flex gap-2 mb-8">
+            <Input 
+              placeholder="کلمه مورد نظر را وارد کنید..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              className="rounded-lg"
+            />
+            <Button onClick={handleSearch} className="rounded-lg">
+              <SearchIcon className="w-4 h-4 ml-1" />
+              جستجو
+            </Button>
+          </div>
+
+          <div className="space-y-4">
+            {searchResults.length === 0 && (
+              <div className="text-center py-10 bg-muted/30 rounded-lg">
+                <p>نتیجه‌ای یافت نشد.</p>
+              </div>
+            )}
+
+            {searchResults.map((result, index) => (
+              <div 
+                key={index}
+                className="p-4 border rounded-lg cursor-pointer bg-background hover:bg-muted/30 transition-colors"
+                onClick={() => setSelectedWord(result)}
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-lg font-medium">{result.word}</h3>
+                    <p className="text-sm text-muted-foreground">{result.meaning}</p>
+                  </div>
+                  <InfoIcon className="text-muted-foreground" size={18} />
+                </div>
+              </div>
+            ))}
+
+            {selectedWord && (
+              <div className="mt-8 p-5 border rounded-lg bg-muted/30 space-y-3">
+                <div className="flex justify-between">
+                  <h2 className="text-xl font-bold">{selectedWord.word}</h2>
+                  <span className="text-sm text-muted-foreground">{selectedWord.root}</span>
+                </div>
+                <p className="font-medium">{selectedWord.meaning}</p>
+                <p className="text-muted-foreground">{selectedWord.description}</p>
+                
+                <div className="mt-4">
+                  <p className="font-medium mb-2">کلمات هم‌خانواده:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedWord.examples.map((example, idx) => (
+                      <span 
+                        key={idx} 
+                        className="bg-primary/10 text-primary px-2 py-1 rounded text-sm"
+                      >
+                        {example}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
