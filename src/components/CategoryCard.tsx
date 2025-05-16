@@ -18,7 +18,7 @@ import {
 import { categoryThemes } from '@/utils/categoryColors';
 
 // Map categories to their respective icons - moved outside component to prevent recreation
-const categoryIcons: Record<string, React.ComponentType<any>> = {
+const categoryIcons = {
   text: TextIcon,
   image: Image,
   seo: Search,
@@ -44,7 +44,7 @@ export const CategoryCard = memo(function CategoryCard({ category, count }: Cate
   
   return (
     <Link to={`/category/${category}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
-      <div className="neo-glass rounded-3xl p-5 flex flex-col items-center group hover:-translate-y-1 hover:shadow-lg will-change-transform transition-all duration-300">
+      <div className="card-apple-gradient rounded-3xl p-5 flex flex-col items-center group hover:-translate-y-1 hover:shadow-lg will-change-transform transition-all duration-300">
         <div className={`icon-container mb-4 w-16 h-16 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 shadow-sm border border-white/30 ${theme.gradient}`}>
           <IconComponent size={28} className={theme.iconColor} />
         </div>
