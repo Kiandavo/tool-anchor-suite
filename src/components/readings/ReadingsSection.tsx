@@ -29,28 +29,27 @@ export const ReadingsSection = () => {
           </h2>
         </div>
         
-        <CollapsibleTrigger asChild onClick={() => setIsOpen(!isOpen)}>
-          <Button 
-            variant="apple-outline" 
-            size="apple-sm"
-            className="rounded-full flex items-center gap-1"
-          >
-            {isOpen ? (
-              <>
-                <ChevronUp size={16} />
-                <span className="text-sm">بستن</span>
-              </>
-            ) : (
-              <>
-                <ChevronDown size={16} />
-                <span className="text-sm">نمایش همه</span>
-              </>
-            )}
-          </Button>
-        </CollapsibleTrigger>
+        <Button 
+          variant="apple-outline" 
+          size="apple-sm"
+          className="rounded-full flex items-center gap-1"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? (
+            <>
+              <ChevronUp size={16} />
+              <span className="text-sm">بستن</span>
+            </>
+          ) : (
+            <>
+              <ChevronDown size={16} />
+              <span className="text-sm">نمایش همه</span>
+            </>
+          )}
+        </Button>
       </div>
       
-      <Collapsible open={isOpen}>
+      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         {/* Preview cards (always visible) */}
         <div className="grid md:grid-cols-4 gap-4 mb-4">
           {toolsPreview.map((tool) => (
