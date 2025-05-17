@@ -10,10 +10,10 @@ export const PersianCulturalSection = () => {
 
   return (
     <section className="mb-16 sm:mb-24 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-      <div className="rounded-3xl border border-gray-100 neo-glass shadow-sm overflow-hidden backdrop-blur-sm">
+      <div className="rounded-3xl border border-gray-100 neo-glass shadow-sm overflow-hidden backdrop-blur-sm bg-gradient-to-br from-white/80 to-gray-50/60">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-500/20 to-violet-600/10 flex items-center justify-center mr-3 shadow-sm backdrop-blur-sm border border-white/30">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-500/25 to-violet-600/15 flex items-center justify-center mr-3 shadow-sm backdrop-blur-sm border border-white/30">
               <BookMarked size={22} className="text-violet-600" />
             </div>
             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">فرهنگ و زبان فارسی</h2>
@@ -27,6 +27,16 @@ export const PersianCulturalSection = () => {
             <ChevronLeft size={16} className="mr-1.5 group-hover:translate-x-[-2px] transition-transform" />
           </Link>
         </div>
+
+        {/* Added section description */}
+        <div className="px-6 sm:px-10 pb-6">
+          <p className="text-gray-600 leading-relaxed max-w-3xl mb-6 bg-white/50 p-4 rounded-xl border border-gray-100/50 shadow-sm">
+            مجموعه ابزارهای فرهنگ و زبان فارسی به منظور آشنایی با میراث غنی ایران، شامل ادبیات کهن، ضرب‌المثل‌ها، تقویم شمسی، 
+            ریشه‌شناسی واژگان، خط و خوشنویسی، موسیقی، معماری، آشپزی سنتی و جشن‌های باستانی ایجاد شده است. 
+            این ابزارها به کاربران کمک می‌کند تا با عناصر هویت‌ساز فرهنگی ایران بیشتر آشنا شوند.
+          </p>
+        </div>
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 px-6 sm:px-10 pb-10">
           {persianTools.slice(0, 4).map((tool, index) => (
             <div 
