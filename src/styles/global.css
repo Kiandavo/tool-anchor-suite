@@ -1,0 +1,44 @@
+
+/* Global styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import other style files */
+@import './base.css';
+@import './components.css';
+@import './animations.css';
+
+:root {
+  --font-sans: 'SF Pro Display', 'B Yekan', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-persian: 'B Yekan', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* RTL text support */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Gradient background utilities */
+.bg-gradient-soft {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(240, 240, 255, 0.8));
+}
+
+.dark .bg-gradient-soft {
+  background: linear-gradient(to bottom right, rgba(30, 30, 40, 0.9), rgba(15, 15, 25, 0.8));
+}
