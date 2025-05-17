@@ -8,6 +8,9 @@ import { PredictionType } from './horoscopeTypes';
 // Store previously shown predictions to avoid repetition in the same session
 const shownPredictions: Record<string, number[]> = {};
 
+// Positive prediction weightings
+const POSITIVE_PREDICTION_WEIGHT = 0.8; // 80% chance of positive prediction
+
 // Get a horoscope prediction based on sign and prediction type
 export const generateHoroscopePrediction = (
   selectedSign: string, 
@@ -44,6 +47,21 @@ export const generateHoroscopePrediction = (
   const availablePredictions = predictions.filter((_, index) => 
     !shownPredictions[trackingKey].includes(index)
   );
+
+  // Separate predictions into positive and neutral/negative
+  const positivePredictions = availablePredictions.filter(pred => 
+    pred.toLowerCase().includes('خوب') || 
+    pred.toLowerCase().includes('عالی') || 
+    pred.toLowerCase().includes('موفقیت') ||
+    pred.toLowerCase().includes('پیشرفت') ||
+    pred.toLowerCase().includes('خوش') ||
+    pred.toLowerCase().includes('موفق') ||
+    pred.toLowerCase().includes('فرصت')
+  );
+  
+  const otherPredictions = availablePredictions.filter(pred => 
+    !positivePredictions.includes(pred)
+  );
   
   // Use the current timestamp + date info as our source of randomness
   const now = Date.now();
@@ -56,10 +74,15 @@ export const generateHoroscopePrediction = (
   let selectedIndex: number;
   let selectedPrediction: string;
   
-  if (availablePredictions.length > 0) {
+  // Decide whether to use positive predictions with 80% probability
+  const usePositivePredictions = Math.random() < POSITIVE_PREDICTION_WEIGHT && positivePredictions.length > 0;
+  
+  const predictionsToUse = usePositivePredictions ? positivePredictions : availablePredictions;
+  
+  if (predictionsToUse.length > 0) {
     // Get a random prediction from available ones
-    selectedIndex = Math.floor(Math.abs(Math.sin(seed)) * availablePredictions.length);
-    selectedPrediction = availablePredictions[selectedIndex % availablePredictions.length];
+    selectedIndex = Math.floor(Math.abs(Math.sin(seed)) * predictionsToUse.length);
+    selectedPrediction = predictionsToUse[selectedIndex % predictionsToUse.length];
     
     // Find the original index in the full predictions array
     const originalIndex = predictions.indexOf(selectedPrediction);

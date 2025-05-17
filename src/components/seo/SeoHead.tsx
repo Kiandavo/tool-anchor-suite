@@ -11,16 +11,18 @@ interface SeoHeadProps {
   schema?: any;
   noindex?: boolean;
   language?: string;
+  structuredData?: Record<string, any>;
 }
 
 export const SeoHead: React.FC<SeoHeadProps> = ({
   title = 'لنگر - مجموعه ابزارهای آنلاین رایگان | Langar Tools',
   description = 'مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو و بهینه‌سازی. بیش از ۱۱۰ ابزار کاربردی در یک پلتفرم.',
-  keywords = 'ابزار آنلاین, ابزار سئو, تبدیل متن, محاسبه گر آنلاین, ویرایش تصویر, ابزارهای رایگان, langar, لنگر, فرهنگ فارسی, آموزش زبان فارسی',
+  keywords = 'ابزار آنلاین, ابزار سئو, تبدیل متن, محاسبه گر آنلاین, ویرایش تصویر, ابزارهای رایگان, langar, لنگر, فرهنگ فارسی, آموزش زبان فارسی, فال و طالع‌بینی, فال حافظ, استخاره',
   image = '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png',
   schema,
   noindex = false,
-  language = 'fa'
+  language = 'fa',
+  structuredData
 }) => {
   const location = useLocation();
   const currentUrl = `https://langar.co${location.pathname}`;
@@ -30,7 +32,18 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <html lang={language} />
+      <html lang={language} dir="rtl" />
+      
+      {/* Speed optimization meta tags */}
+      <meta httpEquiv="x-dns-prefetch-control" content="on" />
+      <link rel="dns-prefetch" href="https://cdn.fontcdn.ir" />
+      <link rel="preconnect" href="https://cdn.fontcdn.ir" crossOrigin="anonymous" />
+      
+      {/* PWA meta tags */}
+      <meta name="theme-color" content="#7E49F2" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="apple-mobile-web-app-title" content="لنگر" />
       
       {/* Robots meta tags */}
       {noindex ? (
@@ -80,6 +93,13 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       {schema && (
         <script type="application/ld+json">
           {JSON.stringify(schema)}
+        </script>
+      )}
+      
+      {/* Additional structured data */}
+      {structuredData && (
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
         </script>
       )}
     </Helmet>

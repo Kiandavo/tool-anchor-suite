@@ -39,11 +39,18 @@ export const useRumiIstikhara = () => {
     // Find poems that haven't been shown yet
     const availablePoems = rumiPoems.filter(p => !shownPoemIds.includes(p.id));
     
+    // Apply positive bias - filter positive poems if available
+    const positivePoems = availablePoems.filter(p => p.isPositive === true);
+    
+    // 80% chance of getting a positive poem if available
+    const usePositivePool = positivePoems.length > 0 && Math.random() < 0.8;
+    const poemsToChooseFrom = usePositivePool ? positivePoems : availablePoems;
+    
     setTimeout(() => {
       // If we have available poems, pick one randomly
-      if (availablePoems.length > 0) {
-        const randomIndex = Math.floor(Math.random() * availablePoems.length);
-        const selectedPoem = availablePoems[randomIndex];
+      if (poemsToChooseFrom.length > 0) {
+        const randomIndex = Math.floor(Math.random() * poemsToChooseFrom.length);
+        const selectedPoem = poemsToChooseFrom[randomIndex];
         
         // Update shown poems in session storage
         shownPoemIds.push(selectedPoem.id);

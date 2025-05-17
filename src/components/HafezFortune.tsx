@@ -33,11 +33,17 @@ export const HafezFortune = () => {
     // Find poems that haven't been shown yet
     const availablePoems = hafezGhazals.filter(p => !shownPoemIds.includes(p.id));
     
+    // Apply positive bias - filter positive poems if available
+    const positivePoems = availablePoems.filter(p => p.isPositive === true);
+    const poemsToChooseFrom = positivePoems.length > 0 
+      ? (Math.random() < 0.75 ? positivePoems : availablePoems) // 75% chance of positive poem
+      : availablePoems;
+    
     setTimeout(() => {
       // If we have available poems, pick one randomly
-      if (availablePoems.length > 0) {
-        const randomIndex = Math.floor(Math.random() * availablePoems.length);
-        const selectedPoem = availablePoems[randomIndex];
+      if (poemsToChooseFrom.length > 0) {
+        const randomIndex = Math.floor(Math.random() * poemsToChooseFrom.length);
+        const selectedPoem = poemsToChooseFrom[randomIndex];
         
         // Update shown poems in session storage
         shownPoemIds.push(selectedPoem.id);
@@ -69,6 +75,9 @@ export const HafezFortune = () => {
 
   return (
     <Card className="bg-[#f5f6f7] border-[#d1d5db] shadow-md overflow-hidden relative">
+      {/* Background gradient effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#f7f0ff] via-transparent to-[#f0f5ff]/20 opacity-70"></div>
+      
       {/* Decorative pattern */}
       <div className="absolute inset-0 opacity-[0.04]">
         <div className="w-full h-full" style={{
@@ -85,11 +94,11 @@ export const HafezFortune = () => {
           </h2>
         </div>
         
-        {/* Add the new HafezGuide component */}
+        {/* Add the HafezGuide component */}
         <HafezGuide />
       </CardHeader>
       
-      <CardContent className="pt-3 px-3">
+      <CardContent className="pt-3 px-3 relative z-10">
         <div className="space-y-3">
           {!poem ? (
             <div className="text-center text-gray-600 text-sm py-4">
@@ -132,12 +141,12 @@ export const HafezFortune = () => {
         </div>
       </CardContent>
       
-      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-[#f5f6f7]/70 border-t border-[#d1d5db]/50">
+      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-[#f5f6f7]/70 border-t border-[#d1d5db]/50 relative z-10">
         <Button 
           onClick={getRandomPoem} 
           disabled={isLoading}
           size="sm" 
-          className="bg-[#6b7280] hover:bg-[#4b5563] text-white text-xs h-8 px-4 relative overflow-hidden group w-full sm:w-auto"
+          className="bg-gradient-to-r from-[#6b7280] to-[#4b5563] hover:from-[#5b6270] hover:to-[#3b4553] text-white text-xs h-8 px-4 relative overflow-hidden group w-full sm:w-auto"
         >
           <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
           {isLoading ? 
@@ -152,7 +161,7 @@ export const HafezFortune = () => {
             variant="outline"
             size="sm"
             onClick={copyFortune} 
-            className="border-[#6b7280] text-[#4b5563] text-xs h-8 px-3 w-full sm:w-auto"
+            className="border-[#6b7280] text-[#4b5563] text-xs h-8 px-3 w-full sm:w-auto hover:bg-[#f0f0f0]"
           >
             <Copy size={14} className="mr-1" />
             کپی فال
