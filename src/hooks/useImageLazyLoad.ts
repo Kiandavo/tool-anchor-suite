@@ -11,7 +11,7 @@ export const useImageLazyLoad = (src: string, placeholderSrc: string = '') => {
     setIsLoaded(true);
   }, []);
 
-  const onError = useCallback((e: Event) => {
+  const onError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     setError(new Error('Failed to load image'));
     console.error('Image loading failed', src);
   }, [src]);

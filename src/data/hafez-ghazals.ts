@@ -4,6 +4,7 @@ export interface HafezPoem {
   title: string;
   text: string;
   interpretation: string;
+  isPositive?: boolean; // Added this property as optional
 }
 
 // 500 Hafez ghazals (simplified for demonstration)

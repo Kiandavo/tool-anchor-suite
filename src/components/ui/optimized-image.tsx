@@ -43,7 +43,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         alt={alt}
         loading={loadingStrategy}
         onLoad={onLoad}
-        onError={onError}
+        onError={onError as React.ReactEventHandler<HTMLImageElement>}
         className={cn(
           "w-full h-full object-cover transition-opacity duration-300",
           !isLoaded && "opacity-0",
