@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-70", /* Improved disabled state opacity for better visibility */
   {
     variants: {
       variant: {
@@ -14,16 +14,16 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border-2 border-input bg-background hover:bg-accent/10 hover:text-accent-foreground", /* Border increased for visibility */
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "hover:bg-accent/10 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        apple: "bg-gradient-to-b from-apple-blue to-apple-blue/90 text-white hover:shadow-md active:scale-[0.98] shadow-sm",
-        "apple-outline": "border border-apple-blue/20 text-apple-blue bg-white hover:bg-apple-blue/5 shadow-sm",
-        "apple-secondary": "bg-gradient-to-b from-white to-gray-50 text-gray-800 border border-gray-200/60 hover:shadow-md",
-        "apple-destructive": "bg-gradient-to-b from-apple-red to-apple-red/90 text-white hover:shadow-md active:scale-[0.98] shadow-sm",
-        "apple-success": "bg-gradient-to-b from-apple-green to-apple-green/90 text-white hover:shadow-md active:scale-[0.98] shadow-sm",
+        apple: "bg-gradient-to-b from-blue-600 to-blue-700 text-white hover:shadow-md active:scale-[0.98] shadow-sm", /* Enhanced contrast */
+        "apple-outline": "border-2 border-blue-400 text-blue-700 bg-white hover:bg-blue-50 shadow-sm", /* Enhanced border for visibility */
+        "apple-secondary": "bg-gradient-to-b from-white to-gray-50 text-gray-800 border-2 border-gray-300 hover:shadow-md", /* Stronger border */
+        "apple-destructive": "bg-gradient-to-b from-red-600 to-red-700 text-white hover:shadow-md active:scale-[0.98] shadow-sm", /* Enhanced contrast */
+        "apple-success": "bg-gradient-to-b from-green-600 to-green-700 text-white hover:shadow-md active:scale-[0.98] shadow-sm", /* Enhanced contrast */
       },
       size: {
         default: "h-10 px-4 py-2",

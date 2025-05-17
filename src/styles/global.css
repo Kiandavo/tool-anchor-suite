@@ -15,11 +15,17 @@
   --font-sans: 'SF Pro Display', 'B Yekan', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-persian: 'B Yekan', sans-serif;
   
-  /* Custom color variables */
-  --apple-blue: 63 131 248;
-  --apple-purple: 147 51 234;
-  --apple-green: 16 185 129;
-  --apple-orange: 249 115 22;
+  /* Enhanced color variables with improved contrast */
+  --apple-blue: 37 99 235; /* Adjusted for better contrast */
+  --apple-purple: 124 58 237; /* Deeper purple for better readability */
+  --apple-green: 22 163 74; /* Darker green for better contrast */
+  --apple-orange: 234 88 12; /* Adjusted for better contrast */
+  
+  /* Accessibility-focused text colors */
+  --text-primary: 23 23 23; /* Near black for main text */
+  --text-secondary: 51 65 85; /* Dark slate for secondary text */
+  --text-muted: 71 85 105; /* Slate for muted text, meets contrast requirements */
+  --text-on-dark: 248 250 252; /* Off-white for text on dark backgrounds */
 }
 
 html {
@@ -30,6 +36,22 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   background-color: #fafaff;
+  color: rgb(var(--text-primary)); /* Setting default text color */
+  font-size: 1rem; /* Base font size for readability */
+  line-height: 1.5; /* Improved line spacing for readability */
+}
+
+/* Increased contrast for focused elements */
+:focus {
+  outline: 3px solid rgb(var(--apple-blue));
+  outline-offset: 2px;
+}
+
+/* Improved link styling for better visibility */
+a:not([class]) {
+  color: rgb(var(--apple-blue));
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 /* RTL text support */
@@ -43,44 +65,44 @@ body {
   text-align: left;
 }
 
-/* Enhanced gradient backgrounds */
+/* Enhanced gradient backgrounds with better contrast */
 .bg-gradient-soft {
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.9));
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.97), rgba(245, 245, 255, 0.95));
 }
 
 .dark .bg-gradient-soft {
-  background: linear-gradient(to bottom right, rgba(30, 30, 40, 0.9), rgba(15, 15, 25, 0.8));
+  background: linear-gradient(to bottom right, rgba(30, 30, 40, 0.95), rgba(15, 15, 25, 0.9));
 }
 
-/* Card gradients */
+/* Card gradients with improved visibility */
 .card-apple-gradient {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.9));
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
 .card-apple-gradient:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* Apple-style buttonss */
+/* ADA-compliant buttons */
 @layer components {
   .btn-apple {
-    @apply bg-gradient-to-br from-blue-500 to-blue-600 text-white font-medium py-2.5 px-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
+    @apply bg-gradient-to-br from-blue-600 to-blue-700 text-white font-medium py-2.5 px-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
   }
   
   .btn-apple-outline {
-    @apply bg-white/80 text-blue-600 border border-blue-200/50 font-medium py-2.5 px-5 rounded-xl shadow-sm hover:shadow-md hover:bg-blue-50/50 transition-all duration-300;
+    @apply bg-white text-blue-700 border border-blue-300 font-medium py-2.5 px-5 rounded-xl shadow-sm hover:shadow-md hover:bg-blue-50 transition-all duration-300;
   }
   
   .card-interactive {
-    @apply border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden bg-white/70 backdrop-blur-sm hover:bg-white/90;
+    @apply border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden bg-white/80 backdrop-blur-sm hover:bg-white/95;
   }
   
   .input-apple {
-    @apply bg-gray-50/80 border border-gray-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition-all duration-200;
+    @apply bg-gray-50 border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all duration-200;
   }
 }
 
@@ -90,3 +112,25 @@ body {
   z-index: -1;
 }
 
+/* Accessibility utility classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip to content link for keyboard users */
+.skip-to-content {
+  @apply bg-white text-blue-700 fixed top-0 left-0 p-3 m-3 transition-transform duration-200 z-50;
+  transform: translateY(-120%);
+}
+
+.skip-to-content:focus {
+  transform: translateY(0);
+}

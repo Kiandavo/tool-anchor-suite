@@ -10,27 +10,27 @@ export const PersianCulturalSection = () => {
 
   return (
     <section className="mb-16 sm:mb-24 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-      <div className="rounded-3xl border border-gray-100 neo-glass shadow-sm overflow-hidden backdrop-blur-sm bg-gradient-to-br from-white/80 to-gray-50/60">
+      <div className="rounded-3xl border border-gray-200 neo-glass shadow-sm overflow-hidden backdrop-blur-sm bg-gradient-to-br from-white/90 to-gray-50/80">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-500/25 to-violet-600/15 flex items-center justify-center mr-3 shadow-sm backdrop-blur-sm border border-white/30">
-              <BookMarked size={22} className="text-violet-600" />
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-400 to-violet-500/30 flex items-center justify-center mr-3 shadow-sm backdrop-blur-sm border border-white/30">
+              <BookMarked size={22} className="text-violet-700" aria-hidden="true" />
             </div>
             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">فرهنگ و زبان فارسی</h2>
           </div>
           <Link 
             to="/category/persian-cultural" 
-            className="text-violet-600 flex items-center text-sm font-medium bg-white/70 py-1.5 px-4 rounded-full hover:bg-violet-50 transition-all duration-300 mt-2 sm:mt-0 shadow-sm border border-violet-100/50 backdrop-blur-sm group"
+            className="text-violet-700 flex items-center text-sm font-medium bg-white/80 py-1.5 px-4 rounded-full hover:bg-violet-50 transition-all duration-300 mt-2 sm:mt-0 shadow-sm border border-violet-200 backdrop-blur-sm group"
             aria-label="مشاهده همه ابزارهای فرهنگ و زبان فارسی"
           >
             مشاهده همه
-            <ChevronLeft size={16} className="mr-1.5 group-hover:translate-x-[-2px] transition-transform" />
+            <ChevronLeft size={16} className="mr-1.5 group-hover:translate-x-[-2px] transition-transform" aria-hidden="true" />
           </Link>
         </div>
 
-        {/* Added section description */}
+        {/* Added section description with improved contrast */}
         <div className="px-6 sm:px-10 pb-6">
-          <p className="text-gray-600 leading-relaxed max-w-3xl mb-6 bg-white/50 p-4 rounded-xl border border-gray-100/50 shadow-sm">
+          <p className="text-gray-700 leading-relaxed max-w-3xl mb-6 bg-white/60 p-4 rounded-xl border border-gray-200/50 shadow-sm">
             مجموعه ابزارهای فرهنگ و زبان فارسی به منظور آشنایی با میراث غنی ایران، شامل ادبیات کهن، ضرب‌المثل‌ها، تقویم شمسی، 
             ریشه‌شناسی واژگان، خط و خوشنویسی، موسیقی، معماری، آشپزی سنتی و جشن‌های باستانی ایجاد شده است. 
             این ابزارها به کاربران کمک می‌کند تا با عناصر هویت‌ساز فرهنگی ایران بیشتر آشنا شوند.
