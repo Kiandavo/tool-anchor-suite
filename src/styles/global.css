@@ -8,6 +8,8 @@
 @import './base.css';
 @import './components.css';
 @import './animations.css';
+@import './fonts.css';
+@import './patterns.css';
 
 :root {
   --font-sans: 'SF Pro Display', 'B Yekan', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;

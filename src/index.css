@@ -1,4 +1,3 @@
 
 /* This file serves as a central import point for all styles */
-/* All styles are now imported through global.css */
 @import './styles/global.css';

@@ -6,9 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
-import "./styles/global.css";
-import "./styles/fonts.css";
-import "./styles/patterns.css";
+import "./index.css";
 
 const queryClient = new QueryClient();
 
