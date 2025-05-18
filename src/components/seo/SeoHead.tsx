@@ -26,6 +26,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
 }) => {
   const location = useLocation();
   const currentUrl = `https://langar.co${location.pathname}`;
+  const logoUrl = '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png';
   
   return (
     <Helmet>
@@ -60,10 +61,10 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       <link rel="canonical" href={currentUrl} />
       
       {/* Favicons */}
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="icon" href={logoUrl} />
+      <link rel="apple-touch-icon" sizes="180x180" href={logoUrl} />
+      <link rel="icon" type="image/png" sizes="32x32" href={logoUrl} />
+      <link rel="icon" type="image/png" sizes="16x16" href={logoUrl} />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
