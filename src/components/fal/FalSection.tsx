@@ -1,7 +1,12 @@
 
 import React, { useState, lazy, Suspense } from 'react';
-import { Star, Globe, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { ChevronRight, ChevronDown, ChevronUp, Star, Sparkles, BookOpen, Layers, Dice6, Compass, Hash } from "lucide-react";
+import { getToolsByCategory } from '@/data/tools';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { EnhancedGradientBackground } from '@/components/ui/enhanced-gradient-background';
 
 // Lazy load components with proper handling for named exports
 const HafezFortune = lazy(() => import('../../components/HafezFortune').then(module => ({ default: module.HafezFortune })));
@@ -149,7 +154,7 @@ export const FalSection = () => {
         <div className="h-0.5 bg-gradient-to-r from-transparent via-[#a99af0] to-transparent w-1/4"></div>
         <div className="px-4 py-1.5 bg-[#f8f6ff] rounded-full shadow-sm border border-[#a99af0]/20">
           <h2 className="text-center text-[#2a1c64] font-bold text-xl flex items-center">
-            <Globe size={20} className="ml-2 text-[#a99af0]" />
+            <Compass size={20} className="ml-2 text-[#a99af0]" />
             اکتشافات عرفانی
           </h2>
         </div>
@@ -215,3 +220,5 @@ export const FalSection = () => {
     </section>
   );
 };
+
+export default FalSection;

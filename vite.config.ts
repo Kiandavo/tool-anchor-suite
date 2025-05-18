@@ -13,17 +13,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react({
       plugins: [],
-      // swcOptions can be used instead of fastRefresh for better compatibility
-      swcOptions: {
-        jsc: {
-          transform: {
-            react: {
-              refresh: true,
-              development: mode === 'development',
-            },
-          },
-        },
-      },
+      // Using jsxImportSource instead of swcOptions
+      jsxImportSource: mode === 'development' ? 'react' : undefined,
     }),
     mode === 'development' &&
     componentTagger(),
