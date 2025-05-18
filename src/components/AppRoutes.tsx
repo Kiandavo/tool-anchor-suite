@@ -2,24 +2,29 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { Suspense, lazy } from "react";
-import { Spinner } from "@/components/ui/spinner";
 
-// Lazy load components
-const Index = lazy(() => import("@/pages/Index"));
-const Category = lazy(() => import("@/pages/Category"));
-const Tool = lazy(() => import("@/pages/Tool"));
-const Search = lazy(() => import("@/pages/Search"));
-const AllTools = lazy(() => import("@/pages/AllTools"));
-const Settings = lazy(() => import("@/pages/Settings"));
-const Community = lazy(() => import("@/pages/Community"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
-
-// Loading fallback component
+// Better loading component
 const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-[70vh]">
-    <Spinner className="h-12 w-12 text-primary" />
+  <div className="flex items-center justify-center min-h-[70vh] w-full">
+    <div className="relative h-16 w-16">
+      <div className="absolute top-0 left-0 right-0 bottom-0 animate-pulse bg-primary/20 rounded-full"></div>
+      <svg className="animate-spin h-12 w-12 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </div>
   </div>
 );
+
+// Lazy load components with explicit chunk names
+const Index = lazy(() => import(/* webpackChunkName: "index-page" */ "@/pages/Index"));
+const Category = lazy(() => import(/* webpackChunkName: "category-page" */ "@/pages/Category"));
+const Tool = lazy(() => import(/* webpackChunkName: "tool-page" */ "@/pages/Tool"));
+const Search = lazy(() => import(/* webpackChunkName: "search-page" */ "@/pages/Search"));
+const AllTools = lazy(() => import(/* webpackChunkName: "all-tools-page" */ "@/pages/AllTools"));
+const Settings = lazy(() => import(/* webpackChunkName: "settings-page" */ "@/pages/Settings"));
+const Community = lazy(() => import(/* webpackChunkName: "community-page" */ "@/pages/Community"));
+const NotFound = lazy(() => import(/* webpackChunkName: "not-found-page" */ "@/pages/NotFound"));
 
 export const AppRoutes = () => {
   const ScrollToTop = () => {

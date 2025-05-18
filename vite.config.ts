@@ -12,7 +12,9 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react({
-      plugins: []
+      plugins: [],
+      // Enable fast refresh
+      fastRefresh: true,
     }),
     mode === 'development' &&
     componentTagger(),
@@ -29,24 +31,47 @@ export default defineConfig(({ mode }) => ({
     cssMinify: true,
     cssCodeSplit: true,
     assetsInlineLimit: 4096, // 4kb
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'router': ['react-router-dom'],
-          'ui': [
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-alert-dialog',
-            '@radix-ui/react-aspect-ratio',
-            '@radix-ui/react-avatar',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-toast',
-            '@radix-ui/react-tooltip',
-          ],
+        manualChunks: (id) => {
+          // Create specific chunks for different parts of the application
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('react-router')) {
+              return 'router';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'ui';
+            }
+            if (id.includes('framer-motion')) {
+              return 'animations';
+            }
+            if (id.includes('lucide')) {
+              return 'icons';
+            }
+            return 'vendor';
+          }
+          if (id.includes('/src/components/fal/')) {
+            return 'fortune';
+          }
+          if (id.includes('/src/components/tool/')) {
+            return 'tools';
+          }
         }
       }
     },
     chunkSizeWarningLimit: 1000,
   },
+  // Enable dependency optimization
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@radix-ui/react-slot']
+  }
 }));

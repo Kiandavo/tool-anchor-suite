@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import other style files */
+/* Import other style files - use layer directives for better tree-shaking */
 @import './base.css';
 @import './components.css';
 @import './animations.css';
@@ -26,6 +26,16 @@
   --text-secondary: 51 65 85; /* Dark slate for secondary text */
   --text-muted: 71 85 105; /* Slate for muted text, meets contrast requirements */
   --text-on-dark: 248 250 252; /* Off-white for text on dark backgrounds */
+}
+
+/* Use content-visibility for better rendering performance */
+.render-offscreen {
+  content-visibility: auto;
+}
+
+/* Use font-display: swap for better font loading */
+@font-face {
+  font-display: swap;
 }
 
 html {
@@ -91,14 +101,17 @@ a:not([class]) {
 @layer components {
   .btn-apple {
     @apply bg-gradient-to-br from-blue-600 to-blue-700 text-white font-medium py-2.5 px-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
+    will-change: transform, box-shadow;
   }
   
   .btn-apple-outline {
     @apply bg-white text-blue-700 border border-blue-300 font-medium py-2.5 px-5 rounded-xl shadow-sm hover:shadow-md hover:bg-blue-50 transition-all duration-300;
+    will-change: transform, box-shadow, background-color;
   }
   
   .card-interactive {
     @apply border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden bg-white/80 backdrop-blur-sm hover:bg-white/95;
+    will-change: transform, box-shadow, background-color;
   }
   
   .input-apple {
@@ -110,6 +123,7 @@ a:not([class]) {
 .bg-blur-element {
   @apply absolute pointer-events-none opacity-70 blur-3xl;
   z-index: -1;
+  will-change: transform, opacity;
 }
 
 /* Accessibility utility classes */
@@ -133,4 +147,20 @@ a:not([class]) {
 
 .skip-to-content:focus {
   transform: translateY(0);
+}
+
+/* Performance optimizations */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Reduce layout shifts */
+img:not([height]), video:not([height]) {
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Add will-change hints for smoother animations */
+.animate-fade-in, .animate-slide-up, .animate-scale {
+  will-change: transform, opacity;
 }

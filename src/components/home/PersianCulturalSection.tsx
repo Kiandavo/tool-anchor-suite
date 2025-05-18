@@ -1,15 +1,19 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolCard } from '@/components/ToolCard';
 import { getToolsByCategory } from '@/data/tools';
 import { BookMarked, ChevronLeft } from 'lucide-react';
 
+// Memoize the individual tool card to prevent unnecessary re-renders
+const MemoizedToolCard = memo(ToolCard);
+
 export const PersianCulturalSection = () => {
-  const persianTools = getToolsByCategory('persian-cultural');
+  // Only get the first 4 tools to avoid excessive rendering
+  const persianTools = getToolsByCategory('persian-cultural').slice(0, 4);
 
   return (
-    <section className="mb-16 sm:mb-24 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+    <section className="mb-16 sm:mb-24 animate-slide-up render-offscreen" style={{ animationDelay: '0.3s' }}>
       <div className="rounded-3xl border border-gray-200 neo-glass shadow-sm overflow-hidden backdrop-blur-sm bg-gradient-to-br from-white/90 to-gray-50/80">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
@@ -38,18 +42,18 @@ export const PersianCulturalSection = () => {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 px-6 sm:px-10 pb-10">
-          {persianTools.slice(0, 4).map((tool, index) => (
+          {persianTools.map((tool, index) => (
             <div 
               key={tool.id} 
               className="animate-fade-in transition-transform hover:-translate-y-1 duration-300" 
               style={{ animationDelay: `${0.4 + index * 0.1}s` }}
             >
-              <ToolCard tool={tool} />
+              <MemoizedToolCard tool={tool} />
             </div>
           ))}
         </div>
         
-        {/* Added schema.org content for better SEO */}
+        {/* Schema.org content for better SEO */}
         <div itemScope itemType="https://schema.org/ItemList" style={{display: 'none'}}>
           <meta itemProp="name" content="ابزارهای فرهنگ و زبان فارسی" />
           <meta itemProp="description" content="مجموعه ابزارهای فرهنگ و زبان فارسی شامل آموزش زبان فارسی، تبدیل تاریخ، معانی نام‌های ایرانی و ضرب‌المثل‌های فارسی" />
@@ -73,3 +77,6 @@ export const PersianCulturalSection = () => {
     </section>
   );
 };
+
+// Export as memoized component
+export default memo(PersianCulturalSection);
