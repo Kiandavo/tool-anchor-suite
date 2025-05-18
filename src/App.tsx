@@ -32,12 +32,16 @@ const App = () => {
   }, []);
 
   return (
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <GoogleAnalytics />
-      <AppRoutes />
-    </TooltipProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <GoogleAnalytics />
+          <AppRoutes />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 
