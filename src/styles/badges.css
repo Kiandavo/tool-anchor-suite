@@ -1,0 +1,21 @@
+
+@layer components {
+  /* Badge styles */
+  .badge-new {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-primary/20 text-primary;
+  }
+
+  /* Apple-style badges with improved contrast */
+  .badge-apple {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-white/90 backdrop-blur-sm 
+    shadow-sm border border-gray-200;
+  }
+  
+  .badge-apple-new {
+    @apply badge-apple bg-blue-50 text-blue-700 border-blue-300;
+  }
+  
+  .badge-apple-premium {
+    @apply badge-apple bg-purple-50 text-purple-700 border-purple-300;
+  }
+}

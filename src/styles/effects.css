@@ -1,0 +1,50 @@
+
+@layer components {
+  /* Glass and visual effects */
+  .glass-effect {
+    @apply backdrop-blur-lg bg-white/90 border border-white/50 shadow-sm hover:shadow transition-all duration-300;
+  }
+
+  .neo-glass {
+    @apply backdrop-blur-xl bg-white/95 border border-gray-200/60 shadow-sm;
+  }
+
+  .frost-glass {
+    @apply backdrop-blur-md bg-white/80 border border-gray-100/50;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-md border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  .glass-nav {
+    @apply backdrop-blur-xl bg-white/95 border-b border-gray-100/50 shadow-sm;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+  }
+  
+  .icon-container {
+    @apply w-16 h-16 rounded-xl flex items-center justify-center mb-4;
+    background: linear-gradient(135deg, rgba(var(--primary) / 0.15), rgba(var(--accent) / 0.1));
+    box-shadow: 0 4px 12px rgba(var(--primary) / 0.1);
+  }
+
+  .vibrant-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    @apply text-transparent bg-clip-text animate-gradient;
+  }
+  
+  .vibrant-button {
+    @apply relative overflow-hidden rounded-full px-6 py-2.5 font-medium text-white transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    box-shadow: 0 4px 12px rgba(var(--primary) / 0.2);
+  }
+  
+  /* Apple-style dividers */
+  .divider-gradient {
+    @apply h-px w-full;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.15), transparent);
+  }
+}

@@ -1,0 +1,48 @@
+
+@layer components {
+  /* Card styles */
+  .card-interactive {
+    @apply border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden bg-white/80 backdrop-blur-sm hover:bg-white/95;
+    will-change: transform, box-shadow, background-color;
+  }
+  
+  /* Apple-style card variants with improved contrast */
+  .card-apple {
+    @apply rounded-2xl bg-white/95 backdrop-blur-lg border border-gray-200 p-6 shadow-sm
+    hover:shadow-md transition-all;
+  }
+  
+  .card-apple-gradient {
+    @apply rounded-2xl backdrop-blur-md border border-gray-200 p-6 shadow-sm
+    hover:shadow-md transition-all;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+  }
+  
+  .vibrant-card {
+    @apply neo-glass rounded-2xl p-6 transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+    border: 1px solid rgba(230,230,230,0.8);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  }
+  
+  .tool-card {
+    @apply glass-card rounded-2xl transition-all duration-300 hover:-translate-y-1 p-6 h-full;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+    border: 1px solid rgba(230,230,230,0.8);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  }
+  
+  .category-card {
+    @apply glass-card rounded-2xl p-7 flex flex-col items-center hover:-translate-y-1;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+    border: 1px solid rgba(230,230,230,0.8);
+  }
+  
+  .card-accessible {
+    @apply rounded-xl border border-gray-200 p-4 shadow-sm bg-white;
+  }
+  
+  .result-card {
+    @apply neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1;
+  }
+}

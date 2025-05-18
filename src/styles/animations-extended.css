@@ -1,0 +1,26 @@
+
+@layer components {
+  @keyframes shimmer {
+    0% {
+      transform: translate(-50%, -50%) rotate(30deg);
+    }
+    100% {
+      transform: translate(50%, 50%) rotate(30deg);
+    }
+  }
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+}

@@ -1,0 +1,28 @@
+
+@layer components {
+  /* Button styles */
+  .btn-apple {
+    @apply bg-gradient-to-br from-blue-600 to-blue-700 text-white font-medium py-2.5 px-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
+    will-change: transform, box-shadow;
+  }
+  
+  .btn-apple-outline {
+    @apply bg-white text-blue-700 border border-blue-300 font-medium py-2.5 px-5 rounded-xl shadow-sm hover:shadow-md hover:bg-blue-50 transition-all duration-300;
+    will-change: transform, box-shadow, background-color;
+  }
+
+  /* ADA-compliant button variants with better contrast */
+  .button-apple-primary {
+    @apply rounded-full bg-gradient-to-b from-blue-600 to-blue-700 text-white px-5 py-2.5 font-medium 
+    shadow-sm hover:shadow-md active:scale-[0.98] transition-all;
+  }
+  
+  .button-apple-secondary {
+    @apply rounded-full border-2 border-blue-400 text-blue-700 bg-white px-5 py-2.5 font-medium
+    shadow-sm hover:shadow hover:bg-blue-50/70 transition-all;
+  }
+  
+  .btn-accessible {
+    @apply py-2 px-4 rounded-md focus-ring;
+  }
+}

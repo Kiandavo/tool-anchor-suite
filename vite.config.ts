@@ -13,8 +13,17 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react({
       plugins: [],
-      // Enable fast refresh
-      fastRefresh: true,
+      // swcOptions can be used instead of fastRefresh for better compatibility
+      swcOptions: {
+        jsc: {
+          transform: {
+            react: {
+              refresh: true,
+              development: mode === 'development',
+            },
+          },
+        },
+      },
     }),
     mode === 'development' &&
     componentTagger(),

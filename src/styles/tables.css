@@ -1,0 +1,15 @@
+
+@layer components {
+  /* Table styles with improved contrast */
+  .table-container {
+    @apply rounded-xl overflow-hidden neo-glass;
+  }
+  
+  .table-header {
+    @apply bg-primary/10 p-4 border-b border-gray-200;
+  }
+  
+  .table-row {
+    @apply border-t border-gray-200 hover:bg-primary/5 transition-colors duration-200;
+  }
+}
