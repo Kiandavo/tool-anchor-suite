@@ -16,7 +16,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-// Lazy load components with explicit chunk names - updating the casing here
+// Lazy load components with correct file names (lowercase)
 const Index = lazy(() => import(/* webpackChunkName: "index-page" */ "@/pages/index"));
 const Category = lazy(() => import(/* webpackChunkName: "category-page" */ "@/pages/Category"));
 const Tool = lazy(() => import(/* webpackChunkName: "tool-page" */ "@/pages/Tool"));
