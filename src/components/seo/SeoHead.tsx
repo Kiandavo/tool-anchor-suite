@@ -39,6 +39,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       <meta httpEquiv="x-dns-prefetch-control" content="on" />
       <link rel="dns-prefetch" href="https://cdn.fontcdn.ir" />
       <link rel="preconnect" href="https://cdn.fontcdn.ir" crossOrigin="anonymous" />
+      <link rel="preload" as="font" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff" type="font/woff" crossOrigin="anonymous" />
       
       {/* PWA meta tags */}
       <meta name="theme-color" content="#7E49F2" />

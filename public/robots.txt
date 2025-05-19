@@ -16,8 +16,15 @@ Disallow: /*?*
 # Allow useful directories 
 Allow: /tool/
 Allow: /category/
+Allow: /search/
 Allow: /assets/
 Allow: /images/
+
+# Explicitly allow key tools for better indexing
+Allow: /tool/meta-tag-generator
+Allow: /tool/robots-txt-generator
+Allow: /tool/sitemap-generator
+Allow: /tool/keyword-density
 
 # Explicitly allow Persian cultural tools
 Allow: /tool/persian-calendar
@@ -30,3 +37,16 @@ Allow: /category/persian-cultural
 
 # Crawl-delay directive
 Crawl-delay: 1
+
+# Specify key pages to Google 
+User-agent: Googlebot
+Allow: /
+Allow: /tool/
+Allow: /category/
+Allow: /search
+Allow: /all-tools
+
+# Mobile-specific directives
+User-agent: Googlebot-Mobile
+Allow: /
+

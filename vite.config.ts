@@ -31,10 +31,12 @@ export default defineConfig(({ mode }) => ({
     cssMinify: true,
     cssCodeSplit: true,
     assetsInlineLimit: 4096, // 4kb
+    reportCompressedSize: false, // Speed up build
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug']
       }
     },
     rollupOptions: {
@@ -65,13 +67,20 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('/src/components/tool/')) {
             return 'tools';
           }
-        }
+        },
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
       }
     },
     chunkSizeWarningLimit: 1000,
   },
   // Enable dependency optimization
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', '@radix-ui/react-slot']
+    include: ['react', 'react-dom', 'react-router-dom', '@radix-ui/react-slot'],
+    esbuildOptions: {
+      target: 'esnext',
+      treeShaking: true,
+    }
   }
 }));
