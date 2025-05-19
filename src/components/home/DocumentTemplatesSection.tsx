@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, FileContract, FileDigit, FilePen } from 'lucide-react';
+import { FileText, FileCode, FileDigit, FilePen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const templateCategories = [
@@ -17,7 +17,7 @@ const templateCategories = [
     id: 'legal-contracts',
     title: 'قراردادهای حقوقی فریلنسری',
     description: 'قراردادهای استاندارد برای فریلنسرها و کسب‌وکارهای مستقل در ایران',
-    icon: FileContract,
+    icon: FileCode,
     color: 'bg-gradient-to-br from-blue-100/80 to-blue-300/80',
     iconColor: 'text-blue-600',
   },
