@@ -16,15 +16,15 @@ const LoadingFallback = () => (
   </div>
 );
 
-// Lazy load components with correct file names (lowercase)
-const Index = lazy(() => import(/* webpackChunkName: "index-page" */ "@/pages/index"));
-const Category = lazy(() => import(/* webpackChunkName: "category-page" */ "@/pages/Category"));
-const Tool = lazy(() => import(/* webpackChunkName: "tool-page" */ "@/pages/Tool"));
-const Search = lazy(() => import(/* webpackChunkName: "search-page" */ "@/pages/Search"));
-const AllTools = lazy(() => import(/* webpackChunkName: "all-tools-page" */ "@/pages/AllTools"));
-const Settings = lazy(() => import(/* webpackChunkName: "settings-page" */ "@/pages/Settings"));
-const Community = lazy(() => import(/* webpackChunkName: "community-page" */ "@/pages/Community"));
-const NotFound = lazy(() => import(/* webpackChunkName: "not-found-page" */ "@/pages/NotFound"));
+// Lazy load components with correct file names with exact casing
+const Index = lazy(() => import("@/pages/index"));
+const Category = lazy(() => import("@/pages/Category"));
+const Tool = lazy(() => import("@/pages/Tool"));
+const Search = lazy(() => import("@/pages/Search"));
+const AllTools = lazy(() => import("@/pages/AllTools"));
+const Settings = lazy(() => import("@/pages/Settings"));
+const Community = lazy(() => import("@/pages/Community"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 export const AppRoutes = () => {
   const ScrollToTop = () => {
