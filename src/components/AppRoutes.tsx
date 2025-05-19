@@ -16,7 +16,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-// Lazy load components with correct file names with exact casing
+// Use dynamic imports with explicit chunk names
 const Index = lazy(() => import("@/pages/index"));
 const Category = lazy(() => import("@/pages/Category"));
 const Tool = lazy(() => import("@/pages/Tool"));
