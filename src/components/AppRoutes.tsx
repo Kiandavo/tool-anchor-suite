@@ -25,6 +25,9 @@ const AllTools = lazy(() => import("@/pages/AllTools"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Community = lazy(() => import("@/pages/Community"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const AllTemplates = lazy(() => import("@/pages/AllTemplates"));
+const TemplateCategory = lazy(() => import("@/pages/TemplateCategory"));
+const Template = lazy(() => import("@/pages/Template"));
 
 export const AppRoutes = () => {
   const ScrollToTop = () => {
@@ -44,6 +47,9 @@ export const AppRoutes = () => {
           <Route path="/all-tools" element={<AllTools />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/all-templates" element={<AllTemplates />} />
+          <Route path="/template-category/:categoryId" element={<TemplateCategory />} />
+          <Route path="/template/:slug" element={<Template />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

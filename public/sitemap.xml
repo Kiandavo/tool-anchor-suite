@@ -134,4 +134,36 @@
     <priority>0.9</priority>
     <lastmod>2025-05-19</lastmod>
   </url>
+  
+  <!-- Document Template Pages -->
+  <url>
+    <loc>https://langar.co/all-templates</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-05-19</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/template-category/resume-templates</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-05-19</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/template-category/legal-contracts</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-05-19</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/template-category/notion-templates</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-05-19</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/template-category/business-documents</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-05-19</lastmod>
+  </url>
 </urlset>

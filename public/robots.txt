@@ -19,6 +19,9 @@ Allow: /category/
 Allow: /search/
 Allow: /assets/
 Allow: /images/
+Allow: /all-templates/
+Allow: /template-category/
+Allow: /template/
 
 # Explicitly allow key tools for better indexing
 Allow: /tool/meta-tag-generator
@@ -35,6 +38,12 @@ Allow: /tool/word-etymology
 Allow: /tool/farsi-learning
 Allow: /category/persian-cultural
 
+# Explicitly allow template categories
+Allow: /template-category/resume-templates
+Allow: /template-category/legal-contracts
+Allow: /template-category/notion-templates
+Allow: /template-category/business-documents
+
 # Crawl-delay directive
 Crawl-delay: 1
 
@@ -45,6 +54,9 @@ Allow: /tool/
 Allow: /category/
 Allow: /search
 Allow: /all-tools
+Allow: /all-templates
+Allow: /template-category/
+Allow: /template/
 
 # Mobile-specific directives
 User-agent: Googlebot-Mobile
