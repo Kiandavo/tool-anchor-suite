@@ -1,42 +1,36 @@
 
-@layer components {
-  /* RTL specific utility classes */
-  .rtl-flip {
-    @apply scale-x-[-1];
-  }
-  
-  .rtl-space-x {
-    @apply space-x-reverse;
-  }
-  
-  .rtl-margin {
-    @apply mr-auto ml-0;
-  }
-  
-  /* Focus styles for better accessibility */
+@layer utilities {
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
   }
   
-  /* Accessibility utility classes */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
-  /* Form element styles */
-  .input-apple {
-    @apply bg-gray-50 border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all duration-200;
+  .screen-reader-only {
+    @apply sr-only;
   }
   
-  .input-accessible {
-    @apply p-2 rounded-md border border-gray-300 focus-ring;
+  .interactive {
+    @apply cursor-pointer;
+  }
+  
+  .disable-transitions {
+    @apply [&_*]:!transition-none;
+  }
+  
+  /* High contrast mode styles */
+  @media (forced-colors: active) {
+    .forced-colors-button {
+      border: 1px solid ButtonText;
+    }
+    
+    .forced-colors-link {
+      color: LinkText;
+    }
+  }
+  
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe {
+      @apply transition-none animate-none;
+    }
   }
 }

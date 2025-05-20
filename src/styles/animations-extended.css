@@ -1,26 +1,64 @@
 
-@layer components {
-  @keyframes shimmer {
-    0% {
-      transform: translate(-50%, -50%) rotate(30deg);
+@layer utilities {
+  /* Extended animation utilities */
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out hover:-translate-y-1;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105;
+  }
+  
+  .hover-reveal {
+    @apply relative overflow-hidden;
+  }
+  
+  .hover-reveal::after {
+    @apply content-[''] absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300;
+  }
+  
+  .hover-reveal:hover::after {
+    @apply opacity-100;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+  }
+  
+  /* Pulse animation */
+  .pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
     }
-    100% {
-      transform: translate(50%, 50%) rotate(30deg);
+    50% {
+      opacity: 0.8;
     }
   }
   
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  /* Shimmer effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
   }
-
-  .animate-gradient {
-    animation: gradient 8s ease infinite;
-    background-size: 200% 200%;
+  
+  .shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -100%;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
   }
-
-  .hover-scale {
-    @apply transition-transform duration-300 hover:scale-105;
+  
+  @keyframes shimmer {
+    to {
+      right: 100%;
+    }
   }
 }

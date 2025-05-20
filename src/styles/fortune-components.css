@@ -1,84 +1,26 @@
 
 @layer components {
-  /* Fortune telling specific components with enhanced contrast */
   .fortune-card {
-    @apply relative overflow-hidden transition-all duration-300 rounded-2xl border border-gray-200 shadow-sm;
+    @apply relative overflow-hidden rounded-2xl border bg-card shadow-md transition-all duration-300 hover:shadow-lg;
   }
   
-  .fortune-card-header {
-    @apply relative z-10 border-b border-gray-200 transition-colors duration-300 bg-white/90 backdrop-blur-sm;
+  .fortune-card-front {
+    @apply absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-purple-100 to-indigo-100 p-6 text-center transition-all duration-500;
   }
   
-  .fortune-card-content {
-    @apply relative z-10;
+  .fortune-card-back {
+    @apply absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100 p-6 text-center transition-opacity duration-500;
   }
   
-  .fortune-background-pattern {
-    @apply absolute inset-0 opacity-5 -z-10;
+  .fortune-button {
+    @apply mt-4 inline-flex items-center justify-center rounded-full bg-white/80 px-6 py-2 font-medium shadow-sm transition-all duration-300 hover:bg-white hover:shadow;
   }
   
-  .zodiac-symbol {
-    @apply inline-block text-lg opacity-80 transition-all duration-300;
+  .fortune-heading {
+    @apply text-3xl font-bold text-gradient;
   }
   
-  .zodiac-wheel {
-    @apply rounded-full flex items-center justify-center;
-    background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 70%, rgba(255,255,255,0.75) 100%);
-  }
-  
-  .mystical-border {
-    @apply border-2 border-opacity-40 rounded-lg; /* Increased border width for visibility */
-  }
-  
-  .prediction-container {
-    @apply bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-inner relative;
-  }
-  
-  .animate-shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .animate-shimmer::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      to bottom right,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0.3) 50%,
-      rgba(255,255,255,0) 100%
-    );
-    transform: rotate(30deg);
-    animation: shimmer 3s infinite;
-  }
-  
-  /* Tarot card styling */
-  .perspective-card {
-    perspective: 1000px;
-  }
-  
-  .tarot-card {
-    transform-style: preserve-3d;
-  }
-  
-  .tarot-card-front,
-  .tarot-card-back {
-    backface-visibility: hidden;
-  }
-  
-  .tarot-card-back {
-    transform: rotateY(180deg);
-  }
-  
-  .rotate-y-180 {
-    transform: rotateY(180deg);
-  }
-  
-  .rotateY-180 {
-    transform: rotateY(180deg);
+  .fortune-text {
+    @apply mt-4 leading-relaxed text-gray-700;
   }
 }

@@ -22,6 +22,7 @@ export default {
 			'vazirmatn': ['B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
 			'sf': ['"SF Pro Display"', 'B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
 			'byekan': ['B Yekan', 'system-ui', 'sans-serif'],
+			'sans': ['B Yekan', '"SF Pro Display"', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {
