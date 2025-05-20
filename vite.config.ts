@@ -9,11 +9,11 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    cors: true,
   },
   plugins: [
     react({
       plugins: [],
-      // Using jsxImportSource instead of swcOptions
       jsxImportSource: mode === 'development' ? 'react' : undefined,
     }),
     mode === 'development' &&
@@ -24,25 +24,34 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@radix-ui/react-slot'],
+    exclude: ['lovable-tagger'],
+  },
+  css: {
+    preprocessorOptions: {
+      postcss: {
+        plugins: [],
+      }
+    },
+    devSourcemap: true,
+  },
   build: {
-    // optimize build
     target: 'esnext',
     minify: 'terser',
     cssMinify: true,
     cssCodeSplit: true,
-    assetsInlineLimit: 4096, // 4kb
-    reportCompressedSize: false, // Speed up build
+    assetsInlineLimit: 4096,
+    reportCompressedSize: false,
     terserOptions: {
       compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug']
+        drop_console: mode === 'production',
+        drop_debugger: mode === 'production',
       }
     },
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Create specific chunks for different parts of the application
           if (id.includes('node_modules')) {
             if (id.includes('react') || id.includes('react-dom')) {
               return 'react-vendor';
@@ -61,12 +70,6 @@ export default defineConfig(({ mode }) => ({
             }
             return 'vendor';
           }
-          if (id.includes('/src/components/fal/')) {
-            return 'fortune';
-          }
-          if (id.includes('/src/components/tool/')) {
-            return 'tools';
-          }
         },
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
@@ -74,13 +77,5 @@ export default defineConfig(({ mode }) => ({
       }
     },
     chunkSizeWarningLimit: 1000,
-  },
-  // Enable dependency optimization
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', '@radix-ui/react-slot'],
-    esbuildOptions: {
-      target: 'esnext',
-      treeShaking: true,
-    }
   }
 }));

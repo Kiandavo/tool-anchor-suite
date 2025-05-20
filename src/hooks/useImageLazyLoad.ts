@@ -1,55 +1,76 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+/**
+ * Custom hook for optimized lazy loading of images
+ */
 export const useImageLazyLoad = (src: string, placeholderSrc: string = '') => {
   const [imageSrc, setImageSrc] = useState(placeholderSrc || src);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const hasIntersectionObserver = typeof window !== 'undefined' && 'IntersectionObserver' in window;
 
+  // Memoized callbacks for better performance
   const onLoad = useCallback(() => {
     setIsLoaded(true);
   }, []);
 
-  const onError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const onError = useCallback(() => {
     setError(new Error('Failed to load image'));
-    console.error('Image loading failed', src);
+    console.error('Image loading failed:', src);
   }, [src]);
 
   useEffect(() => {
-    let observer: IntersectionObserver;
-    let isUnmounted = false;
+    let isMounted = true;
+    
+    // Clean up previous observer
+    if (observerRef.current && imageRef.current) {
+      observerRef.current.unobserve(imageRef.current);
+      observerRef.current = null;
+    }
+
+    // Skip if no src provided or browser doesn't support intersection observer
+    if (!src || !hasIntersectionObserver) {
+      setImageSrc(src);
+      return;
+    }
 
     // Only use IntersectionObserver with placeholderSrc
     if (placeholderSrc && imageRef.current) {
-      observer = new IntersectionObserver((entries) => {
+      observerRef.current = new IntersectionObserver((entries) => {
         // When image comes into view
         entries.forEach(entry => {
-          if (!isUnmounted && entry.isIntersecting) {
-            // Set to actual source
-            setImageSrc(src);
-            // Stop observing once we've swapped the source
-            observer.unobserve(entry.target);
+          if (!isMounted || !entry.isIntersecting) return;
+          
+          // Set to actual source
+          setImageSrc(src);
+          
+          // Stop observing once we've swapped the source
+          if (observerRef.current && imageRef.current) {
+            observerRef.current.unobserve(imageRef.current);
           }
         });
       }, {
-        rootMargin: '100px 0px', // Start loading a bit before it comes into view
+        rootMargin: '200px 0px', // Start loading before it comes into view
         threshold: 0.01,
       });
 
-      observer.observe(imageRef.current);
+      observerRef.current.observe(imageRef.current);
     } else {
       // If no placeholder, use the actual source directly
       setImageSrc(src);
     }
 
     return () => {
-      isUnmounted = true;
-      if (observer) {
-        observer.disconnect();
+      isMounted = false;
+      if (observerRef.current && imageRef.current) {
+        observerRef.current.unobserve(imageRef.current);
+        observerRef.current = null;
       }
     };
-  }, [src, placeholderSrc]);
+  }, [src, placeholderSrc, hasIntersectionObserver]);
 
   return {
     ref: imageRef,

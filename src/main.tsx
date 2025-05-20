@@ -5,6 +5,7 @@ import App from './App.tsx'
 import './styles/global.css'
 import { BrowserRouter } from 'react-router-dom'
 
+// Create root with concurrent mode
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>

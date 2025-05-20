@@ -4,75 +4,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import other style files - use layer directives for better tree-shaking */
+/* Import other style files - ordered for better cascade control */
 @import './base.css';
+@import './fonts.css';
+@import './components.css';
 @import './buttons.css';
 @import './cards.css';
 @import './badges.css';
 @import './tables.css';
 @import './effects.css';
-@import './accessibility.css';
-@import './fortune-components.css';
-@import './components.css';
 @import './animations.css';
 @import './animations-extended.css';
-@import './fonts.css';
+@import './accessibility.css';
 @import './patterns.css';
+@import './fortune-components.css';
 
+/* Critical global styles */
 :root {
-  --font-sans: 'SF Pro Display', 'B Yekan', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
   --font-persian: 'B Yekan', sans-serif;
   
   /* Enhanced color variables with improved contrast */
-  --apple-blue: 37 99 235; /* Adjusted for better contrast */
-  --apple-purple: 124 58 237; /* Deeper purple for better readability */
-  --apple-green: 22 163 74; /* Darker green for better contrast */
-  --apple-orange: 234 88 12; /* Adjusted for better contrast */
+  --apple-blue: 37 99 235;
+  --apple-purple: 124 58 237;
+  --apple-green: 22 163 74;
+  --apple-orange: 234 88 12;
   
   /* Accessibility-focused text colors */
-  --text-primary: 23 23 23; /* Near black for main text */
-  --text-secondary: 51 65 85; /* Dark slate for secondary text */
-  --text-muted: 71 85 105; /* Slate for muted text, meets contrast requirements */
-  --text-on-dark: 248 250 252; /* Off-white for text on dark backgrounds */
+  --text-primary: 23 23 23;
+  --text-secondary: 51 65 85;
+  --text-muted: 71 85 105;
+  --text-on-dark: 248 250 252;
 }
 
-/* Use content-visibility for better rendering performance */
-.render-offscreen {
-  content-visibility: auto;
-}
-
-/* Use font-display: swap for better font loading */
-@font-face {
-  font-display: swap;
-}
-
+/* Base styles for better first paint */
 html {
   scroll-behavior: smooth;
+  direction: rtl;
 }
 
 body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   background-color: #fafaff;
-  color: rgb(var(--text-primary)); /* Setting default text color */
-  font-size: 1rem; /* Base font size for readability */
-  line-height: 1.5; /* Improved line spacing for readability */
+  color: rgb(var(--text-primary));
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
-/* Increased contrast for focused elements */
-:focus {
-  outline: 3px solid rgb(var(--apple-blue));
-  outline-offset: 2px;
-}
-
-/* Improved link styling for better visibility */
-a:not([class]) {
-  color: rgb(var(--apple-blue));
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-/* RTL text support */
+/* Critical layout utilities */
 .rtl {
   direction: rtl;
   text-align: right;
@@ -83,27 +63,13 @@ a:not([class]) {
   text-align: left;
 }
 
-/* Enhanced gradient backgrounds with better contrast */
-.bg-gradient-soft {
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.97), rgba(245, 245, 255, 0.95));
-}
-
-.dark .bg-gradient-soft {
-  background: linear-gradient(to bottom right, rgba(30, 30, 40, 0.95), rgba(15, 15, 25, 0.9));
-}
-
 /* Performance optimizations */
 img, video {
   max-width: 100%;
   height: auto;
 }
 
-/* Reduce layout shifts */
-img:not([height]), video:not([height]) {
-  aspect-ratio: attr(width) / attr(height);
-}
-
-/* Add will-change hints for smoother animations */
+/* High-performance animations */
 .animate-fade-in, .animate-slide-up, .animate-scale {
   will-change: transform, opacity;
 }

@@ -1,8 +1,12 @@
 
-/* SF Pro Display font imports */
+/* Font loading optimization with swap display strategy */
+
+/* SF Pro Display - system fonts with fallbacks for better performance */
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff2') format('woff2');
+  src: local('SF Pro Display'),
+       local('SFProDisplay-Regular'),
+       url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -10,7 +14,9 @@
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff2') format('woff2');
+  src: local('SF Pro Display Medium'),
+       local('SFProDisplay-Medium'),
+       url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -18,7 +24,9 @@
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff2') format('woff2');
+  src: local('SF Pro Display Semibold'),
+       local('SFProDisplay-Semibold'),
+       url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -26,19 +34,18 @@
 
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff2') format('woff2');
+  src: local('SF Pro Display Bold'),
+       local('SFProDisplay-Bold'),
+       url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
-/* B Yekan font imports */
+/* B Yekan font - optimized loading */
 @font-face {
   font-family: 'B Yekan';
-  src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.eot');
-  src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.eot?#iefix') format('embedded-opentype'),
-       url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff') format('woff'),
-       url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.ttf') format('truetype');
+  src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -46,10 +53,7 @@
 
 @font-face {
   font-family: 'B Yekan';
-  src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan-Bold.eot');
-  src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan-Bold.eot?#iefix') format('embedded-opentype'),
-       url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan-Bold.woff') format('woff'),
-       url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan-Bold.ttf') format('truetype');
+  src: url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;

@@ -1,10 +1,6 @@
 
-/* This file now serves as a central import point for component styles */
-/* Most styles have been moved to their own files for better organization and performance */
-
 @layer components {
-  /* Any remaining component styles that don't fit elsewhere can stay here */
-  /* Though we should aim to keep this file as small as possible */
+  /* Highly optimized critical component styles */
   
   /* Skip to content link for keyboard users */
   .skip-to-content {
@@ -16,15 +12,31 @@
     transform: translateY(0);
   }
   
-  /* Blurred background elements */
+  /* Blurred background elements with performance optimizations */
   .bg-blur-element {
     @apply absolute pointer-events-none opacity-70 blur-3xl;
     z-index: -1;
     will-change: transform, opacity;
   }
 
-  /* Glass navigation effect */
+  /* Glass navigation effect - optimized for performance */
   .glass-nav {
-    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 z-30 transition-all duration-200;
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 z-30;
+    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+  }
+  
+  /* Optimized button styles */
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  /* Card styles */
+  .card-base {
+    @apply rounded-lg border bg-card text-card-foreground shadow;
+  }
+  
+  /* Form control styles */
+  .form-control {
+    @apply flex flex-col space-y-1.5;
   }
 }
