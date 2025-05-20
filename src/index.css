@@ -1,16 +1,3 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Basic styles to ensure CSS is loading */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-}
-
-#root {
-  height: 100%;
-}
+/* This file is now only a placeholder. The main styles are imported from global.css */
+/* All styles are now loaded from src/styles/global.css which is imported in main.tsx */
