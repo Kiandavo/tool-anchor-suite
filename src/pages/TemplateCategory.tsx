@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
@@ -21,7 +20,7 @@ const categoryData = {
       { id: 'academic-cv', title: 'رزومه آکادمیک', format: 'Word, LaTeX', downloads: 980, thumbnail: 'https://via.placeholder.com/300x400' },
       { id: 'entry-level', title: 'رزومه تازه‌کار', format: 'Word, PDF', downloads: 2200, thumbnail: 'https://via.placeholder.com/300x400' },
     ],
-    variant: 'purple'
+    variant: 'purple' as const
   },
   'legal-contracts': {
     title: 'قراردادهای حقوقی فریلنسری',
@@ -33,7 +32,7 @@ const categoryData = {
       { id: 'consulting-agreement', title: 'قرارداد مشاوره', format: 'Word, PDF', downloads: 1300, thumbnail: 'https://via.placeholder.com/300x400' },
       { id: 'digital-rights', title: 'قرارداد حقوق دیجیتال', format: 'Word, PDF', downloads: 950, thumbnail: 'https://via.placeholder.com/300x400' },
     ],
-    variant: 'blue'
+    variant: 'blue' as const
   },
   'notion-templates': {
     title: 'قالب‌های فارسی نوشن',
@@ -46,7 +45,7 @@ const categoryData = {
       { id: 'personal-dashboard', title: 'داشبورد شخصی', format: 'Notion', downloads: 1850, thumbnail: 'https://via.placeholder.com/300x400' },
       { id: 'habit-tracker', title: 'پیگیری عادت‌ها', format: 'Notion', downloads: 1380, thumbnail: 'https://via.placeholder.com/300x400' },
     ],
-    variant: 'green'
+    variant: 'green' as const
   },
   'business-documents': {
     title: 'اسناد تجاری قابل ویرایش',
@@ -59,7 +58,7 @@ const categoryData = {
       { id: 'expense-report', title: 'گزارش هزینه', format: 'Excel', downloads: 1950, thumbnail: 'https://via.placeholder.com/300x400' },
       { id: 'budget-planner', title: 'برنامه‌ریز بودجه', format: 'Excel', downloads: 1730, thumbnail: 'https://via.placeholder.com/300x400' },
     ],
-    variant: 'orange'
+    variant: 'orange' as const
   }
 };
 
@@ -79,6 +78,15 @@ export default function TemplateCategory() {
     );
   }
 
+  // Convert the variant to a valid type or use default
+  const backgroundVariant = (
+    category.variant === 'purple' || 
+    category.variant === 'blue' || 
+    category.variant === 'green' || 
+    category.variant === 'orange' || 
+    category.variant === 'readings'
+  ) ? category.variant : 'default';
+
   return (
     <Layout backUrl="/all-templates">
       <SeoHead 
@@ -87,7 +95,7 @@ export default function TemplateCategory() {
         keywords={`${category.title}, قالب فارسی, دانلود رایگان, فایل قابل ویرایش, لنگر`}
       />
       
-      <EnhancedGradientBackground variant={category.variant || 'default'} className="min-h-full">
+      <EnhancedGradientBackground variant={backgroundVariant} className="min-h-full">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             className="rounded-3xl p-8 mb-10 neo-glass"

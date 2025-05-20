@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
@@ -22,7 +21,7 @@ const templateData = {
     thumbnail: 'https://via.placeholder.com/300x400',
     lastUpdate: '۱۵ فروردین ۱۴۰۴',
     fileSize: '۲.۵ مگابایت',
-    variant: 'purple',
+    variant: 'purple' as const,
     features: [
       'طراحی مدرن و حرفه‌ای',
       'قابل ویرایش در Word',
@@ -51,6 +50,15 @@ export default function Template() {
     );
   }
 
+  // Convert the variant to a valid type or use default
+  const backgroundVariant = (
+    template.variant === 'purple' || 
+    template.variant === 'blue' || 
+    template.variant === 'green' || 
+    template.variant === 'orange' || 
+    template.variant === 'readings' 
+  ) ? template.variant : 'default';
+
   return (
     <Layout backUrl={`/template-category/${template.category}`}>
       <SeoHead 
@@ -59,7 +67,7 @@ export default function Template() {
         keywords={`${template.title}, قالب فارسی, دانلود رایگان, فایل قابل ویرایش, لنگر, ${template.categoryTitle}`}
       />
       
-      <EnhancedGradientBackground variant={template.variant || 'default'}>
+      <EnhancedGradientBackground variant={backgroundVariant}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div 
