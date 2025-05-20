@@ -52,20 +52,20 @@ export const DocumentTemplatesSection = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {templateCategories.map((category) => (
+          {templateCategories.map((category, index) => (
             <motion.div
               key={category.id}
               className="group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 * templateCategories.indexOf(category) }}
+              transition={{ duration: 0.5, delay: 0.1 * index }}
             >
               <Link 
-                to={`/category/${category.id}`} 
-                className="block rounded-3xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
+                to={`/template-category/${category.id}`} 
+                className="block h-full transition-all duration-300 hover-lift"
               >
-                <div className="h-full flex flex-col rounded-3xl border border-white/40 backdrop-blur-sm neo-glass">
+                <div className="h-full flex flex-col rounded-3xl neo-glass overflow-hidden">
                   <div className={`flex items-center justify-center py-6 ${category.color}`}>
                     <category.icon className={`w-12 h-12 ${category.iconColor}`} />
                   </div>
@@ -76,7 +76,7 @@ export const DocumentTemplatesSection = () => {
                     
                     <div className="mt-4 flex justify-between items-center">
                       <span className="text-xs text-gray-500">۱۰+ قالب موجود</span>
-                      <span className="text-primary text-sm font-medium">مشاهده &larr;</span>
+                      <span className="text-primary text-sm font-medium group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform duration-300">مشاهده &larr;</span>
                     </div>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ export const DocumentTemplatesSection = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <Link to="/all-templates" className="inline-flex items-center px-6 py-3 bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all duration-300">
+          <Link to="/all-templates" className="inline-flex items-center px-6 py-3 bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all duration-300 hover:shadow-md">
             مشاهده تمام قالب‌ها
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
