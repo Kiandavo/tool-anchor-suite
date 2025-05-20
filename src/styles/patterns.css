@@ -1,4 +1,5 @@
 
+/* Pattern backgrounds */
 .bg-pattern-subtle {
   background-image: 
     radial-gradient(at 100% 0%, rgba(var(--primary) / 0.2) 0px, transparent 50%),

@@ -55,7 +55,7 @@ export function Layout({
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col pb-16 font-sf relative overflow-hidden" dir="rtl">
+    <div className="min-h-screen flex flex-col pb-16 font-sans relative overflow-hidden" dir="rtl">
       {/* Decorative gradient orbs */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full filter blur-3xl" />

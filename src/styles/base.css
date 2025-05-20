@@ -58,7 +58,7 @@
   }
 
   body {
-    @apply bg-gradient-to-br from-white via-background/95 to-background/90 text-foreground font-byekan min-h-screen transition-colors duration-300;
+    @apply bg-gradient-to-br from-white via-background/95 to-background/90 text-foreground min-h-screen transition-colors duration-300;
     background-image: 
       radial-gradient(at 100% 0%, rgba(var(--primary) / 0.15) 0px, transparent 50%),
       radial-gradient(at 0% 0%, rgba(var(--accent) / 0.15) 0px, transparent 50%);
