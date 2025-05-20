@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Download, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface TemplateCardProps {
   id: string;
@@ -11,9 +12,18 @@ interface TemplateCardProps {
   downloads: number;
   thumbnail: string;
   index?: number;
+  onDownload?: () => void;
 }
 
-export const TemplateCard = ({ id, title, format, downloads, thumbnail, index = 0 }: TemplateCardProps) => {
+export const TemplateCard = ({ 
+  id, 
+  title, 
+  format, 
+  downloads, 
+  thumbnail, 
+  index = 0, 
+  onDownload 
+}: TemplateCardProps) => {
   return (
     <motion.div 
       className="h-full"
@@ -24,11 +34,11 @@ export const TemplateCard = ({ id, title, format, downloads, thumbnail, index = 
     >
       <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100/80 h-full flex flex-col group">
         <div className="relative overflow-hidden">
-          <img 
+          <OptimizedImage 
             src={thumbnail} 
             alt={title}
             className="w-full h-48 object-cover object-center transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
+            loadingStrategy="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
@@ -53,13 +63,13 @@ export const TemplateCard = ({ id, title, format, downloads, thumbnail, index = 
               پیش‌نمایش
             </Link>
             
-            <Link 
-              to={`/template/${id}`}
+            <button 
+              onClick={onDownload}
               className="flex items-center justify-center flex-1 py-2 px-3 bg-primary/10 hover:bg-primary/20 rounded-md text-primary transition-colors duration-200 text-sm"
             >
               <Download size={16} className="ml-1.5" />
               دانلود
-            </Link>
+            </button>
           </div>
         </div>
       </div>
