@@ -22,61 +22,45 @@ export function BeautifulLoading({
 
   return (
     <div className={cn("flex flex-col items-center justify-center min-h-[200px] p-8", className)}>
-      <div className="relative">
-        {/* Outer rotating ring */}
+      <div className="relative flex items-center justify-center">
+        {/* Single smooth rotating ring */}
         <motion.div
           className={cn(
-            "border-4 border-transparent border-t-primary rounded-full",
+            "border-3 border-transparent border-t-primary rounded-full",
             sizeClasses[size]
           )}
           animate={{ rotate: 360 }}
           transition={{
-            duration: 1,
+            duration: 1.5,
             repeat: Infinity,
             ease: "linear"
           }}
         />
-        
-        {/* Inner pulsing dot */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center"
-          initial={{ scale: 0.8, opacity: 0.5 }}
-          animate={{ scale: 1.2, opacity: 1 }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut"
-          }}
-        >
-          <div className="w-2 h-2 bg-primary rounded-full" />
-        </motion.div>
       </div>
       
       {/* Loading text with Persian styling */}
       <motion.p
-        className="mt-6 text-gray-600 font-medium text-lg"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
+        className="mt-6 text-gray-600 font-medium text-lg text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
         {text}
       </motion.p>
       
-      {/* Animated dots */}
+      {/* Simplified animated dots */}
       <div className="flex space-x-1 rtl:space-x-reverse mt-2">
         {[0, 1, 2].map((i) => (
           <motion.div
             key={i}
             className="w-2 h-2 bg-primary/60 rounded-full"
             animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.5, 1, 0.5]
+              opacity: [0.3, 1, 0.3]
             }}
             transition={{
               duration: 1.5,
               repeat: Infinity,
-              delay: i * 0.2,
+              delay: i * 0.3,
             }}
           />
         ))}

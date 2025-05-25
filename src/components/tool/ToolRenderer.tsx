@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Tool } from '@/data/tools';
 import { toolTypeBySlug } from '@/utils/toolTypeUtils';
@@ -27,6 +26,10 @@ import DistantReading from '@/components/readings/DistantReading';
 import Lithomancy from '@/components/readings/Lithomancy';
 import Numerology from '@/components/readings/Numerology';
 
+// Import new readings components
+import CoffeeReading from '@/components/readings/CoffeeReading';
+import WoodDivination from '@/components/readings/WoodDivination';
+
 // Import Persian cultural tools
 import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
 import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
@@ -40,14 +43,12 @@ import PersianCuisine from '@/pages/ToolTypes/PersianCultural/PersianCuisine';
 import PersianHolidays from '@/pages/ToolTypes/PersianCultural/PersianHolidays';
 import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchitecture';
 
-// Import productivity tools
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
 import TodoList from '@/pages/ToolTypes/ProductivityTools/TodoList';
 import NoteTaking from '@/pages/ToolTypes/ProductivityTools/NoteTaking';
 import CalendarScheduler from '@/pages/ToolTypes/ProductivityTools/CalendarScheduler';
 
-// Import design tools
 import ColorPalette from '@/pages/ToolTypes/DesignTools/ColorPalette';
 import FontPreview from '@/pages/ToolTypes/DesignTools/FontPreview';
 import SimpleLogoMaker from '@/pages/ToolTypes/DesignTools/SimpleLogoMaker';
@@ -61,7 +62,7 @@ interface ToolRendererProps {
 export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   const toolType = toolTypeBySlug[slug];
   
-  // First, check for readings tools
+  // Existing readings tools
   if (toolType === 'tarot-reading') return <TarotReading />;
   if (toolType === 'horoscope') return <Horoscope />;
   if (toolType === 'rumi-istikhara') return <RumiIstikhara />;
@@ -73,7 +74,19 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'lithomancy') return <Lithomancy />;
   if (toolType === 'numerology') return <Numerology />;
   
-  // Standard tool types
+  // New readings tools
+  if (toolType === 'coffee-reading') return <CoffeeReading />;
+  if (toolType === 'wood-divination') return <WoodDivination />;
+  
+  // Placeholder for other new readings tools
+  if (toolType === 'mirror-scrying' || toolType === 'flower-reading' || 
+      toolType === 'coin-oracle' || toolType === 'dream-interpretation' || 
+      toolType === 'name-numerology' || toolType === 'color-reading' || 
+      toolType === 'fragrance-divination' || toolType === 'palm-reading') {
+    return <ToolNotImplemented />;
+  }
+  
+  // all other tool types
   if (toolType === 'text') return <TextTool slug={slug} />;
   if (toolType === 'image') return <ImageTool slug={slug} />;
   if (toolType === 'seo') return <SeoTool slug={slug} />;
@@ -81,7 +94,6 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'random-password') return <RandomPasswordTool />;
   if (toolType === 'random-color') return <RandomColorGenerator />;
   
-  // Persian Cultural tools
   if (toolType === 'persian-calendar') return <PersianCalendar />;
   if (toolType === 'persian-names') return <PersianNames />;
   if (toolType === 'persian-proverbs') return <PersianProverbs />;
@@ -94,20 +106,17 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'persian-holidays') return <PersianHolidays />;
   if (toolType === 'persian-architecture') return <PersianArchitecture />;
   
-  // Productivity tools
   if (toolType === 'pomodoro-timer') return <PomodoroTimer />;
   if (toolType === 'project-board') return <ProjectBoard />;
   if (toolType === 'todo-list') return <TodoList />;
   if (toolType === 'note-taking') return <NoteTaking />;
   if (toolType === 'calendar-scheduler') return <CalendarScheduler />;
   
-  // Design tools
   if (toolType === 'color-palette') return <ColorPalette />;
   if (toolType === 'font-preview') return <FontPreview />;
   if (toolType === 'simple-logo-maker') return <SimpleLogoMaker />;
   if (toolType === 'social-media-template') return <SocialMediaTemplate />;
   
-  // For calculator tools and others, use the specific renderers
   switch (toolType) {
     case 'calculator':
     case 'investment-calculator':

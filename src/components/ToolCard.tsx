@@ -38,7 +38,14 @@ import {
   Star,
   Gift,
   Award,
-  Flame
+  Flame,
+  Coffee,
+  TreePine,
+  Mirror,
+  Flower,
+  Coins,
+  Moon,
+  Hand
 } from 'lucide-react';
 
 // Map icon strings to Lucide components - moved outside component
@@ -76,7 +83,17 @@ const iconMap = {
   'gift': Gift,
   'award': Award,
   'flame': Flame,
-  'random': Dice6
+  'random': Dice6,
+  'dice6': Dice6,
+  'compass': Globe,
+  'layers': LayoutGrid,
+  'coffee-cup': Coffee,
+  'tree-pine': TreePine,
+  'mirror': Mirror,
+  'flower': Flower,
+  'coins': Coins,
+  'moon': Moon,
+  'hand': Hand
 };
 
 interface ToolCardProps {

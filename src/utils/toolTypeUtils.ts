@@ -108,8 +108,6 @@ export const toolTypeBySlug: Record<string, string> = {
   "note-taking": "note-taking",
   "calendar-scheduler": "calendar-scheduler",
   "project-board": "project-board",
-  
-  // Design tools
   "color-palette": "color-palette",
   "simple-logo-maker": "simple-logo-maker",
   "social-media-template": "social-media-template",
@@ -126,5 +124,17 @@ export const toolTypeBySlug: Record<string, string> = {
   "cleromancy": "cleromancy",
   "distant-reading": "distant-reading",
   "lithomancy": "lithomancy",
-  "numerology": "numerology"
+  "numerology": "numerology",
+  
+  // New Reading tools
+  "coffee-reading": "coffee-reading",
+  "wood-divination": "wood-divination",
+  "mirror-scrying": "mirror-scrying",
+  "flower-reading": "flower-reading",
+  "coin-oracle": "coin-oracle",
+  "dream-interpretation": "dream-interpretation",
+  "name-numerology": "name-numerology",
+  "color-reading": "color-reading",
+  "fragrance-divination": "fragrance-divination",
+  "palm-reading": "palm-reading"
 };
