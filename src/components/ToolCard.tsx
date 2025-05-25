@@ -1,4 +1,3 @@
-
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Tool } from '@/data/tools';
@@ -41,7 +40,7 @@ import {
   Flame,
   Coffee,
   TreePine,
-  Mirror,
+  Eye,
   Flower,
   Coins,
   Moon,
@@ -89,7 +88,7 @@ const iconMap = {
   'layers': LayoutGrid,
   'coffee-cup': Coffee,
   'tree-pine': TreePine,
-  'mirror': Mirror,
+  'mirror': Eye,
   'flower': Flower,
   'coins': Coins,
   'moon': Moon,

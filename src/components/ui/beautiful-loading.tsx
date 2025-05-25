@@ -26,12 +26,12 @@ export function BeautifulLoading({
         {/* Single smooth rotating ring */}
         <motion.div
           className={cn(
-            "border-3 border-transparent border-t-primary rounded-full",
+            "border-2 border-transparent border-t-primary rounded-full",
             sizeClasses[size]
           )}
           animate={{ rotate: 360 }}
           transition={{
-            duration: 1.5,
+            duration: 1,
             repeat: Infinity,
             ease: "linear"
           }}
@@ -40,31 +40,13 @@ export function BeautifulLoading({
       
       {/* Loading text with Persian styling */}
       <motion.p
-        className="mt-6 text-gray-600 font-medium text-lg text-center"
+        className="mt-4 text-gray-600 font-medium text-base text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
         {text}
       </motion.p>
-      
-      {/* Simplified animated dots */}
-      <div className="flex space-x-1 rtl:space-x-reverse mt-2">
-        {[0, 1, 2].map((i) => (
-          <motion.div
-            key={i}
-            className="w-2 h-2 bg-primary/60 rounded-full"
-            animate={{ 
-              opacity: [0.3, 1, 0.3]
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              delay: i * 0.3,
-            }}
-          />
-        ))}
-      </div>
     </div>
   );
 }
