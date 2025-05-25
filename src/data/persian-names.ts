@@ -817,6 +817,1205 @@ export const persianNames: PersianName[] = [
     origin: "persian",
     popularity: "medium",
     historicalFigure: "مانی پیامبر"
+  },
+  {
+    id: 101,
+    name: "آبان",
+    meaning: "آب، مهر، نام ماه هشتم",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 102,
+    name: "آپادا",
+    meaning: "آب، رودخانه",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 103,
+    name: "آتابان",
+    meaning: "نگهبان آتش",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 104,
+    name: "آتسا",
+    meaning: "آتش مقدس",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 105,
+    name: "آتش",
+    meaning: "آتش، نار، انرژی",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 106,
+    name: "آجین",
+    meaning: "عاج، استخوان فیل",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 107,
+    name: "آدار",
+    meaning: "آتش، انرژی",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 108,
+    name: "آذر",
+    meaning: "آتش، نام ماه نهم",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 109,
+    name: "آذرتاش",
+    meaning: "پادشاه آتش",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 110,
+    name: "آذرگشسب",
+    meaning: "اسب آتشین",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 111,
+    name: "آذرمیدخت",
+    meaning: "دختر آتش",
+    gender: "female",
+    origin: "persian",
+    popularity: "low",
+    historicalFigure: "ملکه ساسانی"
+  },
+  {
+    id: 112,
+    name: "آذرین",
+    meaning: "آتشین، پر انرژی",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 113,
+    name: "آراد",
+    meaning: "نیکوکار، درستکار",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 114,
+    name: "آرام",
+    meaning: "آرامش، سکون",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 115,
+    name: "آراوین",
+    meaning: "شریف، نجیب",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 116,
+    name: "آرایا",
+    meaning: "تزیین کننده، آراینده",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 117,
+    name: "آردوان",
+    meaning: "عادل، درستکار",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 118,
+    name: "آرزو",
+    meaning: "خواسته، امید",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 119,
+    name: "آرسام",
+    meaning: "قوی، توانا",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 120,
+    name: "آرشیا",
+    meaning: "شاه آریایی",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 121,
+    name: "آرنوش",
+    meaning: "آتش شادی",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 122,
+    name: "آریوبرزن",
+    meaning: "آریایی بلند مرتبه",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 123,
+    name: "آفاق",
+    meaning: "افق‌ها، آسمان",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 124,
+    name: "آفرین",
+    meaning: "آفریننده، ستایش",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 125,
+    name: "آفرینه",
+    meaning: "آفریده شده، خلق شده",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 126,
+    name: "آکام",
+    meaning: "آرزو، خواسته",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 127,
+    name: "آلاله",
+    meaning: "گل لاله",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 128,
+    name: "آمنه",
+    meaning: "امین، امانت دار",
+    gender: "female",
+    origin: "arabic",
+    popularity: "medium"
+  },
+  {
+    id: 129,
+    name: "آناویتا",
+    meaning: "آب مقدس",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 130,
+    name: "آنوش",
+    meaning: "جاودان، بی‌مرگ",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 131,
+    name: "آوات",
+    meaning: "صدا، آواز",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 132,
+    name: "آویژه",
+    meaning: "آویزان، معلق",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 133,
+    name: "آویکا",
+    meaning: "خانم کوچک",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 134,
+    name: "آهو",
+    meaning: "آهو، غزال",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 135,
+    name: "آهین",
+    meaning: "آهنی، محکم",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 136,
+    name: "بارمان",
+    meaning: "پر نور، درخشان",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 137,
+    name: "بارمین",
+    meaning: "زمین حاصلخیز",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 138,
+    name: "باریا",
+    meaning: "باریک، ظریف",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 139,
+    name: "بازمان",
+    meaning: "نیروی بازگشت",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 140,
+    name: "بامان",
+    meaning: "صبح، بامداد",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 141,
+    name: "بانو",
+    meaning: "خانم، بانو",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 142,
+    name: "بهاویه",
+    meaning: "خوش هوا",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 143,
+    name: "بهاره",
+    meaning: "بهاری، مربوط به بهار",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 144,
+    name: "بهاروخ",
+    meaning: "روی بهاری",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 145,
+    name: "بهزاد",
+    meaning: "بهترین نژاد",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 146,
+    name: "بهمن",
+    meaning: "اندیشه نیک، نام ماه یازدهم",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 147,
+    name: "بهیار",
+    meaning: "یار نیک، دوست خوب",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 148,
+    name: "بختیار",
+    meaning: "صاحب بخت، خوش‌شانس",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 149,
+    name: "بندان",
+    meaning: "بند، پیوند",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 150,
+    name: "بوژان",
+    meaning: "زنده، پر جنب و جوش",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 151,
+    name: "بوذرجمهر",
+    meaning: "حکیم، دانشمند",
+    gender: "male",
+    origin: "persian",
+    popularity: "low",
+    historicalFigure: "وزیر انوشیروان"
+  },
+  {
+    id: 152,
+    name: "بویان",
+    meaning: "خوشبو، معطر",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 153,
+    name: "بیژن",
+    meaning: "قهرمان، نجیب",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    literaryReference: "شاهنامه فردوسی"
+  },
+  {
+    id: 154,
+    name: "پارتان",
+    meaning: "پارت، پارتی",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 155,
+    name: "پارتو",
+    meaning: "نور، پرتو",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 156,
+    name: "پارنیا",
+    meaning: "پری‌زاده، پری مانند",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 157,
+    name: "پاریا",
+    meaning: "پری‌وش، زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 158,
+    name: "پارین",
+    meaning: "پری‌مانند، زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 159,
+    name: "پارینوش",
+    meaning: "شیرین مانند پری",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 160,
+    name: "پارویز",
+    meaning: "پیروز، فاتح",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "خسرو پرویز"
+  },
+  {
+    id: 161,
+    name: "پاسارگاد",
+    meaning: "نام پایتخت کوروش",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 162,
+    name: "پاشا",
+    meaning: "پادشاه، حاکم",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 163,
+    name: "پاکان",
+    meaning: "پاک، صاف",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 164,
+    name: "پاکناز",
+    meaning: "پاک و زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 165,
+    name: "پامان",
+    meaning: "محافظ، نگهبان",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 166,
+    name: "پانیز",
+    meaning: "شکر، پنیر",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 167,
+    name: "پاوان",
+    meaning: "پادشاه، حاکم",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 168,
+    name: "پایام",
+    meaning: "پیام، خبر",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 169,
+    name: "پایان",
+    meaning: "پایان، انتها",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 170,
+    name: "پدرام",
+    meaning: "پدر آرام",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 171,
+    name: "پردیس",
+    meaning: "بهشت، باغ زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 172,
+    name: "پرستار",
+    meaning: "نگهبان، محافظ",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 173,
+    name: "پرشین",
+    meaning: "ایرانی، پارسی",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 174,
+    name: "پرناز",
+    meaning: "پر ناز، زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 175,
+    name: "پروا",
+    meaning: "پرواز، پریدن",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 176,
+    name: "پروان",
+    meaning: "پروانه، شب‌پره",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 177,
+    name: "پروانه",
+    meaning: "شب‌پره، اجازه",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 178,
+    name: "پروین",
+    meaning: "گروه ستارگان ثریا",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 179,
+    name: "پرویز",
+    meaning: "پیروز، فاتح",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 180,
+    name: "پریان",
+    meaning: "پری‌ها، فرشتگان",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 181,
+    name: "پریچهر",
+    meaning: "چهره پری",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 182,
+    name: "پریدخت",
+    meaning: "دختر پری",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 183,
+    name: "پریسا",
+    meaning: "مانند پری، زیبا",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 184,
+    name: "پریشان",
+    meaning: "درهم، آشفته",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 185,
+    name: "پزشک",
+    meaning: "دکتر، طبیب",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 186,
+    name: "پژمان",
+    meaning: "پشیمان، توبه‌کار",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 187,
+    name: "پژوه",
+    meaning: "پژوهش، تحقیق",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 188,
+    name: "پسند",
+    meaning: "پسندیده، مطلوب",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 189,
+    name: "پشوتن",
+    meaning: "دارنده گله",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 190,
+    name: "پناه",
+    meaning: "پناهگاه، حمایت",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 191,
+    name: "پوپک",
+    meaning: "کوچک، نازنین",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 192,
+    name: "پوران",
+    meaning: "پسرانه، مردانه",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "ملکه ساسانی"
+  },
+  {
+    id: 193,
+    name: "پورداور",
+    meaning: "داور، حاکم",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 194,
+    name: "پورسا",
+    meaning: "پرسنده، کنجکاو",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 195,
+    name: "پوریا",
+    meaning: "پیروز، موفق",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 196,
+    name: "پویان",
+    meaning: "در حال حرکت، پویا",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 197,
+    name: "پیام",
+    meaning: "خبر، پیغام",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 198,
+    name: "پیکان",
+    meaning: "تیر، پیکان",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 199,
+    name: "پیمان",
+    meaning: "عهد، قرارداد",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 200,
+    name: "پیوند",
+    meaning: "اتصال، ارتباط",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 201,
+    name: "تابان",
+    meaning: "درخشان، نورانی",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 202,
+    name: "تابش",
+    meaning: "درخشش، نور",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 203,
+    name: "تاج",
+    meaning: "تاج، کلاه شاهی",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 204,
+    name: "تاجور",
+    meaning: "تاج‌دار، شاه",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 205,
+    name: "تاران",
+    meaning: "صاعقه، برق",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 206,
+    name: "تاریخ",
+    meaning: "تاریخ، گذشته",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 207,
+    name: "تالار",
+    meaning: "سالن، اتاق بزرگ",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 208,
+    name: "تانیا",
+    meaning: "تن، بدن",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 209,
+    name: "تاها",
+    meaning: "پاک، خالص",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 210,
+    name: "تپش",
+    meaning: "تپیدن، ضربان",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 211,
+    name: "تراب",
+    meaning: "خاک، زمین",
+    gender: "male",
+    origin: "arabic",
+    popularity: "low"
+  },
+  {
+    id: 212,
+    name: "ترانا",
+    meaning: "آواز، ترانه",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 213,
+    name: "ترلان",
+    meaning: "عزیز، محبوب",
+    gender: "female",
+    origin: "turkish",
+    popularity: "medium"
+  },
+  {
+    id: 214,
+    name: "تنگیس",
+    meaning: "دریا، اقیانوس",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 215,
+    name: "توران",
+    meaning: "سرزمین تورانی‌ها",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 216,
+    name: "توراندخت",
+    meaning: "دختر تورانی",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 217,
+    name: "تورج",
+    meaning: "تندگو، شعله",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 218,
+    name: "توس",
+    meaning: "نام شهری در خراسان",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 219,
+    name: "توفان",
+    meaning: "طوفان، تندباد",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 220,
+    name: "تومریس",
+    meaning: "ملکه ماساژت‌ها",
+    gender: "female",
+    origin: "persian",
+    popularity: "low",
+    historicalFigure: "ملکه ماساژت"
+  },
+  {
+    id: 221,
+    name: "تیام",
+    meaning: "شب، تاریکی",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 222,
+    name: "تیر",
+    meaning: "تیر، نام ماه چهارم",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 223,
+    name: "تیرداد",
+    meaning: "داده شده از تیر",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 224,
+    name: "جاماسب",
+    meaning: "صاحب اسب",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 225,
+    name: "جامین",
+    meaning: "زمین، سرزمین",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 226,
+    name: "جاوید",
+    meaning: "جاودان، ابدی",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 227,
+    name: "جهانبخش",
+    meaning: "جهان بخش",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 228,
+    name: "جهانگیر",
+    meaning: "فاتح جهان",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 229,
+    name: "جیران",
+    meaning: "زنده، پر جنب و جوش",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 230,
+    name: "چاووش",
+    meaning: "نگهبان، سرباز",
+    gender: "male",
+    origin: "turkish",
+    popularity: "low"
+  },
+  {
+    id: 231,
+    name: "چمن",
+    meaning: "سبزه‌زار، علفزار",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 232,
+    name: "چنگیز",
+    meaning: "قوی، نیرومند",
+    gender: "male",
+    origin: "turkish",
+    popularity: "medium"
+  },
+  {
+    id: 233,
+    name: "خانم",
+    meaning: "بانو، زن محترم",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 234,
+    name: "خاور",
+    meaning: "شرق، خاورمیانه",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 235,
+    name: "خجسته",
+    meaning: "مبارک، خوش‌یمن",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 236,
+    name: "خداداد",
+    meaning: "خدا داده",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 237,
+    name: "خدایار",
+    meaning: "یار خدا",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 238,
+    name: "خرم",
+    meaning: "شاد، خوشحال",
+    gender: "unisex",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 239,
+    name: "خرمین",
+    meaning: "شادی، خوشحالی",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 240,
+    name: "خسرو",
+    meaning: "نام شاه، پادشاه",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "خسرو پرویز"
+  },
+  {
+    id: 241,
+    name: "خورشید",
+    meaning: "آفتاب، خورشید",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 242,
+    name: "داتیس",
+    meaning: "قانون‌گذار، عادل",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 243,
+    name: "دادان",
+    meaning: "دهنده، بخشنده",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 244,
+    name: "دادبه",
+    meaning: "داد بهتر",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 245,
+    name: "دادفر",
+    meaning: "شکوه عدالت",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 246,
+    name: "دادگستر",
+    meaning: "عدالت گستر",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 247,
+    name: "دادمهر",
+    meaning: "مهر عدالت",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 248,
+    name: "دادور",
+    meaning: "دادگر، عادل",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 249,
+    name: "دادوند",
+    meaning: "دهنده، بخشنده",
+    gender: "male",
+    origin: "persian",
+    popularity: "low"
   }
 ];
 

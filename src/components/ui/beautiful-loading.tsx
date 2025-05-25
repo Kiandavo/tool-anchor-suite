@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
 
 interface BeautifulLoadingProps {
   className?: string;
@@ -24,29 +23,32 @@ export function BeautifulLoading({
     <div className={cn("flex flex-col items-center justify-center min-h-[200px] p-8", className)}>
       <div className="relative flex items-center justify-center">
         {/* Single smooth rotating ring */}
-        <motion.div
+        <div
           className={cn(
-            "border-2 border-transparent border-t-primary rounded-full",
+            "rounded-full border-4 border-gray-200 border-t-blue-600 animate-spin",
             sizeClasses[size]
           )}
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: "linear"
+          style={{
+            animation: 'spin 1s linear infinite'
           }}
         />
       </div>
       
       {/* Loading text with Persian styling */}
-      <motion.p
-        className="mt-4 text-gray-600 font-medium text-base text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
+      <p className="mt-4 text-gray-600 font-medium text-base text-center animate-pulse">
         {text}
-      </motion.p>
+      </p>
+      
+      <style jsx>{`
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 }
