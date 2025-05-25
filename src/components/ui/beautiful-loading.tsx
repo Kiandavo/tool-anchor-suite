@@ -22,15 +22,12 @@ export function BeautifulLoading({
   return (
     <div className={cn("flex flex-col items-center justify-center min-h-[200px] p-8", className)}>
       <div className="relative flex items-center justify-center">
-        {/* Single smooth rotating ring */}
+        {/* Smooth rotating ring with consistent animation */}
         <div
           className={cn(
             "rounded-full border-4 border-gray-200 border-t-blue-600 animate-spin",
             sizeClasses[size]
           )}
-          style={{
-            animation: 'spin 1s linear infinite'
-          }}
         />
       </div>
       
@@ -38,17 +35,6 @@ export function BeautifulLoading({
       <p className="mt-4 text-gray-600 font-medium text-base text-center animate-pulse">
         {text}
       </p>
-      
-      <style jsx>{`
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
     </div>
   );
 }
