@@ -82,36 +82,42 @@ export const HeroSection = () => {
             بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
           </motion.p>
           
-          {/* New feature highlights section */}
+          {/* New feature highlights section - now clickable */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all hover:scale-[1.02]">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-200 to-purple-100 flex items-center justify-center mx-auto mb-4 shadow-sm">
-                <Sparkles size={20} className="text-purple-700" />
+            <Link to="/category/calculators" className="block group">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all hover:scale-[1.02]">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-200 to-purple-100 flex items-center justify-center mx-auto mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                  <Sparkles size={20} className="text-purple-700" />
+                </div>
+                <h3 className="text-lg font-medium mb-2 text-gray-800">ابزارهای تخصصی و کاربردی</h3>
+                <p className="text-gray-600 text-sm">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
               </div>
-              <h3 className="text-lg font-medium mb-2 text-gray-800">ابزارهای تخصصی و کاربردی</h3>
-              <p className="text-gray-600 text-sm">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
-            </div>
+            </Link>
             
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all hover:scale-[1.02]">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-200 to-blue-100 flex items-center justify-center mx-auto mb-4 shadow-sm">
-                <Globe size={20} className="text-blue-700" />
+            <Link to="/category/persian-cultural" className="block group">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all hover:scale-[1.02]">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-200 to-blue-100 flex items-center justify-center mx-auto mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                  <Globe size={20} className="text-blue-700" />
+                </div>
+                <h3 className="text-lg font-medium mb-2 text-gray-800">فرهنگ و زبان فارسی</h3>
+                <p className="text-gray-600 text-sm">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
               </div>
-              <h3 className="text-lg font-medium mb-2 text-gray-800">فرهنگ و زبان فارسی</h3>
-              <p className="text-gray-600 text-sm">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
-            </div>
+            </Link>
             
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all hover:scale-[1.02]">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-200 to-green-100 flex items-center justify-center mx-auto mb-4 shadow-sm">
-                <BookOpen size={20} className="text-green-700" />
+            <Link to="/category/readings" className="block group">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all hover:scale-[1.02]">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-200 to-green-100 flex items-center justify-center mx-auto mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                  <BookOpen size={20} className="text-green-700" />
+                </div>
+                <h3 className="text-lg font-medium mb-2 text-gray-800">طالع‌بینی و فال</h3>
+                <p className="text-gray-600 text-sm">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
               </div>
-              <h3 className="text-lg font-medium mb-2 text-gray-800">طالع‌بینی و فال</h3>
-              <p className="text-gray-600 text-sm">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
-            </div>
+            </Link>
           </motion.div>
 
           <motion.div 

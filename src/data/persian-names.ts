@@ -1,4 +1,3 @@
-
 export interface PersianName {
   id: number;
   name: string;
@@ -6,6 +5,8 @@ export interface PersianName {
   gender: 'male' | 'female' | 'unisex';
   origin: 'persian' | 'arabic' | 'turkish' | 'kurdish' | 'mixed';
   popularity: 'high' | 'medium' | 'low';
+  literaryReference?: string;
+  historicalFigure?: string;
 }
 
 export const persianNames: PersianName[] = [
@@ -47,7 +48,8 @@ export const persianNames: PersianName[] = [
     meaning: "درخشان و سرخ، نام پسر رستم در شاهنامه",
     gender: "male",
     origin: "persian",
-    popularity: "medium"
+    popularity: "medium",
+    literaryReference: "شاهنامه فردوسی"
   },
   {
     id: 6,
@@ -648,5 +650,205 @@ export const persianNames: PersianName[] = [
     gender: "male",
     origin: "persian",
     popularity: "medium"
+  },
+  {
+    id: 81,
+    name: "آرمان",
+    meaning: "آرزو، هدف، خواسته",
+    gender: "male",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 82,
+    name: "آرش",
+    meaning: "تیرانداز افسانه‌ای، نام کمانگیر ایرانی",
+    gender: "male",
+    origin: "persian",
+    popularity: "high",
+    literaryReference: "اساطیر ایرانی"
+  },
+  {
+    id: 83,
+    name: "آزاده",
+    meaning: "آزاد، رها، آزادی‌خواه",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 84,
+    name: "آسیه",
+    meaning: "آرامش بخش، دلداری دهنده",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 85,
+    name: "بردیا",
+    meaning: "بلند مرتبه، برجسته",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "بردیا هخامنشی"
+  },
+  {
+    id: 86,
+    name: "بهناز",
+    meaning: "زیبا، خوش ناز",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 87,
+    name: "بیتا",
+    meaning: "بی نظیر، یکتا، منحصر به فرد",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 88,
+    name: "جمشید",
+    meaning: "خورشید درخشان، نام پادشاه افسانه‌ای",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    literaryReference: "شاهنامه فردوسی"
+  },
+  {
+    id: 89,
+    name: "جواد",
+    meaning: "بخشنده، سخاوتمند",
+    gender: "male",
+    origin: "arabic",
+    popularity: "high"
+  },
+  {
+    id: 90,
+    name: "جهان",
+    meaning: "دنیا، عالم، کائنات",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 91,
+    name: "چارا",
+    meaning: "چاره، راه حل",
+    gender: "female",
+    origin: "persian",
+    popularity: "low"
+  },
+  {
+    id: 92,
+    name: "خشایار",
+    meaning: "فرمانروای شاه، پادشاه",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "خشایارشا هخامنشی"
+  },
+  {
+    id: 93,
+    name: "درسا",
+    meaning: "درست، صحیح",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 94,
+    name: "رایا",
+    meaning: "نیکوکار، شایان",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 95,
+    name: "ساسان",
+    meaning: "نام بنیانگذار ساسانیان",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "ساسان بابکان"
+  },
+  {
+    id: 96,
+    name: "شراره",
+    meaning: "جرقه، برق",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 97,
+    name: "فریبا",
+    meaning: "فریبنده، جذاب",
+    gender: "female",
+    origin: "persian",
+    popularity: "high"
+  },
+  {
+    id: 98,
+    name: "کامبیز",
+    meaning: "خوش بخت، کام‌یاب",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "کامبوجیه هخامنشی"
+  },
+  {
+    id: 99,
+    name: "لادن",
+    meaning: "پاک، صاف",
+    gender: "female",
+    origin: "persian",
+    popularity: "medium"
+  },
+  {
+    id: 100,
+    name: "مانی",
+    meaning: "ماندگار، پایدار",
+    gender: "male",
+    origin: "persian",
+    popularity: "medium",
+    historicalFigure: "مانی پیامبر"
   }
 ];
+
+// Name categories for better organization
+export const nameCategories = {
+  historical: "تاریخی",
+  literary: "ادبی",
+  nature: "طبیعت",
+  virtue: "فضیلت",
+  royal: "شاهی"
+} as const;
+
+export type NameCategory = keyof typeof nameCategories;
+
+// Helper functions for name filtering and search
+export const getNamesByGender = (gender: 'male' | 'female' | 'unisex') => {
+  return persianNames.filter(name => name.gender === gender);
+};
+
+export const getNamesByOrigin = (origin: PersianName['origin']) => {
+  return persianNames.filter(name => name.origin === origin);
+};
+
+export const searchNames = (query: string) => {
+  const lowerQuery = query.toLowerCase();
+  return persianNames.filter(name => 
+    name.name.includes(query) ||
+    name.meaning.toLowerCase().includes(lowerQuery)
+  );
+};
+
+export const getRandomName = () => {
+  const randomIndex = Math.floor(Math.random() * persianNames.length);
+  return persianNames[randomIndex];
+};
