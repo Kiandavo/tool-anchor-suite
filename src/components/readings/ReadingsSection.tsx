@@ -16,17 +16,17 @@ export const ReadingsSection = () => {
   
   return (
     <motion.section 
-      className="mb-12 space-y-6 animate-fade-in rounded-3xl border border-[#b0c8e6]/30 overflow-hidden" 
+      className="mb-12 space-y-6 animate-fade-in rounded-3xl border border-orange-300/30 overflow-hidden" 
       style={{ animationDelay: '0.3s' }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <EnhancedGradientBackground variant="readings" className="p-8">
+      <EnhancedGradientBackground variant="orange" className="p-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
-            <Star size={20} className="ml-2 text-[#6e42ca]" />
-            <h2 className="text-center text-[#2a1c64] font-bold text-xl">
+            <Star size={20} className="ml-2 text-white" />
+            <h2 className="text-center text-white font-bold text-xl">
               فال و طالع‌بینی
             </h2>
           </div>
@@ -34,7 +34,7 @@ export const ReadingsSection = () => {
           <Button 
             variant="apple-outline" 
             size="apple-sm"
-            className="rounded-full flex items-center gap-1 bg-white/50 border-[#6e42ca]/30 hover:bg-white/70 hover:border-[#6e42ca]/50 text-[#2a1c64]"
+            className="rounded-full flex items-center gap-1 bg-white/20 border-white/40 hover:bg-white/30 hover:border-white/60 text-white"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? (
@@ -58,25 +58,25 @@ export const ReadingsSection = () => {
               <Link 
                 key={tool.id}
                 to={`/tool/${tool.slug}`} 
-                className="bg-white/80 hover:bg-white/90 rounded-2xl p-4 border border-[#b0c8e6]/20 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] neo-glass relative overflow-hidden group"
+                className="bg-white/90 hover:bg-white/95 rounded-2xl p-4 border border-white/30 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] neo-glass relative overflow-hidden group"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#f7f0ff] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 <div className="flex items-center mb-3">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#f0f7ff] mr-3 border border-[#b0c8e6]/20">
-                    {tool.icon === 'sparkles' && <Sparkles size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'star' && <Star size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'book' && <BookOpen size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'book-open' && <BookOpen size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'globe' && <Compass size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'layers' && <Layers size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'dice6' && <Dice6 size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'compass' && <Compass size={20} className="text-[#6e42ca]" />}
-                    {tool.icon === 'hash' && <Hash size={20} className="text-[#6e42ca]" />}
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-500 mr-3 border border-orange-400/20 shadow-sm">
+                    {tool.icon === 'sparkles' && <Sparkles size={20} className="text-white" />}
+                    {tool.icon === 'star' && <Star size={20} className="text-white" />}
+                    {tool.icon === 'book' && <BookOpen size={20} className="text-white" />}
+                    {tool.icon === 'book-open' && <BookOpen size={20} className="text-white" />}
+                    {tool.icon === 'globe' && <Compass size={20} className="text-white" />}
+                    {tool.icon === 'layers' && <Layers size={20} className="text-white" />}
+                    {tool.icon === 'dice6' && <Dice6 size={20} className="text-white" />}
+                    {tool.icon === 'compass' && <Compass size={20} className="text-white" />}
+                    {tool.icon === 'hash' && <Hash size={20} className="text-white" />}
                   </div>
                   <div>
                     <h3 className="text-gray-800 font-medium text-sm">{tool.name}</h3>
                     {tool.isNew && (
-                      <span className="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-sm">جدید</span>
+                      <span className="text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-sm">جدید</span>
                     )}
                   </div>
                 </div>
@@ -98,25 +98,25 @@ export const ReadingsSection = () => {
                   <Link 
                     key={tool.id}
                     to={`/tool/${tool.slug}`} 
-                    className="bg-white/80 hover:bg-white/90 rounded-2xl p-4 border border-[#b0c8e6]/20 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] neo-glass relative overflow-hidden group"
+                    className="bg-white/90 hover:bg-white/95 rounded-2xl p-4 border border-white/30 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] neo-glass relative overflow-hidden group"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#f7f0ff] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                     <div className="flex items-center mb-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#f0f7ff] mr-3 border border-[#b0c8e6]/20">
-                        {tool.icon === 'sparkles' && <Sparkles size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'star' && <Star size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'book' && <BookOpen size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'book-open' && <BookOpen size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'globe' && <Compass size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'layers' && <Layers size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'dice6' && <Dice6 size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'compass' && <Compass size={20} className="text-[#6e42ca]" />}
-                        {tool.icon === 'hash' && <Hash size={20} className="text-[#6e42ca]" />}
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-500 mr-3 border border-orange-400/20 shadow-sm">
+                        {tool.icon === 'sparkles' && <Sparkles size={20} className="text-white" />}
+                        {tool.icon === 'star' && <Star size={20} className="text-white" />}
+                        {tool.icon === 'book' && <BookOpen size={20} className="text-white" />}
+                        {tool.icon === 'book-open' && <BookOpen size={20} className="text-white" />}
+                        {tool.icon === 'globe' && <Compass size={20} className="text-white" />}
+                        {tool.icon === 'layers' && <Layers size={20} className="text-white" />}
+                        {tool.icon === 'dice6' && <Dice6 size={20} className="text-white" />}
+                        {tool.icon === 'compass' && <Compass size={20} className="text-white" />}
+                        {tool.icon === 'hash' && <Hash size={20} className="text-white" />}
                       </div>
                       <div>
                         <h3 className="text-gray-800 font-medium text-sm">{tool.name}</h3>
                         {tool.isNew && (
-                          <span className="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-sm">جدید</span>
+                          <span className="text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-sm">جدید</span>
                         )}
                       </div>
                     </div>
@@ -124,7 +124,7 @@ export const ReadingsSection = () => {
                     <Button 
                       variant="link" 
                       size="sm" 
-                      className="text-[#6e42ca] p-0 h-auto text-xs"
+                      className="text-orange-600 p-0 h-auto text-xs"
                     >
                       مشاهده
                       <ChevronRight size={14} className="mr-1 rtl:rotate-180" />
@@ -141,7 +141,7 @@ export const ReadingsSection = () => {
             <Button 
               variant="apple"
               size="apple-sm"
-              className="bg-gradient-to-b from-[#6e42ca] to-[#5835a9] hover:from-[#7e52da] hover:to-[#6845b9] shadow-md"
+              className="bg-white/20 hover:bg-white/30 border border-white/40 hover:border-white/60 text-white shadow-md"
             >
               نمایش همه ابزارهای فال و طالع‌بینی
               <ChevronRight size={16} className="mr-1 rtl:rotate-180" />

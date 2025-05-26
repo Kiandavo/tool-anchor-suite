@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
@@ -95,8 +94,8 @@ export const HeroSection = () => {
           >
             <Link to="/category/calculators" className="block group">
               <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full gradient-persian flex items-center justify-center mx-auto mb-4 shadow-sm bounce-subtle">
-                  <Sparkles size={20} className="text-white" />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle">
+                  <Sparkles size={20} className="text-white drop-shadow-sm" />
                 </div>
                 <h3 className="text-lg font-medium mb-2 text-gray-800">ابزارهای تخصصی و کاربردی</h3>
                 <p className="text-gray-600 text-sm">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
@@ -105,8 +104,8 @@ export const HeroSection = () => {
             
             <Link to="/category/persian-cultural" className="block group">
               <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full gradient-ocean flex items-center justify-center mx-auto mb-4 shadow-sm bounce-subtle" style={{ animationDelay: '0.5s' }}>
-                  <Globe size={20} className="text-white" />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{ animationDelay: '0.5s' }}>
+                  <Globe size={20} className="text-white drop-shadow-sm" />
                 </div>
                 <h3 className="text-lg font-medium mb-2 text-gray-800">فرهنگ و زبان فارسی</h3>
                 <p className="text-gray-600 text-sm">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
@@ -115,8 +114,8 @@ export const HeroSection = () => {
             
             <Link to="/category/readings" className="block group">
               <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full gradient-forest flex items-center justify-center mx-auto mb-4 shadow-sm bounce-subtle" style={{ animationDelay: '1s' }}>
-                  <BookOpen size={20} className="text-white" />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{ animationDelay: '1s' }}>
+                  <BookOpen size={20} className="text-white drop-shadow-sm" />
                 </div>
                 <h3 className="text-lg font-medium mb-2 text-gray-800">طالع‌بینی و فال</h3>
                 <p className="text-gray-600 text-sm">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
@@ -124,6 +123,7 @@ export const HeroSection = () => {
             </Link>
           </motion.div>
 
+          
           <motion.div 
             className="flex flex-wrap justify-center gap-4 mb-8"
             initial={{ opacity: 0, y: 30 }}
@@ -153,7 +153,7 @@ export const HeroSection = () => {
             </Button>
           </motion.div>
           
-          {/* Enhanced design element with wave animation */}
+          
           <motion.div 
             className="max-w-lg mx-auto h-1.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mt-16 rounded-full wave-animation"
             initial={{ scaleX: 0 }}
