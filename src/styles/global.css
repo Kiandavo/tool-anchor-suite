@@ -1,97 +1,44 @@
 
-/* Global styles */
+/* Optimized global styles - only critical imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import other style files - ordered for better cascade control */
-@import './base.css';
+/* Critical styles only */
+@import './critical.css';
 @import './fonts.css';
 @import './components.css';
-@import './buttons.css';
-@import './cards.css';
-@import './badges.css';
-@import './tables.css';
-@import './effects.css';
 @import './animations.css';
-@import './animations-extended.css';
-@import './enhanced-effects.css';
-@import './accessibility.css';
-@import './patterns.css';
-@import './fortune-components.css';
-
-/* Critical global styles */
-:root {
-  --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
-  --font-persian: 'B Yekan', sans-serif;
-  
-  /* Enhanced color variables with improved contrast */
-  --apple-blue: 37 99 235;
-  --apple-purple: 124 58 237;
-  --apple-green: 22 163 74;
-  --apple-orange: 234 88 12;
-  
-  /* Accessibility-focused text colors */
-  --text-primary: 23 23 23;
-  --text-secondary: 51 65 85;
-  --text-muted: 71 85 105;
-  --text-on-dark: 248 250 252;
-}
-
-/* Base styles for better first paint */
-html {
-  scroll-behavior: smooth;
-  direction: rtl;
-}
-
-body {
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-  background-color: #fafaff;
-  color: rgb(var(--text-primary));
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-/* Critical layout utilities */
-.rtl {
-  direction: rtl;
-  text-align: right;
-}
-
-.ltr {
-  direction: ltr;
-  text-align: left;
-}
 
 /* Performance optimizations */
+* {
+  cursor: inherit;
+}
+
 img, video {
   max-width: 100%;
   height: auto;
 }
 
-/* High-performance animations */
-.animate-fade-in, .animate-slide-up, .animate-scale {
-  will-change: transform, opacity;
-}
-
-/* Enhanced cursor styles */
-* {
-  cursor: inherit;
-}
-
-.cursor-magic {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234F46E5' stroke-width='2'%3E%3Cpath d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'/%3E%3C/svg%3E") 12 12, auto;
-}
-
-/* Smooth transitions for all interactive elements */
+/* High-performance transitions */
 button, a, [role="button"] {
   transition: all 0.2s ease;
 }
 
-/* Enhanced focus styles */
+/* Enhanced focus for accessibility */
 :focus-visible {
   outline: 2px solid rgb(var(--apple-blue));
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* Performance optimized animations */
+.animate-fade-in, .animate-slide-up {
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes */
+.animate-fade-in.animation-complete,
+.animate-slide-up.animation-complete {
+  will-change: auto;
 }

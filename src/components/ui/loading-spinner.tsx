@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BeautifulLoading } from './beautiful-loading';
+import { AppleLoading } from './apple-loading';
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
@@ -13,5 +13,5 @@ export function LoadingSpinner({
   className,
   text = "در حال بارگذاری..."
 }: LoadingSpinnerProps) {
-  return <BeautifulLoading size={size} className={className} text={text} />;
+  return <AppleLoading className={className} text={text} />;
 }

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useMemo, useCallback } from 'react';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { ScrollToTop } from './layout/ScrollToTop';
@@ -12,30 +12,30 @@ interface LayoutProps {
   backUrl?: string;
 }
 
-// Memoized child components to prevent unnecessary re-renders
+// Memoized child components
 const MemoizedHeader = memo(Header);
 const MemoizedFooter = memo(Footer);
 const MemoizedScrollToTop = memo(ScrollToTop);
 const MemoizedScrollIndicator = memo(ScrollIndicator);
 
-export function Layout({
-  children,
-  showSearch = true,
-  title,
-  backUrl
-}: LayoutProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
+// Optimized scroll state hook
+const useScrollState = () => {
+  const [scrollState, setScrollState] = useState({
+    isScrolled: false,
+    showScrollTop: false
+  });
 
   useEffect(() => {
-    // Optimized scroll handler with event throttling
     let ticking = false;
     
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
-          setShowScrollTop(window.scrollY > 300);
+          const scrollY = window.scrollY;
+          setScrollState({
+            isScrolled: scrollY > 20,
+            showScrollTop: scrollY > 300
+          });
           ticking = false;
         });
         ticking = true;
@@ -46,13 +46,28 @@ export function Layout({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  return scrollState;
+};
+
+export const Layout = memo(function Layout({
+  children,
+  showSearch = true,
+  title,
+  backUrl
+}: LayoutProps) {
+  const { isScrolled, showScrollTop } = useScrollState();
+
+  // Memoize decorative gradients to prevent re-renders
+  const decorativeGradients = useMemo(() => (
+    <div className="fixed inset-0 -z-10 pointer-events-none">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl opacity-70" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full filter blur-3xl opacity-70" />
+    </div>
+  ), []);
+
   return (
     <div className="min-h-screen flex flex-col pb-16 font-sans relative overflow-hidden" dir="rtl">
-      {/* Optimized decorative gradients - reduced size */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full filter blur-3xl" />
-      </div>
+      {decorativeGradients}
 
       <MemoizedHeader title={title} backUrl={backUrl} isScrolled={isScrolled} />
       
@@ -65,4 +80,4 @@ export function Layout({
       <MemoizedFooter />
     </div>
   );
-}
+});
