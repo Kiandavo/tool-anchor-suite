@@ -102,15 +102,6 @@ export const readingsTools: Tool[] = [
     icon: "hash"
   },
   {
-    id: "coffee-reading",
-    slug: "coffee-reading",
-    name: "فال قهوه",
-    category: "readings",
-    description: "با مطالعه تَله قهوه در فنجان، نمادها و شکل‌های مرموز را تفسیر کنید و پیام‌های پنهان درباره آینده، عشق و زندگی خود را کشف نمایید.",
-    isNew: true,
-    icon: "coffee-cup"
-  },
-  {
     id: "wood-divination",
     slug: "wood-divination",
     name: "فال چوب",
@@ -181,14 +172,5 @@ export const readingsTools: Tool[] = [
     description: "با حس بویایی و انتخاب عطرها و رایحه‌های مختلف، پیام‌های حسی و روحانی دریافت کنید و از قدرت شفابخش عطرها بهره‌مند شوید.",
     isNew: true,
     icon: "sparkles"
-  },
-  {
-    id: "palm-reading",
-    slug: "palm-reading",
-    name: "فال دست",
-    category: "readings",
-    description: "با مطالعه خطوط کف دست، شکل انگشتان و نشانه‌های دست، گذشته، حال و آینده خود را بخوانید و اسرار نهفته در دستان خود را کشف کنید.",
-    isNew: true,
-    icon: "hand"
   }
 ];
