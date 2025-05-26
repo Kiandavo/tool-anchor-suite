@@ -1,23 +1,125 @@
 
-/* Optimized global styles - only critical imports */
+/* Optimized global styles with critical-first loading */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Critical styles only */
-@import './critical.css';
-@import './fonts.css';
-@import './components.css';
-@import './animations.css';
+/* Critical fonts and styles */
+@import url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css');
 
-/* Performance optimizations */
-* {
-  cursor: inherit;
+/* Critical CSS variables */
+@layer base {
+  :root {
+    --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
+    --font-persian: 'B Yekan', sans-serif;
+    --apple-blue: 37 99 235;
+    --apple-purple: 124 58 237;
+    --apple-green: 22 163 74;
+    --apple-orange: 234 88 12;
+    --text-primary: 23 23 23;
+    --text-secondary: 51 65 85;
+  }
+
+  html {
+    direction: rtl;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #fafaff;
+    color: rgb(var(--text-primary));
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-feature-settings: "ss01", "ss02", "kern";
+  }
+
+  .font-persian {
+    font-family: var(--font-persian);
+  }
 }
 
-img, video {
-  max-width: 100%;
-  height: auto;
+@layer components {
+  /* Critical loading styles */
+  .apple-spinner {
+    @apply relative w-12 h-12 mx-auto;
+  }
+  
+  .apple-spinner::before {
+    @apply absolute inset-0 rounded-full border-3 border-gray-200;
+    content: '';
+  }
+  
+  .apple-spinner::after {
+    @apply absolute inset-0 rounded-full border-3 border-blue-600 border-t-transparent animate-spin;
+    content: '';
+  }
+
+  /* Glass effects */
+  .neo-glass {
+    @apply bg-white/80 backdrop-blur-sm border border-white/40;
+  }
+
+  .glass-nav {
+    @apply bg-white/90 backdrop-blur-md border-b border-gray-200/50;
+    transition: background-color 0.2s ease-out;
+  }
+
+  /* Performance-optimized animations */
+  .animate-fade-in {
+    animation: fadeIn 400ms ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 500ms ease-out forwards;
+  }
+
+  .card-hover-glow {
+    @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
+    will-change: transform, box-shadow;
+  }
+
+  /* Interactive elements */
+  .cursor-pointer { 
+    cursor: pointer; 
+  }
+  
+  /* RTL support */
+  .rtl { 
+    direction: rtl; 
+    text-align: right; 
+  }
+  
+  .ltr { 
+    direction: ltr; 
+    text-align: left; 
+  }
+}
+
+@layer utilities {
+  /* Essential animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Performance optimizations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-auto {
+    will-change: auto;
+  }
 }
 
 /* High-performance transitions */
@@ -32,9 +134,10 @@ button, a, [role="button"] {
   border-radius: 4px;
 }
 
-/* Performance optimized animations */
-.animate-fade-in, .animate-slide-up {
-  will-change: transform, opacity;
+/* Image optimization */
+img, video {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Remove will-change after animation completes */

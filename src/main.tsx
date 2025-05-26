@@ -5,9 +5,8 @@ import App from './App.tsx'
 import './styles/global.css'
 import { BrowserRouter } from 'react-router-dom'
 
-// Performance monitoring
-if (typeof window !== 'undefined' && 'performance' in window) {
-  // Monitor Core Web Vitals
+// Performance monitoring for development
+if (typeof window !== 'undefined' && 'performance' in window && process.env.NODE_ENV === 'development') {
   const observer = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       if (entry.entryType === 'navigation') {
@@ -18,9 +17,15 @@ if (typeof window !== 'undefined' && 'performance' in window) {
   observer.observe({ entryTypes: ['navigation'] });
 }
 
-// Create root with concurrent features
-const root = ReactDOM.createRoot(document.getElementById('root')!);
+// Create root with error handling
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
 
+const root = ReactDOM.createRoot(rootElement);
+
+// Render with error boundary
 root.render(
   <React.StrictMode>
     <BrowserRouter>

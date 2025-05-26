@@ -2,31 +2,32 @@
 import { Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { Suspense, lazy, memo } from "react";
-import { AppleLoading } from "@/components/ui/apple-loading";
+import { EnhancedLoading } from "@/components/ui/enhanced-loading";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 
-// Optimized loading component
+// Loading component
 const LoadingFallback = memo(() => (
   <div className="flex items-center justify-center min-h-[70vh] w-full">
-    <AppleLoading text="در حال بارگذاری صفحه..." />
+    <EnhancedLoading text="در حال بارگذاری صفحه..." />
   </div>
 ));
 
 LoadingFallback.displayName = 'LoadingFallback';
 
-// Optimized dynamic imports with better chunk names
-const Index = lazy(() => import("@/pages/index"));
-const Category = lazy(() => import("@/pages/Category"));
-const Tool = lazy(() => import("@/pages/Tool"));
-const Search = lazy(() => import("@/pages/Search"));
-const AllTools = lazy(() => import("@/pages/AllTools"));
-const Settings = lazy(() => import("@/pages/Settings"));
-const Community = lazy(() => import("@/pages/Community"));
+// Dynamic imports with proper error handling
+const Index = lazy(() => import("@/pages/index").catch(() => import("@/pages/NotFound")));
+const Category = lazy(() => import("@/pages/Category").catch(() => import("@/pages/NotFound")));
+const Tool = lazy(() => import("@/pages/Tool").catch(() => import("@/pages/NotFound")));
+const Search = lazy(() => import("@/pages/Search").catch(() => import("@/pages/NotFound")));
+const AllTools = lazy(() => import("@/pages/AllTools").catch(() => import("@/pages/NotFound")));
+const Settings = lazy(() => import("@/pages/Settings").catch(() => import("@/pages/NotFound")));
+const Community = lazy(() => import("@/pages/Community").catch(() => import("@/pages/NotFound")));
 const NotFound = lazy(() => import("@/pages/NotFound"));
-const AllTemplates = lazy(() => import("@/pages/AllTemplates"));
-const TemplateCategory = lazy(() => import("@/pages/TemplateCategory"));
-const Template = lazy(() => import("@/pages/Template"));
+const AllTemplates = lazy(() => import("@/pages/AllTemplates").catch(() => import("@/pages/NotFound")));
+const TemplateCategory = lazy(() => import("@/pages/TemplateCategory").catch(() => import("@/pages/NotFound")));
+const Template = lazy(() => import("@/pages/Template").catch(() => import("@/pages/NotFound")));
 
-// Memoized scroll to top component
+// Scroll to top component
 const ScrollToTop = memo(() => {
   useScrollToTop();
   return null;
@@ -38,21 +39,23 @@ export const AppRoutes = memo(() => {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/category/:categoryId" element={<Category />} />
-          <Route path="/tool/:slug" element={<Tool />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/all-tools" element={<AllTools />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/all-templates" element={<AllTemplates />} />
-          <Route path="/template-category/:categoryId" element={<TemplateCategory />} />
-          <Route path="/template/:slug" element={<Template />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/category/:categoryId" element={<Category />} />
+            <Route path="/tool/:slug" element={<Tool />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/all-tools" element={<AllTools />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/all-templates" element={<AllTemplates />} />
+            <Route path="/template-category/:categoryId" element={<TemplateCategory />} />
+            <Route path="/template/:slug" element={<Template />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 });

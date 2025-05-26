@@ -4,19 +4,20 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppRoutes } from "@/components/AppRoutes";
 import { HelmetProvider } from "@/providers/HelmetProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AppleLoading } from "@/components/ui/apple-loading";
+import { EnhancedLoading } from "@/components/ui/enhanced-loading";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 
-// Lazy load non-critical components with better chunking
+// Lazy load non-critical components
 const Toaster = lazy(() => import("@/components/ui/toaster").then(mod => ({ default: mod.Toaster })));
 const Sonner = lazy(() => import("@/components/ui/sonner").then(mod => ({ default: mod.Toaster })));
 const GoogleAnalytics = lazy(() => import("@/components/analytics/GoogleAnalytics").then(mod => ({ default: mod.GoogleAnalytics })));
 
-// Optimized QueryClient with better caching
+// Optimized QueryClient
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes  
+      staleTime: 5 * 60 * 1000,
+      gcTime: 10 * 60 * 1000,
       retry: 1,
       refetchOnWindowFocus: false,
       refetchOnReconnect: 'always',
@@ -27,7 +28,7 @@ const queryClient = new QueryClient({
   },
 });
 
-// Memoized theme handler for performance
+// Theme handler
 const ThemeHandler = memo(() => {
   useEffect(() => {
     const applyTheme = () => {
@@ -51,28 +52,32 @@ const ThemeHandler = memo(() => {
 
 ThemeHandler.displayName = 'ThemeHandler';
 
-// Optimized loading fallback
+// Loading fallback
 const LoadingFallback = memo(() => (
-  <AppleLoading variant="fullscreen" text="در حال بارگذاری..." />
+  <EnhancedLoading variant="fullscreen" text="در حال بارگذاری..." />
 ));
 
 LoadingFallback.displayName = 'LoadingFallback';
 
 const App = () => {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <ThemeHandler />
-          <Suspense fallback={<LoadingFallback />}>
-            <Toaster />
-            <Sonner />
-            <GoogleAnalytics />
-          </Suspense>
-          <AppRoutes />
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <ThemeHandler />
+            <Suspense fallback={<LoadingFallback />}>
+              <ErrorBoundary>
+                <Toaster />
+                <Sonner />
+                <GoogleAnalytics />
+              </ErrorBoundary>
+            </Suspense>
+            <AppRoutes />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 };
 

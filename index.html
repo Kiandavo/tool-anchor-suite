@@ -3,19 +3,21 @@
 <html lang="fa" dir="rtl" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>لنگر - ابزارهای آنلاین رایگان</title>
     <meta name="description" content="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی و بیش از ۱۱۰ ابزار کاربردی دیگر" />
     
-    <!-- Preconnect to critical domains -->
+    <!-- Critical performance optimizations -->
     <link rel="preconnect" href="https://cdn.fontcdn.ir" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff" as="font" type="font/woff" crossorigin />
     <link rel="preload" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" as="image" />
     
-    <!-- Critical CSS -->
+    <!-- Critical CSS with font display optimization -->
     <style>
       :root {
         --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
@@ -24,6 +26,9 @@
       html {
         direction: rtl;
         scroll-behavior: smooth;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       body {
         font-family: var(--font-sans);
@@ -31,29 +36,89 @@
         margin: 0;
         padding: 0;
         overflow-x: hidden;
+        color: #171717;
+        line-height: 1.6;
+      }
+      
+      /* Loading screen styles */
+      .initial-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fafaff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease-out;
+      }
+      
+      .loading-spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid #e5e7eb;
+        border-top: 4px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Hide loading when React is ready */
+      .app-loaded .initial-loading {
+        opacity: 0;
+        pointer-events: none;
       }
     </style>
     
-    <!-- Favicon -->
+    <!-- Enhanced favicon support -->
     <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
     
     <!-- PWA settings -->
     <meta name="theme-color" content="#7E49F2" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="لنگر" />
+    <meta name="format-detection" content="telephone=no" />
     
-    <!-- Social Media Preview -->
+    <!-- Enhanced Social Media Preview -->
     <meta property="og:title" content="لنگر - ابزارهای آنلاین رایگان" />
     <meta property="og:description" content="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی و بیش از ۱۱۰ ابزار کاربردی دیگر" />
     <meta property="og:image" content="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
     <meta property="og:url" content="https://langar.co" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fa_IR" />
     
-    <!-- App Styles - Load with high priority -->
+    <!-- Load fonts with optimal display strategy -->
     <link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css"></noscript>
   </head>
-  <body class="bg-gray-50 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-50">
+  <body>
+    <!-- Initial loading screen -->
+    <div class="initial-loading">
+      <div class="loading-spinner"></div>
+    </div>
+    
     <div id="root"></div>
+    
+    <!-- Scripts -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Remove loading screen when app is ready -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.body.classList.add('app-loaded');
+        }, 100);
+      });
+    </script>
   </body>
 </html>
