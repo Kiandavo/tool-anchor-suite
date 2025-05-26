@@ -124,7 +124,7 @@ export const ReadingsSection = () => {
                     <Button 
                       variant="link" 
                       size="sm" 
-                      className="text-orange-600 p-0 h-auto text-xs"
+                      className="text-orange-600 p-0 h-auto text-xs font-medium hover:text-orange-700"
                     >
                       مشاهده
                       <ChevronRight size={14} className="mr-1 rtl:rotate-180" />
@@ -141,7 +141,7 @@ export const ReadingsSection = () => {
             <Button 
               variant="apple"
               size="apple-sm"
-              className="bg-white/20 hover:bg-white/30 border border-white/40 hover:border-white/60 text-white shadow-md"
+              className="bg-orange-500 hover:bg-orange-600 border-none text-white shadow-md"
             >
               نمایش همه ابزارهای فال و طالع‌بینی
               <ChevronRight size={16} className="mr-1 rtl:rotate-180" />

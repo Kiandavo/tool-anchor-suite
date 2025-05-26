@@ -29,10 +29,10 @@ export const FortuneCard: React.FC<FortuneCardProps> = ({
           onClick={onLoadComponent}
           variant="apple"
           size="apple-sm"
-          className={`bg-gradient-to-b from-[${gradientFrom}] to-[${gradientTo}]`}
+          className="bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white border-none shadow-md"
         >
           {buttonText}
-          <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
+          <ChevronRight size={16} className="mr-1 rtl:rotate-180 text-white" />
         </Button>
       </div>
     </div>
