@@ -119,7 +119,7 @@ export const ToolCard = memo(function ToolCard({ tool, highlight = false, compac
       >
         <div className="flex items-start justify-between mb-3">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 
-            gradient-persian shadow-sm border border-white/40 bounce-subtle">
+            bg-gradient-to-br from-blue-500 to-purple-600 shadow-sm border border-white/40 bounce-subtle">
             <IconComponent className="text-white" size={22} />
           </div>
           {isNew && (

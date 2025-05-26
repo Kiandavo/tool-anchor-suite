@@ -17,8 +17,8 @@ export const PersianCulturalSection = () => {
       <div className="rounded-3xl border border-gray-200 neo-glass shadow-sm overflow-hidden backdrop-blur-sm bg-gradient-to-br from-white/90 to-gray-50/80">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-400 to-violet-500/30 flex items-center justify-center mr-3 shadow-sm backdrop-blur-sm border border-white/30">
-              <BookMarked size={22} className="text-violet-700" aria-hidden="true" />
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center mr-3 shadow-sm backdrop-blur-sm border border-white/30">
+              <BookMarked size={22} className="text-white" aria-hidden="true" />
             </div>
             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">فرهنگ و زبان فارسی</h2>
           </div>

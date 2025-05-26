@@ -15,8 +15,8 @@ export const ToolsSection = () => {
       <section className="mb-16 sm:mb-24 animate-slide-up rounded-3xl border border-green-200/30 neo-glass shadow-sm" style={{ animationDelay: '0.2s' }}>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-10 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-apple-green/20 to-apple-green/10 flex items-center justify-center mr-3 shadow-sm">
-              <Sparkles size={20} className="text-apple-green" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center mr-3 shadow-sm">
+              <Sparkles size={20} className="text-white" />
             </div>
             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">ابزارهای جدید</h2>
           </div>
@@ -38,8 +38,8 @@ export const ToolsSection = () => {
       <section className="mb-16 sm:mb-24 animate-slide-up rounded-3xl border border-primary/10 neo-glass shadow-sm" style={{ animationDelay: '0.4s' }}>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-10 px-6 sm:px-10 pt-10">
           <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mr-3 shadow-sm">
-              <TrendingUp size={20} className="text-primary" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mr-3 shadow-sm">
+              <TrendingUp size={20} className="text-white" />
             </div>
             <h2 className="text-xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">ابزارهای محبوب</h2>
           </div>
