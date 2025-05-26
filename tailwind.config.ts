@@ -8,6 +8,7 @@ export default {
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+		"./index.html",
 	],
 	prefix: "",
 	theme: {
@@ -91,11 +92,18 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			spacing: {
+				'18': '4.5rem',
+				'88': '22rem',
+			},
 			boxShadow: {
 				'apple-sm': '0 2px 5px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
 				'apple': '0 4px 10px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.1)',
 				'apple-lg': '0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1)',
 				'apple-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
+			},
+			borderWidth: {
+				'3': '3px',
 			},
 			keyframes: {
 				'accordion-down': {

@@ -7,17 +7,28 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { EnhancedLoading } from "@/components/ui/enhanced-loading";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 
-// Lazy load non-critical components
-const Toaster = lazy(() => import("@/components/ui/toaster").then(mod => ({ default: mod.Toaster })));
-const Sonner = lazy(() => import("@/components/ui/sonner").then(mod => ({ default: mod.Toaster })));
-const GoogleAnalytics = lazy(() => import("@/components/analytics/GoogleAnalytics").then(mod => ({ default: mod.GoogleAnalytics })));
+// Lazy load components with error fallbacks
+const Toaster = lazy(() => 
+  import("@/components/ui/toaster").then(mod => ({ default: mod.Toaster }))
+  .catch(() => ({ default: () => null }))
+);
 
-// Optimized QueryClient
+const Sonner = lazy(() => 
+  import("@/components/ui/sonner").then(mod => ({ default: mod.Toaster }))
+  .catch(() => ({ default: () => null }))
+);
+
+const GoogleAnalytics = lazy(() => 
+  import("@/components/analytics/GoogleAnalytics").then(mod => ({ default: mod.GoogleAnalytics }))
+  .catch(() => ({ default: () => null }))
+);
+
+// Optimized QueryClient with better defaults
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000,
-      gcTime: 10 * 60 * 1000,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
       retry: 1,
       refetchOnWindowFocus: false,
       refetchOnReconnect: 'always',
@@ -28,16 +39,20 @@ const queryClient = new QueryClient({
   },
 });
 
-// Theme handler
+// Theme handler component
 const ThemeHandler = memo(() => {
   useEffect(() => {
     const applyTheme = () => {
-      const theme = localStorage.getItem('theme') || 'system';
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
-      document.documentElement.classList.toggle('dark', 
-        theme === 'dark' || (theme === 'system' && systemPrefersDark)
-      );
+      try {
+        const theme = localStorage.getItem('theme') || 'system';
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        document.documentElement.classList.toggle('dark', 
+          theme === 'dark' || (theme === 'system' && systemPrefersDark)
+        );
+      } catch (error) {
+        console.warn('Theme application failed:', error);
+      }
     };
 
     applyTheme();
@@ -52,13 +67,16 @@ const ThemeHandler = memo(() => {
 
 ThemeHandler.displayName = 'ThemeHandler';
 
-// Loading fallback
+// Loading fallback component
 const LoadingFallback = memo(() => (
-  <EnhancedLoading variant="fullscreen" text="در حال بارگذاری..." />
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <EnhancedLoading variant="fullscreen" text="در حال بارگذاری..." />
+  </div>
 ));
 
 LoadingFallback.displayName = 'LoadingFallback';
 
+// Main App component
 const App = () => {
   return (
     <ErrorBoundary>

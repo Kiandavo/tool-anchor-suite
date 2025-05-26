@@ -1,23 +1,90 @@
 
-/* Optimized global styles with critical-first loading */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Critical fonts and styles */
-@import url('https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css');
-
-/* Critical CSS variables */
+/* Critical CSS variables - these were missing and causing Tailwind issues */
 @layer base {
   :root {
-    --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
+    /* Color system variables */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 260 80% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 260 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 24 90% 50%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 260 80% 50%;
+    --radius: 1rem;
+
+    /* Sidebar variables */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Font system */
+    --font-sans: 'B Yekan', 'SF Pro Display', system-ui, sans-serif;
     --font-persian: 'B Yekan', sans-serif;
+    
+    /* Apple-style colors */
     --apple-blue: 37 99 235;
     --apple-purple: 124 58 237;
     --apple-green: 22 163 74;
     --apple-orange: 234 88 12;
     --text-primary: 23 23 23;
     --text-secondary: 51 65 85;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 260 80% 60%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 75.1%;
+    --accent: 24 90% 55%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 260 80% 60%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 94.1%;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Base HTML styles */
+  * {
+    @apply border-border;
   }
 
   html {
@@ -30,38 +97,48 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #fafaff;
-    color: rgb(var(--text-primary));
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     overflow-x: hidden;
     font-feature-settings: "ss01", "ss02", "kern";
+    line-height: 1.6;
   }
 
+  /* Persian font class */
   .font-persian {
     font-family: var(--font-persian);
+  }
+
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
 @layer components {
-  /* Critical loading styles */
-  .apple-spinner {
+  /* Loading components */
+  .loading-spinner {
     @apply relative w-12 h-12 mx-auto;
   }
   
-  .apple-spinner::before {
+  .loading-spinner::before {
     @apply absolute inset-0 rounded-full border-3 border-gray-200;
     content: '';
   }
   
-  .apple-spinner::after {
-    @apply absolute inset-0 rounded-full border-3 border-blue-600 border-t-transparent animate-spin;
+  .loading-spinner::after {
+    @apply absolute inset-0 rounded-full border-3 border-primary border-t-transparent animate-spin;
     content: '';
   }
 
   /* Glass effects */
-  .neo-glass {
-    @apply bg-white/80 backdrop-blur-sm border border-white/40;
+  .glass-effect {
+    @apply bg-white/40 backdrop-blur-sm border border-white/20 shadow-sm;
   }
 
   .glass-nav {
@@ -69,39 +146,25 @@
     transition: background-color 0.2s ease-out;
   }
 
-  /* Performance-optimized animations */
-  .animate-fade-in {
-    animation: fadeIn 400ms ease-out forwards;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 500ms ease-out forwards;
-  }
-
-  .card-hover-glow {
-    @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
-    will-change: transform, box-shadow;
-  }
-
   /* Interactive elements */
-  .cursor-pointer { 
-    cursor: pointer; 
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
+  }
+
+  /* Persian text utilities */
+  .rtl {
+    direction: rtl;
+    text-align: right;
   }
   
-  /* RTL support */
-  .rtl { 
-    direction: rtl; 
-    text-align: right; 
-  }
-  
-  .ltr { 
-    direction: ltr; 
-    text-align: left; 
+  .ltr {
+    direction: ltr;
+    text-align: left;
   }
 }
 
 @layer utilities {
-  /* Essential animations */
+  /* Animation keyframes */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -112,13 +175,31 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Performance optimizations */
-  .will-change-transform {
-    will-change: transform;
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
-  .will-change-auto {
-    will-change: auto;
+  /* Animation classes */
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  /* Utility classes */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-gradient-subtle {
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
   }
 }
 
@@ -127,21 +208,27 @@ button, a, [role="button"] {
   transition: all 0.2s ease;
 }
 
-/* Enhanced focus for accessibility */
-:focus-visible {
-  outline: 2px solid rgb(var(--apple-blue));
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
 /* Image optimization */
 img, video {
   max-width: 100%;
   height: auto;
 }
 
-/* Remove will-change after animation completes */
-.animate-fade-in.animation-complete,
-.animate-slide-up.animation-complete {
-  will-change: auto;
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
