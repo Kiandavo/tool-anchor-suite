@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Tool } from '@/data/tools';
@@ -107,21 +108,22 @@ export const ToolCard = memo(function ToolCard({ tool, highlight = false, compac
   const theme = categoryThemes[category];
 
   return (
-    <Link to={`/tool/${slug}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
+    <Link to={`/tool/${slug}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl group">
       <div
         className={`
           rounded-3xl shadow-sm transition-all duration-300 backdrop-blur-sm will-change-transform
-          border border-white/40 hover:shadow-lg hover:scale-[1.02] neo-glass
+          border border-white/40 hover:shadow-lg hover:scale-[1.02] glass-morphism
+          card-hover-glow magnetic-hover interactive-element
           ${compact ? 'py-4' : 'p-6'}
         `}
       >
         <div className="flex items-start justify-between mb-3">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 
-            bg-white/70 backdrop-blur-sm shadow-sm border border-white/40">
-            <IconComponent className={theme.iconColor} size={22} />
+            gradient-persian shadow-sm border border-white/40 bounce-subtle">
+            <IconComponent className="text-white" size={22} />
           </div>
           {isNew && (
-            <span className="rounded-full px-3 py-1 text-xs font-medium bg-white/70 backdrop-blur-sm shadow-sm border border-white/30 text-apple-blue">
+            <span className="rounded-full px-3 py-1 text-xs font-medium glass-morphism shadow-sm border border-white/30 text-apple-blue neon-glow">
               جدید
             </span>
           )}
@@ -129,7 +131,7 @@ export const ToolCard = memo(function ToolCard({ tool, highlight = false, compac
         <div className={`${compact ? 'space-y-1' : 'mb-2'}`}>
           <h3 className={`font-medium text-gray-800 line-clamp-1 ${compact ? 'text-base' : 'text-lg'}`}>{name}</h3>
           {!compact && (
-            <p className="text-sm text-gray-600 mt-2 line-clamp-2 bg-white/30 p-1.5 rounded-md">{description}</p>
+            <p className="text-sm text-gray-600 mt-2 line-clamp-2 glass-morphism p-1.5 rounded-md">{description}</p>
           )}
         </div>
       </div>
