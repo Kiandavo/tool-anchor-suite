@@ -110,18 +110,12 @@
       }
       
       /* Hide loading when React is ready */
-      .initial-loading.opacity-0 {
-        opacity: 0;
+      .initial-loading[style*="opacity: 0"] {
         pointer-events: none;
       }
       
-      /* Prevent flash of unstyled content */
+      /* Make root visible by default */
       #root {
-        opacity: 0;
-        transition: opacity 0.2s ease-in;
-      }
-      
-      #root.loaded {
         opacity: 1;
       }
     </style>
@@ -165,28 +159,5 @@
     <!-- Scripts -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Initialize app when loaded -->
-    <script>
-      // Show root when React is ready
-      window.addEventListener('load', function() {
-        const root = document.getElementById('root');
-        if (root) {
-          root.classList.add('loaded');
-        }
-      });
-
-      // Fallback to remove loading screen after maximum wait time
-      setTimeout(function() {
-        const loadingScreen = document.querySelector('.initial-loading');
-        if (loadingScreen) {
-          loadingScreen.classList.add('opacity-0');
-        }
-        const root = document.getElementById('root');
-        if (root) {
-          root.classList.add('loaded');
-        }
-      }, 3000);
-    </script>
   </body>
 </html>

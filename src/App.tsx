@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppRoutes } from "@/components/AppRoutes";
 import { HelmetProvider } from "@/providers/HelmetProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { EnhancedLoading } from "@/components/ui/enhanced-loading";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 
 // Lazy load non-critical components only
@@ -27,8 +26,8 @@ const GoogleAnalytics = lazy(() =>
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 5 * 60 * 1000,
+      gcTime: 10 * 60 * 1000,
       retry: 1,
       refetchOnWindowFocus: false,
       refetchOnReconnect: 'always',
@@ -76,7 +75,7 @@ const MinimalLoading = memo(() => (
 
 MinimalLoading.displayName = 'MinimalLoading';
 
-// Main App component with improved error handling
+// Main App component
 const App = () => {
   useEffect(() => {
     console.log('App component mounted successfully');
@@ -89,7 +88,7 @@ const App = () => {
           <TooltipProvider>
             <ThemeHandler />
             
-            {/* Load non-critical components asynchronously with minimal loading */}
+            {/* Load non-critical components asynchronously */}
             <Suspense fallback={<MinimalLoading />}>
               <ErrorBoundary>
                 <Toaster />
@@ -98,7 +97,7 @@ const App = () => {
               </ErrorBoundary>
             </Suspense>
             
-            {/* Main app routes - homepage loads synchronously now */}
+            {/* Main app routes */}
             <AppRoutes />
           </TooltipProvider>
         </QueryClientProvider>
