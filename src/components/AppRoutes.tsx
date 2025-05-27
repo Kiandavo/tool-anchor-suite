@@ -23,9 +23,6 @@ const AllTools = lazy(() => import("@/pages/AllTools"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Community = lazy(() => import("@/pages/Community"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
-const AllTemplates = lazy(() => import("@/pages/AllTemplates"));
-const TemplateCategory = lazy(() => import("@/pages/TemplateCategory"));
-const Template = lazy(() => import("@/pages/Template"));
 
 // Scroll to top component
 const ScrollToTop = memo(() => {
@@ -72,21 +69,6 @@ export const AppRoutes = memo(() => {
           <Route path="/community" element={
             <Suspense fallback={<LoadingFallback />}>
               <Community />
-            </Suspense>
-          } />
-          <Route path="/all-templates" element={
-            <Suspense fallback={<LoadingFallback />}>
-              <AllTemplates />
-            </Suspense>
-          } />
-          <Route path="/template-category/:categoryId" element={
-            <Suspense fallback={<LoadingFallback />}>
-              <TemplateCategory />
-            </Suspense>
-          } />
-          <Route path="/template/:slug" element={
-            <Suspense fallback={<LoadingFallback />}>
-              <Template />
             </Suspense>
           } />
           <Route path="*" element={

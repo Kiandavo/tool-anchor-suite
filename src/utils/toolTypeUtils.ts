@@ -61,6 +61,11 @@ export const toolTypeBySlug: Record<string, string> = {
   "gpa-calculator": "calculator",
   "font-size-calculator": "calculator",
   
+  // Developer tools
+  "json-formatter": "json-formatter",
+  "hash-generator": "hash-generator",
+  "qr-generator": "qr-generator",
+  
   // Random tools
   "random-password": "random-password",
   "random-number": "random",

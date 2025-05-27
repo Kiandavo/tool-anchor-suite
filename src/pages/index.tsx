@@ -5,7 +5,7 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { CategoriesSection } from '@/components/home/CategoriesSection';
 import { ToolsSection } from '@/components/home/ToolsSection';
 import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
-import { DocumentTemplatesSection } from '@/components/home/DocumentTemplatesSection';
+import { AIToolsSection } from '@/components/home/AIToolsSection';
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateWebsiteSchema } from '@/utils/schemaUtils';
@@ -18,7 +18,7 @@ const MemoizedPersianCulturalSection = memo(PersianCulturalSection);
 const MemoizedToolsSection = memo(ToolsSection);
 const MemoizedReadingsSection = memo(ReadingsSection);
 const MemoizedFalSection = memo(FalSection);
-const MemoizedDocumentTemplatesSection = memo(DocumentTemplatesSection);
+const MemoizedAIToolsSection = memo(AIToolsSection);
 
 const Index = () => {
   // Generate homepage schema
@@ -42,21 +42,21 @@ const Index = () => {
     }
   };
   
-  // Document templates schema
-  const templatesSchema = {
+  // AI tools schema
+  const aiToolsSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "قالب‌های اسناد فارسی",
-    "description": "مجموعه قالب‌های حرفه‌ای فارسی برای رزومه، قراردادها، اسناد تجاری و قالب‌های نوشن",
+    "name": "ابزارهای هوش مصنوعی فارسی",
+    "description": "مجموعه ابزارهای پیشرفته هوش مصنوعی با قابلیت درک و پردازش زبان فارسی",
     "provider": {
       "@type": "Organization",
       "name": "لنگر - ابزارهای آنلاین",
       "url": "https://langar.co"
     },
-    "serviceType": "Document Templates",
+    "serviceType": "AI Tools",
     "availableChannel": {
       "@type": "ServiceChannel",
-      "serviceUrl": "https://langar.co/all-templates"
+      "serviceUrl": "https://langar.co/category/ai-tools"
     }
   };
   
@@ -79,10 +79,10 @@ const Index = () => {
     <Layout>
       <SeoHead 
         title="لنگر - مجموعه ابزارهای آنلاین رایگان | Langar Tools"
-        description="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی، سئو و بهینه‌سازی. بیش از ۱۱۰ ابزار کاربردی در یک پلتفرم."
-        keywords="ابزار آنلاین, ابزار سئو, تبدیل متن, محاسبه گر آنلاین, ویرایش تصویر, فال حافظ, طالع‌بینی, استخاره, ابزارهای رایگان, langar, لنگر, فرهنگ فارسی, آموزش زبان فارسی, قالب رزومه فارسی, قراردادهای فریلنسری, فاکتور فارسی"
+        description="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی، هوش مصنوعی و سئو. بیش از ۱۱۰ ابزار کاربردی در یک پلتفرم."
+        keywords="ابزار آنلاین, ابزار سئو, تبدیل متن, محاسبه گر آنلاین, ویرایش تصویر, فال حافظ, طالع‌بینی, استخاره, هوش مصنوعی فارسی, ابزارهای رایگان, langar, لنگر, فرهنگ فارسی, آموزش زبان فارسی"
         schema={homeSchema}
-        structuredData={[readingsSchema, templatesSchema]}
+        structuredData={[readingsSchema, aiToolsSchema]}
       />
       <GoogleAnalytics />
       
@@ -104,7 +104,7 @@ const Index = () => {
       </section>
       
       <div className="animate-fade-in">
-        <MemoizedDocumentTemplatesSection />
+        <MemoizedAIToolsSection />
       </div>
       
       <div className="animate-slide-up">

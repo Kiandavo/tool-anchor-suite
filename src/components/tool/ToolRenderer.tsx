@@ -14,6 +14,11 @@ import RandomPasswordTool from '@/pages/ToolTypes/RandomPasswordTool';
 import NumberTool from '@/pages/ToolTypes/NumberTool';
 import RandomColorGenerator from '@/pages/ToolTypes/RandomTools/RandomColorGenerator';
 
+// Import new developer tools
+import JsonFormatter from '@/pages/ToolTypes/DeveloperTools/JsonFormatter';
+import QRGenerator from '@/pages/ToolTypes/UtilityTools/QRGenerator';
+import HashGenerator from '@/pages/ToolTypes/UtilityTools/HashGenerator';
+
 // Import readings components
 import { TarotReading } from '@/components/fal/TarotReading';
 import { Horoscope } from '@/components/fal/Horoscope';
@@ -46,8 +51,8 @@ import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchit
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
 import TodoList from '@/pages/ToolTypes/ProductivityTools/TodoList';
-import NoteTaking from '@/pages/ToolTypes/ProductivityTools/NoteTaking';
-import CalendarScheduler from '@/pages/ToolTypes/ProductivityTools/CalendarScheduler';
+import NoteTaking from '@/pages/ToolTypes/NoteTaking';
+import CalendarScheduler from '@/pages/ToolTypes/CalendarScheduler';
 
 import ColorPalette from '@/pages/ToolTypes/DesignTools/ColorPalette';
 import FontPreview from '@/pages/ToolTypes/DesignTools/FontPreview';
@@ -61,6 +66,11 @@ interface ToolRendererProps {
 
 export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   const toolType = toolTypeBySlug[slug];
+  
+  // Developer tools
+  if (toolType === 'json-formatter') return <JsonFormatter />;
+  if (toolType === 'qr-generator') return <QRGenerator />;
+  if (toolType === 'hash-generator') return <HashGenerator />;
   
   // Existing readings tools
   if (toolType === 'tarot-reading') return <TarotReading />;
