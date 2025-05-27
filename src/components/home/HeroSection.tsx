@@ -1,13 +1,10 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SafeEnhancedGraphics } from '@/components/ui/safe-enhanced-graphics';
-
 export const HeroSection = () => {
-  return (
-    <section className="py-28 sm:py-36 mb-16 relative overflow-hidden cursor-pointer">
+  return <section className="py-28 sm:py-36 mb-16 relative overflow-hidden cursor-pointer">
       {/* Enhanced background with safe graphics */}
       <div className="absolute inset-0 gradient-mesh opacity-30" />
       <div className="absolute inset-0 glass-morphism" />
@@ -16,22 +13,16 @@ export const HeroSection = () => {
       <SafeEnhancedGraphics variant="floating-orbs" className="absolute inset-0" />
       
       {/* Enhanced animated circles with more vibrant colors */}
-      <div 
-        className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-br from-blue-200/40 to-purple-200/30 blur-3xl card-hover-glow animate-float"
-      />
+      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-br from-blue-200/40 to-purple-200/30 blur-3xl card-hover-glow animate-float" />
       
-      <div 
-        className="absolute bottom-20 left-[10%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-200/40 to-blue-200/30 blur-3xl wave-animation"
-      />
+      <div className="absolute bottom-20 left-[10%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-200/40 to-blue-200/30 blur-3xl wave-animation" />
       
       {/* New decorative element with particle effect */}
-      <div 
-        className="absolute top-[35%] left-[25%] w-40 h-40 rounded-full bg-gradient-to-br from-amber-200/30 to-amber-300/20 blur-2xl particle-bg animate-pulse-subtle"
-      />
+      <div className="absolute top-[35%] left-[25%] w-40 h-40 rounded-full bg-gradient-to-br from-amber-200/30 to-amber-300/20 blur-2xl particle-bg animate-pulse-subtle" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-5xl mx-auto text-center animate-fade-in">
-          <h1 className="text-5xl sm:text-7xl font-bold mb-4 text-gray-900 leading-tight tracking-tight text-shine neon-glow">
+          <h1 className="text-6xl">
             لنگر - مجموعه ابزارهای آنلاین
           </h1>
           
@@ -58,7 +49,9 @@ export const HeroSection = () => {
             
             <Link to="/category/persian-cultural" className="block group">
               <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{ animationDelay: '0.5s' }}>
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{
+                animationDelay: '0.5s'
+              }}>
                   <Globe size={20} className="text-white drop-shadow-sm" />
                 </div>
                 <h3 className="text-lg font-medium mb-2 text-gray-800">فرهنگ و زبان فارسی</h3>
@@ -68,7 +61,9 @@ export const HeroSection = () => {
             
             <Link to="/category/readings" className="block group">
               <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{ animationDelay: '1s' }}>
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{
+                animationDelay: '1s'
+              }}>
                   <BookOpen size={20} className="text-white drop-shadow-sm" />
                 </div>
                 <h3 className="text-lg font-medium mb-2 text-gray-800">طالع‌بینی و فال</h3>
@@ -79,22 +74,13 @@ export const HeroSection = () => {
 
           
           <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <Button 
-              size="lg"
-              className="shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] font-medium text-lg gradient-persian text-white interactive-element magnetic-hover px-8 py-4"
-              asChild
-            >
+            <Button size="lg" className="shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] font-medium text-lg gradient-persian text-white interactive-element magnetic-hover px-8 py-4" asChild>
               <Link to="/all-tools">
                 مشاهده همه ابزارها
                 <ArrowRight className="h-5 w-5 mr-2 rtl:rotate-180" />
               </Link>
             </Button>
-            <Button 
-              variant="outline"
-              size="lg"
-              className="glass-morphism hover:shadow-md hover:bg-blue-50/50 transition-all hover:scale-[1.02] font-medium text-lg interactive-element magnetic-hover px-8 py-4"
-              asChild
-            >
+            <Button variant="outline" size="lg" className="glass-morphism hover:shadow-md hover:bg-blue-50/50 transition-all hover:scale-[1.02] font-medium text-lg interactive-element magnetic-hover px-8 py-4" asChild>
               <Link to="/#popular-tools">
                 ابزارهای محبوب
               </Link>
@@ -108,6 +94,5 @@ export const HeroSection = () => {
       
       {/* Additional floating particles */}
       <SafeEnhancedGraphics variant="particles" className="absolute inset-0 opacity-50" />
-    </section>
-  );
+    </section>;
 };
