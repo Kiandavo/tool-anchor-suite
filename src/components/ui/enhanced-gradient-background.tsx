@@ -1,50 +1,48 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface EnhancedGradientBackgroundProps {
   className?: string;
-  children: React.ReactNode;
-  variant?: 'default' | 'purple' | 'blue' | 'green' | 'orange' | 'readings';
+  variant?: 'blue' | 'purple' | 'green' | 'orange' | 'red' | 'default';
+  children?: React.ReactNode;
 }
 
 export const EnhancedGradientBackground: React.FC<EnhancedGradientBackgroundProps> = ({
   className,
-  children,
-  variant = 'default'
+  variant = 'default',
+  children
 }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const gradientVariants = {
-    default: 'bg-gradient-to-br from-white via-background/95 to-background/90 bg-pattern-subtle',
-    purple: 'bg-gradient-to-br from-[#f5f0ff] via-[#ede4ff]/95 to-[#e5d8ff]/90 bg-pattern-subtle',
-    blue: 'bg-gradient-to-br from-[#f0f5ff] via-[#e4edff]/95 to-[#d8e5ff]/90 bg-pattern-subtle',
-    green: 'bg-gradient-to-br from-[#f0fff5] via-[#e4ffed]/95 to-[#d8ffdf]/90 bg-pattern-subtle',
-    orange: 'bg-gradient-to-br from-[#ff8c42] via-[#ff7b2a]/95 to-[#ff6912]/90 bg-pattern-subtle',
-    readings: 'bg-gradient-to-br from-[#ff8c42] via-[#ff7b2a]/95 to-[#ff6912]/90 bg-pattern-stars'
+  const getGradientClasses = () => {
+    switch (variant) {
+      case 'blue':
+        return 'bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700';
+      case 'purple':
+        return 'bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700';
+      case 'green':
+        return 'bg-gradient-to-br from-green-500 via-green-600 to-green-700';
+      case 'orange':
+        return 'bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700';
+      case 'red':
+        return 'bg-gradient-to-br from-red-500 via-red-600 to-red-700';
+      default:
+        return 'bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700';
+    }
   };
 
-  if (!mounted) {
-    return (
-      <div className={cn('transition-colors duration-500', className)}>
+  return (
+    <div className={cn(
+      "relative overflow-hidden",
+      getGradientClasses(),
+      className
+    )}>
+      {/* Background pattern overlay */}
+      <div className="absolute inset-0 bg-pattern-subtle opacity-20" />
+      
+      {/* Content */}
+      <div className="relative z-10">
         {children}
       </div>
-    );
-  }
-
-  return (
-    <div 
-      className={cn(
-        'transition-colors duration-500',
-        gradientVariants[variant],
-        className
-      )}
-    >
-      {children}
     </div>
   );
 };
