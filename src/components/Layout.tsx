@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, memo, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, memo, useMemo } from 'react';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { ScrollToTop } from './layout/ScrollToTop';
@@ -55,13 +55,15 @@ export const Layout = memo(function Layout({
   title,
   backUrl
 }: LayoutProps) {
+  console.log('Layout component rendering...');
+  
   const { isScrolled, showScrollTop } = useScrollState();
 
-  // Memoize decorative gradients to prevent re-renders
+  // Simplified decorative gradients
   const decorativeGradients = useMemo(() => (
     <div className="fixed inset-0 -z-10 pointer-events-none">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl opacity-70" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full filter blur-3xl opacity-70" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/30 rounded-full filter blur-3xl opacity-70" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100/30 rounded-full filter blur-3xl opacity-70" />
     </div>
   ), []);
 

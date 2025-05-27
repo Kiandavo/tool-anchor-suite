@@ -5,7 +5,6 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { CategoriesSection } from '@/components/home/CategoriesSection';
 import { ToolsSection } from '@/components/home/ToolsSection';
 import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
-import { AIToolsSection } from '@/components/home/AIToolsSection';
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateWebsiteSchema } from '@/utils/schemaUtils';
@@ -18,9 +17,10 @@ const MemoizedPersianCulturalSection = memo(PersianCulturalSection);
 const MemoizedToolsSection = memo(ToolsSection);
 const MemoizedReadingsSection = memo(ReadingsSection);
 const MemoizedFalSection = memo(FalSection);
-const MemoizedAIToolsSection = memo(AIToolsSection);
 
 const Index = () => {
+  console.log('Index component rendering...');
+  
   // Generate homepage schema
   const homeSchema = generateWebsiteSchema();
   
@@ -42,37 +42,23 @@ const Index = () => {
     }
   };
   
-  // AI tools schema
-  const aiToolsSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "ابزارهای هوش مصنوعی فارسی",
-    "description": "مجموعه ابزارهای پیشرفته هوش مصنوعی با قابلیت درک و پردازش زبان فارسی",
-    "provider": {
-      "@type": "Organization",
-      "name": "لنگر - ابزارهای آنلاین",
-      "url": "https://langar.co"
-    },
-    "serviceType": "AI Tools",
-    "availableChannel": {
-      "@type": "ServiceChannel",
-      "serviceUrl": "https://langar.co/category/ai-tools"
-    }
-  };
-  
   // Preload critical resources and mark app as ready
   useEffect(() => {
     console.log('Homepage mounted, preloading critical resources...');
     
-    // Preload key images
-    const mainLogo = new Image();
-    mainLogo.src = '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png';
-    
-    // Mark the page as fully loaded
-    setTimeout(() => {
-      console.log('Homepage fully loaded');
-      document.body.classList.add('page-loaded');
-    }, 100);
+    try {
+      // Preload key images
+      const mainLogo = new Image();
+      mainLogo.src = '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png';
+      
+      // Mark the page as fully loaded
+      setTimeout(() => {
+        console.log('Homepage fully loaded');
+        document.body.classList.add('page-loaded');
+      }, 100);
+    } catch (error) {
+      console.error('Error in homepage useEffect:', error);
+    }
   }, []);
   
   return (
@@ -82,11 +68,11 @@ const Index = () => {
         description="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی، هوش مصنوعی و سئو. بیش از ۱۱۰ ابزار کاربردی در یک پلتفرم."
         keywords="ابزار آنلاین, ابزار سئو, تبدیل متن, محاسبه گر آنلاین, ویرایش تصویر, فال حافظ, طالع‌بینی, استخاره, هوش مصنوعی فارسی, ابزارهای رایگان, langar, لنگر, فرهنگ فارسی, آموزش زبان فارسی"
         schema={homeSchema}
-        structuredData={[readingsSchema, aiToolsSchema]}
+        structuredData={[readingsSchema]}
       />
       <GoogleAnalytics />
       
-      {/* Load sections synchronously for better performance */}
+      {/* Load sections synchronously with error boundaries */}
       <div className="animate-fade-in">
         <HeroSection />
       </div>
@@ -102,10 +88,6 @@ const Index = () => {
       <section id="popular-tools" className="animate-slide-up">
         <MemoizedToolsSection />
       </section>
-      
-      <div className="animate-fade-in">
-        <MemoizedAIToolsSection />
-      </div>
       
       <div className="animate-slide-up">
         <MemoizedReadingsSection />

@@ -66,19 +66,36 @@ const ThemeHandler = memo(() => {
 
 ThemeHandler.displayName = 'ThemeHandler';
 
-// Minimal loading fallback for non-critical components
+// Minimal loading fallback
 const MinimalLoading = memo(() => (
   <div className="flex items-center justify-center p-2">
-    <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+    <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
   </div>
 ));
 
 MinimalLoading.displayName = 'MinimalLoading';
 
-// Main App component
+// Main App component with better error handling
 const App = () => {
   useEffect(() => {
     console.log('App component mounted successfully');
+    
+    // Add global error handler
+    const handleError = (error: ErrorEvent) => {
+      console.error('Global error caught:', error);
+    };
+    
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.error('Unhandled promise rejection:', event.reason);
+    };
+    
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
   }, []);
 
   return (
