@@ -43,89 +43,11 @@
         min-height: 100vh;
       }
       
-      /* Initial loading screen */
-      .initial-loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, #fafaff 0%, #f8fafc 100%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        transition: opacity 0.3s ease-out;
-      }
-      
-      .loading-content {
-        text-align: center;
-        max-width: 400px;
-        padding: 2rem;
-      }
-      
-      .loading-spinner {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto 2rem;
-        position: relative;
-      }
-      
-      .loading-spinner::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border: 4px solid #e5e7eb;
-        border-radius: 50%;
-      }
-      
-      .loading-spinner::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border: 4px solid #3b82f6;
-        border-top-color: transparent;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-      
-      .loading-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #1f2937;
-        margin-bottom: 0.5rem;
-        font-family: var(--font-persian);
-      }
-      
-      .loading-subtitle {
-        font-size: 1rem;
-        color: #6b7280;
-        font-family: var(--font-persian);
-      }
-      
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      
-      /* Root element - visible by default, hidden only when loading */
+      /* Root element - always visible */
       #root {
         min-height: 100vh;
         opacity: 1;
         visibility: visible;
-      }
-      
-      /* Hide root when loading screen is active */
-      body.loading #root {
-        opacity: 0;
-        visibility: hidden;
-      }
-      
-      /* Hide loading screen when app is ready */
-      body.app-ready .initial-loading {
-        opacity: 0;
-        pointer-events: none;
       }
     </style>
     
@@ -153,16 +75,7 @@
     <link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css"></noscript>
   </head>
-  <body class="loading">
-    <!-- Initial loading screen -->
-    <div class="initial-loading">
-      <div class="loading-content">
-        <div class="loading-spinner"></div>
-        <h1 class="loading-title">لنگر</h1>
-        <p class="loading-subtitle">در حال بارگذاری ابزارهای آنلاین...</p>
-      </div>
-    </div>
-    
+  <body>
     <div id="root"></div>
     
     <!-- Scripts -->

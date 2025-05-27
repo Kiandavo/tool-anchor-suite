@@ -58,23 +58,7 @@ if (!rootElement) {
 
 const root = ReactDOM.createRoot(rootElement);
 
-// Simplified app ready handler
-const markAppAsReady = () => {
-  console.log('Marking app as ready...');
-  document.body.classList.remove('loading');
-  document.body.classList.add('app-ready');
-  
-  // Remove loading screen after transition
-  setTimeout(() => {
-    const loadingScreen = document.querySelector('.initial-loading');
-    if (loadingScreen) {
-      loadingScreen.remove();
-      console.log('Loading screen removed');
-    }
-  }, 300);
-};
-
-// Render with simplified error handling
+// Render the app directly without loading screens
 try {
   console.log('Starting React app render...');
   root.render(
@@ -88,27 +72,19 @@ try {
   );
   console.log('React app rendered successfully');
 
-  // Mark app as ready after React has had time to render
-  setTimeout(() => {
-    markAppAsReady();
-  }, 1000);
-
 } catch (error) {
   console.error('Failed to render React app:', error);
-  // Remove loading and show error even if app fails
-  setTimeout(() => {
-    markAppAsReady();
-    const rootEl = document.getElementById('root');
-    if (rootEl) {
-      rootEl.innerHTML = `
-        <div class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-          <div class="text-center">
-            <h2 class="text-xl font-bold text-gray-900 mb-2">خطا در بارگذاری</h2>
-            <p class="text-gray-600 mb-4">لطفاً صفحه را رفرش کنید.</p>
-            <button onclick="window.location.reload()" class="bg-blue-600 text-white px-4 py-2 rounded">رفرش</button>
-          </div>
+  // Show error fallback
+  const rootEl = document.getElementById('root');
+  if (rootEl) {
+    rootEl.innerHTML = `
+      <div class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div class="text-center">
+          <h2 class="text-xl font-bold text-gray-900 mb-2">خطا در بارگذاری</h2>
+          <p class="text-gray-600 mb-4">لطفاً صفحه را رفرش کنید.</p>
+          <button onclick="window.location.reload()" class="bg-blue-600 text-white px-4 py-2 rounded">رفرش</button>
         </div>
-      `;
-    }
-  }, 1000);
+      </div>
+    `;
+  }
 }
