@@ -61,7 +61,7 @@ const root = ReactDOM.createRoot(rootElement);
 // Simplified loading screen removal
 const removeLoadingScreen = () => {
   console.log('Removing loading screen...');
-  const loadingScreen = document.querySelector('.initial-loading');
+  const loadingScreen = document.querySelector('.initial-loading') as HTMLElement;
   if (loadingScreen) {
     loadingScreen.style.opacity = '0';
     setTimeout(() => {
