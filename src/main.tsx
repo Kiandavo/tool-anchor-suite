@@ -58,21 +58,43 @@ if (!rootElement) {
 
 const root = ReactDOM.createRoot(rootElement);
 
-// Simplified loading screen removal
+// Enhanced loading screen removal
 const removeLoadingScreen = () => {
-  console.log('Removing loading screen...');
+  console.log('Starting to remove loading screen...');
   const loadingScreen = document.querySelector('.initial-loading') as HTMLElement;
   if (loadingScreen) {
+    console.log('Loading screen found, hiding it...');
     loadingScreen.style.opacity = '0';
+    loadingScreen.style.pointerEvents = 'none';
     setTimeout(() => {
-      loadingScreen?.remove();
-      console.log('Loading screen removed successfully');
+      try {
+        loadingScreen.remove();
+        console.log('Loading screen removed successfully');
+        
+        // Ensure root is visible
+        const rootEl = document.getElementById('root') as HTMLElement;
+        if (rootEl) {
+          rootEl.style.opacity = '1';
+          rootEl.style.visibility = 'visible';
+          console.log('Root element made visible');
+        }
+      } catch (error) {
+        console.error('Error removing loading screen:', error);
+      }
     }, 300);
+  } else {
+    console.log('Loading screen not found, ensuring root is visible...');
+    const rootEl = document.getElementById('root') as HTMLElement;
+    if (rootEl) {
+      rootEl.style.opacity = '1';
+      rootEl.style.visibility = 'visible';
+    }
   }
 };
 
-// Render with simplified loading detection
+// Render with proper error handling
 try {
+  console.log('Starting React app render...');
   root.render(
     <React.StrictMode>
       <GlobalErrorBoundary>
@@ -82,11 +104,30 @@ try {
       </GlobalErrorBoundary>
     </React.StrictMode>
   );
+  console.log('React app rendered successfully');
 
-  // Remove loading screen after a short delay to allow React to mount
-  setTimeout(removeLoadingScreen, 1000);
+  // Remove loading screen after React mounts
+  setTimeout(() => {
+    removeLoadingScreen();
+  }, 500);
 
 } catch (error) {
   console.error('Failed to render React app:', error);
-  setTimeout(removeLoadingScreen, 1000);
+  // Still remove loading screen even if app fails
+  setTimeout(() => {
+    removeLoadingScreen();
+    // Show a fallback message
+    const rootEl = document.getElementById('root');
+    if (rootEl) {
+      rootEl.innerHTML = `
+        <div class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+          <div class="text-center">
+            <h2 class="text-xl font-bold text-gray-900 mb-2">خطا در بارگذاری</h2>
+            <p class="text-gray-600 mb-4">لطفاً صفحه را رفرش کنید.</p>
+            <button onclick="window.location.reload()" class="bg-blue-600 text-white px-4 py-2 rounded">رفرش</button>
+          </div>
+        </div>
+      `;
+    }
+  }, 1000);
 }
