@@ -23,7 +23,7 @@ export default {
 			'vazirmatn': ['B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
 			'sf': ['"SF Pro Display"', 'B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
 			'byekan': ['B Yekan', 'system-ui', 'sans-serif'],
-			'sans': ['B Yekan', '"SF Pro Display"', 'system-ui', 'sans-serif'],
+			'sans': ['B Yekan', '"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {
@@ -71,18 +71,18 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				apple: {
-					blue: '#007AFF',
+					blue: 'rgb(var(--apple-blue))',
+					purple: 'rgb(var(--apple-purple))',
+					green: 'rgb(var(--apple-green))',
+					orange: 'rgb(var(--apple-orange))',
+					red: 'rgb(var(--apple-red))',
+					yellow: 'rgb(var(--apple-yellow))',
 					gray: '#8E9196',
 					'light-gray': '#F6F6F7',
 					'dark-gray': '#333333',
 					black: '#000000',
 					white: '#FFFFFF',
-					purple: '#9b87f5',
-					green: '#8cc55b',
-					orange: '#F97316',
-					yellow: '#F7C948',
 					pink: '#D946EF',
-					red: '#FF3B30',
 					teal: '#5AC8FA',
 					indigo: '#5856D6',
 				}
