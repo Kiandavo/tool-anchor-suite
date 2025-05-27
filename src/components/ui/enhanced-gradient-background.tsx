@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 interface EnhancedGradientBackgroundProps {
   className?: string;
-  variant?: 'blue' | 'purple' | 'green' | 'orange' | 'red' | 'default';
+  variant?: 'blue' | 'purple' | 'green' | 'orange' | 'red' | 'default' | 'readings';
   children?: React.ReactNode;
 }
 
@@ -25,6 +25,8 @@ export const EnhancedGradientBackground: React.FC<EnhancedGradientBackgroundProp
         return 'bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700';
       case 'red':
         return 'bg-gradient-to-br from-red-500 via-red-600 to-red-700';
+      case 'readings':
+        return 'bg-gradient-to-br from-violet-500 via-violet-600 to-violet-700';
       default:
         return 'bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700';
     }
