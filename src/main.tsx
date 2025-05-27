@@ -58,44 +58,40 @@ if (!rootElement) {
 
 const root = ReactDOM.createRoot(rootElement);
 
-// Improved loading screen removal with proper React detection
+// Improved loading screen removal
 const removeLoadingScreen = () => {
-  console.log('Attempting to remove loading screen...');
+  console.log('Removing loading screen...');
   const loadingScreen = document.querySelector('.initial-loading');
   if (loadingScreen) {
-    console.log('Loading screen found, removing...');
     loadingScreen.classList.add('opacity-0');
     setTimeout(() => {
       loadingScreen?.remove();
       console.log('Loading screen removed successfully');
     }, 300);
-  } else {
-    console.log('Loading screen not found');
   }
 };
 
-// Wait for React to actually render before removing loading screen
-const waitForReactRender = () => {
+// Wait for homepage content to be ready
+const waitForHomepageContent = () => {
   return new Promise<void>((resolve) => {
     const checkForContent = () => {
-      const appContent = document.querySelector('[data-react-app]') || 
-                        document.querySelector('#root > *');
+      // Look for specific homepage content
+      const heroSection = document.querySelector('section');
+      const appContent = document.querySelector('[data-react-app]');
       
-      if (appContent) {
-        console.log('React content detected, app is ready');
+      if (heroSection && appContent) {
+        console.log('Homepage content detected');
         resolve();
       } else {
-        console.log('Waiting for React content...');
-        setTimeout(checkForContent, 50);
+        setTimeout(checkForContent, 100);
       }
     };
     
-    // Start checking after a minimal delay
-    setTimeout(checkForContent, 100);
+    setTimeout(checkForContent, 200);
   });
 };
 
-// Render with comprehensive error handling and proper loading detection
+// Render with improved loading detection
 try {
   root.render(
     <React.StrictMode>
@@ -109,34 +105,17 @@ try {
     </React.StrictMode>
   );
 
-  // Remove loading screen only after React has rendered
-  waitForReactRender().then(() => {
-    setTimeout(removeLoadingScreen, 500); // Small additional delay for smooth transition
-  }).catch((error) => {
-    console.error('Error waiting for React render:', error);
-    // Fallback: remove loading screen after timeout
-    setTimeout(removeLoadingScreen, 2000);
-  });
+  // Remove loading screen after homepage content is ready
+  waitForHomepageContent()
+    .then(() => {
+      setTimeout(removeLoadingScreen, 500);
+    })
+    .catch(() => {
+      // Fallback: remove after timeout
+      setTimeout(removeLoadingScreen, 3000);
+    });
 
 } catch (error) {
   console.error('Failed to render React app:', error);
-  // Remove loading screen even if there's an error
   setTimeout(removeLoadingScreen, 1000);
-}
-
-// Performance monitoring for development
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-  const observer = new PerformanceObserver((list) => {
-    for (const entry of list.getEntries()) {
-      if (entry.entryType === 'navigation') {
-        console.log('Page Load Time:', entry.duration);
-      }
-    }
-  });
-  
-  try {
-    observer.observe({ entryTypes: ['navigation'] });
-  } catch (e) {
-    console.warn('Performance observer not supported');
-  }
 }

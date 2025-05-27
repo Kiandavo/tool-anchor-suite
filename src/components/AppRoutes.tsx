@@ -1,9 +1,9 @@
-
 import { Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { Suspense, lazy, memo } from "react";
 import { EnhancedLoading } from "@/components/ui/enhanced-loading";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
+import Index from "@/pages/index"; // Import synchronously instead of lazy loading
 
 // Loading component
 const LoadingFallback = memo(() => (
@@ -14,8 +14,7 @@ const LoadingFallback = memo(() => (
 
 LoadingFallback.displayName = 'LoadingFallback';
 
-// Dynamic imports with proper error handling
-const Index = lazy(() => import("@/pages/index").catch(() => import("@/pages/NotFound")));
+// Dynamic imports with proper error handling - keep other pages lazy
 const Category = lazy(() => import("@/pages/Category").catch(() => import("@/pages/NotFound")));
 const Tool = lazy(() => import("@/pages/Tool").catch(() => import("@/pages/NotFound")));
 const Search = lazy(() => import("@/pages/Search").catch(() => import("@/pages/NotFound")));
@@ -40,9 +39,12 @@ export const AppRoutes = memo(() => {
     <>
       <ScrollToTop />
       <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
+        <Routes>
+          {/* Homepage loads synchronously - no Suspense wrapper */}
+          <Route path="/" element={<Index />} />
+          
+          {/* Other routes remain lazy-loaded */}
+          <Suspense fallback={<LoadingFallback />}>
             <Route path="/category/:categoryId" element={<Category />} />
             <Route path="/tool/:slug" element={<Tool />} />
             <Route path="/search" element={<Search />} />
@@ -53,8 +55,8 @@ export const AppRoutes = memo(() => {
             <Route path="/template-category/:categoryId" element={<TemplateCategory />} />
             <Route path="/template/:slug" element={<Template />} />
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+          </Suspense>
+        </Routes>
       </ErrorBoundary>
     </>
   );

@@ -67,14 +67,14 @@ const ThemeHandler = memo(() => {
 
 ThemeHandler.displayName = 'ThemeHandler';
 
-// Loading fallback component with better styling
-const LoadingFallback = memo(() => (
-  <div className="min-h-screen flex items-center justify-center bg-background">
-    <EnhancedLoading variant="fullscreen" text="در حال بارگذاری..." />
+// Minimal loading fallback for non-critical components
+const MinimalLoading = memo(() => (
+  <div className="flex items-center justify-center p-2">
+    <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
   </div>
 ));
 
-LoadingFallback.displayName = 'LoadingFallback';
+MinimalLoading.displayName = 'MinimalLoading';
 
 // Main App component with improved error handling
 const App = () => {
@@ -89,8 +89,8 @@ const App = () => {
           <TooltipProvider>
             <ThemeHandler />
             
-            {/* Load non-critical components asynchronously */}
-            <Suspense fallback={null}>
+            {/* Load non-critical components asynchronously with minimal loading */}
+            <Suspense fallback={<MinimalLoading />}>
               <ErrorBoundary>
                 <Toaster />
                 <Sonner />
@@ -98,10 +98,8 @@ const App = () => {
               </ErrorBoundary>
             </Suspense>
             
-            {/* Main app routes - load synchronously for better performance */}
-            <Suspense fallback={<LoadingFallback />}>
-              <AppRoutes />
-            </Suspense>
+            {/* Main app routes - homepage loads synchronously now */}
+            <AppRoutes />
           </TooltipProvider>
         </QueryClientProvider>
       </HelmetProvider>
