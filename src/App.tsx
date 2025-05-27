@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { EnhancedLoading } from "@/components/ui/enhanced-loading";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 
-// Lazy load components with error fallbacks
+// Lazy load non-critical components only
 const Toaster = lazy(() => 
   import("@/components/ui/toaster").then(mod => ({ default: mod.Toaster }))
   .catch(() => ({ default: () => null }))
@@ -67,7 +67,7 @@ const ThemeHandler = memo(() => {
 
 ThemeHandler.displayName = 'ThemeHandler';
 
-// Loading fallback component
+// Loading fallback component with better styling
 const LoadingFallback = memo(() => (
   <div className="min-h-screen flex items-center justify-center bg-background">
     <EnhancedLoading variant="fullscreen" text="در حال بارگذاری..." />
@@ -76,22 +76,32 @@ const LoadingFallback = memo(() => (
 
 LoadingFallback.displayName = 'LoadingFallback';
 
-// Main App component
+// Main App component with improved error handling
 const App = () => {
+  useEffect(() => {
+    console.log('App component mounted successfully');
+  }, []);
+
   return (
     <ErrorBoundary>
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <ThemeHandler />
-            <Suspense fallback={<LoadingFallback />}>
+            
+            {/* Load non-critical components asynchronously */}
+            <Suspense fallback={null}>
               <ErrorBoundary>
                 <Toaster />
                 <Sonner />
                 <GoogleAnalytics />
               </ErrorBoundary>
             </Suspense>
-            <AppRoutes />
+            
+            {/* Main app routes - load synchronously for better performance */}
+            <Suspense fallback={<LoadingFallback />}>
+              <AppRoutes />
+            </Suspense>
           </TooltipProvider>
         </QueryClientProvider>
       </HelmetProvider>

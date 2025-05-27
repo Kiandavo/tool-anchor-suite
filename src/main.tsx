@@ -16,6 +16,7 @@ class GlobalErrorBoundary extends React.Component<
   }
 
   static getDerivedStateFromError(error: Error) {
+    console.error('Global error boundary caught error:', error);
     return { hasError: true, error };
   }
 
@@ -57,30 +58,71 @@ if (!rootElement) {
 
 const root = ReactDOM.createRoot(rootElement);
 
-// Remove loading screen when React is ready
+// Improved loading screen removal with proper React detection
 const removeLoadingScreen = () => {
+  console.log('Attempting to remove loading screen...');
   const loadingScreen = document.querySelector('.initial-loading');
   if (loadingScreen) {
+    console.log('Loading screen found, removing...');
     loadingScreen.classList.add('opacity-0');
     setTimeout(() => {
       loadingScreen?.remove();
+      console.log('Loading screen removed successfully');
     }, 300);
+  } else {
+    console.log('Loading screen not found');
   }
 };
 
-// Render with comprehensive error handling
-root.render(
-  <React.StrictMode>
-    <GlobalErrorBoundary>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </GlobalErrorBoundary>
-  </React.StrictMode>
-);
+// Wait for React to actually render before removing loading screen
+const waitForReactRender = () => {
+  return new Promise<void>((resolve) => {
+    const checkForContent = () => {
+      const appContent = document.querySelector('[data-react-app]') || 
+                        document.querySelector('#root > *');
+      
+      if (appContent) {
+        console.log('React content detected, app is ready');
+        resolve();
+      } else {
+        console.log('Waiting for React content...');
+        setTimeout(checkForContent, 50);
+      }
+    };
+    
+    // Start checking after a minimal delay
+    setTimeout(checkForContent, 100);
+  });
+};
 
-// Remove loading screen after app is mounted
-setTimeout(removeLoadingScreen, 100);
+// Render with comprehensive error handling and proper loading detection
+try {
+  root.render(
+    <React.StrictMode>
+      <GlobalErrorBoundary>
+        <BrowserRouter>
+          <div data-react-app>
+            <App />
+          </div>
+        </BrowserRouter>
+      </GlobalErrorBoundary>
+    </React.StrictMode>
+  );
+
+  // Remove loading screen only after React has rendered
+  waitForReactRender().then(() => {
+    setTimeout(removeLoadingScreen, 500); // Small additional delay for smooth transition
+  }).catch((error) => {
+    console.error('Error waiting for React render:', error);
+    // Fallback: remove loading screen after timeout
+    setTimeout(removeLoadingScreen, 2000);
+  });
+
+} catch (error) {
+  console.error('Failed to render React app:', error);
+  // Remove loading screen even if there's an error
+  setTimeout(removeLoadingScreen, 1000);
+}
 
 // Performance monitoring for development
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
@@ -91,5 +133,10 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
       }
     }
   });
-  observer.observe({ entryTypes: ['navigation'] });
+  
+  try {
+    observer.observe({ entryTypes: ['navigation'] });
+  } catch (e) {
+    console.warn('Performance observer not supported');
+  }
 }

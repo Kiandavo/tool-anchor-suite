@@ -30,7 +30,7 @@ export const EnhancedLoading: React.FC<EnhancedLoadingProps> = ({
   const getVariantClasses = () => {
     switch (variant) {
       case 'fullscreen':
-        return 'min-h-screen flex items-center justify-center';
+        return 'min-h-screen flex items-center justify-center bg-background';
       case 'inline':
         return 'inline-flex items-center';
       default:

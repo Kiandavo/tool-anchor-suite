@@ -11,9 +11,8 @@ import { SeoHead } from '@/components/seo/SeoHead';
 import { generateWebsiteSchema } from '@/utils/schemaUtils';
 import { ReadingsSection } from '@/components/readings/ReadingsSection';
 import { FalSection } from '@/components/fal/FalSection';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
-// Memoize components that don't need to re-render
+// Load all critical sections synchronously for better initial loading
 const MemoizedCategoriesSection = memo(CategoriesSection);
 const MemoizedPersianCulturalSection = memo(PersianCulturalSection);
 const MemoizedToolsSection = memo(ToolsSection);
@@ -61,11 +60,19 @@ const Index = () => {
     }
   };
   
-  // Preload critical resources
+  // Preload critical resources and mark app as ready
   useEffect(() => {
+    console.log('Homepage mounted, preloading critical resources...');
+    
     // Preload key images
     const mainLogo = new Image();
     mainLogo.src = '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png';
+    
+    // Mark the page as fully loaded
+    setTimeout(() => {
+      console.log('Homepage fully loaded');
+      document.body.classList.add('page-loaded');
+    }, 100);
   }, []);
   
   return (
@@ -78,15 +85,35 @@ const Index = () => {
         structuredData={[readingsSchema, templatesSchema]}
       />
       <GoogleAnalytics />
-      <HeroSection />
-      <MemoizedCategoriesSection />
-      <MemoizedPersianCulturalSection />
-      <section id="popular-tools">
+      
+      {/* Load sections synchronously for better performance */}
+      <div className="animate-fade-in">
+        <HeroSection />
+      </div>
+      
+      <div className="animate-slide-up">
+        <MemoizedCategoriesSection />
+      </div>
+      
+      <div className="animate-fade-in">
+        <MemoizedPersianCulturalSection />
+      </div>
+      
+      <section id="popular-tools" className="animate-slide-up">
         <MemoizedToolsSection />
       </section>
-      <MemoizedDocumentTemplatesSection />
-      <MemoizedReadingsSection />
-      <MemoizedFalSection />
+      
+      <div className="animate-fade-in">
+        <MemoizedDocumentTemplatesSection />
+      </div>
+      
+      <div className="animate-slide-up">
+        <MemoizedReadingsSection />
+      </div>
+      
+      <div className="animate-fade-in">
+        <MemoizedFalSection />
+      </div>
     </Layout>
   );
 };

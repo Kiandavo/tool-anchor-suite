@@ -147,11 +147,6 @@
     animation: wave 6s ease-in-out infinite;
   }
   
-  @keyframes wave {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.05) rotate(1deg); }
-  }
-  
   /* Particle background */
   .particle-bg {
     position: relative;
@@ -170,11 +165,6 @@
     animation: particle-float 20s linear infinite;
   }
   
-  @keyframes particle-float {
-    0% { transform: translateY(0) translateX(0); }
-    100% { transform: translateY(-100vh) translateX(100px); }
-  }
-  
   /* Text shine effect */
   .text-shine {
     background: linear-gradient(90deg, #333 25%, #666 50%, #333 75%);
@@ -183,11 +173,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 3s ease-in-out infinite;
-  }
-  
-  @keyframes shine {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
   }
   
   /* Neon glow effect */
@@ -210,11 +195,6 @@
   /* Subtle bounce animation */
   .bounce-subtle {
     animation: bounce-subtle 2s ease-in-out infinite;
-  }
-  
-  @keyframes bounce-subtle {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
   }
   
   /* Interactive element styles */
@@ -288,6 +268,18 @@
   .neo-glass {
     @apply bg-white/80 backdrop-blur-sm border border-white/40;
   }
+
+  /* Scroll reveal effect */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+  }
+  
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @layer utilities {
@@ -307,6 +299,31 @@
     to { transform: rotate(360deg); }
   }
 
+  @keyframes wave {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(1deg); }
+  }
+
+  @keyframes particle-float {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-100vh) translateX(100px); }
+  }
+
+  @keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
   /* Animation classes */
   .animate-fade-in {
     animation: fadeIn 0.4s ease-out forwards;
@@ -318,6 +335,10 @@
 
   .animate-spin {
     animation: spin 1s linear infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
   }
 
   /* Utility classes */
