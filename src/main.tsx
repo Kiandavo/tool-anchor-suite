@@ -58,41 +58,23 @@ if (!rootElement) {
 
 const root = ReactDOM.createRoot(rootElement);
 
-// Enhanced loading screen removal
-const removeLoadingScreen = () => {
-  console.log('Starting to remove loading screen...');
-  const loadingScreen = document.querySelector('.initial-loading') as HTMLElement;
-  if (loadingScreen) {
-    console.log('Loading screen found, hiding it...');
-    loadingScreen.style.opacity = '0';
-    loadingScreen.style.pointerEvents = 'none';
-    setTimeout(() => {
-      try {
-        loadingScreen.remove();
-        console.log('Loading screen removed successfully');
-        
-        // Ensure root is visible
-        const rootEl = document.getElementById('root') as HTMLElement;
-        if (rootEl) {
-          rootEl.style.opacity = '1';
-          rootEl.style.visibility = 'visible';
-          console.log('Root element made visible');
-        }
-      } catch (error) {
-        console.error('Error removing loading screen:', error);
-      }
-    }, 300);
-  } else {
-    console.log('Loading screen not found, ensuring root is visible...');
-    const rootEl = document.getElementById('root') as HTMLElement;
-    if (rootEl) {
-      rootEl.style.opacity = '1';
-      rootEl.style.visibility = 'visible';
+// Simplified app ready handler
+const markAppAsReady = () => {
+  console.log('Marking app as ready...');
+  document.body.classList.remove('loading');
+  document.body.classList.add('app-ready');
+  
+  // Remove loading screen after transition
+  setTimeout(() => {
+    const loadingScreen = document.querySelector('.initial-loading');
+    if (loadingScreen) {
+      loadingScreen.remove();
+      console.log('Loading screen removed');
     }
-  }
+  }, 300);
 };
 
-// Render with proper error handling
+// Render with simplified error handling
 try {
   console.log('Starting React app render...');
   root.render(
@@ -106,17 +88,16 @@ try {
   );
   console.log('React app rendered successfully');
 
-  // Remove loading screen after React mounts
+  // Mark app as ready after React has had time to render
   setTimeout(() => {
-    removeLoadingScreen();
-  }, 500);
+    markAppAsReady();
+  }, 1000);
 
 } catch (error) {
   console.error('Failed to render React app:', error);
-  // Still remove loading screen even if app fails
+  // Remove loading and show error even if app fails
   setTimeout(() => {
-    removeLoadingScreen();
-    // Show a fallback message
+    markAppAsReady();
     const rootEl = document.getElementById('root');
     if (rootEl) {
       rootEl.innerHTML = `

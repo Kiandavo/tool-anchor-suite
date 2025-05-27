@@ -79,15 +79,6 @@ MinimalLoading.displayName = 'MinimalLoading';
 const App = () => {
   useEffect(() => {
     console.log('App component mounted successfully');
-    
-    // Mark the app as ready after a short delay
-    setTimeout(() => {
-      const rootEl = document.getElementById('root');
-      if (rootEl) {
-        rootEl.classList.add('ready');
-        console.log('App marked as ready');
-      }
-    }, 100);
   }, []);
 
   return (

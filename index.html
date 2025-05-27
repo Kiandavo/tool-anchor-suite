@@ -109,18 +109,23 @@
         to { transform: rotate(360deg); }
       }
       
-      /* Make root always visible and ready */
+      /* Root element - visible by default, hidden only when loading */
       #root {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease-out;
         min-height: 100vh;
+        opacity: 1;
+        visibility: visible;
       }
       
-      /* When React is ready, root becomes visible */
-      #root.ready {
-        opacity: 1 !important;
-        visibility: visible !important;
+      /* Hide root when loading screen is active */
+      body.loading #root {
+        opacity: 0;
+        visibility: hidden;
+      }
+      
+      /* Hide loading screen when app is ready */
+      body.app-ready .initial-loading {
+        opacity: 0;
+        pointer-events: none;
       }
     </style>
     
@@ -148,7 +153,7 @@
     <link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css"></noscript>
   </head>
-  <body>
+  <body class="loading">
     <!-- Initial loading screen -->
     <div class="initial-loading">
       <div class="loading-content">
