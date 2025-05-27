@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Tool } from '@/data/tools';
 import { toolTypeBySlug } from '@/utils/toolTypeUtils';
@@ -51,8 +52,8 @@ import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchit
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
 import TodoList from '@/pages/ToolTypes/ProductivityTools/TodoList';
-import NoteTaking from '@/pages/ToolTypes/NoteTaking';
-import CalendarScheduler from '@/pages/ToolTypes/CalendarScheduler';
+import NoteTaking from '@/pages/ToolTypes/ProductivityTools/NoteTaking';
+import CalendarScheduler from '@/pages/ToolTypes/ProductivityTools/CalendarScheduler';
 
 import ColorPalette from '@/pages/ToolTypes/DesignTools/ColorPalette';
 import FontPreview from '@/pages/ToolTypes/DesignTools/FontPreview';
