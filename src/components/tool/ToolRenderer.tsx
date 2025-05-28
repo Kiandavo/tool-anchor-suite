@@ -49,12 +49,14 @@ import PersianCuisine from '@/pages/ToolTypes/PersianCultural/PersianCuisine';
 import PersianHolidays from '@/pages/ToolTypes/PersianCultural/PersianHolidays';
 import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchitecture';
 
+// Import productivity tools from correct paths
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
 import TodoList from '@/pages/ToolTypes/ProductivityTools/TodoList';
 import NoteTaking from '@/pages/ToolTypes/ProductivityTools/NoteTaking';
 import CalendarScheduler from '@/pages/ToolTypes/ProductivityTools/CalendarScheduler';
 
+// Import design tools
 import ColorPalette from '@/pages/ToolTypes/DesignTools/ColorPalette';
 import FontPreview from '@/pages/ToolTypes/DesignTools/FontPreview';
 import SimpleLogoMaker from '@/pages/ToolTypes/DesignTools/SimpleLogoMaker';
@@ -66,7 +68,10 @@ interface ToolRendererProps {
 }
 
 export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
+  console.log('ToolRenderer rendering for slug:', slug);
+  
   const toolType = toolTypeBySlug[slug];
+  console.log('Tool type determined:', toolType);
   
   // Developer tools
   if (toolType === 'json-formatter') return <JsonFormatter />;
@@ -97,14 +102,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     return <ToolNotImplemented />;
   }
   
-  // all other tool types
-  if (toolType === 'text') return <TextTool slug={slug} />;
-  if (toolType === 'image') return <ImageTool slug={slug} />;
-  if (toolType === 'seo') return <SeoTool slug={slug} />;
-  if (toolType === 'number') return <NumberTool slug={slug} />;
-  if (toolType === 'random-password') return <RandomPasswordTool />;
-  if (toolType === 'random-color') return <RandomColorGenerator />;
-  
+  // Persian cultural tools
   if (toolType === 'persian-calendar') return <PersianCalendar />;
   if (toolType === 'persian-names') return <PersianNames />;
   if (toolType === 'persian-proverbs') return <PersianProverbs />;
@@ -117,16 +115,26 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'persian-holidays') return <PersianHolidays />;
   if (toolType === 'persian-architecture') return <PersianArchitecture />;
   
+  // Productivity tools
   if (toolType === 'pomodoro-timer') return <PomodoroTimer />;
   if (toolType === 'project-board') return <ProjectBoard />;
   if (toolType === 'todo-list') return <TodoList />;
   if (toolType === 'note-taking') return <NoteTaking />;
   if (toolType === 'calendar-scheduler') return <CalendarScheduler />;
   
+  // Design tools
   if (toolType === 'color-palette') return <ColorPalette />;
   if (toolType === 'font-preview') return <FontPreview />;
   if (toolType === 'simple-logo-maker') return <SimpleLogoMaker />;
   if (toolType === 'social-media-template') return <SocialMediaTemplate />;
+  
+  // General tool types
+  if (toolType === 'text') return <TextTool slug={slug} />;
+  if (toolType === 'image') return <ImageTool slug={slug} />;
+  if (toolType === 'seo') return <SeoTool slug={slug} />;
+  if (toolType === 'number') return <NumberTool slug={slug} />;
+  if (toolType === 'random-password') return <RandomPasswordTool />;
+  if (toolType === 'random-color') return <RandomColorGenerator />;
   
   switch (toolType) {
     case 'calculator':
@@ -148,6 +156,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     case 'prime-checker':
       return <UtilityToolRenderer slug={slug} type={toolType} />;
     default:
+      console.log('No specific renderer found for toolType:', toolType, 'using ToolNotImplemented');
       return <ToolNotImplemented />;
   }
 };
