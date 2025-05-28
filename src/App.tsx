@@ -33,27 +33,35 @@ const queryClient = new QueryClient({
   },
 });
 
-// Theme handler component
+// Enhanced theme handler component - force light mode
 const ThemeHandler = memo(() => {
   useEffect(() => {
-    const applyTheme = () => {
+    const applyLightTheme = () => {
       try {
-        const theme = localStorage.getItem('theme') || 'system';
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        console.log('Applying light theme...');
         
-        document.documentElement.classList.toggle('dark', 
-          theme === 'dark' || (theme === 'system' && systemPrefersDark)
-        );
+        // Force light theme
+        document.documentElement.classList.remove('dark');
+        document.body.classList.add('bg-white');
+        
+        // Set theme in localStorage
+        localStorage.setItem('theme', 'light');
+        
+        console.log('Light theme applied successfully');
       } catch (error) {
         console.warn('Theme application failed:', error);
       }
     };
 
-    applyTheme();
+    // Apply immediately
+    applyLightTheme();
     
+    // Listen for system theme changes but always override to light
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQuery.addEventListener('change', applyTheme);
-    return () => mediaQuery.removeEventListener('change', applyTheme);
+    const handleChange = () => applyLightTheme();
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   return null;
@@ -61,19 +69,23 @@ const ThemeHandler = memo(() => {
 
 ThemeHandler.displayName = 'ThemeHandler';
 
-// Minimal loading fallback
+// Minimal loading fallback with light theme
 const MinimalLoading = memo(() => (
-  <div className="flex items-center justify-center p-4 min-h-screen">
+  <div className="flex items-center justify-center p-4 min-h-screen bg-white">
     <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
   </div>
 ));
 
 MinimalLoading.displayName = 'MinimalLoading';
 
-// Main App component with better error handling
+// Main App component with enhanced error handling and light theme
 const App = () => {
   useEffect(() => {
     console.log('App component mounted successfully');
+    
+    // Force light theme on app start
+    document.documentElement.classList.remove('dark');
+    document.body.classList.add('bg-white');
     
     // Add global error handler
     const handleError = (error: ErrorEvent) => {
@@ -94,26 +106,28 @@ const App = () => {
   }, []);
 
   return (
-    <ErrorBoundary>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <ThemeHandler />
-            
-            {/* Load non-critical components asynchronously */}
-            <Suspense fallback={<MinimalLoading />}>
-              <ErrorBoundary>
-                <Toaster />
-                <Sonner />
-              </ErrorBoundary>
-            </Suspense>
-            
-            {/* Main app routes */}
-            <AppRoutes />
-          </TooltipProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
-    </ErrorBoundary>
+    <div className="bg-white min-h-screen">
+      <ErrorBoundary>
+        <HelmetProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <ThemeHandler />
+              
+              {/* Load non-critical components asynchronously */}
+              <Suspense fallback={<MinimalLoading />}>
+                <ErrorBoundary>
+                  <Toaster />
+                  <Sonner />
+                </ErrorBoundary>
+              </Suspense>
+              
+              {/* Main app routes */}
+              <AppRoutes />
+            </TooltipProvider>
+          </QueryClientProvider>
+        </HelmetProvider>
+      </ErrorBoundary>
+    </div>
   );
 };
 

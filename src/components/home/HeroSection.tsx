@@ -5,16 +5,16 @@ import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const HeroSection = () => {
-  console.log('HeroSection rendering...');
+  console.log('HeroSection rendering in light theme...');
   
   return (
-    <section className="py-28 sm:py-36 mb-16 relative overflow-hidden">
-      {/* Simplified background without complex graphics */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30" />
+    <section className="py-28 sm:py-36 mb-16 relative overflow-hidden bg-white">
+      {/* Simplified light theme background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 to-purple-50/20" />
       
-      {/* Simple animated circles */}
-      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-br from-blue-200/40 to-purple-200/30 blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 left-[10%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-200/40 to-blue-200/30 blur-3xl animate-pulse" />
+      {/* Light theme animated circles */}
+      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-br from-blue-100/30 to-purple-100/20 blur-3xl animate-pulse" />
+      <div className="absolute bottom-20 left-[10%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-100/30 to-blue-100/20 blur-3xl animate-pulse" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
@@ -30,10 +30,10 @@ export const HeroSection = () => {
             بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
           </p>
           
-          {/* Feature highlights section */}
+          {/* Feature highlights section with light theme */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <Link to="/category/calculators" className="block group">
-              <div className="bg-white/50 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Sparkles size={20} className="text-white" />
                 </div>
@@ -43,7 +43,7 @@ export const HeroSection = () => {
             </Link>
             
             <Link to="/category/persian-cultural" className="block group">
-              <div className="bg-white/50 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Globe size={20} className="text-white" />
                 </div>
@@ -53,7 +53,7 @@ export const HeroSection = () => {
             </Link>
             
             <Link to="/category/readings" className="block group">
-              <div className="bg-white/50 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center mx-auto mb-4 shadow-md">
                   <BookOpen size={20} className="text-white" />
                 </div>
@@ -70,7 +70,7 @@ export const HeroSection = () => {
                 <ArrowRight className="h-5 w-5 mr-2 rtl:rotate-180" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="bg-white/50 backdrop-blur-sm hover:shadow-md hover:bg-blue-50/50 transition-all hover:scale-[1.02] font-medium text-lg px-8 py-4" asChild>
+            <Button variant="outline" size="lg" className="bg-white/80 backdrop-blur-sm hover:shadow-md hover:bg-blue-50/50 transition-all hover:scale-[1.02] font-medium text-lg px-8 py-4" asChild>
               <Link to="/#popular-tools">
                 ابزارهای محبوب
               </Link>

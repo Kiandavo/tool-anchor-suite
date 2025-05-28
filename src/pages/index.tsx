@@ -42,18 +42,22 @@ const Index = () => {
     }
   };
   
-  // Preload critical resources and mark app as ready
+  // Optimize initial loading and ensure light theme
   useEffect(() => {
-    console.log('Homepage mounted, preloading critical resources...');
+    console.log('Homepage mounted, optimizing for light theme...');
     
     try {
-      // Preload key images
+      // Force light theme
+      document.documentElement.classList.remove('dark');
+      document.body.classList.add('bg-white');
+      
+      // Preload critical resources
       const mainLogo = new Image();
       mainLogo.src = '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png';
       
       // Mark the page as fully loaded
       setTimeout(() => {
-        console.log('Homepage fully loaded');
+        console.log('Homepage fully loaded in light theme');
         document.body.classList.add('page-loaded');
       }, 100);
     } catch (error) {
@@ -72,28 +76,28 @@ const Index = () => {
       />
       <GoogleAnalytics />
       
-      {/* Load sections synchronously with error boundaries */}
-      <div className="animate-fade-in">
+      {/* Load sections with optimized animations for light theme */}
+      <div className="animate-fade-in bg-white">
         <HeroSection />
       </div>
       
-      <div className="animate-slide-up">
+      <div className="animate-slide-up bg-white">
         <MemoizedCategoriesSection />
       </div>
       
-      <div className="animate-fade-in">
+      <div className="animate-fade-in bg-white">
         <MemoizedPersianCulturalSection />
       </div>
       
-      <section id="popular-tools" className="animate-slide-up">
+      <section id="popular-tools" className="animate-slide-up bg-white">
         <MemoizedToolsSection />
       </section>
       
-      <div className="animate-slide-up">
+      <div className="animate-slide-up bg-white">
         <MemoizedReadingsSection />
       </div>
       
-      <div className="animate-fade-in">
+      <div className="animate-fade-in bg-white">
         <MemoizedFalSection />
       </div>
     </Layout>
