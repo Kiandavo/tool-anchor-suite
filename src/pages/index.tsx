@@ -8,13 +8,13 @@ import { ToolsSection } from '@/components/home/ToolsSection';
 import { FalSection } from '@/components/fal/FalSection';
 
 const Index = () => {
-  console.log('Index page rendering - start');
+  console.log('Index: Page rendering started');
   
   React.useEffect(() => {
-    console.log('Index page mounted successfully');
+    console.log('Index: Page mounted successfully');
     
     return () => {
-      console.log('Index page unmounting');
+      console.log('Index: Page unmounting');
     };
   }, []);
 

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { ScrollToTop } from './layout/ScrollToTop';
@@ -11,40 +11,57 @@ interface LayoutProps {
   backUrl?: string;
 }
 
-// Simplified scroll state hook with error handling
+// Optimized scroll state hook to prevent excessive re-renders
 const useScrollState = () => {
   const [scrollState, setScrollState] = useState({
     isScrolled: false,
     showScrollTop: false
   });
 
-  useEffect(() => {
-    let ticking = false;
+  const updateScrollState = useCallback(() => {
+    const scrollY = window.scrollY;
+    const newState = {
+      isScrolled: scrollY > 20,
+      showScrollTop: scrollY > 300
+    };
     
-    const updateScrollState = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          try {
-            const scrollY = window.scrollY;
-            setScrollState({
-              isScrolled: scrollY > 20,
-              showScrollTop: scrollY > 300
-            });
-          } catch (error) {
-            console.error('Error updating scroll state:', error);
-          }
-          ticking = false;
-        });
-        ticking = true;
+    // Only update if state actually changed
+    setScrollState(prevState => {
+      if (
+        prevState.isScrolled !== newState.isScrolled ||
+        prevState.showScrollTop !== newState.showScrollTop
+      ) {
+        return newState;
       }
+      return prevState;
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log('Layout: Setting up scroll listener');
+    
+    // Throttled scroll handler
+    let timeoutId: NodeJS.Timeout;
+    const throttledScroll = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(updateScrollState, 16); // ~60fps
     };
 
     // Initial call
     updateScrollState();
     
-    window.addEventListener('scroll', updateScrollState, { passive: true });
-    return () => window.removeEventListener('scroll', updateScrollState);
-  }, []);
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    
+    return () => {
+      console.log('Layout: Cleaning up scroll listener');
+      window.removeEventListener('scroll', throttledScroll);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [updateScrollState]);
 
   return scrollState;
 };
@@ -54,13 +71,13 @@ export const Layout = memo(function Layout({
   title,
   backUrl
 }: LayoutProps) {
-  console.log('Layout component rendering...');
+  console.log('Layout: Rendering with title:', title);
   
   const { isScrolled, showScrollTop } = useScrollState();
 
   useEffect(() => {
-    console.log('Layout mounted successfully');
-    return () => console.log('Layout unmounting');
+    console.log('Layout: Mounted successfully');
+    return () => console.log('Layout: Unmounting');
   }, []);
 
   return (

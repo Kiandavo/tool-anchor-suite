@@ -5,7 +5,11 @@ import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const HeroSection = () => {
-  console.log('HeroSection rendering...');
+  console.log('HeroSection: Component rendering');
+  
+  React.useEffect(() => {
+    console.log('HeroSection: Mounted successfully');
+  }, []);
   
   return (
     <section className="py-20 sm:py-28 mb-12 relative overflow-hidden bg-white">
