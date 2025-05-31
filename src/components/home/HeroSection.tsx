@@ -5,16 +5,12 @@ import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const HeroSection = () => {
-  console.log('HeroSection rendering optimized...');
+  console.log('HeroSection rendering...');
   
   return (
     <section className="py-20 sm:py-28 mb-12 relative overflow-hidden bg-white">
-      {/* Light theme background */}
+      {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30" />
-      
-      {/* Simple animated circles */}
-      <div className="absolute top-16 right-[10%] w-48 h-48 rounded-full bg-gradient-to-br from-blue-100/40 to-purple-100/30 blur-3xl animate-pulse" />
-      <div className="absolute bottom-16 left-[10%] w-56 h-56 rounded-full bg-gradient-to-tr from-green-100/40 to-blue-100/30 blur-3xl animate-pulse" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
@@ -76,8 +72,6 @@ export const HeroSection = () => {
               </Link>
             </Button>
           </div>
-          
-          <div className="max-w-lg mx-auto h-1.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mt-12 rounded-full" />
         </div>
       </div>
     </section>
