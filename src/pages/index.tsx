@@ -8,24 +8,32 @@ import { ToolsSection } from '@/components/home/ToolsSection';
 import { FalSection } from '@/components/fal/FalSection';
 
 const Index = () => {
-  console.log('Index page rendering...');
+  console.log('Index page rendering - start');
   
+  React.useEffect(() => {
+    console.log('Index page mounted successfully');
+    
+    return () => {
+      console.log('Index page unmounting');
+    };
+  }, []);
+
   return (
     <Layout>
       <div className="bg-white min-h-screen">
-        <ErrorBoundary fallback={<div className="p-4 text-center">خطا در بارگیری بخش اصلی</div>}>
+        <ErrorBoundary fallback={<div className="p-4 text-center bg-red-50 rounded-lg">خطا در بارگیری بخش اصلی</div>}>
           <HeroSection />
         </ErrorBoundary>
         
-        <ErrorBoundary fallback={<div className="p-4 text-center">خطا در بارگیری ابزارها</div>}>
+        <ErrorBoundary fallback={<div className="p-4 text-center bg-yellow-50 rounded-lg">خطا در بارگیری ابزارها</div>}>
           <ToolsSection />
         </ErrorBoundary>
         
-        <ErrorBoundary fallback={<div className="p-4 text-center">خطا در بارگیری فال</div>}>
+        <ErrorBoundary fallback={<div className="p-4 text-center bg-purple-50 rounded-lg">خطا در بارگیری فال</div>}>
           <FalSection />
         </ErrorBoundary>
         
-        <ErrorBoundary fallback={<div className="p-4 text-center">خطا در بارگیری دسته‌بندی‌ها</div>}>
+        <ErrorBoundary fallback={<div className="p-4 text-center bg-blue-50 rounded-lg">خطا در بارگیری دسته‌بندی‌ها</div>}>
           <CategoriesSection />
         </ErrorBoundary>
       </div>

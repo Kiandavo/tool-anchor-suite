@@ -8,6 +8,7 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --primary: 260 80% 50%;
+    --accent: 24 90% 50%;
     --radius: 1rem;
     --apple-blue: 37, 99, 235;
     --apple-purple: 175, 82, 222;
@@ -70,7 +71,23 @@
     }
   }
 
-  /* Animation utilities */
+  /* Consolidated glass navigation - single definition */
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-out;
+  }
+
+  /* Fallback for browsers without backdrop-filter support */
+  @supports not (backdrop-filter: blur(10px)) {
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  /* Simplified animation utilities */
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
     opacity: 0;
@@ -82,58 +99,67 @@
     transform: translateY(20px);
   }
 
-  /* Glass morphism effects */
+  /* Glass morphism effects with fallbacks */
   .neo-glass {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  @supports not (backdrop-filter: blur(8px)) {
+    .neo-glass {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
   }
 
   .glass-morphism {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  /* Apple design system colors */
+  /* Apple design system colors - fixed definitions */
   .text-apple-blue {
-    color: rgb(var(--apple-blue));
+    color: rgb(37, 99, 235);
   }
 
   .text-apple-green {
-    color: rgb(var(--apple-green));
+    color: rgb(22, 163, 74);
   }
 
   .text-primary {
     color: hsl(var(--primary));
   }
 
+  .text-accent {
+    color: hsl(var(--accent));
+  }
+
   .bg-apple-blue\/5 {
-    background-color: rgba(var(--apple-blue), 0.05);
+    background-color: rgba(37, 99, 235, 0.05);
   }
 
   .bg-apple-blue\/20 {
-    background-color: rgba(var(--apple-blue), 0.2);
+    background-color: rgba(37, 99, 235, 0.2);
   }
 
-  /* Card effects */
+  /* Card effects with simplified styling */
   .card-apple-gradient {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   }
 
-  /* Font classes */
-  .persian-text {
-    font-family: 'B Yekan', system-ui, sans-serif;
-  }
-
+  /* Font classes with fallbacks */
+  .persian-text,
   .font-byekan {
-    font-family: 'B Yekan', system-ui, sans-serif;
+    font-family: 'B Yekan', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
+  /* Simplified keyframes */
   @keyframes fadeIn {
     from {
       opacity: 0;

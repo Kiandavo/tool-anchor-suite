@@ -11,7 +11,7 @@ interface LayoutProps {
   backUrl?: string;
 }
 
-// Simplified scroll state hook
+// Simplified scroll state hook with error handling
 const useScrollState = () => {
   const [scrollState, setScrollState] = useState({
     isScrolled: false,
@@ -19,12 +19,24 @@ const useScrollState = () => {
   });
 
   useEffect(() => {
+    let ticking = false;
+    
     const updateScrollState = () => {
-      const scrollY = window.scrollY;
-      setScrollState({
-        isScrolled: scrollY > 20,
-        showScrollTop: scrollY > 300
-      });
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          try {
+            const scrollY = window.scrollY;
+            setScrollState({
+              isScrolled: scrollY > 20,
+              showScrollTop: scrollY > 300
+            });
+          } catch (error) {
+            console.error('Error updating scroll state:', error);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     // Initial call
@@ -45,6 +57,11 @@ export const Layout = memo(function Layout({
   console.log('Layout component rendering...');
   
   const { isScrolled, showScrollTop } = useScrollState();
+
+  useEffect(() => {
+    console.log('Layout mounted successfully');
+    return () => console.log('Layout unmounting');
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col pb-16 font-sans relative bg-white" dir="rtl">
