@@ -6,7 +6,7 @@ import { HelmetProvider } from "@/providers/HelmetProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 
-// Lazy load non-critical components only
+// Lazy load only non-critical components
 const Toaster = lazy(() => 
   import("@/components/ui/toaster").then(mod => ({ default: mod.Toaster }))
   .catch(() => ({ default: () => null }))
@@ -17,7 +17,7 @@ const Sonner = lazy(() =>
   .catch(() => ({ default: () => null }))
 );
 
-// Optimized QueryClient with better defaults
+// Optimized QueryClient
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -25,43 +25,24 @@ const queryClient = new QueryClient({
       gcTime: 10 * 60 * 1000,
       retry: 1,
       refetchOnWindowFocus: false,
-      refetchOnReconnect: 'always',
-    },
-    mutations: {
-      retry: 1,
     },
   },
 });
 
-// Enhanced theme handler component - force light mode
+// Light theme enforcer
 const ThemeHandler = memo(() => {
   useEffect(() => {
-    const applyLightTheme = () => {
-      try {
-        console.log('Applying light theme...');
-        
-        // Force light theme
-        document.documentElement.classList.remove('dark');
-        document.body.classList.add('bg-white');
-        
-        // Set theme in localStorage
-        localStorage.setItem('theme', 'light');
-        
-        console.log('Light theme applied successfully');
-      } catch (error) {
-        console.warn('Theme application failed:', error);
-      }
-    };
-
-    // Apply immediately
-    applyLightTheme();
+    console.log('Enforcing light theme...');
     
-    // Listen for system theme changes but always override to light
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = () => applyLightTheme();
+    // Force light theme immediately
+    document.documentElement.classList.remove('dark');
+    document.body.classList.add('bg-white');
+    document.body.style.backgroundColor = '#ffffff';
     
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    // Set theme in localStorage
+    localStorage.setItem('theme', 'light');
+    
+    console.log('Light theme enforced successfully');
   }, []);
 
   return null;
@@ -69,40 +50,23 @@ const ThemeHandler = memo(() => {
 
 ThemeHandler.displayName = 'ThemeHandler';
 
-// Minimal loading fallback with light theme
-const MinimalLoading = memo(() => (
-  <div className="flex items-center justify-center p-4 min-h-screen bg-white">
+// Simple loading component
+const SimpleLoading = memo(() => (
+  <div className="flex items-center justify-center p-8 min-h-screen bg-white">
     <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
   </div>
 ));
 
-MinimalLoading.displayName = 'MinimalLoading';
+SimpleLoading.displayName = 'SimpleLoading';
 
-// Main App component with enhanced error handling and light theme
 const App = () => {
   useEffect(() => {
-    console.log('App component mounted successfully');
+    console.log('App component mounted - enforcing light theme');
     
-    // Force light theme on app start
+    // Immediate theme enforcement
     document.documentElement.classList.remove('dark');
     document.body.classList.add('bg-white');
-    
-    // Add global error handler
-    const handleError = (error: ErrorEvent) => {
-      console.error('Global error caught:', error);
-    };
-    
-    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      console.error('Unhandled promise rejection:', event.reason);
-    };
-    
-    window.addEventListener('error', handleError);
-    window.addEventListener('unhandledrejection', handleUnhandledRejection);
-    
-    return () => {
-      window.removeEventListener('error', handleError);
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
-    };
+    document.body.style.backgroundColor = '#ffffff';
   }, []);
 
   return (
@@ -113,15 +77,13 @@ const App = () => {
             <TooltipProvider>
               <ThemeHandler />
               
-              {/* Load non-critical components asynchronously */}
-              <Suspense fallback={<MinimalLoading />}>
+              <Suspense fallback={<SimpleLoading />}>
                 <ErrorBoundary>
                   <Toaster />
                   <Sonner />
                 </ErrorBoundary>
               </Suspense>
               
-              {/* Main app routes */}
               <AppRoutes />
             </TooltipProvider>
           </QueryClientProvider>

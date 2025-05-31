@@ -18,38 +18,38 @@ const MemoizedFooter = memo(Footer);
 const MemoizedScrollToTop = memo(ScrollToTop);
 const MemoizedScrollIndicator = memo(ScrollIndicator);
 
-// Fixed scroll state hook with proper throttling
+// Optimized scroll state hook with proper cleanup
 const useScrollState = () => {
   const [scrollState, setScrollState] = useState({
     isScrolled: false,
     showScrollTop: false
   });
 
-  const updateScrollState = useCallback(() => {
-    const scrollY = window.scrollY;
-    const newState = {
-      isScrolled: scrollY > 20,
-      showScrollTop: scrollY > 300
-    };
-    
-    // Only update if state actually changed
-    setScrollState(prevState => {
-      if (prevState.isScrolled !== newState.isScrolled || 
-          prevState.showScrollTop !== newState.showScrollTop) {
-        return newState;
-      }
-      return prevState;
-    });
-  }, []);
-
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let ticking = false;
     
+    const updateScrollState = () => {
+      const scrollY = window.scrollY;
+      const newState = {
+        isScrolled: scrollY > 20,
+        showScrollTop: scrollY > 300
+      };
+      
+      setScrollState(prevState => {
+        if (prevState.isScrolled !== newState.isScrolled || 
+            prevState.showScrollTop !== newState.showScrollTop) {
+          return newState;
+        }
+        return prevState;
+      });
+      ticking = false;
+    };
+
     const handleScroll = () => {
-      // Clear previous timeout
-      clearTimeout(timeoutId);
-      // Throttle updates
-      timeoutId = setTimeout(updateScrollState, 16); // ~60fps
+      if (!ticking) {
+        requestAnimationFrame(updateScrollState);
+        ticking = true;
+      }
     };
     
     // Initial call
@@ -58,9 +58,8 @@ const useScrollState = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timeoutId);
     };
-  }, [updateScrollState]);
+  }, []);
 
   return scrollState;
 };
@@ -71,15 +70,15 @@ export const Layout = memo(function Layout({
   title,
   backUrl
 }: LayoutProps) {
-  console.log('Layout component rendering...');
+  console.log('Layout component rendering optimized...');
   
   const { isScrolled, showScrollTop } = useScrollState();
 
-  // Simplified decorative gradients - memoized properly
+  // Simplified decorative gradients
   const decorativeGradients = useMemo(() => (
     <div className="fixed inset-0 -z-10 pointer-events-none">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100/20 rounded-full filter blur-3xl opacity-50" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100/20 rounded-full filter blur-3xl opacity-50" />
+      <div className="absolute top-0 right-0 w-72 h-72 bg-blue-50/30 rounded-full filter blur-3xl opacity-40" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-50/30 rounded-full filter blur-3xl opacity-40" />
     </div>
   ), []);
 
