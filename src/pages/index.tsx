@@ -1,33 +1,18 @@
 
-import React, { memo, useEffect } from 'react';
-import { Layout } from '@/components/Layout';
-import { HeroSection } from '@/components/home/HeroSection';
-import { CategoriesSection } from '@/components/home/CategoriesSection';
-import { ToolsSection } from '@/components/home/ToolsSection';
+import React from 'react';
+import { SimpleLayout } from '@/components/SimpleLayout';
+import { SimpleHero } from '@/components/home/SimpleHero';
+import { SimpleCategories } from '@/components/home/SimpleCategories';
 
 const Index = () => {
-  console.log('Index component rendering...');
-  
-  useEffect(() => {
-    console.log('Homepage mounted successfully');
-    
-    // Ensure light theme
-    document.documentElement.classList.remove('dark');
-    document.body.classList.add('bg-white');
-    document.body.style.backgroundColor = '#ffffff';
-  }, []);
-  
   return (
-    <Layout>
+    <SimpleLayout>
       <div className="bg-white min-h-screen">
-        <HeroSection />
-        <CategoriesSection />
-        <section id="popular-tools">
-          <ToolsSection />
-        </section>
+        <SimpleHero />
+        <SimpleCategories />
       </div>
-    </Layout>
+    </SimpleLayout>
   );
 };
 
-export default memo(Index);
+export default Index;
