@@ -123,3 +123,15 @@ export const getNewTools = (): Tool[] => {
 export const getPopularTools = (): Tool[] => {
   return tools.filter(tool => tool.isPopular).slice(0, 4);
 };
+
+export const searchTools = (query: string): Tool[] => {
+  if (!query.trim()) return [];
+  
+  const searchQuery = query.toLowerCase().trim();
+  
+  return tools.filter(tool => 
+    tool.name.toLowerCase().includes(searchQuery) ||
+    tool.description.toLowerCase().includes(searchQuery) ||
+    categoryLabels[tool.category].toLowerCase().includes(searchQuery)
+  );
+};

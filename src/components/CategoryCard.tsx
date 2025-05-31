@@ -23,7 +23,7 @@ const categoryIcons = {
   text: TextIcon,
   image: Image,
   seo: Search,
-  calculators: Calculator,
+  calculator: Calculator,
   number: Hash,
   random: Dice6,
   educational: BookOpen,
@@ -53,8 +53,8 @@ export const CategoryCard = memo(function CategoryCard({ category, count }: Cate
         viewport={{ once: true }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className={`icon-container mb-4 w-16 h-16 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 shadow-sm border border-white/30 ${theme.gradient}`}>
-          <IconComponent size={28} className={theme.iconColor} />
+        <div className={`icon-container mb-4 w-16 h-16 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 shadow-sm border border-white/30 bg-gradient-to-br ${theme.gradient}`}>
+          <IconComponent size={28} className={theme.icon} />
         </div>
         <h3 className="text-lg font-medium text-gray-800 mb-1">{categoryLabels[category]}</h3>
         <p className="text-sm text-gray-500 text-center bg-white/50 py-0.5 px-2 rounded-full border border-white/20">{count} ابزار</p>
