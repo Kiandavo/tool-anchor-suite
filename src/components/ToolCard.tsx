@@ -10,6 +10,11 @@ interface ToolCardProps {
 }
 
 export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) => {
+  if (!tool || !tool.slug) {
+    console.warn('ToolCard: Invalid tool data:', tool);
+    return null;
+  }
+
   return (
     <Link to={`/tool/${tool.slug}`} className="block">
       <div className={`
@@ -36,8 +41,8 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) =
           </div>
         </div>
         
-        <h3 className="text-lg font-medium text-gray-800 mb-2">{tool.name}</h3>
-        <p className="text-sm text-gray-600 flex-1 line-clamp-2">{tool.description}</p>
+        <h3 className="text-lg font-medium text-gray-800 mb-2">{tool.name || 'ابزار بدون نام'}</h3>
+        <p className="text-sm text-gray-600 flex-1 line-clamp-2">{tool.description || 'توضیحی در دسترس نیست'}</p>
         
         <div className="mt-4 pt-3 border-t border-gray-100">
           <span className="text-xs text-blue-600 font-medium">

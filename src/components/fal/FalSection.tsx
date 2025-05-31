@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Star, Sparkles, BookOpen } from 'lucide-react';
 
 export const FalSection = () => {
+  console.log('FalSection rendering...');
+  
   const falTools = [
     {
       id: 'hafez-fortune',
@@ -40,7 +42,7 @@ export const FalSection = () => {
         {falTools.map((tool) => {
           const IconComponent = tool.icon;
           return (
-            <div key={tool.id} className="bg-white/90 hover:bg-white/95 rounded-2xl p-5 border border-white/30 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02]">
+            <div key={tool.id} className="bg-white/90 hover:bg-white/95 rounded-2xl p-5 border border-white/30 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] neo-glass relative overflow-hidden group">
               <div className="flex items-center mb-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mr-3 shadow-sm">
                   <IconComponent size={20} className="text-white" />
