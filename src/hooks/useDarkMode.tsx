@@ -2,19 +2,19 @@
 import { useState, useEffect } from 'react';
 
 export function useDarkMode() {
-  // Always force light theme
+  // Always force light theme - simplified version
   const [theme] = useState<'light'>('light');
 
   useEffect(() => {
     console.log('useDarkMode: Enforcing light theme only');
     
-    // Always apply light theme
+    // Remove any dark mode classes and force light theme
     document.documentElement.classList.remove('dark');
     document.body.classList.add('bg-white');
     document.body.style.backgroundColor = '#ffffff';
     localStorage.setItem('theme', 'light');
     
-    console.log('Light theme enforced via useDarkMode hook');
+    console.log('Light theme enforced successfully');
   }, []);
 
   return { 

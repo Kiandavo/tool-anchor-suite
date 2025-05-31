@@ -3,10 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Critical CSS variables */
+/* Critical CSS variables and base styles */
 @layer base {
   :root {
-    /* Color system variables */
+    /* Essential color system variables */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -29,11 +29,10 @@
     --radius: 1rem;
 
     /* Font system */
-    --font-sans: 'B Yekan', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    --font-persian: 'B Yekan', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-sans: 'system-ui', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
-  /* Base HTML styles */
+  /* Essential base styles */
   * {
     @apply border-border;
   }
@@ -41,9 +40,6 @@
   html {
     direction: rtl;
     scroll-behavior: smooth;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -53,48 +49,33 @@
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.6;
+    direction: rtl;
   }
 
-  /* Enhanced focus styles */
+  /* Focus styles */
   *:focus-visible {
     outline: 2px solid hsl(var(--primary));
     outline-offset: 2px;
-    border-radius: 4px;
   }
 }
 
 @layer components {
-  /* Glass morphism effect */
+  /* Essential component styles */
   .glass-nav {
     @apply bg-white/90 backdrop-blur-md border-b border-gray-200/50;
-    transition: background-color 0.2s ease-out;
   }
   
-  /* Card hover effect */
-  .card-hover-glow {
-    @apply transition-all duration-300 ease-out;
-  }
-  
-  .card-hover-glow:hover {
-    @apply shadow-xl;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
-                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  .neo-glass {
+    @apply bg-white/80 backdrop-blur-sm border border-white/40;
   }
 
-  /* Interactive element styles */
-  .interactive-element {
-    @apply cursor-pointer transition-all duration-200 ease-out;
-  }
-  
-  .interactive-element:hover {
-    @apply scale-105 brightness-110;
+  .card-hover-glow {
+    @apply transition-all duration-300 ease-out hover:shadow-lg hover:scale-[1.02];
   }
 }
 
 @layer utilities {
-  /* Performance-optimized animations */
+  /* Essential animations */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -105,7 +86,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Animation classes */
   .animate-fade-in {
     animation: fadeIn 0.4s ease-out forwards;
   }
@@ -113,32 +93,18 @@
   .animate-slide-up {
     animation: slideUp 0.5s ease-out forwards;
   }
-
-  /* Utility classes */
-  .text-balance {
-    text-wrap: balance;
-  }
 }
 
-/* High-performance transitions */
-button, a, [role="button"] {
-  transition: all 0.2s ease;
-}
-
-/* Image optimization */
+/* Performance optimizations */
 img, video {
   max-width: 100%;
   height: auto;
 }
 
-/* Reduced motion preferences */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  * {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

@@ -11,7 +11,7 @@ interface LayoutProps {
   backUrl?: string;
 }
 
-// Optimized scroll state hook
+// Simplified scroll state hook
 const useScrollState = () => {
   const [scrollState, setScrollState] = useState({
     isScrolled: false,
@@ -19,39 +19,19 @@ const useScrollState = () => {
   });
 
   useEffect(() => {
-    let ticking = false;
-    
     const updateScrollState = () => {
       const scrollY = window.scrollY;
-      const newState = {
+      setScrollState({
         isScrolled: scrollY > 20,
         showScrollTop: scrollY > 300
-      };
-      
-      setScrollState(prevState => {
-        if (prevState.isScrolled !== newState.isScrolled || 
-            prevState.showScrollTop !== newState.showScrollTop) {
-          return newState;
-        }
-        return prevState;
       });
-      ticking = false;
     };
 
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(updateScrollState);
-        ticking = true;
-      }
-    };
-    
     // Initial call
     updateScrollState();
     
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener('scroll', updateScrollState, { passive: true });
+    return () => window.removeEventListener('scroll', updateScrollState);
   }, []);
 
   return scrollState;

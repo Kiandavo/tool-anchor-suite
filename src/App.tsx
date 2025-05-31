@@ -6,62 +6,50 @@ import { HelmetProvider } from "@/providers/HelmetProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 
-// Lazy load toast components
-const Toaster = lazy(() => 
-  import("@/components/ui/toaster").then(mod => ({ default: mod.Toaster }))
-);
+// Simple loading component to avoid complex dependencies
+const SimpleLoading = memo(() => (
+  <div className="flex items-center justify-center p-8 min-h-screen bg-white">
+    <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+    <span className="mr-3 text-gray-600">در حال بارگذاری...</span>
+  </div>
+));
 
-const Sonner = lazy(() => 
-  import("@/components/ui/sonner").then(mod => ({ default: mod.Toaster }))
-);
+SimpleLoading.displayName = 'SimpleLoading';
 
-// Optimized QueryClient
+// Optimized QueryClient with minimal config
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000,
-      gcTime: 10 * 60 * 1000,
       retry: 1,
       refetchOnWindowFocus: false,
     },
   },
 });
 
-// Simple loading component
-const SimpleLoading = memo(() => (
-  <div className="flex items-center justify-center p-8 min-h-screen bg-white">
-    <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-  </div>
-));
-
-SimpleLoading.displayName = 'SimpleLoading';
-
 const App = () => {
   useEffect(() => {
-    console.log('App component mounted - initializing...');
+    console.log('App component mounted');
     
-    // Force light theme immediately
+    // Force light theme immediately and ensure proper styling
     document.documentElement.classList.remove('dark');
+    document.documentElement.setAttribute('dir', 'rtl');
     document.body.classList.add('bg-white');
     document.body.style.backgroundColor = '#ffffff';
+    document.body.style.direction = 'rtl';
     
-    console.log('App initialized successfully');
+    console.log('Light theme and RTL direction applied');
   }, []);
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen" dir="rtl">
       <ErrorBoundary>
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <Suspense fallback={<SimpleLoading />}>
-                <ErrorBoundary>
-                  <Toaster />
-                  <Sonner />
-                </ErrorBoundary>
+                <AppRoutes />
               </Suspense>
-              
-              <AppRoutes />
             </TooltipProvider>
           </QueryClientProvider>
         </HelmetProvider>
