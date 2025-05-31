@@ -1,17 +1,21 @@
 
 import React from 'react';
-import { SimpleLayout } from '@/components/SimpleLayout';
-import { SimpleHero } from '@/components/home/SimpleHero';
-import { SimpleCategories } from '@/components/home/SimpleCategories';
+import { Layout } from '@/components/Layout';
+import { HeroSection } from '@/components/home/HeroSection';
+import { CategoriesSection } from '@/components/home/CategoriesSection';
+import { ToolsSection } from '@/components/home/ToolsSection';
+import { FalSection } from '@/components/fal/FalSection';
 
 const Index = () => {
   return (
-    <SimpleLayout>
+    <Layout>
       <div className="bg-white min-h-screen">
-        <SimpleHero />
-        <SimpleCategories />
+        <HeroSection />
+        <ToolsSection />
+        <FalSection />
+        <CategoriesSection />
       </div>
-    </SimpleLayout>
+    </Layout>
   );
 };
 
