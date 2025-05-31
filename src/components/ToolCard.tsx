@@ -1,140 +1,50 @@
 
-import React, { memo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tool } from '@/data/tools';
-import { categoryThemes } from '@/utils/categoryColors';
-import { 
-  TextIcon, 
-  Image, 
-  Search, 
-  Calculator, 
-  Hash, 
-  Dice6, 
-  Percent, 
-  Binary, 
-  Key, 
-  Type, 
-  Maximize, 
-  Filter, 
-  Activity,
-  Calendar,
-  Sparkles,
-  BookOpen,
-  CheckSquare,
-  Palette,
-  BookMarked,
-  Pen,
-  User,
-  Book,
-  FileText,
-  Clock,
-  Pencil,
-  LayoutGrid,
-  Globe,
-  CalendarDays,
-  School,
-  PaintBucket,
-  Shuffle,
-  Star,
-  Gift,
-  Award,
-  Flame,
-  Coffee,
-  TreePine,
-  Eye,
-  Flower,
-  Coins,
-  Moon,
-  Hand
-} from 'lucide-react';
-
-// Map icon strings to Lucide components - moved outside component
-const iconMap = {
-  'text-size': TextIcon,
-  'image': Image,
-  'code': Search,
-  'percent': Percent,
-  'binary': Binary,
-  'key': Key,
-  'type': Type,
-  'maximize': Maximize,
-  'filter': Filter,
-  'activity': Activity,
-  'dice': Dice6,
-  'hash': Hash,
-  'calendar': Calendar,
-  'calculator': Calculator,
-  'sparkles': Sparkles,
-  'book-open': BookOpen,
-  'list-check': CheckSquare,
-  'paint-bucket': PaintBucket,
-  'pen': Pen,
-  'user': User,
-  'book': Book,
-  'file-text': FileText,
-  'clock': Clock,
-  'pencil': Pencil,
-  'layout-grid': LayoutGrid,
-  'globe': Globe,
-  'calendar-days': CalendarDays,
-  'school': School,
-  'shuffle': Shuffle,
-  'star': Star,
-  'gift': Gift,
-  'award': Award,
-  'flame': Flame,
-  'random': Dice6,
-  'dice6': Dice6,
-  'compass': Globe,
-  'layers': LayoutGrid,
-  'coffee-cup': Coffee,
-  'tree-pine': TreePine,
-  'mirror': Eye,
-  'flower': Flower,
-  'coins': Coins,
-  'moon': Moon,
-  'hand': Hand
-};
+import { Star, Sparkles } from 'lucide-react';
 
 interface ToolCardProps {
   tool: Tool;
   highlight?: boolean;
-  compact?: boolean;
 }
 
-export const ToolCard = memo(function ToolCard({ tool, highlight = false, compact = false }: ToolCardProps) {
-  const { slug, name, description, isNew, icon, category } = tool;
-  const IconComponent = iconMap[icon as keyof typeof iconMap] || TextIcon;
-  const theme = categoryThemes[category];
-
+export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) => {
   return (
-    <Link to={`/tool/${slug}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl group">
-      <div
-        className={`
-          rounded-3xl shadow-sm transition-all duration-300 backdrop-blur-sm will-change-transform
-          border border-white/40 hover:shadow-lg hover:scale-[1.02] glass-morphism
-          card-hover-glow magnetic-hover interactive-element
-          ${compact ? 'py-4' : 'p-6'}
-        `}
-      >
-        <div className="flex items-start justify-between mb-3">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 
-            bg-gradient-to-br from-blue-500 to-purple-600 shadow-sm border border-white/40 bounce-subtle">
-            <IconComponent className="text-white" size={22} />
+    <Link to={`/tool/${tool.slug}`} className="block">
+      <div className={`
+        card-apple-gradient rounded-2xl p-5 h-full flex flex-col
+        transition-all duration-300 hover:shadow-lg hover:scale-[1.02]
+        ${highlight ? 'ring-2 ring-green-200' : ''}
+      `}>
+        <div className="flex items-center justify-between mb-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm">
+            <Star size={20} className="text-white" />
           </div>
-          {isNew && (
-            <span className="rounded-full px-3 py-1 text-xs font-medium glass-morphism shadow-sm border border-white/30 text-apple-blue neon-glow">
-              جدید
-            </span>
-          )}
+          <div className="flex gap-1">
+            {tool.isNew && (
+              <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+                جدید
+              </span>
+            )}
+            {tool.isPopular && (
+              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium flex items-center gap-1">
+                <Sparkles size={12} />
+                محبوب
+              </span>
+            )}
+          </div>
         </div>
-        <div className={`${compact ? 'space-y-1' : 'mb-2'}`}>
-          <h3 className={`font-medium text-gray-800 line-clamp-1 ${compact ? 'text-base' : 'text-lg'}`}>{name}</h3>
-          {!compact && (
-            <p className="text-sm text-gray-600 mt-2 line-clamp-2 glass-morphism p-1.5 rounded-md">{description}</p>
-          )}
+        
+        <h3 className="text-lg font-medium text-gray-800 mb-2">{tool.name}</h3>
+        <p className="text-sm text-gray-600 flex-1 line-clamp-2">{tool.description}</p>
+        
+        <div className="mt-4 pt-3 border-t border-gray-100">
+          <span className="text-xs text-blue-600 font-medium">
+            مشاهده ابزار ←
+          </span>
         </div>
       </div>
     </Link>
   );
-});
+};
