@@ -38,7 +38,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 
   componentDidMount() {
-    console.log('ErrorBoundary mounted successfully');
+    console.log('ErrorBoundary: Mounted successfully');
   }
 
   render() {
