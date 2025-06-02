@@ -2,6 +2,7 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolCategory, categoryLabels } from '@/data/tools';
+import { fallbackCategoryLabels } from '@/data/fallback-tools';
 import { 
   TextIcon, 
   Image, 
@@ -41,8 +42,20 @@ interface CategoryCardProps {
 export const CategoryCard = memo(function CategoryCard({ category, count }: CategoryCardProps) {
   console.log('CategoryCard: Rendering category:', category, 'with count:', count);
   
+  // Ensure category exists and has fallbacks
+  if (!category) {
+    console.warn('CategoryCard: Invalid category provided');
+    return null;
+  }
+  
   const IconComponent = categoryIcons[category] || TextIcon;
   const theme = categoryThemes[category] || categoryThemes.text;
+  
+  // Use fallback labels if main labels are not available
+  const categoryLabel = categoryLabels[category] || fallbackCategoryLabels[category] || 'دسته نامشخص';
+  
+  // Ensure count is a valid number
+  const safeCount = typeof count === 'number' && count >= 0 ? count : 0;
   
   return (
     <Link to={`/category/${category}`} className="block focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-3xl">
@@ -50,8 +63,10 @@ export const CategoryCard = memo(function CategoryCard({ category, count }: Cate
         <div className={`icon-container mb-4 w-16 h-16 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 shadow-sm border border-white/30 bg-gradient-to-br ${theme.gradient}`}>
           <IconComponent size={28} className="text-white" />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-1">{categoryLabels[category]}</h3>
-        <p className="text-sm text-gray-500 text-center bg-white/50 py-0.5 px-2 rounded-full border border-white/20">{count} ابزار</p>
+        <h3 className="text-lg font-medium text-gray-800 mb-1">{categoryLabel}</h3>
+        <p className="text-sm text-gray-500 text-center bg-white/50 py-0.5 px-2 rounded-full border border-white/20">
+          {safeCount} ابزار
+        </p>
       </div>
     </Link>
   );
