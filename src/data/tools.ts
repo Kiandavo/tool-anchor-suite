@@ -1,4 +1,16 @@
 
+import { textTools } from './tool-categories/text-tools';
+import { imageTools } from './tool-categories/image-tools';
+import { seoTools } from './tool-categories/seo-tools';
+import { calculatorTools } from './tool-categories/calculator-tools';
+import { numberTools } from './tool-categories/number-tools';
+import { randomTools } from './tool-categories/random-tools';
+import { designTools } from './tool-categories/design-tools';
+import { productivityTools } from './tool-categories/productivity-tools';
+import { educationalTools } from './tool-categories/educational-tools';
+import { persianCulturalTools } from './tool-categories/persian-cultural-tools';
+import { readingsTools } from './tool-categories/readings-tools';
+
 export type ToolCategory = 
   | 'text'
   | 'calculator'
@@ -21,6 +33,8 @@ export interface Tool {
   icon: string;
   isNew?: boolean;
   isPopular?: boolean;
+  isComingSoon?: boolean;
+  isPremium?: boolean;
 }
 
 export const categoryLabels: Record<ToolCategory, string> = {
@@ -37,91 +51,171 @@ export const categoryLabels: Record<ToolCategory, string> = {
   'educational': 'آموزشی'
 };
 
+// Consolidated tool registry from all category files
 export const tools: Tool[] = [
-  {
-    id: '1',
-    slug: 'text-counter',
-    name: 'شمارش کلمات و حروف',
-    description: 'شمارش دقیق کلمات، حروف، پاراگراف‌ها و خطوط متن فارسی و انگلیسی',
-    category: 'text',
-    icon: 'text-size',
-    isPopular: true
-  },
-  {
-    id: '2',
-    slug: 'hafez-fortune',
-    name: 'فال حافظ',
-    description: 'دریافت فال از دیوان حافظ شیرازی با تفسیر کامل',
-    category: 'readings',
-    icon: 'book-open',
-    isNew: true,
-    isPopular: true
-  },
-  {
-    id: '3',
-    slug: 'percentage-calculator',
-    name: 'محاسبه درصد',
-    description: 'محاسبه انواع درصد، افزایش، کاهش و تبدیل عدد به درصد',
-    category: 'calculator',
-    icon: 'percent',
-    isPopular: true
-  },
-  {
-    id: '4',
-    slug: 'random-password',
-    name: 'تولید رمز عبور',
-    description: 'تولید رمز عبور قوی و امن با تنظیمات مختلف',
-    category: 'random',
-    icon: 'key',
-    isPopular: true
-  },
-  {
-    id: '5',
-    slug: 'bmi-calculator',
-    name: 'محاسبه BMI',
-    description: 'محاسبه شاخص توده بدنی و وضعیت سلامت',
-    category: 'calculator',
-    icon: 'activity',
-    isNew: true
-  },
-  {
-    id: '6',
-    slug: 'color-palette',
-    name: 'پالت رنگ',
-    description: 'تولید پالت رنگ‌های زیبا و هماهنگ برای طراحی',
-    category: 'design',
-    icon: 'palette',
-    isNew: true
-  },
-  {
-    id: '7',
-    slug: 'tarot-reading',
-    name: 'فال تاروت',
-    description: 'فال تاروت کامل با کارت‌های اصلی و تفسیر دقیق',
-    category: 'readings',
-    icon: 'sparkles'
-  },
-  {
-    id: '8',
-    slug: 'todo-list',
-    name: 'لیست کارها',
-    description: 'مدیریت کارهای روزانه با امکانات پیشرفته',
-    category: 'productivity',
-    icon: 'list-check',
-    isNew: true
-  }
+  // Convert type-specific tools to main Tool interface
+  ...textTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'text' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: tool.isComingSoon,
+    isPremium: tool.isPremium
+  })),
+  
+  ...imageTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'image' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: false,
+    isPremium: false
+  })),
+  
+  ...seoTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'seo' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: false,
+    isPremium: false
+  })),
+  
+  ...calculatorTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'calculator' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: false,
+    isPremium: false
+  })),
+  
+  ...numberTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'number' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: false,
+    isPremium: false
+  })),
+  
+  ...randomTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'random' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: false,
+    isPremium: false
+  })),
+  
+  ...designTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'design' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: tool.isComingSoon,
+    isPremium: false
+  })),
+  
+  ...productivityTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'productivity' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: tool.isComingSoon,
+    isPremium: false
+  })),
+  
+  ...educationalTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'educational' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: tool.isComingSoon,
+    isPremium: false
+  })),
+  
+  ...persianCulturalTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'persian-cultural' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: tool.isComingSoon,
+    isPremium: false
+  })),
+  
+  ...readingsTools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: 'readings' as ToolCategory,
+    icon: tool.icon,
+    isNew: tool.isNew,
+    isPopular: false,
+    isComingSoon: false,
+    isPremium: false
+  }))
 ];
+
+// Mark popular tools
+const popularToolSlugs = ['text-counter', 'hafez-fortune', 'percentage-calculator', 'random-password', 'tarot-reading', 'bmi-calculator'];
+tools.forEach(tool => {
+  if (popularToolSlugs.includes(tool.slug)) {
+    tool.isPopular = true;
+  }
+});
 
 export const getToolsByCategory = (category: ToolCategory): Tool[] => {
   return tools.filter(tool => tool.category === category);
 };
 
 export const getNewTools = (): Tool[] => {
-  return tools.filter(tool => tool.isNew).slice(0, 4);
+  return tools.filter(tool => tool.isNew).slice(0, 8);
 };
 
 export const getPopularTools = (): Tool[] => {
-  return tools.filter(tool => tool.isPopular).slice(0, 4);
+  return tools.filter(tool => tool.isPopular).slice(0, 8);
 };
 
 export const searchTools = (query: string): Tool[] => {
@@ -134,4 +228,21 @@ export const searchTools = (query: string): Tool[] => {
     tool.description.toLowerCase().includes(searchQuery) ||
     categoryLabels[tool.category].toLowerCase().includes(searchQuery)
   );
+};
+
+export const getToolBySlug = (slug: string): Tool | undefined => {
+  return tools.find(tool => tool.slug === slug);
+};
+
+export const getToolStats = () => {
+  return {
+    total: tools.length,
+    byCategory: Object.keys(categoryLabels).reduce((acc, category) => {
+      acc[category as ToolCategory] = getToolsByCategory(category as ToolCategory).length;
+      return acc;
+    }, {} as Record<ToolCategory, number>),
+    newTools: tools.filter(tool => tool.isNew).length,
+    popularTools: tools.filter(tool => tool.isPopular).length,
+    comingSoon: tools.filter(tool => tool.isComingSoon).length
+  };
 };

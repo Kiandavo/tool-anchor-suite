@@ -1,26 +1,44 @@
 
 import React from 'react';
-import { AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Construction, Clock } from 'lucide-react';
 
-export default function ToolNotImplemented() {
+interface ToolNotImplementedProps {
+  isComingSoon?: boolean;
+  toolName?: string;
+}
+
+const ToolNotImplemented: React.FC<ToolNotImplementedProps> = ({ 
+  isComingSoon = false, 
+  toolName = "این ابزار" 
+}) => {
   return (
-    <div className="rounded-lg border p-6 shadow-sm">
-      <div className="flex flex-col items-center justify-center space-y-4 text-center">
-        <div className="rounded-full bg-red-100 p-3">
-          <AlertCircle className="h-6 w-6 text-red-500" />
-        </div>
-        <h3 className="text-lg font-medium text-red-500">ابزار پیاده سازی نشده است.</h3>
-        <p className="text-muted-foreground">
-          این ابزار در حال توسعه است و به زودی در دسترس قرار می‌گیرد.
+    <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center">
+      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+        {isComingSoon ? (
+          <Clock size={32} className="text-gray-400" />
+        ) : (
+          <Construction size={32} className="text-gray-400" />
+        )}
+      </div>
+      
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+        {isComingSoon ? `${toolName} به زودی` : `${toolName} در حال توسعه`}
+      </h3>
+      
+      <p className="text-gray-600 max-w-md">
+        {isComingSoon 
+          ? "این ابزار به زودی راه‌اندازی خواهد شد. لطفاً بعداً مراجعه کنید."
+          : "این ابزار در حال حاضر در دست توسعه است و به زودی در دسترس قرار خواهد گرفت."
+        }
+      </p>
+      
+      <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+        <p className="text-sm text-blue-700">
+          💡 پیشنهاد: از ابزارهای مشابه در دسته‌بندی‌های مختلف استفاده کنید
         </p>
-        <Button asChild>
-          <Link to="/">
-            بازگشت به صفحه اصلی
-          </Link>
-        </Button>
       </div>
     </div>
   );
-}
+};
+
+export default ToolNotImplemented;

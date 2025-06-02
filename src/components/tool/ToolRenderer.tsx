@@ -2,10 +2,6 @@
 import React from 'react';
 import { Tool } from '@/data/tools';
 import { toolTypeBySlug } from '@/utils/toolTypeUtils';
-import { TextToolRenderer } from './renderers/TextToolRenderer';
-import { ImageToolRenderer } from './renderers/ImageToolRenderer';
-import { CalculatorToolRenderer } from './renderers/CalculatorToolRenderer';
-import { UtilityToolRenderer } from './renderers/UtilityToolRenderer';
 import ToolNotImplemented from '@/pages/ToolTypes/ToolNotImplemented';
 import TextTool from '@/pages/ToolTypes/TextTool';
 import ImageTool from '@/pages/ToolTypes/ImageTool';
@@ -15,7 +11,7 @@ import RandomPasswordTool from '@/pages/ToolTypes/RandomPasswordTool';
 import NumberTool from '@/pages/ToolTypes/NumberTool';
 import RandomColorGenerator from '@/pages/ToolTypes/RandomTools/RandomColorGenerator';
 
-// Import new developer tools
+// Import developer tools
 import JsonFormatter from '@/pages/ToolTypes/DeveloperTools/JsonFormatter';
 import QRGenerator from '@/pages/ToolTypes/UtilityTools/QRGenerator';
 import HashGenerator from '@/pages/ToolTypes/UtilityTools/HashGenerator';
@@ -31,8 +27,6 @@ import Cleromancy from '@/components/readings/Cleromancy';
 import DistantReading from '@/components/readings/DistantReading';
 import Lithomancy from '@/components/readings/Lithomancy';
 import Numerology from '@/components/readings/Numerology';
-
-// Import new readings components
 import CoffeeReading from '@/components/readings/CoffeeReading';
 import WoodDivination from '@/components/readings/WoodDivination';
 
@@ -49,7 +43,7 @@ import PersianCuisine from '@/pages/ToolTypes/PersianCultural/PersianCuisine';
 import PersianHolidays from '@/pages/ToolTypes/PersianCultural/PersianHolidays';
 import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchitecture';
 
-// Import productivity tools from correct paths
+// Import productivity tools
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
 import TodoList from '@/pages/ToolTypes/ProductivityTools/TodoList';
@@ -73,12 +67,17 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   const toolType = toolTypeBySlug[slug];
   console.log('Tool type determined:', toolType);
   
+  // Check if tool is coming soon
+  if (tool?.isComingSoon) {
+    return <ToolNotImplemented isComingSoon={true} toolName={tool.name} />;
+  }
+  
   // Developer tools
   if (toolType === 'json-formatter') return <JsonFormatter />;
   if (toolType === 'qr-generator') return <QRGenerator />;
   if (toolType === 'hash-generator') return <HashGenerator />;
   
-  // Existing readings tools
+  // Readings tools
   if (toolType === 'tarot-reading') return <TarotReading />;
   if (toolType === 'horoscope') return <Horoscope />;
   if (toolType === 'rumi-istikhara') return <RumiIstikhara />;
@@ -89,18 +88,8 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'distant-reading') return <DistantReading />;
   if (toolType === 'lithomancy') return <Lithomancy />;
   if (toolType === 'numerology') return <Numerology />;
-  
-  // New readings tools
   if (toolType === 'coffee-reading') return <CoffeeReading />;
   if (toolType === 'wood-divination') return <WoodDivination />;
-  
-  // Placeholder for other new readings tools
-  if (toolType === 'mirror-scrying' || toolType === 'flower-reading' || 
-      toolType === 'coin-oracle' || toolType === 'dream-interpretation' || 
-      toolType === 'name-numerology' || toolType === 'color-reading' || 
-      toolType === 'fragrance-divination' || toolType === 'palm-reading') {
-    return <ToolNotImplemented />;
-  }
   
   // Persian cultural tools
   if (toolType === 'persian-calendar') return <PersianCalendar />;
@@ -136,6 +125,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'random-password') return <RandomPasswordTool />;
   if (toolType === 'random-color') return <RandomColorGenerator />;
   
+  // Calculator and utility tools
   switch (toolType) {
     case 'calculator':
     case 'investment-calculator':
@@ -151,12 +141,13 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     case 'salary-tax-calculator':
     case 'range-calculator':
       return <CalculatorTool slug={slug} type={toolType} />;
+    
     case 'random':
-      return <UtilityToolRenderer slug={slug} type={toolType} />;
     case 'prime-checker':
-      return <UtilityToolRenderer slug={slug} type={toolType} />;
+      return <NumberTool slug={slug} />;
+    
     default:
       console.log('No specific renderer found for toolType:', toolType, 'using ToolNotImplemented');
-      return <ToolNotImplemented />;
+      return <ToolNotImplemented toolName={tool?.name} />;
   }
 };
