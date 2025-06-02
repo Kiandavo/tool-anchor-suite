@@ -16,6 +16,8 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --radius: 1rem;
+    
+    /* Standardized Apple colors with consistent comma-separated format */
     --apple-blue: 37, 99, 235;
     --apple-purple: 175, 82, 222;
     --apple-green: 22, 163, 74;
@@ -127,29 +129,41 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  /* Apple design system colors */
+  /* Standardized Apple design system colors with proper fallbacks */
   .text-apple-blue {
     color: rgb(var(--apple-blue));
+    /* Fallback for older browsers */
+    color: rgb(37, 99, 235);
   }
 
   .text-apple-green {
     color: rgb(var(--apple-green));
+    /* Fallback for older browsers */
+    color: rgb(22, 163, 74);
   }
 
   .text-primary {
     color: hsl(var(--primary));
+    /* Fallback for older browsers */
+    color: hsl(260, 80%, 50%);
   }
 
   .text-accent {
     color: hsl(var(--accent));
+    /* Fallback for older browsers */
+    color: hsl(24, 90%, 50%);
   }
 
   .bg-apple-blue\/5 {
     background-color: rgba(var(--apple-blue), 0.05);
+    /* Fallback for older browsers */
+    background-color: rgba(37, 99, 235, 0.05);
   }
 
   .bg-apple-blue\/20 {
     background-color: rgba(var(--apple-blue), 0.2);
+    /* Fallback for older browsers */
+    background-color: rgba(37, 99, 235, 0.2);
   }
 
   /* Card effects */

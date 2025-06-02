@@ -11,42 +11,34 @@ interface LayoutProps {
   backUrl?: string;
 }
 
-// Optimized scroll state hook to prevent excessive re-renders
+// Simplified scroll state hook to prevent excessive re-renders
 const useScrollState = () => {
-  const [scrollState, setScrollState] = useState({
-    isScrolled: false,
-    showScrollTop: false
-  });
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const updateScrollState = useCallback(() => {
     const scrollY = window.scrollY;
-    const newState = {
-      isScrolled: scrollY > 20,
-      showScrollTop: scrollY > 300
-    };
+    const newIsScrolled = scrollY > 20;
+    const newShowScrollTop = scrollY > 300;
     
-    // Only update if state actually changed
-    setScrollState(prevState => {
-      if (
-        prevState.isScrolled !== newState.isScrolled ||
-        prevState.showScrollTop !== newState.showScrollTop
-      ) {
-        return newState;
-      }
-      return prevState;
-    });
+    // Only update if state actually changed to prevent unnecessary re-renders
+    setIsScrolled(prev => prev !== newIsScrolled ? newIsScrolled : prev);
+    setShowScrollTop(prev => prev !== newShowScrollTop ? newShowScrollTop : prev);
   }, []);
 
   useEffect(() => {
     console.log('Layout: Setting up scroll listener');
     
-    // Throttled scroll handler
-    let timeoutId: NodeJS.Timeout;
+    // Throttled scroll handler with requestAnimationFrame for better performance
+    let ticking = false;
     const throttledScroll = () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateScrollState();
+          ticking = false;
+        });
+        ticking = true;
       }
-      timeoutId = setTimeout(updateScrollState, 16); // ~60fps
     };
 
     // Initial call
@@ -57,13 +49,10 @@ const useScrollState = () => {
     return () => {
       console.log('Layout: Cleaning up scroll listener');
       window.removeEventListener('scroll', throttledScroll);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
     };
   }, [updateScrollState]);
 
-  return scrollState;
+  return { isScrolled, showScrollTop };
 };
 
 export const Layout = memo(function Layout({
