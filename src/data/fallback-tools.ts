@@ -9,6 +9,7 @@ export const fallbackTools: Tool[] = [
     description: 'شمارش کلمات، کاراکترها و خطوط متن',
     slug: 'text-counter',
     category: 'text' as ToolCategory,
+    icon: 'text-size',
     isPopular: true,
     isNew: false
   },
@@ -18,6 +19,7 @@ export const fallbackTools: Tool[] = [
     description: 'محاسبات ریاضی ساده و پیشرفته',
     slug: 'calculator',
     category: 'calculator' as ToolCategory,
+    icon: 'calculator',
     isPopular: true,
     isNew: false
   },
@@ -27,6 +29,7 @@ export const fallbackTools: Tool[] = [
     description: 'تولید رنگ‌های تصادفی برای طراحی',
     slug: 'random-color',
     category: 'random' as ToolCategory,
+    icon: 'palette',
     isPopular: false,
     isNew: true
   }
