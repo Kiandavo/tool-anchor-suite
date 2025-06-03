@@ -53,7 +53,7 @@ export const readingsTools: Tool[] = [
     name: "خوانش هاله",
     category: "readings",
     description: "بینش عمیقی از هاله انرژی خود کسب کنید و معنای رنگ‌ها، شکل‌ها و الگوهای آن را دریابید. از این طریق به درک بهتری از شخصیت و انرژی درونی خود برسید.",
-    isNew: true,
+    isNew: false,
     icon: "sparkles"
   },
   {
@@ -62,7 +62,7 @@ export const readingsTools: Tool[] = [
     name: "فال ورق",
     category: "readings",
     description: "با استفاده از کارت‌های معمولی بازی، پیام‌هایی عمیق و روشنگر درباره‌ی آینده، روابط و مسیر زندگی خود دریافت کنید و به سوالات خود پاسخ دهید.",
-    isNew: true,
+    isNew: false,
     icon: "layers"
   },
   {
@@ -71,7 +71,7 @@ export const readingsTools: Tool[] = [
     name: "تاس‌بینی",
     category: "readings",
     description: "با انداختن تاس یا اشیاء مشابه، پاسخ سوالات خود را دریافت کنید و راهنمایی برای تصمیم‌گیری‌های مهم زندگی به دست آورید. روشی باستانی برای کشف پیام‌های سرنوشت.",
-    isNew: true,
+    isNew: false,
     icon: "dice6"
   },
   {
@@ -80,7 +80,7 @@ export const readingsTools: Tool[] = [
     name: "خوانش از راه دور",
     category: "readings",
     description: "از طریق تصاویر ذهنی و شهود، بینش و آگاهی درباره افراد، مکان‌ها یا وضعیت‌هایی که از شما دور هستند دریافت کنید و به درک عمیق‌تری از آنها دست یابید.",
-    isNew: true,
+    isNew: false,
     icon: "compass"
   },
   {
@@ -89,7 +89,7 @@ export const readingsTools: Tool[] = [
     name: "سنگ‌بینی و بلورخوانی",
     category: "readings",
     description: "با استفاده از سنگ‌ها و کریستال‌های مختلف، پیام‌های پنهان و نیروهای نامرئی زندگی خود را آشکار کنید. هر سنگ انرژی و پیامی منحصر به فرد برای شما دارد.",
-    isNew: true,
+    isNew: false,
     icon: "star"
   },
   {
@@ -98,7 +98,7 @@ export const readingsTools: Tool[] = [
     name: "اعداد شناسی",
     category: "readings",
     description: "با تحلیل اعداد مرتبط با زندگی شما مانند تاریخ تولد و نام، شخصیت، سرنوشت و مسیر زندگی خود را کشف کنید و از این دانش برای رشد شخصی استفاده کنید.",
-    isNew: true,
+    isNew: false,
     icon: "hash"
   },
   {
@@ -107,8 +107,17 @@ export const readingsTools: Tool[] = [
     name: "فال چوب",
     category: "readings",
     description: "با استفاده از چوب‌ها و شاخه‌های مقدس، پیام‌های طبیعت را دریافت کنید و از انرژی درختان برای راهنمایی در مسیر زندگی بهره‌مند شوید.",
-    isNew: true,
+    isNew: false,
     icon: "tree-pine"
+  },
+  {
+    id: "coffee-reading",
+    slug: "coffee-reading",
+    name: "فال قهوه",
+    category: "readings",
+    description: "با خواندن اشکال و نمادهای باقی‌مانده در ته فنجان قهوه، پیام‌های مخفی آینده و راهنمایی‌هایی برای زندگی خود کشف کنید.",
+    isNew: false,
+    icon: "coffee"
   },
   {
     id: "mirror-scrying",
@@ -116,8 +125,8 @@ export const readingsTools: Tool[] = [
     name: "فال آینه",
     category: "readings",
     description: "با خیره شدن به آینه‌های مقدس و تمرکز عمیق، به دنیای نامرئی سفر کنید و تصاویر و پیام‌های عرفانی از گذشته و آینده دریافت نمایید.",
-    isNew: true,
-    icon: "mirror"
+    isNew: false,
+    icon: "eye"
   },
   {
     id: "flower-reading",
@@ -125,7 +134,7 @@ export const readingsTools: Tool[] = [
     name: "فال گل",
     category: "readings",
     description: "با انتخاب گلبرگ‌ها و گل‌های مختلف، از زبان طبیعت پیام‌های عاشقانه و زندگی را بشنوید. هر گل رازی از دل طبیعت برای شما دارد.",
-    isNew: true,
+    isNew: false,
     icon: "flower"
   },
   {
@@ -134,7 +143,7 @@ export const readingsTools: Tool[] = [
     name: "فال سکه",
     category: "readings",
     description: "با پرتاب سکه‌های مقدس و تفسیر الگوهای آنها، پاسخ‌های دقیق و راهنمایی‌های روشن برای سوالات مهم زندگی خود دریافت کنید.",
-    isNew: true,
+    isNew: false,
     icon: "coins"
   },
   {
@@ -143,7 +152,7 @@ export const readingsTools: Tool[] = [
     name: "فال خواب",
     category: "readings",
     description: "خواب‌های خود را تعریف کنید و با استفاده از دانش باستانی تعبیر خواب، معنای عمیق و پیام‌های پنهان رؤیاهایتان را کشف نمایید.",
-    isNew: true,
+    isNew: false,
     icon: "moon"
   },
   {
@@ -152,17 +161,8 @@ export const readingsTools: Tool[] = [
     name: "فال نام",
     category: "readings",
     description: "با تحلیل حروف و اعداد نام خود، شخصیت، استعدادها و سرنوشت خود را بشناسید و از قدرت پنهان نام خود آگاه شوید.",
-    isNew: true,
+    isNew: false,
     icon: "user"
-  },
-  {
-    id: "color-reading",
-    slug: "color-reading",
-    name: "فال رنگ",
-    category: "readings",
-    description: "با انتخاب رنگ‌هایی که به آنها کشیده می‌شوید، شخصیت، حالات روحی و مسیر آینده خود را از طریق روانشناسی رنگ‌ها کشف کنید.",
-    isNew: true,
-    icon: "palette"
   },
   {
     id: "fragrance-divination",
@@ -170,7 +170,7 @@ export const readingsTools: Tool[] = [
     name: "فال عطر",
     category: "readings",
     description: "با حس بویایی و انتخاب عطرها و رایحه‌های مختلف، پیام‌های حسی و روحانی دریافت کنید و از قدرت شفابخش عطرها بهره‌مند شوید.",
-    isNew: true,
+    isNew: false,
     icon: "sparkles"
   }
 ];

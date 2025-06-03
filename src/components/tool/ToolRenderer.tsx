@@ -29,6 +29,12 @@ import Lithomancy from '@/components/readings/Lithomancy';
 import Numerology from '@/components/readings/Numerology';
 import CoffeeReading from '@/components/readings/CoffeeReading';
 import WoodDivination from '@/components/readings/WoodDivination';
+import MirrorScrying from '@/components/readings/MirrorScrying';
+import FlowerReading from '@/components/readings/FlowerReading';
+import CoinOracle from '@/components/readings/CoinOracle';
+import DreamInterpretation from '@/components/readings/DreamInterpretation';
+import NameNumerology from '@/components/readings/NameNumerology';
+import FragranceDivination from '@/components/readings/FragranceDivination';
 
 // Import Persian cultural tools
 import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
@@ -90,6 +96,12 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'numerology') return <Numerology />;
   if (toolType === 'coffee-reading') return <CoffeeReading />;
   if (toolType === 'wood-divination') return <WoodDivination />;
+  if (toolType === 'mirror-scrying') return <MirrorScrying />;
+  if (toolType === 'flower-reading') return <FlowerReading />;
+  if (toolType === 'coin-oracle') return <CoinOracle />;
+  if (toolType === 'dream-interpretation') return <DreamInterpretation />;
+  if (toolType === 'name-numerology') return <NameNumerology />;
+  if (toolType === 'fragrance-divination') return <FragranceDivination />;
   
   // Persian cultural tools
   if (toolType === 'persian-calendar') return <PersianCalendar />;
