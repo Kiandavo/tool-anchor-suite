@@ -35,32 +35,21 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       <meta name="keywords" content={keywords} />
       <html lang={language} dir="rtl" />
       
-      {/* Google's Core Web Vitals optimization */}
+      {/* Speed optimization meta tags */}
       <meta httpEquiv="x-dns-prefetch-control" content="on" />
       <link rel="dns-prefetch" href="https://cdn.fontcdn.ir" />
-      <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://cdn.fontcdn.ir" crossOrigin="anonymous" />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      
-      {/* Critical resource preloading */}
       <link rel="preload" as="font" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff" type="font/woff" crossOrigin="anonymous" />
-      <link rel="preload" as="image" href={logoUrl} />
       
-      {/* PWA and mobile optimization */}
+      {/* PWA meta tags */}
       <meta name="theme-color" content="#7E49F2" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       <meta name="apple-mobile-web-app-title" content="لنگر" />
-      <meta name="format-detection" content="telephone=no" />
       
-      {/* Enhanced robots meta tags for Google compliance */}
+      {/* Robots meta tags */}
       {noindex ? (
-        <>
-          <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
-          <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
-          <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet" />
-        </>
+        <meta name="robots" content="noindex, nofollow" />
       ) : (
         <>
           <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -72,14 +61,13 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       {/* Canonical URL */}
       <link rel="canonical" href={currentUrl} />
       
-      {/* Enhanced favicon support */}
+      {/* Favicons */}
       <link rel="icon" href={logoUrl} />
       <link rel="apple-touch-icon" sizes="180x180" href={logoUrl} />
       <link rel="icon" type="image/png" sizes="32x32" href={logoUrl} />
       <link rel="icon" type="image/png" sizes="16x16" href={logoUrl} />
-      <link rel="mask-icon" href={logoUrl} color="#7E49F2" />
       
-      {/* Enhanced Open Graph for better social sharing */}
+      {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content={currentUrl} />
       <meta property="og:title" content={title} />
@@ -88,26 +76,20 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={title} />
-      <meta property="og:locale" content={language === 'fa' ? 'fa_IR' : 'en_US'} />
+      <meta property="og:locale" content={language} />
       <meta property="og:site_name" content="لنگر - ابزارهای آنلاین" />
 
-      {/* Enhanced Twitter Cards */}
+      {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={currentUrl} />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={`https://langar.co${image}`} />
-      <meta property="twitter:image:alt" content={title} />
       <meta property="twitter:site" content="@langar_app" />
-      <meta property="twitter:creator" content="@langar_app" />
       
-      {/* Additional SEO meta tags */}
-      <meta name="author" content="Langar Tools" />
-      <meta name="publisher" content="Langar Tools" />
-      <meta name="copyright" content="© 2024 Langar Tools" />
-      <meta name="revisit-after" content="1 days" />
-      <meta name="distribution" content="global" />
-      <meta name="rating" content="general" />
+      {/* Resource hints for performance */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       
       {/* Schema.org structured data */}
       {schema && (

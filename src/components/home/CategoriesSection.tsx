@@ -1,72 +1,46 @@
 
 import React from 'react';
 import { CategoryCard } from '@/components/CategoryCard';
-import { tools, categoryLabels, getToolsByCategory } from '@/data/tools';
-import { fallbackTools, fallbackCategoryLabels } from '@/data/fallback-tools';
+import { ToolCategory, categoryLabels, getToolsByCategory } from '@/data/tools';
+import { Grid3X3, ChevronLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const CategoriesSection = () => {
-  console.log('CategoriesSection: Component rendering');
-  
-  // Use actual tools with fallbacks
-  const allTools = tools.length > 0 ? tools : fallbackTools;
-  const labels = tools.length > 0 ? categoryLabels : fallbackCategoryLabels;
-  
-  console.log('CategoriesSection: Tools count:', allTools.length);
-  
-  // Calculate category counts
-  const categoryData = Object.entries(labels).map(([category, label]) => {
-    const count = tools.length > 0 
-      ? getToolsByCategory(category as any).length 
-      : allTools.filter(tool => tool.category === category).length;
-    
-    return {
-      category: category as any,
-      label,
-      count
-    };
-  }).filter(cat => cat.count > 0); // Only show categories with tools
-
-  console.log('CategoriesSection: Categories with tools:', categoryData.length);
-
-  if (categoryData.length === 0) {
-    console.warn('CategoriesSection: No categories available');
-    return (
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">دسته‌بندی‌ها در حال بارگیری...</h2>
-            <p className="text-gray-600">لطفاً چند لحظه صبر کنید</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // Get counts for each category
+  const categories = Object.keys(categoryLabels) as ToolCategory[];
+  const categoryCounts = categories.map(category => ({
+    category,
+    count: getToolsByCategory(category).length
+  }));
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">دسته‌بندی ابزارها</h2>
-          <p className="text-gray-600">
-            ابزارها را بر اساس کاربرد دسته‌بندی کرده‌ایم تا سریع‌تر پیدایشان کنید
-          </p>
+    <section className="mb-16 sm:mb-24 animate-slide-up px-2">
+      <div className="flex justify-between items-center mb-8">
+        <div className="flex items-center">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-apple-blue/20 to-apple-blue/10 flex items-center justify-center mr-3 shadow-sm">
+            <Grid3X3 size={20} className="text-apple-blue" />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100">
+            دسته‌بندی‌ها
+          </h2>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {categoryData.map(({ category, count }) => (
-            <CategoryCard 
-              key={category} 
-              category={category} 
-              count={count}
-            />
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <p className="text-sm text-gray-500">
-            مجموعاً {allTools.length} ابزار در {categoryData.length} دسته‌بندی
-          </p>
-        </div>
+        
+        <Link to="/all-tools" className="text-apple-blue flex items-center text-sm font-medium hover:underline group bg-apple-blue/5 py-1.5 px-3 rounded-full">
+          مشاهده همه
+          <ChevronLeft size={18} className="mr-1 group-hover:translate-x-[-2px] transition-transform" />
+        </Link>
+      </div>
+      
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        {categoryCounts.map(({ category, count }, index) => (
+          <div 
+            key={category} 
+            className="animate-fade-in" 
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <CategoryCard category={category} count={count} />
+          </div>
+        ))}
       </div>
     </section>
   );

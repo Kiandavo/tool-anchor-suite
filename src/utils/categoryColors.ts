@@ -1,90 +1,66 @@
 
-import { ToolCategory } from '@/data/tools';
+import { ToolCategory } from '@/types/tool-types';
 
-export interface CategoryTheme {
+type CategoryTheme = {
   gradient: string;
-  background: string;
-  border: string;
-  text: string;
-  icon: string;
-}
+  iconColor: string;
+  badgeClass: string;
+};
 
 export const categoryThemes: Record<ToolCategory, CategoryTheme> = {
   text: {
-    gradient: 'from-blue-500 to-blue-600',
-    background: 'bg-blue-50',
-    border: 'border-blue-200',
-    text: 'text-blue-800',
-    icon: 'text-blue-600'
-  },
-  calculator: {
-    gradient: 'from-green-500 to-green-600',
-    background: 'bg-green-50',
-    border: 'border-green-200',
-    text: 'text-green-800',
-    icon: 'text-green-600'
+    gradient: "bg-gradient-to-br from-[#E5DEFF]/80 to-[#D6BCFA]/80",
+    iconColor: "text-purple-600",
+    badgeClass: "bg-purple-100 text-purple-600",
   },
   image: {
-    gradient: 'from-purple-500 to-purple-600',
-    background: 'bg-purple-50',
-    border: 'border-purple-200',
-    text: 'text-purple-800',
-    icon: 'text-purple-600'
+    gradient: "bg-gradient-to-br from-[#D3E4FD]/80 to-[#0EA5E9]/80",
+    iconColor: "text-blue-600",
+    badgeClass: "bg-blue-100 text-blue-600",
+  },
+  calculators: {
+    gradient: "bg-gradient-to-br from-[#F2FCE2]/80 to-[#8cc55b]/80",
+    iconColor: "text-green-600",
+    badgeClass: "bg-green-100 text-green-600",
   },
   seo: {
-    gradient: 'from-orange-500 to-orange-600',
-    background: 'bg-orange-50',
-    border: 'border-orange-200',
-    text: 'text-orange-800',
-    icon: 'text-orange-600'
-  },
-  random: {
-    gradient: 'from-pink-500 to-pink-600',
-    background: 'bg-pink-50',
-    border: 'border-pink-200',
-    text: 'text-pink-800',
-    icon: 'text-pink-600'
-  },
-  'persian-cultural': {
-    gradient: 'from-indigo-500 to-indigo-600',
-    background: 'bg-indigo-50',
-    border: 'border-indigo-200',
-    text: 'text-indigo-800',
-    icon: 'text-indigo-600'
-  },
-  readings: {
-    gradient: 'from-violet-500 to-violet-600',
-    background: 'bg-violet-50',
-    border: 'border-violet-200',
-    text: 'text-violet-800',
-    icon: 'text-violet-600'
-  },
-  productivity: {
-    gradient: 'from-teal-500 to-teal-600',
-    background: 'bg-teal-50',
-    border: 'border-teal-200',
-    text: 'text-teal-800',
-    icon: 'text-teal-600'
-  },
-  design: {
-    gradient: 'from-rose-500 to-rose-600',
-    background: 'bg-rose-50',
-    border: 'border-rose-200',
-    text: 'text-rose-800',
-    icon: 'text-rose-600'
+    gradient: "bg-gradient-to-br from-[#FEC6A1]/80 to-[#F97316]/80",
+    iconColor: "text-orange-600",
+    badgeClass: "bg-orange-100 text-orange-600",
   },
   number: {
-    gradient: 'from-amber-500 to-amber-600',
-    background: 'bg-amber-50',
-    border: 'border-amber-200',
-    text: 'text-amber-800',
-    icon: 'text-amber-600'
+    gradient: "bg-gradient-to-br from-[#FEF7CD]/80 to-[#F7C948]/80",
+    iconColor: "text-yellow-600",
+    badgeClass: "bg-yellow-100 text-yellow-600",
+  },
+  random: {
+    gradient: "bg-gradient-to-br from-[#FFDEE2]/80 to-[#D946EF]/80",
+    iconColor: "text-pink-600",
+    badgeClass: "bg-pink-100 text-pink-600",
   },
   educational: {
-    gradient: 'from-cyan-500 to-cyan-600',
-    background: 'bg-cyan-50',
-    border: 'border-cyan-200',
-    text: 'text-cyan-800',
-    icon: 'text-cyan-600'
+    gradient: "bg-gradient-to-br from-[#E0F2FE]/80 to-[#38BDF8]/80",
+    iconColor: "text-blue-600",
+    badgeClass: "bg-blue-100 text-blue-600",
+  },
+  productivity: {
+    gradient: "bg-gradient-to-br from-[#DCFCE7]/80 to-[#4ADE80]/80",
+    iconColor: "text-green-600",
+    badgeClass: "bg-green-100 text-green-600",
+  },
+  design: {
+    gradient: "bg-gradient-to-br from-[#FFE4E6]/80 to-[#FB7185]/80",
+    iconColor: "text-rose-600",
+    badgeClass: "bg-rose-100 text-rose-600",
+  },
+  "persian-cultural": {
+    gradient: "bg-gradient-to-br from-[#F1F5F9]/80 to-[#94A3B8]/80",
+    iconColor: "text-slate-600",
+    badgeClass: "bg-slate-100 text-slate-600",
+  },
+  "readings": {
+    gradient: "bg-gradient-to-br from-[#E5DEFF]/80 to-[#9b87f5]/80",
+    iconColor: "text-violet-600",
+    badgeClass: "bg-violet-100 text-violet-600",
   }
 };

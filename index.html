@@ -3,82 +3,56 @@
 <html lang="fa" dir="rtl" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>لنگر - ابزارهای آنلاین رایگان</title>
     <meta name="description" content="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی و بیش از ۱۱۰ ابزار کاربردی دیگر" />
     
-    <!-- Critical performance optimizations -->
+    <!-- Preconnect to critical domains -->
     <link rel="preconnect" href="https://cdn.fontcdn.ir" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff" as="font" type="font/woff" crossorigin />
     <link rel="preload" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" as="image" />
     
-    <!-- Critical inline CSS -->
+    <!-- Critical CSS -->
     <style>
       :root {
-        --font-sans: 'B Yekan', 'SF Pro Display', system-ui, sans-serif;
+        --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
         --font-persian: 'B Yekan', sans-serif;
       }
-      
       html {
         direction: rtl;
         scroll-behavior: smooth;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
       }
-      
       body {
         font-family: var(--font-sans);
         background-color: #fafaff;
         margin: 0;
         padding: 0;
         overflow-x: hidden;
-        color: #171717;
-        line-height: 1.6;
-        min-height: 100vh;
-      }
-      
-      /* Root element - always visible */
-      #root {
-        min-height: 100vh;
-        opacity: 1;
-        visibility: visible;
       }
     </style>
     
-    <!-- Enhanced favicon support -->
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
     
     <!-- PWA settings -->
     <meta name="theme-color" content="#7E49F2" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="لنگر" />
-    <meta name="format-detection" content="telephone=no" />
     
-    <!-- Enhanced Social Media Preview -->
+    <!-- Social Media Preview -->
     <meta property="og:title" content="لنگر - ابزارهای آنلاین رایگان" />
     <meta property="og:description" content="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی و بیش از ۱۱۰ ابزار کاربردی دیگر" />
     <meta property="og:image" content="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
     <meta property="og:url" content="https://langar.co" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="fa_IR" />
     
-    <!-- Load fonts with optimal display strategy -->
+    <!-- App Styles - Load with high priority -->
     <link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css"></noscript>
   </head>
-  <body>
+  <body class="bg-gray-50 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-50">
     <div id="root"></div>
-    
-    <!-- Scripts -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

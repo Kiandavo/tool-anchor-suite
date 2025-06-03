@@ -1,8 +1,9 @@
 
-import React, { useState, useEffect, memo, useCallback } from 'react';
+import React, { useState, useEffect, memo, useMemo, useCallback } from 'react';
 import { Header } from './layout/Header';
 import { Footer } from './layout/Footer';
 import { ScrollToTop } from './layout/ScrollToTop';
+import { ScrollIndicator } from './layout/ScrollIndicator';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,74 +12,72 @@ interface LayoutProps {
   backUrl?: string;
 }
 
-// Simplified scroll state hook to prevent excessive re-renders
-const useScrollState = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
+// Memoized child components
+const MemoizedHeader = memo(Header);
+const MemoizedFooter = memo(Footer);
+const MemoizedScrollToTop = memo(ScrollToTop);
+const MemoizedScrollIndicator = memo(ScrollIndicator);
 
-  const updateScrollState = useCallback(() => {
-    const scrollY = window.scrollY;
-    const newIsScrolled = scrollY > 20;
-    const newShowScrollTop = scrollY > 300;
-    
-    // Only update if state actually changed to prevent unnecessary re-renders
-    setIsScrolled(prev => prev !== newIsScrolled ? newIsScrolled : prev);
-    setShowScrollTop(prev => prev !== newShowScrollTop ? newShowScrollTop : prev);
-  }, []);
+// Optimized scroll state hook
+const useScrollState = () => {
+  const [scrollState, setScrollState] = useState({
+    isScrolled: false,
+    showScrollTop: false
+  });
 
   useEffect(() => {
-    console.log('Layout: Setting up scroll listener');
-    
-    // Throttled scroll handler with requestAnimationFrame for better performance
     let ticking = false;
-    const throttledScroll = () => {
+    
+    const handleScroll = () => {
       if (!ticking) {
-        requestAnimationFrame(() => {
-          updateScrollState();
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          setScrollState({
+            isScrolled: scrollY > 20,
+            showScrollTop: scrollY > 300
+          });
           ticking = false;
         });
         ticking = true;
       }
     };
-
-    // Initial call
-    updateScrollState();
     
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-    
-    return () => {
-      console.log('Layout: Cleaning up scroll listener');
-      window.removeEventListener('scroll', throttledScroll);
-    };
-  }, [updateScrollState]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  return { isScrolled, showScrollTop };
+  return scrollState;
 };
 
 export const Layout = memo(function Layout({
   children,
+  showSearch = true,
   title,
   backUrl
 }: LayoutProps) {
-  console.log('Layout: Rendering with title:', title);
-  
   const { isScrolled, showScrollTop } = useScrollState();
 
-  useEffect(() => {
-    console.log('Layout: Mounted successfully');
-    return () => console.log('Layout: Unmounting');
-  }, []);
+  // Memoize decorative gradients to prevent re-renders
+  const decorativeGradients = useMemo(() => (
+    <div className="fixed inset-0 -z-10 pointer-events-none">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl opacity-70" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full filter blur-3xl opacity-70" />
+    </div>
+  ), []);
 
   return (
-    <div className="min-h-screen flex flex-col pb-16 font-sans relative bg-white" dir="rtl">
-      <Header title={title} backUrl={backUrl} isScrolled={isScrolled} />
+    <div className="min-h-screen flex flex-col pb-16 font-sans relative overflow-hidden" dir="rtl">
+      {decorativeGradients}
+
+      <MemoizedHeader title={title} backUrl={backUrl} isScrolled={isScrolled} />
       
       <main className="flex-1 container mx-auto px-4 sm:px-6 py-6 sm:py-8 mt-0 max-w-[1400px] relative">
         {children}
       </main>
 
-      {showScrollTop && <ScrollToTop show={showScrollTop} />}
-      <Footer />
+      <MemoizedScrollIndicator isScrolled={isScrolled} />
+      {showScrollTop && <MemoizedScrollToTop show={showScrollTop} />}
+      <MemoizedFooter />
     </div>
   );
 });

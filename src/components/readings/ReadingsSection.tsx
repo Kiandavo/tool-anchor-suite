@@ -7,11 +7,10 @@ import { getToolsByCategory } from '@/data/tools';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import { EnhancedGradientBackground } from '@/components/ui/enhanced-gradient-background';
-import { LucideProps } from 'lucide-react';
 
-// Icon mapping for tools - updated to use proper Lucide React types
-const getToolIcon = (iconName: string): React.ComponentType<LucideProps> => {
-  const iconMap: Record<string, React.ComponentType<LucideProps>> = {
+// Icon mapping for tools
+const getToolIcon = (iconName: string) => {
+  const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
     'sparkles': Sparkles,
     'star': Star,
     'book': BookOpen,

@@ -8,7 +8,6 @@ export default {
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
-		"./index.html",
 	],
 	prefix: "",
 	theme: {
@@ -23,7 +22,7 @@ export default {
 			'vazirmatn': ['B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
 			'sf': ['"SF Pro Display"', 'B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
 			'byekan': ['B Yekan', 'system-ui', 'sans-serif'],
-			'sans': ['B Yekan', '"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+			'sans': ['B Yekan', '"SF Pro Display"', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {
@@ -71,18 +70,18 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				apple: {
-					blue: 'rgb(var(--apple-blue))',
-					purple: 'rgb(var(--apple-purple))',
-					green: 'rgb(var(--apple-green))',
-					orange: 'rgb(var(--apple-orange))',
-					red: 'rgb(var(--apple-red))',
-					yellow: 'rgb(var(--apple-yellow))',
+					blue: '#007AFF',
 					gray: '#8E9196',
 					'light-gray': '#F6F6F7',
 					'dark-gray': '#333333',
 					black: '#000000',
 					white: '#FFFFFF',
+					purple: '#9b87f5',
+					green: '#8cc55b',
+					orange: '#F97316',
+					yellow: '#F7C948',
 					pink: '#D946EF',
+					red: '#FF3B30',
 					teal: '#5AC8FA',
 					indigo: '#5856D6',
 				}
@@ -92,18 +91,11 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
-			spacing: {
-				'18': '4.5rem',
-				'88': '22rem',
-			},
 			boxShadow: {
 				'apple-sm': '0 2px 5px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
 				'apple': '0 4px 10px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.1)',
 				'apple-lg': '0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1)',
 				'apple-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
-			},
-			borderWidth: {
-				'3': '3px',
 			},
 			keyframes: {
 				'accordion-down': {

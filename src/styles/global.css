@@ -1,11 +1,44 @@
 
+/* Optimized global styles - only critical imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Import all modular CSS files */
-@import './variables.css';
-@import './base-styles.css';
-@import './layout.css';
-@import './glass-effects.css';
-@import './core-animations.css';
+/* Critical styles only */
+@import './critical.css';
+@import './fonts.css';
+@import './components.css';
+@import './animations.css';
+
+/* Performance optimizations */
+* {
+  cursor: inherit;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* High-performance transitions */
+button, a, [role="button"] {
+  transition: all 0.2s ease;
+}
+
+/* Enhanced focus for accessibility */
+:focus-visible {
+  outline: 2px solid rgb(var(--apple-blue));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Performance optimized animations */
+.animate-fade-in, .animate-slide-up {
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes */
+.animate-fade-in.animation-complete,
+.animate-slide-up.animation-complete {
+  will-change: auto;
+}
