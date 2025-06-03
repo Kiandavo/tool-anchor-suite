@@ -3,14 +3,14 @@ export type ToolCategory =
   | "text" 
   | "image" 
   | "seo" 
-  | "calculators" 
+  | "calculator" 
   | "number" 
   | "random"
   | "educational"
   | "productivity"
   | "design"
   | "persian-cultural"
-  | "readings"; // Added new category
+  | "readings";
 
 export interface Tool {
   id: string;
@@ -28,12 +28,12 @@ export const categoryLabels: Record<ToolCategory, string> = {
   text: "متن",
   image: "تصویر",
   seo: "سئو",
-  calculators: "ماشین حساب",
+  calculator: "ماشین حساب",
   number: "اعداد",
   random: "تصادفی",
   educational: "آموزشی",
   productivity: "بهره‌وری",
   design: "طراحی",
   "persian-cultural": "فرهنگ فارسی",
-  "readings": "فال و طالع‌بینی" // Added Persian translation for readings
+  "readings": "فال و طالع‌بینی"
 };

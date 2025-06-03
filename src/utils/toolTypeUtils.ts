@@ -1,3 +1,4 @@
+
 export const toolTypeBySlug: Record<string, string> = {
   'text-counter': 'text',
   'reverse-text': 'text',

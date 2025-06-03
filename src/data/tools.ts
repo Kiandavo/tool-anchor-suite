@@ -51,151 +51,35 @@ export const categoryLabels: Record<ToolCategory, string> = {
   'educational': 'آموزشی'
 };
 
+// Helper function to convert category tools to main Tool interface
+const convertCategoryTools = (tools: any[], category: ToolCategory): Tool[] => {
+  return tools.map(tool => ({
+    id: tool.id,
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    category: category,
+    icon: tool.icon,
+    isNew: tool.isNew || false,
+    isPopular: false,
+    isComingSoon: tool.isComingSoon || false,
+    isPremium: tool.isPremium || false
+  }));
+};
+
 // Consolidated tool registry from all category files
 export const tools: Tool[] = [
-  // Convert type-specific tools to main Tool interface
-  ...textTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'text' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: tool.isComingSoon,
-    isPremium: tool.isPremium
-  })),
-  
-  ...imageTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'image' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: false,
-    isPremium: false
-  })),
-  
-  ...seoTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'seo' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: false,
-    isPremium: false
-  })),
-  
-  ...calculatorTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'calculator' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: false,
-    isPremium: false
-  })),
-  
-  ...numberTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'number' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: false,
-    isPremium: false
-  })),
-  
-  ...randomTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'random' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: false,
-    isPremium: false
-  })),
-  
-  ...designTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'design' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: tool.isComingSoon,
-    isPremium: false
-  })),
-  
-  ...productivityTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'productivity' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: tool.isComingSoon,
-    isPremium: false
-  })),
-  
-  ...educationalTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'educational' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: tool.isComingSoon,
-    isPremium: false
-  })),
-  
-  ...persianCulturalTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'persian-cultural' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: tool.isComingSoon,
-    isPremium: false
-  })),
-  
-  ...readingsTools.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: 'readings' as ToolCategory,
-    icon: tool.icon,
-    isNew: tool.isNew,
-    isPopular: false,
-    isComingSoon: false,
-    isPremium: false
-  }))
+  ...convertCategoryTools(textTools, 'text'),
+  ...convertCategoryTools(imageTools, 'image'),
+  ...convertCategoryTools(seoTools, 'seo'),
+  ...convertCategoryTools(calculatorTools, 'calculator'),
+  ...convertCategoryTools(numberTools, 'number'),
+  ...convertCategoryTools(randomTools, 'random'),
+  ...convertCategoryTools(designTools, 'design'),
+  ...convertCategoryTools(productivityTools, 'productivity'),
+  ...convertCategoryTools(educationalTools, 'educational'),
+  ...convertCategoryTools(persianCulturalTools, 'persian-cultural'),
+  ...convertCategoryTools(readingsTools, 'readings')
 ];
 
 // Mark popular tools

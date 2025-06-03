@@ -19,6 +19,7 @@ import HashGenerator from '@/pages/ToolTypes/UtilityTools/HashGenerator';
 // Import readings components
 import { TarotReading } from '@/components/fal/TarotReading';
 import { Horoscope } from '@/components/fal/Horoscope';
+import { HafezFortune } from '@/components/HafezFortune';
 import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
 import { ParallelUniverseExplorer } from '@/components/fal/parallelUniverse/ParallelUniverseExplorer';
 import AuraReading from '@/components/readings/AuraReading';
@@ -86,6 +87,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   // Readings tools
   if (toolType === 'tarot-reading') return <TarotReading />;
   if (toolType === 'horoscope') return <Horoscope />;
+  if (toolType === 'hafez-fortune') return <HafezFortune />;
   if (toolType === 'rumi-istikhara') return <RumiIstikhara />;
   if (toolType === 'parallel-universe') return <ParallelUniverseExplorer />;
   if (toolType === 'aura-reading') return <AuraReading />;
