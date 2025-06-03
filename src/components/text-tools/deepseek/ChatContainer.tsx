@@ -1,13 +1,16 @@
+
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
-import ModelSelector from './ModelSelector';
-import SettingsControls from './SettingsControls';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import ChatMessages from './ChatMessages';
 import MessageInput from './MessageInput';
+import SettingsControls from './SettingsControls';
+import ApiKeySection from './ApiKeySection';
 import ApiErrorAlert from './ApiErrorAlert';
-import { Sparkles } from 'lucide-react';
+import { Message } from './types';
+
 interface ChatContainerProps {
-  messages: any[];
+  messages: Message[];
   isLoading: boolean;
   hasApiError: boolean;
   apiErrorMessage: string;
@@ -23,7 +26,12 @@ interface ChatContainerProps {
   handleRetryConnection: () => void;
   clearMessages: () => void;
   startNewChat: () => void;
+  apiKey: string;
+  setApiKey: (key: string) => void;
+  isSaved: boolean;
+  setIsSaved: (saved: boolean) => void;
 }
+
 const ChatContainer: React.FC<ChatContainerProps> = ({
   messages,
   isLoading,
@@ -40,49 +48,71 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   handleSendMessage,
   handleRetryConnection,
   clearMessages,
-  startNewChat
+  startNewChat,
+  apiKey,
+  setApiKey,
+  isSaved,
+  setIsSaved
 }) => {
-  return <div className="space-y-4">
-      <Card className="glass-card border-purple-100/20 bg-gradient-to-br from-[#F2FCE2]/30 to-[#F7FDF0]/30 rounded-3xl shadow-md hover:shadow-lg transition-all duration-300">
-        <CardContent className="pt-6">
-          <div className="space-y-6">
-            {/* Header with Title */}
-            <div className="flex items-center justify-center mb-4 bg-red-600">
-              <h2 className="text-2xl font-bold title-gradient">دستیار هوش مصنوعی دیپ‌سیک</h2>
-              <Sparkles className="h-5 w-5 mr-2 text-primary" />
-            </div>
-            
-            {/* Settings Section */}
-            <div className="space-y-4">
-              <div className="flex flex-col md:flex-row md:items-end gap-3">
-                <div className="flex-1">
-                  <button onClick={startNewChat} className="vibrant-button inline-flex items-center px-5 py-2.5 rounded-full text-sm font-medium hover:shadow-md transition-all duration-300">
-                    گفتگوی جدید
-                  </button>
-                </div>
-                <ModelSelector selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
-              </div>
-              
-              <SettingsControls temperature={temperature} setTemperature={setTemperature} contextLength={contextLength} setContextLength={setContextLength} />
-            </div>
-            
-            {hasApiError && <ApiErrorAlert hasApiError={hasApiError} errorMessage={apiErrorMessage} onRetry={handleRetryConnection} />}
+  const setHasApiError = () => {}; // Placeholder for compatibility
 
-            {/* Messages Area */}
-            <div className="neo-glass rounded-3xl bg-white/50 shadow-inner">
-              <ChatMessages messages={messages} isLoading={isLoading} />
-            </div>
-            
-            {/* Input Area */}
-            <MessageInput inputMessage={inputMessage} setInputMessage={setInputMessage} handleSendMessage={handleSendMessage} clearMessages={clearMessages} isLoading={isLoading} messagesLength={messages.length} />
-            
-            <div className="text-xs text-center text-gray-500 pt-2 frost-glass rounded-xl p-3">
-              <p>این ابزار به صورت رایگان در اختیار شما قرار گرفته است</p>
-              <p className="mt-1">برای شروع مجدد گفتگو از دکمه "گفتگوی جدید" استفاده کنید</p>
-            </div>
+  return (
+    <div className="max-w-4xl mx-auto space-y-6">
+      <Card className="shadow-lg">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-bold text-right">
+            هوش مصنوعی دیپ‌سیک
+          </CardTitle>
+        </CardHeader>
+        
+        <CardContent className="space-y-4">
+          {/* API Key Section */}
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <ApiKeySection
+              apiKey={apiKey}
+              setApiKey={setApiKey}
+              isSaved={isSaved}
+              setIsSaved={setIsSaved}
+              setHasApiError={setHasApiError}
+            />
           </div>
+
+          {/* Settings Controls */}
+          <SettingsControls
+            selectedModel={selectedModel}
+            setSelectedModel={setSelectedModel}
+            temperature={temperature}
+            setTemperature={setTemperature}
+            contextLength={contextLength}
+            setContextLength={setContextLength}
+            startNewChat={startNewChat}
+          />
+
+          <Separator />
+
+          {/* Error Alert */}
+          {hasApiError && (
+            <ApiErrorAlert
+              message={apiErrorMessage}
+              onRetry={handleRetryConnection}
+            />
+          )}
+
+          {/* Chat Messages */}
+          <ChatMessages messages={messages} isLoading={isLoading} />
+
+          {/* Message Input */}
+          <MessageInput
+            inputMessage={inputMessage}
+            setInputMessage={setInputMessage}
+            handleSendMessage={handleSendMessage}
+            isLoading={isLoading}
+            disabled={!isSaved || !apiKey.trim()}
+          />
         </CardContent>
       </Card>
-    </div>;
+    </div>
+  );
 };
+
 export default ChatContainer;
