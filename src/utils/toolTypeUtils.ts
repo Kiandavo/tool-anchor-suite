@@ -1,27 +1,6 @@
-import {
-  TextToolType,
-  ImageToolType,
-  SEOToolType,
-  CalculatorToolType,
-  NumberToolType,
-  RandomToolType,
-  ProductivityToolType,
-  DesignToolType,
-  PersianCulturalToolType,
-  ReadingsToolType
-} from '@/types/tool-types';
 
-type ToolType =
-  | TextToolType
-  | ImageToolType
-  | SEOToolType
-  | CalculatorToolType
-  | NumberToolType
-  | RandomToolType
-  | ProductivityToolType
-  | DesignToolType
-  | PersianCulturalToolType
-  | ReadingsToolType;
+// Define tool types as string literals since the individual type interfaces don't exist
+type ToolType = string;
 
 export const toolTypeBySlug: Record<string, ToolType> = {
   "text-counter": "text",
