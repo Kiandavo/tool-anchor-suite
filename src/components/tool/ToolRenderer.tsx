@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Tool } from '@/data/tools';
 import { toolTypeBySlug } from '@/utils/toolTypeUtils';
@@ -27,6 +28,10 @@ import Lithomancy from '@/components/readings/Lithomancy';
 import Numerology from '@/components/readings/Numerology';
 import CoffeeReading from '@/components/readings/CoffeeReading';
 import WoodDivination from '@/components/readings/WoodDivination';
+import DailyHoroscope from '@/components/readings/DailyHoroscope';
+import PersianSuperstitions from '@/components/readings/PersianSuperstitions';
+import DreamInterpretation from '@/components/readings/DreamInterpretation';
+import NameNumerology from '@/components/readings/NameNumerology';
 
 // Import existing Persian cultural tools
 import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
@@ -77,10 +82,14 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'coffee-reading') return <CoffeeReading />;
   if (toolType === 'wood-divination') return <WoodDivination />;
   
-  // New readings tools (placeholder for now)
-  if (toolType === 'daily-horoscope' || toolType === 'persian-superstitions' || 
-      toolType === 'dream-interpretation' || toolType === 'name-numerology' ||
-      toolType === 'mirror-scrying' || toolType === 'flower-reading' || 
+  // New readings tools
+  if (toolType === 'daily-horoscope') return <DailyHoroscope />;
+  if (toolType === 'persian-superstitions') return <PersianSuperstitions />;
+  if (toolType === 'dream-interpretation') return <DreamInterpretation />;
+  if (toolType === 'name-numerology') return <NameNumerology />;
+  
+  // Placeholder for remaining new readings tools
+  if (toolType === 'mirror-scrying' || toolType === 'flower-reading' || 
       toolType === 'coin-oracle' || toolType === 'color-reading' || 
       toolType === 'fragrance-divination' || toolType === 'palm-reading') {
     return <ToolNotImplemented />;

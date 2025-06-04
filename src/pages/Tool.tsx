@@ -8,7 +8,6 @@ import { tools } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateToolSchema } from '@/utils/schemaUtils';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 const Tool = () => {
   const { slug } = useParams();

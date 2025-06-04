@@ -9,7 +9,7 @@ import {
   DesignToolType,
   PersianCulturalToolType,
   ReadingsToolType
-} from '@/types/toolTypes';
+} from '@/types/tool-types';
 
 type ToolType =
   | TextToolType
