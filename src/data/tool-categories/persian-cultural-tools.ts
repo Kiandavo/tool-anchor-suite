@@ -111,5 +111,46 @@ export const persianCulturalTools: Tool[] = [
     isNew: true,
     icon: "landmark",
     isComingSoon: false
+  },
+  // New Phase 1 tools
+  {
+    id: "persian-poetry-analysis",
+    slug: "persian-poetry-analysis",
+    name: "تحلیل شعر فارسی",
+    category: "persian-cultural",
+    description: "تحلیل بحر، قافیه و آرایه‌های ادبی در شعر فارسی",
+    isNew: true,
+    icon: "sparkles",
+    isComingSoon: false
+  },
+  {
+    id: "persian-date-events",
+    slug: "persian-date-events",
+    name: "رویدادهای تاریخی فارسی",
+    category: "persian-cultural",
+    description: "نمایش رویدادهای تاریخی مربوط به هر تاریخ شمسی",
+    isNew: true,
+    icon: "scroll-text",
+    isComingSoon: false
+  },
+  {
+    id: "persian-regional-dialects",
+    slug: "persian-regional-dialects",
+    name: "گویش‌های محلی ایران",
+    category: "persian-cultural",
+    description: "آشنایی با گویش‌های مختلف ایرانی مانند گیلکی، مازندرانی، لری",
+    isNew: true,
+    icon: "map",
+    isComingSoon: false
+  },
+  {
+    id: "traditional-persian-games",
+    slug: "traditional-persian-games",
+    name: "بازی‌های سنتی ایرانی",
+    category: "persian-cultural",
+    description: "آموزش بازی‌های سنتی مانند گل یا پوچ، علک دولک، یوبی",
+    isNew: true,
+    icon: "gamepad-2",
+    isComingSoon: false
   }
 ];

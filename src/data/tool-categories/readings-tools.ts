@@ -1,4 +1,3 @@
-
 import { Tool } from '@/types/tool-types';
 
 export const readingsTools: Tool[] = [
@@ -19,6 +18,15 @@ export const readingsTools: Tool[] = [
     description: "بر اساس برج تولد خود، پیش‌بینی‌های دقیق و شخصی‌سازی شده درباره عشق، کار، سلامتی و مسیر زندگی خود را دریافت کنید.",
     isNew: false,
     icon: "star"
+  },
+  {
+    id: "daily-horoscope",
+    slug: "daily-horoscope",
+    name: "طالع روزانه",
+    category: "readings",
+    description: "طالع‌بینی تفصیلی روزانه شامل عشق، کار، سلامتی، مالی و روابط اجتماعی بر اساس برج شما",
+    isNew: true,
+    icon: "sun"
   },
   {
     id: "hafez",
@@ -46,6 +54,33 @@ export const readingsTools: Tool[] = [
     description: "به جهان‌های موازی سفر کنید و نسخه‌های جایگزین زندگی خود را کشف کنید. ببینید در واقعیت‌های دیگر چه مسیرهایی را می‌توانستید طی کنید.",
     isNew: false,
     icon: "compass"
+  },
+  {
+    id: "persian-superstitions",
+    slug: "persian-superstitions",
+    name: "راهنمای خرافات ایرانی",
+    category: "readings",
+    description: "آشنایی با خرافات، باورهای مردمی و فولکلور ایرانی به همراه توضیحات فرهنگی و تاریخی",
+    isNew: true,
+    icon: "book"
+  },
+  {
+    id: "dream-interpretation",
+    slug: "dream-interpretation",
+    name: "تعبیر خواب",
+    category: "readings",
+    description: "تعبیر خواب بر اساس سنت‌های ایرانی و اسلامی با پایگاه داده جامع نمادها و معانی",
+    isNew: true,
+    icon: "moon"
+  },
+  {
+    id: "name-numerology",
+    slug: "name-numerology",
+    name: "اعداد شناسی نام",
+    category: "readings",
+    description: "تحلیل نام فارسی با محاسبات ابجد و اعداد شناسی سنتی ایرانی",
+    isNew: true,
+    icon: "hash"
   },
   {
     id: "aura-reading",
@@ -145,24 +180,6 @@ export const readingsTools: Tool[] = [
     description: "با پرتاب سکه‌های مقدس و تفسیر الگوهای آنها، پاسخ‌های دقیق و راهنمایی‌های روشن برای سوالات مهم زندگی خود دریافت کنید.",
     isNew: true,
     icon: "coins"
-  },
-  {
-    id: "dream-interpretation",
-    slug: "dream-interpretation",
-    name: "فال خواب",
-    category: "readings",
-    description: "خواب‌های خود را تعریف کنید و با استفاده از دانش باستانی تعبیر خواب، معنای عمیق و پیام‌های پنهان رؤیاهایتان را کشف نمایید.",
-    isNew: true,
-    icon: "moon"
-  },
-  {
-    id: "name-numerology",
-    slug: "name-numerology",
-    name: "فال نام",
-    category: "readings",
-    description: "با تحلیل حروف و اعداد نام خود، شخصیت، استعدادها و سرنوشت خود را بشناسید و از قدرت پنهان نام خود آگاه شوید.",
-    isNew: true,
-    icon: "user"
   },
   {
     id: "color-reading",

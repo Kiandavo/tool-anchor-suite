@@ -25,12 +25,10 @@ import Cleromancy from '@/components/readings/Cleromancy';
 import DistantReading from '@/components/readings/DistantReading';
 import Lithomancy from '@/components/readings/Lithomancy';
 import Numerology from '@/components/readings/Numerology';
-
-// Import new readings components
 import CoffeeReading from '@/components/readings/CoffeeReading';
 import WoodDivination from '@/components/readings/WoodDivination';
 
-// Import Persian cultural tools
+// Import existing Persian cultural tools
 import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
 import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
 import PersianProverbs from '@/pages/ToolTypes/PersianCultural/PersianProverbs';
@@ -42,6 +40,9 @@ import PersianMusic from '@/pages/ToolTypes/PersianCultural/PersianMusic';
 import PersianCuisine from '@/pages/ToolTypes/PersianCultural/PersianCuisine';
 import PersianHolidays from '@/pages/ToolTypes/PersianCultural/PersianHolidays';
 import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchitecture';
+
+// Import new Persian cultural tools
+import PersianPoetryAnalysis from '@/pages/ToolTypes/PersianCultural/PersianPoetryAnalysis';
 
 import PomodoroTimer from '@/pages/ToolTypes/ProductivityTools/PomodoroTimer';
 import ProjectBoard from '@/pages/ToolTypes/ProductivityTools/ProjectBoard';
@@ -73,15 +74,14 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'distant-reading') return <DistantReading />;
   if (toolType === 'lithomancy') return <Lithomancy />;
   if (toolType === 'numerology') return <Numerology />;
-  
-  // New readings tools
   if (toolType === 'coffee-reading') return <CoffeeReading />;
   if (toolType === 'wood-divination') return <WoodDivination />;
   
-  // Placeholder for other new readings tools
-  if (toolType === 'mirror-scrying' || toolType === 'flower-reading' || 
-      toolType === 'coin-oracle' || toolType === 'dream-interpretation' || 
-      toolType === 'name-numerology' || toolType === 'color-reading' || 
+  // New readings tools (placeholder for now)
+  if (toolType === 'daily-horoscope' || toolType === 'persian-superstitions' || 
+      toolType === 'dream-interpretation' || toolType === 'name-numerology' ||
+      toolType === 'mirror-scrying' || toolType === 'flower-reading' || 
+      toolType === 'coin-oracle' || toolType === 'color-reading' || 
       toolType === 'fragrance-divination' || toolType === 'palm-reading') {
     return <ToolNotImplemented />;
   }
@@ -94,6 +94,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'random-password') return <RandomPasswordTool />;
   if (toolType === 'random-color') return <RandomColorGenerator />;
   
+  // Existing Persian cultural tools
   if (toolType === 'persian-calendar') return <PersianCalendar />;
   if (toolType === 'persian-names') return <PersianNames />;
   if (toolType === 'persian-proverbs') return <PersianProverbs />;
@@ -105,6 +106,15 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (toolType === 'persian-cuisine') return <PersianCuisine />;
   if (toolType === 'persian-holidays') return <PersianHolidays />;
   if (toolType === 'persian-architecture') return <PersianArchitecture />;
+  
+  // New Persian cultural tools
+  if (toolType === 'persian-poetry-analysis') return <PersianPoetryAnalysis />;
+  
+  // Placeholder for other new Persian cultural tools
+  if (toolType === 'persian-date-events' || toolType === 'persian-regional-dialects' || 
+      toolType === 'traditional-persian-games') {
+    return <ToolNotImplemented />;
+  }
   
   if (toolType === 'pomodoro-timer') return <PomodoroTimer />;
   if (toolType === 'project-board') return <ProjectBoard />;
