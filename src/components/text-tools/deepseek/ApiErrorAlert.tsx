@@ -4,20 +4,16 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info, RefreshCw, WifiOff } from "lucide-react";
 
 interface ApiErrorAlertProps {
-  hasApiError: boolean;
-  errorMessage?: string;
+  message: string;
   onRetry: () => void;
 }
 
 const ApiErrorAlert: React.FC<ApiErrorAlertProps> = ({ 
-  hasApiError, 
-  errorMessage,
+  message,
   onRetry 
 }) => {
-  if (!hasApiError) return null;
-  
-  const isCorsError = errorMessage?.toLowerCase().includes('cors');
-  const isNetworkError = errorMessage?.toLowerCase().includes('failed to fetch') || 
+  const isCorsError = message?.toLowerCase().includes('cors');
+  const isNetworkError = message?.toLowerCase().includes('failed to fetch') || 
                         !navigator.onLine;
   
   return (
@@ -54,8 +50,8 @@ const ApiErrorAlert: React.FC<ApiErrorAlertProps> = ({
               </>
             )}
             
-            {errorMessage && !isCorsError && !isNetworkError && (
-              <div className="mt-1 text-xs opacity-90">{errorMessage}</div>
+            {message && !isCorsError && !isNetworkError && (
+              <div className="mt-1 text-xs opacity-90">{message}</div>
             )}
           </AlertDescription>
         </div>

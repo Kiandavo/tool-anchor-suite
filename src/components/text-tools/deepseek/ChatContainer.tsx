@@ -108,6 +108,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
             handleSendMessage={handleSendMessage}
             isLoading={isLoading}
             disabled={!isSaved || !apiKey.trim()}
+            clearMessages={clearMessages}
+            messagesLength={messages.length}
           />
         </CardContent>
       </Card>
