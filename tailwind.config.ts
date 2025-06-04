@@ -77,13 +77,14 @@ export default {
 					black: '#000000',
 					white: '#FFFFFF',
 					purple: '#9b87f5',
-					green: '#8cc55b',
+					green: '#10B981',
 					orange: '#F97316',
 					yellow: '#F7C948',
 					pink: '#D946EF',
 					red: '#FF3B30',
-					teal: '#5AC8FA',
-					indigo: '#5856D6',
+					teal: '#14B8A6',
+					cyan: '#06B6D4',
+					indigo: '#6366F1',
 				}
 			},
 			borderRadius: {
@@ -96,6 +97,8 @@ export default {
 				'apple': '0 4px 10px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.1)',
 				'apple-lg': '0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1)',
 				'apple-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
+				'neo': '0 8px 32px rgba(0, 0, 0, 0.1)',
+				'neo-lg': '0 12px 40px rgba(0, 0, 0, 0.15)',
 			},
 			keyframes: {
 				'accordion-down': {

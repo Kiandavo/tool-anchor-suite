@@ -42,17 +42,19 @@ export const ReadingsSection = () => {
   
   return (
     <motion.section 
-      className="mb-12 space-y-6 animate-fade-in rounded-3xl border border-orange-300/30 overflow-hidden" 
+      className="mb-12 space-y-6 animate-fade-in rounded-3xl border border-cyan-300/30 overflow-hidden" 
       style={{ animationDelay: '0.3s' }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <EnhancedGradientBackground variant="orange" className="p-8">
+      <EnhancedGradientBackground variant="teal" className="p-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
-            <Star size={20} className="ml-2 text-white" />
-            <h2 className="text-center text-white font-bold text-xl">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/20 backdrop-blur-sm mr-4 border border-white/30 shadow-lg">
+              <Star size={24} className="text-white" />
+            </div>
+            <h2 className="text-white font-bold text-2xl">
               فال و طالع‌بینی
             </h2>
           </div>
@@ -60,18 +62,18 @@ export const ReadingsSection = () => {
           <Button 
             variant="apple-outline" 
             size="apple-sm"
-            className="rounded-full flex items-center gap-1 bg-white/20 border-white/40 hover:bg-white/30 hover:border-white/60 text-white"
+            className="rounded-full flex items-center gap-2 bg-white/20 border-white/40 hover:bg-white/30 hover:border-white/60 text-white backdrop-blur-sm shadow-md"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? (
               <>
                 <ChevronUp size={16} />
-                <span className="text-sm">بستن</span>
+                <span className="text-sm font-medium">بستن</span>
               </>
             ) : (
               <>
                 <ChevronDown size={16} />
-                <span className="text-sm">نمایش همه</span>
+                <span className="text-sm font-medium">نمایش همه</span>
               </>
             )}
           </Button>
@@ -79,28 +81,28 @@ export const ReadingsSection = () => {
         
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           {/* Preview cards (always visible) */}
-          <div className="grid md:grid-cols-4 gap-4 mb-4">
+          <div className="grid md:grid-cols-4 gap-6 mb-6">
             {toolsPreview.map((tool) => {
               const IconComponent = getToolIcon(tool.icon);
               return (
                 <Link 
                   key={tool.id}
                   to={`/tool/${tool.slug}`} 
-                  className="bg-white/90 hover:bg-white/95 rounded-2xl p-4 border border-white/30 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] neo-glass relative overflow-hidden group"
+                  className="bg-white/95 hover:bg-white rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] neo-glass relative overflow-hidden group backdrop-blur-sm"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-500 mr-3 border border-orange-400/20 shadow-sm">
-                      <IconComponent size={20} className="text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-cyan-500 to-teal-600 mr-4 border border-cyan-400/20 shadow-md">
+                      <IconComponent size={24} className="text-white" />
                     </div>
                     <div>
-                      <h3 className="text-gray-800 font-medium text-sm">{tool.name}</h3>
+                      <h3 className="text-gray-800 font-semibold text-base">{tool.name}</h3>
                       {tool.isNew && (
-                        <span className="text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-sm">جدید</span>
+                        <span className="text-xs bg-cyan-100 text-cyan-700 px-2 py-1 rounded-lg font-medium">جدید</span>
                       )}
                     </div>
                   </div>
-                  <p className="text-gray-600 text-xs line-clamp-2">{tool.description}</p>
+                  <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed">{tool.description}</p>
                 </Link>
               );
             })}
@@ -113,7 +115,7 @@ export const ReadingsSection = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="grid md:grid-cols-4 gap-4"
+                className="grid md:grid-cols-4 gap-6"
               >
                 {readingsTools.slice(4).map((tool) => {
                   const IconComponent = getToolIcon(tool.icon);
@@ -121,28 +123,28 @@ export const ReadingsSection = () => {
                     <Link 
                       key={tool.id}
                       to={`/tool/${tool.slug}`} 
-                      className="bg-white/90 hover:bg-white/95 rounded-2xl p-4 border border-white/30 shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] neo-glass relative overflow-hidden group"
+                      className="bg-white/95 hover:bg-white rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] neo-glass relative overflow-hidden group backdrop-blur-sm"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-orange-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                      <div className="flex items-center mb-3">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-500 mr-3 border border-orange-400/20 shadow-sm">
-                          <IconComponent size={20} className="text-white" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                      <div className="flex items-center mb-4">
+                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-cyan-500 to-teal-600 mr-4 border border-cyan-400/20 shadow-md">
+                          <IconComponent size={24} className="text-white" />
                         </div>
                         <div>
-                          <h3 className="text-gray-800 font-medium text-sm">{tool.name}</h3>
+                          <h3 className="text-gray-800 font-semibold text-base">{tool.name}</h3>
                           {tool.isNew && (
-                            <span className="text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-sm">جدید</span>
+                            <span className="text-xs bg-cyan-100 text-cyan-700 px-2 py-1 rounded-lg font-medium">جدید</span>
                           )}
                         </div>
                       </div>
-                      <p className="text-gray-600 text-xs mb-3 line-clamp-2">{tool.description}</p>
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">{tool.description}</p>
                       <Button 
                         variant="link" 
                         size="sm" 
-                        className="text-orange-600 p-0 h-auto text-xs font-medium hover:text-orange-700"
+                        className="text-cyan-600 p-0 h-auto text-sm font-semibold hover:text-cyan-700"
                       >
                         مشاهده
-                        <ChevronRight size={14} className="mr-1 rtl:rotate-180" />
+                        <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
                       </Button>
                     </Link>
                   );
@@ -152,15 +154,15 @@ export const ReadingsSection = () => {
           </CollapsibleContent>
         </Collapsible>
         
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-8">
           <Link to="/category/readings">
             <Button 
               variant="apple"
               size="apple-sm"
-              className="bg-orange-500 hover:bg-orange-600 border-none text-white shadow-md"
+              className="bg-white text-cyan-700 hover:bg-gray-50 border-none shadow-lg font-semibold px-6 py-3 rounded-2xl"
             >
               نمایش همه ابزارهای فال و طالع‌بینی
-              <ChevronRight size={16} className="mr-1 rtl:rotate-180" />
+              <ChevronRight size={18} className="mr-2 rtl:rotate-180" />
             </Button>
           </Link>
         </div>

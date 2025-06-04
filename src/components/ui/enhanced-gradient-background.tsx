@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 interface EnhancedGradientBackgroundProps {
   className?: string;
   children: React.ReactNode;
-  variant?: 'default' | 'purple' | 'blue' | 'green' | 'orange' | 'readings';
+  variant?: 'default' | 'purple' | 'blue' | 'green' | 'orange' | 'readings' | 'teal';
 }
 
 export const EnhancedGradientBackground: React.FC<EnhancedGradientBackgroundProps> = ({
@@ -25,7 +25,8 @@ export const EnhancedGradientBackground: React.FC<EnhancedGradientBackgroundProp
     blue: 'bg-gradient-to-br from-[#f0f5ff] via-[#e4edff]/95 to-[#d8e5ff]/90 bg-pattern-subtle',
     green: 'bg-gradient-to-br from-[#f0fff5] via-[#e4ffed]/95 to-[#d8ffdf]/90 bg-pattern-subtle',
     orange: 'bg-gradient-to-br from-[#ff8c42] via-[#ff7b2a]/95 to-[#ff6912]/90 bg-pattern-subtle',
-    readings: 'bg-gradient-to-br from-[#ff8c42] via-[#ff7b2a]/95 to-[#ff6912]/90 bg-pattern-stars'
+    readings: 'bg-gradient-to-br from-[#ff8c42] via-[#ff7b2a]/95 to-[#ff6912]/90 bg-pattern-stars',
+    teal: 'bg-gradient-to-br from-[#14b8a6] via-[#0891b2]/95 to-[#0e7490]/90 bg-pattern-subtle'
   };
 
   if (!mounted) {
