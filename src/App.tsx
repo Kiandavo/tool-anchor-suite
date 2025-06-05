@@ -5,6 +5,7 @@ import { AppRoutes } from "@/components/AppRoutes";
 import { HelmetProvider } from "@/providers/HelmetProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppleLoading } from "@/components/ui/apple-loading";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 // Optimized QueryClient with better caching
 const queryClient = new QueryClient({
@@ -55,14 +56,16 @@ LoadingFallback.displayName = 'LoadingFallback';
 
 const App = () => {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <ThemeHandler />
-          <AppRoutes />
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <ThemeHandler />
+            <AppRoutes />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 };
 
