@@ -40,7 +40,14 @@ const Tool = () => {
     { label: tool.category, href: `/category/${tool.category}` },
     { label: tool.name, current: true }
   ];
-  const toolSchema = generateToolSchema(tool);
+  
+  // Fix for TS2554: generateToolSchema expects 4 arguments, so provide all required arguments
+  const toolSchema = generateToolSchema({
+    name: tool.name,
+    description: tool.description,
+    slug: tool.slug,
+    category: tool.category
+  });
 
   return (
     <Layout>
