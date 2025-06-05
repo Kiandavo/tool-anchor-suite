@@ -35,7 +35,11 @@ const Tool = () => {
     );
   }
 
-  const breadcrumbs = generateToolBreadcrumbs(tool.category, tool.name);
+  const breadcrumbs = [
+    { name: 'خانه', href: '/' },
+    { name: tool.category, href: `/category/${tool.category}` },
+    { name: tool.name, href: `/tool/${tool.slug}` }
+  ];
   const toolSchema = generateToolSchema(tool);
 
   return (
