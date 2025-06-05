@@ -5,12 +5,10 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { CategoriesSection } from '@/components/home/CategoriesSection';
 import { ToolsSection } from '@/components/home/ToolsSection';
 import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
-import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateWebsiteSchema } from '@/utils/schemaUtils';
 import { ReadingsSection } from '@/components/readings/ReadingsSection';
 import { FalSection } from '@/components/fal/FalSection';
-import { OptimizedImage } from '@/components/ui/optimized-image';
 
 // Memoize components that don't need to re-render
 const MemoizedCategoriesSection = memo(CategoriesSection);
@@ -41,13 +39,6 @@ const Index = () => {
     }
   };
   
-  // Preload critical resources
-  useEffect(() => {
-    // Preload key images
-    const mainLogo = new Image();
-    mainLogo.src = '/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png';
-  }, []);
-  
   return (
     <Layout>
       <SeoHead 
@@ -57,7 +48,6 @@ const Index = () => {
         schema={homeSchema}
         structuredData={[readingsSchema]}
       />
-      <GoogleAnalytics />
       <HeroSection />
       <MemoizedCategoriesSection />
       <MemoizedPersianCulturalSection />

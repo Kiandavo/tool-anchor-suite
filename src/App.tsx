@@ -6,11 +6,6 @@ import { HelmetProvider } from "@/providers/HelmetProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppleLoading } from "@/components/ui/apple-loading";
 
-// Lazy load non-critical components with better chunking
-const Toaster = lazy(() => import("@/components/ui/toaster").then(mod => ({ default: mod.Toaster })));
-const Sonner = lazy(() => import("@/components/ui/sonner").then(mod => ({ default: mod.Toaster })));
-const GoogleAnalytics = lazy(() => import("@/components/analytics/GoogleAnalytics").then(mod => ({ default: mod.GoogleAnalytics })));
-
 // Optimized QueryClient with better caching
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,11 +59,6 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <ThemeHandler />
-          <Suspense fallback={<LoadingFallback />}>
-            <Toaster />
-            <Sonner />
-            <GoogleAnalytics />
-          </Suspense>
           <AppRoutes />
         </TooltipProvider>
       </QueryClientProvider>

@@ -1,9 +1,8 @@
 
-import React, { ImgHTMLAttributes } from 'react';
+import React, { ImgHTMLAttributes, useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { useImageLazyLoad } from '@/hooks/useImageLazyLoad';
 
-interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'onLoad' | 'onError' | 'ref'> {
+interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'onLoad' | 'onError'> {
   src: string;
   alt: string;
   placeholderSrc?: string;
@@ -20,13 +19,35 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   loadingStrategy = 'lazy',
   ...props
 }) => {
-  const {
-    ref,
-    src: imageSrc,
-    isLoaded,
-    onLoad,
-    onError
-  } = useImageLazyLoad(src, placeholderSrc);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState(placeholderSrc);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (loadingStrategy === 'eager') {
+      setImageSrc(src);
+    }
+  }, [src, loadingStrategy]);
+
+  useEffect(() => {
+    if (loadingStrategy === 'lazy' && imgRef.current) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setImageSrc(src);
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(imgRef.current);
+      return () => observer.disconnect();
+    }
+  }, [src, loadingStrategy]);
+
+  const handleLoad = () => setIsLoaded(true);
+  const handleError = () => setImageSrc(placeholderSrc);
 
   return (
     <div
@@ -38,12 +59,12 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
       )}
     >
       <img
-        ref={ref}
+        ref={imgRef}
         src={imageSrc}
         alt={alt}
         loading={loadingStrategy}
-        onLoad={onLoad}
-        onError={onError as React.ReactEventHandler<HTMLImageElement>}
+        onLoad={handleLoad}
+        onError={handleError}
         className={cn(
           "w-full h-full object-cover transition-opacity duration-300",
           !isLoaded && "opacity-0",

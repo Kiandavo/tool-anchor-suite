@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ToolRenderer } from '@/components/tool/ToolRenderer';
-import { BreadcrumbNavigation, generateToolBreadcrumbs } from '@/components/ui/breadcrumb-navigation';
+import { BreadcrumbNavigation } from '@/components/ui/breadcrumb-navigation';
 import { tools } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
 import { SeoHead } from '@/components/seo/SeoHead';
@@ -36,9 +36,9 @@ const Tool = () => {
   }
 
   const breadcrumbs = [
-    { name: 'خانه', href: '/' },
-    { name: tool.category, href: `/category/${tool.category}` },
-    { name: tool.name, href: `/tool/${tool.slug}` }
+    { label: 'خانه', href: '/' },
+    { label: tool.category, href: `/category/${tool.category}` },
+    { label: tool.name, current: true }
   ];
   const toolSchema = generateToolSchema(tool);
 
