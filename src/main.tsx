@@ -1,8 +1,15 @@
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './styles/global.css'
 import { BrowserRouter } from 'react-router-dom'
+
+// Define the LayoutShift interface for TypeScript
+interface LayoutShift extends PerformanceEntry {
+  value: number;
+  hadRecentInput: boolean;
+}
 
 // Enhanced performance monitoring
 if (typeof window !== 'undefined' && 'performance' in window) {
