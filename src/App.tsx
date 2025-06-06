@@ -1,8 +1,6 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppRoutes } from "@/components/AppRoutes";
-import { HelmetProvider } from "@/providers/HelmetProvider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const queryClient = new QueryClient({
@@ -17,13 +15,9 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <ErrorBoundary>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <AppRoutes />
-          </TooltipProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppRoutes />
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 };

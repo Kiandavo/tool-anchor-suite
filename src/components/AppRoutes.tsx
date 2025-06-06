@@ -1,6 +1,10 @@
 
 import { Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import Index from "@/pages/index";
+import Category from "@/pages/Category";
+import Tool from "@/pages/Tool";
+import AllTools from "@/pages/AllTools";
+import NotFound from "@/pages/NotFound";
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-[70vh] w-full">
@@ -8,28 +12,14 @@ const LoadingFallback = () => (
   </div>
 );
 
-const Index = lazy(() => import("@/pages/index"));
-const Category = lazy(() => import("@/pages/Category"));
-const Tool = lazy(() => import("@/pages/Tool"));
-const Search = lazy(() => import("@/pages/Search"));
-const AllTools = lazy(() => import("@/pages/AllTools"));
-const Settings = lazy(() => import("@/pages/Settings"));
-const Community = lazy(() => import("@/pages/Community"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
-
 export const AppRoutes = () => {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/category/:categoryId" element={<Category />} />
-        <Route path="/tool/:slug" element={<Tool />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/all-tools" element={<AllTools />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/category/:categoryId" element={<Category />} />
+      <Route path="/tool/:slug" element={<Tool />} />
+      <Route path="/all-tools" element={<AllTools />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };

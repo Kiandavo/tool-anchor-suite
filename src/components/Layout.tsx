@@ -1,41 +1,28 @@
 
-import React, { useState, useEffect } from 'react';
-import { Header } from './layout/Header';
-import { Footer } from './layout/Footer';
+import React from 'react';
 
 interface LayoutProps {
   children: React.ReactNode;
-  showSearch?: boolean;
-  title?: string;
-  backUrl?: string;
 }
 
-export const Layout = ({
-  children,
-  showSearch = true,
-  title,
-  backUrl
-}: LayoutProps) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col" dir="rtl">
-      <Header title={title} backUrl={backUrl} isScrolled={isScrolled} />
+    <div className="min-h-screen" dir="rtl">
+      <header className="border-b bg-white">
+        <div className="container mx-auto px-4 py-4">
+          <h1 className="text-xl font-bold">لنگر</h1>
+        </div>
+      </header>
       
-      <main className="flex-1 container mx-auto px-4 py-6 max-w-6xl">
+      <main className="container mx-auto px-4 py-6 max-w-6xl">
         {children}
       </main>
 
-      <Footer />
+      <footer className="border-t bg-gray-50 mt-20">
+        <div className="container mx-auto px-4 py-8 text-center text-gray-600">
+          <p>© ۲۰۲۴ لنگر - ابزارهای آنلاین رایگان</p>
+        </div>
+      </footer>
     </div>
   );
 };
