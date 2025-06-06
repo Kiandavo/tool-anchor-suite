@@ -1,63 +1,141 @@
 
-/* Optimized global styles - only critical imports */
+/* Critical CSS - inlined for faster loading */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Critical styles only */
-@import './critical.css';
-@import './fonts.css';
-@import './components.css';
-@import './animations.css';
+/* Essential performance-critical styles only */
+@layer base {
+  :root {
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-persian: Tahoma, Arial, sans-serif;
+    --apple-blue: 37 99 235;
+    --apple-purple: 124 58 237;
+    --apple-green: 22 163 74;
+    --apple-orange: 234 88 12;
+    --text-primary: 23 23 23;
+    --text-secondary: 51 65 85;
+  }
 
-/* Performance optimizations */
-* {
-  cursor: inherit;
+  html {
+    scroll-behavior: smooth;
+    direction: rtl;
+    font-display: swap;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    background-color: #fafaff;
+    color: rgb(var(--text-primary));
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Performance optimizations */
+  * {
+    cursor: inherit;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
-img, video {
-  max-width: 100%;
-  height: auto;
+@layer components {
+  /* Critical loading spinner */
+  .apple-spinner {
+    @apply relative w-12 h-12 mx-auto;
+  }
+  
+  .apple-spinner::before {
+    @apply absolute inset-0 rounded-full border-3 border-gray-200;
+    content: '';
+  }
+  
+  .apple-spinner::after {
+    @apply absolute inset-0 rounded-full border-3 border-blue-600 border-t-transparent animate-spin;
+    content: '';
+  }
+
+  /* Performance-optimized glass effects */
+  .neo-glass {
+    @apply bg-white/80 backdrop-blur-sm border border-white/40;
+  }
+
+  .glass-nav {
+    @apply bg-white/90 backdrop-blur-md border-b border-gray-200/50;
+    transition: background-color 0.2s ease-out;
+  }
+
+  /* High-performance button */
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  /* Optimized card */
+  .card-base {
+    @apply rounded-lg border bg-card text-card-foreground shadow;
+  }
 }
 
-/* High-performance transitions */
-button, a, [role="button"] {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+@layer utilities {
+  /* Essential animations only - CPU optimized */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-/* Enhanced focus for accessibility */
-:focus-visible {
-  outline: 2px solid rgb(var(--apple-blue));
-  outline-offset: 2px;
-  border-radius: 8px;
-}
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-/* Performance optimized animations */
-.animate-fade-in, .animate-slide-up {
-  will-change: transform, opacity;
-}
+  .animate-fade-in {
+    animation: fadeIn 400ms ease-out forwards;
+    will-change: opacity;
+  }
 
-/* Remove will-change after animation completes */
-.animate-fade-in.animation-complete,
-.animate-slide-up.animation-complete {
-  will-change: auto;
-}
+  .animate-slide-up {
+    animation: slideUp 500ms ease-out forwards;
+    will-change: transform, opacity;
+  }
 
-/* Enhanced neo-glass effect */
-.neo-glass {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
+  /* Remove will-change after animation */
+  .animate-fade-in.animation-complete,
+  .animate-slide-up.animation-complete {
+    will-change: auto;
+  }
 
-/* Better hover effects */
-.hover-lift {
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  /* Enhanced focus for accessibility */
+  :focus-visible {
+    outline: 2px solid rgb(var(--apple-blue));
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
 
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  /* Optimized hover effects */
+  .hover-lift {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Persian text optimization */
+  .persian-text {
+    font-family: var(--font-persian);
+    direction: rtl;
+  }
+
+  /* Performance-optimized scroll */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
 }

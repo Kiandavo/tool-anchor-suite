@@ -41,28 +41,52 @@ export default defineConfig(({ mode }) => ({
         drop_console: mode === 'production',
         drop_debugger: mode === 'production',
         pure_funcs: mode === 'production' ? ['console.log', 'console.info'] : [],
-      }
+        passes: 2,
+      },
+      mangle: {
+        safari10: true,
+      },
     },
     rollupOptions: {
       output: {
         manualChunks: (id) => {
+          // More granular chunking for better caching
           if (id.includes('node_modules')) {
             if (id.includes('react') || id.includes('react-dom')) return 'react-vendor';
             if (id.includes('react-router')) return 'router';
-            if (id.includes('@radix-ui')) return 'ui';
+            if (id.includes('@radix-ui')) return 'ui-vendor';
             if (id.includes('framer-motion')) return 'animations';
             if (id.includes('lucide')) return 'icons';
+            if (id.includes('@tanstack/react-query')) return 'query';
             return 'vendor';
           }
-          if (id.includes('components/fal/')) return 'fortune';
+          
+          // Feature-based chunking
+          if (id.includes('components/fal/')) return 'fortune-tools';
           if (id.includes('components/readings/')) return 'readings';
-          if (id.includes('pages/ToolTypes/')) return 'tools';
+          if (id.includes('pages/ToolTypes/')) return 'tool-pages';
+          if (id.includes('components/text-tools/')) return 'text-tools';
+          if (id.includes('components/image-tools/')) return 'image-tools';
+          if (id.includes('data/tool-categories/')) return 'tool-data';
         },
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
+        entryFileNames: (chunkInfo) => {
+          const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId.split('/').pop() : 'unknown';
+          return `assets/${facadeModuleId}-[hash].js`;
+        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `assets/images/[name]-[hash].[ext]`;
+          }
+          if (/css/i.test(ext)) {
+            return `assets/css/[name]-[hash].[ext]`;
+          }
+          return `assets/[name]-[hash].[ext]`;
+        }
       }
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 800,
   }
 }));

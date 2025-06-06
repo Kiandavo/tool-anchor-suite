@@ -3,26 +3,42 @@
 <html lang="fa" dir="rtl" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>لنگر - ابزارهای آنلاین رایگان</title>
-    <meta name="description" content="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی و بیش از ۱۱۰ ابزار کاربردی دیگر" />
     
-    <!-- Preconnect to critical domains -->
+    <!-- Performance optimizations -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- Preconnect to critical domains for faster loading -->
     <link rel="preconnect" href="https://cdn.fontcdn.ir" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.fontcdn.ir" />
     
     <!-- Preload critical resources -->
     <link rel="preload" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" as="image" />
+    <link rel="preload" href="https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.woff2" as="font" type="font/woff2" crossorigin />
     
-    <!-- Critical CSS -->
+    <!-- SEO and Meta -->
+    <title>لنگر - ابزارهای آنلاین رایگان</title>
+    <meta name="description" content="مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، فال و طالع‌بینی و بیش از ۱۱۰ ابزار کاربردی دیگر" />
+    
+    <!-- Icons and PWA -->
+    <link rel="icon" type="image/svg+xml" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
+    
+    <!-- PWA settings -->
+    <meta name="theme-color" content="#7E49F2" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <!-- Critical CSS inlined for performance -->
     <style>
       :root {
-        --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', system-ui, sans-serif;
         --font-persian: Tahoma, Arial, sans-serif;
       }
       html {
         direction: rtl;
         scroll-behavior: smooth;
+        font-display: swap;
       }
       body {
         font-family: var(--font-sans);
@@ -30,19 +46,31 @@
         margin: 0;
         padding: 0;
         overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       .persian-text {
         font-family: var(--font-persian);
         direction: rtl;
       }
+      /* Loading spinner for immediate feedback */
+      .initial-loading {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+      }
     </style>
-    
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
-    
-    <!-- PWA settings -->
-    <meta name="theme-color" content="#7E49F2" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
     
     <!-- Social Media Preview -->
     <meta property="og:title" content="لنگر - ابزارهای آنلاین رایگان" />
@@ -50,9 +78,29 @@
     <meta property="og:image" content="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
     <meta property="og:url" content="https://langar.co" />
     <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="لنگر - ابزارهای آنلاین رایگان" />
+    <meta name="twitter:description" content="مجموعه کامل ابزارهای آنلاین رایگان" />
+    <meta name="twitter:image" content="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
   </head>
   <body class="bg-gray-50 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-50">
+    <!-- Loading indicator -->
+    <div id="initial-loader" class="initial-loading"></div>
+    
     <div id="root"></div>
+    
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Remove loading indicator once app loads -->
+    <script>
+      window.addEventListener('load', function() {
+        const loader = document.getElementById('initial-loader');
+        if (loader) {
+          loader.style.display = 'none';
+        }
+      });
+    </script>
   </body>
 </html>
