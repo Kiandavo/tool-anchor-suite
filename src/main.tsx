@@ -1,4 +1,3 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
@@ -12,8 +11,9 @@ if (typeof window !== 'undefined' && 'performance' in window) {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if (entry.entryType === 'navigation') {
+          const navEntry = entry as PerformanceNavigationTiming;
           console.log('Page Load Time:', entry.duration);
-          console.log('DOM Content Loaded:', entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart);
+          console.log('DOM Content Loaded:', navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart);
         }
         
         // Monitor Largest Contentful Paint (LCP)
@@ -23,12 +23,16 @@ if (typeof window !== 'undefined' && 'performance' in window) {
         
         // Monitor First Input Delay (FID)
         if (entry.entryType === 'first-input') {
-          console.log('FID:', entry.processingStart - entry.startTime);
+          const fidEntry = entry as PerformanceEventTiming;
+          console.log('FID:', fidEntry.processingStart - fidEntry.startTime);
         }
         
         // Monitor Cumulative Layout Shift (CLS)
-        if (entry.entryType === 'layout-shift' && !entry.hadRecentInput) {
-          console.log('CLS:', entry.value);
+        if (entry.entryType === 'layout-shift') {
+          const clsEntry = entry as LayoutShift;
+          if (!clsEntry.hadRecentInput) {
+            console.log('CLS:', clsEntry.value);
+          }
         }
       }
     });
