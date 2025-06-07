@@ -1,17 +1,16 @@
 
 import React, { useState, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ToolCard } from '@/components/ToolCard';
 import { getToolsByCategory, categoryLabels, ToolCategory } from '@/data/tools';
-import { Search, ArrowLeft } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateCategorySchema, generateBreadcrumbSchema, combineSchemas } from '@/utils/schemaUtils';
 
 const Category = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
 
   // Type assertion since we know the param should match our ToolCategory type
   const category = categoryId as ToolCategory;
@@ -80,14 +79,6 @@ const Category = () => {
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">{categoryName}</h1>
           <p className="text-gray-600 text-xs sm:text-sm">{allTools.length} ابزار در این دسته‌بندی</p>
         </div>
-        {/* Back button visible on mobile for better UX */}
-        <button
-          className="flex items-center text-primary hover:text-primary/80 bg-white rounded border px-3 py-1 transition-colors duration-200 shadow-sm mt-2 sm:mt-0 sm:hidden"
-          onClick={() => navigate('/')}
-        >
-          <ArrowLeft size={18} className="ml-2" />
-          بازگشت
-        </button>
       </div>
 
       <div className="mb-6 relative max-w-md mx-auto w-full">
