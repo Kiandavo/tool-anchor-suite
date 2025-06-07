@@ -1,7 +1,6 @@
 
-import React from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Info } from "lucide-react";
+import React from 'react';
+import { ExternalLink } from 'lucide-react';
 
 interface ToolInfoCardProps {
   name: string;
@@ -9,26 +8,26 @@ interface ToolInfoCardProps {
   learnMoreUrl?: string;
 }
 
-export const ToolInfoCard: React.FC<ToolInfoCardProps> = ({
-  name,
-  description,
-  learnMoreUrl,
-}) => (
-  <Card className="glass-morphism animate-fade-in mb-6 border-primary/5">
-    <CardHeader className="flex flex-row items-start gap-3 p-4 pb-2">
-      <div className="rounded-full bg-primary/20 p-2 shrink-0">
-        <Info className="text-primary" size={20} />
-      </div>
-      <div>
-        <CardTitle className="text-base font-semibold text-primary mb-1">{name}</CardTitle>
-        <CardDescription className="text-muted-foreground">{description}</CardDescription>
-        {learnMoreUrl && (
-          <a href={learnMoreUrl} target="_blank" rel="noopener noreferrer" className="text-xs underline decoration-primary ml-2">
-            بیشتر بدانید
-          </a>
-        )}
-      </div>
-    </CardHeader>
-  </Card>
-);
-
+export const ToolInfoCard: React.FC<ToolInfoCardProps> = ({ 
+  name, 
+  description, 
+  learnMoreUrl 
+}) => {
+  return (
+    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+      <h2 className="text-lg font-semibold text-blue-900 mb-2">{name}</h2>
+      <p className="text-blue-800 text-sm mb-3">{description}</p>
+      {learnMoreUrl && (
+        <a 
+          href={learnMoreUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
+        >
+          اطلاعات بیشتر
+          <ExternalLink className="mr-1 w-4 h-4" />
+        </a>
+      )}
+    </div>
+  );
+};

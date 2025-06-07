@@ -7,7 +7,6 @@ import { BreadcrumbNavigation } from '@/components/ui/breadcrumb-navigation';
 import { tools } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
 import { SeoHead } from '@/components/seo/SeoHead';
-import { generateToolSchema } from '@/utils/schemaUtils';
 
 const Tool = () => {
   const { slug } = useParams();
@@ -40,15 +39,12 @@ const Tool = () => {
     { label: tool.category, href: `/category/${tool.category}` },
     { label: tool.name, current: true }
   ];
-  
-  const toolSchema = generateToolSchema(tool.name, tool.description, tool.slug, tool.category);
 
   return (
     <Layout>
       <SeoHead 
         title={`${tool.name} | لنگر`}
         description={tool.description}
-        schema={toolSchema}
       />
       
       <div className="mb-6">

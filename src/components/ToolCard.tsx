@@ -1,140 +1,44 @@
 
-import React, { memo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Tool } from '@/data/tools';
-import { categoryThemes } from '@/utils/categoryColors';
-import { 
-  TextIcon, 
-  Image, 
-  Search, 
-  Calculator, 
-  Hash, 
-  Dice6, 
-  Percent, 
-  Binary, 
-  Key, 
-  Type, 
-  Maximize, 
-  Filter, 
-  Activity,
-  Calendar,
-  Sparkles,
-  BookOpen,
-  CheckSquare,
-  Palette,
-  BookMarked,
-  Pen,
-  User,
-  Book,
-  FileText,
-  Clock,
-  Pencil,
-  LayoutGrid,
-  Globe,
-  CalendarDays,
-  School,
-  PaintBucket,
-  Shuffle,
-  Star,
-  Gift,
-  Award,
-  Flame,
-  Coffee,
-  TreePine,
-  Eye,
-  Flower,
-  Coins,
-  Moon,
-  Hand
-} from 'lucide-react';
+import { Calculator, FileText, Image, Wrench } from 'lucide-react';
 
-// Map icon strings to Lucide components - moved outside component
-const iconMap = {
-  'text-size': TextIcon,
-  'image': Image,
-  'code': Search,
-  'percent': Percent,
-  'binary': Binary,
-  'key': Key,
-  'type': Type,
-  'maximize': Maximize,
-  'filter': Filter,
-  'activity': Activity,
-  'dice': Dice6,
-  'hash': Hash,
-  'calendar': Calendar,
-  'calculator': Calculator,
-  'sparkles': Sparkles,
-  'book-open': BookOpen,
-  'list-check': CheckSquare,
-  'paint-bucket': PaintBucket,
-  'pen': Pen,
-  'user': User,
-  'book': Book,
-  'file-text': FileText,
-  'clock': Clock,
-  'pencil': Pencil,
-  'layout-grid': LayoutGrid,
-  'globe': Globe,
-  'calendar-days': CalendarDays,
-  'school': School,
-  'shuffle': Shuffle,
-  'star': Star,
-  'gift': Gift,
-  'award': Award,
-  'flame': Flame,
-  'random': Dice6,
-  'dice6': Dice6,
-  'compass': Globe,
-  'layers': LayoutGrid,
-  'coffee-cup': Coffee,
-  'tree-pine': TreePine,
-  'mirror': Eye,
-  'flower': Flower,
-  'coins': Coins,
-  'moon': Moon,
-  'hand': Hand
-};
+interface Tool {
+  id: string;
+  name: string;
+  description: string;
+  slug: string;
+  category: string;
+}
 
 interface ToolCardProps {
   tool: Tool;
-  highlight?: boolean;
-  compact?: boolean;
 }
 
-export const ToolCard = memo(function ToolCard({ tool, highlight = false, compact = false }: ToolCardProps) {
-  const { slug, name, description, isNew, icon, category } = tool;
-  const IconComponent = iconMap[icon as keyof typeof iconMap] || TextIcon;
-  const theme = categoryThemes[category];
+export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
+  const getIcon = (category: string) => {
+    switch (category) {
+      case 'calculators':
+        return <Calculator className="w-6 h-6" />;
+      case 'text':
+        return <FileText className="w-6 h-6" />;
+      case 'image':
+        return <Image className="w-6 h-6" />;
+      default:
+        return <Wrench className="w-6 h-6" />;
+    }
+  };
 
   return (
-    <Link to={`/tool/${slug}`} className="block transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl group">
-      <div
-        className={`
-          rounded-3xl shadow-sm transition-all duration-300 backdrop-blur-sm will-change-transform
-          border border-white/40 hover:shadow-lg hover:scale-[1.02] glass-morphism
-          card-hover-glow magnetic-hover interactive-element
-          ${compact ? 'py-4' : 'p-6'}
-        `}
-      >
-        <div className="flex items-start justify-between mb-3">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 
-            bg-gradient-to-br from-blue-500 to-purple-600 shadow-sm border border-white/40 bounce-subtle">
-            <IconComponent className="text-white" size={22} />
-          </div>
-          {isNew && (
-            <span className="rounded-full px-3 py-1 text-xs font-medium glass-morphism shadow-sm border border-white/30 text-apple-blue neon-glow">
-              جدید
-            </span>
-          )}
-        </div>
-        <div className={`${compact ? 'space-y-1' : 'mb-2'}`}>
-          <h3 className={`font-medium text-gray-800 line-clamp-1 ${compact ? 'text-base' : 'text-lg'}`}>{name}</h3>
-          {!compact && (
-            <p className="text-sm text-gray-600 mt-2 line-clamp-2 glass-morphism p-1.5 rounded-md">{description}</p>
-          )}
-        </div>
+    <Link 
+      to={`/tool/${tool.slug}`}
+      className="block p-4 border rounded-lg hover:shadow-md transition-shadow bg-white"
+    >
+      <div className="flex items-center mb-2">
+        {getIcon(tool.category)}
+        <h3 className="mr-2 font-medium">{tool.name}</h3>
       </div>
+      <p className="text-sm text-gray-600">{tool.description}</p>
     </Link>
   );
-});
+};
