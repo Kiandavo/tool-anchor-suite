@@ -17,3 +17,131 @@
     padding: 0;
   }
 }
+
+@layer utilities {
+  /* Animation classes */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Glass morphism effects */
+  .neo-glass {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .card-hover-glow {
+    transition: all 0.3s ease;
+  }
+
+  .card-hover-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shine {
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .neon-glow {
+    text-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+  }
+
+  .gradient-mesh {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+  }
+
+  .gradient-persian {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .magnetic-hover {
+    transition: transform 0.2s ease;
+  }
+
+  .magnetic-hover:hover {
+    transform: scale(1.02);
+  }
+
+  .bounce-subtle {
+    animation: bounce-subtle 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  .wave-animation {
+    animation: wave 3s ease-in-out infinite;
+  }
+
+  @keyframes wave {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(2deg); }
+  }
+
+  .interactive-element {
+    cursor: pointer;
+  }
+
+  .cursor-magic {
+    cursor: pointer;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+  }
+
+  .particle-bg {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .glass-morphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .bg-pattern-subtle {
+    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,.05) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+
+  .bg-pattern-stars {
+    background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,.3) 1px, transparent 0);
+    background-size: 30px 30px;
+  }
+}

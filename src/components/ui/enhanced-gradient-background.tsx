@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface EnhancedGradientBackgroundProps {
@@ -13,38 +13,18 @@ export const EnhancedGradientBackground: React.FC<EnhancedGradientBackgroundProp
   children,
   variant = 'default'
 }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const gradientVariants = {
-    default: 'bg-gradient-to-br from-white via-background/95 to-background/90 bg-pattern-subtle',
-    purple: 'bg-gradient-to-br from-[#f5f0ff] via-[#ede4ff]/95 to-[#e5d8ff]/90 bg-pattern-subtle',
-    blue: 'bg-gradient-to-br from-[#f0f5ff] via-[#e4edff]/95 to-[#d8e5ff]/90 bg-pattern-subtle',
-    green: 'bg-gradient-to-br from-[#f0fff5] via-[#e4ffed]/95 to-[#d8ffdf]/90 bg-pattern-subtle',
-    orange: 'bg-gradient-to-br from-[#ff8c42] via-[#ff7b2a]/95 to-[#ff6912]/90 bg-pattern-subtle',
-    readings: 'bg-gradient-to-br from-[#ff8c42] via-[#ff7b2a]/95 to-[#ff6912]/90 bg-pattern-stars',
-    teal: 'bg-gradient-to-br from-[#14b8a6] via-[#0891b2]/95 to-[#0e7490]/90 bg-pattern-subtle'
+    default: 'bg-gradient-to-br from-white via-gray-50 to-gray-100',
+    purple: 'bg-gradient-to-br from-purple-50 to-purple-100',
+    blue: 'bg-gradient-to-br from-blue-50 to-blue-100',
+    green: 'bg-gradient-to-br from-green-50 to-green-100',
+    orange: 'bg-gradient-to-br from-orange-50 to-orange-100',
+    readings: 'bg-gradient-to-br from-orange-50 to-orange-100',
+    teal: 'bg-gradient-to-br from-teal-50 to-teal-100'
   };
 
-  if (!mounted) {
-    return (
-      <div className={cn('transition-colors duration-500', className)}>
-        {children}
-      </div>
-    );
-  }
-
   return (
-    <div 
-      className={cn(
-        'transition-colors duration-500',
-        gradientVariants[variant],
-        className
-      )}
-    >
+    <div className={cn('transition-colors duration-300', gradientVariants[variant], className)}>
       {children}
     </div>
   );
