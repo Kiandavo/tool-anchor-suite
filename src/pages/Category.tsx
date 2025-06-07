@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
@@ -66,7 +67,7 @@ const Category = () => {
   }, [category, categoryName, allTools]);
 
   return (
-    <Layout title={categoryName} backUrl="/">
+    <Layout>
       <SeoHead 
         title={seoData.title}
         description={seoData.description}

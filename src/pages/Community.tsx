@@ -80,7 +80,7 @@ const Community = () => {
   };
 
   return (
-    <Layout title="انجمن کاربران" backUrl="/">
+    <Layout>
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8">
           <h2 className="text-xl font-bold mb-4">ارسال پیشنهاد جدید</h2>

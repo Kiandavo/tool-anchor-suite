@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Settings = () => {
   return (
-    <Layout title="تنظیمات" backUrl="/" showSearch={false}>
+    <Layout>
       <div className="bg-white rounded-xl shadow-sm p-6 max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">تنظیمات</h1>
         

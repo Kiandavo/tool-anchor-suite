@@ -14,7 +14,7 @@ const groupedTools: Record<ToolCategory, typeof tools> = categories.reduce((acc,
 
 const AllTools = () => {
   return (
-    <Layout title="همه ابزارها" backUrl="/">
+    <Layout>
       <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">همه ابزارها بر اساس دسته‌بندی</h1>
       <div className="flex flex-col gap-8 sm:gap-12">
         {categories.map((category) =>

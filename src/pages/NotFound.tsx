@@ -1,3 +1,4 @@
+
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -14,7 +15,7 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <Layout showSearch={false}>
+    <Layout>
       <div className="min-h-[70vh] flex flex-col items-center justify-center animate-fade-in">
         <div className="text-center bg-white p-8 rounded-xl shadow-sm max-w-md mx-auto">
           <h1 className="text-8xl font-bold text-primary mb-4">۴۰۴</h1>

@@ -49,7 +49,7 @@ const Search = () => {
   };
   
   return (
-    <Layout backUrl="/" showSearch={false}>
+    <Layout>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">نتایج جستجو</h1>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
