@@ -1,64 +1,79 @@
 
-# robots.txt for Langar.co
+# robots.txt for Langar.co - Updated for latest SEO algorithms
 
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://langar.co/sitemap.xml
+# High-priority pages and categories
+Allow: /tool/
+Allow: /category/
+Allow: /all-tools
 
-# Common crawl directives
+# SEO and utility pages
+Allow: /search
+Allow: /sitemap.xml
+Allow: /.well-known/
+
+# Static assets
+Allow: /assets/
+Allow: /images/
+Allow: /lovable-uploads/
+Allow: /_app/
+Allow: /favicon.ico
+
+# Block admin and private areas
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
-Disallow: /*?*
+Disallow: /_next/
+Disallow: /node_modules/
 
-# Allow useful directories 
-Allow: /tool/
-Allow: /category/
-Allow: /search/
-Allow: /assets/
-Allow: /images/
-Allow: /all-templates/
-Allow: /template-category/
-Allow: /template/
+# Block search parameters and tracking
+Disallow: /*?
+Disallow: /*#
+Disallow: /*&
+Disallow: /search?*
+Disallow: /*utm_*
+Disallow: /*ref=*
 
-# Explicitly allow key tools for better indexing
-Allow: /tool/meta-tag-generator
-Allow: /tool/robots-txt-generator
-Allow: /tool/sitemap-generator
-Allow: /tool/keyword-density
-
-# Explicitly allow Persian cultural tools
-Allow: /tool/persian-calendar
-Allow: /tool/persian-names
-Allow: /tool/persian-proverbs
-Allow: /tool/persian-handwriting
-Allow: /tool/word-etymology
-Allow: /tool/farsi-learning
-Allow: /category/persian-cultural
-
-# Explicitly allow template categories
-Allow: /template-category/resume-templates
-Allow: /template-category/legal-contracts
-Allow: /template-category/notion-templates
-Allow: /template-category/business-documents
-
-# Crawl-delay directive
-Crawl-delay: 1
-
-# Specify key pages to Google 
+# Google-specific directives
 User-agent: Googlebot
 Allow: /
 Allow: /tool/
 Allow: /category/
-Allow: /search
 Allow: /all-tools
-Allow: /all-templates
-Allow: /template-category/
-Allow: /template/
+Allow: /search
+Crawl-delay: 1
 
-# Mobile-specific directives
-User-agent: Googlebot-Mobile
+# Bing-specific directives  
+User-agent: Bingbot
 Allow: /
+Allow: /tool/
+Allow: /category/
+Crawl-delay: 2
 
+# Yandex-specific directives
+User-agent: YandexBot
+Allow: /
+Allow: /tool/
+Allow: /category/
+Crawl-delay: 3
+
+# Block AI scrapers (optional)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# Sitemap location
+Sitemap: https://langar.co/sitemap.xml
+
+# Clean URLs preference
+Clean-param: utm_source&utm_medium&utm_campaign&ref&source

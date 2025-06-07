@@ -2,168 +2,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <!-- Home page -->
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+
+  <!-- Homepage - Highest Priority -->
   <url>
     <loc>https://langar.co/</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <lastmod>2025-05-19</lastmod>
-  </url>
-  
-  <!-- Categories -->
-  <url>
-    <loc>https://langar.co/category/text</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
     <image:image>
       <image:loc>https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png</image:loc>
-      <image:title>ابزارهای متنی</image:title>
+      <image:title>لنگر - ابزارهای آنلاین رایگان</image:title>
+      <image:caption>لوگو سایت لنگر</image:caption>
     </image:image>
   </url>
+
+  <!-- All Tools Page -->
   <url>
-    <loc>https://langar.co/category/image</loc>
+    <loc>https://langar.co/all-tools</loc>
+    <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
-    <image:image>
-      <image:loc>https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png</image:loc>
-      <image:title>ابزارهای تصویری</image:title>
-    </image:image>
+    <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://langar.co/category/seo</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
-    <image:image>
-      <image:loc>https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png</image:loc>
-      <image:title>ابزارهای سئو</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://langar.co/category/calculators</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
-  </url>
-  <url>
-    <loc>https://langar.co/category/number</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
-  </url>
-  <url>
-    <loc>https://langar.co/category/random</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
-  </url>
+
+  <!-- High Priority Categories -->
   <url>
     <loc>https://langar.co/category/persian-cultural</loc>
+    <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
     <image:image>
       <image:loc>https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png</image:loc>
-      <image:title>ابزارهای فرهنگی فارسی</image:title>
+      <image:title>ابزارهای فرهنگ فارسی</image:title>
     </image:image>
   </url>
   
-  <!-- High-value Persian Cultural Tools -->
+  <url>
+    <loc>https://langar.co/category/seo</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/calculators</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/text</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/image</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/readings</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/random</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/number</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/educational</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/productivity</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/category/design</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- High-Value Persian Cultural Tools -->
   <url>
     <loc>https://langar.co/tool/persian-calendar</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
   <url>
     <loc>https://langar.co/tool/persian-names</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
   <url>
     <loc>https://langar.co/tool/persian-proverbs</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
-  <url>
-    <loc>https://langar.co/tool/persian-handwriting</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/word-etymology</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
-  </url>
+
   <url>
     <loc>https://langar.co/tool/farsi-learning</loc>
+    <lastmod>2025-06-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
-  
-  <!-- SEO Tools (high ranking) -->
+
+  <url>
+    <loc>https://langar.co/tool/word-etymology</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- High-Value SEO Tools -->
   <url>
     <loc>https://langar.co/tool/meta-tag-generator</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
   <url>
     <loc>https://langar.co/tool/robots-txt-generator</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
   <url>
     <loc>https://langar.co/tool/sitemap-generator</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
   <url>
     <loc>https://langar.co/tool/keyword-density</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <lastmod>2025-05-19</lastmod>
-  </url>
-  
-  <!-- Document Template Pages -->
-  <url>
-    <loc>https://langar.co/all-templates</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
+  <!-- Reading/Fortune Tools -->
   <url>
-    <loc>https://langar.co/template-category/resume-templates</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://langar.co/tool/hafez-fortune</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
   <url>
-    <loc>https://langar.co/template-category/legal-contracts</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://langar.co/tool/tarot-reading</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
   <url>
-    <loc>https://langar.co/template-category/notion-templates</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://langar.co/tool/horoscope</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
+  <!-- Popular Calculator Tools -->
   <url>
-    <loc>https://langar.co/template-category/business-documents</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://langar.co/tool/bmi-calculator</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-19</lastmod>
   </url>
+
+  <url>
+    <loc>https://langar.co/tool/loan-calculator</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/tool/age-calculator</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Text Tools -->
+  <url>
+    <loc>https://langar.co/tool/text-counter</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://langar.co/tool/finglish-converter</loc>
+    <lastmod>2025-06-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
