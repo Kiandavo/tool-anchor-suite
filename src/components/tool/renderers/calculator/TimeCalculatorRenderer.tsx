@@ -17,6 +17,6 @@ export const TimeCalculatorRenderer: React.FC<TimeCalculatorRendererProps> = ({ 
     case 'world-time':
       return <WorldTimeConverter />;
     default:
-      return null;
+      return <TodayDateConverter />;
   }
 };
