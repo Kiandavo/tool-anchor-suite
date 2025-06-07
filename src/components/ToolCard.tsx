@@ -2,17 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calculator, FileText, Image, Wrench, Calendar, Star, Settings, BookMarked, Code, Key, Dice1, Hash, Activity, Percent, Type, Users, Utensils, Gamepad2, Sparkles, BookOpen, Moon, Hand, Coffee, Binary, Filter, SpellCheck } from 'lucide-react';
-
-interface Tool {
-  id: string;
-  name: string;
-  description: string;
-  slug: string;
-  category: string;
-  icon?: string;
-  isNew?: boolean;
-  isComingSoon?: boolean;
-}
+import { Tool } from '@/types/tool-types';
 
 interface ToolCardProps {
   tool: Tool;
