@@ -6,10 +6,6 @@ import { HafezFortune } from '@/components/HafezFortune';
 import { TarotReading } from '@/components/fal/TarotReading';
 import { Horoscope } from '@/components/fal/Horoscope';
 import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
-import { DreamInterpretation } from '@/components/readings/DreamInterpretation';
-import { NameNumerology } from '@/components/readings/NameNumerology';
-import { CoffeeReading } from '@/components/readings/CoffeeReading';
-import { Numerology } from '@/components/readings/Numerology';
 
 interface ReadingToolProps {
   slug: string;
@@ -31,13 +27,92 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
       case 'rumi-istikhara':
         return <RumiIstikhara />;
       case 'dream-interpretation':
-        return <DreamInterpretation />;
+        return (
+          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-purple-50 to-blue-50">
+            <div className="text-center space-y-4">
+              <div className="text-6xl">💤</div>
+              <h3 className="text-xl font-bold text-purple-800">تعبیر خواب</h3>
+              <p className="text-gray-700 max-w-md mx-auto">
+                خواب خود را وارد کنید تا تعبیر آن را دریافت کنید
+              </p>
+              <div className="bg-white p-4 rounded-lg">
+                <textarea 
+                  className="w-full p-2 border rounded" 
+                  placeholder="خواب خود را اینجا بنویسید..."
+                  rows={4}
+                />
+                <button className="mt-2 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                  تعبیر خواب
+                </button>
+              </div>
+            </div>
+          </div>
+        );
       case 'name-numerology':
-        return <NameNumerology />;
+        return (
+          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-green-50 to-yellow-50">
+            <div className="text-center space-y-4">
+              <div className="text-6xl">🔢</div>
+              <h3 className="text-xl font-bold text-green-800">اعداد شناسی نام</h3>
+              <p className="text-gray-700 max-w-md mx-auto">
+                نام خود را وارد کنید تا تحلیل عددی آن را ببینید
+              </p>
+              <div className="bg-white p-4 rounded-lg">
+                <input 
+                  type="text" 
+                  className="w-full p-2 border rounded" 
+                  placeholder="نام خود را وارد کنید"
+                />
+                <button className="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                  تحلیل نام
+                </button>
+              </div>
+            </div>
+          </div>
+        );
       case 'coffee-reading':
-        return <CoffeeReading />;
+        return (
+          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-amber-50 to-orange-50">
+            <div className="text-center space-y-4">
+              <div className="text-6xl">☕</div>
+              <h3 className="text-xl font-bold text-amber-800">فال قهوه</h3>
+              <p className="text-gray-700 max-w-md mx-auto">
+                شکل‌های دیده شده در ته فنجان قهوه را توصیف کنید
+              </p>
+              <div className="bg-white p-4 rounded-lg">
+                <textarea 
+                  className="w-full p-2 border rounded" 
+                  placeholder="شکل‌هایی که در ته فنجان می‌بینید را توصیف کنید..."
+                  rows={3}
+                />
+                <button className="mt-2 bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700">
+                  تفسیر فال
+                </button>
+              </div>
+            </div>
+          </div>
+        );
       case 'numerology':
-        return <Numerology />;
+        return (
+          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-indigo-50 to-purple-50">
+            <div className="text-center space-y-4">
+              <div className="text-6xl">🔮</div>
+              <h3 className="text-xl font-bold text-indigo-800">اعداد شناسی</h3>
+              <p className="text-gray-700 max-w-md mx-auto">
+                تاریخ تولد خود را وارد کنید تا اعداد سرنوشت شما محاسبه شود
+              </p>
+              <div className="bg-white p-4 rounded-lg">
+                <input 
+                  type="date" 
+                  className="w-full p-2 border rounded"
+                />
+                <button className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                  محاسبه اعداد سرنوشت
+                </button>
+              </div>
+            </div>
+          </div>
+        );
       case 'palm-reading':
         return (
           <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-purple-50 to-pink-50">
