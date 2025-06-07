@@ -7,36 +7,56 @@ import { ProfessionalToolsSection } from '@/components/home/ProfessionalToolsSec
 import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
 import { ReadingsSection } from '@/components/home/ReadingsSection';
 import { SeoHead } from '@/components/seo/SeoHead';
-import { generateWebsiteSchema, combineSchemas } from '@/utils/schemaUtils';
 
 const Index = () => {
-  // Generate comprehensive SEO data for homepage
-  const websiteSchema = generateWebsiteSchema();
+  // Generate comprehensive SEO data for homepage with error handling
+  let websiteSchema = null;
+  let combinedSchema = null;
   
-  const homepageSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "لنگر - ابزارهای آنلاین رایگان",
-    "description": "بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما",
-    "url": "https://langar.co/",
-    "mainEntity": {
-      "@type": "ItemList",
-      "name": "ابزارهای آنلاین لنگر",
-      "description": "مجموعه کامل ابزارهای آنلاین شامل محاسبه‌گر، ابزارهای متنی، تصویری، فرهنگ فارسی و طالع‌بینی",
-      "numberOfItems": "120+"
-    },
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "صفحه اصلی",
-        "item": "https://langar.co/"
-      }]
-    }
-  };
+  try {
+    // Safely import and use schema utilities
+    const { generateWebsiteSchema, combineSchemas } = require('@/utils/schemaUtils');
+    
+    websiteSchema = generateWebsiteSchema();
+    
+    const homepageSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "لنگر - ابزارهای آنلاین رایگان",
+      "description": "بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما",
+      "url": "https://langar.co/",
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "ابزارهای آنلاین لنگر",
+        "description": "مجموعه کامل ابزارهای آنلاین شامل محاسبه‌گر، ابزارهای متنی، تصویری، فرهنگ فارسی و طالع‌بینی",
+        "numberOfItems": "120+"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "صفحه اصلی",
+          "item": "https://langar.co/"
+        }]
+      }
+    };
 
-  const combinedSchema = combineSchemas(websiteSchema, homepageSchema);
+    combinedSchema = combineSchemas(websiteSchema, homepageSchema);
+    console.log('SEO Schema generated successfully');
+  } catch (error) {
+    console.error('Error generating SEO schema:', error);
+    // Fallback schema
+    combinedSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "لنگر - ابزارهای آنلاین رایگان",
+      "url": "https://langar.co",
+      "description": "مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو و بهینه‌سازی"
+    };
+  }
+
+  console.log('Homepage component rendering...');
 
   return (
     <Layout>
@@ -45,6 +65,7 @@ const Index = () => {
         description="بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. شامل محاسبه‌گر، ابزارهای متنی، تصویری، فرهنگ فارسی و طالع‌بینی."
         keywords="ابزار آنلاین, لنگر, محاسبه‌گر, ابزار متنی, ابزار تصویری, فرهنگ فارسی, طالع‌بینی, ابزار رایگان, Langar Tools"
         schema={combinedSchema}
+        canonical="https://langar.co/"
       />
       
       <HeroSection />

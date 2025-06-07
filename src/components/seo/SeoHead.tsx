@@ -23,7 +23,23 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   ogType = 'website',
   noindex = false
 }) => {
-  const currentUrl = canonical || `https://langar.co${window.location.pathname}`;
+  // Safe URL generation with fallback
+  let currentUrl = 'https://langar.co/';
+  try {
+    currentUrl = canonical || `https://langar.co${window.location.pathname}`;
+  } catch (error) {
+    console.log('Using fallback URL due to window access error');
+  }
+  
+  // Safe schema stringification
+  let schemaString = '';
+  try {
+    if (schema) {
+      schemaString = JSON.stringify(schema);
+    }
+  } catch (error) {
+    console.error('Error stringifying schema:', error);
+  }
   
   return (
     <Helmet>
@@ -88,10 +104,10 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
       <link rel="icon" type="image/png" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
       <link rel="apple-touch-icon" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
       
-      {/* Structured Data */}
-      {schema && (
+      {/* Structured Data - Only include if valid */}
+      {schemaString && (
         <script type="application/ld+json">
-          {JSON.stringify(schema)}
+          {schemaString}
         </script>
       )}
     </Helmet>

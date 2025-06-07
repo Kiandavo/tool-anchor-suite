@@ -14,6 +14,8 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  console.log('App component initializing...');
+  
   return (
     <ErrorBoundary>
       <HelmetProvider>
