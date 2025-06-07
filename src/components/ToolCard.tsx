@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, FileText, Image, Wrench, Calendar, Star, Settings, BookMarked, Code, Key, Dice, Hash, Activity, Percent, Type, Users, Utensils, Gamepad2, Sparkles, BookOpen, Moon, Hand, Coffee, Binary, Filter, Spellcheck } from 'lucide-react';
+import { Calculator, FileText, Image, Wrench, Calendar, Star, Settings, BookMarked, Code, Key, Dice1, Hash, Activity, Percent, Type, Users, Utensils, Gamepad2, Sparkles, BookOpen, Moon, Hand, Coffee, Binary, Filter, SpellCheck } from 'lucide-react';
 
 interface Tool {
   id: string;
@@ -40,7 +40,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) =
         case 'key':
           return <Key className={iconSize} />;
         case 'dice':
-          return <Dice className={iconSize} />;
+          return <Dice1 className={iconSize} />;
         case 'hash':
           return <Hash className={iconSize} />;
         case 'activity':
@@ -72,7 +72,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) =
         case 'filter':
           return <Filter className={iconSize} />;
         case 'spellcheck':
-          return <Spellcheck className={iconSize} />;
+          return <SpellCheck className={iconSize} />;
         case 'abc':
           return <Type className={iconSize} />;
         default:
@@ -94,7 +94,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) =
       case 'seo':
         return <Code className={iconSize} />;
       case 'random':
-        return <Dice className={iconSize} />;
+        return <Dice1 className={iconSize} />;
       case 'number':
         return <Hash className={iconSize} />;
       default:
