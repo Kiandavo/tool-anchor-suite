@@ -11,12 +11,6 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-// Remove loading indicator if it exists
-const loader = document.getElementById('initial-loader');
-if (loader) {
-  loader.remove();
-}
-
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(

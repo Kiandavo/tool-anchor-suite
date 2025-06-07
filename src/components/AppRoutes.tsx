@@ -6,12 +6,6 @@ import Tool from "@/pages/Tool";
 import AllTools from "@/pages/AllTools";
 import NotFound from "@/pages/NotFound";
 
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-[70vh] w-full">
-    <div className="text-center">در حال بارگذاری...</div>
-  </div>
-);
-
 export const AppRoutes = () => {
   return (
     <Routes>
