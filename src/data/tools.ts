@@ -1,8 +1,7 @@
-
 import { Tool, ToolCategory } from '@/types/tool-types';
 
 // Re-export types for backward compatibility
-export { Tool, ToolCategory } from '@/types/tool-types';
+export type { Tool, ToolCategory } from '@/types/tool-types';
 
 export const categoryLabels: Record<ToolCategory, string> = {
   calculators: 'محاسبه‌گرها',
