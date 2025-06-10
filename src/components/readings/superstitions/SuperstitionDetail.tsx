@@ -1,8 +1,7 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { ArrowRight } from 'lucide-react';
 import { Superstition } from '@/data/persian-superstitions';
 
 interface SuperstitionDetailProps {
@@ -10,54 +9,42 @@ interface SuperstitionDetailProps {
   onBack: () => void;
 }
 
-const SuperstitionDetail: React.FC<SuperstitionDetailProps> = ({ 
-  superstition, 
-  onBack 
-}) => {
+const SuperstitionDetail: React.FC<SuperstitionDetailProps> = ({ superstition, onBack }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="bg-white/90 p-4 rounded-lg border border-purple-200"
-    >
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-lg font-bold text-purple-800 flex items-center">
-          <Star className="ml-2" size={18} />
-          {superstition.title}
-        </h3>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onBack}
-          className="border-purple-300 text-purple-700 hover:bg-purple-100"
-        >
-          بازگشت
-        </Button>
-      </div>
-
-      <div className="space-y-3">
-        <div>
-          <h4 className="font-semibold text-purple-700 mb-1">توضیحات:</h4>
-          <p className="text-sm text-gray-700 leading-relaxed">
-            {superstition.description}
-          </p>
-        </div>
-
-        <div>
-          <h4 className="font-semibold text-purple-700 mb-1">منشأ:</h4>
-          <p className="text-sm text-gray-600">{superstition.origin}</p>
-        </div>
-
-        <div className="flex items-center justify-between pt-2 border-t border-purple-200">
-          <span className="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
-            {superstition.category}
-          </span>
-          <span className="text-xs text-gray-500">
-            باور مردمی ایرانی
-          </span>
+    <div className="space-y-4">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={onBack}
+        className="mb-4"
+      >
+        <ArrowRight size={16} className="ml-1" />
+        بازگشت
+      </Button>
+      
+      <div className="bg-white/50 p-4 rounded-lg border border-purple-200">
+        <h3 className="font-bold text-purple-800 mb-3">{superstition.title}</h3>
+        
+        <div className="space-y-3 text-sm">
+          <div>
+            <strong className="text-purple-700">توضیح:</strong>
+            <p className="text-gray-700 mt-1">{superstition.description}</p>
+          </div>
+          
+          <div>
+            <strong className="text-purple-700">منشأ:</strong>
+            <p className="text-gray-700 mt-1">{superstition.origin}</p>
+          </div>
+          
+          <div>
+            <strong className="text-purple-700">دسته‌بندی:</strong>
+            <span className="inline-block bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs mr-2">
+              {superstition.category}
+            </span>
+          </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

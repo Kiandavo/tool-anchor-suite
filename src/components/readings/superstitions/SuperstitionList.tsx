@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { Button } from "@/components/ui/button";
 import { Superstition } from '@/data/persian-superstitions';
 
 interface SuperstitionListProps {
@@ -8,39 +8,29 @@ interface SuperstitionListProps {
   onSelectSuperstition: (superstition: Superstition) => void;
 }
 
-const SuperstitionList: React.FC<SuperstitionListProps> = ({ 
-  superstitions, 
-  onSelectSuperstition 
-}) => {
+const SuperstitionList: React.FC<SuperstitionListProps> = ({ superstitions, onSelectSuperstition }) => {
   if (superstitions.length === 0) {
     return (
-      <div className="text-center py-8">
-        <p className="text-gray-500">هیچ خرافتی با این جستجو یافت نشد.</p>
+      <div className="text-center py-6">
+        <p className="text-gray-500 text-sm">موردی یافت نشد</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-2 max-h-96 overflow-y-auto">
-      {superstitions.map((item, index) => (
-        <motion.div
+    <div className="space-y-2 max-h-64 overflow-y-auto">
+      {superstitions.map((superstition, index) => (
+        <Button
           key={index}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
-          onClick={() => onSelectSuperstition(item)}
-          className="bg-white/80 p-3 rounded-lg border border-purple-200 cursor-pointer hover:bg-purple-50 transition-colors"
+          variant="outline"
+          className="w-full justify-start text-right p-3 h-auto"
+          onClick={() => onSelectSuperstition(superstition)}
         >
-          <div className="flex justify-between items-start">
-            <div>
-              <h4 className="font-bold text-purple-800 mb-1">{item.title}</h4>
-              <p className="text-xs text-gray-600 line-clamp-2">{item.description}</p>
-            </div>
-            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
-              {item.category}
-            </span>
+          <div className="text-right">
+            <div className="font-medium text-sm">{superstition.title}</div>
+            <div className="text-xs text-gray-500 mt-1">{superstition.category}</div>
           </div>
-        </motion.div>
+        </Button>
       ))}
     </div>
   );

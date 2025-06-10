@@ -49,10 +49,10 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
 
   return (
-    <header className={`glass-nav py-5 sticky top-0 z-30 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/90 border-b border-gray-200/20 shadow-sm transition-all duration-300">
       <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px] relative">
         <div className="flex flex-col items-center">
-          <div className="flex items-center justify-between w-full gap-4">
+          <div className="flex items-center justify-between w-full gap-4 py-3">
             <Link
               to="/"
               className="text-xl font-semibold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center persian-text"
@@ -67,7 +67,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src={logoUrl}
                   alt="Langar Logo" 
-                  className="h-20 w-auto object-contain hover:scale-150 transition-transform duration-300"
+                  className="h-16 w-auto object-contain hover:scale-110 transition-transform duration-300"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;

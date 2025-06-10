@@ -6,6 +6,8 @@ import { HafezFortune } from '@/components/HafezFortune';
 import { TarotReading } from '@/components/fal/TarotReading';
 import { Horoscope } from '@/components/fal/Horoscope';
 import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
+import PersianSuperstitions from '@/components/readings/PersianSuperstitions';
+import DailyHoroscope from '@/components/readings/DailyHoroscope';
 
 interface ReadingToolProps {
   slug: string;
@@ -26,6 +28,10 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
         return <Horoscope />;
       case 'rumi-istikhara':
         return <RumiIstikhara />;
+      case 'persian-superstitions':
+        return <PersianSuperstitions />;
+      case 'daily-horoscope':
+        return <DailyHoroscope />;
       case 'dream-interpretation':
         return (
           <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-purple-50 to-blue-50">
