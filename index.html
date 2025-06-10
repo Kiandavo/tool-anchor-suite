@@ -8,6 +8,11 @@
     <meta name="description" content="مجموعه کامل ابزارهای آنلاین رایگان" />
     <link rel="icon" type="image/png" href="/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png" />
     
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Critical inline styles for immediate rendering -->
     <style>
       html {
         direction: rtl;
@@ -18,11 +23,50 @@
         background-color: #fafaff;
         margin: 0;
         padding: 0;
+        line-height: 1.6;
+      }
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Loading fallback */
+      .loading-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, sans-serif;
+        direction: rtl;
+      }
+      .loading-text {
+        text-align: center;
+        color: #374151;
+      }
+      .loading-spinner {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #e5e7eb;
+        border-top: 2px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Fallback content while JS loads -->
+      <div class="loading-fallback">
+        <div class="loading-text">
+          <div class="loading-spinner"></div>
+          <p>در حال بارگذاری...</p>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
