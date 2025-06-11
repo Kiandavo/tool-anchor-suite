@@ -20,16 +20,12 @@ export default function UniverseWelcomeScreen({
 }: UniverseWelcomeScreenProps) {
   console.log('UniverseWelcomeScreen rendered:', { isLoading, favoriteCount, totalUniverses });
 
-  const handleDiscoverClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleDiscoverClick = () => {
     console.log('🎯 Discover button clicked in welcome screen');
     onDiscoverUniverse();
   };
 
-  const handleBrowserClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleBrowserClick = () => {
     console.log('🔍 Browser button clicked in welcome screen');
     onShowBrowser();
   };
