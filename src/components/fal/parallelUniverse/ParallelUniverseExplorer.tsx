@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Heart, RefreshCw, Copy, Compass } from "lucide-react";
+import { Sparkles, Heart, RefreshCw, Copy, Compass, Search } from "lucide-react";
 import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/randomUtils";
 import { ParallelUniverse } from './types';
@@ -13,48 +13,93 @@ import { getUniverseTypeColor } from './universeStyleUtils';
 import UniverseHeader from './components/UniverseHeader';
 import DecorativeBackground from './components/DecorativeBackground';
 import UniverseContent from './components/UniverseContent';
+import UniverseBrowser from './components/UniverseBrowser';
 
 // Session storage keys
 const FAVORITES_KEY = 'parallel_universe_favorites';
+const HISTORY_KEY = 'parallel_universe_history';
 
 export const ParallelUniverseExplorer = () => {
   const [currentUniverse, setCurrentUniverse] = useState<ParallelUniverse | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [history, setHistory] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showFavorites, setShowFavorites] = useState(false);
+  const [showBrowser, setShowBrowser] = useState(false);
 
-  // Load saved favorites on mount
+  console.log("ParallelUniverseExplorer mounted", { currentUniverse, favorites, history });
+
+  // Load saved data on mount
   useEffect(() => {
     const savedFavorites = localStorage.getItem(FAVORITES_KEY);
+    const savedHistory = localStorage.getItem(HISTORY_KEY);
+    
     if (savedFavorites) {
-      setFavorites(JSON.parse(savedFavorites));
+      const parsedFavorites = JSON.parse(savedFavorites);
+      setFavorites(parsedFavorites);
+      console.log("Loaded favorites:", parsedFavorites);
+    }
+    
+    if (savedHistory) {
+      const parsedHistory = JSON.parse(savedHistory);
+      setHistory(parsedHistory);
+      console.log("Loaded history:", parsedHistory);
     }
   }, []);
 
-  // Save favorites when they change
+  // Save data when they change
   useEffect(() => {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    console.log("Saved favorites:", favorites);
   }, [favorites]);
 
+  useEffect(() => {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    console.log("Saved history:", history);
+  }, [history]);
+
   const discoverRandomUniverse = () => {
+    console.log("Starting universe discovery...");
     setIsLoading(true);
     
     setTimeout(() => {
       const universe = getRandomUniverse();
+      console.log("Selected universe:", universe);
       setCurrentUniverse(universe);
+      
+      // Add to history
+      if (!history.includes(universe.id)) {
+        setHistory(prev => [universe.id, ...prev.slice(0, 9)]); // Keep last 10
+      }
+      
       setIsLoading(false);
       toast.success(`🌟 جهان "${universe.name}" کشف شد!`);
     }, 1000);
   };
 
-  const handleToggleFavorite = () => {
-    if (!currentUniverse) return;
+  const selectUniverse = (universe: ParallelUniverse) => {
+    console.log("Selecting universe from browser:", universe);
+    setCurrentUniverse(universe);
     
-    if (favorites.includes(currentUniverse.id)) {
-      setFavorites(favorites.filter(id => id !== currentUniverse.id));
+    // Add to history
+    if (!history.includes(universe.id)) {
+      setHistory(prev => [universe.id, ...prev.slice(0, 9)]); // Keep last 10
+    }
+    
+    setShowBrowser(false);
+    toast.success(`✨ به جهان "${universe.name}" سفر کردید!`);
+  };
+
+  const handleToggleFavorite = (universeId?: number) => {
+    const targetId = universeId || currentUniverse?.id;
+    if (!targetId) return;
+    
+    console.log("Toggling favorite for universe:", targetId);
+    
+    if (favorites.includes(targetId)) {
+      setFavorites(favorites.filter(id => id !== targetId));
       toast.success("💔 از علاقه‌مندی‌ها حذف شد");
     } else {
-      setFavorites([...favorites, currentUniverse.id]);
+      setFavorites([...favorites, targetId]);
       toast.success("💖 به علاقه‌مندی‌ها اضافه شد");
     }
   };
@@ -68,15 +113,38 @@ export const ParallelUniverseExplorer = () => {
     }
   };
 
-  const getFavoriteUniverses = () => {
-    return parallelUniverses.filter(u => favorites.includes(u.id));
-  };
-
-  const selectFromFavorites = (universe: ParallelUniverse) => {
-    setCurrentUniverse(universe);
-    setShowFavorites(false);
-    toast.success(`💫 به جهان محبوب "${universe.name}" بازگشتید!`);
-  };
+  if (showBrowser) {
+    return (
+      <Card className="shadow-lg overflow-hidden relative bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
+        <DecorativeBackground />
+        <UniverseHeader />
+        
+        <CardContent className="pt-6 px-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-bold text-gray-800 flex items-center">
+              <Search className="mr-2 text-purple-600" size={20} />
+              مرورگر جهان‌های موازی
+            </h3>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowBrowser(false)}
+              className="border-purple-400 text-purple-700 hover:bg-purple-50"
+            >
+              <Compass className="mr-1" size={14} />
+              بازگشت
+            </Button>
+          </div>
+          
+          <UniverseBrowser
+            onSelectUniverse={selectUniverse}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
+            history={history}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className={`shadow-lg overflow-hidden relative ${currentUniverse ? getUniverseTypeColor(currentUniverse.type) : 'bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200'}`}>
@@ -88,10 +156,10 @@ export const ParallelUniverseExplorer = () => {
       
       {/* Content */}
       <CardContent className="pt-6 px-6">
-        {!currentUniverse && !showFavorites ? (
+        {!currentUniverse ? (
           // Welcome screen
           <div className="text-center py-12">
-            <div className="text-6xl mb-4">🌌</div>
+            <div className="text-6xl mb-4 animate-pulse">🌌</div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">به کاوشگر جهان‌های موازی خوش آمدید!</h3>
             <p className="text-gray-600 mb-6">آماده‌اید تا نسخه‌ای متفاوت از خودتان را در جهانی دیگر ببینید؟</p>
             
@@ -115,63 +183,32 @@ export const ParallelUniverseExplorer = () => {
                 )}
               </Button>
               
-              {favorites.length > 0 && (
+              <div className="flex justify-center gap-2">
                 <Button 
                   variant="outline"
-                  onClick={() => setShowFavorites(true)}
+                  onClick={() => setShowBrowser(true)}
                   className="border-purple-400 text-purple-700 hover:bg-purple-50"
                 >
-                  <Heart className="mr-2" size={16} />
-                  جهان‌های محبوب من ({favorites.length})
+                  <Search className="mr-2" size={16} />
+                  مرور جهان‌ها ({parallelUniverses.length})
                 </Button>
-              )}
-            </div>
-          </div>
-        ) : showFavorites ? (
-          // Favorites screen
-          <div className="py-4">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-800 flex items-center">
-                <Heart className="mr-2 text-red-500" size={20} />
-                جهان‌های محبوب شما
-              </h3>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => setShowFavorites(false)}
-              >
-                <Compass className="mr-1" size={14} />
-                بازگشت
-              </Button>
-            </div>
-            
-            {getFavoriteUniverses().length === 0 ? (
-              <div className="text-center py-8">
-                <div className="text-4xl mb-2">💔</div>
-                <p className="text-gray-600">هنوز جهان محبوبی ندارید!</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {getFavoriteUniverses().map((universe) => (
-                  <Card 
-                    key={universe.id}
-                    className={`cursor-pointer hover:shadow-md transition-all duration-200 hover:scale-[1.02] ${getUniverseTypeColor(universe.type)} border-2 hover:border-purple-400`}
-                    onClick={() => selectFromFavorites(universe)}
+                
+                {favorites.length > 0 && (
+                  <Button 
+                    variant="outline"
+                    onClick={() => setShowBrowser(true)}
+                    className="border-red-400 text-red-700 hover:bg-red-50"
                   >
-                    <CardContent className="p-4">
-                      <h4 className="font-medium text-sm mb-2">{universe.name}</h4>
-                      <p className="text-xs text-gray-600 line-clamp-2">
-                        {universe.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+                    <Heart className="mr-2" size={16} />
+                    علاقه‌مندی‌ها ({favorites.length})
+                  </Button>
+                )}
               </div>
-            )}
+            </div>
           </div>
         ) : (
           // Universe display
-          <div className="space-y-6">
+          <div className="space-y-6 universe-appear">
             <UniverseContent 
               universe={currentUniverse}
               hasNewUniverse={true}
@@ -194,7 +231,7 @@ export const ParallelUniverseExplorer = () => {
               
               <Button
                 variant="outline"
-                onClick={handleToggleFavorite}
+                onClick={() => handleToggleFavorite()}
                 className={`border-red-400 ${favorites.includes(currentUniverse.id) ? 'bg-red-50 text-red-700' : 'text-red-600 hover:bg-red-50'}`}
               >
                 <Heart 
@@ -213,16 +250,14 @@ export const ParallelUniverseExplorer = () => {
                 کپی
               </Button>
               
-              {favorites.length > 0 && (
-                <Button
-                  variant="outline"
-                  onClick={() => setShowFavorites(true)}
-                  className="border-purple-400 text-purple-700 hover:bg-purple-50"
-                >
-                  <Heart className="mr-2" size={16} />
-                  محبوب‌ها
-                </Button>
-              )}
+              <Button
+                variant="outline"
+                onClick={() => setShowBrowser(true)}
+                className="border-purple-400 text-purple-700 hover:bg-purple-50"
+              >
+                <Search className="mr-2" size={16} />
+                مرور جهان‌ها
+              </Button>
             </div>
           </div>
         )}
