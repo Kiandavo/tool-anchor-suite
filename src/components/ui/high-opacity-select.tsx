@@ -20,10 +20,10 @@ export function HighOpacitySelect({
 }: HighOpacitySelectProps) {
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className={cn("bg-white border-gray-300", className)}>
+      <SelectTrigger className={cn("bg-background border-border", className)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="bg-white border border-gray-300 shadow-lg z-50 max-h-60 overflow-y-auto">
+      <SelectContent className="bg-popover border border-border shadow-lg z-[9999] max-h-60 overflow-y-auto dropdown-content">
         {children}
       </SelectContent>
     </Select>
