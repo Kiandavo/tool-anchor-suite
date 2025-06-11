@@ -18,6 +18,18 @@ export default function UniverseWelcomeScreen({
   favoriteCount,
   totalUniverses 
 }: UniverseWelcomeScreenProps) {
+  console.log('UniverseWelcomeScreen rendered:', { isLoading, favoriteCount, totalUniverses });
+
+  const handleDiscoverClick = () => {
+    console.log('Discover button clicked');
+    onDiscoverUniverse();
+  };
+
+  const handleBrowserClick = () => {
+    console.log('Browser button clicked');
+    onShowBrowser();
+  };
+
   return (
     <div className="text-center py-12">
       <div className="text-6xl mb-4 animate-pulse">🌌</div>
@@ -26,7 +38,7 @@ export default function UniverseWelcomeScreen({
       
       <div className="space-y-3">
         <Button 
-          onClick={onDiscoverUniverse}
+          onClick={handleDiscoverClick}
           disabled={isLoading}
           size="lg"
           className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
@@ -47,7 +59,7 @@ export default function UniverseWelcomeScreen({
         <div className="flex justify-center gap-2">
           <Button 
             variant="outline"
-            onClick={onShowBrowser}
+            onClick={handleBrowserClick}
             className="border-purple-400 text-purple-700 hover:bg-purple-50"
           >
             <Search className="mr-2" size={16} />
@@ -57,7 +69,7 @@ export default function UniverseWelcomeScreen({
           {favoriteCount > 0 && (
             <Button 
               variant="outline"
-              onClick={onShowBrowser}
+              onClick={handleBrowserClick}
               className="border-red-400 text-red-700 hover:bg-red-50"
             >
               <Heart className="mr-2" size={16} />
