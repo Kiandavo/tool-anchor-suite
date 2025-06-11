@@ -32,12 +32,12 @@ export const ParallelUniverseExplorer = () => {
   });
 
   const discoverRandomUniverse = () => {
-    console.log('discoverRandomUniverse called');
+    console.log('🚀 Discover button clicked - starting universe generation');
     setIsLoading(true);
     
     setTimeout(() => {
       const universe = getRandomUniverse();
-      console.log('Generated universe:', universe);
+      console.log('✨ Generated universe:', universe.name);
       setCurrentUniverse(universe);
       addToHistory(universe.id);
       setIsLoading(false);
@@ -46,7 +46,7 @@ export const ParallelUniverseExplorer = () => {
   };
 
   const selectUniverse = (universe: ParallelUniverse) => {
-    console.log('selectUniverse called with:', universe.name);
+    console.log('🎯 Universe selected:', universe.name);
     setCurrentUniverse(universe);
     addToHistory(universe.id);
     setShowBrowser(false);
@@ -55,33 +55,41 @@ export const ParallelUniverseExplorer = () => {
 
   const handleToggleFavorite = (universeId?: number) => {
     const targetId = universeId || currentUniverse?.id;
-    console.log('handleToggleFavorite called with:', targetId);
-    if (!targetId) return;
+    console.log('💖 Toggle favorite for universe:', targetId);
+    if (!targetId) {
+      console.warn('No universe ID provided for favorite toggle');
+      return;
+    }
     
     const wasAdded = toggleFavorite(targetId);
+    console.log('Favorite toggled:', wasAdded ? 'added' : 'removed');
     toast.success(wasAdded ? "💖 به علاقه‌مندی‌ها اضافه شد" : "💔 از علاقه‌مندی‌ها حذف شد");
   };
 
   const copyUniverseDetails = () => {
-    console.log('copyUniverseDetails called');
-    if (currentUniverse) {
-      const text = `🌌 جهان موازی: ${currentUniverse.name}\n\n${currentUniverse.description}\n\n✨ ویژگی‌ها:\n${currentUniverse.characteristics.map(c => `• ${c}`).join('\n')}\n\n👤 شما در این جهان:\n${currentUniverse.youInThisUniverse}\n\n🎲 احتمال وجود: ${(currentUniverse.probability * 100).toFixed(4)}%`;
-      
-      copyToClipboard(text);
-      toast.success("📋 اطلاعات جهان کپی شد!");
+    console.log('📋 Copy button clicked');
+    if (!currentUniverse) {
+      console.warn('No universe to copy');
+      return;
     }
+    
+    const text = `🌌 جهان موازی: ${currentUniverse.name}\n\n${currentUniverse.description}\n\n✨ ویژگی‌ها:\n${currentUniverse.characteristics.map(c => `• ${c}`).join('\n')}\n\n👤 شما در این جهان:\n${currentUniverse.youInThisUniverse}\n\n🎲 احتمال وجود: ${(currentUniverse.probability * 100).toFixed(4)}%`;
+    
+    copyToClipboard(text);
+    toast.success("📋 اطلاعات جهان کپی شد!");
   };
 
   const handleShowBrowser = () => {
-    console.log('handleShowBrowser called');
+    console.log('🔍 Show browser clicked');
     setShowBrowser(true);
   };
 
   const handleHideBrowser = () => {
-    console.log('handleHideBrowser called');
+    console.log('🔙 Hide browser clicked');
     setShowBrowser(false);
   };
 
+  // Browser view
   if (showBrowser) {
     return (
       <Card className="shadow-lg overflow-hidden relative bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
@@ -115,6 +123,7 @@ export const ParallelUniverseExplorer = () => {
     );
   }
 
+  // Main view
   return (
     <Card className={`shadow-lg overflow-hidden relative ${currentUniverse ? getUniverseTypeColor(currentUniverse.type) : 'bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200'}`}>
       <DecorativeBackground />
@@ -143,11 +152,16 @@ export const ParallelUniverseExplorer = () => {
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
               >
                 {isLoading ? (
-                  <RefreshCw className="animate-spin mr-2" size={16} />
+                  <>
+                    <RefreshCw className="animate-spin mr-2" size={16} />
+                    در حال کاوش...
+                  </>
                 ) : (
-                  <Sparkles className="mr-2" size={16} />
+                  <>
+                    <Sparkles className="mr-2" size={16} />
+                    جهان جدید
+                  </>
                 )}
-                {isLoading ? 'در حال کاوش...' : 'جهان جدید'}
               </Button>
               
               <Button

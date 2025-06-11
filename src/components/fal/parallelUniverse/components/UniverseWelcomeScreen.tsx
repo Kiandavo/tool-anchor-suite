@@ -20,13 +20,17 @@ export default function UniverseWelcomeScreen({
 }: UniverseWelcomeScreenProps) {
   console.log('UniverseWelcomeScreen rendered:', { isLoading, favoriteCount, totalUniverses });
 
-  const handleDiscoverClick = () => {
-    console.log('Discover button clicked');
+  const handleDiscoverClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('🎯 Discover button clicked in welcome screen');
     onDiscoverUniverse();
   };
 
-  const handleBrowserClick = () => {
-    console.log('Browser button clicked');
+  const handleBrowserClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('🔍 Browser button clicked in welcome screen');
     onShowBrowser();
   };
 
@@ -60,6 +64,7 @@ export default function UniverseWelcomeScreen({
           <Button 
             variant="outline"
             onClick={handleBrowserClick}
+            disabled={isLoading}
             className="border-purple-400 text-purple-700 hover:bg-purple-50"
           >
             <Search className="mr-2" size={16} />
@@ -70,6 +75,7 @@ export default function UniverseWelcomeScreen({
             <Button 
               variant="outline"
               onClick={handleBrowserClick}
+              disabled={isLoading}
               className="border-red-400 text-red-700 hover:bg-red-50"
             >
               <Heart className="mr-2" size={16} />
