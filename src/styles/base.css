@@ -100,6 +100,7 @@
     border: 1px solid hsl(var(--border)) !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
     z-index: 9999 !important;
+    opacity: 1 !important;
   }
 
   .dropdown-item {
@@ -110,10 +111,31 @@
     cursor: pointer !important;
     background: transparent !important;
     transition: background-color 0.15s ease !important;
+    opacity: 1 !important;
   }
 
   .dropdown-item:hover {
     background: hsl(var(--accent)) !important;
     color: hsl(var(--accent-foreground)) !important;
+    opacity: 1 !important;
+  }
+
+  /* Force solid backgrounds for all dropdown-related elements */
+  [data-radix-select-content],
+  [data-radix-dropdown-menu-content],
+  [data-radix-popover-content] {
+    background: hsl(var(--popover)) !important;
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Override any problematic opacity classes */
+  .bg-white\/70,
+  .bg-white\/60,
+  .bg-white\/50,
+  .bg-gray-50\/70,
+  .bg-background\/70 {
+    background: hsl(var(--background)) !important;
+    opacity: 1 !important;
   }
 }

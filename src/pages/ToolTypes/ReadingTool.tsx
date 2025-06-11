@@ -6,6 +6,7 @@ import { HafezFortune } from '@/components/HafezFortune';
 import { TarotReading } from '@/components/fal/TarotReading';
 import { Horoscope } from '@/components/fal/Horoscope';
 import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
+import { ParallelUniverseExplorer } from '@/components/fal/parallelUniverse/ParallelUniverseExplorer';
 import PersianSuperstitions from '@/components/readings/PersianSuperstitions';
 import DailyHoroscope from '@/components/readings/DailyHoroscope';
 
@@ -28,6 +29,8 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
         return <Horoscope />;
       case 'rumi-istikhara':
         return <RumiIstikhara />;
+      case 'parallel-universe':
+        return <ParallelUniverseExplorer />;
       case 'persian-superstitions':
         return <PersianSuperstitions />;
       case 'daily-horoscope':

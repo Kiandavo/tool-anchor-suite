@@ -48,7 +48,7 @@ export const TarotControls: React.FC<TarotControlsProps> = ({
         <div className="w-full sm:w-1/2">
           <label className="block text-xs text-[#143a5c] mb-1">نوع خوانش</label>
           <Select onValueChange={onReadingTypeChange} value={readingType.id}>
-            <SelectTrigger className="w-full bg-white/70 border-[#b0c8e6]">
+            <SelectTrigger className="w-full bg-background border-[#b0c8e6]">
               <SelectValue placeholder={readingType.name} />
             </SelectTrigger>
             <SelectContent>
@@ -71,7 +71,7 @@ export const TarotControls: React.FC<TarotControlsProps> = ({
                 value={userQuestion}
                 onChange={(e) => onQuestionChange(e.target.value)}
                 placeholder="سؤال بله/خیر خود را بنویسید..."
-                className="w-full p-2 rounded bg-white/70 border border-[#b0c8e6] text-sm"
+                className="w-full p-2 rounded bg-background border border-[#b0c8e6] text-sm"
               />
             </div>
           )}

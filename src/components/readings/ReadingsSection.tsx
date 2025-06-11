@@ -88,7 +88,7 @@ export const ReadingsSection = () => {
                 <Link 
                   key={tool.id}
                   to={`/tool/${tool.slug}`} 
-                  className="bg-white/95 hover:bg-white rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] neo-glass relative overflow-hidden group backdrop-blur-sm"
+                  className="bg-white hover:bg-white/95 rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] neo-glass relative overflow-hidden group backdrop-blur-sm"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                   <div className="flex items-center mb-4">
@@ -123,7 +123,7 @@ export const ReadingsSection = () => {
                     <Link 
                       key={tool.id}
                       to={`/tool/${tool.slug}`} 
-                      className="bg-white/95 hover:bg-white rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] neo-glass relative overflow-hidden group backdrop-blur-sm"
+                      className="bg-white hover:bg-white/95 rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] neo-glass relative overflow-hidden group backdrop-blur-sm"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-cyan-50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                       <div className="flex items-center mb-4">
