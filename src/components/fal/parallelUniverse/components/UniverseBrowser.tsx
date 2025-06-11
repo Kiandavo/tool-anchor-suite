@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Search, Sparkles, Filter, Heart, History } from "lucide-react";
-import { ParallelUniverse } from '../types';
+import { ParallelUniverse, UniverseType } from '../types';
 import { parallelUniverses, getUniversesByType, searchUniverses } from '../universeData';
 import { getUniverseTypeColor } from '../universeStyleUtils';
 
@@ -22,7 +22,7 @@ const UniverseBrowser: React.FC<UniverseBrowserProps> = ({
   onToggleFavorite,
   history
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavorites, setShowFavorites] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -35,7 +35,11 @@ const UniverseBrowser: React.FC<UniverseBrowserProps> = ({
     } else if (showHistory) {
       universes = universes.filter(u => history.includes(u.id));
     } else if (selectedCategory !== 'all') {
-      universes = getUniversesByType(selectedCategory);
+      // Type guard to ensure selectedCategory is a valid UniverseType
+      const validTypes: UniverseType[] = ['utopian', 'dystopian', 'bizarre', 'neutral'];
+      if (validTypes.includes(selectedCategory as UniverseType)) {
+        universes = getUniversesByType(selectedCategory as UniverseType);
+      }
     }
 
     if (searchQuery) {
