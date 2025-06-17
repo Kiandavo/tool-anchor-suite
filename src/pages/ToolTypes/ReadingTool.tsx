@@ -11,6 +11,20 @@ import EnhancedAuraReading from '@/components/readings/EnhancedAuraReading';
 import Numerology from '@/components/readings/Numerology';
 import NameNumerology from '@/components/readings/NameNumerology';
 import { ParallelUniverseExplorer } from '@/components/fal/parallelUniverse/ParallelUniverseExplorer';
+import PersianSuperstitions from '@/components/readings/PersianSuperstitions';
+import DreamInterpretation from '@/components/readings/DreamInterpretation';
+import AuraReading from '@/components/readings/AuraReading';
+import CoffeeReading from '@/components/readings/CoffeeReading';
+import Cartomancy from '@/components/readings/Cartomancy';
+import Cleromancy from '@/components/readings/Cleromancy';
+import Lithomancy from '@/components/readings/Lithomancy';
+import WoodDivination from '@/components/readings/WoodDivination';
+import DistantReading from '@/components/readings/DistantReading';
+
+// Import new tools we'll create
+import PalmReading from '@/components/readings/PalmReading';
+import CoinOracle from '@/components/readings/CoinOracle';
+import ColorReading from '@/components/readings/ColorReading';
 
 interface ReadingToolProps {
   slug: string;
@@ -37,27 +51,35 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
         console.log("Rendering ParallelUniverseExplorer");
         return <ParallelUniverseExplorer />;
 
-      // Tools that need implementation
-      case 'cartomancy':
-        return <ToolNotImplemented toolName="کارتومانسی (فال با کارت)" category="readings" estimatedCompletion="دو هفته آینده" />;
-      
-      case 'cleromancy':
-        return <ToolNotImplemented toolName="فال سنگ و جواهر" category="readings" estimatedCompletion="یک هفته آینده" />;
-      
-      case 'coffee-reading':
-        return <ToolNotImplemented toolName="فال قهوه" category="readings" estimatedCompletion="یک هفته آینده" />;
-      
-      case 'lithomancy':
-        return <ToolNotImplemented toolName="سنگ‌شناسی روحانی" category="readings" estimatedCompletion="دو هفته آینده" />;
-      
-      case 'wood-divination':
-        return <ToolNotImplemented toolName="فال چوب" category="readings" estimatedCompletion="یک هفته آینده" />;
-      
-      case 'distant-reading':
-        return <ToolNotImplemented toolName="قرائت از راه دور" category="readings" estimatedCompletion="یک ماه آینده" />;
-      
       case 'persian-superstitions':
-        return <ToolNotImplemented toolName="باورهای عامیانه ایرانی" category="readings" estimatedCompletion="یک هفته آینده" />;
+        return <PersianSuperstitions />;
+
+      case 'coffee-reading':
+        return <CoffeeReading />;
+
+      case 'cartomancy':
+        return <Cartomancy />;
+
+      case 'cleromancy':
+        return <Cleromancy />;
+
+      case 'lithomancy':
+        return <Lithomancy />;
+
+      case 'wood-divination':
+        return <WoodDivination />;
+
+      case 'distant-reading':
+        return <DistantReading />;
+
+      case 'palm-reading':
+        return <PalmReading />;
+
+      case 'coin-oracle':
+        return <CoinOracle />;
+
+      case 'color-reading':
+        return <ColorReading />;
 
       default:
         return <ToolNotImplemented toolName="این ابزار طالع‌بینی" category="readings" />;
@@ -93,7 +115,10 @@ function getToolTitle(slug: string): string {
     'lithomancy': 'سنگ‌شناسی روحانی',
     'wood-divination': 'فال چوب',
     'distant-reading': 'قرائت از راه دور',
-    'persian-superstitions': 'باورهای عامیانه ایرانی'
+    'persian-superstitions': 'باورهای عامیانه ایرانی',
+    'palm-reading': 'فال دست',
+    'coin-oracle': 'پیشگویی با سکه',
+    'color-reading': 'روان‌شناسی رنگ'
   };
   
   return titles[slug] || 'ابزار طالع‌بینی';

@@ -80,7 +80,7 @@ export const readingsTools: Tool[] = [
     description: "تفسیر و تعبیر رویاها بر اساس نمادها و معانی",
     isNew: false,
     icon: "moon",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "name-numerology",
@@ -90,7 +90,7 @@ export const readingsTools: Tool[] = [
     description: "تحلیل شخصیت و سرنوشت از طریق حروف نام",
     isNew: false,
     icon: "hash",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "coffee-reading",
@@ -100,7 +100,7 @@ export const readingsTools: Tool[] = [
     description: "تفسیر اشکال ته فنجان قهوه برای پیش‌بینی آینده",
     isNew: false,
     icon: "coffee",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "numerology",
@@ -110,7 +110,7 @@ export const readingsTools: Tool[] = [
     description: "محاسبه و تفسیر اعداد سرنوشت بر اساس تاریخ تولد",
     isNew: false,
     icon: "calculator",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "palm-reading", 
@@ -120,7 +120,7 @@ export const readingsTools: Tool[] = [
     description: "خط‌شناسی و تفسیر خطوط کف دست",
     isNew: false,
     icon: "hand",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "aura-reading",
@@ -130,7 +130,7 @@ export const readingsTools: Tool[] = [
     description: "تشخیص و تفسیر رنگ‌های هاله انرژی اطراف شما",
     isNew: false,
     icon: "zap",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "cartomancy",
@@ -140,7 +140,7 @@ export const readingsTools: Tool[] = [
     description: "فال‌گیری با کارت‌های بازی معمولی",
     isNew: false,
     icon: "spade",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "coin-oracle",
@@ -150,7 +150,7 @@ export const readingsTools: Tool[] = [
     description: "استفاده از سکه برای پاسخ به سوالات مهم زندگی",
     isNew: false,
     icon: "coins",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "color-reading",
@@ -160,6 +160,6 @@ export const readingsTools: Tool[] = [
     description: "تحلیل شخصیت بر اساس رنگ‌های مورد علاقه",
     isNew: false,
     icon: "palette",
-    isComingSoon: true
+    isComingSoon: false
   }
 ];
