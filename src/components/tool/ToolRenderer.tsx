@@ -1,10 +1,12 @@
-
 import React from 'react';
 import { Tool } from '@/data/tools';
 import { TextToolRenderer } from './renderers/TextToolRenderer';
 import { ImageToolRenderer } from './renderers/ImageToolRenderer';
 import { CalculatorToolRenderer } from './renderers/CalculatorToolRenderer';
 import { UtilityToolRenderer } from './renderers/UtilityToolRenderer';
+import { DesignToolRenderer } from './renderers/DesignToolRenderer';
+import { ProductivityToolRenderer } from './renderers/ProductivityToolRenderer';
+import { EducationalToolRenderer } from './renderers/EducationalToolRenderer';
 import ReadingTool from '@/pages/ToolTypes/ReadingTool';
 import PersianCulturalTool from '@/pages/ToolTypes/PersianCulturalTool';
 
@@ -39,6 +41,15 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     
     case 'persian-cultural':
       return <PersianCulturalTool slug={slug} />;
+    
+    case 'design':
+      return <DesignToolRenderer slug={slug} />;
+    
+    case 'productivity':
+      return <ProductivityToolRenderer slug={slug} />;
+    
+    case 'educational':
+      return <EducationalToolRenderer slug={slug} />;
     
     default:
       return (

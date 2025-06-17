@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ToolNotImplemented from './ToolNotImplemented';
@@ -20,11 +19,18 @@ import Cleromancy from '@/components/readings/Cleromancy';
 import Lithomancy from '@/components/readings/Lithomancy';
 import WoodDivination from '@/components/readings/WoodDivination';
 import DistantReading from '@/components/readings/DistantReading';
+import DailyHoroscope from '@/components/readings/DailyHoroscope';
 
-// Import new tools we'll create
+// Import new tools we created
 import PalmReading from '@/components/readings/PalmReading';
 import CoinOracle from '@/components/readings/CoinOracle';
 import ColorReading from '@/components/readings/ColorReading';
+
+// Import Fal components
+import HafezFortune from '@/components/HafezFortune';
+import TarotReading from '@/components/fal/TarotReading';
+import Horoscope from '@/components/fal/Horoscope';
+import RumiIstikhara from '@/components/fal/RumiIstikhara';
 
 interface ReadingToolProps {
   slug: string;
@@ -81,6 +87,21 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
       case 'color-reading':
         return <ColorReading />;
 
+      case 'daily-horoscope':
+        return <DailyHoroscope />;
+
+      case 'hafez-fortune':
+        return <HafezFortune />;
+
+      case 'tarot-reading':
+        return <TarotReading />;
+
+      case 'horoscope':
+        return <Horoscope />;
+
+      case 'rumi-istikhara':
+        return <RumiIstikhara />;
+
       default:
         return <ToolNotImplemented toolName="این ابزار طالع‌بینی" category="readings" />;
     }
@@ -118,7 +139,12 @@ function getToolTitle(slug: string): string {
     'persian-superstitions': 'باورهای عامیانه ایرانی',
     'palm-reading': 'فال دست',
     'coin-oracle': 'پیشگویی با سکه',
-    'color-reading': 'روان‌شناسی رنگ'
+    'color-reading': 'روان‌شناسی رنگ',
+    'daily-horoscope': 'طالع روزانه',
+    'hafez-fortune': 'فال حافظ',
+    'tarot-reading': 'فال تاروت',
+    'horoscope': 'طالع بینی',
+    'rumi-istikhara': 'استخاره با مولانا'
   };
   
   return titles[slug] || 'ابزار طالع‌بینی';
