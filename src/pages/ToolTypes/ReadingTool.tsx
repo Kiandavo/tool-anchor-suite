@@ -26,11 +26,11 @@ import PalmReading from '@/components/readings/PalmReading';
 import CoinOracle from '@/components/readings/CoinOracle';
 import ColorReading from '@/components/readings/ColorReading';
 
-// Import Fal components
-import HafezFortune from '@/components/HafezFortune';
-import TarotReading from '@/components/fal/TarotReading';
-import Horoscope from '@/components/fal/Horoscope';
-import RumiIstikhara from '@/components/fal/RumiIstikhara';
+// Import Fal components - using named imports
+import { HafezFortune } from '@/components/HafezFortune';
+import { TarotReading } from '@/components/fal/TarotReading';
+import { Horoscope } from '@/components/fal/Horoscope';
+import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
 
 interface ReadingToolProps {
   slug: string;
