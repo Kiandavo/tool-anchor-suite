@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParallelUniverseExplorer } from './hooks/useParallelUniverseExplorer';
 import { UniverseBrowserView } from './components/UniverseBrowserView';
-import { UniverseMainView } from './components/UniverseMainView';
+import { EnhancedUniverseMainView } from './components/EnhancedUniverseMainView';
 
 export const ParallelUniverseContainer = () => {
   const {
@@ -31,7 +31,7 @@ export const ParallelUniverseContainer = () => {
   }
 
   return (
-    <UniverseMainView
+    <EnhancedUniverseMainView
       currentUniverse={currentUniverse}
       isLoading={isLoading}
       favorites={favorites}
