@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Heart, RefreshCw, Copy, Search, Share, Download, ArrowLeft } from "lucide-react";
 import { ParallelUniverse } from '../types';
@@ -30,10 +29,10 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
   onShowBrowser
 }) => {
   return (
-    <Card className="shadow-2xl overflow-hidden relative min-h-[700px] transition-all duration-500 bg-slate-900 border-white/10">
+    <div className="shadow-2xl overflow-hidden relative min-h-[700px] transition-all duration-500 glass-morphism border border-gray-200/50 rounded-2xl">
       <Modern3DHeader />
       
-      <CardContent className="p-0 relative">
+      <div className="p-0 relative">
         {!currentUniverse ? (
           <Modern3DWelcomeScreen
             onDiscoverUniverse={onDiscoverUniverse}
@@ -59,20 +58,18 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
                 hasNewUniverse={true}
               />
               
-              {/* Futuristic Action Panel */}
-              <div className="sticky bottom-0 bg-black/30 backdrop-blur-2xl rounded-3xl border border-white/10 p-10 shadow-2xl">
-                <div className="space-y-8">
+              {/* Action Panel matching homepage style */}
+              <div className="glass-morphism rounded-2xl border border-gray-200/50 p-8 shadow-lg">
+                <div className="space-y-6">
                   {/* Primary Action */}
                   <div className="flex justify-center">
                     <Button
                       onClick={onDiscoverUniverse}
                       disabled={isLoading}
-                      variant="apple"
-                      size="apple-lg"
-                      className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold px-16 py-6 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-700 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group min-w-[350px] text-xl"
+                      size="lg"
+                      className="shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] font-medium text-lg gradient-persian text-white interactive-element magnetic-hover min-w-[300px]"
                     >
-                      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-                      <span className="relative z-10 flex items-center justify-center">
+                      <span className="flex items-center justify-center">
                         {isLoading ? (
                           <>
                             در حال کاوش کیهان...
@@ -91,40 +88,40 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
                   {/* Secondary Actions */}
                   <div className="flex flex-wrap gap-4 justify-center">
                     <Button
-                      variant="apple-outline"
-                      size="apple"
+                      variant="outline"
+                      size="lg"
                       onClick={onToggleFavorite}
                       disabled={isLoading}
-                      className={`font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 backdrop-blur-md text-lg min-w-[220px] ${
+                      className={`transition-all hover:scale-[1.02] font-medium text-base interactive-element magnetic-hover min-w-[200px] ${
                         favorites.includes(currentUniverse.id) 
-                          ? 'bg-red-500/20 border-red-400/30 text-red-200 hover:bg-red-500/30' 
-                          : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                          ? 'glass-morphism hover:bg-red-50/50 text-red-600 border-red-200' 
+                          : 'glass-morphism hover:bg-blue-50/50'
                       }`}
                     >
                       {favorites.includes(currentUniverse.id) ? 'حذف از علاقه‌مندی‌ها' : 'افزودن به علاقه‌مندی‌ها'}
                       <Heart 
-                        className={`mr-3 ${favorites.includes(currentUniverse.id) ? 'fill-red-400 text-red-400' : ''}`} 
+                        className={`mr-3 ${favorites.includes(currentUniverse.id) ? 'fill-current text-red-500' : ''}`} 
                         size={20} 
                       />
                     </Button>
                     
                     <Button
-                      variant="apple-outline"
-                      size="apple"
+                      variant="outline"
+                      size="lg"
                       onClick={onCopyDetails}
                       disabled={isLoading}
-                      className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 text-lg min-w-[180px]"
+                      className="glass-morphism hover:bg-blue-50/50 transition-all hover:scale-[1.02] font-medium text-base interactive-element magnetic-hover min-w-[160px]"
                     >
                       کپی اطلاعات
                       <Copy className="mr-3" size={20} />
                     </Button>
                     
                     <Button
-                      variant="apple-outline"
-                      size="apple"
+                      variant="outline"
+                      size="lg"
                       onClick={onShowBrowser}
                       disabled={isLoading}
-                      className="bg-purple-500/10 backdrop-blur-md border-purple-400/30 text-purple-200 hover:bg-purple-500/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 text-lg min-w-[200px]"
+                      className="glass-morphism hover:bg-purple-50/50 transition-all hover:scale-[1.02] font-medium text-base interactive-element magnetic-hover text-purple-600 border-purple-200 min-w-[180px]"
                     >
                       مرور همه جهان‌ها
                       <Search className="mr-3" size={20} />
@@ -133,17 +130,17 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
                 </div>
                 
                 {/* Quantum Status Bar */}
-                <div className="flex justify-center mt-8 pt-8 border-t border-white/10">
-                  <div className="flex items-center gap-8 text-white/80 text-lg font-light flex-wrap justify-center">
+                <div className="flex justify-center mt-6 pt-6 border-t border-gray-200/50">
+                  <div className="flex items-center gap-6 text-gray-700 text-base font-light flex-wrap justify-center">
                     <div className="flex items-center">
                       <div className="w-3 h-3 bg-green-400 rounded-full ml-3 animate-pulse shadow-lg shadow-green-400/50"></div>
                       <span>{currentUniverse.name}</span>
                     </div>
-                    <div className="text-white/40">•</div>
+                    <div className="text-gray-400">•</div>
                     <div>
                       احتمال: {(currentUniverse.probability * 100).toFixed(4)}%
                     </div>
-                    <div className="text-white/40">•</div>
+                    <div className="text-gray-400">•</div>
                     <div>
                       نوع: {currentUniverse.type}
                     </div>
@@ -153,18 +150,7 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
             </div>
           </div>
         )}
-      </CardContent>
-      
-      <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        
-        .group:hover .group-hover\\:animate-shimmer {
-          animation: shimmer 1.2s ease-in-out;
-        }
-      `}</style>
-    </Card>
+      </div>
+    </div>
   );
 };

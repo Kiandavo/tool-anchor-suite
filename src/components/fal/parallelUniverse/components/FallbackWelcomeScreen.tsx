@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Sparkles, RefreshCw, Search, Heart, Globe, Star, Telescope, Zap, Infinity } from "lucide-react";
 import { ParallelUniverse } from '../types';
 import { parallelUniverses } from '../universeData';
+import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 
 interface FallbackWelcomeScreenProps {
   onDiscoverUniverse: () => void;
@@ -45,162 +44,131 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
   ];
 
   return (
-    <div className="relative min-h-[600px] bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 overflow-hidden" dir="rtl">
-      {/* Animated background with CSS */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-gradient-to-br from-pink-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        
-        {/* Floating particles with CSS */}
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white/30 rounded-full animate-pulse"
-            style={{
-              right: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
-            }}
-          />
-        ))}
-      </div>
+    <section className="py-20 sm:py-28 mb-16 relative overflow-hidden" dir="rtl">
+      {/* Background elements matching homepage */}
+      <div className="absolute inset-0 gradient-mesh opacity-20" />
+      <div className="absolute inset-0 glass-morphism" />
+      
+      <EnhancedGraphics variant="floating-orbs" className="absolute inset-0" />
+      
+      {/* Animated background circles like homepage */}
+      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-br from-blue-200/40 to-purple-200/30 blur-3xl wave-animation" />
+      <div className="absolute bottom-20 left-[10%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-200/40 to-blue-200/30 blur-3xl wave-animation" style={{ animationDelay: '1s' }} />
 
-      <div className="relative z-10 px-8 py-16">
-        {/* Hero Section */}
-        <div className="text-center mb-16 max-w-5xl mx-auto">
-          <div className="inline-flex items-center justify-center w-32 h-32 bg-white/10 backdrop-blur-xl rounded-full mb-8 shadow-2xl border border-white/20">
-            <Infinity className="w-16 h-16 text-blue-400" />
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-5xl mx-auto text-center animate-fade-in">
+          {/* Hero Section matching homepage style */}
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 mb-8 shadow-2xl bounce-subtle">
+            <Infinity className="w-10 h-10 text-white" />
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight leading-tight font-vazirmatn">
-            کاوشگر جهان‌های
-            <span className="block font-medium bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              موازی
-            </span>
+          <h1 className="text-4xl sm:text-6xl font-bold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight text-shine">
+            کاوشگر جهان‌های موازی
           </h1>
           
-          <p className="text-base md:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed font-light mb-8 font-vazirmatn px-4">
+          <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed text-gray-700 font-light mb-6 scroll-reveal">
             سفری به دنیایی که در آن هر انتخاب شما منجر به ایجاد جهانی جدید شده است.
-            <br className="hidden md:block" />
             آماده‌اید نسخه‌ای متفاوت از خودتان را در کیهان بی‌نهایت کشف کنید؟
           </p>
 
-          <div className="flex justify-center gap-3 flex-wrap">
-            <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20 px-4 py-2 rounded-full font-medium text-sm">
-              {totalUniverses.toLocaleString()} جهان در دسترس
-              <Telescope className="w-4 h-4 mr-2" />
-            </Badge>
+          <div className="flex justify-center gap-4 flex-wrap mb-8">
+            <div className="glass-morphism px-4 py-2 rounded-full shadow-sm border border-gray-200/50">
+              <div className="flex items-center text-gray-700 font-medium text-sm">
+                {totalUniverses.toLocaleString()} جهان در دسترس
+                <Telescope className="w-4 h-4 mr-2" />
+              </div>
+            </div>
             {favoriteCount > 0 && (
-              <Badge className="bg-red-500/20 backdrop-blur-md text-red-200 border-red-300/30 px-4 py-2 rounded-full font-medium text-sm">
-                {favoriteCount} جهان محبوب
-                <Heart className="w-4 h-4 mr-2 fill-current" />
-              </Badge>
+              <div className="glass-morphism px-4 py-2 rounded-full shadow-sm border border-gray-200/50">
+                <div className="flex items-center text-gray-700 font-medium text-sm">
+                  {favoriteCount} جهان محبوب
+                  <Heart className="w-4 h-4 mr-2 fill-current text-red-500" />
+                </div>
+              </div>
             )}
           </div>
-        </div>
 
-        {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
-          {features.map((feature, index) => (
-            <Card 
-              key={index}
-              className={`group relative overflow-hidden bg-white/5 backdrop-blur-xl border-white/10 transition-all duration-700 hover:scale-105 hover:bg-white/10 cursor-pointer ${
-                hoveredFeature === index ? 'shadow-2xl shadow-purple-500/20 border-white/20' : 'shadow-xl'
-              }`}
-              onMouseEnter={() => setHoveredFeature(index)}
-              onMouseLeave={() => setHoveredFeature(null)}
-            >
-              <CardContent className="p-8 text-center relative">
-                <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-3xl mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-500`}>
-                  <feature.icon className="w-10 h-10 text-white" />
+          {/* Feature Cards matching homepage style */}
+          <div className="grid md:grid-cols-3 gap-6 mb-8 animate-slide-up">
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover"
+                onMouseEnter={() => setHoveredFeature(index)}
+                onMouseLeave={() => setHoveredFeature(null)}
+              >
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${feature.gradient} flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle`} style={{ animationDelay: `${index * 0.5}s` }}>
+                  <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg md:text-xl font-semibold text-white mb-4 font-vazirmatn">{feature.title}</h3>
-                <p className="text-white/80 leading-relaxed font-light text-sm md:text-base font-vazirmatn">{feature.description}</p>
-                
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-700 rounded-3xl`}></div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                <h3 className="text-lg font-medium mb-2 text-gray-800">{feature.title}</h3>
+                <p className="text-gray-600 text-sm">{feature.description}</p>
+              </div>
+            ))}
+          </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col items-center justify-center space-y-8 px-4">
-          <Button 
-            onClick={onDiscoverUniverse}
-            disabled={isLoading}
-            variant="apple"
-            size="apple-lg"
-            className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold px-8 md:px-12 py-4 md:py-5 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 w-full max-w-[320px] relative overflow-hidden group text-base md:text-lg font-vazirmatn"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-            <span className="relative z-10 flex items-center justify-center">
+          {/* Action Buttons matching homepage style */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <Button 
+              onClick={onDiscoverUniverse}
+              disabled={isLoading}
+              size="lg"
+              className="shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] font-medium text-lg gradient-persian text-white interactive-element magnetic-hover"
+            >
               {isLoading ? (
                 <>
                   در حال کاوش کیهان...
-                  <RefreshCw className="animate-spin mr-3" size={20} />
+                  <RefreshCw className="animate-spin mr-2 h-5 w-5" />
                 </>
               ) : (
                 <>
                   شروع کاوش جهان‌های موازی
-                  <Sparkles className="mr-3" size={20} />
+                  <Sparkles className="mr-2 h-5 w-5" />
                 </>
               )}
-            </span>
-          </Button>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 w-full max-w-xl">
+            </Button>
+            
             <Button 
-              variant="apple-outline"
-              size="apple"
+              variant="outline"
+              size="lg"
               onClick={onShowBrowser}
               disabled={isLoading}
-              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-6 md:px-8 py-3 md:py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-sm md:text-base w-full sm:w-auto min-w-[200px] md:min-w-[220px] font-vazirmatn"
+              className="glass-morphism hover:shadow-md hover:bg-blue-50/50 transition-all hover:scale-[1.02] font-medium text-lg interactive-element magnetic-hover"
             >
               مرور تمام جهان‌ها
-              <Search className="mr-2" size={18} />
+              <Search className="mr-2 h-5 w-5" />
             </Button>
             
             {favoriteCount > 0 && (
               <Button 
-                variant="apple-outline"
-                size="apple"
+                variant="outline"
+                size="lg"
                 onClick={onShowBrowser}
                 disabled={isLoading}
-                className="bg-red-500/10 backdrop-blur-md border-red-400/30 text-red-200 hover:bg-red-500/20 font-medium px-6 md:px-8 py-3 md:py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-sm md:text-base w-full sm:w-auto min-w-[200px] md:min-w-[220px] font-vazirmatn"
+                className="glass-morphism hover:shadow-md hover:bg-red-50/50 transition-all hover:scale-[1.02] font-medium text-lg interactive-element magnetic-hover text-red-600 border-red-200"
               >
                 جهان‌های محبوب
-                <Heart className="mr-2 fill-current" size={18} />
+                <Heart className="mr-2 h-5 w-5 fill-current" />
               </Button>
             )}
           </div>
-        </div>
 
-        {/* Status Indicator */}
-        <div className="flex justify-center mt-16 px-4">
-          <div className="bg-black/20 backdrop-blur-xl rounded-full px-4 md:px-6 py-2 md:py-3 border border-white/10 shadow-2xl">
-            <div className="flex items-center gap-3 md:gap-4 text-white/80 text-sm md:text-base font-light font-vazirmatn">
-              <div className="flex items-center">
-                سیستم کوانتومی آنلاین
-                <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse shadow-lg shadow-green-400/50"></div>
+          {/* Status Indicator matching homepage style */}
+          <div className="max-w-lg mx-auto h-1.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mt-16 rounded-full wave-animation" />
+          
+          <div className="flex justify-center mt-8">
+            <div className="glass-morphism px-6 py-3 rounded-full shadow-sm border border-gray-200/50">
+              <div className="flex items-center gap-3 text-gray-700 text-sm font-light">
+                <div className="flex items-center">
+                  سیستم کوانتومی آنلاین
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse shadow-lg shadow-green-400/50"></div>
+                </div>
+                <div className="text-gray-400 hidden md:block">•</div>
+                <div className="hidden md:block">آخرین بروزرسانی: امروز</div>
               </div>
-              <div className="text-white/40 hidden md:block">•</div>
-              <div className="hidden md:block">آخرین بروزرسانی: امروز</div>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        
-        .group:hover .group-hover\\:animate-shimmer {
-          animation: shimmer 1s ease-in-out;
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
