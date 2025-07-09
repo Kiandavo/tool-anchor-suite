@@ -62,25 +62,25 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
             <Infinity className="w-10 h-10 text-white" />
           </div>
           
-          <h1 className="text-4xl sm:text-6xl font-bold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight text-shine">
+          <h1 className="text-4xl sm:text-6xl font-bold mb-6 sm:mb-8 text-foreground leading-tight tracking-tight title-gradient">
             کاوشگر جهان‌های موازی
           </h1>
           
-          <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed text-gray-700 font-light mb-6 scroll-reveal">
+          <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed text-muted-foreground font-light mb-6 scroll-reveal">
             سفری به دنیایی که در آن هر انتخاب شما منجر به ایجاد جهانی جدید شده است.
             آماده‌اید نسخه‌ای متفاوت از خودتان را در کیهان بی‌نهایت کشف کنید؟
           </p>
 
           <div className="flex justify-center gap-4 flex-wrap mb-8">
             <div className="glass-morphism px-4 py-2 rounded-full shadow-sm border border-gray-200/50">
-              <div className="flex items-center text-gray-700 font-medium text-sm">
+              <div className="flex items-center text-foreground font-medium text-sm">
                 {totalUniverses.toLocaleString()} جهان در دسترس
                 <Telescope className="w-4 h-4 mr-2" />
               </div>
             </div>
             {favoriteCount > 0 && (
               <div className="glass-morphism px-4 py-2 rounded-full shadow-sm border border-gray-200/50">
-                <div className="flex items-center text-gray-700 font-medium text-sm">
+                <div className="flex items-center text-foreground font-medium text-sm">
                   {favoriteCount} جهان محبوب
                   <Heart className="w-4 h-4 mr-2 fill-current text-red-500" />
                 </div>
@@ -100,8 +100,8 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
                 <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${feature.gradient} flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle`} style={{ animationDelay: `${index * 0.5}s` }}>
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-medium mb-2 text-gray-800">{feature.title}</h3>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
+                <h3 className="text-lg font-medium mb-2 text-foreground">{feature.title}</h3>
+                <p className="text-muted-foreground text-sm">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -157,12 +157,12 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
           
           <div className="flex justify-center mt-8">
             <div className="glass-morphism px-6 py-3 rounded-full shadow-sm border border-gray-200/50">
-              <div className="flex items-center gap-3 text-gray-700 text-sm font-light">
+              <div className="flex items-center gap-3 text-muted-foreground text-sm font-light">
                 <div className="flex items-center">
                   سیستم کوانتومی آنلاین
                   <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse shadow-lg shadow-green-400/50"></div>
                 </div>
-                <div className="text-gray-400 hidden md:block">•</div>
+                <div className="text-muted-foreground/60 hidden md:block">•</div>
                 <div className="hidden md:block">آخرین بروزرسانی: امروز</div>
               </div>
             </div>

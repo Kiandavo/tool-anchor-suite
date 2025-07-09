@@ -13,7 +13,7 @@ interface Modern3DWelcomeScreenProps {
 
 export const Modern3DWelcomeScreen: React.FC<Modern3DWelcomeScreenProps> = (props) => {
   return (
-    <div className="relative min-h-[600px] bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 overflow-hidden">
+    <div className="relative min-h-[600px] bg-background overflow-hidden">
       <ThreeJSErrorBoundary fallback={<FallbackWelcomeScreen {...props} />}>
         <Suspense fallback={<FallbackWelcomeScreen {...props} />}>
           <SimpleCosmicBackground count={2000} />
