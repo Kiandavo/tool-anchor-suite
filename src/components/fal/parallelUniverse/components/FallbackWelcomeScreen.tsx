@@ -125,13 +125,13 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="text-center space-y-8 px-4">
+        <div className="flex flex-col items-center justify-center space-y-8 px-4">
           <Button 
             onClick={onDiscoverUniverse}
             disabled={isLoading}
             variant="apple"
             size="apple-lg"
-            className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold px-12 md:px-16 py-5 md:py-6 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 min-w-[300px] md:min-w-[380px] relative overflow-hidden group text-lg md:text-xl font-vazirmatn"
+            className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold px-12 md:px-16 py-5 md:py-6 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 w-full max-w-[380px] relative overflow-hidden group text-lg md:text-xl font-vazirmatn"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
             <span className="relative z-10 flex items-center justify-center">
@@ -149,13 +149,13 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
             </span>
           </Button>
           
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-2xl">
             <Button 
               variant="apple-outline"
               size="apple-lg"
               onClick={onShowBrowser}
               disabled={isLoading}
-              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 md:px-12 py-4 md:py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-base md:text-lg min-w-[240px] md:min-w-[280px] font-vazirmatn"
+              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 md:px-12 py-4 md:py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-base md:text-lg w-full sm:w-auto min-w-[240px] md:min-w-[280px] font-vazirmatn"
             >
               مرور تمام جهان‌ها
               <Search className="mr-3" size={22} />
@@ -167,7 +167,7 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
                 size="apple-lg"
                 onClick={onShowBrowser}
                 disabled={isLoading}
-                className="bg-red-500/10 backdrop-blur-md border-red-400/30 text-red-200 hover:bg-red-500/20 font-medium px-8 md:px-12 py-4 md:py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-base md:text-lg min-w-[240px] md:min-w-[280px] font-vazirmatn"
+                className="bg-red-500/10 backdrop-blur-md border-red-400/30 text-red-200 hover:bg-red-500/20 font-medium px-8 md:px-12 py-4 md:py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-base md:text-lg w-full sm:w-auto min-w-[240px] md:min-w-[280px] font-vazirmatn"
               >
                 جهان‌های محبوب
                 <Heart className="mr-3 fill-current" size={22} />
