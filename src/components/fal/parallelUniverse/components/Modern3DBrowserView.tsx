@@ -45,10 +45,10 @@ export const Modern3DBrowserView: React.FC<Modern3DBrowserViewProps> = ({
               variant="apple-outline" 
               size="apple"
               onClick={onHideBrowser}
-              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-lg"
+              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-lg min-w-[140px]"
             >
-              <ArrowLeft className="ml-3" size={20} />
               بازگشت
+              <ArrowLeft className="mr-3" size={20} />
             </Button>
           </div>
           

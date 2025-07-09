@@ -88,13 +88,13 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
 
           <div className="flex justify-center gap-4 flex-wrap">
             <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20 px-6 py-3 rounded-full font-medium text-base">
-              <Telescope className="w-5 h-5 ml-3" />
               {totalUniverses.toLocaleString()} جهان در دسترس
+              <Telescope className="w-5 h-5 mr-3" />
             </Badge>
             {favoriteCount > 0 && (
               <Badge className="bg-red-500/20 backdrop-blur-md text-red-200 border-red-300/30 px-6 py-3 rounded-full font-medium text-base">
-                <Heart className="w-5 h-5 ml-3 fill-current" />
                 {favoriteCount} جهان محبوب
+                <Heart className="w-5 h-5 mr-3 fill-current" />
               </Badge>
             )}
           </div>
@@ -137,13 +137,13 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
             <span className="relative z-10 flex items-center justify-center">
               {isLoading ? (
                 <>
-                  <RefreshCw className="animate-spin ml-4" size={28} />
                   در حال کاوش کیهان...
+                  <RefreshCw className="animate-spin mr-4" size={28} />
                 </>
               ) : (
                 <>
-                  <Sparkles className="ml-4" size={28} />
                   شروع کاوش جهان‌های موازی
+                  <Sparkles className="mr-4" size={28} />
                 </>
               )}
             </span>
@@ -152,25 +152,25 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
           <div className="flex flex-wrap justify-center gap-6">
             <Button 
               variant="apple-outline"
-              size="apple"
+              size="apple-lg"
               onClick={onShowBrowser}
               disabled={isLoading}
-              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-10 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-lg"
+              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-12 py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-lg min-w-[280px]"
             >
-              <Search className="ml-3" size={20} />
               مرور تمام جهان‌ها
+              <Search className="mr-3" size={22} />
             </Button>
             
             {favoriteCount > 0 && (
               <Button 
                 variant="apple-outline"
-                size="apple"
+                size="apple-lg"
                 onClick={onShowBrowser}
                 disabled={isLoading}
-                className="bg-red-500/10 backdrop-blur-md border-red-400/30 text-red-200 hover:bg-red-500/20 font-medium px-10 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-lg"
+                className="bg-red-500/10 backdrop-blur-md border-red-400/30 text-red-200 hover:bg-red-500/20 font-medium px-12 py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-lg min-w-[280px]"
               >
-                <Heart className="ml-3 fill-current" size={20} />
                 جهان‌های محبوب
+                <Heart className="mr-3 fill-current" size={22} />
               </Button>
             )}
           </div>
@@ -181,8 +181,8 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
           <div className="bg-black/20 backdrop-blur-xl rounded-full px-8 py-4 border border-white/10 shadow-2xl">
             <div className="flex items-center gap-6 text-white/80 text-lg font-light">
               <div className="flex items-center">
-                <div className="w-3 h-3 bg-green-400 rounded-full ml-3 animate-pulse shadow-lg shadow-green-400/50"></div>
                 سیستم کوانتومی آنلاین
+                <div className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse shadow-lg shadow-green-400/50"></div>
               </div>
               <div className="text-white/40">•</div>
               <div>آخرین بروزرسانی: امروز</div>

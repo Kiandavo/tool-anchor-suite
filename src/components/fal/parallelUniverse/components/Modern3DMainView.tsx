@@ -75,13 +75,13 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
                       <span className="relative z-10 flex items-center justify-center">
                         {isLoading ? (
                           <>
-                            <RefreshCw className="animate-spin ml-4" size={24} />
                             در حال کاوش کیهان...
+                            <RefreshCw className="animate-spin mr-4" size={24} />
                           </>
                         ) : (
                           <>
-                            <Sparkles className="ml-4" size={24} />
                             کشف جهان جدید
+                            <Sparkles className="mr-4" size={24} />
                           </>
                         )}
                       </span>
@@ -95,17 +95,17 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
                       size="apple"
                       onClick={onToggleFavorite}
                       disabled={isLoading}
-                      className={`font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 backdrop-blur-md text-lg ${
+                      className={`font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 backdrop-blur-md text-lg min-w-[220px] ${
                         favorites.includes(currentUniverse.id) 
                           ? 'bg-red-500/20 border-red-400/30 text-red-200 hover:bg-red-500/30' 
                           : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
                       }`}
                     >
+                      {favorites.includes(currentUniverse.id) ? 'حذف از علاقه‌مندی‌ها' : 'افزودن به علاقه‌مندی‌ها'}
                       <Heart 
-                        className={`ml-3 ${favorites.includes(currentUniverse.id) ? 'fill-red-400 text-red-400' : ''}`} 
+                        className={`mr-3 ${favorites.includes(currentUniverse.id) ? 'fill-red-400 text-red-400' : ''}`} 
                         size={20} 
                       />
-                      {favorites.includes(currentUniverse.id) ? 'حذف از علاقه‌مندی‌ها' : 'افزودن به علاقه‌مندی‌ها'}
                     </Button>
                     
                     <Button
@@ -113,10 +113,10 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
                       size="apple"
                       onClick={onCopyDetails}
                       disabled={isLoading}
-                      className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 text-lg"
+                      className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 text-lg min-w-[180px]"
                     >
-                      <Copy className="ml-3" size={20} />
                       کپی اطلاعات
+                      <Copy className="mr-3" size={20} />
                     </Button>
                     
                     <Button
@@ -124,10 +124,10 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
                       size="apple"
                       onClick={onShowBrowser}
                       disabled={isLoading}
-                      className="bg-purple-500/10 backdrop-blur-md border-purple-400/30 text-purple-200 hover:bg-purple-500/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 text-lg"
+                      className="bg-purple-500/10 backdrop-blur-md border-purple-400/30 text-purple-200 hover:bg-purple-500/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 text-lg min-w-[200px]"
                     >
-                      <Search className="ml-3" size={20} />
                       مرور همه جهان‌ها
+                      <Search className="mr-3" size={20} />
                     </Button>
                   </div>
                 </div>
