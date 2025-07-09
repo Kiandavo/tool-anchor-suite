@@ -19,10 +19,11 @@ export default {
 			}
 		},
 		fontFamily: {
-			'vazirmatn': ['B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
-			'sf': ['"SF Pro Display"', 'B Yekan', 'Vazirmatn', 'system-ui', 'sans-serif'],
-			'byekan': ['B Yekan', 'system-ui', 'sans-serif'],
-			'sans': ['B Yekan', '"SF Pro Display"', 'system-ui', 'sans-serif'],
+			'vazirmatn': ['Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'inter': ['Inter', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			'sf': ['"SF Pro Display"', 'Inter', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			'byekan': ['B Yekan', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'sans': ['Vazirmatn', 'Inter', '"SF Pro Display"', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {
