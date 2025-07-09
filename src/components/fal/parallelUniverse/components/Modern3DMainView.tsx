@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Heart, RefreshCw, Copy, Search, Share, Download, ArrowLeft } from "lucide-react";
@@ -7,7 +7,8 @@ import { parallelUniverses } from '../universeData';
 import { Modern3DHeader } from './Modern3DHeader';
 import { Modern3DContent } from './Modern3DContent';
 import { Modern3DWelcomeScreen } from './Modern3DWelcomeScreen';
-import { CosmicBackground3D } from './CosmicBackground3D';
+import { SimpleCosmicBackground } from './SimpleCosmicBackground';
+import { ThreeJSErrorBoundary } from './ThreeJSErrorBoundary';
 
 interface Modern3DMainViewProps {
   currentUniverse: ParallelUniverse | null;
@@ -44,9 +45,13 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
         ) : (
           <div className="relative">
             {/* 3D Background for main content */}
-            <div className="absolute inset-0 opacity-20">
-              <CosmicBackground3D count={2000} />
-            </div>
+            <ThreeJSErrorBoundary>
+              <Suspense fallback={null}>
+                <div className="absolute inset-0 opacity-20">
+                  <SimpleCosmicBackground count={1000} />
+                </div>
+              </Suspense>
+            </ThreeJSErrorBoundary>
             
             <div className="relative z-10 p-10 space-y-10" dir="rtl">
               <Modern3DContent 

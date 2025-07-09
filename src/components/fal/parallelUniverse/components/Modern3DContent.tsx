@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Sparkles, Zap, Clock, Target, Globe2, Star, Award, TrendingUp, Atom, Infinity } from "lucide-react";
 import { ParallelUniverse } from '../types';
 import { motion } from 'framer-motion';
-import { CosmicBackground3D } from './CosmicBackground3D';
+import { SimpleCosmicBackground } from './SimpleCosmicBackground';
+import { ThreeJSErrorBoundary } from './ThreeJSErrorBoundary';
 
 interface Modern3DContentProps {
   universe: ParallelUniverse;
@@ -21,9 +22,13 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
   return (
     <div className="relative" dir="rtl">
       {/* 3D Background for content */}
-      <div className="absolute inset-0 opacity-30">
-        <CosmicBackground3D count={1000} />
-      </div>
+      <ThreeJSErrorBoundary>
+        <Suspense fallback={null}>
+          <div className="absolute inset-0 opacity-30">
+            <SimpleCosmicBackground count={500} />
+          </div>
+        </Suspense>
+      </ThreeJSErrorBoundary>
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}
