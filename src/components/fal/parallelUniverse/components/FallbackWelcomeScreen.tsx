@@ -73,28 +73,28 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
             <Infinity className="w-16 h-16 text-blue-400" />
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-8 tracking-tight leading-tight font-vazirmatn">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-8 tracking-tight leading-tight font-vazirmatn">
             کاوشگر جهان‌های
             <span className="block font-medium bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               موازی
             </span>
           </h1>
           
-          <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light mb-8 font-vazirmatn px-4">
+          <p className="text-base md:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed font-light mb-8 font-vazirmatn px-4">
             سفری به دنیایی که در آن هر انتخاب شما منجر به ایجاد جهانی جدید شده است.
             <br className="hidden md:block" />
             آماده‌اید نسخه‌ای متفاوت از خودتان را در کیهان بی‌نهایت کشف کنید؟
           </p>
 
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20 px-6 py-3 rounded-full font-medium text-base">
+          <div className="flex justify-center gap-3 flex-wrap">
+            <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20 px-4 py-2 rounded-full font-medium text-sm">
               {totalUniverses.toLocaleString()} جهان در دسترس
-              <Telescope className="w-5 h-5 mr-3" />
+              <Telescope className="w-4 h-4 mr-2" />
             </Badge>
             {favoriteCount > 0 && (
-              <Badge className="bg-red-500/20 backdrop-blur-md text-red-200 border-red-300/30 px-6 py-3 rounded-full font-medium text-base">
+              <Badge className="bg-red-500/20 backdrop-blur-md text-red-200 border-red-300/30 px-4 py-2 rounded-full font-medium text-sm">
                 {favoriteCount} جهان محبوب
-                <Heart className="w-5 h-5 mr-3 fill-current" />
+                <Heart className="w-4 h-4 mr-2 fill-current" />
               </Badge>
             )}
           </div>
@@ -115,8 +115,8 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
                 <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-3xl mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-500`}>
                   <feature.icon className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-xl md:text-2xl font-semibold text-white mb-4 font-vazirmatn">{feature.title}</h3>
-                <p className="text-white/80 leading-relaxed font-light text-base md:text-lg font-vazirmatn">{feature.description}</p>
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-4 font-vazirmatn">{feature.title}</h3>
+                <p className="text-white/80 leading-relaxed font-light text-sm md:text-base font-vazirmatn">{feature.description}</p>
                 
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-700 rounded-3xl`}></div>
               </CardContent>
@@ -131,46 +131,46 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
             disabled={isLoading}
             variant="apple"
             size="apple-lg"
-            className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold px-12 md:px-16 py-5 md:py-6 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 w-full max-w-[380px] relative overflow-hidden group text-lg md:text-xl font-vazirmatn"
+            className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold px-8 md:px-12 py-4 md:py-5 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 w-full max-w-[320px] relative overflow-hidden group text-base md:text-lg font-vazirmatn"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
             <span className="relative z-10 flex items-center justify-center">
               {isLoading ? (
                 <>
                   در حال کاوش کیهان...
-                  <RefreshCw className="animate-spin mr-4" size={28} />
+                  <RefreshCw className="animate-spin mr-3" size={20} />
                 </>
               ) : (
                 <>
                   شروع کاوش جهان‌های موازی
-                  <Sparkles className="mr-4" size={28} />
+                  <Sparkles className="mr-3" size={20} />
                 </>
               )}
             </span>
           </Button>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-2xl">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 w-full max-w-xl">
             <Button 
               variant="apple-outline"
-              size="apple-lg"
+              size="apple"
               onClick={onShowBrowser}
               disabled={isLoading}
-              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 md:px-12 py-4 md:py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-base md:text-lg w-full sm:w-auto min-w-[240px] md:min-w-[280px] font-vazirmatn"
+              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-6 md:px-8 py-3 md:py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-sm md:text-base w-full sm:w-auto min-w-[200px] md:min-w-[220px] font-vazirmatn"
             >
               مرور تمام جهان‌ها
-              <Search className="mr-3" size={22} />
+              <Search className="mr-2" size={18} />
             </Button>
             
             {favoriteCount > 0 && (
               <Button 
                 variant="apple-outline"
-                size="apple-lg"
+                size="apple"
                 onClick={onShowBrowser}
                 disabled={isLoading}
-                className="bg-red-500/10 backdrop-blur-md border-red-400/30 text-red-200 hover:bg-red-500/20 font-medium px-8 md:px-12 py-4 md:py-5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-base md:text-lg w-full sm:w-auto min-w-[240px] md:min-w-[280px] font-vazirmatn"
+                className="bg-red-500/10 backdrop-blur-md border-red-400/30 text-red-200 hover:bg-red-500/20 font-medium px-6 md:px-8 py-3 md:py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-sm md:text-base w-full sm:w-auto min-w-[200px] md:min-w-[220px] font-vazirmatn"
               >
                 جهان‌های محبوب
-                <Heart className="mr-3 fill-current" size={22} />
+                <Heart className="mr-2 fill-current" size={18} />
               </Button>
             )}
           </div>
@@ -178,11 +178,11 @@ export const FallbackWelcomeScreen: React.FC<FallbackWelcomeScreenProps> = ({
 
         {/* Status Indicator */}
         <div className="flex justify-center mt-16 px-4">
-          <div className="bg-black/20 backdrop-blur-xl rounded-full px-6 md:px-8 py-3 md:py-4 border border-white/10 shadow-2xl">
-            <div className="flex items-center gap-4 md:gap-6 text-white/80 text-base md:text-lg font-light font-vazirmatn">
+          <div className="bg-black/20 backdrop-blur-xl rounded-full px-4 md:px-6 py-2 md:py-3 border border-white/10 shadow-2xl">
+            <div className="flex items-center gap-3 md:gap-4 text-white/80 text-sm md:text-base font-light font-vazirmatn">
               <div className="flex items-center">
                 سیستم کوانتومی آنلاین
-                <div className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse shadow-lg shadow-green-400/50"></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse shadow-lg shadow-green-400/50"></div>
               </div>
               <div className="text-white/40 hidden md:block">•</div>
               <div className="hidden md:block">آخرین بروزرسانی: امروز</div>
