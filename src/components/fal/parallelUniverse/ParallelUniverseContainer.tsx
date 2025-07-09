@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParallelUniverseExplorer } from './hooks/useParallelUniverseExplorer';
-import { AppleUniverseBrowserView } from './components/AppleUniverseBrowserView';
-import { AppleUniverseMainView } from './components/AppleUniverseMainView';
+import { Modern3DMainView } from './components/Modern3DMainView';
+import { Modern3DBrowserView } from './components/Modern3DBrowserView';
 
 export const ParallelUniverseContainer = () => {
   const {
@@ -20,7 +20,7 @@ export const ParallelUniverseContainer = () => {
 
   if (showBrowser) {
     return (
-      <AppleUniverseBrowserView
+      <Modern3DBrowserView
         onSelectUniverse={selectUniverse}
         favorites={favorites}
         onToggleFavorite={handleToggleFavorite}
@@ -31,7 +31,7 @@ export const ParallelUniverseContainer = () => {
   }
 
   return (
-    <AppleUniverseMainView
+    <Modern3DMainView
       currentUniverse={currentUniverse}
       isLoading={isLoading}
       favorites={favorites}
