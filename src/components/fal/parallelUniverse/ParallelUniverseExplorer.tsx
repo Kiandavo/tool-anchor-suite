@@ -51,7 +51,7 @@ export const ParallelUniverseExplorer = () => {
         setIsLoading(false);
         toast.error('خطا در کشف جهان موازی');
       }
-    }, 2000);
+    }, 1500);
   };
 
   const selectUniverse = (universe: ParallelUniverse) => {
@@ -91,6 +91,7 @@ export const ParallelUniverseExplorer = () => {
     const text = `🌌 جهان موازی: ${currentUniverse.name}\n\n${currentUniverse.description}\n\n✨ ویژگی‌ها:\n${currentUniverse.characteristics.map(c => `• ${c}`).join('\n')}\n\n👤 شما در این جهان:\n${currentUniverse.youInThisUniverse}\n\n🎲 احتمال وجود: ${(currentUniverse.probability * 100).toFixed(4)}%`;
     
     copyToClipboard(text);
+    toast.success('📋 اطلاعات جهان موازی کپی شد!');
     console.log('📋 Universe details copied to clipboard');
   };
 
@@ -166,7 +167,10 @@ export const ParallelUniverseExplorer = () => {
                 onClick={discoverRandomUniverse}
                 disabled={isLoading}
                 size="lg"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                style={{
+                  cursor: isLoading ? 'not-allowed' : 'pointer'
+                }}
               >
                 {isLoading ? (
                   <>
@@ -184,8 +188,9 @@ export const ParallelUniverseExplorer = () => {
               <Button
                 variant="outline"
                 onClick={() => handleToggleFavorite()}
+                disabled={isLoading}
                 size="lg"
-                className={`border-2 font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 ${
+                className={`border-2 font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 ${
                   favorites.includes(currentUniverse.id) 
                     ? 'bg-red-50 border-red-400 text-red-700 hover:bg-red-100' 
                     : 'border-red-400 text-red-600 hover:bg-red-50'
@@ -201,8 +206,9 @@ export const ParallelUniverseExplorer = () => {
               <Button
                 variant="outline"
                 onClick={copyUniverseDetails}
+                disabled={isLoading}
                 size="lg"
-                className="border-2 border-gray-400 text-gray-700 hover:bg-gray-50 font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+                className="border-2 border-gray-400 text-gray-700 hover:bg-gray-50 font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
               >
                 <Copy className="mr-2" size={18} />
                 کپی
@@ -211,8 +217,9 @@ export const ParallelUniverseExplorer = () => {
               <Button
                 variant="outline"
                 onClick={handleShowBrowser}
+                disabled={isLoading}
                 size="lg"
-                className="border-2 border-purple-400 text-purple-700 hover:bg-purple-50 font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+                className="border-2 border-purple-400 text-purple-700 hover:bg-purple-50 font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
               >
                 <Search className="mr-2" size={18} />
                 مرور جهان‌ها
