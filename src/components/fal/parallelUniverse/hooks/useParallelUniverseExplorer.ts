@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { copyToClipboard } from "@/utils/copyUtils";
 import { ParallelUniverse } from '../types';
 import { getRandomUniverse } from '../universeData';
-import { useUniverseStorage } from './useUniverseStorage';
+import { useUniverseStorage } from '../hooks/useUniverseStorage';
 
 export const useParallelUniverseExplorer = () => {
   const [currentUniverse, setCurrentUniverse] = useState<ParallelUniverse | null>(null);
