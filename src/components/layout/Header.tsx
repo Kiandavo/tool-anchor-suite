@@ -49,7 +49,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/90 border-b border-gray-200/20 shadow-sm transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/90 border-b border-border/30 shadow-sm transition-all duration-300">
       <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px] relative">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-between w-full gap-4 py-3">
@@ -80,7 +80,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="flex gap-4 items-center">
               <Link
                 to="/settings"
-                className="text-gray-600 hover:text-primary transition-colors duration-300 flex items-center"
+                className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center"
                 aria-label="تنظیمات"
               >
                 <Settings size={22} />

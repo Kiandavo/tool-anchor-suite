@@ -4,6 +4,17 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Design tokens (HSL) */
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+    --border: 214.3 31.8% 91.4%;
+    --primary: 252 82% 60%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+  }
+
   html {
     direction: rtl;
     font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, sans-serif;
@@ -11,8 +22,8 @@
 
   body {
     font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #ffffff;
-    color: #111827;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     margin: 0;
     padding: 0;
     line-height: 1.6;
@@ -109,5 +120,19 @@
 
   .magnetic-hover:hover {
     transform: scale(1.02);
+  }
+
+  /* Space/Dark themed pages */
+  .space-theme {
+    --background: 226 35% 6%; /* deep space */
+    --foreground: 0 0% 100%;
+    --border: 226 20% 22%;
+  }
+
+  .gradient-cosmic {
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(88, 28, 135, 0.35), transparent),
+      radial-gradient(800px 400px at 20% 110%, rgba(59, 130, 246, 0.25), transparent),
+      linear-gradient(180deg, #0b1020 0%, #0a0f1a 40%, #0a0b14 100%);
   }
 }

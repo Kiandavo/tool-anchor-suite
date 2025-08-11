@@ -107,6 +107,14 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
     }
   };
 
+  if (slug === 'parallel-universe') {
+    return (
+      <div className="space-theme gradient-cosmic rounded-xl p-0 min-h-[70vh]">
+        <ParallelUniverseExplorer />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <Card className="bg-white border shadow-sm">
