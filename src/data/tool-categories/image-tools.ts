@@ -44,7 +44,8 @@ export const imageTools: Tool[] = [
     category: "image",
     description: "بخشی از عکس را انتخاب و برش دهید",
     isNew: false,
-    icon: "image"
+    icon: "image",
+    isComingSoon: true
   },
   {
     id: "28",
@@ -53,7 +54,8 @@ export const imageTools: Tool[] = [
     category: "image",
     description: "افزودن فیلتر یا تغییر روشنایی تصویر",
     isNew: false,
-    icon: "image"
+    icon: "image",
+    isComingSoon: true
   },
   {
     id: "29",
@@ -80,7 +82,8 @@ export const imageTools: Tool[] = [
     category: "image",
     description: "پس‌زمینه تصویر را حذف کنید (ابزار ابتدایی)",
     isNew: false,
-    icon: "image"
+    icon: "image",
+    isComingSoon: true
   },
   {
     id: "32",
@@ -125,7 +128,8 @@ export const imageTools: Tool[] = [
     category: "image",
     description: "ابعاد دقیق تصاویر خود را مشاهده کنید",
     isNew: false,
-    icon: "image"
+    icon: "image",
+    isComingSoon: true
   },
   {
     id: "88",
@@ -134,7 +138,8 @@ export const imageTools: Tool[] = [
     category: "image",
     description: "تبدیل فرمت چندین عکس به صورت همزمان",
     isNew: false,
-    icon: "image"
+    icon: "image",
+    isComingSoon: true
   },
   {
     id: "106",
@@ -143,7 +148,8 @@ export const imageTools: Tool[] = [
     category: "image",
     description: "بر روی عکس خود افکت پیکسلی اعمال کنید",
     isNew: false,
-    icon: "image"
+    icon: "image",
+    isComingSoon: true
   },
   {
     id: "109",

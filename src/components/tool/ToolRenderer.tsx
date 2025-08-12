@@ -16,6 +16,13 @@ interface ToolRendererProps {
 }
 
 export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
+  // Special-case slugs that have dedicated renderers outside their categories
+  if (tool.slug === 'random-password') {
+    return <UtilityToolRenderer slug={slug} type="random-password" />;
+  }
+  if (tool.slug === 'prime-checker') {
+    return <UtilityToolRenderer slug={slug} type="prime-checker" />;
+  }
   // Route tools based on their category
   switch (tool.category) {
     case 'calculators':

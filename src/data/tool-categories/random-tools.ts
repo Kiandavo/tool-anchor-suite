@@ -9,7 +9,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "ایجاد رمزهای عبور قوی و تصادفی",
     isNew: true,
-    icon: "key"
+    icon: "key",
+    isComingSoon: false
   },
   {
     id: "64",
@@ -45,7 +46,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "تولید اعداد تصادفی در محدوده دلخواه",
     isNew: false,
-    icon: "dice"
+    icon: "dice",
+    isComingSoon: true
   },
   {
     id: "67",
@@ -99,7 +101,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک نام کاربری و پروفایل ساختگی بساز",
     isNew: false,
-    icon: "key"
+    icon: "key",
+    isComingSoon: true
   },
   {
     id: "73",
@@ -126,7 +129,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "قدرت رمز عبور خود را بسنجید",
     isNew: false,
-    icon: "key"
+    icon: "key",
+    isComingSoon: true
   },
   {
     id: "92",
@@ -135,7 +139,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "تولید کد QR برای هر مقدار تصادفی",
     isNew: false,
-    icon: "random"
+    icon: "random",
+    isComingSoon: true
   },
   {
     id: "107",
@@ -144,7 +149,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "آرایه‌ای از اعداد یا متن را به صورت تصادفی مرتب کنید",
     isNew: true,
-    icon: "shuffle"
+    icon: "shuffle",
+    isComingSoon: true
   },
   {
     id: "108",
@@ -171,7 +177,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک کارت تصادفی از بازی ورق انتخاب کنید",
     isNew: true,
-    icon: "random"
+    icon: "random",
+    isComingSoon: true
   },
   {
     id: "111",
@@ -180,7 +187,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "برای مناسبت‌های مختلف هدیه تصادفی پیشنهاد می‌دهد",
     isNew: true,
-    icon: "gift"
+    icon: "gift",
+    isComingSoon: true
   },
   {
     id: "112",
@@ -189,7 +197,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک نام مستعار جالب و تصادفی بسازید",
     isNew: true,
-    icon: "sparkles"
+    icon: "sparkles",
+    isComingSoon: false
   },
   {
     id: "113",
@@ -198,7 +207,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "بین چند گزینه به صورت تصادفی تصمیم‌گیری کنید",
     isNew: true,
-    icon: "random"
+    icon: "random",
+    isComingSoon: false
   },
   {
     id: "114",
@@ -207,7 +217,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک جدول مسابقات با جایگیری تصادفی بسازید",
     isNew: true,
-    icon: "award"
+    icon: "award",
+    isComingSoon: true
   },
   {
     id: "115",
@@ -216,7 +227,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک نقطه تصادفی روی نقشه جهان پیدا کنید",
     isNew: true,
-    icon: "random"
+    icon: "random",
+    isComingSoon: true
   },
   {
     id: "116",
@@ -225,7 +237,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک چرخ شانس با گزینه‌های سفارشی بسازید",
     isNew: true,
-    icon: "random"
+    icon: "random",
+    isComingSoon: true
   },
   {
     id: "117",
@@ -234,7 +247,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "یک شخصیت تصادفی با ویژگی‌های مختلف بسازید",
     isNew: true,
-    icon: "sparkles"
+    icon: "sparkles",
+    isComingSoon: true
   },
   {
     id: "118",
@@ -243,7 +257,8 @@ export const randomTools: Tool[] = [
     category: "random",
     description: "وظایف را به صورت تصادفی بین افراد تقسیم کنید",
     isNew: true,
-    icon: "random"
+    icon: "random",
+    isComingSoon: true
   },
   {
     id: "119",
