@@ -7,6 +7,9 @@ import { HtmlTools } from '@/components/seo/HtmlTools';
 import { KeywordDensity } from '@/components/seo/KeywordDensity';
 import { KeywordExtractor } from '@/components/seo/KeywordExtractor';
 import { RobotsTxtGenerator } from '@/components/seo/RobotsTxtGenerator';
+import { UTMBuilder } from '@/components/seo/UTMBuilder';
+import { OGTagGenerator } from '@/components/seo/OGTagGenerator';
+import { SitemapGenerator } from '@/components/seo/SitemapGenerator';
 
 interface SeoToolProps {
   slug: string;
@@ -29,6 +32,12 @@ export default function SeoTool({ slug }: SeoToolProps) {
         return <KeywordExtractor />;
       case 'robots-txt-generator':
         return <RobotsTxtGenerator />;
+      case 'utm-builder':
+        return <UTMBuilder />;
+      case 'open-graph-generator':
+        return <OGTagGenerator />;
+      case 'sitemap-generator':
+        return <SitemapGenerator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

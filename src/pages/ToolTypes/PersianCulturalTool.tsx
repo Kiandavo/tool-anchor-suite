@@ -2,6 +2,14 @@
 import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
+import PersianArchitecture from '@/pages/ToolTypes/PersianCultural/PersianArchitecture';
+import PersianHolidays from '@/pages/ToolTypes/PersianCultural/PersianHolidays';
+import PersianMusic from '@/pages/ToolTypes/PersianCultural/PersianMusic';
+import PersianPoetryAnalysis from '@/pages/ToolTypes/PersianCultural/PersianPoetryAnalysis';
+import WordEtymology from '@/pages/ToolTypes/PersianCultural/WordEtymology';
+import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
+import PersianProverbs from '@/pages/ToolTypes/PersianCultural/PersianProverbs';
+import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
 
 interface PersianCulturalToolProps {
   slug: string;
@@ -15,71 +23,11 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
   const renderToolContent = () => {
     switch (slug) {
       case 'persian-calendar':
-        return (
-          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-blue-50 to-cyan-50">
-            <div className="text-center space-y-4">
-              <div className="text-6xl">📅</div>
-              <h3 className="text-2xl font-bold text-blue-800">تبدیل تقویم</h3>
-              <p className="text-gray-700 max-w-md mx-auto">
-                تاریخ را بین تقویم‌های شمسی، قمری و میلادی تبدیل کنید
-              </p>
-              <div className="bg-white p-4 rounded-lg">
-                <input 
-                  type="date" 
-                  className="w-full p-2 border rounded mb-2"
-                />
-                <div className="text-sm text-gray-600 mt-2">
-                  <div>شمسی: ۱۴۰۳/۰۳/۱۷</div>
-                  <div>قمری: ۱۴۴۵/۱۲/۰۲</div>
-                  <div>میلادی: 2024/06/07</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <PersianCalendar />;
       case 'persian-names':
-        return (
-          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-pink-50 to-rose-50">
-            <div className="text-center space-y-4">
-              <div className="text-6xl">👤</div>
-              <h3 className="text-2xl font-bold text-pink-800">معانی نام‌های ایرانی</h3>
-              <p className="text-gray-700 max-w-md mx-auto">
-                معنی و ریشه نام‌های فارسی را جستجو کنید
-              </p>
-              <div className="bg-white p-4 rounded-lg">
-                <input 
-                  type="text" 
-                  className="w-full p-2 border rounded" 
-                  placeholder="نام مورد نظر را وارد کنید"
-                />
-                <button className="mt-2 bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">
-                  جستجو
-                </button>
-              </div>
-            </div>
-          </div>
-        );
+        return <PersianNames />;
       case 'persian-proverbs':
-        return (
-          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-yellow-50 to-amber-50">
-            <div className="text-center space-y-4">
-              <div className="text-6xl">📚</div>
-              <h3 className="text-2xl font-bold text-yellow-800">ضرب‌المثل‌های فارسی</h3>
-              <div className="bg-white p-4 rounded-lg max-w-lg mx-auto">
-                <div className="text-right space-y-3">
-                  <div className="border-b pb-2">
-                    <strong>آب رفته به جوی باز نمی‌گردد</strong>
-                    <p className="text-sm text-gray-600 mt-1">معنی: کارهای انجام شده قابل برگشت نیستند</p>
-                  </div>
-                  <div className="border-b pb-2">
-                    <strong>دوست آن باشد که گیرد دست دوست</strong>
-                    <p className="text-sm text-gray-600 mt-1">معنی: دوست واقعی در زمان سختی کمک می‌کند</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <PersianProverbs />;
       case 'farsi-learning':
         return (
           <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-indigo-50 to-blue-50">
@@ -215,6 +163,16 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
             </div>
           </div>
         );
+      case 'persian-architecture':
+        return <PersianArchitecture />;
+      case 'persian-holidays':
+        return <PersianHolidays />;
+      case 'persian-music':
+        return <PersianMusic />;
+      case 'persian-poetry-analysis':
+        return <PersianPoetryAnalysis />;
+      case 'word-etymology':
+        return <WordEtymology />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

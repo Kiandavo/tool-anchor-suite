@@ -19,6 +19,10 @@ import { RandomNickname } from '@/components/random-tools/RandomNickname';
 import { RandomDecision } from '@/components/random-tools/RandomDecision';
 import { RandomTeam } from '@/components/random-tools/RandomTeam';
 import { RandomLotteryNumbers } from '@/components/random-tools/RandomLotteryNumbers';
+import { RandomNumber } from '@/components/random-tools/RandomNumber';
+import { RandomArrayShuffler } from '@/components/random-tools/RandomArrayShuffler';
+import { RandomCardPicker } from '@/components/random-tools/RandomCardPicker';
+import { RandomQRCodeGenerator } from '@/components/random-tools/RandomQRCodeGenerator';
 
 interface RandomToolProps {
   slug: string;
@@ -65,6 +69,14 @@ export default function RandomTool({ slug }: RandomToolProps) {
         return <RandomTeam />;
       case 'random-lottery-numbers':
         return <RandomLotteryNumbers />;
+      case 'random-number':
+        return <RandomNumber />;
+      case 'random-array-shuffler':
+        return <RandomArrayShuffler />;
+      case 'random-card-picker':
+        return <RandomCardPicker />;
+      case 'random-qrcode-generator':
+        return <RandomQRCodeGenerator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

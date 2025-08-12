@@ -45,7 +45,7 @@ export const imageTools: Tool[] = [
     description: "بخشی از عکس را انتخاب و برش دهید",
     isNew: false,
     icon: "image",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "28",
@@ -129,7 +129,7 @@ export const imageTools: Tool[] = [
     description: "ابعاد دقیق تصاویر خود را مشاهده کنید",
     isNew: false,
     icon: "image",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "88",

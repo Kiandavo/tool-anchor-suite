@@ -3,6 +3,10 @@ import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
 import { NumberBaseConverter } from '@/components/number-tools/NumberBaseConverter';
+import { EvenOddChecker } from '@/components/number-tools/EvenOddChecker';
+import { SumCalculator } from '@/components/number-tools/SumCalculator';
+import { NumberFormatter } from '@/components/number-tools/NumberFormatter';
+import { NumberRounder } from '@/components/number-tools/NumberRounder';
 
 interface NumberToolProps {
   slug: string;
@@ -21,6 +25,14 @@ export default function NumberTool({ slug }: NumberToolProps) {
       case 'decimal-hex-converter':
       case 'decimal-octal-converter':
         return <NumberBaseConverter />;
+      case 'even-odd-checker':
+        return <EvenOddChecker />;
+      case 'sum-calculator':
+        return <SumCalculator />;
+      case 'number-formatter':
+        return <NumberFormatter />;
+      case 'number-rounder':
+        return <NumberRounder />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

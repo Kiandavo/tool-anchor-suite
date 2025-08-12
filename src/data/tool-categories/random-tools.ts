@@ -47,7 +47,7 @@ export const randomTools: Tool[] = [
     description: "تولید اعداد تصادفی در محدوده دلخواه",
     isNew: false,
     icon: "dice",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "67",
@@ -140,7 +140,7 @@ export const randomTools: Tool[] = [
     description: "تولید کد QR برای هر مقدار تصادفی",
     isNew: false,
     icon: "random",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "107",
@@ -150,7 +150,7 @@ export const randomTools: Tool[] = [
     description: "آرایه‌ای از اعداد یا متن را به صورت تصادفی مرتب کنید",
     isNew: true,
     icon: "shuffle",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "108",
@@ -178,7 +178,7 @@ export const randomTools: Tool[] = [
     description: "یک کارت تصادفی از بازی ورق انتخاب کنید",
     isNew: true,
     icon: "random",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "111",

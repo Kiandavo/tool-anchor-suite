@@ -10,7 +10,7 @@ export const productivityTools: Tool[] = [
     description: "مدیریت فهرست کارهای روزانه با قابلیت اولویت‌بندی",
     isNew: true,
     icon: "list-check",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "pomodoro-timer",
@@ -30,7 +30,7 @@ export const productivityTools: Tool[] = [
     description: "ابزار ساده برای یادداشت‌برداری سریع و سازمان‌دهی اطلاعات",
     isNew: true,
     icon: "pencil",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "calendar-scheduler",
@@ -40,7 +40,7 @@ export const productivityTools: Tool[] = [
     description: "مدیریت زمان‌بندی روزانه، هفتگی و ماهانه",
     isNew: true,
     icon: "calendar",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "project-board",
