@@ -229,7 +229,7 @@ export const calculatorTools: Tool[] = [
   },
 {
     id: "115",
-    slug: "today-date-converter",
+    slug: "today-date",
     name: "تبدیل تاریخ امروز",
     category: "calculators",
     description: "تبدیل تاریخ امروز به شمسی، قمری و میلادی",
@@ -238,7 +238,7 @@ export const calculatorTools: Tool[] = [
   },
   {
     id: "116",
-    slug: "date-difference-calculator",
+    slug: "date-difference",
     name: "محاسبه اختلاف تاریخ",
     category: "calculators",
     description: "محاسبه اختلاف بین دو تاریخ",
@@ -247,7 +247,7 @@ export const calculatorTools: Tool[] = [
   },
   {
     id: "117",
-    slug: "world-time-converter",
+    slug: "world-time",
     name: "ساعت جهانی",
     category: "calculators",
     description: "نمایش ساعت در نقاط مختلف جهان",
@@ -260,15 +260,6 @@ export const calculatorTools: Tool[] = [
     name: "محاسبه سود و بهره",
     category: "calculators",
     description: "محاسبه سود سپرده و وام",
-    isNew: true,
-    icon: "calculator"
-  },
-  {
-    id: "119",
-    slug: "scientific-calculator",
-    name: "ماشین حساب علمی",
-    category: "calculators",
-    description: "انجام محاسبات پیچیده علمی",
     isNew: true,
     icon: "calculator"
   },

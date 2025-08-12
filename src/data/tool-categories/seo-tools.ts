@@ -11,6 +11,15 @@ export const seoTools: Tool[] = [
     icon: "code"
   },
   {
+    id: "1300",
+    slug: "html-meta-tags",
+    name: "تحلیل تگ‌های HTML",
+    category: "seo",
+    description: "استخراج و بررسی تگ‌های HTML و سئو صفحه",
+    isNew: false,
+    icon: "code"
+  },
+  {
     id: "34",
     slug: "robots-txt-generator",
     name: "ساخت robots.txt",

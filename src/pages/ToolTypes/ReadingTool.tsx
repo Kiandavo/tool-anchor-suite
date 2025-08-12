@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ToolNotImplemented from './ToolNotImplemented';
 
@@ -9,7 +9,7 @@ import EnhancedAuraReading from '@/components/readings/EnhancedAuraReading';
 // Import existing tools
 import Numerology from '@/components/readings/Numerology';
 import NameNumerology from '@/components/readings/NameNumerology';
-import { ParallelUniverseExplorer } from '@/components/fal/parallelUniverse/ParallelUniverseExplorer';
+const ParallelUniverseExplorer = lazy(() => import('@/components/fal/parallelUniverse/ParallelUniverseExplorer').then(m => ({ default: m.ParallelUniverseExplorer })));
 import PersianSuperstitions from '@/components/readings/PersianSuperstitions';
 import DreamInterpretation from '@/components/readings/DreamInterpretation';
 import AuraReading from '@/components/readings/AuraReading';
@@ -55,7 +55,11 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
       
       case 'parallel-universe':
         console.log("Rendering ParallelUniverseExplorer");
-        return <ParallelUniverseExplorer />;
+        return (
+          <Suspense fallback={<div className="p-8 text-center">در حال بارگذاری...</div>}>
+            <ParallelUniverseExplorer />
+          </Suspense>
+        );
 
       case 'persian-superstitions':
         return <PersianSuperstitions />;
@@ -110,7 +114,9 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
   if (slug === 'parallel-universe') {
     return (
       <div className="space-theme gradient-cosmic rounded-xl p-0 min-h-[70vh]">
-        <ParallelUniverseExplorer />
+        <Suspense fallback={<div className="p-8 text-center">در حال بارگذاری...</div>}>
+          <ParallelUniverseExplorer />
+        </Suspense>
       </div>
     );
   }

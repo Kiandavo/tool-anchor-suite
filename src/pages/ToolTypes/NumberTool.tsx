@@ -16,6 +16,10 @@ export default function NumberTool({ slug }: NumberToolProps) {
   const renderToolContent = () => {
     switch (slug) {
       case 'number-base-converter':
+      case 'number-converter':
+      case 'decimal-binary-converter':
+      case 'decimal-hex-converter':
+      case 'decimal-octal-converter':
         return <NumberBaseConverter />;
       default:
         return (

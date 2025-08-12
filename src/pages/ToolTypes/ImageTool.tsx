@@ -17,6 +17,7 @@ export default function ImageTool({ slug }: ImageToolProps) {
   const renderToolContent = () => {
     switch (slug) {
       case "svg-to-png":
+      case "svg-to-png-converter":
         return <SvgToPng />;
       default:
         return <ImageTools slug={slug} />;  // Passed the slug prop

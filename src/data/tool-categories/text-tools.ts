@@ -309,4 +309,15 @@ export const textTools: Tool[] = [
     isPremium: false,
     isComingSoon: false,
   },
+  {
+    id: "deepseek-ai",
+    slug: "deepseek-ai",
+    name: "چت دیپ‌سیک (AI)",
+    description: "دستیار هوشمند دیپ‌سیک با پشتیبانی از کلید API شما",
+    category: "text",
+    icon: "code",
+    isNew: true,
+    isPremium: false,
+    isComingSoon: false,
+  },
 ];
