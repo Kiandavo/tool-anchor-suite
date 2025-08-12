@@ -31,6 +31,12 @@ export const CategoriesSection = () => {
         </Link>
       </div>
       
+      <div className="px-2 sm:px-0 mb-4">
+        <p className="text-gray-700 text-sm leading-relaxed">
+          دسته‌بندی‌های متنوع لنگر به شما کمک می‌کند ابزار مناسب را سریع پیدا کنید؛ از محاسبه‌گر و متن تا تصویر، سئو، فرهنگ فارسی و طالع‌بینی.
+        </p>
+      </div>
+      
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
         {categoryCounts.map(({ category, count }, index) => (
           <div 

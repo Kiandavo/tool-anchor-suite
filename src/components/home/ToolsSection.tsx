@@ -25,6 +25,9 @@ export const ToolsSection = () => {
             <ChevronLeft size={18} className="mr-1 group-hover:translate-x-[-2px] transition-transform" />
           </Link>
         </div>
+        <div className="px-6 sm:px-10 -mt-4 mb-2">
+          <p className="text-gray-700 text-sm leading-relaxed">جدیدترین ابزارهای آنلاین رایگان لنگر برای نیازهای روزانه شما.</p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-6 sm:px-10 pb-10">
           {newTools.map((tool) => (
             <div key={tool.id} className="animate-fade-in">
@@ -47,6 +50,9 @@ export const ToolsSection = () => {
             مشاهده همه
             <ChevronLeft size={18} className="mr-1 group-hover:translate-x-[-2px] transition-transform" />
           </Link>
+        </div>
+        <div className="px-6 sm:px-10 -mt-4 mb-2">
+          <p className="text-gray-700 text-sm leading-relaxed">محبوب‌ترین ابزارهای آنلاین و پرکاربرد لنگر؛ سریع، امن و رایگان.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-6 sm:px-10 pb-10">
           {popularTools.map((tool) => (

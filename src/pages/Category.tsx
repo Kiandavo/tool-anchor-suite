@@ -34,6 +34,10 @@ const Category = () => {
       title = 'ابزارهای فرهنگ و زبان فارسی - آموزش فارسی، تقویم، ضرب المثل و نام‌های ایرانی | لنگر';
       description = 'مجموعه ابزارهای فرهنگ و زبان فارسی شامل آموزش زبان فارسی، تبدیل تاریخ، معانی نام‌های ایرانی، ریشه‌شناسی کلمات و ضرب‌المثل‌های فارسی';
       keywords = 'آموزش زبان فارسی, تقویم شمسی, معانی نام‌های ایرانی, ریشه‌شناسی, ضرب المثل فارسی, فرهنگ فارسی, تمرین خوشنویسی';
+    } else if (category === 'readings') {
+      title = 'فال و طالع‌بینی - فال حافظ، تاروت، طالع روزانه | لنگر';
+      description = 'فال و طالع‌بینی رایگان: فال حافظ، فال تاروت، طالع روزانه، استخاره با مولانا، تعبیر خواب، فال قهوه و اعدادشناسی در لنگر.';
+      keywords = 'فال حافظ, فال تاروت, طالع‌بینی, طالع روزانه, استخاره, تعبیر خواب, فال قهوه, اعداد شناسی, فال دست, خواندن هاله, خرافات ایرانی, جهان موازی, فال آنلاین';
     }
     
     // Create schema.org structured data
@@ -72,12 +76,18 @@ const Category = () => {
         description={seoData.description}
         keywords={seoData.keywords}
         schema={seoData.schema}
+        canonical={`https://langar.co/category/${category}`}
       />
 
       <div className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">{categoryName}</h1>
           <p className="text-gray-600 text-xs sm:text-sm">{allTools.length} ابزار در این دسته‌بندی</p>
+          <p className="text-gray-700 text-xs sm:text-sm mt-2 leading-relaxed">
+            {category === 'readings'
+              ? 'ابزارهای رایگان فال و طالع‌بینی: فال حافظ، فال تاروت، طالع‌بینی روزانه، استخاره با مولانا، تعبیر خواب و موارد دیگر برای سرگرمی و خودشناسی.'
+              : `مجموعه‌ای از ابزارهای ${categoryName} برای انجام سریع و آسان کارهای روزمره شما در لنگر.`}
+          </p>
         </div>
       </div>
 
