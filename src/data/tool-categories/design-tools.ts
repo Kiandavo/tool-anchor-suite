@@ -20,7 +20,7 @@ export const designTools: Tool[] = [
     description: "ساخت لوگوهای ساده با شکل‌های پایه و تایپوگرافی",
     isNew: true,
     icon: "paint-bucket",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "social-media-template",
@@ -30,7 +30,7 @@ export const designTools: Tool[] = [
     description: "ساخت تصاویر با اندازه مناسب برای شبکه‌های اجتماعی مختلف",
     isNew: true,
     icon: "image",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "font-preview",

@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "@/providers/HelmetProvider";
 import { AppRoutes } from "@/components/AppRoutes";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,7 @@ const App = () => {
     <ErrorBoundary>
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
+          <GoogleAnalytics />
           <AppRoutes />
         </QueryClientProvider>
       </HelmetProvider>
