@@ -10,7 +10,7 @@ export function Footer() {
           <p className="text-gray-600 text-sm mb-1 md:mb-0 max-w-md">
             تمامی ابزارها رایگان و بدون نیاز به ثبت‌نام ارائه می‌شوند.
           </p>
-          <div className="flex items-center space-x-3">
+          <div className="icon-text gap-3">
             <a 
               href="https://www.instagram.com/kiandavo" 
               target="_blank" 
@@ -18,7 +18,7 @@ export function Footer() {
               className="text-primary hover:text-accent transition-colors"
               aria-label="اینستاگرام لنگر"
             >
-              <Instagram size={20} className="px-0 py-0 my-[17px] mx-[7px]" />
+              <Instagram size={20} />
             </a>
             <p className="text-gray-600 text-xs sm:text-sm">© ۱۴۰۴ لنگر - مجموعه ابزار</p>
           </div>

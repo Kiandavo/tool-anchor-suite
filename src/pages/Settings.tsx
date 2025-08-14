@@ -37,8 +37,8 @@ const Settings = () => {
             </div>
             
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Globe size={22} className="ml-3 text-primary" />
+              <div className="icon-text">
+                <Globe size={22} className="text-primary" />
                 <div>
                   <h3 className="text-lg font-medium text-gray-800">زبان فارسی</h3>
                   <p className="text-sm text-gray-500">زبان پیش‌فرض برنامه</p>
