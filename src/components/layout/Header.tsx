@@ -49,7 +49,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 apple-glass border-b border-white/20 shadow-apple-sm transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-none border-none shadow-none transition-all duration-300">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-between w-full gap-6 py-4">
