@@ -23,11 +23,11 @@ export const HeroSection = () => {
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
           {/* Logo */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-4">
             <img 
               src={logoUrl}
               alt="Langar Logo" 
-              className="h-24 w-auto object-contain hover:scale-105 transition-all duration-200"
+              className="h-32 w-auto object-contain hover:scale-105 transition-all duration-200"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.onerror = null;
