@@ -46,7 +46,7 @@ export const Modern3DMainView: React.FC<Modern3DMainViewProps> = ({
             {/* 3D Background for main content */}
             <ThreeJSErrorBoundary>
               <Suspense fallback={null}>
-                <div className="absolute inset-0 opacity-60">
+                <div className="absolute inset-0 opacity-10">
                   <SimpleCosmicBackground count={200} />
                 </div>
               </Suspense>

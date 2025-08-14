@@ -16,7 +16,7 @@ export const Modern3DWelcomeScreen: React.FC<Modern3DWelcomeScreenProps> = (prop
     <div className="relative min-h-[600px] bg-background overflow-hidden">
       <ThreeJSErrorBoundary fallback={<FallbackWelcomeScreen {...props} />}>
         <Suspense fallback={<FallbackWelcomeScreen {...props} />}>
-          <SimpleCosmicBackground count={2000} />
+          <SimpleCosmicBackground count={300} />
           <FallbackWelcomeScreen {...props} />
         </Suspense>
       </ThreeJSErrorBoundary>

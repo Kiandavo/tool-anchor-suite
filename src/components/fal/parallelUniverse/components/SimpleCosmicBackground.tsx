@@ -59,7 +59,7 @@ function SimpleStars({ count = 1000 }: { count?: number }) {
         size={1.5}
         vertexColors
         transparent
-        opacity={0.8}
+        opacity={0.4}
         sizeAttenuation={true}
         blending={THREE.AdditiveBlending}
       />
@@ -107,7 +107,7 @@ function SimpleOrbs() {
           <meshBasicMaterial
             color={new THREE.Color(0.4, 0.6, 1)}
             transparent
-            opacity={0.2}
+            opacity={0.1}
             blending={THREE.AdditiveBlending}
           />
         </mesh>

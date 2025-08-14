@@ -24,8 +24,8 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
       {/* 3D Background for content */}
       <ThreeJSErrorBoundary>
         <Suspense fallback={null}>
-          <div className="absolute inset-0 opacity-30">
-            <SimpleCosmicBackground count={500} />
+          <div className="absolute inset-0 opacity-5">
+            <SimpleCosmicBackground count={100} />
           </div>
         </Suspense>
       </ThreeJSErrorBoundary>

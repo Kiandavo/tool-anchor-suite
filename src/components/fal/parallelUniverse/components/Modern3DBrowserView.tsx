@@ -28,8 +28,8 @@ export const Modern3DBrowserView: React.FC<Modern3DBrowserViewProps> = ({
       
       <CardContent className="p-10 relative" dir="rtl">
         {/* 3D Background */}
-        <div className="absolute inset-0 opacity-20">
-          <CosmicBackground3D count={1500} />
+        <div className="absolute inset-0 opacity-5">
+          <CosmicBackground3D count={150} />
         </div>
         
         <div className="relative z-10">
