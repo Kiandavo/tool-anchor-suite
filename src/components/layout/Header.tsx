@@ -49,16 +49,16 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-none border-none shadow-none transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-blue-600 border-b border-blue-700 shadow-lg transition-all duration-300">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-between w-full gap-6 py-4">
             <Link
               to="/"
-              className="text-lg font-medium text-apple-blue hover:text-apple-blue/80 transition-all duration-200 flex items-center persian-text hover-lift"
+              className="text-lg font-medium text-white hover:text-blue-100 transition-all duration-200 flex items-center persian-text hover-lift"
             >
-              <Home size={20} className="ml-2" />
-              <span className="hidden md:inline">خانه</span>
+              <Home size={20} className="ml-2 text-white" />
+              <span className="hidden md:inline text-white">خانه</span>
             </Link>
 
             {/* Logo in the center */}
@@ -80,19 +80,19 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="flex gap-4 items-center">
               <Link
                 to="/settings"
-                className="text-apple-gray hover:text-apple-blue transition-all duration-200 flex items-center hover-lift p-2 rounded-full hover:bg-apple-blue/10"
+                className="text-white hover:text-blue-100 transition-all duration-200 flex items-center hover-lift p-2 rounded-full hover:bg-blue-700"
                 aria-label="تنظیمات"
               >
-                <Settings size={20} />
+                <Settings size={20} className="text-white" />
               </Link>
 
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="flex items-center font-medium text-apple-blue hover:text-apple-blue/80 text-sm px-4 py-2.5 rounded-full transition-all duration-200 apple-glass border border-apple-blue/20 hover:shadow-apple-sm persian-text hover-lift"
+                  className="flex items-center font-medium text-white hover:text-blue-100 text-sm px-4 py-2.5 rounded-full transition-all duration-200 bg-blue-500 border border-blue-400 hover:bg-blue-700 persian-text hover-lift"
                 >
-                  <ArrowRight size={16} className="ml-2" />
-                  <span className="hidden sm:inline">بازگشت</span>
+                  <ArrowRight size={16} className="ml-2 text-white" />
+                  <span className="hidden sm:inline text-white">بازگشت</span>
                 </button>
               ) : null}
             </div>
