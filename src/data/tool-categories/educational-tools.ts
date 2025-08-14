@@ -9,8 +9,7 @@ export const educationalTools: Tool[] = [
     category: "educational",
     description: "تحلیل وزن، قافیه و آرایه‌های ادبی در اشعار فارسی",
     isNew: true,
-    icon: "book-open",
-    isComingSoon: true
+    icon: "book-open"
   },
   {
     id: "language-learning",
@@ -19,8 +18,7 @@ export const educationalTools: Tool[] = [
     category: "educational",
     description: "ابزارهای یادگیری زبان همراه با تمرین و آزمون",
     isNew: true,
-    icon: "globe",
-    isComingSoon: true
+    icon: "globe"
   },
   {
     id: "equation-solver",
@@ -29,8 +27,7 @@ export const educationalTools: Tool[] = [
     category: "educational",
     description: "حل انواع معادلات ریاضی با نمایش مراحل حل",
     isNew: true,
-    icon: "calculator",
-    isComingSoon: true
+    icon: "calculator"
   },
   {
     id: "historical-timeline",
@@ -39,8 +36,7 @@ export const educationalTools: Tool[] = [
     category: "educational",
     description: "مشاهده رویدادهای تاریخی در قالب خط زمانی",
     isNew: true,
-    icon: "calendar-days",
-    isComingSoon: true
+    icon: "calendar-days"
   },
   {
     id: "quiz-generator",
@@ -49,7 +45,6 @@ export const educationalTools: Tool[] = [
     category: "educational",
     description: "ساخت آزمون‌های چندگزینه‌ای برای موضوعات مختلف",
     isNew: true,
-    icon: "school",
-    isComingSoon: true
+    icon: "school"
   }
 ];

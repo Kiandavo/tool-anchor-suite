@@ -6,6 +6,7 @@ import { ToolsSection } from '@/components/home/ToolsSection';
 import { ProfessionalToolsSection } from '@/components/home/ProfessionalToolsSection';
 import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
 import { ReadingsSection } from '@/components/home/ReadingsSection';
+import { CategoriesSection } from '@/components/home/CategoriesSection';
 import { SeoHead } from '@/components/seo/SeoHead';
 
 const Index = () => {
@@ -38,6 +39,7 @@ const Index = () => {
         <ProfessionalToolsSection />
         <PersianCulturalSection />
         <ReadingsSection />
+        <CategoriesSection />
       </div>
     </Layout>
   );
