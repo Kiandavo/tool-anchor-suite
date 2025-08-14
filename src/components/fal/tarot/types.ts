@@ -3,7 +3,7 @@ import {
   Crown, Heart, Star, LucideIcon, Globe, Landmark
 } from 'lucide-react';
 
-export type TarotReadingType = 'three-card' | 'celtic-cross' | 'relationship' | 'career' | 'yes-no';
+export type TarotReadingType = 'three-card' | 'celtic-cross' | 'relationship' | 'career' | 'yes-no' | 'detailed-future' | 'love-timeline' | 'financial' | 'spiritual-path' | 'health-guidance';
 
 export interface TarotCardType {
   name: string;
@@ -12,6 +12,16 @@ export interface TarotCardType {
   image?: string;
   meaning?: string;
   reversedMeaning?: string;
+  timePeriod?: string;
+  advice?: string;
+}
+
+export interface DetailedQuestion {
+  id: string;
+  question: string;
+  type: 'text' | 'select' | 'date' | 'number';
+  options?: string[];
+  required: boolean;
 }
 
 export interface TarotReadingConfig {
@@ -20,6 +30,9 @@ export interface TarotReadingConfig {
   description: string;
   cardCount: number;
   positions: string[];
+  questions?: DetailedQuestion[];
+  hasTimeline?: boolean;
+  accuracyFactors?: string[];
 }
 
 export const tarotReadingTypes: TarotReadingConfig[] = [
@@ -28,28 +41,138 @@ export const tarotReadingTypes: TarotReadingConfig[] = [
     name: 'گذشته، حال، آینده',
     description: 'یک خوانش ساده سه کارته که گذشته، حال و آینده‌ی شما را نشان می‌دهد.',
     cardCount: 3,
-    positions: ['گذشته', 'حال', 'آینده']
+    positions: ['گذشته', 'حال', 'آینده'],
+    hasTimeline: true,
+    accuracyFactors: ['تمرکز روی سوال', 'صداقت پاسخ‌ها', 'زمان مناسب']
+  },
+  {
+    id: 'detailed-future',
+    name: 'آینده تفصیلی',
+    description: 'خوانش پیشرفته ۵ کارته برای آینده ۶ ماه آینده با جزئیات زمانی دقیق.',
+    cardCount: 5,
+    positions: ['ماه آینده', '۳ ماه آینده', '۶ ماه آینده', 'چالش‌ها', 'راهکارها'],
+    hasTimeline: true,
+    questions: [
+      { id: 'birth_date', question: 'تاریخ تولد شما', type: 'date', required: true },
+      { id: 'main_concern', question: 'اصلی‌ترین نگرانی شما در حال حاضر', type: 'text', required: true },
+      { id: 'life_area', question: 'حوزه زندگی که بیشتر نگران آن هستید', type: 'select', 
+        options: ['عشق و رابطه', 'کار و شغل', 'سلامتی', 'مالی', 'خانواده', 'تحصیل'], required: true },
+      { id: 'current_mood', question: 'احساس فعلی شما', type: 'select',
+        options: ['امیدوار', 'نگران', 'گیج', 'خوشحال', 'ناراحت', 'خنثی'], required: true }
+    ],
+    accuracyFactors: ['صحت تاریخ تولد', 'وضوح نگرانی اصلی', 'صداقت در پاسخ‌ها', 'تمرکز ذهنی']
+  },
+  {
+    id: 'love-timeline',
+    name: 'زمان‌بندی عشق',
+    description: 'فال تخصصی عاشقانه با پیش‌بینی زمان دقیق رویدادهای عاطفی.',
+    cardCount: 4,
+    positions: ['رابطه فعلی', '۲ ماه آینده', '۶ ماه آینده', 'سال آینده'],
+    hasTimeline: true,
+    questions: [
+      { id: 'relationship_status', question: 'وضعیت رابطه فعلی شما', type: 'select',
+        options: ['مجرد', 'در رابطه', 'متاهل', 'جدا شده', 'پیچیده'], required: true },
+      { id: 'love_priority', question: 'اولویت اصلی شما در عشق', type: 'select',
+        options: ['یافتن عشق جدید', 'تقویت رابطه فعلی', 'حل مشکلات', 'ازدواج', 'استقلال عاطفی'], required: true },
+      { id: 'past_relationship', question: 'آیا رابطه گذشته بر شما تاثیر می‌گذارد؟', type: 'select',
+        options: ['خیلی زیاد', 'تا حدودی', 'کم', 'اصلاً'], required: true }
+    ],
+    accuracyFactors: ['صداقت درباره وضعیت', 'وضوح اولویت‌ها', 'پذیرش گذشته']
+  },
+  {
+    id: 'financial',
+    name: 'وضعیت مالی',
+    description: 'خوانش مالی جامع با پیش‌بینی درآمد، هزینه‌ها و فرصت‌های سرمایه‌گذاری.',
+    cardCount: 4,
+    positions: ['وضعیت فعلی', 'درآمد آینده', 'هزینه‌ها', 'سرمایه‌گذاری'],
+    hasTimeline: true,
+    questions: [
+      { id: 'financial_goal', question: 'هدف اصلی مالی شما', type: 'select',
+        options: ['افزایش درآمد', 'پس‌انداز', 'سرمایه‌گذاری', 'کاهش بدهی', 'خرید خانه/ماشین'], required: true },
+      { id: 'income_source', question: 'منبع اصلی درآمد', type: 'select',
+        options: ['حقوق ثابت', 'کسب‌وکار شخصی', 'فریلنسری', 'سرمایه‌گذاری', 'متنوع'], required: true },
+      { id: 'financial_stress', question: 'میزان استرس مالی فعلی', type: 'select',
+        options: ['بسیار زیاد', 'زیاد', 'متوسط', 'کم', 'بدون استرس'], required: true }
+    ],
+    accuracyFactors: ['وضوح اهداف مالی', 'صداقت درباره وضعیت', 'واقع‌بینی در انتظارات']
+  },
+  {
+    id: 'spiritual-path',
+    name: 'مسیر معنوی',
+    description: 'راهنمایی برای رشد معنوی و یافتن هدف زندگی.',
+    cardCount: 4,
+    positions: ['وضعیت روحی فعلی', 'چالش‌های معنوی', 'راه رشد', 'هدف نهایی'],
+    questions: [
+      { id: 'spiritual_practice', question: 'آیا تمرین معنوی خاصی دارید؟', type: 'select',
+        options: ['مراقبه', 'دعا', 'یوگا', 'طبیعت‌گردی', 'مطالعه', 'هیچ‌کدام'], required: false },
+      { id: 'life_purpose', question: 'آیا هدف زندگی‌تان را می‌شناسید؟', type: 'select',
+        options: ['کاملاً مشخص', 'تا حدودی', 'گاهی', 'اصلاً نه'], required: true },
+      { id: 'inner_peace', question: 'میزان آرامش درونی فعلی', type: 'select',
+        options: ['کاملاً آرام', 'اکثر اوقات', 'گاهی', 'کمتر', 'مضطرب'], required: true }
+    ],
+    accuracyFactors: ['صداقت درونی', 'آمادگی برای تغییر', 'پذیرش راهنمایی']
+  },
+  {
+    id: 'health-guidance',
+    name: 'راهنمایی سلامت',
+    description: 'بررسی انرژی‌های بدن و راهنمایی برای سلامت جسمی و روحی.',
+    cardCount: 3,
+    positions: ['وضعیت فعلی سلامت', 'عوامل تاثیرگذار', 'راهکارهای بهبود'],
+    questions: [
+      { id: 'health_concern', question: 'اصلی‌ترین نگرانی سلامتی', type: 'select',
+        options: ['انرژی و خستگی', 'استرس و اضطراب', 'تغذیه', 'ورزش', 'خواب', 'درد مزمن'], required: true },
+      { id: 'lifestyle', question: 'سبک زندگی فعلی شما', type: 'select',
+        options: ['فعال و سالم', 'نسبتاً سالم', 'متوسط', 'نیاز به بهبود', 'نامناسب'], required: true },
+      { id: 'stress_level', question: 'میزان استرس روزانه', type: 'select',
+        options: ['بسیار زیاد', 'زیاد', 'متوسط', 'کم', 'بدون استرس'], required: true }
+    ],
+    accuracyFactors: ['صداقت درباره عادات', 'آمادگی برای تغییر', 'پیگیری توصیه‌ها']
   },
   {
     id: 'relationship',
     name: 'خوانش رابطه',
-    description: 'سه کارت که شما، شخص دیگر و رابطه‌ی شما را نشان می‌دهد.',
+    description: 'تحلیل عمیق رابطه با سوالات تفصیلی برای دقت بیشتر.',
     cardCount: 3,
-    positions: ['شما', 'شخص دیگر', 'رابطه']
+    positions: ['شما', 'شخص دیگر', 'رابطه'],
+    questions: [
+      { id: 'relationship_type', question: 'نوع رابطه', type: 'select',
+        options: ['عاشقانه', 'دوستی', 'خانوادگی', 'کاری', 'زناشویی'], required: true },
+      { id: 'relationship_duration', question: 'مدت زمان رابطه', type: 'select',
+        options: ['جدید (کمتر از ۶ ماه)', 'جوان (۶ ماه تا ۲ سال)', 'بالغ (۲ تا ۵ سال)', 'پایدار (بیش از ۵ سال)'], required: true },
+      { id: 'main_issue', question: 'مشکل اصلی رابطه', type: 'text', required: false }
+    ],
+    accuracyFactors: ['صداقت درباره احساسات', 'وضوح انتظارات', 'آمادگی برای تغییر']
   },
   {
     id: 'career',
-    name: 'مسیر شغلی',
-    description: 'سه کارت که وضعیت فعلی، چالش‌ها و فرصت‌های شغلی شما را نشان می‌دهد.',
-    cardCount: 3,
-    positions: ['وضعیت فعلی', 'چالش‌ها', 'فرصت‌ها']
+    name: 'مسیر شغلی پیشرفته',
+    description: 'تحلیل جامع شغلی با پیش‌بینی زمانی فرصت‌ها.',
+    cardCount: 5,
+    positions: ['وضعیت فعلی', 'استعدادهای پنهان', 'فرصت‌های آینده', 'چالش‌ها', 'موفقیت نهایی'],
+    hasTimeline: true,
+    questions: [
+      { id: 'current_job', question: 'وضعیت شغلی فعلی', type: 'select',
+        options: ['شاغل راضی', 'شاغل ناراضی', 'بیکار', 'دانشجو', 'تغییر شغل', 'کسب‌وکار شخصی'], required: true },
+      { id: 'career_goal', question: 'هدف شغلی اصلی', type: 'select',
+        options: ['ارتقای شغلی', 'تغییر شغل', 'راه‌اندازی کسب‌وکار', 'افزایش درآمد', 'تعادل کار و زندگی'], required: true },
+      { id: 'skills', question: 'اصلی‌ترین مهارت شما', type: 'text', required: true }
+    ],
+    accuracyFactors: ['وضوح اهداف شغلی', 'واقع‌بینی در قابلیت‌ها', 'آمادگی برای تلاش']
   },
   {
     id: 'yes-no',
     name: 'پاسخ سوال بله/خیر',
-    description: 'یک کارت که به سوال بله/خیر شما پاسخ می‌دهد.',
+    description: 'پاسخ دقیق به سوال مشخص با درصد احتمال.',
     cardCount: 1,
-    positions: ['پاسخ']
+    positions: ['پاسخ'],
+    questions: [
+      { id: 'question_text', question: 'سوال دقیق شما', type: 'text', required: true },
+      { id: 'question_importance', question: 'اهمیت این سوال برای شما', type: 'select',
+        options: ['بسیار مهم', 'مهم', 'متوسط', 'کم اهمیت'], required: true },
+      { id: 'time_frame', question: 'بازه زمانی مورد نظر', type: 'select',
+        options: ['امروز/فردا', 'این هفته', 'این ماه', '۳ ماه آینده', '۶ ماه آینده', 'سال آینده'], required: true }
+    ],
+    accuracyFactors: ['وضوح سوال', 'اهمیت موضوع', 'زمان‌بندی واقعی']
   }
 ];
 
@@ -60,7 +183,9 @@ export const tarotCards: TarotCardType[] = [
     icon: BookOpen,
     image: "/tarot-cards/tower.jpg",
     meaning: "گذشته شما با تغییرات ناگهانی و چالش‌های بزرگ همراه بوده است. این تغییرات اگرچه دشوار بوده‌اند، اما زمینه را برای رشد و تحول شما فراهم کرده‌اند.",
-    reversedMeaning: "شما از پذیرش تغییرات ضروری خودداری می‌کنید. ترس از دست دادن امنیت ممکن است مانع پیشرفت شما شود."
+    reversedMeaning: "شما از پذیرش تغییرات ضروری خودداری می‌کنید. ترس از دست دادن امنیت ممکن است مانع پیشرفت شما شود.",
+    timePeriod: "۲-۶ ماه آینده",
+    advice: "آماده باشید برای تغییرات مثبت. این دوره گذار موقتی است."
   },
   {
     name: "ماه",

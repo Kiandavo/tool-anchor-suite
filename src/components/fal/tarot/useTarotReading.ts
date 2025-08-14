@@ -18,13 +18,14 @@ export const useTarotReading = () => {
   const [allowReversedCards, setAllowReversedCards] = useState(false);
   const [reversedCards, setReversedCards] = useState<boolean[]>([]);
   const [userQuestion, setUserQuestion] = useState("");
+  const [questionnaireAnswers, setQuestionnaireAnswers] = useState<Record<string, string>>({});
   
   useEffect(() => {
     // Check if we have previously drawn cards
     const storedState = sessionStorage.getItem(TAROT_STATE_KEY);
     if (storedState) {
       try {
-        const { cards, revealed, type, reversed, question } = JSON.parse(storedState);
+        const { cards, revealed, type, reversed, question, answers } = JSON.parse(storedState);
         // If we have stored cards, use them
         if (cards && cards.length) {
           console.log("Loaded saved tarot cards:", cards);
@@ -49,6 +50,10 @@ export const useTarotReading = () => {
           if (question) {
             setUserQuestion(question);
           }
+          
+          if (answers) {
+            setQuestionnaireAnswers(answers);
+          }
         }
       } catch (e) {
         // If there's an error parsing JSON, ignore it
@@ -65,11 +70,12 @@ export const useTarotReading = () => {
         revealed: isRevealed,
         type: readingType.id,
         reversed: reversedCards,
-        question: userQuestion
+        question: userQuestion,
+        answers: questionnaireAnswers
       };
       sessionStorage.setItem(TAROT_STATE_KEY, JSON.stringify(stateToSave));
     }
-  }, [selectedCards, isRevealed, readingType, reversedCards, userQuestion]);
+  }, [selectedCards, isRevealed, readingType, reversedCards, userQuestion, questionnaireAnswers]);
 
   const handleReadingTypeChange = (typeId: string) => {
     const newType = tarotReadingTypes.find(type => type.id === typeId) || tarotReadingTypes[0];
@@ -79,6 +85,7 @@ export const useTarotReading = () => {
     setSelectedCards([]);
     setIsRevealed(false);
     setHasDrawn(false);
+    setQuestionnaireAnswers({});
   };
 
   const toggleReversedCards = () => {
@@ -89,8 +96,26 @@ export const useTarotReading = () => {
     setUserQuestion(question);
   };
 
+  const handleQuestionnaireAnswerChange = (questionId: string, answer: string) => {
+    setQuestionnaireAnswers(prev => ({
+      ...prev,
+      [questionId]: answer
+    }));
+  };
+
   const drawCards = () => {
-    if (readingType.id === 'yes-no' && !userQuestion) {
+    // Check required questions
+    if (readingType.questions) {
+      const requiredQuestions = readingType.questions.filter(q => q.required);
+      const missingAnswers = requiredQuestions.filter(q => !questionnaireAnswers[q.id]);
+      
+      if (missingAnswers.length > 0) {
+        toast.error("لطفاً ابتدا تمام سوالات ضروری را پاسخ دهید");
+        return;
+      }
+    }
+    
+    if (readingType.id === 'yes-no' && !userQuestion && !questionnaireAnswers.question_text) {
       toast.error("لطفاً سوال خود را وارد کنید");
       return;
     }
@@ -261,11 +286,13 @@ export const useTarotReading = () => {
     allowReversedCards,
     reversedCards,
     userQuestion,
+    questionnaireAnswers,
     drawCards,
     revealMeaning,
     copyReading,
     handleReadingTypeChange,
     toggleReversedCards,
-    handleQuestionChange
+    handleQuestionChange,
+    handleQuestionnaireAnswerChange
   };
 };

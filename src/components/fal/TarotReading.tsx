@@ -6,6 +6,8 @@ import { TarotControls } from './tarot/TarotControls';
 import { TarotAnimation } from './tarot/TarotAnimation';
 import { useTarotReading } from './tarot/useTarotReading';
 import { TarotGuide } from './tarot/TarotGuide';
+import { TarotQuestionnaire } from './tarot/TarotQuestionnaire';
+import { TarotTimeline } from './tarot/TarotTimeline';
 import { motion } from 'framer-motion';
 import { CosmicStarField, MysticalSymbols } from './graphics/TarotGraphics';
 
@@ -18,12 +20,14 @@ export const TarotReading = () => {
     allowReversedCards,
     reversedCards,
     userQuestion,
+    questionnaireAnswers,
     drawCards,
     revealMeaning,
     copyReading,
     handleReadingTypeChange,
     toggleReversedCards,
-    handleQuestionChange
+    handleQuestionChange,
+    handleQuestionnaireAnswerChange
   } = useTarotReading();
 
   return (
@@ -81,6 +85,21 @@ export const TarotReading = () => {
           >
             {readingType.description}
           </motion.p>
+          
+          <TarotQuestionnaire
+            readingType={readingType}
+            answers={questionnaireAnswers}
+            onAnswerChange={handleQuestionnaireAnswerChange}
+          />
+          
+          {readingType.hasTimeline && isRevealed && (
+            <TarotTimeline
+              selectedCards={selectedCards}
+              readingType={readingType}
+              reversedCards={reversedCards}
+              answers={questionnaireAnswers}
+            />
+          )}
           
           <TarotCardDisplay 
             selectedCards={selectedCards}
