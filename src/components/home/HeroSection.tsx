@@ -23,7 +23,7 @@ export const HeroSection = () => {
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
           {/* Logo */}
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-2">
             <img 
               src={logoUrl}
               alt="Langar Logo" 
