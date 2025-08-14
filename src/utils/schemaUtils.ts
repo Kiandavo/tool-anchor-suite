@@ -4,21 +4,47 @@
  * All functions include error handling for browser compatibility
  */
 
-// Website schema for the entire site
+// Enhanced website schema for the entire site
 export const generateWebsiteSchema = () => {
   try {
     return {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "لنگر - ابزارهای آنلاین رایگان",
+      "alternateName": "Langar Online Tools",
       "url": "https://langar.co",
-      "description": "مجموعه کامل ابزارهای آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو و بهینه‌سازی",
+      "description": "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی.",
+      "keywords": "ابزار آنلاین, محاسبه گر, تبدیل متن, ویرایش تصویر, سئو, فال, ابزار فارسی, لنگر",
+      "inLanguage": "fa-IR",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Persian speakers, Iranian users, Online tool users"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "لنگر",
+        "url": "https://langar.co"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "لنگر",
+        "url": "https://langar.co",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+        }
+      },
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://langar.co/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       },
-      "inLanguage": "fa-IR"
+      "mainEntity": {
+        "@type": "ItemList",
+        "name": "ابزارهای آنلاین لنگر",
+        "description": "مجموعه کامل ابزارهای آنلاین رایگان",
+        "numberOfItems": "100+"
+      }
     };
   } catch (error) {
     console.error('Error generating website schema:', error);
@@ -26,33 +52,63 @@ export const generateWebsiteSchema = () => {
   }
 };
 
-// Tool schema for individual tool pages
+// Enhanced tool schema for individual tool pages
 export const generateToolSchema = (
   name: string, 
   description: string, 
   slug: string, 
-  category: string
+  category: string,
+  keywords?: string[],
+  screenshots?: string[]
 ) => {
   try {
     return {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
+      "@type": "SoftwareApplication",
       "name": name,
       "description": description,
       "url": `https://langar.co/tool/${slug}`,
       "applicationCategory": category,
+      "applicationSubCategory": "Web Application",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript enabled",
+      "permissions": "No special permissions required",
+      "memoryRequirements": "Minimal",
+      "storageRequirements": "No storage required",
+      "inLanguage": "fa-IR",
+      "availableLanguage": "fa-IR",
       "offers": {
         "@type": "Offer",
         "price": "0",
-        "priceCurrency": "USD"
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
       },
-      "operatingSystem": "Any",
-      "inLanguage": "fa-IR",
+      "author": {
+        "@type": "Organization",
+        "name": "لنگر",
+        "url": "https://langar.co",
+        "logo": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "لنگر",
+        "url": "https://langar.co",
+        "logo": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+      },
       "isPartOf": {
         "@type": "WebSite",
         "name": "لنگر - ابزارهای آنلاین",
         "url": "https://langar.co"
-      }
+      },
+      "featureList": [
+        "ابزار آنلاین رایگان",
+        "بدون نیاز به نصب",
+        "پشتیبانی از زبان فارسی",
+        "طراحی ریسپانسیو",
+        "امنیت بالا"
+      ],
+      ...(keywords && keywords.length > 0 && { "keywords": keywords.join(", ") }),
+      ...(screenshots && screenshots.length > 0 && { "screenshot": screenshots })
     };
   } catch (error) {
     console.error('Error generating tool schema:', error);

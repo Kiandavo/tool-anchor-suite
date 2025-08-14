@@ -41,18 +41,28 @@ const Tool = () => {
     { label: tool.name, current: true }
   ];
 
-  // SEO data
+  // Enhanced SEO data
   const categoryLabel = (categoryLabels as any)[tool.category] || tool.category;
-  const seoTitle = `${tool.name} | ابزار آنلاین لنگر`;
-  const seoDescription = tool.description;
-  const seoKeywords = `${tool.name}, ${categoryLabel}, لنگر, ابزار آنلاین, Langar Tools`;
+  const seoTitle = `${tool.name} | ${categoryLabel} رایگان - لنگر`;
+  const seoDescription = `${tool.description} - ${tool.name} رایگان و آنلاین، بدون نیاز به نصب. بهترین ابزار آنلاین فارسی در لنگر.`;
+  const seoKeywords = `${tool.name}, ${categoryLabel}, لنگر, ابزار آنلاین, رایگان, فارسی, ایرانی, ${tool.category}`;
 
-  const toolSchema = generateToolSchema(tool.name, tool.description, tool.slug, categoryLabel);
+  // Enhanced schema with more details
+  const toolKeywords = [tool.name, categoryLabel, 'ابزار آنلاین', 'رایگان', 'فارسی'];
+  const toolSchema = generateToolSchema(
+    tool.name, 
+    seoDescription, 
+    tool.slug, 
+    categoryLabel,
+    toolKeywords
+  );
+  
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'لنگر', url: 'https://langar.co/' },
     { name: categoryLabel, url: `https://langar.co/category/${tool.category}` },
     { name: tool.name, url: `https://langar.co/tool/${tool.slug}` }
   ]);
+  
   const combinedSchema = combineSchemas(toolSchema, breadcrumbSchema);
 
   return (
