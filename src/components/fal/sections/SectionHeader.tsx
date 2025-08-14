@@ -19,8 +19,8 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
     <div className="flex items-center justify-center mb-6">
       <div className="h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent w-1/4"></div>
       <div className={`px-4 py-1.5 ${backgroundColor} rounded-full shadow-sm border border-purple-300/30`}>
-        <h2 className="text-center text-purple-800 font-bold text-xl flex items-center">
-          <Icon size={20} className={`ml-2 text-purple-600`} />
+        <h2 className="text-center text-purple-800 font-bold text-xl icon-text">
+          <Icon size={20} className="text-purple-600" />
           {title}
         </h2>
       </div>

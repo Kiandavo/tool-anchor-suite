@@ -81,11 +81,11 @@ export const HafezFortune = () => {
       <FloatingPersianLetters />
       
       <CardHeader className="bg-gradient-to-r from-[#6b7280] to-[#4b5563] text-center pb-2 py-2 relative border-b border-[#d1d5db]">
-        <div className="flex items-center justify-center">
-          <Book className="text-white mr-2" size={16} />
-          <h2 className="text-sm font-bold text-white flex items-center">
+        <div className="icon-text justify-center">
+          <Book className="text-white" size={16} />
+          <h2 className="text-sm font-bold text-white icon-text-sm">
             فال حافظ
-            <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-white opacity-70" /></span>
+            <span className="inline-block"><Sparkles size={12} className="text-white opacity-70" /></span>
           </h2>
         </div>
         
@@ -144,11 +144,13 @@ export const HafezFortune = () => {
           className="bg-gradient-to-r from-[#6b7280] to-[#4b5563] hover:from-[#5b6270] hover:to-[#3b4553] text-white text-xs h-8 px-4 relative overflow-hidden group w-full sm:w-auto"
         >
           <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-          {isLoading ? 
-            <RefreshCw className="animate-spin mr-1" size={14} /> : 
-            <Sparkles size={14} className="mr-1" />
-          }
-          فال حافظ
+          <span className="icon-text-sm">
+            {isLoading ? 
+              <RefreshCw className="animate-spin" size={14} /> : 
+              <Sparkles size={14} />
+            }
+            فال حافظ
+          </span>
         </Button>
         
         {poem && (
@@ -158,8 +160,10 @@ export const HafezFortune = () => {
             onClick={copyFortune} 
             className="border-[#6b7280] text-[#4b5563] text-xs h-8 px-3 w-full sm:w-auto hover:bg-[#f0f0f0]"
           >
-            <Copy size={14} className="mr-1" />
-            کپی فال
+            <span className="icon-text-sm">
+              <Copy size={14} />
+              کپی فال
+            </span>
           </Button>
         )}
       </CardFooter>

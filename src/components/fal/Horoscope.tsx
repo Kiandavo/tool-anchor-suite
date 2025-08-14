@@ -41,11 +41,11 @@ export const Horoscope = () => {
       </div>
       
       <CardHeader className="bg-gradient-to-r from-[#e6c8b0] to-[#d2b095] text-center pb-2 py-2 relative border-b border-[#e6c8b0]">
-        <div className="flex items-center justify-center">
-          <Star className="text-[#5c3f14] mr-2" size={16} />
-          <h2 className="text-sm font-bold text-[#5c3f14] flex items-center">
+        <div className="icon-text justify-center">
+          <Star className="text-[#5c3f14]" size={16} />
+          <h2 className="text-sm font-bold text-[#5c3f14] icon-text-sm">
             طالع بینی
-            <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-[#5c3f14] opacity-70" /></span>
+            <span className="inline-block"><Sparkles size={12} className="text-[#5c3f14] opacity-70" /></span>
           </h2>
         </div>
         
@@ -98,11 +98,13 @@ export const Horoscope = () => {
           className="bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14] text-[10px] h-7 px-3 relative overflow-hidden group"
         >
           <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-          {isAnimating ? 
-            <RefreshCw className="animate-spin mr-1" size={12} /> : 
-            <Sparkles size={12} className="mr-1" />
-          }
-          دریافت طالع
+          <span className="icon-text-sm">
+            {isAnimating ? 
+              <RefreshCw className="animate-spin" size={12} /> : 
+              <Sparkles size={12} />
+            }
+            دریافت طالع
+          </span>
         </Button>
         
         {prediction && (
@@ -112,8 +114,10 @@ export const Horoscope = () => {
             onClick={copyHoroscope} 
             className="border-[#e6c8b0] text-[#5c3f14] text-[10px] h-7 px-3 hover:bg-[#fdf0e9]/50"
           >
-            <Copy size={12} className="mr-1" />
-            کپی طالع
+            <span className="icon-text-sm">
+              <Copy size={12} />
+              کپی طالع
+            </span>
           </Button>
         )}
       </CardFooter>

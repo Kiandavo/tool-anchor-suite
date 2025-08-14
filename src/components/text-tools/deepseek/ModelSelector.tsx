@@ -11,7 +11,7 @@ interface ModelSelectorProps {
 const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, setSelectedModel }) => {
   return (
     <div className="md:w-1/3">
-      <label htmlFor="model" className="block text-xs font-medium text-gray-700 mb-1 flex items-center gap-1.5">
+      <label htmlFor="model" className="block text-xs font-medium text-gray-700 mb-1 icon-text-sm">
         <Bot className="h-3.5 w-3.5 text-primary/80" />
         انتخاب مدل هوش مصنوعی
       </label>

@@ -101,14 +101,14 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) =
       to={`/tool/${tool.slug}`}
       className={cardClass}
     >
-      <div className="flex items-center mb-2">
+      <div className="icon-text mb-2">
         {getIcon(tool.category, tool.icon)}
-        <h3 className="mr-2 font-medium">{tool.name}</h3>
+        <h3 className="font-medium">{tool.name}</h3>
         {tool.isNew && (
-          <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-lg font-medium mr-2">جدید</span>
+          <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-lg font-medium">جدید</span>
         )}
         {tool.isComingSoon && (
-          <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-lg font-medium mr-2">به زودی</span>
+          <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-lg font-medium">به زودی</span>
         )}
       </div>
       <p className="text-sm text-gray-600">{tool.description}</p>

@@ -22,10 +22,10 @@ export const ToolInfoCard: React.FC<ToolInfoCardProps> = ({
           href={learnMoreUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
+          className="icon-text text-blue-600 hover:text-blue-800 text-sm"
         >
           اطلاعات بیشتر
-          <ExternalLink className="mr-1 w-4 h-4" />
+          <ExternalLink className="w-4 h-4" />
         </a>
       )}
     </div>
