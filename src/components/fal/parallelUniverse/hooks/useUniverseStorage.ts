@@ -1,8 +1,14 @@
 
 import { useState, useEffect } from 'react';
+import { secureLocalStorage } from '@/utils/security/secureStorage';
 
 const FAVORITES_KEY = 'parallel_universe_favorites';
 const HISTORY_KEY = 'parallel_universe_history';
+
+// Validators for universe data
+const validateNumberArray = (data: any): boolean => {
+  return Array.isArray(data) && data.every(item => typeof item === 'number');
+};
 
 export const useUniverseStorage = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
@@ -10,27 +16,20 @@ export const useUniverseStorage = () => {
 
   // Load saved data on mount
   useEffect(() => {
-    const savedFavorites = localStorage.getItem(FAVORITES_KEY);
-    const savedHistory = localStorage.getItem(HISTORY_KEY);
+    const savedFavorites = secureLocalStorage.getItem(FAVORITES_KEY, [], validateNumberArray);
+    const savedHistory = secureLocalStorage.getItem(HISTORY_KEY, [], validateNumberArray);
     
-    if (savedFavorites) {
-      const parsedFavorites = JSON.parse(savedFavorites);
-      setFavorites(parsedFavorites);
-    }
-    
-    if (savedHistory) {
-      const parsedHistory = JSON.parse(savedHistory);
-      setHistory(parsedHistory);
-    }
+    setFavorites(savedFavorites);
+    setHistory(savedHistory);
   }, []);
 
   // Save data when they change
   useEffect(() => {
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    secureLocalStorage.setItem(FAVORITES_KEY, favorites);
   }, [favorites]);
 
   useEffect(() => {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    secureLocalStorage.setItem(HISTORY_KEY, history);
   }, [history]);
 
   const addToHistory = (universeId: number) => {
