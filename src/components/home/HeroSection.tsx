@@ -7,64 +7,64 @@ import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 
 export const HeroSection = () => {
   return (
-    <section className="py-20 sm:py-28 mb-16 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 gradient-mesh opacity-20" />
-      <div className="absolute inset-0 glass-morphism" />
+    <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden">
+      {/* Apple-style background elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-apple-light-gray/30 via-transparent to-apple-light-gray/20" />
+      <div className="absolute inset-0 apple-glass" />
       
-      <EnhancedGraphics variant="floating-orbs" className="absolute inset-0" />
+      <EnhancedGraphics variant="floating-orbs" className="absolute inset-0 opacity-60" />
       
-      {/* Animated background circles */}
-      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-br from-blue-200/40 to-purple-200/30 blur-3xl wave-animation" />
-      <div className="absolute bottom-20 left-[10%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-200/40 to-blue-200/30 blur-3xl wave-animation" style={{ animationDelay: '1s' }} />
+      {/* Refined background elements */}
+      <div className="absolute top-20 right-[15%] w-96 h-96 rounded-full bg-gradient-to-br from-apple-blue/20 to-apple-purple/15 blur-3xl animate-float" />
+      <div className="absolute bottom-20 left-[15%] w-80 h-80 rounded-full bg-gradient-to-tr from-apple-green/20 to-apple-cyan/15 blur-3xl animate-float" style={{ animationDelay: '2s' }} />
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto text-center animate-fade-in">
-          <h1 className="text-4xl sm:text-6xl font-bold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight text-shine neon-glow">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
+        <div className="max-w-4xl mx-auto text-center animate-fade-in">
+          <h1 className="text-5xl sm:text-7xl font-bold mb-8 sm:mb-12 text-apple-dark-gray leading-tight tracking-tight bg-gradient-to-b from-apple-dark-gray to-apple-gray bg-clip-text text-transparent">
             لنگر - مجموعه ابزارهای آنلاین
           </h1>
           
-          <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed text-gray-700 font-light mb-6 scroll-reveal">
+          <p className="text-xl sm:text-2xl max-w-3xl mx-auto leading-relaxed text-apple-gray font-light mb-10 sm:mb-12">
             بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
           </p>
           
-          {/* Feature highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-slide-up">
+          {/* Apple-style feature highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 sm:mb-16 animate-slide-up">
             <Link to="/category/calculators" className="block group">
-              <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle">
-                  <Sparkles size={20} className="text-white drop-shadow-sm" />
+              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover-lift">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-purple to-apple-indigo flex items-center justify-center mx-auto mb-6 shadow-apple">
+                  <Sparkles size={24} className="text-white" />
                 </div>
-                <h3 className="text-lg font-medium mb-2 text-gray-800">ابزارهای تخصصی و کاربردی</h3>
-                <p className="text-gray-600 text-sm">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
+                <h3 className="text-xl font-semibold mb-3 text-apple-dark-gray">ابزارهای تخصصی و کاربردی</h3>
+                <p className="text-apple-gray text-base leading-relaxed">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
               </div>
             </Link>
             
             <Link to="/category/persian-cultural" className="block group">
-              <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{ animationDelay: '0.5s' }}>
-                  <Globe size={20} className="text-white drop-shadow-sm" />
+              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover-lift">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-blue to-apple-cyan flex items-center justify-center mx-auto mb-6 shadow-apple animate-pulse-subtle" style={{ animationDelay: '0.5s' }}>
+                  <Globe size={24} className="text-white" />
                 </div>
-                <h3 className="text-lg font-medium mb-2 text-gray-800">فرهنگ و زبان فارسی</h3>
-                <p className="text-gray-600 text-sm">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
+                <h3 className="text-xl font-semibold mb-3 text-apple-dark-gray">فرهنگ و زبان فارسی</h3>
+                <p className="text-apple-gray text-base leading-relaxed">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
               </div>
             </Link>
             
             <Link to="/category/readings" className="block group">
-              <div className="glass-morphism card-hover-glow p-6 rounded-2xl shadow-sm border border-gray-200/50 magnetic-hover">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center mx-auto mb-4 shadow-md bounce-subtle" style={{ animationDelay: '1s' }}>
-                  <BookOpen size={20} className="text-white drop-shadow-sm" />
+              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover-lift">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-green to-apple-teal flex items-center justify-center mx-auto mb-6 shadow-apple animate-scale-subtle" style={{ animationDelay: '1s' }}>
+                  <BookOpen size={24} className="text-white" />
                 </div>
-                <h3 className="text-lg font-medium mb-2 text-gray-800">طالع‌بینی و فال</h3>
-                <p className="text-gray-600 text-sm">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
+                <h3 className="text-xl font-semibold mb-3 text-apple-dark-gray">طالع‌بینی و فال</h3>
+                <p className="text-apple-gray text-base leading-relaxed">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
               </div>
             </Link>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+          <div className="flex flex-wrap justify-center gap-6 mb-16">
             <Button 
               size="lg"
-              className="shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] font-medium text-lg gradient-persian text-white interactive-element magnetic-hover"
+              className="shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover:scale-[1.02] font-semibold text-lg bg-apple-blue text-white hover:bg-apple-blue/90 px-8 py-4 rounded-2xl hover-lift"
               asChild
             >
               <Link to="/all-tools">
@@ -75,7 +75,7 @@ export const HeroSection = () => {
             <Button 
               variant="outline"
               size="lg"
-              className="glass-morphism hover:shadow-md hover:bg-blue-50/50 transition-all hover:scale-[1.02] font-medium text-lg interactive-element magnetic-hover"
+              className="apple-glass hover:shadow-apple-lg border-apple-blue/30 text-apple-blue hover:bg-apple-blue/10 transition-all duration-300 hover:scale-[1.02] font-semibold text-lg px-8 py-4 rounded-2xl hover-lift"
               asChild
             >
               <Link to="/#popular-tools">
@@ -84,7 +84,7 @@ export const HeroSection = () => {
             </Button>
           </div>
           
-          <div className="max-w-lg mx-auto h-1.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mt-16 rounded-full wave-animation" />
+          <div className="max-w-2xl mx-auto h-0.5 bg-gradient-to-r from-transparent via-apple-blue/40 to-transparent mt-20 rounded-full animate-shimmer" />
         </div>
       </div>
     </section>

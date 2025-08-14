@@ -32,7 +32,7 @@ const Index = () => {
       />
       
       <HeroSection />
-      <div className="container mx-auto px-4 space-y-8">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
         <div id="popular-tools">
           <ToolsSection />
         </div>

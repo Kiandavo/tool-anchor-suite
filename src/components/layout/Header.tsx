@@ -49,15 +49,15 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/90 border-b border-border/30 shadow-sm transition-all duration-300">
-      <div className="container mx-auto px-4 sm:px-8 lg:px-16 max-w-[1400px] relative">
+    <header className="fixed top-0 left-0 right-0 z-50 apple-glass border-b border-white/20 shadow-apple-sm transition-all duration-300">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative">
         <div className="flex flex-col items-center">
-          <div className="flex items-center justify-between w-full gap-4 py-3">
+          <div className="flex items-center justify-between w-full gap-6 py-4">
             <Link
               to="/"
-              className="text-xl font-semibold text-primary hover:text-primary/80 transition-colors duration-300 flex items-center persian-text"
+              className="text-lg font-medium text-apple-blue hover:text-apple-blue/80 transition-all duration-200 flex items-center persian-text hover-lift"
             >
-              <Home size={22} className="ml-2" />
+              <Home size={20} className="ml-2" />
               <span className="hidden md:inline">خانه</span>
             </Link>
 
@@ -67,7 +67,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src={logoUrl}
                   alt="Langar Logo" 
-                  className="h-16 w-auto object-contain hover:scale-110 transition-transform duration-300"
+                  className="h-14 w-auto object-contain hover:scale-105 transition-all duration-200 hover-lift"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;
@@ -80,18 +80,18 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="flex gap-4 items-center">
               <Link
                 to="/settings"
-                className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center"
+                className="text-apple-gray hover:text-apple-blue transition-all duration-200 flex items-center hover-lift p-2 rounded-full hover:bg-apple-blue/10"
                 aria-label="تنظیمات"
               >
-                <Settings size={22} />
+                <Settings size={20} />
               </Link>
 
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="flex items-center font-medium text-primary hover:text-primary/70 text-sm px-4 py-2 rounded-full transition-colors duration-200 border border-primary/20 hover:bg-primary/10 persian-text"
+                  className="flex items-center font-medium text-apple-blue hover:text-apple-blue/80 text-sm px-4 py-2.5 rounded-full transition-all duration-200 apple-glass border border-apple-blue/20 hover:shadow-apple-sm persian-text hover-lift"
                 >
-                  <ArrowRight size={18} className="ml-2" />
+                  <ArrowRight size={16} className="ml-2" />
                   <span className="hidden sm:inline">بازگشت</span>
                 </button>
               ) : null}
