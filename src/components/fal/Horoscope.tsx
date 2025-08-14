@@ -9,6 +9,7 @@ import { ZodiacSelector } from './horoscope/ZodiacSelector';
 import { PredictionTypeSelector } from './horoscope/PredictionTypeSelector';
 import { PredictionDisplay } from './horoscope/PredictionDisplay';
 import { EmptyStateDisplay } from './horoscope/EmptyStateDisplay';
+import { ZodiacConstellation, PlanetaryOrbit, ZodiacWheel } from './graphics/HoroscopeGraphics';
 
 export const Horoscope = () => {
   // ... keep existing code (hooks, component logic)
@@ -28,9 +29,12 @@ export const Horoscope = () => {
   console.log("Horoscope rendering with selectedSign:", selectedSign, "and predictionType:", predictionType);
 
   return (
-    <Card className="bg-[#fdf0e9] border-[#e6c8b0] shadow-md overflow-hidden relative">
-      {/* Decorative pattern */}
-      <div className="absolute inset-0 opacity-[0.03] pattern-drift">
+    <Card className="bg-gradient-to-br from-purple-50 to-indigo-100 border-purple-300 shadow-md overflow-hidden relative">
+      {/* Enhanced astrology graphics */}
+      <ZodiacConstellation sign={selectedSign} />
+      <PlanetaryOrbit />
+      <ZodiacWheel selectedSign={selectedSign} />
+      <div className="absolute inset-0 opacity-[0.05] pattern-drift">
         <div className="w-full h-full" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235c3f14' fill-opacity='0.4'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z'/%3E%3C/g%3E%3C/svg%3E")`,
         }} />

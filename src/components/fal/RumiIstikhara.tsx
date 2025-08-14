@@ -8,6 +8,7 @@ import { useRumiIstikhara } from './rumi/useRumiIstikhara';
 import { RumiIntention } from './rumi/RumiIntention';
 import { RumiDisplay } from './rumi/RumiDisplay';
 import { RumiGuide } from './rumi/RumiGuide';
+import { PersianManuscriptBackground, DervishSpinAnimation, SufiSymbols, FlowingArabicPattern } from './graphics/RumiGraphics';
 
 export const RumiIstikhara = () => {
   const {
@@ -24,15 +25,11 @@ export const RumiIstikhara = () => {
   } = useRumiIstikhara();
 
   return (
-    <Card className="bg-[#fff7ec] border-[#c19e67] shadow-md overflow-hidden relative">
-      {/* Subtle animated background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pattern-drift">
-          <div className="w-full h-full" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%238e6d43' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E")`,
-          }} />
-        </div>
-      </div>
+    <Card className="bg-gradient-to-br from-amber-50 to-orange-100 border-amber-400 shadow-md overflow-hidden relative">
+      {/* Enhanced Persian manuscript graphics */}
+      <PersianManuscriptBackground />
+      <SufiSymbols />
+      <FlowingArabicPattern />
       
       <CardHeader className="bg-gradient-to-r from-[#c19e67] to-[#8e6d43] text-center pb-2 py-2 relative border-b border-[#c19e67]">
         <div className="flex items-center justify-center">

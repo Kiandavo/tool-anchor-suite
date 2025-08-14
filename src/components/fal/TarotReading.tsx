@@ -7,6 +7,7 @@ import { TarotAnimation } from './tarot/TarotAnimation';
 import { useTarotReading } from './tarot/useTarotReading';
 import { TarotGuide } from './tarot/TarotGuide';
 import { motion } from 'framer-motion';
+import { CosmicStarField, MysticalSymbols } from './graphics/TarotGraphics';
 
 export const TarotReading = () => {
   const {
@@ -26,11 +27,13 @@ export const TarotReading = () => {
   } = useTarotReading();
 
   return (
-    <Card className="bg-[#e9f0f7] border-[#b0c8e6] shadow-lg overflow-hidden relative">
-      {/* Animated cosmic background */}
+    <Card className="bg-gradient-to-br from-indigo-50 to-purple-100 border-indigo-300 shadow-lg overflow-hidden relative">
+      {/* Enhanced cosmic graphics */}
+      <CosmicStarField />
+      <MysticalSymbols isVisible={selectedCards.length > 0} />
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
-          className="absolute top-0 left-0 w-full h-full opacity-[0.04]"
+          className="absolute top-0 left-0 w-full h-full opacity-[0.02]"
           animate={{ 
             backgroundPosition: ['0% 0%', '100% 100%'],
           }}

@@ -7,7 +7,7 @@ interface CosmicBackgroundProps {
   count?: number;
 }
 
-function Stars({ count = 2000 }: { count?: number }) {
+function Stars({ count = 300 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null);
   
   const [positions, colors] = useMemo(() => {
@@ -106,7 +106,7 @@ function FloatingOrbs() {
   );
 }
 
-export const CosmicBackground3D: React.FC<CosmicBackgroundProps> = ({ count = 2000 }) => {
+export const CosmicBackground3D: React.FC<CosmicBackgroundProps> = ({ count = 300 }) => {
   return (
     <div className="absolute inset-0 z-0">
       <Canvas
