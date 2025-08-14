@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
 import { Helmet } from 'react-helmet-async';
 
 interface LayoutProps {
@@ -63,11 +64,7 @@ export const Layout = ({ children }: LayoutProps) => {
         {children}
       </main>
 
-      <footer className="border-t bg-gray-50 mt-20">
-        <div className="container mx-auto px-4 py-8 text-center text-gray-600">
-          <p>© ۲۰۲۴ لنگر - ابزارهای آنلاین رایگان</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
