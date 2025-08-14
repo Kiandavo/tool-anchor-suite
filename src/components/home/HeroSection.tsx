@@ -5,6 +5,8 @@ import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 
+const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
+
 export const HeroSection = () => {
   return (
     <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden">
@@ -20,6 +22,20 @@ export const HeroSection = () => {
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <img 
+              src={logoUrl}
+              alt="Langar Logo" 
+              className="h-24 w-auto object-contain hover:scale-105 transition-all duration-200"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui' font-size='16' fill='%23666'%3ELangar%3C/text%3E%3C/svg%3E";
+              }}
+            />
+          </div>
+          
           <h1 className="text-5xl sm:text-7xl font-bold mb-8 sm:mb-12 leading-tight tracking-tight text-foreground">
             <span className="bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text text-transparent">
               لنگر - مجموعه ابزارهای آنلاین

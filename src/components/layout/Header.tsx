@@ -61,21 +61,6 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               <span className="hidden md:inline text-white">خانه</span>
             </Link>
 
-            {/* Logo in the center */}
-            <div className="absolute left-1/2 transform -translate-x-1/2">
-              <Link to="/">
-                <img 
-                  src={logoUrl}
-                  alt="Langar Logo" 
-                  className="h-14 w-auto object-contain hover:scale-105 transition-all duration-200 hover-lift"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui' font-size='16' fill='%23666'%3ELangar%3C/text%3E%3C/svg%3E";
-                  }}
-                />
-              </Link>
-            </div>
 
             <div className="flex gap-4 items-center">
               <Link
