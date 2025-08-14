@@ -55,7 +55,7 @@ export const Horoscope = () => {
       
       <CardContent className="pt-3 px-3">
         <div className="space-y-3">
-          <div className="bg-white/30 p-3 rounded-lg border border-[#e6c8b0]/20 text-center text-xs text-[#5c3f14] mb-2">
+          <div className="bg-white p-3 rounded-lg border border-[#e6c8b0]/20 text-center text-xs text-[#5c3f14] mb-2">
             لطفاً ماه تولد و نوع پیش‌بینی مورد نظر خود را انتخاب کنید
           </div>
           
@@ -90,7 +90,7 @@ export const Horoscope = () => {
         </div>
       </CardContent>
       
-      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-white/20 border-t border-[#e6c8b0]/20">
+      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-white border-t border-[#e6c8b0]/20">
         <Button 
           onClick={getHoroscope} 
           disabled={isAnimating || !selectedSign}

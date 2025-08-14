@@ -103,7 +103,7 @@ export const TarotTimeline: React.FC<TarotTimelineProps> = ({
   };
 
   return (
-    <Card className="mb-6 border-indigo-200 bg-gradient-to-br from-indigo-50/50 to-purple-50/50">
+    <Card className="mb-6 border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50">
       <CardContent className="p-6">
         <div className="icon-text mb-4">
           <Calendar className="h-5 w-5 text-indigo-600" />
@@ -117,7 +117,7 @@ export const TarotTimeline: React.FC<TarotTimelineProps> = ({
             const isReversed = reversedCards[index];
 
             return (
-              <div key={index} className="p-4 bg-white/60 rounded-lg border border-indigo-100">
+              <div key={index} className="p-4 bg-white rounded-lg border border-indigo-100">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h4 className="font-medium text-gray-800">

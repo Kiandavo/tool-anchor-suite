@@ -78,7 +78,7 @@ export const TarotReading = () => {
       <CardContent className="pt-4 px-3 sm:px-4 relative">
         <div className="space-y-4">
           <motion.p 
-            className="text-center text-[#143a5c] text-xs font-medium bg-white/60 p-3 rounded-md border border-[#b0c8e6]/30 shadow-sm"
+            className="text-center text-[#143a5c] text-xs font-medium bg-white p-3 rounded-md border border-[#b0c8e6]/30 shadow-sm"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -111,7 +111,7 @@ export const TarotReading = () => {
         </div>
       </CardContent>
       
-      <CardFooter className="flex flex-col justify-center gap-2 pt-3 pb-4 bg-white/40 border-t border-[#b0c8e6]/20">
+      <CardFooter className="flex flex-col justify-center gap-2 pt-3 pb-4 bg-white border-t border-[#b0c8e6]/20">
         <TarotControls 
           selectedCards={selectedCards}
           isAnimating={isAnimating}

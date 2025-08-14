@@ -48,7 +48,7 @@ export const HafezGuide = () => {
             راهنما
           </Button>
         </DialogTrigger>
-        <DialogContent className="bg-white/95 backdrop-blur-md max-w-3xl text-right p-6 border-[#d1d5db] shadow-lg">
+        <DialogContent className="bg-white backdrop-blur-md max-w-3xl text-right p-6 border-[#d1d5db] shadow-lg">
           <DialogHeader>
             <DialogTitle className="text-[#4b5563] text-xl flex items-center justify-center mb-4">
               <Sparkles size={18} className="ml-2 text-[#6b7280]" />
@@ -73,7 +73,7 @@ export const HafezGuide = () => {
             {/* How to Interpret Section */}
             <div className="space-y-4">
               <h3 className="text-[#4b5563] font-bold">تفسیر فال حافظ</h3>
-              <div className="bg-white/70 p-4 rounded-lg border border-[#d1d5db]/50">
+              <div className="bg-white p-4 rounded-lg border border-[#d1d5db]/50">
                 <p className="text-[#4b5563]/80 text-sm leading-6">
                   اشعار حافظ دارای لایه‌های معنایی متعددی هستند و می‌توانند تفسیرهای گوناگونی داشته باشند. هنگام خواندن فال حافظ، به این نکات توجه کنید:
                 </p>
@@ -89,7 +89,7 @@ export const HafezGuide = () => {
             </div>
             
             {/* Cultural Significance */}
-            <div className="bg-white/70 p-3 rounded-lg border border-[#d1d5db]/50">
+            <div className="bg-white p-3 rounded-lg border border-[#d1d5db]/50">
               <h4 className="text-[#4b5563] font-medium mb-2">جایگاه فرهنگی</h4>
               <p className="text-[#4b5563]/80 text-sm leading-6">
                 فال حافظ در فرهنگ ایرانی صرفاً یک سرگرمی نیست، بلکه راهی برای اتصال به خرد جمعی و فرهنگ غنی ادبی ایران است. در مناسبت‌های مختلف مانند شب یلدا، عید نوروز و جشن‌های خانوادگی، فال حافظ گرفتن به یک سنت دیرینه تبدیل شده است.

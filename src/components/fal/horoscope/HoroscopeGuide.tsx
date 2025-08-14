@@ -21,7 +21,7 @@ export const HoroscopeGuide: React.FC = () => {
           <span className="sr-only">راهنما</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-white/95 backdrop-blur-md max-w-2xl text-right border-[#e6c8b0]">
+      <DialogContent className="bg-white backdrop-blur-md max-w-2xl text-right border-[#e6c8b0]">
         <DialogHeader>
           <DialogTitle className="text-[#5c3f14] text-xl flex items-center justify-center mb-3">
             <Star className="ml-2 text-[#e6c8b0]" size={18} />
@@ -57,7 +57,7 @@ export const HoroscopeGuide: React.FC = () => {
             <h3 className="text-[#5c3f14] font-bold mb-3">نشان‌های ماه تولد</h3>
             <div className="grid grid-cols-3 gap-2">
               {zodiacSigns.map((sign) => (
-                <div key={sign.value} className="bg-white/50 p-2 rounded-md border border-[#e6c8b0]/30 text-center">
+                <div key={sign.value} className="bg-white p-2 rounded-md border border-[#e6c8b0]/30 text-center">
                   <div className="text-xl text-[#5c3f14]">{sign.symbol}</div>
                   <div className="text-xs text-[#5c3f14]/80 mt-1 font-medium">{sign.label.split(' ')[0]}</div>
                 </div>

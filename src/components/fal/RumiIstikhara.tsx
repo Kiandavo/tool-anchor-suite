@@ -67,7 +67,7 @@ export const RumiIstikhara = () => {
         </div>
       </CardContent>
       
-      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-white/30 border-t border-[#c19e67]/20">
+      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-3 bg-white border-t border-[#c19e67]/20">
         {hasSetIntention && (
           <>
             <Button 

@@ -86,7 +86,7 @@ export function SearchBar({
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           placeholder={placeholder}
-          className="w-full rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm py-3 pr-12 pl-12 text-base text-apple-dark-gray placeholder:text-apple-gray focus:border-apple-blue/30 focus:outline-none transition-all duration-300"
+          className="w-full rounded-full border border-slate-200 bg-white backdrop-blur-sm py-3 pr-12 pl-12 text-base text-apple-dark-gray placeholder:text-apple-gray focus:border-apple-blue/30 focus:outline-none transition-all duration-300"
           dir="rtl"
         />
         {query && (
@@ -100,7 +100,7 @@ export function SearchBar({
       {showInlineResults && results.length > 0 && isFocused && (
         <div 
           ref={resultsRef}
-          className="absolute z-50 mt-2 w-full bg-white/90 backdrop-blur-lg rounded-2xl border border-slate-100 shadow-lg max-h-80 overflow-y-auto"
+          className="absolute z-50 mt-2 w-full bg-white backdrop-blur-lg rounded-2xl border border-slate-100 shadow-lg max-h-80 overflow-y-auto"
         >
           <div className="p-2">
             <p className="text-xs text-apple-gray mb-2 px-3">{results.length} نتیجه یافت شد</p>

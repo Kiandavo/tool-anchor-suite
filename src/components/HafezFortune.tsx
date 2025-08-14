@@ -123,7 +123,7 @@ export const HafezFortune = () => {
                 <h3 className="font-bold text-[#4b5563] text-sm">{poem.title}</h3>
               </div>
               
-              <div className="bg-white/70 p-4 rounded-lg border border-[#d1d5db] shadow-inner">
+              <div className="bg-white p-4 rounded-lg border border-[#d1d5db] shadow-inner">
                 <pre className="text-[#4b5563] text-sm font-medium leading-6 whitespace-pre-wrap text-right">{poem.text}</pre>
               </div>
               

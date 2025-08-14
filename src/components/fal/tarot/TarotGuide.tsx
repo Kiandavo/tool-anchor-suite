@@ -20,7 +20,7 @@ export const TarotGuide: React.FC = () => {
           راهنمای تاروت
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-white/95 backdrop-blur-md max-w-3xl max-h-[80vh] text-right p-6 border-[#b0c8e6] shadow-lg overflow-y-auto">
+      <DialogContent className="bg-white backdrop-blur-md max-w-3xl max-h-[80vh] text-right p-6 border-[#b0c8e6] shadow-lg overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-[#143a5c] text-xl flex items-center justify-center mb-4">
             <Sparkles size={18} className="ml-2 text-[#7a97c2]" />
@@ -45,11 +45,11 @@ export const TarotGuide: React.FC = () => {
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
             <h3 className="text-[#143a5c] font-bold mb-3">انواع خوانش‌های پیشرفته</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="bg-white/70 p-3 rounded border border-purple-100">
+              <div className="bg-white p-3 rounded border border-purple-100">
                 <h4 className="text-purple-700 font-medium text-sm mb-1">آینده تفصیلی</h4>
                 <p className="text-xs text-gray-600">پیش‌بینی ۶ ماه آینده با زمان‌بندی دقیق</p>
               </div>
-              <div className="bg-white/70 p-3 rounded border border-pink-100">
+              <div className="bg-white p-3 rounded border border-pink-100">
                 <h4 className="text-pink-700 font-medium text-sm mb-1">زمان‌بندی عشق</h4>
                 <p className="text-xs text-gray-600">فال عاشقانه با پیش‌بینی زمان رویدادها</p>
               </div>

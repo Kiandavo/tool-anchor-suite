@@ -94,7 +94,7 @@ export const TarotQuestionnaire: React.FC<TarotQuestionnaireProps> = ({
   const accuracyPercentage = Math.round((completedRequired / requiredQuestions) * 100);
 
   return (
-    <Card className="mb-6 border-purple-200 bg-gradient-to-br from-purple-50/50 to-pink-50/50">
+    <Card className="mb-6 border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50">
       <CardHeader>
         <CardTitle className="icon-text text-lg">
           <AlertCircle className="h-5 w-5 text-purple-600" />
@@ -125,7 +125,7 @@ export const TarotQuestionnaire: React.FC<TarotQuestionnaireProps> = ({
         ))}
 
         {showAccuracyFactors && readingType.accuracyFactors && (
-          <div className="mt-6 p-4 bg-white/60 rounded-lg border border-purple-100">
+          <div className="mt-6 p-4 bg-white rounded-lg border border-purple-100">
             <h4 className="font-medium text-sm text-purple-800 mb-3">
               عوامل افزایش دقت فال:
             </h4>
