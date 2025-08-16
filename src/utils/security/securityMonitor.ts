@@ -8,10 +8,12 @@ interface RateLimitConfig {
 }
 
 interface SecurityEvent {
-  type: 'api_error' | 'invalid_input' | 'rate_limit' | 'suspicious_activity';
+  type: 'api_error' | 'invalid_input' | 'rate_limit' | 'suspicious_activity' | 'cookie_manipulation' | 'dom_tampering';
   timestamp: number;
   details: string;
   userAgent?: string;
+  severity?: 'low' | 'medium' | 'high' | 'critical';
+  source?: string;
 }
 
 class SecurityMonitor {
@@ -50,20 +52,68 @@ class SecurityMonitor {
   }
 
   /**
-   * Log security events
+   * Log security events with enhanced monitoring
    */
   logSecurityEvent(event: SecurityEvent): void {
-    this.securityEvents.push(event);
+    // Set default severity if not provided
+    const enhancedEvent = {
+      ...event,
+      severity: event.severity || this.determineSeverity(event),
+      source: event.source || 'client',
+      userAgent: event.userAgent || navigator.userAgent
+    };
+
+    this.securityEvents.push(enhancedEvent);
     
     // Keep only the most recent events
     if (this.securityEvents.length > this.maxEventsToStore) {
       this.securityEvents = this.securityEvents.slice(-this.maxEventsToStore);
     }
 
-    // Log to console in development
+    // Enhanced logging based on severity
     if (process.env.NODE_ENV === 'development') {
-      console.warn('Security Event:', event);
+      const logLevel = enhancedEvent.severity === 'critical' || enhancedEvent.severity === 'high' ? 'error' : 'warn';
+      console[logLevel]('🛡️ Security Event:', enhancedEvent);
     }
+
+    // Alert for critical events
+    if (enhancedEvent.severity === 'critical') {
+      this.handleCriticalEvent(enhancedEvent);
+    }
+  }
+
+  /**
+   * Determine event severity automatically
+   */
+  private determineSeverity(event: SecurityEvent): 'low' | 'medium' | 'high' | 'critical' {
+    switch (event.type) {
+      case 'suspicious_activity':
+        return event.details.includes('script') || event.details.includes('eval') ? 'high' : 'medium';
+      case 'rate_limit':
+        return 'medium';
+      case 'invalid_input':
+        return 'low';
+      case 'cookie_manipulation':
+        return 'medium';
+      case 'dom_tampering':
+        return 'high';
+      case 'api_error':
+      default:
+        return 'low';
+    }
+  }
+
+  /**
+   * Handle critical security events
+   */
+  private handleCriticalEvent(event: SecurityEvent): void {
+    // In a real app, this might trigger alerts, disable features, etc.
+    console.error('🚨 CRITICAL Security Event:', event);
+    
+    // Could implement additional measures like:
+    // - Disabling certain features
+    // - Forcing logout
+    // - Sending alerts to security team
   }
 
   /**

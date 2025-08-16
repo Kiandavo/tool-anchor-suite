@@ -104,13 +104,16 @@ export function addCSPMetaTag(): void {
   cspMeta.setAttribute('http-equiv', 'Content-Security-Policy');
   cspMeta.setAttribute('content', 
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; " +
-    "style-src 'self' 'unsafe-inline' https:; " +
-    "img-src 'self' data: https:; " +
-    "font-src 'self' https:; " +
-    "connect-src 'self' https:; " +
+    "script-src 'self' https: 'wasm-unsafe-eval'; " +  // Removed unsafe-inline and unsafe-eval, kept wasm-unsafe-eval for React dev
+    "style-src 'self' https: 'unsafe-inline'; " +       // Keep unsafe-inline for Tailwind
+    "img-src 'self' data: https: blob:; " +             // Added blob: support
+    "font-src 'self' https: data:; " +                  // Added data: for embedded fonts
+    "connect-src 'self' https: wss:; " +                // Added wss: for websockets
     "frame-src 'none'; " +
-    "object-src 'none';"
+    "frame-ancestors 'none'; " +                        // Prevent clickjacking
+    "object-src 'none'; " +
+    "base-uri 'self'; " +                               // Restrict base tag
+    "form-action 'self';"                               // Restrict form submissions
   );
   
   document.head.appendChild(cspMeta);
