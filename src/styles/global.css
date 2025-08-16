@@ -149,7 +149,28 @@
     @apply flex items-center gap-3;
   }
   
-  .icon-text-vertical {
-    @apply flex flex-col items-center gap-2;
+  /* Enhanced animation utilities */
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
+
+  .mystical-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mystical-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .mystical-glow:hover::before {
+    left: 100%;
   }
 }

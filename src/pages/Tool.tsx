@@ -8,6 +8,7 @@ import { tools, categoryLabels } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { generateToolSchema, generateBreadcrumbSchema, combineSchemas } from '@/utils/schemaUtils';
+import { generateRumiStructuredData } from '@/components/seo/RumiSeoData';
 
 const Tool = () => {
   const { slug } = useParams();
@@ -49,21 +50,28 @@ const Tool = () => {
 
   // Enhanced schema with more details
   const toolKeywords = [tool.name, categoryLabel, 'ابزار آنلاین', 'رایگان', 'فارسی'];
-  const toolSchema = generateToolSchema(
-    tool.name, 
-    seoDescription, 
-    tool.slug, 
-    categoryLabel,
-    toolKeywords
-  );
   
-  const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'لنگر', url: 'https://langar.co/' },
-    { name: categoryLabel, url: `https://langar.co/category/${tool.category}` },
-    { name: tool.name, url: `https://langar.co/tool/${tool.slug}` }
-  ]);
-  
-  const combinedSchema = combineSchemas(toolSchema, breadcrumbSchema);
+  // Use specific structured data for Rumi tool
+  let combinedSchema;
+  if (tool.slug === 'rumi-istikhara') {
+    combinedSchema = generateRumiStructuredData();
+  } else {
+    const toolSchema = generateToolSchema(
+      tool.name, 
+      seoDescription, 
+      tool.slug, 
+      categoryLabel,
+      toolKeywords
+    );
+    
+    const breadcrumbSchema = generateBreadcrumbSchema([
+      { name: 'لنگر', url: 'https://langar.co/' },
+      { name: categoryLabel, url: `https://langar.co/category/${tool.category}` },
+      { name: tool.name, url: `https://langar.co/tool/${tool.slug}` }
+    ]);
+    
+    combinedSchema = combineSchemas(toolSchema, breadcrumbSchema);
+  }
 
   return (
     <Layout>

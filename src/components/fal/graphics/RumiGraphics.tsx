@@ -80,7 +80,7 @@ export const FlowingArabicPattern = () => (
   <div className="absolute inset-0 overflow-hidden opacity-5">
     <div className="absolute inset-0 text-6xl text-amber-800 font-bold">
       <div className="absolute top-1/4 left-1/4 animate-float" style={{ animationDelay: '0s' }}>
-        ﷲ
+        ✨
       </div>
       <div className="absolute bottom-1/4 right-1/4 animate-float" style={{ animationDelay: '2s' }}>
         ♥
