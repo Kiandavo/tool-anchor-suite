@@ -325,7 +325,7 @@ ${selectedSymbols.map((symbol, index) =>
                   <h3 className="text-xl font-semibold mb-4 text-center text-amber-800">
                     فنجان قهوه شما
                   </h3>
-                  <Coffeeup selectedSymbols={selectedSymbols} onAreaClick={() => {}} />
+                  <Coffeecup selectedSymbols={selectedSymbols} onAreaClick={() => {}} />
                 </div>
 
                 {/* Symbols Interpretation */}
