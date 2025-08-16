@@ -138,22 +138,22 @@ ${selectedUniverse.visualDescription}
   };
 
   return (
-    <Card className="relative overflow-hidden bg-gradient-to-br from-indigo-50/90 via-purple-50/80 to-pink-50/90 border-indigo-200 shadow-2xl backdrop-blur-sm">
+    <Card className="relative overflow-hidden bg-white border-2 border-indigo-300 shadow-xl">
       <ParticleBackground type={selectedUniverse?.type} />
       
-      <CardHeader className="relative z-10 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-center py-4 backdrop-blur-sm shadow-lg">
+      <CardHeader className="relative z-10 bg-indigo-700 text-center py-6">
         <motion.div 
           className="flex items-center justify-center"
           animate={{ scale: selectedUniverse ? [1, 1.05, 1] : 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Globe className="text-white drop-shadow-md ml-3" size={24} />
-          <h2 className="text-2xl font-bold text-white drop-shadow-md font-vazirmatn">
+          <Globe className="text-white ml-3" size={24} />
+          <h2 className="text-2xl font-bold text-white">
             {selectedUniverse ? selectedUniverse.name : 'کاوشگر جهان‌های موازی'}
           </h2>
-          <Sparkles className="text-white drop-shadow-md mr-3" size={20} />
+          <Sparkles className="text-white mr-3" size={20} />
         </motion.div>
-        <p className="text-white drop-shadow-sm mt-2 text-sm font-vazirmatn">
+        <p className="text-white mt-2 text-sm">
           {selectedUniverse ? 'دنیایی متفاوت از آنچه می‌شناسید' : '60 جهان موازی مختلف برای کاوش'}
         </p>
       </CardHeader>
@@ -169,22 +169,22 @@ ${selectedUniverse.visualDescription}
               className="space-y-6"
             >
               {/* Introduction */}
-              <div className="text-center bg-white/95 backdrop-blur-sm p-6 rounded-xl border border-indigo-200 shadow-lg">
+              <div className="text-center bg-white p-6 rounded-xl border-2 border-indigo-200 shadow-lg">
                 <Globe className="mx-auto mb-4 text-indigo-600" size={48} />
-                <h3 className="text-xl font-bold text-indigo-900 mb-3 font-vazirmatn">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
                   به کاوشگر جهان‌های موازی خوش آمدید
                 </h3>
-                <p className="text-indigo-800 mb-4 leading-relaxed font-vazirmatn">
+                <p className="text-gray-800 mb-4 leading-relaxed">
                   60 جهان موازی مختلف منتظر کاوش شما هستند. هر جهان داستان منحصربه‌فردی برای زندگی شما دارد.
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
                   {Object.entries(UNIVERSE_TYPE_LABELS).slice(1).map(([key, label]) => (
-                    <div key={key} className="bg-indigo-50 p-2 rounded-lg border border-indigo-200">
+                    <div key={key} className="bg-gray-50 p-2 rounded-lg border border-gray-300">
                       <div className="flex items-center gap-1 mb-1">
                         <UniverseTypeIcon type={key as any} />
-                        <span className="text-xs font-medium text-indigo-900 font-vazirmatn">{label}</span>
+                        <span className="text-xs font-medium text-gray-900">{label}</span>
                       </div>
-                      <span className="text-xs text-indigo-700 font-vazirmatn">
+                      <span className="text-xs text-gray-700">
                         {parallelUniverses.filter(u => u.type === key).length} جهان
                       </span>
                     </div>
@@ -193,13 +193,13 @@ ${selectedUniverse.visualDescription}
               </div>
 
               {/* Filter Selection */}
-              <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl border border-indigo-200 shadow-md">
-                <h4 className="font-bold text-indigo-900 mb-3 flex items-center font-vazirmatn">
+              <div className="bg-white p-4 rounded-xl border-2 border-gray-300 shadow-md">
+                <h4 className="font-bold text-gray-900 mb-3 flex items-center">
                   <Eye className="ml-2" size={18} />
                   انتخاب نوع جهان موازی
                 </h4>
                 <Select value={filterType} onValueChange={(value) => setFilterType(value as any)}>
-                  <SelectTrigger className="w-full h-12 border-indigo-200 focus:border-indigo-400">
+                  <SelectTrigger className="w-full h-12 border-2 border-gray-300 focus:border-indigo-500 bg-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -219,8 +219,8 @@ ${selectedUniverse.visualDescription}
               </div>
 
               {/* Statistics */}
-              <div className="bg-gradient-to-r from-purple-100/90 to-pink-100/90 backdrop-blur-sm p-4 rounded-xl border border-purple-200">
-                <p className="text-center text-purple-900 text-sm font-vazirmatn">
+              <div className="bg-indigo-100 p-4 rounded-xl border-2 border-indigo-300">
+                <p className="text-center text-indigo-900 text-sm font-medium">
                   📊 در حال حاضر <strong>{filteredUniverses.length}</strong> جهان موازی برای کاوش در دسترس است
                 </p>
               </div>
@@ -240,10 +240,10 @@ ${selectedUniverse.visualDescription}
               >
                 <Globe className="text-indigo-600" size={48} />
               </motion.div>
-              <h3 className="text-xl font-bold text-indigo-900 mb-2 font-vazirmatn">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
                 در حال کاوش جهان‌های موازی...
               </h3>
-              <p className="text-indigo-800 font-vazirmatn">
+              <p className="text-gray-800">
                 ابعاد مختلف در حال بررسی هستند 🌌
               </p>
             </motion.div>
@@ -256,16 +256,16 @@ ${selectedUniverse.visualDescription}
               className="space-y-6"
             >
               {/* Universe Header */}
-              <div className="text-center bg-white/95 backdrop-blur-sm p-4 rounded-xl border border-indigo-200 shadow-md">
+              <div className="text-center bg-white p-4 rounded-xl border-2 border-indigo-300 shadow-md">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <UniverseTypeIcon type={selectedUniverse.type} />
-                  <h3 className="text-xl font-bold text-indigo-900 font-vazirmatn">
+                  <h3 className="text-xl font-bold text-gray-900">
                     {selectedUniverse.name}
                   </h3>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <ProbabilityBadge probability={selectedUniverse.probability} />
-                  <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-gray-200 text-gray-900 px-2 py-1 rounded-full border border-gray-400">
                     {selectedUniverse.type === 'utopian' ? 'آرمانی' : 
                      selectedUniverse.type === 'dystopian' ? 'تاریک' : 
                      selectedUniverse.type === 'bizarre' ? 'عجیب' : 'تاریخی'}
@@ -274,30 +274,30 @@ ${selectedUniverse.visualDescription}
               </div>
 
               {/* Description */}
-              <div className="bg-gradient-to-br from-white/95 to-indigo-50/95 backdrop-blur-sm p-6 rounded-xl border border-indigo-200 shadow-lg">
-                <h4 className="font-bold text-indigo-900 mb-3 flex items-center font-vazirmatn">
+              <div className="bg-blue-50 p-6 rounded-xl border-2 border-blue-200 shadow-lg">
+                <h4 className="font-bold text-blue-900 mb-3 flex items-center">
                   <Globe className="ml-2" size={18} />
                   توضیحات جهان
                 </h4>
-                <p className="text-gray-800 leading-relaxed font-vazirmatn">
+                <p className="text-gray-900 leading-relaxed">
                   {selectedUniverse.description}
                 </p>
               </div>
 
               {/* Personal Story */}
-              <div className="bg-gradient-to-br from-purple-50/95 to-pink-50/95 backdrop-blur-sm p-6 rounded-xl border border-purple-200 shadow-lg">
-                <h4 className="font-bold text-purple-900 mb-3 flex items-center font-vazirmatn">
+              <div className="bg-purple-50 p-6 rounded-xl border-2 border-purple-200 shadow-lg">
+                <h4 className="font-bold text-purple-900 mb-3 flex items-center">
                   <Heart className="ml-2" size={18} />
                   داستان شخصی شما
                 </h4>
-                <p className="text-gray-800 leading-relaxed text-right font-vazirmatn">
+                <p className="text-gray-900 leading-relaxed text-right">
                   {selectedUniverse.personalStory}
                 </p>
               </div>
 
               {/* Key Differences */}
-              <div className="bg-gradient-to-br from-amber-50/95 to-orange-50/95 backdrop-blur-sm p-6 rounded-xl border border-amber-200 shadow-lg">
-                <h4 className="font-bold text-amber-900 mb-3 flex items-center font-vazirmatn">
+              <div className="bg-orange-50 p-6 rounded-xl border-2 border-orange-200 shadow-lg">
+                <h4 className="font-bold text-orange-900 mb-3 flex items-center">
                   <Sparkles className="ml-2" size={18} />
                   تفاوت‌های کلیدی
                 </h4>
@@ -308,9 +308,9 @@ ${selectedUniverse.visualDescription}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center text-gray-800 font-vazirmatn"
+                      className="flex items-center text-gray-900"
                     >
-                      <div className="w-2 h-2 bg-amber-500 rounded-full ml-2 flex-shrink-0" />
+                      <div className="w-2 h-2 bg-orange-600 rounded-full ml-2 flex-shrink-0" />
                       {diff}
                     </motion.li>
                   ))}
@@ -318,19 +318,19 @@ ${selectedUniverse.visualDescription}
               </div>
 
               {/* Visual Description */}
-              <div className="bg-gradient-to-br from-emerald-50/95 to-teal-50/95 backdrop-blur-sm p-6 rounded-xl border border-emerald-200 shadow-lg">
-                <h4 className="font-bold text-emerald-900 mb-3 flex items-center font-vazirmatn">
+              <div className="bg-green-50 p-6 rounded-xl border-2 border-green-200 shadow-lg">
+                <h4 className="font-bold text-green-900 mb-3 flex items-center">
                   <Eye className="ml-2" size={18} />
                   چشم‌انداز بصری
                 </h4>
-                <p className="text-gray-800 leading-relaxed italic font-vazirmatn">
+                <p className="text-gray-900 leading-relaxed italic">
                   {selectedUniverse.visualDescription}
                 </p>
               </div>
 
               {/* Probability Info */}
-              <div className="bg-gradient-to-r from-blue-100/90 to-indigo-100/90 backdrop-blur-sm p-4 rounded-xl border border-blue-200">
-                <p className="text-center text-blue-900 text-sm font-vazirmatn">
+              <div className="bg-indigo-100 p-4 rounded-xl border-2 border-indigo-300">
+                <p className="text-center text-indigo-900 text-sm font-medium">
                   🎲 احتمال وجود این جهان بر اساس نظریات علمی: <strong>
                     {selectedUniverse.probability === 'low' ? 'کم' : 
                      selectedUniverse.probability === 'medium' ? 'متوسط' : 'زیاد'}
@@ -342,7 +342,7 @@ ${selectedUniverse.visualDescription}
         </AnimatePresence>
       </CardContent>
       
-      <CardFooter className="relative z-10 flex justify-center gap-3 pt-4 pb-6 bg-gradient-to-r from-indigo-50/90 to-purple-50/90 backdrop-blur-sm">
+      <CardFooter className="relative z-10 flex justify-center gap-3 pt-4 pb-6 bg-gray-50 border-t-2 border-gray-200">
         {!selectedUniverse ? (
           <Button
             onClick={exploreRandomUniverse}
