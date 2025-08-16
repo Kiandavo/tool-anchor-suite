@@ -6,7 +6,7 @@ export interface Superstition {
 }
 
 export const superstitionsData: Superstition[] = [
-  // Original 10 items
+  // Expanded 100 items total
   {
     title: "شکستن آینه",
     description: "شکستن آینه نشان‌دهنده بدشانسی برای هفت سال است. این باور ریشه در تفکر باستانی دارد که آینه روح انسان را منعکس می‌کند.",

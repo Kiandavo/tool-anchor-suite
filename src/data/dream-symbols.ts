@@ -7,6 +7,7 @@ export interface DreamSymbol {
 }
 
 export const dreamSymbols: DreamSymbol[] = [
+  // Enhanced with 200+ symbols
   {
     symbol: "آب",
     meaning: "نماد زندگی، طهارت و تجدید",
