@@ -3,14 +3,26 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Hash, Calculator, Copy, RefreshCw } from "lucide-react";
-import { motion } from 'framer-motion';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Hash, Calculator, Copy, RefreshCw, Calendar, Heart, Briefcase, Star } from "lucide-react";
+import { motion, AnimatePresence } from 'framer-motion';
+import { copyToClipboard } from '@/utils/clipboard';
+import { useToast } from "@/hooks/use-toast";
 
 interface NumerologyResult {
   name: string;
+  birthDate?: string;
   lifePath: number;
   destiny: number;
   personality: number;
+  birthNumber?: number;
+  compatibility: number;
+  luckyNumbers: number[];
+  luckyColors: string[];
+  careerGuidance: string;
+  loveLife: string;
+  challenges: string;
+  strengths: string;
   interpretation: string;
 }
 
@@ -25,8 +37,11 @@ const abjadValues: Record<string, number> = {
 const NameNumerology = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [calculationType, setCalculationType] = useState<'name' | 'complete'>('name');
   const [result, setResult] = useState<NumerologyResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const { toast } = useToast();
 
   const calculateAbjadValue = (text: string): number => {
     return text.split('').reduce((sum, char) => {
@@ -41,8 +56,46 @@ const NameNumerology = () => {
     return num;
   };
 
+  const calculateBirthNumber = (date: string): number => {
+    const digits = date.replace(/\D/g, '');
+    return reduceToSingleDigit(digits.split('').reduce((sum, digit) => sum + parseInt(digit), 0));
+  };
+
+  const generateLuckyNumbers = (lifePath: number, destiny: number): number[] => {
+    const base = [lifePath, destiny];
+    const additional = [
+      (lifePath + destiny) % 9 || 9,
+      (lifePath * 2) % 9 || 9,
+      (destiny * 2) % 9 || 9
+    ];
+    return [...base, ...additional].slice(0, 5);
+  };
+
+  const generateLuckyColors = (lifePath: number): string[] => {
+    const colorMap: { [key: number]: string[] } = {
+      1: ['قرمز', 'نارنجی', 'طلایی'],
+      2: ['آبی', 'سبز روشن', 'نقره‌ای'],
+      3: ['زرد', 'بنفش', 'صورتی'],
+      4: ['سبز', 'قهوه‌ای', 'خاکستری'],
+      5: ['آبی روشن', 'فیروزه‌ای', 'سفید'],
+      6: ['صورتی', 'آبی کبود', 'سبز کمرنگ'],
+      7: ['بنفش', 'طلایی کم‌رنگ', 'سفید'],
+      8: ['مشکی', 'قهوه‌ای تیره', 'زرد'],
+      9: ['قرمز', 'طلایی', 'نارنجی']
+    };
+    return colorMap[lifePath] || ['آبی', 'سفید', 'طلایی'];
+  };
+
   const calculateNumerology = () => {
     if (!firstName.trim()) return;
+    if (calculationType === 'complete' && !birthDate.trim()) {
+      toast({
+        title: "تاریخ تولد لازم است",
+        description: "برای محاسبه کامل، تاریخ تولد را وارد کنید",
+        variant: "destructive"
+      });
+      return;
+    }
 
     setIsCalculating(true);
     
@@ -53,22 +106,147 @@ const NameNumerology = () => {
       const lifePath = reduceToSingleDigit(calculateAbjadValue(firstName));
       const destiny = reduceToSingleDigit(totalValue);
       const personality = lastName ? reduceToSingleDigit(calculateAbjadValue(lastName)) : lifePath;
+      const birthNumber = calculationType === 'complete' && birthDate ? calculateBirthNumber(birthDate) : undefined;
+      const compatibility = (lifePath + destiny) % 9 || 9;
       
-      const interpretation = generateInterpretation(lifePath, destiny, personality);
+      const luckyNumbers = generateLuckyNumbers(lifePath, destiny);
+      const luckyColors = generateLuckyColors(lifePath);
+      
+      const interpretation = generateCompleteInterpretation(lifePath, destiny, personality, birthNumber);
+      const careerGuidance = generateCareerGuidance(lifePath, destiny);
+      const loveLife = generateLoveGuidance(lifePath, personality);
+      const challenges = generateChallenges(lifePath);
+      const strengths = generateStrengths(lifePath);
       
       setResult({
         name: fullName,
+        birthDate: calculationType === 'complete' ? birthDate : undefined,
         lifePath,
         destiny,
         personality,
+        birthNumber,
+        compatibility,
+        luckyNumbers,
+        luckyColors,
+        careerGuidance,
+        loveLife,
+        challenges,
+        strengths,
         interpretation
       });
       
       setIsCalculating(false);
-    }, 1500);
+      
+      toast({
+        title: "محاسبه تکمیل شد! ✨",
+        description: "تحلیل کامل اعداد شناسی شما آماده است",
+      });
+    }, 2000);
   };
 
-  const generateInterpretation = (lifePath: number, destiny: number, personality: number): string => {
+  const generateCompleteInterpretation = (lifePath: number, destiny: number, personality: number, birthNumber?: number): string => {
+    const lifePathMeanings = {
+      1: "رهبری، استقلال و نوآوری",
+      2: "همکاری، صلح و دیپلماسی", 
+      3: "خلاقیت، هنر و ارتباطات",
+      4: "نظم، کار سخت و پایداری",
+      5: "آزادی، ماجراجویی و تغییر",
+      6: "عشق، خانواده و مسئولیت",
+      7: "معنویت، تحقیق و حکمت",
+      8: "قدرت، مال و موفقیت مادی",
+      9: "خدمت، انسان‌دوستی و عشق جهانی"
+    };
+
+    const destinyMeanings = {
+      1: "شما برای رهبری و پیشگامی آمده‌اید",
+      2: "شما برای ایجاد تعادل و صلح آمده‌اید",
+      3: "شما برای خلق زیبایی و الهام آمده‌اید",
+      4: "شما برای ساختن و پایه‌گذاری آمده‌اید",
+      5: "شما برای کشف و تجربه آمده‌اید",
+      6: "شما برای نگهداری و محافظت آمده‌اید",
+      7: "شما برای جستجوی حقیقت آمده‌اید",
+      8: "شما برای دستیابی به قدرت آمده‌اید",
+      9: "شما برای خدمت به بشریت آمده‌اید"
+    };
+
+    let interpretation = `مسیر زندگی (${lifePath}): ${lifePathMeanings[lifePath as keyof typeof lifePathMeanings]}
+
+هدف زندگی (${destiny}): ${destinyMeanings[destiny as keyof typeof destinyMeanings]}
+
+شخصیت ظاهری (${personality}): ${lifePathMeanings[personality as keyof typeof lifePathMeanings]}`;
+
+    if (birthNumber) {
+      interpretation += `
+
+عدد تولد (${birthNumber}): ${lifePathMeanings[birthNumber as keyof typeof lifePathMeanings]}`;
+    }
+
+    interpretation += `
+
+نام شما حاوی انرژی‌های قوی است که می‌تواند در مسیر رشد شخصی و معنوی شما نقش مهمی ایفا کند.`;
+    
+    return interpretation;
+  };
+
+  const generateCareerGuidance = (lifePath: number, destiny: number): string => {
+    const careerMap: { [key: number]: string } = {
+      1: "مناسب برای رهبری، کارآفرینی، مدیریت و مشاغل مستقل. در موقعیت‌های رهبری عملکرد بهتری دارید.",
+      2: "مناسب برای مشاوره، دیپلماسی، کار تیمی و خدمات اجتماعی. در محیط‌های همکاری موفق هستید.",
+      3: "مناسب برای هنر، نوشتن، رسانه، تبلیغات و ارتباطات. خلاقیت نقطه قوت شماست.",
+      4: "مناسب برای حسابداری، مهندسی، ساختمان و مشاغل فنی. دقت و نظم ویژگی‌های شماست.",
+      5: "مناسب برای سفر، فروش، روابط عمومی و مشاغل متنوع. تغییر و چالش را دوست دارید.",
+      6: "مناسب برای آموزش، پزشکی، مددکاری و خدمات خانوادگی. کمک به دیگران رسالت شماست.",
+      7: "مناسب برای تحقیق، تحلیل، معنویت و علوم انسانی. عمق فکری نقطه قوت شماست.",
+      8: "مناسب برای بانکداری، املاک، سرمایه‌گذاری و مدیریت مالی. استعداد مالی دارید.",
+      9: "مناسب برای خیریه، آموزش، هنر و خدمات انسان‌دوستانه. خدمت به جامعه اولویت شماست."
+    };
+    return careerMap[lifePath] || "مسیر شغلی متنوعی پیش رو دارید.";
+  };
+
+  const generateLoveGuidance = (lifePath: number, personality: number): string => {
+    const loveMap: { [key: number]: string } = {
+      1: "در روابط عاطفی رهبری می‌کنید و استقلال طلب هستید. نیاز به شریکی دارید که استقلال شما را احترام کند.",
+      2: "در عشق صلح‌طلب و مهربان هستید. رابطه متعادل و هارمونی برایتان مهم است.",
+      3: "در روابط عاطفی خلاق و شاد هستید. ارتباط کلامی و شوخ‌طبعی در روابط اهمیت دارد.",
+      4: "در عشق پایدار و وفادار هستید. به زمان نیاز دارید تا اعتماد کنید اما روابط طولانی دارید.",
+      5: "در روابط آزادی‌خواه هستید و از یکنواختی فرار می‌کنید. شریک ماجراجو و انعطاف‌پذیر نیاز دارید.",
+      6: "در عشق مسئولیت‌پذیر و فداکار هستید. خانواده و امنیت عاطفی برایتان اولویت دارد.",
+      7: "در روابط عمیق و معنوی هستید. به شریکی نیاز دارید که درکتان کند و فضای تنهایی بدهد.",
+      8: "در عشق قدرتمند و پرشور هستید. موفقیت و امنیت مالی در انتخاب شریک مهم است.",
+      9: "در روابط انسان‌دوست و فداکار هستید. عشق شما فراتر از فرد و شامل جامعه می‌شود."
+    };
+    return loveMap[lifePath] || "روابط عاطفی متعادلی خواهید داشت.";
+  };
+
+  const generateChallenges = (lifePath: number): string => {
+    const challengeMap: { [key: number]: string } = {
+      1: "گاهی خودمحور و سرسخت می‌شوید. یادگیری همکاری و صبر چالش اصلی شماست.",
+      2: "حساسیت زیاد و ترس از تضاد. باید اعتمادبه‌نفس بیشتری پیدا کنید.",
+      3: "پراکندگی و تمرکز کم. متمرکز ماندن روی اهداف چالش شماست.",
+      4: "سخت‌گیری بیش از حد و مقاومت در برابر تغییر. انعطاف‌پذیری را یاد بگیرید.",
+      5: "بی‌قراری و عدم تعهد. ثبات و پایداری چالش اصلی شماست.",
+      6: "مداخله بیش از حد در زندگی دیگران. حدود سالم رعایت کنید.",
+      7: "انزوای بیش از حد و دوری از جامعه. تعامل اجتماعی را فراموش نکنید.",
+      8: "طمع و عدم توجه به جنبه‌های معنوی. تعادل بین مادی و معنوی پیدا کنید.",
+      9: "ایده‌آل‌گرایی بیش از حد و ناامیدی. واقع‌بینی را یاد بگیرید."
+    };
+    return challengeMap[lifePath] || "چالش‌هایی در مسیر رشد خواهید داشت.";
+  };
+
+  const generateStrengths = (lifePath: number): string => {
+    const strengthMap: { [key: number]: string } = {
+      1: "رهبری طبیعی، استقلال، نوآوری، اعتمادبه‌نفس و قدرت تصمیم‌گیری از نقاط قوت شماست.",
+      2: "همکاری، دیپلماسی، حساسیت، صبر و قدرت میانجی‌گری نقاط قوت شماست.",
+      3: "خلاقیت، شادی، مهارت ارتباطی، بیان و الهام‌بخشی استعدادهای شماست.",
+      4: "سازماندهی، دقت، قابلیت اعتماد، پشتکار و عملی بودن نقاط قوت شماست.",
+      5: "انطباق‌پذیری، ماجراجویی، آزادی‌خواهی، خلاقیت و چندجانبگی قوت‌های شماست.",
+      6: "مسئولیت‌پذیری، مهرورزی، درک، حمایت‌گری و ایجاد هارمونی از ویژگی‌هایتان است.",
+      7: "تحلیل عمیق، معنویت، حکمت، تحقیق و بینش درونی نقاط قوت شماست.",
+      8: "مدیریت، سازماندهی، قدرت مالی، عزم و دستیابی به موفقیت مادی ویژگی‌هایتان است.",
+      9: "انسان‌دوستی، خدمت‌رسانی، فداکاری، حکمت و نگاه جهانی نقاط قوت شماست."
+    };
+    return strengthMap[lifePath] || "استعدادهای متنوعی دارید.";
+  };
     const lifePathMeanings = {
       1: "رهبری، استقلال و نوآوری",
       2: "همکاری، صلح و دیپلماسی", 
