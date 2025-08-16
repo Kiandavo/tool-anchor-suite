@@ -177,35 +177,35 @@ const DailyHoroscope = () => {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
           >
-            <div className="bg-white/70 p-3 rounded-lg border border-amber-200">
+            <div className="bg-white p-3 rounded-lg border border-amber-200">
               <h4 className="font-bold text-amber-800 mb-2 flex items-center">
                 <span className="ml-2">💕</span>عشق و روابط
               </h4>
               <p className="text-sm text-gray-700">{prediction.love}</p>
             </div>
 
-            <div className="bg-white/70 p-3 rounded-lg border border-amber-200">
+            <div className="bg-white p-3 rounded-lg border border-amber-200">
               <h4 className="font-bold text-amber-800 mb-2 flex items-center">
                 <span className="ml-2">💼</span>کار و شغل
               </h4>
               <p className="text-sm text-gray-700">{prediction.career}</p>
             </div>
 
-            <div className="bg-white/70 p-3 rounded-lg border border-amber-200">
+            <div className="bg-white p-3 rounded-lg border border-amber-200">
               <h4 className="font-bold text-amber-800 mb-2 flex items-center">
                 <span className="ml-2">🏥</span>سلامت
               </h4>
               <p className="text-sm text-gray-700">{prediction.health}</p>
             </div>
 
-            <div className="bg-white/70 p-3 rounded-lg border border-amber-200">
+            <div className="bg-white p-3 rounded-lg border border-amber-200">
               <h4 className="font-bold text-amber-800 mb-2 flex items-center">
                 <span className="ml-2">💰</span>مالی
               </h4>
               <p className="text-sm text-gray-700">{prediction.finance}</p>
             </div>
 
-            <div className="bg-white/70 p-3 rounded-lg border border-amber-200">
+            <div className="bg-white p-3 rounded-lg border border-amber-200">
               <h4 className="font-bold text-amber-800 mb-2 flex items-center">
                 <span className="ml-2">✨</span>پیش‌بینی کلی
               </h4>
@@ -228,7 +228,7 @@ const DailyHoroscope = () => {
         )}
       </CardContent>
       
-      <CardFooter className="flex justify-center gap-2 pt-3 pb-4 bg-amber-50/50">
+      <CardFooter className="flex justify-center gap-2 pt-3 pb-4 bg-amber-50">
         {prediction && (
           <>
             <Button

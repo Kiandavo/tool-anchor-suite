@@ -36,7 +36,7 @@ export const RumiIstikhara = () => {
           <BookOpen className="text-white mr-2" size={16} />
           <h2 className="text-sm font-bold text-white flex items-center">
             استخاره با مولانا
-            <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-white opacity-70" /></span>
+            <span className="mr-1.5 inline-block"><Sparkles size={12} className="text-white" /></span>
           </h2>
         </div>
         

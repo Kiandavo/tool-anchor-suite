@@ -67,7 +67,7 @@ export const TarotReading = () => {
           <h2 className="text-sm font-bold text-[#143a5c] flex items-center">
             فال تاروت
             <span className="mr-1.5 inline-block">
-              <Sparkles size={12} className="text-[#143a5c] opacity-70" />
+              <Sparkles size={12} className="text-[#143a5c]" />
             </span>
           </h2>
         </div>

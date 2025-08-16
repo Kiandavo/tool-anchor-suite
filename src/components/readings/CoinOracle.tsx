@@ -1,196 +1,261 @@
-
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Coins, Sparkles, Copy, RefreshCw } from "lucide-react";
-import { toast } from "sonner";
-import { copyToClipboard } from "@/utils/randomUtils";
+import { Textarea } from "@/components/ui/textarea";
+import { Coins, RefreshCw, Copy, HelpCircle } from "lucide-react";
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CoinResult {
-  result: 'شیر' | 'خط';
-  answer: string;
-  guidance: string;
+  result: 'heads' | 'tails';
+  interpretation: string;
+  advice: string;
+  confidence: number;
 }
 
-const coinAnswers = {
-  'شیر': [
-    "پاسخ مثبت است. زمان مناسبی برای اقدام است.",
-    "بله، اما با احتیاط پیش بروید.",
-    "نشانه‌ها مثبت هستند. با اعتماد به نفس ادامه دهید.",
-    "فرصت طلایی در انتظار شماست.",
-    "انرژی‌های مثبت با شما همراه است."
+const interpretations = {
+  heads: [
+    {
+      interpretation: "پاسخ مثبت - راه درست را انتخاب کرده‌اید",
+      advice: "با اعتماد به نفس ادامه دهید و از فرصت‌های پیش رو استفاده کنید.",
+      confidence: 85
+    },
+    {
+      interpretation: "شرایط به نفع شما است - اقدام کنید",
+      advice: "زمان مناسبی برای اقدام است. تردید نکنید و قدم بردارید.",
+      confidence: 90
+    },
+    {
+      interpretation: "انرژی مثبت در راه است",
+      advice: "تغییرات خوبی در راه است. صبور باشید و مثبت فکر کنید.",
+      confidence: 80
+    }
   ],
-  'خط': [
-    "هنوز زمان مناسب نیست. صبر کنید.",
-    "بهتر است کمی بیشتر فکر کنید.",
-    "شاید راه دیگری وجود داشته باشد.",
-    "زمان برای تأمل و بازنگری است.",
-    "احتیاط و دقت بیشتری لازم است."
+  tails: [
+    {
+      interpretation: "زمان انتظار و تأمل فرا رسیده",
+      advice: "عجله نکنید. فرصت بهتری در راه است. صبر کنید.",
+      confidence: 75
+    },
+    {
+      interpretation: "نگاه دوباره به موضوع ضروری است",
+      advice: "شاید بهتر باشد موضوع را از زاویه دیگری بررسی کنید.",
+      confidence: 80
+    },
+    {
+      interpretation: "درون خود را بیشتر بشناسید",
+      advice: "پاسخ در درون شماست. به شهود خود اعتماد کنید.",
+      confidence: 70
+    }
   ]
 };
 
-const guidanceMessages = [
-  "به قلب خود گوش دهید و از درون پاسخ بگیرید.",
-  "گاهی بهترین تصمیمات از شهود و احساس می‌آیند.",
-  "زمان همه چیز را آشکار خواهد کرد.",
-  "اعتماد به خود کلید موفقیت است.",
-  "هر انتخابی درس‌هایی برای شما دارد."
-];
-
-export default function CoinOracle() {
+const CoinOracle = () => {
   const [question, setQuestion] = useState('');
   const [result, setResult] = useState<CoinResult | null>(null);
   const [isFlipping, setIsFlipping] = useState(false);
-  const [coinAnimation, setCoinAnimation] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
 
   const flipCoin = () => {
-    if (!question.trim()) {
-      toast.error("لطفاً سؤال خود را وارد کنید");
-      return;
-    }
-
+    if (!question.trim()) return;
+    
     setIsFlipping(true);
-    setCoinAnimation(true);
-
+    
     setTimeout(() => {
-      const coinResult = Math.random() < 0.5 ? 'شیر' : 'خط';
-      const answers = coinAnswers[coinResult];
-      const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
-      const randomGuidance = guidanceMessages[Math.floor(Math.random() * guidanceMessages.length)];
-
+      const coinResult = Math.random() < 0.5 ? 'heads' : 'tails';
+      const options = interpretations[coinResult];
+      const selectedInterpretation = options[Math.floor(Math.random() * options.length)];
+      
       setResult({
         result: coinResult,
-        answer: randomAnswer,
-        guidance: randomGuidance
+        ...selectedInterpretation
       });
-
       setIsFlipping(false);
-      setCoinAnimation(false);
-      toast.success(`سکه ${coinResult} آمد!`);
-    }, 3000);
+    }, 2000);
   };
 
   const copyResult = () => {
-    if (result) {
-      const text = `🪙 پیشگویی با سکه\n\n❓ سؤال: ${question}\n\n🎯 نتیجه: ${result.result}\n\n💬 پاسخ: ${result.answer}\n\n🧭 راهنمایی: ${result.guidance}`;
-      copyToClipboard(text);
-      toast.success("نتیجه پیشگویی کپی شد!");
-    }
+    if (!result) return;
+    
+    const text = `پیشگویی با سکه
+
+سؤال: ${question}
+نتیجه: ${result.result === 'heads' ? 'شیر' : 'خط'}
+تفسیر: ${result.interpretation}
+توصیه: ${result.advice}
+اطمینان: ${result.confidence}%`;
+    
+    navigator.clipboard.writeText(text);
   };
 
-  const resetReading = () => {
-    setQuestion('');
+  const resetOracle = () => {
     setResult(null);
+    setQuestion('');
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200">
-        <CardHeader className="text-center">
-          <CardTitle className="flex items-center justify-center gap-2 text-2xl text-yellow-800">
-            <Coins className="text-yellow-600" size={28} />
-            پیشگویی با سکه
-          </CardTitle>
-          <p className="text-yellow-600 mt-2">سؤال خود را بپرسید و سکه را بیندازید</p>
-        </CardHeader>
+    <Card className="bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-300 shadow-lg overflow-hidden">
+      <CardHeader className="bg-gradient-to-r from-yellow-400 to-amber-400 text-center py-3 relative">
+        <div className="flex items-center justify-center">
+          <Coins className="text-yellow-800 ml-2" size={18} />
+          <h2 className="text-lg font-bold text-yellow-800">پیشگویی با سکه</h2>
+        </div>
         
-        <CardContent className="space-y-6">
-          {!result ? (
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <label className="text-sm font-medium text-yellow-800">سؤال خود را بپرسید:</label>
-                <Input
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  placeholder="مثال: آیا باید این کار را انجام دهم؟"
-                  className="border-yellow-200 focus:border-yellow-400"
-                />
-              </div>
-
-              <div className="text-center">
-                <div className={`mb-6 text-6xl transition-transform duration-300 ${coinAnimation ? 'animate-spin' : ''}`}>
-                  🪙
-                </div>
-                
-                <Button
-                  onClick={flipCoin}
-                  disabled={isFlipping || !question.trim()}
-                  size="lg"
-                  className="bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700 text-white px-8 py-4 text-lg"
-                >
-                  {isFlipping ? (
-                    <>
-                      <RefreshCw className="animate-spin mr-2" size={20} />
-                      سکه در حال چرخش...
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="mr-2" size={20} />
-                      انداختن سکه
-                    </>
-                  )}
-                </Button>
-              </div>
-
-              <div className="bg-white/60 p-4 rounded-lg border border-yellow-200">
-                <h3 className="font-semibold text-yellow-800 mb-2">راهنمای پیشگویی:</h3>
-                <div className="space-y-1 text-sm text-yellow-700">
-                  <p><strong>شیر:</strong> پاسخ مثبت، پیش بروید</p>
-                  <p><strong>خط:</strong> احتیاط، صبر یا تغییر مسیر</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <div className="text-center mb-4">
-                <div className="text-6xl mb-2">
-                  {result.result === 'شیر' ? '🦁' : '➖'}
-                </div>
-                <h3 className="text-2xl font-bold text-yellow-800">
-                  {result.result}
-                </h3>
-              </div>
-
-              <div className="bg-white/80 p-6 rounded-lg border border-yellow-200 space-y-4">
-                <div>
-                  <h4 className="font-semibold text-yellow-800 mb-2">سؤال شما:</h4>
-                  <p className="text-yellow-700 italic">"{question}"</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-yellow-800 mb-2">پاسخ سکه:</h4>
-                  <p className="text-yellow-700">{result.answer}</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-yellow-800 mb-2">راهنمایی:</h4>
-                  <p className="text-yellow-700">{result.guidance}</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-3 justify-center">
-                <Button
-                  variant="outline"
-                  onClick={copyResult}
-                  className="border-yellow-400 text-yellow-700 hover:bg-yellow-50"
-                >
-                  <Copy className="mr-2" size={16} />
-                  کپی نتیجه
-                </Button>
-                
-                <Button
-                  variant="outline"
-                  onClick={resetReading}
-                  className="border-gray-400 text-gray-700 hover:bg-gray-50"
-                >
-                  سؤال جدید
-                </Button>
-              </div>
-            </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowGuide(!showGuide)}
+          className="absolute left-2 top-1/2 -translate-y-1/2 text-yellow-800 hover:bg-yellow-300/20"
+        >
+          <HelpCircle size={16} />
+        </Button>
+      </CardHeader>
+      
+      <CardContent className="pt-4 px-4">
+        <AnimatePresence>
+          {showGuide && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mb-4 bg-white p-3 rounded-lg border border-yellow-200"
+            >
+              <h4 className="font-bold text-yellow-800 mb-2">راهنمای استفاده:</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• سؤال خود را با وضوح بنویسید</li>
+                <li>• سؤالات بله/خیر بهترین نتیجه را می‌دهند</li>
+                <li>• پیش از پرتاب سکه، تمرکز کنید</li>
+                <li>• به نتیجه اول اعتماد کنید</li>
+                <li>• شیر = مثبت، خط = نیاز به تأمل</li>
+              </ul>
+            </motion.div>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </AnimatePresence>
+
+        {!result ? (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-yellow-800 mb-2">
+                سؤال خود را بپرسید:
+              </label>
+              <Textarea
+                placeholder="مثال: آیا باید این شغل را قبول کنم؟"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                className="min-h-20 border-yellow-300 focus:border-yellow-500 resize-none"
+              />
+            </div>
+
+            {isFlipping && (
+              <motion.div 
+                className="text-center py-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <motion.div
+                  animate={{ rotateY: 1800 }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
+                  className="inline-block"
+                >
+                  <div className="w-24 h-24 mx-auto bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                    <Coins size={40} className="text-yellow-800" />
+                  </div>
+                </motion.div>
+                <p className="text-yellow-700 mt-4">سکه در حال چرخش...</p>
+              </motion.div>
+            )}
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            <div className="text-center">
+              <div className={`w-32 h-32 mx-auto rounded-full flex items-center justify-center shadow-lg mb-4 ${
+                result.result === 'heads' 
+                  ? 'bg-gradient-to-br from-yellow-400 to-amber-500' 
+                  : 'bg-gradient-to-br from-gray-400 to-gray-600'
+              }`}>
+                <div className="text-white text-3xl font-bold">
+                  {result.result === 'heads' ? 'شیر' : 'خط'}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg border border-yellow-200">
+              <h4 className="font-bold text-yellow-800 mb-2">تفسیر:</h4>
+              <p className="text-gray-700 mb-3">{result.interpretation}</p>
+              
+              <h4 className="font-bold text-yellow-800 mb-2">توصیه:</h4>
+              <p className="text-gray-700 mb-3">{result.advice}</p>
+              
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-yellow-700">
+                  میزان اطمینان: <strong>{result.confidence}%</strong>
+                </span>
+                <span className={`px-2 py-1 rounded text-xs ${
+                  result.result === 'heads' 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-orange-100 text-orange-800'
+                }`}>
+                  {result.result === 'heads' ? 'مثبت' : 'نیاز به تأمل'}
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-yellow-100 p-3 rounded-lg border border-yellow-200">
+              <p className="text-xs text-yellow-800">
+                <strong>سؤال شما:</strong> {question}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </CardContent>
+      
+      <CardFooter className="flex justify-center gap-2 pt-3 pb-4 bg-yellow-50">
+        {!result ? (
+          <Button
+            onClick={flipCoin}
+            disabled={!question.trim() || isFlipping}
+            className="bg-yellow-600 hover:bg-yellow-700 text-white"
+          >
+            {isFlipping ? (
+              <>
+                <RefreshCw className="animate-spin ml-2" size={16} />
+                در حال پرتاب...
+              </>
+            ) : (
+              <>
+                <Coins className="ml-2" size={16} />
+                پرتاب سکه
+              </>
+            )}
+          </Button>
+        ) : (
+          <>
+            <Button
+              onClick={copyResult}
+              variant="outline"
+              size="sm"
+              className="border-yellow-300 text-yellow-700 hover:bg-yellow-100"
+            >
+              <Copy size={14} className="ml-1" />
+              کپی نتیجه
+            </Button>
+            <Button
+              onClick={resetOracle}
+              variant="outline"
+              size="sm"
+              className="border-yellow-300 text-yellow-700 hover:bg-yellow-100"
+            >
+              <RefreshCw size={14} className="ml-1" />
+              سؤال جدید
+            </Button>
+          </>
+        )}
+      </CardFooter>
+    </Card>
   );
-}
+};
+
+export default CoinOracle;

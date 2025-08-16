@@ -45,7 +45,7 @@ export const Horoscope = () => {
           <Star className="text-[#5c3f14]" size={16} />
           <h2 className="text-sm font-bold text-[#5c3f14] icon-text-sm">
             طالع بینی
-            <span className="inline-block"><Sparkles size={12} className="text-[#5c3f14] opacity-70" /></span>
+            <span className="inline-block"><Sparkles size={12} className="text-[#5c3f14]" /></span>
           </h2>
         </div>
         
