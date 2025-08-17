@@ -9,6 +9,7 @@ import Settings from "@/pages/Settings";
 import AboutUs from "@/pages/AboutUs";
 import FAQ from "@/pages/FAQ";
 import Blog from "@/pages/Blog";
+import BlogPost from "@/pages/BlogPost";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
 import NotFound from "@/pages/NotFound";
@@ -29,6 +30,8 @@ export const AppRoutes = () => {
       <Route path="/سوالات-متداول" element={<FAQ />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/وبلاگ" element={<Blog />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/وبلاگ/:slug" element={<BlogPost />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="*" element={<NotFound />} />

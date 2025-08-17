@@ -1,71 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { blogPosts, getBlogPostsByCategory } from '@/data/blog-posts';
 
 export default function Blog() {
-  const articles = [
-    {
-      id: 1,
-      title: "راهنمای کامل استفاده از محاسبگر درصد",
-      excerpt: "یادگیری نحوه محاسبه درصدها در موقعیت‌های مختلف زندگی روزمره و کاری",
-      category: "راهنما",
-      author: "تیم لنگر",
-      date: "۱۴۰۳/۰۸/۱۵",
-      readTime: "۵ دقیقه",
-      slug: "percentage-calculator-guide",
-      image: "/api/placeholder/400/250"
-    },
-    {
-      id: 2,
-      title: "آشنایی با ابزارهای فرهنگ فارسی در لنگر",
-      excerpt: "کاوشی در ابزارهای منحصر به فرد فارسی مانند فال حافظ و تبدیل تقویم",
-      category: "فرهنگ فارسی",
-      author: "تیم لنگر",
-      date: "۱۴۰۳/۰۸/۱۰",
-      readTime: "۷ دقیقه",
-      slug: "persian-cultural-tools",
-      image: "/api/placeholder/400/250"
-    },
-    {
-      id: 3,
-      title: "بهبود بهره‌وری با ابزارهای متنی لنگر",
-      excerpt: "چگونه از ابزارهای پردازش متن برای بهبود کیفیت و سرعت کار استفاده کنیم",
-      category: "بهره‌وری",
-      author: "تیم لنگر",
-      date: "۱۴۰۳/۰۸/۰۵",
-      readTime: "۶ دقیقه",
-      slug: "text-tools-productivity",
-      image: "/api/placeholder/400/250"
-    },
-    {
-      id: 4,
-      title: "نکات مهم برای استفاده از ابزارهای SEO",
-      excerpt: "راهنمای جامع برای بهینه‌سازی سایت با ابزارهای SEO موجود در لنگر",
-      category: "SEO",
-      author: "تیم لنگر",
-      date: "۱۴۰۳/۰۷/۲۸",
-      readTime: "۱۰ دقیقه",
-      slug: "seo-tools-guide",
-      image: "/api/placeholder/400/250"
-    },
-    {
-      id: 5,
-      title: "مقایسه ابزارهای طراحی آنلاین",
-      excerpt: "بررسی کامل ابزارهای طراحی لنگر و مقایسه آن‌ها با گزینه‌های موجود",
-      category: "طراحی",
-      author: "تیم لنگر",
-      date: "۱۴۰۳/۰۷/۲۰",
-      readTime: "۸ دقیقه",
-      slug: "design-tools-comparison",
-      image: "/api/placeholder/400/250"
-    }
-  ];
+  const [selectedCategory, setSelectedCategory] = useState("همه");
+  const filteredArticles = getBlogPostsByCategory(selectedCategory);
 
-  const categories = ["همه", "راهنما", "فرهنگ فارسی", "بهره‌وری", "SEO", "طراحی"];
+  const categories = ["همه", "راهنما", "فرهنگ فارسی", "بهره‌وری", "SEO", "طراحی", "مالی"];
 
   return (
     <Layout>
@@ -88,8 +34,9 @@ export default function Blog() {
           {categories.map((category) => (
             <Badge 
               key={category} 
-              variant={category === "همه" ? "default" : "outline"}
+              variant={category === selectedCategory ? "default" : "outline"}
               className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+              onClick={() => setSelectedCategory(category)}
             >
               {category}
             </Badge>
@@ -98,12 +45,12 @@ export default function Blog() {
 
         {/* Articles Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article) => (
+          {filteredArticles.map((article) => (
             <Card key={article.id} className="hover:shadow-lg transition-shadow cursor-pointer group">
               <CardHeader className="p-0">
                 <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                    <span className="text-primary text-4xl">📄</span>
+                    <span className="text-primary text-6xl">{article.image}</span>
                   </div>
                 </div>
               </CardHeader>

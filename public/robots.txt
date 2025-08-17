@@ -59,18 +59,12 @@ Allow: /tool/
 Allow: /category/
 Crawl-delay: 3
 
-# Block AI scrapers (optional)
-User-agent: GPTBot
-Disallow: /
-
-User-agent: ChatGPT-User
-Disallow: /
-
-User-agent: CCBot
-Disallow: /
-
-User-agent: anthropic-ai
-Disallow: /
+# Allow important pages
+Allow: /about-us
+Allow: /blog/
+Allow: /faq
+Allow: /privacy-policy
+Allow: /terms-of-service
 
 # Sitemap location
 Sitemap: https://langar.co/sitemap.xml

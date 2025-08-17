@@ -39,7 +39,7 @@ export const Layout = ({ children }: LayoutProps) => {
           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
           img-src 'self' data: https: blob: https://pagead2.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net;
           font-src 'self' https://fonts.gstatic.com;
-          connect-src 'self' https://api.openrouter.ai https://openrouter.ai https://pagead2.googlesyndication.com;
+          connect-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com;
           frame-src https://googleads.g.doubleclick.net https://www.google.com;
           object-src 'none';
           base-uri 'self';
