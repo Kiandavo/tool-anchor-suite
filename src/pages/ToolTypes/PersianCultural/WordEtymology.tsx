@@ -87,12 +87,12 @@ const WordEtymology = () => {
                   className="p-4 border rounded-lg cursor-pointer bg-background hover:bg-muted/30 transition-colors"
                   onClick={() => setSelectedWord(result)}
                 >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <h3 className="text-lg font-medium">{result.word}</h3>
-                      <p className="text-sm text-muted-foreground">{result.meaning}</p>
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-medium">{result.word}</h3>
+                    <p className="text-sm text-muted-foreground">{result.meaning}</p>
+                    <div className="flex justify-end">
+                      <InfoIcon className="text-muted-foreground" size={16} />
                     </div>
-                    <InfoIcon className="text-muted-foreground" size={18} />
                   </div>
                 </div>
               ))}
