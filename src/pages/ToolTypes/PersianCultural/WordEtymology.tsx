@@ -20,20 +20,21 @@ const WordEtymology = () => {
   const [selectedWord, setSelectedWord] = useState<WordData | null>(null);
   
   useEffect(() => {
-    // Show random words on initial load
-    console.log('WordEtymology - persianWordEtymology length:', persianWordEtymology.length);
-    console.log('WordEtymology - First few words:', persianWordEtymology.slice(0, 3));
+    // Show all words in alphabetical order on initial load
     if (persianWordEtymology.length > 0) {
-      const randomWords = [...persianWordEtymology]
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3);
-      console.log('WordEtymology - Setting random words:', randomWords);
-      setSearchResults(randomWords);
+      const sortedWords = [...persianWordEtymology]
+        .sort((a, b) => a.word.localeCompare(b.word, 'fa'));
+      setSearchResults(sortedWords);
     }
   }, []);
 
   const handleSearch = () => {
     if (!searchTerm.trim()) {
+      // If search is empty, show all words in alphabetical order
+      const sortedWords = [...persianWordEtymology]
+        .sort((a, b) => a.word.localeCompare(b.word, 'fa'));
+      setSearchResults(sortedWords);
+      setSelectedWord(null);
       return;
     }
     
@@ -41,7 +42,7 @@ const WordEtymology = () => {
     const results = persianWordEtymology.filter(item => 
       item.word.toLowerCase().includes(normalizedSearchTerm) ||
       item.examples.some(ex => ex.toLowerCase().includes(normalizedSearchTerm))
-    );
+    ).sort((a, b) => a.word.localeCompare(b.word, 'fa'));
     
     setSearchResults(results);
     setSelectedWord(null);
@@ -79,21 +80,23 @@ const WordEtymology = () => {
               </div>
             )}
 
-            {searchResults.map((result, index) => (
-              <div 
-                key={index}
-                className="p-4 border rounded-lg cursor-pointer bg-background hover:bg-muted/30 transition-colors"
-                onClick={() => setSelectedWord(result)}
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-lg font-medium">{result.word}</h3>
-                    <p className="text-sm text-muted-foreground">{result.meaning}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {searchResults.map((result, index) => (
+                <div 
+                  key={index}
+                  className="p-4 border rounded-lg cursor-pointer bg-background hover:bg-muted/30 transition-colors"
+                  onClick={() => setSelectedWord(result)}
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="text-lg font-medium">{result.word}</h3>
+                      <p className="text-sm text-muted-foreground">{result.meaning}</p>
+                    </div>
+                    <InfoIcon className="text-muted-foreground" size={18} />
                   </div>
-                  <InfoIcon className="text-muted-foreground" size={18} />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
 
             {selectedWord && (
               <div className="mt-8 p-5 border rounded-lg bg-muted/30 space-y-3">
