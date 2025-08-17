@@ -1,10 +1,15 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchIcon, InfoIcon, Loader2 } from "lucide-react";
 import { persianWordEtymology } from '@/data/persian-word-etymology';
+import { SeoHead } from '@/components/seo/SeoHead';
+import { useMemorizedSearch } from '@/hooks/useMemorizedSearch';
+import { useDebounce } from '@/hooks/useDebounce';
+import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
+import { memoryCache } from '@/utils/performance/cache';
 
 interface WordData {
   word: string;
@@ -16,52 +21,74 @@ interface WordData {
 
 const WordEtymology = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<WordData[]>([]);
   const [selectedWord, setSelectedWord] = useState<WordData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [performanceMetrics, setPerformanceMetrics] = useState({
+    renderTime: 0,
+    searchTime: 0
+  });
+  
+  // Debounced search for better performance
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  
+  // Memoized search results with caching
+  const searchResults = useMemo(() => {
+    const startTime = performance.now();
+    const cacheKey = `search-${debouncedSearchTerm}`;
+    
+    // Try to get from cache first
+    let results = memoryCache.get<WordData[]>(cacheKey);
+    
+    if (!results) {
+      if (!debouncedSearchTerm.trim()) {
+        results = [...persianWordEtymology].sort((a, b) => 
+          a.word.localeCompare(b.word, 'fa')
+        );
+      } else {
+        const normalizedSearchTerm = debouncedSearchTerm.trim().toLowerCase();
+        results = persianWordEtymology
+          .filter(item => 
+            item.word.toLowerCase().includes(normalizedSearchTerm) ||
+            item.examples.some(ex => ex.toLowerCase().includes(normalizedSearchTerm))
+          )
+          .sort((a, b) => a.word.localeCompare(b.word, 'fa'));
+      }
+      
+      // Cache the results
+      memoryCache.set(cacheKey, results, 10 * 60 * 1000); // 10 minutes
+    }
+    
+    const searchTime = performance.now() - startTime;
+    setPerformanceMetrics(prev => ({ ...prev, searchTime }));
+    
+    return results;
+  }, [debouncedSearchTerm]);
   
   useEffect(() => {
-    // Show all words in alphabetical order on initial load
-    setIsLoading(true);
-    setTimeout(() => {
-      if (persianWordEtymology.length > 0) {
-        const sortedWords = [...persianWordEtymology]
-          .sort((a, b) => a.word.localeCompare(b.word, 'fa'));
-        setSearchResults(sortedWords);
-      }
-      setIsLoading(false);
-    }, 300); // Small delay to show loading state
-  }, []);
-
-  const handleSearch = () => {
+    const startTime = performance.now();
     setIsLoading(true);
     
-    // Simulate search processing time for better UX
     setTimeout(() => {
-      if (!searchTerm.trim()) {
-        // If search is empty, show all words in alphabetical order
-        const sortedWords = [...persianWordEtymology]
-          .sort((a, b) => a.word.localeCompare(b.word, 'fa'));
-        setSearchResults(sortedWords);
-        setSelectedWord(null);
-        setIsLoading(false);
-        return;
-      }
-      
-      const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-      const results = persianWordEtymology.filter(item => 
-        item.word.toLowerCase().includes(normalizedSearchTerm) ||
-        item.examples.some(ex => ex.toLowerCase().includes(normalizedSearchTerm))
-      ).sort((a, b) => a.word.localeCompare(b.word, 'fa'));
-      
-      setSearchResults(results);
+      const renderTime = performance.now() - startTime;
+      setPerformanceMetrics(prev => ({ ...prev, renderTime }));
+      setIsLoading(false);
+    }, 300);
+  }, []);
+
+  const handleSearch = useCallback(() => {
+    setIsLoading(true);
+    setTimeout(() => {
       setSelectedWord(null);
       setIsLoading(false);
     }, 200);
-  };
+  }, []);
 
   return (
     <div className="space-y-6">
+      <SeoHead
+        title="ریشه‌شناسی کلمات فارسی"
+        description="با ابزار ریشه‌شناسی کلمات فارسی، ریشه و تاریخچه کلمات را کشف کنید. شامل معانی، تحولات تاریخی و کلمات هم‌خانواده."
+      />
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">ریشه‌شناسی کلمات فارسی</CardTitle>
@@ -119,7 +146,7 @@ const WordEtymology = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-in">
                 {searchResults.map((result, index) => (
                   <div 
-                    key={index}
+                    key={`${result.word}-${index}`}
                     className="p-4 border rounded-lg cursor-pointer bg-background hover:bg-muted/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
                     onClick={() => setSelectedWord(result)}
                   >
@@ -137,6 +164,13 @@ const WordEtymology = () => {
                 ))}
               </div>
             )}
+
+            {/* Performance Monitor */}
+            <PerformanceMonitor
+              renderTime={performanceMetrics.renderTime}
+              searchTime={performanceMetrics.searchTime}
+              itemsCount={searchResults.length}
+            />
 
             {selectedWord && (
               <div className="mt-8 p-5 border rounded-lg bg-muted/30 space-y-3 animate-scale-in">
