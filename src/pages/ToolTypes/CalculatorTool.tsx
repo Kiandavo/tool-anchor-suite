@@ -29,6 +29,7 @@ import UnitListGenerator from './CalculatorTools/UnitListGenerator';
 import VolumeCalculator from './CalculatorTools/VolumeCalculator';
 import WeightConverter from './CalculatorTools/WeightConverter';
 import WorldTimeConverter from './CalculatorTools/WorldTimeConverter';
+import SpeedCalculator from './CalculatorTools/SpeedCalculator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -93,6 +94,8 @@ export default function CalculatorTool({ slug, type }: CalculatorToolProps) {
         return <WorldTimeConverter />;
       case 'equation-solver':
         return <EquationSolver />;
+      case 'speed-calculator':
+        return <SpeedCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

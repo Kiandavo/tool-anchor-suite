@@ -61,6 +61,9 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               <span className="hidden md:inline text-white">خانه</span>
             </Link>
 
+            <div className="text-center">
+              <h1 className="text-xl font-bold text-white">لنگر</h1>
+            </div>
 
             <div className="flex gap-4 items-center">
               <Link
