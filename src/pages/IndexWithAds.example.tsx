@@ -1,0 +1,133 @@
+// Example implementation of homepage with AdSense integration
+// Replace the original index.tsx with this after AdSense approval
+
+import React from 'react';
+import { Layout } from '@/components/Layout';
+import { HeroSection } from '@/components/home/HeroSection';
+import { ToolsSection } from '@/components/home/ToolsSection';
+import { ProfessionalToolsSection } from '@/components/home/ProfessionalToolsSection';
+import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
+import { ReadingsSection } from '@/components/home/ReadingsSection';
+import { CategoriesSection } from '@/components/home/CategoriesSection';
+import { SeoHead } from '@/components/seo/SeoHead';
+import { ResponsiveAd, SidebarAd } from '@/components/ads';
+import { getAdSlot, shouldShowAds } from '@/config/ads';
+import { useAdSense } from '@/hooks/useAdSense';
+import { ADS_CONFIG } from '@/config/ads';
+import { generateWebsiteSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
+
+const IndexWithAds = () => {
+  // Initialize AdSense
+  const { adSenseLoaded } = useAdSense({
+    publisherId: ADS_CONFIG.PUBLISHER_ID,
+    enabled: ADS_CONFIG.ENABLED
+  });
+
+  // Enhanced SEO data for homepage
+  const homeTitle = "ابزارهای آنلاین رایگان | محاسبه‌گر، تبدیل متن، ویرایش تصویر - لنگر";
+  const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی با طراحی مدرن و کاربری آسان.";
+  const homeKeywords = "ابزار آنلاین, محاسبه گر آنلاین, تبدیل متن, ویرایش تصویر, سئو, فال آنلاین, ابزار فارسی, لنگر, محاسبه بیمه, تبدیل واحد, طالع بینی, ایرانی, رایگان";
+
+  // Common FAQ for homepage
+  const homeFAQ = [
+    {
+      question: "آیا ابزارهای لنگر رایگان هستند؟",
+      answer: "بله، تمام ابزارهای لنگر کاملاً رایگان هستند و نیازی به ثبت نام یا پرداخت ندارند."
+    },
+    {
+      question: "آیا ابزارها روی موبایل کار می‌کنند؟",
+      answer: "بله، تمام ابزارهای لنگر طراحی ریسپانسیو دارند و روی موبایل، تبلت و دسکتاپ عالی کار می‌کنند."
+    },
+    {
+      question: "چند ابزار در لنگر موجود است؟",
+      answer: "لنگر بیش از ۱۰۰ ابزار آنلاین مختلف در زمینه‌های محاسبات، متن، تصویر، سئو و فرهنگ ایرانی ارائه می‌دهد."
+    },
+    {
+      question: "آیا اطلاعات من در لنگر ذخیره می‌شود؟",
+      answer: "خیر، تمام محاسبات در مرورگر شما انجام می‌شود و هیچ اطلاعاتی در سرورهای ما ذخیره نمی‌شود."
+    }
+  ];
+
+  const websiteSchema = generateWebsiteSchema();
+  const faqSchema = generateFAQSchema(homeFAQ);
+  const combinedSchema = combineSchemas(websiteSchema, faqSchema);
+
+  return (
+    <Layout>
+      <SeoHead 
+        title={homeTitle}
+        description={homeDescription}
+        keywords={homeKeywords}
+        schema={combinedSchema}
+        canonical="https://langar.co/"
+      />
+      
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Main Content */}
+        <div className="flex-1">
+          <HeroSection />
+          
+          <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
+            
+            {/* Popular Tools */}
+            <div id="popular-tools">
+              <ToolsSection />
+            </div>
+
+            {/* Ad after popular tools - High performing placement */}
+            {shouldShowAds() && adSenseLoaded && (
+              <ResponsiveAd 
+                adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
+                className="my-8 max-w-4xl mx-auto"
+              />
+            )}
+
+            <ProfessionalToolsSection />
+            
+            {/* Ad in middle of content */}
+            {shouldShowAds() && adSenseLoaded && (
+              <ResponsiveAd 
+                adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
+                className="my-8 max-w-4xl mx-auto"
+              />
+            )}
+
+            <PersianCulturalSection />
+            <ReadingsSection />
+            <CategoriesSection />
+          </div>
+        </div>
+
+        {/* Sidebar with ads - Desktop only */}
+        {shouldShowAds() && adSenseLoaded && (
+          <div className="hidden lg:block w-80 flex-shrink-0">
+            <div className="sticky top-20 space-y-8">
+              <SidebarAd 
+                adSlot={getAdSlot('HOMEPAGE_SIDEBAR')} 
+                className="mb-8"
+              />
+              
+              {/* You can add more sidebar content here */}
+              <div className="bg-card rounded-lg p-6 border border-border/50">
+                <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
+                <div className="space-y-2 text-sm">
+                  <a href="/tool/qr-code-generator" className="block hover:text-primary">
+                    تولید QR کد
+                  </a>
+                  <a href="/tool/color-palette-generator" className="block hover:text-primary">
+                    پالت رنگ
+                  </a>
+                  <a href="/tool/password-generator" className="block hover:text-primary">
+                    تولید رمز عبور
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </Layout>
+  );
+};
+
+export default IndexWithAds;
