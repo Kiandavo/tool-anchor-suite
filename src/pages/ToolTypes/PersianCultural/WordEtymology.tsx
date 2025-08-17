@@ -3,13 +3,15 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SearchIcon, InfoIcon, Loader2 } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { SearchIcon, ChevronDownIcon, ChevronUpIcon, Loader2 } from "lucide-react";
 import { persianWordEtymology } from '@/data/persian-word-etymology';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { useMemorizedSearch } from '@/hooks/useMemorizedSearch';
 import { useDebounce } from '@/hooks/useDebounce';
 import { PerformanceMonitor } from '@/components/performance/PerformanceMonitor';
 import { memoryCache } from '@/utils/performance/cache';
+import { ToolInfoCard } from '@/components/ToolInfoCard';
 
 interface WordData {
   word: string;
@@ -21,7 +23,7 @@ interface WordData {
 
 const WordEtymology = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedWord, setSelectedWord] = useState<WordData | null>(null);
+  const [expandedWords, setExpandedWords] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [performanceMetrics, setPerformanceMetrics] = useState({
     renderTime: 0,
@@ -78,9 +80,21 @@ const WordEtymology = () => {
   const handleSearch = useCallback(() => {
     setIsLoading(true);
     setTimeout(() => {
-      setSelectedWord(null);
+      setExpandedWords(new Set());
       setIsLoading(false);
     }, 200);
+  }, []);
+
+  const toggleWordExpansion = useCallback((word: string) => {
+    setExpandedWords(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(word)) {
+        newSet.delete(word);
+      } else {
+        newSet.add(word);
+      }
+      return newSet;
+    });
   }, []);
 
   return (
@@ -89,6 +103,13 @@ const WordEtymology = () => {
         title="ریشه‌شناسی کلمات فارسی"
         description="با ابزار ریشه‌شناسی کلمات فارسی، ریشه و تاریخچه کلمات را کشف کنید. شامل معانی، تحولات تاریخی و کلمات هم‌خانواده."
       />
+      
+      <ToolInfoCard
+        name="ریشه‌شناسی کلمات فارسی"
+        description="این ابزار به شما امکان جستجو در ریشه و تاریخچه کلمات فارسی را می‌دهد. با کلیک بر روی هر کلمه، اطلاعات کامل آن شامل ریشه، معنی، توضیحات تاریخی و کلمات هم‌خانواده نمایش داده می‌شود."
+        learnMoreUrl="https://fa.wikipedia.org/wiki/ریشه‌شناسی"
+      />
+      
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">ریشه‌شناسی کلمات فارسی</CardTitle>
@@ -144,24 +165,62 @@ const WordEtymology = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-in">
-                {searchResults.map((result, index) => (
-                  <div 
-                    key={`${result.word}-${index}`}
-                    className="p-4 border rounded-lg cursor-pointer bg-background hover:bg-muted/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
-                    onClick={() => setSelectedWord(result)}
-                  >
-                    <div className="space-y-2">
-                      <h3 className="text-lg font-medium transition-colors">{result.word}</h3>
-                      <p className="text-sm text-muted-foreground">{result.meaning}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded transition-colors">
-                          {result.examples.length} مثال
-                        </span>
-                        <InfoIcon className="text-muted-foreground transition-transform hover:scale-110" size={16} />
+                {searchResults.map((result, index) => {
+                  const isExpanded = expandedWords.has(result.word);
+                  return (
+                    <Collapsible key={`${result.word}-${index}`} open={isExpanded} onOpenChange={() => toggleWordExpansion(result.word)}>
+                      <div className="border rounded-lg bg-background hover:bg-muted/30 transition-all duration-300 hover:shadow-md">
+                        <CollapsibleTrigger className="w-full p-4 text-left">
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <h3 className="text-lg font-medium transition-colors">{result.word}</h3>
+                              {isExpanded ? (
+                                <ChevronUpIcon className="text-muted-foreground transition-transform" size={16} />
+                              ) : (
+                                <ChevronDownIcon className="text-muted-foreground transition-transform" size={16} />
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground">{result.meaning}</p>
+                            <div className="flex justify-between items-center">
+                              <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded transition-colors">
+                                {result.examples.length} مثال
+                              </span>
+                              <span className="text-xs text-muted-foreground">{result.root}</span>
+                            </div>
+                          </div>
+                        </CollapsibleTrigger>
+                        
+                        <CollapsibleContent className="px-4 pb-4">
+                          <div className="space-y-3 pt-2 border-t border-muted/50">
+                            <div>
+                              <h4 className="text-sm font-medium text-muted-foreground mb-1">ریشه:</h4>
+                              <p className="text-sm">{result.root}</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="text-sm font-medium text-muted-foreground mb-1">توضیحات:</h4>
+                              <p className="text-sm">{result.description}</p>
+                            </div>
+                            
+                            <div>
+                              <h4 className="text-sm font-medium text-muted-foreground mb-2">کلمات هم‌خانواده:</h4>
+                              <div className="flex flex-wrap gap-1">
+                                {result.examples.map((example, idx) => (
+                                  <span 
+                                    key={idx} 
+                                    className="bg-primary/10 text-primary px-2 py-1 rounded text-xs transition-all duration-200 hover:bg-primary/20"
+                                  >
+                                    {example}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </CollapsibleContent>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </Collapsible>
+                  );
+                })}
               </div>
             )}
 
@@ -171,31 +230,6 @@ const WordEtymology = () => {
               searchTime={performanceMetrics.searchTime}
               itemsCount={searchResults.length}
             />
-
-            {selectedWord && (
-              <div className="mt-8 p-5 border rounded-lg bg-muted/30 space-y-3 animate-scale-in">
-                <div className="flex justify-between">
-                  <h2 className="text-xl font-bold">{selectedWord.word}</h2>
-                  <span className="text-sm text-muted-foreground">{selectedWord.root}</span>
-                </div>
-                <p className="font-medium">{selectedWord.meaning}</p>
-                <p className="text-muted-foreground">{selectedWord.description}</p>
-                
-                <div className="mt-4">
-                  <p className="font-medium mb-2">کلمات هم‌خانواده:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedWord.examples.map((example, idx) => (
-                      <span 
-                        key={idx} 
-                        className="bg-primary/10 text-primary px-2 py-1 rounded text-sm transition-all duration-200 hover:bg-primary/20 hover:scale-105"
-                      >
-                        {example}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </CardContent>
       </Card>

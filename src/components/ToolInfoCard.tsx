@@ -14,15 +14,15 @@ export const ToolInfoCard: React.FC<ToolInfoCardProps> = ({
   learnMoreUrl 
 }) => {
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-      <h2 className="text-lg font-semibold text-blue-900 mb-2">{name}</h2>
-      <p className="text-blue-800 text-sm mb-3">{description}</p>
+    <div className="bg-secondary/30 border border-border rounded-lg p-4 mb-6">
+      <h2 className="text-lg font-semibold text-foreground mb-2">{name}</h2>
+      <p className="text-muted-foreground text-sm mb-3">{description}</p>
       {learnMoreUrl && (
         <a 
           href={learnMoreUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="icon-text text-blue-600 hover:text-blue-800 text-sm"
+          className="icon-text text-primary hover:text-primary/80 text-sm transition-colors"
         >
           اطلاعات بیشتر
           <ExternalLink className="w-4 h-4" />
