@@ -90,7 +90,10 @@ const WordEtymology = () => {
                   <div className="space-y-2">
                     <h3 className="text-lg font-medium">{result.word}</h3>
                     <p className="text-sm text-muted-foreground">{result.meaning}</p>
-                    <div className="flex justify-end">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                        {result.examples.length} مثال
+                      </span>
                       <InfoIcon className="text-muted-foreground" size={16} />
                     </div>
                   </div>
