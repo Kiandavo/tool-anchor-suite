@@ -21,10 +21,13 @@ const WordEtymology = () => {
   
   useEffect(() => {
     // Show random words on initial load
+    console.log('WordEtymology - persianWordEtymology length:', persianWordEtymology.length);
+    console.log('WordEtymology - First few words:', persianWordEtymology.slice(0, 3));
     if (persianWordEtymology.length > 0) {
       const randomWords = [...persianWordEtymology]
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
+      console.log('WordEtymology - Setting random words:', randomWords);
       setSearchResults(randomWords);
     }
   }, []);
