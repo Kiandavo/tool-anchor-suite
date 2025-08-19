@@ -136,7 +136,19 @@
       linear-gradient(180deg, #0b1020 0%, #0a0f1a 40%, #0a0b14 100%);
   }
 
+  /* Enhanced spacing system */
+  .spacing-xs { @apply space-y-1; }
+  .spacing-sm { @apply space-y-2; }
+  .spacing-md { @apply space-y-4; }
+  .spacing-lg { @apply space-y-6; }
+  .spacing-xl { @apply space-y-8; }
+  .spacing-2xl { @apply space-y-12; }
+  
   /* Standardized spacing utilities for icon-text combinations */
+  .icon-text-xs {
+    @apply flex items-center gap-1;
+  }
+  
   .icon-text-sm {
     @apply flex items-center gap-1.5;
   }
@@ -147,6 +159,10 @@
   
   .icon-text-lg {
     @apply flex items-center gap-3;
+  }
+  
+  .icon-text-xl {
+    @apply flex items-center gap-4;
   }
   
   /* Enhanced animation utilities */
@@ -191,13 +207,68 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  /* Custom spacing utilities */
+  /* Enhanced spacing utilities */
   .spacing-section {
-    @apply py-16 sm:py-20 lg:py-24;
+    @apply py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28;
+  }
+  
+  .spacing-section-sm {
+    @apply py-8 sm:py-10 md:py-12 lg:py-16;
+  }
+  
+  .spacing-section-lg {
+    @apply py-20 sm:py-24 md:py-28 lg:py-32 xl:py-36;
   }
 
   .spacing-container {
-    @apply px-6 sm:px-8 lg:px-12 max-w-[1200px] mx-auto;
+    @apply px-4 sm:px-6 lg:px-8 xl:px-12 max-w-7xl mx-auto;
+  }
+  
+  .spacing-container-sm {
+    @apply px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto;
+  }
+  
+  .spacing-container-xs {
+    @apply px-4 sm:px-6 max-w-2xl mx-auto;
+  }
+  
+  /* Typography improvements */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .leading-relaxed-plus {
+    line-height: 1.75;
+  }
+  
+  .leading-loose-plus {
+    line-height: 2;
+  }
+  
+  /* Enhanced component spacing */
+  .card-padding {
+    @apply p-4 sm:p-5 lg:p-6;
+  }
+  
+  .card-padding-sm {
+    @apply p-3 sm:p-4;
+  }
+  
+  .card-padding-lg {
+    @apply p-6 sm:p-7 lg:p-8;
+  }
+  
+  /* Button spacing improvements */
+  .btn-padding {
+    @apply px-4 py-2.5;
+  }
+  
+  .btn-padding-sm {
+    @apply px-3 py-2;
+  }
+  
+  .btn-padding-lg {
+    @apply px-6 py-3;
   }
 
   /* Performance optimized animations */

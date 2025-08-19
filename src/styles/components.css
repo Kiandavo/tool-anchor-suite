@@ -30,13 +30,39 @@
     @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
   }
   
-  /* Card styles */
+  /* Enhanced card styles */
   .card-base {
-    @apply rounded-lg border bg-card text-card-foreground shadow;
+    @apply rounded-xl border bg-card text-card-foreground shadow-sm;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-interactive {
+    @apply card-base hover:shadow-md hover:-translate-y-0.5;
+  }
+  
+  .card-elevated {
+    @apply card-base shadow-lg;
   }
   
   /* Form control styles */
   .form-control {
-    @apply flex flex-col space-y-1.5;
+    @apply flex flex-col space-y-2;
+  }
+  
+  .form-group {
+    @apply space-y-3;
+  }
+  
+  /* Enhanced interactive elements */
+  .interactive-element {
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  .hover-scale-subtle {
+    @apply interactive-element hover:scale-[1.02];
+  }
+  
+  .hover-brightness {
+    @apply interactive-element hover:brightness-110;
   }
 }

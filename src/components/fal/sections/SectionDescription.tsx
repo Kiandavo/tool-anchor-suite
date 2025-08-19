@@ -7,8 +7,8 @@ interface SectionDescriptionProps {
 }
 
 export const SectionDescription: React.FC<SectionDescriptionProps> = ({ title, description }) => (
-  <div className="text-center">
-    <h3 className="text-lg font-bold mb-3">{title}</h3>
-    <p className="text-sm text-gray-600 mb-6 max-w-md mx-auto">{description}</p>
+  <div className="text-center spacing-container-xs">
+    <h3 className="text-lg sm:text-xl font-bold mb-4 text-balance leading-tight">{title}</h3>
+    <p className="text-sm sm:text-base text-gray-600 mb-8 max-w-lg mx-auto leading-relaxed text-balance">{description}</p>
   </div>
 );
