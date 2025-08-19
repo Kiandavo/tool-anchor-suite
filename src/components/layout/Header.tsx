@@ -46,29 +46,31 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
 
-  const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
-
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-blue-600 border-b border-blue-700 shadow-lg transition-all duration-300">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-primary/95 backdrop-blur-md border-b border-primary/20 shadow-lg' 
+        : 'bg-primary border-b border-primary/30 shadow-md'
+    }`}>
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative">
         <div className="flex flex-col items-center">
           <div className="flex items-center justify-between w-full gap-6 py-4">
             <Link
               to="/"
-              className="text-lg font-medium text-white hover:text-blue-100 transition-all duration-200 icon-text persian-text hover-lift"
+              className="flex items-center gap-2 text-lg font-medium text-white hover:text-primary-foreground/80 transition-all duration-200 persian-text hover:scale-105 p-2 rounded-xl hover:bg-white/10"
             >
               <Home size={20} className="text-white" />
               <span className="hidden md:inline text-white">خانه</span>
             </Link>
 
             <div className="text-center">
-              <h1 className="text-xl font-bold text-white">لنگر</h1>
+              <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent">لنگر</h1>
             </div>
 
             <div className="flex gap-4 items-center">
               <Link
                 to="/settings"
-                className="text-white hover:text-blue-100 transition-all duration-200 flex items-center hover-lift p-2 rounded-full hover:bg-blue-700"
+                className="text-white hover:text-primary-foreground/80 transition-all duration-200 flex items-center hover:scale-105 p-2 rounded-xl hover:bg-white/10"
                 aria-label="تنظیمات"
               >
                 <Settings size={20} className="text-white" />
@@ -77,7 +79,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="icon-text font-medium text-white hover:text-blue-100 text-sm px-4 py-2.5 rounded-full transition-all duration-200 bg-blue-500 border border-blue-400 hover:bg-blue-700 persian-text hover-lift"
+                  className="flex items-center gap-2 font-medium text-white hover:text-primary-foreground/80 text-sm px-5 py-3 rounded-xl transition-all duration-200 bg-white/10 border border-white/20 hover:bg-white/20 hover:scale-105 persian-text backdrop-blur-sm"
                 >
                   <ArrowRight size={16} className="text-white" />
                   <span className="hidden sm:inline text-white">بازگشت</span>

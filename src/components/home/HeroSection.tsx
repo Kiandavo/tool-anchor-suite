@@ -3,9 +3,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
-const logoUrl = "/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png";
 export const HeroSection = () => {
-  return <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden">
+  return <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden scroll-smooth">
       {/* Apple-style background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-apple-light-gray/30 via-transparent to-apple-light-gray/20" />
       <div className="absolute inset-0 apple-glass" />
@@ -20,9 +19,6 @@ export const HeroSection = () => {
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
-          {/* Logo */}
-          
-          
           <h1 className="text-5xl sm:text-7xl font-bold mb-8 sm:mb-12 leading-tight tracking-tight text-foreground">
             <span className="bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text text-transparent">
               لنگر - مجموعه ابزارهای آنلاین
@@ -36,7 +32,7 @@ export const HeroSection = () => {
           {/* Apple-style feature highlights */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 sm:mb-16 animate-slide-up">
             <Link to="/category/calculators" className="block group">
-              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover-lift">
+              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-purple to-apple-indigo flex items-center justify-center mx-auto mb-6 shadow-apple">
                   <Sparkles size={24} className="text-white" />
                 </div>
@@ -46,7 +42,7 @@ export const HeroSection = () => {
             </Link>
             
             <Link to="/category/persian-cultural" className="block group">
-              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover-lift">
+              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-blue to-apple-cyan flex items-center justify-center mx-auto mb-6 shadow-apple animate-pulse-subtle" style={{
                 animationDelay: '0.5s'
               }}>
@@ -58,7 +54,7 @@ export const HeroSection = () => {
             </Link>
             
             <Link to="/category/readings" className="block group">
-              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover-lift">
+              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-green to-apple-teal flex items-center justify-center mx-auto mb-6 shadow-apple animate-scale-subtle" style={{
                 animationDelay: '1s'
               }}>
@@ -71,13 +67,13 @@ export const HeroSection = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 mb-16">
-            <Button size="lg" className="shadow-apple-lg hover:shadow-apple-xl transition-all duration-300 hover:scale-[1.02] font-semibold text-lg bg-apple-blue text-white hover:bg-apple-blue/90 px-8 py-4 rounded-2xl hover-lift" asChild>
+            <Button size="lg" className="shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 font-semibold text-lg bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-2xl hover:-translate-y-1" asChild>
               <Link to="/all-tools">
                 مشاهده همه ابزارها
                 <ArrowRight className="h-5 w-5 mr-2 rtl:rotate-180" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="apple-glass hover:shadow-apple-lg border-apple-blue/30 text-apple-blue hover:bg-apple-blue/10 transition-all duration-300 hover:scale-[1.02] font-semibold text-lg px-8 py-4 rounded-2xl hover-lift" asChild>
+            <Button variant="outline" size="lg" className="glass-morphism hover:shadow-lg border-primary/30 text-primary hover:bg-primary/10 transition-all duration-500 hover:scale-105 font-semibold text-lg px-8 py-4 rounded-2xl hover:-translate-y-1 backdrop-blur-sm" asChild>
               <Link to="/#popular-tools">
                 ابزارهای محبوب
               </Link>

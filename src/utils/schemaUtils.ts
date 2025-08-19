@@ -28,11 +28,7 @@ export const generateWebsiteSchema = () => {
       "publisher": {
         "@type": "Organization",
         "name": "لنگر",
-        "url": "https://langar.co",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
-        }
+        "url": "https://langar.co"
       },
       "potentialAction": {
         "@type": "SearchAction",
@@ -86,14 +82,12 @@ export const generateToolSchema = (
       "author": {
         "@type": "Organization",
         "name": "لنگر",
-        "url": "https://langar.co",
-        "logo": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+        "url": "https://langar.co"
       },
       "publisher": {
         "@type": "Organization",
         "name": "لنگر",
-        "url": "https://langar.co",
-        "logo": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+        "url": "https://langar.co"
       },
       "isPartOf": {
         "@type": "WebSite",
