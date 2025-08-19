@@ -67,10 +67,10 @@ export const HeroSection = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 mb-16">
-            <Button size="lg" className="shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 font-semibold text-lg bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-2xl hover:-translate-y-1" asChild>
+            <Button size="lg" className="icon-text shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 font-semibold text-lg bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-2xl hover:-translate-y-1" asChild>
               <Link to="/all-tools">
-                مشاهده همه ابزارها
-                <ArrowRight className="h-5 w-5 mr-2 rtl:rotate-180" />
+                <span>مشاهده همه ابزارها</span>
+                <ArrowRight className="h-5 w-5 rtl:rotate-180" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="glass-morphism hover:shadow-lg border-primary/30 text-primary hover:bg-primary/10 transition-all duration-500 hover:scale-105 font-semibold text-lg px-8 py-4 rounded-2xl hover:-translate-y-1 backdrop-blur-sm" asChild>

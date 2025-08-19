@@ -75,10 +75,11 @@ export function Footer() {
                 href="https://www.instagram.com/kiandavo" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-110 p-2 rounded-full hover:bg-primary/10"
+                className="icon-text-sm text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-110 p-2 rounded-full hover:bg-primary/10"
                 aria-label="اینستاگرام لنگر"
               >
                 <Instagram size={22} />
+                <span className="text-sm">اینستاگرام</span>
               </a>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">

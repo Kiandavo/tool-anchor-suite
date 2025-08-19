@@ -57,7 +57,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
           <div className="flex items-center justify-between w-full gap-6 py-4">
             <Link
               to="/"
-              className="flex items-center gap-2 text-lg font-medium text-white hover:text-primary-foreground/80 transition-all duration-200 persian-text hover:scale-105 p-2 rounded-xl hover:bg-white/10"
+              className="icon-text-sm text-lg font-medium text-white hover:text-primary-foreground/80 transition-all duration-200 persian-text hover:scale-105 p-2 rounded-xl hover:bg-white/10"
             >
               <Home size={20} className="text-white" />
               <span className="hidden md:inline text-white">خانه</span>
@@ -70,7 +70,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="flex gap-4 items-center">
               <Link
                 to="/settings"
-                className="text-white hover:text-primary-foreground/80 transition-all duration-200 flex items-center hover:scale-105 p-2 rounded-xl hover:bg-white/10"
+                className="text-white hover:text-primary-foreground/80 transition-all duration-200 icon-text-sm hover:scale-105 p-2 rounded-xl hover:bg-white/10"
                 aria-label="تنظیمات"
               >
                 <Settings size={20} className="text-white" />
@@ -79,7 +79,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {showBackButton ? (
                 <button
                   onClick={handleBack}
-                  className="flex items-center gap-2 font-medium text-white hover:text-primary-foreground/80 text-sm px-5 py-3 rounded-xl transition-all duration-200 bg-white/10 border border-white/20 hover:bg-white/20 hover:scale-105 persian-text backdrop-blur-sm"
+                  className="icon-text-sm font-medium text-white hover:text-primary-foreground/80 text-sm px-5 py-3 rounded-xl transition-all duration-200 bg-white/10 border border-white/20 hover:bg-white/20 hover:scale-105 persian-text backdrop-blur-sm"
                 >
                   <ArrowRight size={16} className="text-white" />
                   <span className="hidden sm:inline text-white">بازگشت</span>
