@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { User, Search, Filter, X } from 'lucide-react';
-import { persianNames, PersianName } from '@/data/persian-names';
+import { persianNamesExpanded, PersianNameExpanded, searchNamesExpanded, getNamesByGenderExpanded, getNamesByOriginExpanded, getNamesByHistoricalPeriod, getNamesByRegion } from '@/data/persian-names-expanded';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';

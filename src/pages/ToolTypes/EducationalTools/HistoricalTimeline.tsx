@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Calendar, MapPin, Crown, Book } from "lucide-react";
+import { historicalPeriods, historicalEvents, historicalFigures, dynasties } from '@/data/historical-timeline-expanded';
 
 const HistoricalTimeline = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);

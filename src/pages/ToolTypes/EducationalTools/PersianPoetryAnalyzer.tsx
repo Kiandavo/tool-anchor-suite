@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Wand2, FileText } from "lucide-react";
+import { detectMeter, detectLiteraryDevices, detectPoetryForm } from '@/data/persian-poetry-meters';
 
 const PersianPoetryAnalyzer = () => {
   const [text, setText] = useState("");

@@ -5,10 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Music, Users, BookOpen, Play, Volume2, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { persianInstruments, dastgahs, regionalMusic } from '@/data/persian-music-expanded';
+
 const PersianMusic = () => {
   const [activeInstrument, setActiveInstrument] = useState<string | null>(null);
-
-  const instruments = [
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
     {
       id: 'tar',
       name: 'تار',
