@@ -24,6 +24,10 @@ const originBadges = {
   'turkish': <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">ترکی</Badge>,
   'kurdish': <Badge className="bg-orange-100 text-orange-800 hover:bg-orange-200">کردی</Badge>,
   'mixed': <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200">ترکیبی</Badge>,
+  'mazandarani': <Badge className="bg-indigo-100 text-indigo-800 hover:bg-indigo-200">مازندرانی</Badge>,
+  'gilaki': <Badge className="bg-cyan-100 text-cyan-800 hover:bg-cyan-200">گیلکی</Badge>,
+  'baluchi': <Badge className="bg-red-100 text-red-800 hover:bg-red-200">بلوچی</Badge>,
+  'azeri': <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200">آذری</Badge>,
 };
 
 // Popularity indicators
@@ -31,6 +35,7 @@ const popularityIndicators = {
   'high': <Badge variant="outline" className="border-green-400 text-green-600">محبوبیت بالا</Badge>,
   'medium': <Badge variant="outline" className="border-yellow-400 text-yellow-600">محبوبیت متوسط</Badge>,
   'low': <Badge variant="outline" className="border-gray-400 text-gray-600">محبوبیت پایین</Badge>,
+  'rare': <Badge variant="outline" className="border-red-400 text-red-600">نادر</Badge>,
 };
 
 export default function PersianNames() {
@@ -38,12 +43,12 @@ export default function PersianNames() {
   const [gender, setGender] = useState<string | null>(null);
   const [origin, setOrigin] = useState<string | null>(null);
   const [popularity, setPopularity] = useState<string | null>(null);
-  const [selectedName, setSelectedName] = useState<PersianName | null>(null);
+  const [selectedName, setSelectedName] = useState<PersianNameExpanded | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   
   // Filter names based on search query and filters
   const filteredNames = useMemo(() => {
-    return persianNames.filter(name => {
+    return persianNamesExpanded.filter(name => {
       // Apply search filter
       const matchesSearch = searchQuery === '' || 
         name.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -69,7 +74,7 @@ export default function PersianNames() {
   };
 
   // Display name details when clicked
-  const handleNameClick = (name: PersianName) => {
+  const handleNameClick = (name: PersianNameExpanded) => {
     setSelectedName(name);
   };
 
@@ -201,7 +206,7 @@ export default function PersianNames() {
                   </div>
                 </div>
                 <div className="text-xs text-gray-500 mt-2 text-center">
-                  نمایش {filteredNames.length} نام از مجموع {persianNames.length} نام
+                  نمایش {filteredNames.length} نام از مجموع {persianNamesExpanded.length} نام
                 </div>
               </TabsContent>
               

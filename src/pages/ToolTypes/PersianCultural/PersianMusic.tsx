@@ -10,65 +10,6 @@ import { persianInstruments, dastgahs, regionalMusic } from '@/data/persian-musi
 const PersianMusic = () => {
   const [activeInstrument, setActiveInstrument] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-    {
-      id: 'tar',
-      name: 'تار',
-      description: 'تار یکی از مهم‌ترین و اصیل‌ترین سازهای موسیقی سنتی ایران است که در رده سازهای زهی مضرابی قرار می‌گیرد.',
-      details: 'تار دارای شش سیم است و با مضراب نواخته می‌شود. بدنه آن از چوب توت و کاسه طنینی آن از پوست نازک گاو ساخته می‌شود. این ساز دارای دسته‌ای بلند با پرده‌هایی از روده است.',
-      origin: 'ایران',
-      century: 'قرن ۱۸'
-    },
-    {
-      id: 'santur',
-      name: 'سنتور',
-      description: 'سنتور سازی است زهی-کوبه‌ای که با مضراب‌های چوبی نواخته می‌شود.',
-      details: 'این ساز دارای ۷۲ سیم فلزی است که روی جعبه‌ای چوبی به شکل ذوزنقه کشیده شده‌اند. سنتور یکی از سازهای اصلی در موسیقی سنتی و دستگاهی ایران است و صدای بسیار زیبا و دلنشینی دارد.',
-      origin: 'ایران',
-      century: 'قرن ۱۰'
-    },
-    {
-      id: 'ney',
-      name: 'نی',
-      description: 'نی یکی از قدیمی‌ترین سازهای بادی جهان است که در موسیقی ایرانی جایگاه ویژه‌ای دارد.',
-      details: 'این ساز از نی قلمی ساخته می‌شود و دارای هفت بند و هفت سوراخ است. صدای نی بسیار روح‌نواز و عرفانی است و در شعر مولانا نیز از آن به عنوان نماد جدایی و اشتیاق یاد شده است.',
-      origin: 'ایران',
-      century: 'قرن ۷'
-    },
-    {
-      id: 'kamanche',
-      name: 'کمانچه',
-      description: 'کمانچه سازی زهی-آرشه‌ای است که با کمان نواخته می‌شود.',
-      details: 'کاسه طنینی کمانچه کروی شکل است و معمولاً از چوب گردو ساخته می‌شود. این ساز دارای چهار سیم است و در اجرای موسیقی سنتی و مقامی ایران کاربرد فراوان دارد.',
-      origin: 'ایران',
-      century: 'قرن ۱۷'
-    },
-    {
-      id: 'tombak',
-      name: 'تنبک',
-      description: 'تنبک اصلی‌ترین ساز کوبه‌ای موسیقی ایرانی است.',
-      details: 'این ساز از چوب توت ساخته می‌شود و روی آن از پوست بز یا گوساله پوشانده شده است. تنبک با انگشتان و کف دست نواخته می‌شود و ریتم اصلی موسیقی ایرانی را تشکیل می‌دهد.',
-      origin: 'ایران',
-      century: 'قرن ۱۵'
-    },
-    {
-      id: 'setar',
-      name: 'سه‌تار',
-      description: 'سه‌تار سازی کوچک و ظریف از خانواده تار است.',
-      details: 'سه‌تار در اصل دارای سه سیم بوده (از اینجا نام آن آمده) ولی امروزه معمولاً دارای چهار سیم است. این ساز برای اجرای موسیقی آوازی و عرفانی بسیار مناسب است.',
-      origin: 'ایران',
-      century: 'قرن ۱۸'
-    }
-  ];
-
-  const dastgahs = [
-    { name: 'شور', description: 'مادر دستگاه‌های موسیقی ایرانی و پرکاربردترین آنها', mood: 'غمگین و دلنشین' },
-    { name: 'ماهور', description: 'دستگاهی شاد و پرطراوت', mood: 'شاد و سرزنده' },
-    { name: 'همایون', description: 'دستگاهی عاشقانه و احساساتی', mood: 'عاشقانه و تأثیرگذار' },
-    { name: 'سه‌گاه', description: 'دستگاهی آرام و تأملی', mood: 'آرام و معنوی' },
-    { name: 'چهارگاه', description: 'دستگاهی قوی و باشکوه', mood: 'قدرتمند و باشکوه' },
-    { name: 'نوا', description: 'دستگاهی دلنشین و نرم', mood: 'لطیف و دلپذیر' },
-    { name: 'راست‌پنجگاه', description: 'دستگاهی باصفا و روشن', mood: 'روشن و امیدوارکننده' }
-  ];
 
   const famousArtists = [
     { name: 'محمدرضا شجریان', instrument: 'آواز', era: 'معاصر', achievement: 'استاد بزرگ آواز ایرانی' },
@@ -104,7 +45,7 @@ const PersianMusic = () => {
 
         <TabsContent value="instruments" className="mt-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {instruments.map((instrument) => (
+            {persianInstruments.map((instrument) => (
               <Card 
                 key={instrument.id} 
                 className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] ${
@@ -125,11 +66,15 @@ const PersianMusic = () => {
                   {activeInstrument === instrument.id && (
                     <div className="mt-4 p-4 bg-gray-50 rounded-xl border">
                       <p className="text-sm text-gray-700 leading-relaxed mb-3">
-                        {instrument.details}
+                        {instrument.history}
                       </p>
                       <div className="flex justify-between text-xs text-gray-500">
                         <span>منشأ: {instrument.origin}</span>
                         <span>دوره: {instrument.century}</span>
+                      </div>
+                      <div className="mt-2 text-xs text-gray-600">
+                        <span className="font-medium">مواد ساخت: </span>
+                        {instrument.materials.join('، ')}
                       </div>
                     </div>
                   )}
@@ -167,6 +112,16 @@ const PersianMusic = () => {
                   <div className="bg-teal-50 p-3 rounded-xl border border-teal-200">
                     <span className="text-sm font-medium text-teal-700">حالت کلی: </span>
                     <span className="text-sm text-teal-600">{dastgah.mood}</span>
+                  </div>
+                  <div className="mt-3 space-y-2">
+                    <div className="text-xs text-gray-600">
+                      <span className="font-medium">گوشه‌ها: </span>
+                      {dastgah.gusheh.join('، ')}
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      <span className="font-medium">مقیاس: </span>
+                      {dastgah.scale}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
