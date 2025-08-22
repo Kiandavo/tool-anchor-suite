@@ -74,6 +74,8 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        position: relative;
+        background: linear-gradient(to bottom, rgba(248, 250, 252, 0.3), transparent, rgba(248, 250, 252, 0.2));
       }
       .hero-title {
         font-size: 3rem;
@@ -81,6 +83,10 @@
         margin-bottom: 2rem;
         line-height: 1.1;
         color: #171717;
+        background: linear-gradient(to bottom, #171717, #64748b);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
       .hero-description {
         font-size: 1.25rem;
@@ -100,6 +106,62 @@
         color: #3b82f6;
         font-weight: 500;
         margin-top: 1rem;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        backdrop-filter: blur(8px);
+      }
+      
+      /* Critical layout elements */
+      .critical-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        padding: 0 1.5rem;
+      }
+      .critical-header .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #171717;
+      }
+      
+      /* Critical content cards preview */
+      .critical-preview-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 75rem;
+        margin: 4rem auto 0;
+        padding: 0 1.5rem;
+      }
+      .critical-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        border-radius: 1rem;
+        border: 1px solid rgba(229, 231, 235, 0.4);
+        padding: 2rem;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+      .critical-card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 1rem;
+      }
+      .critical-card p {
+        color: #64748b;
+        font-size: 0.95rem;
+        line-height: 1.5;
       }
       
       /* Loading spinner */
@@ -121,6 +183,7 @@
         .hero-title { font-size: 4.5rem; }
         .hero-description { font-size: 1.5rem; }
         .hero-content { padding: 10rem 2rem 8rem; }
+        .critical-header { padding: 0 2rem; }
       }
     </style>
     
