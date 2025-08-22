@@ -5,7 +5,8 @@ import { Coffee, Sparkles, Heart, Star, Eye, Crown, Upload, Camera, Copy, Refres
 import { motion, AnimatePresence } from 'framer-motion';
 import { copyToClipboard } from '@/utils/clipboard';
 import { useToast } from "@/hooks/use-toast";
-import { pipeline } from '@huggingface/transformers';
+import { saveReading } from '@/utils/reading-storage';
+import { ReadingResult } from '@/types/reading-types';
 
 interface CoffeeSymbol {
   symbol: string;
@@ -130,42 +131,7 @@ export default function CoffeeReading() {
   const [showResult, setShowResult] = useState(false);
   const [cupPhoto, setCupPhoto] = useState<string | null>(null);
   const [readingMethod, setReadingMethod] = useState<'automatic' | 'interactive'>('automatic');
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { toast } = useToast();
-
-  const analyzeCoffeeImage = async (imageUrl: string): Promise<boolean> => {
-    try {
-      setIsAnalyzing(true);
-      
-      const classifier = await pipeline(
-        'image-classification',
-        'google/vit-base-patch16-224',
-        { device: 'webgpu' }
-      );
-      
-      const results = await classifier(imageUrl);
-      
-      // Check if the image contains coffee-related content
-      const coffeeKeywords = [
-        'coffee', 'cup', 'espresso', 'cappuccino', 'latte', 'mug', 
-        'beverage', 'drink', 'café', 'turkish coffee', 'grounds', 'saucer'
-      ];
-      
-      const isCoffeeImage = results.some((result: any) => 
-        coffeeKeywords.some(keyword => 
-          result.label.toLowerCase().includes(keyword.toLowerCase())
-        ) && result.score > 0.1
-      );
-      
-      return isCoffeeImage;
-    } catch (error) {
-      console.error('Error analyzing image:', error);
-      // If analysis fails, be permissive and allow the image
-      return true;
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
 
   const performReading = () => {
     setIsReading(true);
@@ -178,6 +144,19 @@ export default function CoffeeReading() {
       setSelectedSymbols(randomSymbols);
       setIsReading(false);
       setShowResult(true);
+      
+      // Save reading to history
+      const reading: ReadingResult = {
+        id: Date.now().toString(),
+        type: 'coffee',
+        timestamp: new Date(),
+        result: {
+          symbols: randomSymbols,
+          method: readingMethod,
+          photoUploaded: !!cupPhoto
+        }
+      };
+      saveReading(reading);
       
       toast({
         title: "فال قهوه آماده است! ☕",
@@ -192,31 +171,16 @@ export default function CoffeeReading() {
     setCupPhoto(null);
   };
 
-  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = async (e) => {
-        const imageUrl = e.target?.result as string;
-        
-        // Analyze the image to check if it's a coffee-related image
-        const isCoffeeImage = await analyzeCoffeeImage(imageUrl);
-        
-        if (isCoffeeImage) {
-          setCupPhoto(imageUrl);
-          toast({
-            title: "عکس قهوه تأیید شد! ☕",
-            description: "حالا می‌توانید فال قهوه را شروع کنید",
-          });
-        } else {
-          toast({
-            title: "عکس مناسب نیست! ❌",
-            description: "لطفاً عکس فنجان قهوه یا ته‌مانده قهوه آپلود کنید",
-            variant: "destructive"
-          });
-          // Clear the file input
-          event.target.value = '';
-        }
+      reader.onload = (e) => {
+        setCupPhoto(e.target?.result as string);
+        toast({
+          title: "عکس آپلود شد! 📸",
+          description: "حالا می‌توانید فال قهوه را شروع کنید",
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -311,26 +275,13 @@ ${selectedSymbols.map((symbol, index) =>
                       onChange={handlePhotoUpload}
                       className="hidden"
                       id="cup-photo"
-                      disabled={isAnalyzing}
                     />
                     <label
                       htmlFor="cup-photo"
-                      className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-amber-300 rounded-lg cursor-pointer hover:bg-amber-50 ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-amber-300 rounded-lg cursor-pointer hover:bg-amber-50"
                     >
-                      {isAnalyzing ? (
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="w-8 h-8 text-amber-600 mb-2"
-                        >
-                          <Coffee className="w-8 h-8" />
-                        </motion.div>
-                      ) : (
-                        <Upload className="w-8 h-8 text-amber-600 mb-2" />
-                      )}
-                      <span className="text-amber-700">
-                        {isAnalyzing ? 'در حال تحلیل عکس...' : 'عکس فنجان قهوه را انتخاب کنید'}
-                      </span>
+                      <Upload className="w-8 h-8 text-amber-600 mb-2" />
+                      <span className="text-amber-700">عکس فنجان قهوه را انتخاب کنید</span>
                     </label>
                     
                     {cupPhoto && (
@@ -351,15 +302,6 @@ ${selectedSymbols.map((symbol, index) =>
                   <p>⏱️ فنجان را روی نعلبکی واژگون کنید و 5 دقیقه صبر کنید</p>
                   <p>👁️ نمادها و اشکال تشکیل شده را مشاهده کنید</p>
                   <p>📍 موقعیت نمادها در فنجان مهم است: بالا=آینده، وسط=حال، پایین=گذشته</p>
-                  <div className="bg-orange-100/80 p-3 rounded-lg mt-3 border-l-4 border-orange-400">
-                    <div className="flex items-center gap-2 mb-1">
-                      <AlertTriangle className="w-4 h-4 text-orange-600" />
-                      <span className="text-orange-800 font-medium text-sm">توجه مهم</span>
-                    </div>
-                    <p className="text-orange-700 text-sm">
-                      فقط عکس فنجان قهوه یا ته‌مانده قهوه قابل قبول است. عکس‌های غیرمرتبط تشخیص داده می‌شوند.
-                    </p>
-                  </div>
                 </div>
               </div>
 
