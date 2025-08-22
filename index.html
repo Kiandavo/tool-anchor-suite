@@ -29,6 +29,11 @@
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="dns-prefetch" href="//googletagmanager.com">
     
+    <!-- Preload critical JavaScript modules for faster TTI -->
+    <link rel="modulepreload" href="/src/main.tsx">
+    <link rel="preload" href="/src/App.tsx" as="script">
+    <link rel="preload" href="/src/components/Layout.tsx" as="script">
+    
     <!-- Preload critical font files directly to break dependency chain -->
     <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin>
