@@ -2,11 +2,12 @@
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
-import { ToolsSection } from '@/components/home/ToolsSection';
-import { ProfessionalToolsSection } from '@/components/home/ProfessionalToolsSection';
-import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
-import { ReadingsSection } from '@/components/home/ReadingsSection';
-import { CategoriesSection } from '@/components/home/CategoriesSection';
+import { EnhancedToolsSection } from '@/components/home/EnhancedToolsSection';
+import { ModernProfessionalToolsSection } from '@/components/home/ModernProfessionalToolsSection';
+import { PersianCulturalEnhancedSection } from '@/components/home/PersianCulturalEnhancedSection';
+import { MysticalReadingsSection } from '@/components/home/MysticalReadingsSection';
+import { InteractiveCategoriesSection } from '@/components/home/InteractiveCategoriesSection';
+import { PersianCalendarWidget } from '@/components/home/PersianCalendarWidget';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
@@ -59,12 +60,12 @@ const Index = () => {
           
           <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
             
-            {/* Popular Tools */}
-            <div id="popular-tools">
-              <ToolsSection />
+            {/* Enhanced Tools Section */}
+            <div id="tools-sections">
+              <EnhancedToolsSection />
             </div>
 
-            {/* Strategic Ad Placement - After Popular Tools */}
+            {/* Strategic Ad Placement - After Tools */}
             {shouldShowAds() && (
               <ResponsiveAd 
                 adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
@@ -72,7 +73,10 @@ const Index = () => {
               />
             )}
 
-            <ProfessionalToolsSection />
+            {/* Persian Calendar Widget */}
+            <PersianCalendarWidget />
+
+            <ModernProfessionalToolsSection />
             
             {/* Strategic Ad Placement - Middle Content */}
             {shouldShowAds() && (
@@ -82,9 +86,9 @@ const Index = () => {
               />
             )}
 
-            <PersianCulturalSection />
-            <ReadingsSection />
-            <CategoriesSection />
+            <PersianCulturalEnhancedSection />
+            <MysticalReadingsSection />
+            <InteractiveCategoriesSection />
           </div>
         </div>
 
