@@ -1,0 +1,242 @@
+@layer components {
+  /* Enhanced Fortune Telling Components */
+  
+  /* Transparent Dropdown Styles */
+  .dropdown-content {
+    @apply bg-white/90 backdrop-blur-lg border border-white/30 shadow-xl;
+    @apply max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20;
+  }
+
+  .dropdown-trigger {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    @apply hover:bg-white/15 hover:border-white/30 transition-all duration-200;
+    @apply focus:ring-2 focus:ring-primary/20 focus:border-primary/50;
+  }
+
+  /* Enhanced Fortune Cards */
+  .fortune-card-enhanced {
+    @apply relative overflow-hidden rounded-2xl border shadow-lg;
+    @apply bg-gradient-to-br backdrop-blur-sm transition-all duration-500;
+    @apply hover:shadow-xl hover:scale-[1.02];
+  }
+
+  .fortune-card-hafez {
+    @apply from-amber-50/90 via-orange-50/80 to-amber-100/90 border-amber-200/50;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(217, 119, 6, 0.1) 0%, transparent 50%);
+  }
+
+  .fortune-card-tarot {
+    @apply from-indigo-50/90 via-purple-50/80 to-blue-100/90 border-indigo-200/50;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+  }
+
+  .fortune-card-horoscope {
+    @apply from-purple-50/90 via-indigo-50/80 to-purple-100/90 border-purple-200/50;
+    background-image: 
+      radial-gradient(circle at 30% 70%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(79, 70, 229, 0.1) 0%, transparent 50%);
+  }
+
+  .fortune-card-parallel {
+    @apply from-slate-50/90 via-gray-50/80 to-slate-100/90 border-slate-200/50;
+    background-image: 
+      radial-gradient(circle at 40% 40%, rgba(51, 65, 85, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 60% 60%, rgba(71, 85, 105, 0.1) 0%, transparent 50%);
+  }
+
+  /* Enhanced Headers */
+  .fortune-header {
+    @apply relative border-b backdrop-blur-sm;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  }
+
+  .fortune-header-hafez {
+    @apply from-amber-200/80 to-orange-200/70 border-amber-300/50;
+    @apply text-amber-900;
+  }
+
+  .fortune-header-tarot {
+    @apply from-indigo-200/80 to-purple-200/70 border-indigo-300/50;
+    @apply text-indigo-900;
+  }
+
+  .fortune-header-horoscope {
+    @apply from-purple-200/80 to-indigo-200/70 border-purple-300/50;
+    @apply text-purple-900;
+  }
+
+  .fortune-header-parallel {
+    @apply from-slate-200/80 to-gray-200/70 border-slate-300/50;
+    @apply text-slate-900;
+  }
+
+  /* Enhanced Buttons */
+  .fortune-button-primary {
+    @apply relative overflow-hidden group transition-all duration-300;
+    @apply shadow-md hover:shadow-lg active:scale-[0.98];
+  }
+
+  .fortune-button-hafez {
+    @apply bg-gradient-to-r from-amber-500 to-orange-500;
+    @apply hover:from-amber-600 hover:to-orange-600 text-white;
+  }
+
+  .fortune-button-tarot {
+    @apply bg-gradient-to-r from-indigo-500 to-purple-500;
+    @apply hover:from-indigo-600 hover:to-purple-600 text-white;
+  }
+
+  .fortune-button-horoscope {
+    @apply bg-gradient-to-r from-purple-500 to-indigo-500;
+    @apply hover:from-purple-600 hover:to-indigo-600 text-white;
+  }
+
+  .fortune-button-parallel {
+    @apply bg-gradient-to-r from-slate-500 to-gray-500;
+    @apply hover:from-slate-600 hover:to-gray-600 text-white;
+  }
+
+  /* Shimmer Effect */
+  .fortune-button-primary::before {
+    @apply absolute inset-0 w-full h-full;
+    content: '';
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .fortune-button-primary:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* Enhanced Loading States */
+  .fortune-loading {
+    @apply animate-pulse opacity-70;
+  }
+
+  .fortune-reveal {
+    @apply animate-fade-in;
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+  }
+
+  /* Card Flip Animations */
+  .card-flip-container {
+    perspective: 1000px;
+    @apply w-full h-full;
+  }
+
+  .card-flip {
+    @apply relative w-full h-full transition-transform duration-700;
+    transform-style: preserve-3d;
+  }
+
+  .card-flip.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    @apply absolute inset-0 backface-hidden rounded-lg;
+  }
+
+  .card-back {
+    @apply bg-gradient-to-br from-primary/20 to-primary/30;
+    @apply border border-primary/30 backdrop-blur-sm;
+  }
+
+  .card-front {
+    transform: rotateY(180deg);
+    @apply bg-white/90 backdrop-blur-sm border border-white/30;
+  }
+
+  /* Floating Elements */
+  .floating-element {
+    @apply animate-float;
+    animation-delay: var(--delay, 0s);
+  }
+
+  .floating-element-1 { --delay: 0s; }
+  .floating-element-2 { --delay: 0.5s; }
+  .floating-element-3 { --delay: 1s; }
+  .floating-element-4 { --delay: 1.5s; }
+
+  /* Enhanced Zodiac Wheel */
+  .zodiac-wheel {
+    @apply relative w-32 h-32 mx-auto mb-4;
+    animation: zodiac-rotate 20s linear infinite;
+  }
+
+  @keyframes zodiac-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .zodiac-sign {
+    @apply absolute w-8 h-8 flex items-center justify-center;
+    @apply bg-white/20 backdrop-blur-sm rounded-full;
+    @apply border border-white/30 transition-all duration-300;
+    @apply hover:bg-white/30 hover:scale-110 cursor-pointer;
+  }
+
+  /* Enhanced Prediction Display */
+  .prediction-card {
+    @apply bg-white/80 backdrop-blur-md rounded-lg p-4;
+    @apply border border-white/30 shadow-sm;
+    @apply animate-fade-in;
+  }
+
+  .prediction-text {
+    @apply leading-relaxed text-sm;
+    @apply bg-gradient-to-r from-foreground via-foreground/90 to-foreground;
+    @apply bg-clip-text text-transparent;
+  }
+
+  /* Enhanced Responsive Design */
+  @media (max-width: 640px) {
+    .fortune-card-enhanced {
+      @apply rounded-xl;
+    }
+    
+    .zodiac-wheel {
+      @apply w-24 h-24;
+    }
+    
+    .card-flip-container {
+      @apply min-h-[200px];
+    }
+  }
+
+  /* Accessibility Enhancements */
+  @media (prefers-reduced-motion: reduce) {
+    .zodiac-wheel {
+      animation: none;
+    }
+    
+    .floating-element {
+      animation: none;
+    }
+    
+    .card-flip {
+      transition: none;
+    }
+  }
+
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    .fortune-card-enhanced {
+      @apply shadow-2xl;
+    }
+    
+    .dropdown-content {
+      @apply bg-gray-900/90;
+    }
+    
+    .prediction-card {
+      @apply bg-gray-800/80;
+    }
+  }
+}

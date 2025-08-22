@@ -75,17 +75,17 @@ export const HafezFortune = () => {
   };
 
   return (
-    <Card className="bg-gradient-to-br from-amber-50 to-amber-100 border-amber-300 shadow-lg overflow-hidden relative">
+    <Card className="fortune-card-enhanced fortune-card-hafez">
       {/* Enhanced Persian graphics */}
       <HafezCalligraphyPattern />
       <FloatingPersianLetters />
       
-      <CardHeader className="bg-gradient-to-r from-[#6b7280] to-[#4b5563] text-center pb-2 py-2 relative border-b border-[#d1d5db]">
+      <CardHeader className="fortune-header fortune-header-hafez text-center pb-2 py-2 relative">
         <div className="icon-text justify-center">
-          <Book className="text-white" size={16} />
-          <h2 className="text-sm font-bold text-white icon-text-sm">
+          <Book className="text-amber-800" size={16} />
+          <h2 className="text-sm font-bold text-amber-800 icon-text-sm">
             فال حافظ
-            <span className="inline-block"><Sparkles size={12} className="text-white opacity-70" /></span>
+            <span className="inline-block"><Sparkles size={12} className="text-amber-800 opacity-70" /></span>
           </h2>
         </div>
         
@@ -141,10 +141,9 @@ export const HafezFortune = () => {
           onClick={getRandomPoem} 
           disabled={isLoading}
           size="sm" 
-          className="bg-gradient-to-r from-[#6b7280] to-[#4b5563] hover:from-[#5b6270] hover:to-[#3b4553] text-white text-xs h-8 px-4 relative overflow-hidden group w-full sm:w-auto"
+          className="fortune-button-primary fortune-button-hafez text-xs h-8 px-4 w-full sm:w-auto"
         >
-          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-          <span className="icon-text-sm">
+          <span className="icon-text-sm relative z-10">
             {isLoading ? 
               <RefreshCw className="animate-spin" size={14} /> : 
               <Sparkles size={14} />
@@ -158,7 +157,7 @@ export const HafezFortune = () => {
             variant="outline"
             size="sm"
             onClick={copyFortune} 
-            className="border-[#6b7280] text-[#4b5563] text-xs h-8 px-3 w-full sm:w-auto hover:bg-[#f0f0f0]"
+            className="border-amber-300 text-amber-700 text-xs h-8 px-3 w-full sm:w-auto hover:bg-amber-50 backdrop-blur-sm bg-white/50"
           >
             <span className="icon-text-sm">
               <Copy size={14} />

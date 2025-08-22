@@ -138,22 +138,22 @@ ${selectedUniverse.visualDescription}
   };
 
   return (
-    <Card className="relative overflow-hidden bg-white border-2 border-indigo-300 shadow-xl">
+    <Card className="fortune-card-enhanced fortune-card-parallel relative overflow-hidden">
       <ParticleBackground type={selectedUniverse?.type} />
       
-      <CardHeader className="relative z-10 bg-indigo-700 text-center py-6">
+      <CardHeader className="fortune-header fortune-header-parallel relative z-10 text-center py-6">
         <motion.div 
           className="flex items-center justify-center"
           animate={{ scale: selectedUniverse ? [1, 1.05, 1] : 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Globe className="text-white ml-3" size={24} />
-          <h2 className="text-2xl font-bold text-white">
+          <Globe className="text-slate-100 ml-3" size={24} />
+          <h2 className="text-2xl font-bold text-slate-100">
             {selectedUniverse ? selectedUniverse.name : 'کاوشگر جهان‌های موازی'}
           </h2>
-          <Sparkles className="text-white mr-3" size={20} />
+          <Sparkles className="text-slate-100 mr-3" size={20} />
         </motion.div>
-        <p className="text-white mt-2 text-sm">
+        <p className="text-slate-200 mt-2 text-sm">
           {selectedUniverse ? 'دنیایی متفاوت از آنچه می‌شناسید' : '60 جهان موازی مختلف برای کاوش'}
         </p>
       </CardHeader>
@@ -199,10 +199,10 @@ ${selectedUniverse.visualDescription}
                   انتخاب نوع جهان موازی
                 </h4>
                 <Select value={filterType} onValueChange={(value) => setFilterType(value as any)}>
-                  <SelectTrigger className="w-full h-12 border-2 border-gray-300 focus:border-indigo-500 bg-white">
+                  <SelectTrigger className="dropdown-trigger w-full h-12 focus:border-indigo-500">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="dropdown-content">
                     {Object.entries(UNIVERSE_TYPE_LABELS).map(([key, label]) => (
                       <SelectItem key={key} value={key}>
                         <div className="flex items-center gap-2">
@@ -344,11 +344,11 @@ ${selectedUniverse.visualDescription}
       
       <CardFooter className="relative z-10 flex justify-center gap-3 pt-4 pb-6 bg-gray-50 border-t-2 border-gray-200">
         {!selectedUniverse ? (
-          <Button
-            onClick={exploreRandomUniverse}
-            disabled={isExploring || filteredUniverses.length === 0}
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
-          >
+            <Button
+              onClick={exploreRandomUniverse}
+              disabled={isExploring || filteredUniverses.length === 0}
+              className="fortune-button-primary fortune-button-parallel shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
             {isExploring ? (
               <>
                 <motion.div
@@ -372,14 +372,14 @@ ${selectedUniverse.visualDescription}
             <Button
               onClick={copyUniverse}
               variant="outline"
-              className="border-indigo-300 text-indigo-800 hover:bg-indigo-100 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              className="border-slate-300 text-slate-700 hover:bg-slate-50 backdrop-blur-sm bg-white/50 shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <Copy size={16} className="ml-1" />
               کپی جهان
             </Button>
             <Button
               onClick={exploreRandomUniverse}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              className="fortune-button-primary fortune-button-parallel shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <Globe size={16} className="ml-1" />
               جهان جدید
@@ -387,7 +387,7 @@ ${selectedUniverse.visualDescription}
             <Button
               onClick={resetExploration}
               variant="outline"
-              className="border-indigo-300 text-indigo-800 hover:bg-indigo-100 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              className="border-slate-300 text-slate-700 hover:bg-slate-50 backdrop-blur-sm bg-white/50 shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <RefreshCw size={16} className="ml-1" />
               شروع مجدد

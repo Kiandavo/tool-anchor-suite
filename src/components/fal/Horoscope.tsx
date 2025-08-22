@@ -29,7 +29,7 @@ export const Horoscope = () => {
   console.log("Horoscope rendering with selectedSign:", selectedSign, "and predictionType:", predictionType);
 
   return (
-    <Card className="bg-gradient-to-br from-purple-50 to-indigo-100 border-purple-300 shadow-md overflow-hidden relative">
+    <Card className="fortune-card-enhanced fortune-card-horoscope">
       {/* Enhanced astrology graphics */}
       <ZodiacConstellation sign={selectedSign} />
       <PlanetaryOrbit />
@@ -40,12 +40,12 @@ export const Horoscope = () => {
         }} />
       </div>
       
-      <CardHeader className="bg-gradient-to-r from-[#e6c8b0] to-[#d2b095] text-center pb-2 py-2 relative border-b border-[#e6c8b0]">
+      <CardHeader className="fortune-header fortune-header-horoscope text-center pb-2 py-2 relative">
         <div className="icon-text justify-center">
-          <Star className="text-[#5c3f14]" size={16} />
-          <h2 className="text-sm font-bold text-[#5c3f14] icon-text-sm">
+          <Star className="text-purple-800" size={16} />
+          <h2 className="text-sm font-bold text-purple-800 icon-text-sm">
             طالع بینی
-            <span className="inline-block"><Sparkles size={12} className="text-[#5c3f14]" /></span>
+            <span className="inline-block"><Sparkles size={12} className="text-purple-800" /></span>
           </h2>
         </div>
         
@@ -95,10 +95,9 @@ export const Horoscope = () => {
           onClick={getHoroscope} 
           disabled={isAnimating || !selectedSign}
           size="sm" 
-          className="bg-[#e6c8b0] hover:bg-[#d2b095] text-[#5c3f14] text-[10px] h-7 px-3 relative overflow-hidden group"
+          className="fortune-button-primary fortune-button-horoscope text-[10px] h-7 px-3"
         >
-          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-          <span className="icon-text-sm">
+          <span className="icon-text-sm relative z-10">
             {isAnimating ? 
               <RefreshCw className="animate-spin" size={12} /> : 
               <Sparkles size={12} />
@@ -112,7 +111,7 @@ export const Horoscope = () => {
             variant="outline"
             size="sm"
             onClick={copyHoroscope} 
-            className="border-[#e6c8b0] text-[#5c3f14] text-[10px] h-7 px-3 hover:bg-[#fdf0e9]/50"
+            className="border-purple-300 text-purple-700 text-[10px] h-7 px-3 hover:bg-purple-50 backdrop-blur-sm bg-white/50"
           >
             <span className="icon-text-sm">
               <Copy size={12} />

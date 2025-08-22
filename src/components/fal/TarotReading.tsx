@@ -31,7 +31,7 @@ export const TarotReading = () => {
   } = useTarotReading();
 
   return (
-    <Card className="bg-gradient-to-br from-indigo-50 to-purple-100 border-indigo-300 shadow-lg overflow-hidden relative">
+    <Card className="fortune-card-enhanced fortune-card-tarot">
       {/* Enhanced cosmic graphics */}
       <CosmicStarField />
       <MysticalSymbols isVisible={selectedCards.length > 0} />
@@ -61,13 +61,13 @@ export const TarotReading = () => {
         </motion.div>
       </div>
       
-      <CardHeader className="bg-gradient-to-r from-[#b0c8e6] to-[#9fbfdf] text-center pb-2 py-2 relative border-b border-[#b0c8e6]">
+      <CardHeader className="fortune-header fortune-header-tarot text-center pb-2 py-2 relative">
         <div className="flex items-center justify-center">
-          <BookOpen className="text-[#143a5c] ml-2" size={16} />
-          <h2 className="text-sm font-bold text-[#143a5c] flex items-center">
+          <BookOpen className="text-indigo-800 ml-2" size={16} />
+          <h2 className="text-sm font-bold text-indigo-800 flex items-center">
             فال تاروت
             <span className="mr-1.5 inline-block">
-              <Sparkles size={12} className="text-[#143a5c]" />
+              <Sparkles size={12} className="text-indigo-800" />
             </span>
           </h2>
         </div>
