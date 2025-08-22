@@ -26,6 +26,13 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
         return <PersianCalendar />;
       case 'persian-names':
         return <PersianNames />;
+      case 'handwriting-practice':
+        return (
+          <div>
+            <h3 className="text-2xl font-bold text-center mb-4">تمرین خوشنویسی فارسی</h3>
+            <p className="text-center text-muted-foreground">این بخش به زودی راه‌اندازی خواهد شد</p>
+          </div>
+        );
       case 'persian-proverbs':
         return <PersianProverbs />;
       case 'farsi-learning':
