@@ -1,12 +1,10 @@
 
 import React from 'react';
 import { Layout } from '@/components/Layout';
-import { HeroSection } from '@/components/home/HeroSection';
-import { ToolsSection } from '@/components/home/ToolsSection';
-import { ProfessionalToolsSection } from '@/components/home/ProfessionalToolsSection';
-import { PersianCulturalSection } from '@/components/home/PersianCulturalSection';
+import { ModernHeroSection } from '@/components/home/ModernHeroSection';
+import { InteractiveToolsGrid } from '@/components/home/InteractiveToolsGrid';
+import { PersianCulturalHighlight } from '@/components/home/PersianCulturalHighlight';
 import { ReadingsSection } from '@/components/home/ReadingsSection';
-import { CategoriesSection } from '@/components/home/CategoriesSection';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
@@ -55,37 +53,38 @@ const Index = () => {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main Content */}
         <div className="flex-1">
-          <HeroSection />
+          <ModernHeroSection />
           
-          <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
-            
-            {/* Popular Tools */}
-            <div id="popular-tools">
-              <ToolsSection />
-            </div>
-
-            {/* Strategic Ad Placement - After Popular Tools */}
-            {shouldShowAds() && (
+          {/* Strategic Ad Placement - After Hero */}
+          {shouldShowAds() && (
+            <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1400px] my-8">
               <ResponsiveAd 
                 adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
-                className="my-8 max-w-4xl mx-auto"
+                className="max-w-4xl mx-auto"
               />
-            )}
+            </div>
+          )}
 
-            <ProfessionalToolsSection />
-            
-            {/* Strategic Ad Placement - Middle Content */}
-            {shouldShowAds() && (
+          {/* Interactive Tools Grid */}
+          <div id="popular-tools">
+            <InteractiveToolsGrid />
+          </div>
+          
+          {/* Strategic Ad Placement - Middle Content */}
+          {shouldShowAds() && (
+            <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1400px] my-8">
               <ResponsiveAd 
                 adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
-                className="my-8 max-w-4xl mx-auto"
+                className="max-w-4xl mx-auto"
               />
-            )}
+            </div>
+          )}
 
-            <PersianCulturalSection />
-            <ReadingsSection />
-            <CategoriesSection />
-          </div>
+          {/* Persian Cultural Highlight */}
+          <PersianCulturalHighlight />
+          
+          {/* Readings Section */}
+          <ReadingsSection />
         </div>
 
         {/* Sidebar with ads - Desktop only */}
