@@ -3,210 +3,186 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, MapPin, Clock, Camera, Building2, Mountain, Star } from 'lucide-react';
+import { Search, MapPin, Clock, Camera, Building2, Mountain, Star, ZoomIn, Heart, Share2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { 
+  architecturalSites, 
+  architecturalPeriods,
+  getArchitecturalSitesByPeriod,
+  searchArchitecturalSites 
+} from '@/data/persian-architecture-comprehensive';
 
-interface ArchitecturalSite {
-  id: string;
-  name: string;
-  englishName: string;
-  period: string;
-  location: string;
-  yearBuilt: string;
-  description: string;
-  significance: string;
-  architecturalStyle: string;
-  features: string[];
-  images: string[];
-  virtualTour?: string;
-  status: 'UNESCO' | 'National' | 'Regional';
-}
+// Import images
+import persepolisImg from '@/assets/persepolis.jpg';
+import naqshJahanImg from '@/assets/naqsh-jahan-square.jpg';
+import pasargadaeImg from '@/assets/pasargadae.jpg';
+import golestanImg from '@/assets/golestan-palace.jpg';
+import soltaniyehImg from '@/assets/soltaniyeh.jpg';
+import choghaZanbilImg from '@/assets/chogha-zanbil.jpg';
 
-const architecturalSites: ArchitecturalSite[] = [
-  {
-    id: 'persepolis',
-    name: 'تخت جمشید',
-    englishName: 'Persepolis',
-    period: 'هخامنشی',
-    location: 'شیراز، فارس',
-    yearBuilt: '515 ق.م',
-    description: 'تخت جمشید یا پارسه، پایتخت تشریفاتی امپراتوری هخامنشی بود که توسط داریوش بزرگ بنا شد.',
-    significance: 'نماد عظمت تمدن ایران باستان و شاهکار معماری جهان',
-    architecturalStyle: 'معماری هخامنشی',
-    features: ['تالار صد ستون', 'کاخ آپادانا', 'نقش‌برجسته‌های باستانی', 'پلکان شاهانه'],
-    images: [],
-    status: 'UNESCO'
-  },
-  {
-    id: 'isfahan-square',
-    name: 'میدان نقش جهان',
-    englishName: 'Naqsh-e Jahan Square',
-    period: 'صفوی',
-    location: 'اصفهان',
-    yearBuilt: '1602 م',
-    description: 'میدان نقش جهان یکی از بزرگ‌ترین میدان‌های جهان و نمونه‌ای از معماری اسلامی ایران است.',
-    significance: 'مرکز اجتماعی و اقتصادی دوران صفوی',
-    architecturalStyle: 'معماری اسلامی - ایرانی',
-    features: ['مسجد شاه', 'مسجد شیخ لطف‌الله', 'کاخ عالی‌قاپو', 'بازار قیصریه'],
-    images: [],
-    status: 'UNESCO'
-  },
-  {
-    id: 'pasargadae',
-    name: 'پاسارگاد',
-    englishName: 'Pasargadae',
-    period: 'هخامنشی',
-    location: 'شیراز، فارس',
-    yearBuilt: '546 ق.م',
-    description: 'پاسارگاد اولین پایتخت امپراتوری هخامنشی و محل آرامگاه کوروش بزرگ است.',
-    significance: 'آرامگاه بنیانگذار امپراتوری هخامنشی',
-    architecturalStyle: 'معماری هخامنشی اولیه',
-    features: ['آرامگاه کوروش', 'کاخ‌های باستانی', 'باغ چهارباغ', 'سنگ‌نگاره‌ها'],
-    images: [],
-    status: 'UNESCO'
-  },
-  {
-    id: 'golestan-palace',
-    name: 'کاخ گلستان',
-    englishName: 'Golestan Palace',
-    period: 'قاجار',
-    location: 'تهران',
-    yearBuilt: '1524 م',
-    description: 'کاخ گلستان یکی از قدیمی‌ترین بناهای تاریخی تهران و مقر سلطنتی دودمان قاجار بود.',
-    significance: 'نمونه معماری قاجاری و مرکز سیاسی ایران',
-    architecturalStyle: 'معماری قاجاری',
-    features: ['تالار آینه', 'تالار عاج', 'موزه هدایا', 'باغ‌های زیبا'],
-    images: [],
-    status: 'UNESCO'
-  },
-  {
-    id: 'soltaniyeh',
-    name: 'گنبد سلطانیه',
-    englishName: 'Soltaniyeh Dome',
-    period: 'ایلخانی',
-    location: 'زنجان',
-    yearBuilt: '1302 م',
-    description: 'گنبد سلطانیه بزرگترین گنبد آجری جهان و شاهکار معماری دوران ایلخانی است.',
-    significance: 'بزرگترین گنبد آجری جهان',
-    architecturalStyle: 'معماری ایلخانی',
-    features: ['گنبد عظیم آجری', 'تزیینات کاشی‌کاری', 'خط‌کشی‌های هندسی', 'آرامگاه اولجایتو'],
-    images: [],
-    status: 'UNESCO'
-  },
-  {
-    id: 'chogha-zanbil',
-    name: 'چغازنبیل',
-    englishName: 'Chogha Zanbil',
-    period: 'عیلامی',
-    location: 'خوزستان',
-    yearBuilt: '1250 ق.م',
-    description: 'چغازنبیل بقایای شهر باستانی دور اونتاش و زیگورات عیلامی است.',
-    significance: 'تنها زیگورات باقی‌مانده خارج از بین‌النهرین',
-    architecturalStyle: 'معماری عیلامی',
-    features: ['زیگورات چهارطبقه', 'معابد باستانی', 'کاخ شاهی', 'سیستم آبرسانی'],
-    images: [],
-    status: 'UNESCO'
-  }
-];
-
-const architecturalPeriods = [
-  { id: 'all', name: 'همه دوره‌ها', count: architecturalSites.length },
-  { id: 'هخامنشی', name: 'هخامنشی', count: 2 },
-  { id: 'صفوی', name: 'صفوی', count: 1 },
-  { id: 'قاجار', name: 'قاجار', count: 1 },
-  { id: 'ایلخانی', name: 'ایلخانی', count: 1 },
-  { id: 'عیلامی', name: 'عیلامی', count: 1 }
-];
+const imageMap: Record<string, string> = {
+  'persepolis': persepolisImg,
+  'isfahan-square': naqshJahanImg,
+  'pasargadae': pasargadaeImg,
+  'golestan-palace': golestanImg,
+  'soltaniyeh': soltaniyehImg,
+  'chogha-zanbil': choghaZanbilImg,
+};
 
 export function PersianArchitectureEnhanced() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('all');
-  const [selectedSite, setSelectedSite] = useState<ArchitecturalSite | null>(null);
+  const [selectedSite, setSelectedSite] = useState<any>(null);
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [imageView, setImageView] = useState<string | null>(null);
 
-  const filteredSites = architecturalSites.filter(site => {
-    const matchesSearch = site.name.includes(searchTerm) || 
-                         site.englishName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         site.location.includes(searchTerm);
-    const matchesPeriod = selectedPeriod === 'all' || site.period === selectedPeriod;
-    return matchesSearch && matchesPeriod;
-  });
+  const filteredSites = searchTerm 
+    ? searchArchitecturalSites(searchTerm) 
+    : selectedPeriod === 'all' 
+      ? architecturalSites 
+      : getArchitecturalSitesByPeriod(selectedPeriod);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'UNESCO':
-        return <Badge variant="secondary" className="bg-blue-100 text-blue-800">میراث جهانی یونسکو</Badge>;
+        return <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0">🏛️ میراث جهانی یونسکو</Badge>;
       case 'National':
-        return <Badge variant="secondary" className="bg-green-100 text-green-800">میراث ملی</Badge>;
+        return <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white border-0">🇮🇷 میراث ملی</Badge>;
       case 'Regional':
-        return <Badge variant="secondary" className="bg-orange-100 text-orange-800">میراث منطقه‌ای</Badge>;
+        return <Badge className="bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0">🏛️ میراث منطقه‌ای</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
     }
   };
 
+  const toggleFavorite = (siteId: string) => {
+    setFavorites(prev => 
+      prev.includes(siteId) 
+        ? prev.filter(id => id !== siteId)
+        : [...prev, siteId]
+    );
+  };
+
+  const getPeriodColor = (period: string) => {
+    const colors: Record<string, string> = {
+      'هخامنشی': 'from-amber-500 to-yellow-500',
+      'صفوی': 'from-blue-500 to-indigo-500', 
+      'قاجار': 'from-purple-500 to-pink-500',
+      'ایلخانی': 'from-green-500 to-teal-500',
+      'عیلامی': 'from-red-500 to-orange-500',
+      'ساسانی': 'from-gray-500 to-slate-500',
+    };
+    return colors[period] || 'from-gray-400 to-gray-500';
+  };
+
   return (
-    <div className="space-y-6">
-      <Card className="gradient-persian text-white">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl">
-            <Building2 size={28} />
-            معماری ایران باستان
-          </CardTitle>
-          <p className="text-white/90">
-            کاوش در شاهکارهای معماری ایران از دوران باستان تا دوره‌های اسلامی
-          </p>
-        </CardHeader>
+    <div className="space-y-8 max-w-7xl mx-auto p-4">
+      <Card className="overflow-hidden">
+        <div className="bg-gradient-to-r from-primary via-primary-glow to-secondary p-8 text-white">
+          <CardHeader className="p-0">
+            <CardTitle className="flex items-center gap-3 text-3xl md:text-4xl font-bold">
+              <Building2 size={40} />
+              معماری ایران باستان
+            </CardTitle>
+            <p className="text-white/90 text-lg mt-4 leading-relaxed">
+              سفری در میان شاهکارهای معماری ایران از دوران باستان تا دوره‌های اسلامی
+            </p>
+          </CardHeader>
+        </div>
       </Card>
 
-      <div className="flex flex-col sm:flex-row gap-4 items-center">
+      <div className="flex flex-col lg:flex-row gap-6 items-center">
         <div className="relative flex-1">
           <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
           <Input
-            placeholder="جستجو در بناهای تاریخی..."
+            placeholder="جستجو در بناهای تاریخی، شهرها، دوره‌ها..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pr-10"
+            className="pr-10 h-12 text-lg"
           />
+        </div>
+        <div className="text-sm text-muted-foreground bg-muted px-4 py-2 rounded-lg">
+          {filteredSites.length} بنای تاریخی یافت شد
         </div>
       </div>
 
-      <Tabs value={selectedPeriod} onValueChange={setSelectedPeriod}>
-        <TabsList className="grid grid-cols-3 lg:grid-cols-6 w-full">
-          {architecturalPeriods.map((period) => (
-            <TabsTrigger key={period.id} value={period.id} className="text-sm">
-              {period.name}
-              <span className="mr-1 text-xs">({period.count})</span>
-            </TabsTrigger>
-          ))}
+      <Tabs value={selectedPeriod} onValueChange={setSelectedPeriod} className="space-y-6">
+        <TabsList className="grid grid-cols-3 lg:grid-cols-6 w-full h-auto p-1">
+          {architecturalPeriods.map((period) => {
+            const count = period.id === 'all' 
+              ? architecturalSites.length 
+              : architecturalSites.filter(site => site.period === period.id).length;
+            
+            return (
+              <TabsTrigger 
+                key={period.id} 
+                value={period.id} 
+                className="flex flex-col gap-1 py-3 px-2 data-[state=active]:bg-primary data-[state=active]:text-white"
+              >
+                <span className="font-medium">{period.name}</span>
+                <span className="text-xs opacity-70">({count})</span>
+              </TabsTrigger>
+            );
+          })}
         </TabsList>
 
-        <TabsContent value={selectedPeriod}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <TabsContent value={selectedPeriod} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredSites.map((site) => (
-              <Card key={site.id} className="hover-lift cursor-pointer" onClick={() => setSelectedSite(site)}>
-                <div className="h-48 bg-gradient-to-br from-amber-100 to-orange-100 rounded-t-lg flex items-center justify-center">
-                  <Building2 size={64} className="text-amber-600" />
-                </div>
-                <CardContent className="p-4 space-y-3">
-                  <div className="space-y-2">
-                    <h3 className="font-bold text-lg">{site.name}</h3>
-                    <p className="text-sm text-muted-foreground">{site.englishName}</p>
-                  </div>
-                  
-                  <div className="space-y-2">
+              <Card 
+                key={site.id} 
+                className="group hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 overflow-hidden"
+                onClick={() => setSelectedSite(site)}
+              >
+                <div className="relative h-56 overflow-hidden">
+                  <img 
+                    src={imageMap[site.id] || `https://images.unsplash.com/photo-1588666209969-9bdc1b6e7c47?w=800&h=600&fit=crop`}
+                    alt={site.name}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${getPeriodColor(site.period)} opacity-20 group-hover:opacity-30 transition-opacity`} />
+                  <div className="absolute top-3 right-3 flex gap-2">
                     {getStatusBadge(site.status)}
-                    <Badge variant="outline">{site.period}</Badge>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-3 left-3 bg-white/20 hover:bg-white/30 text-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(site.id);
+                    }}
+                  >
+                    <Heart className={`w-4 h-4 ${favorites.includes(site.id) ? 'fill-red-500 text-red-500' : ''}`} />
+                  </Button>
+                </div>
+                
+                <CardContent className="p-6 space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-xl text-foreground group-hover:text-primary transition-colors">
+                      {site.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-medium">{site.englishName}</p>
                   </div>
                   
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin size={16} />
-                    <span>{site.location}</span>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline" className={`bg-gradient-to-r ${getPeriodColor(site.period)} text-white border-0`}>
+                      {site.period}
+                    </Badge>
                   </div>
                   
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Clock size={16} />
-                    <span>{site.yearBuilt}</span>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <MapPin size={16} className="text-primary" />
+                      <span>{site.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock size={16} className="text-primary" />
+                      <span>{site.yearBuilt}</span>
+                    </div>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground line-clamp-2">
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                     {site.description}
                   </p>
                 </CardContent>
@@ -217,75 +193,132 @@ export function PersianArchitectureEnhanced() {
       </Tabs>
 
       {selectedSite && (
-        <Card className="neo-glass">
-          <CardHeader>
+        <Card className="fixed inset-4 z-50 overflow-auto bg-background/95 backdrop-blur-sm">
+          <CardHeader className="sticky top-0 bg-background/95 backdrop-blur-sm border-b z-10">
             <div className="flex justify-between items-start">
-              <div>
-                <CardTitle className="text-2xl">{selectedSite.name}</CardTitle>
-                <p className="text-muted-foreground">{selectedSite.englishName}</p>
+              <div className="space-y-2">
+                <CardTitle className="text-3xl font-bold text-foreground">
+                  {selectedSite.name}
+                </CardTitle>
+                <p className="text-muted-foreground text-lg">{selectedSite.englishName}</p>
+                <div className="flex gap-3">
+                  {getStatusBadge(selectedSite.status)}
+                  <Badge variant="outline" className={`bg-gradient-to-r ${getPeriodColor(selectedSite.period)} text-white border-0`}>
+                    {selectedSite.period}
+                  </Badge>
+                </div>
               </div>
-              <Button variant="ghost" onClick={() => setSelectedSite(null)}>
-                ✕
-              </Button>
+              <div className="flex gap-2">
+                <Button variant="ghost" size="icon" onClick={() => toggleFavorite(selectedSite.id)}>
+                  <Heart className={`w-5 h-5 ${favorites.includes(selectedSite.id) ? 'fill-red-500 text-red-500' : ''}`} />
+                </Button>
+                <Button variant="ghost" size="icon">
+                  <Share2 className="w-5 h-5" />
+                </Button>
+                <Button variant="ghost" onClick={() => setSelectedSite(null)}>
+                  ✕
+                </Button>
+              </div>
             </div>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <h4 className="font-semibold flex items-center gap-2">
-                  <Clock size={16} />
+          
+          <CardContent className="space-y-8 p-8">
+            <div className="relative h-80 rounded-xl overflow-hidden">
+              <img 
+                src={imageMap[selectedSite.id] || `https://images.unsplash.com/photo-1588666209969-9bdc1b6e7c47?w=1200&h=600&fit=crop`}
+                alt={selectedSite.name}
+                className="w-full h-full object-cover"
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 text-white"
+                onClick={() => setImageView(imageMap[selectedSite.id])}
+              >
+                <ZoomIn className="w-5 h-5" />
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="p-4">
+                <h4 className="font-semibold flex items-center gap-2 mb-3">
+                  <Clock size={18} className="text-primary" />
                   دوره تاریخی
                 </h4>
-                <Badge>{selectedSite.period}</Badge>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-semibold flex items-center gap-2">
-                  <MapPin size={16} />
-                  موقعیت
+                <Badge className={`bg-gradient-to-r ${getPeriodColor(selectedSite.period)} text-white border-0`}>
+                  {selectedSite.period}
+                </Badge>
+              </Card>
+              
+              <Card className="p-4">
+                <h4 className="font-semibold flex items-center gap-2 mb-3">
+                  <MapPin size={18} className="text-primary" />
+                  موقعیت جغرافیایی
                 </h4>
-                <p className="text-sm">{selectedSite.location}</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-semibold flex items-center gap-2">
-                  <Star size={16} />
-                  وضعیت
+                <p className="text-foreground">{selectedSite.location}</p>
+              </Card>
+              
+              <Card className="p-4">
+                <h4 className="font-semibold flex items-center gap-2 mb-3">
+                  <Star size={18} className="text-primary" />
+                  وضعیت حفاظت
                 </h4>
                 {getStatusBadge(selectedSite.status)}
-              </div>
+              </Card>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-semibold">شرح</h4>
-              <p className="text-muted-foreground leading-relaxed">{selectedSite.description}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <Card className="p-6">
+                <h4 className="font-bold text-xl mb-4 text-foreground">شرح تاریخی</h4>
+                <p className="text-muted-foreground leading-relaxed">{selectedSite.description}</p>
+              </Card>
+
+              <Card className="p-6">
+                <h4 className="font-bold text-xl mb-4 text-foreground">اهمیت و ارزش</h4>
+                <p className="text-muted-foreground leading-relaxed">{selectedSite.significance}</p>
+              </Card>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-semibold">اهمیت تاریخی</h4>
-              <p className="text-muted-foreground leading-relaxed">{selectedSite.significance}</p>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="font-semibold">ویژگی‌های معماری</h4>
-              <div className="grid grid-cols-2 gap-2">
-                {selectedSite.features.map((feature, index) => (
-                  <Badge key={index} variant="outline" className="justify-center">
+            <Card className="p-6">
+              <h4 className="font-bold text-xl mb-4 text-foreground">ویژگی‌های معماری</h4>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                {selectedSite.features.map((feature: string, index: number) => (
+                  <Badge key={index} variant="outline" className="justify-center py-2 px-4 text-center">
                     {feature}
                   </Badge>
                 ))}
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-              <div className="flex items-center gap-2 text-blue-700 mb-2">
-                <Camera size={16} />
-                <span className="font-medium">تور مجازی</span>
+            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 p-6">
+              <div className="flex items-center gap-3 text-blue-700 mb-4">
+                <Camera size={24} />
+                <h4 className="font-bold text-xl">تور مجازی و تصاویر</h4>
               </div>
-              <p className="text-blue-600 text-sm">
-                تور مجازی سه‌بعدی این محوطه باستانی به زودی در دسترس خواهد بود.
+              <p className="text-blue-600 leading-relaxed mb-4">
+                تور مجازی سه‌بعدی این محوطه باستانی و گالری تصاویر با کیفیت بالا به زودی در دسترس خواهد بود.
+                شما می‌توانید از نزدیک جزئیات معماری، نقش‌برجسته‌ها و تزیینات این بنای تاریخی را مشاهده کنید.
               </p>
-            </div>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Camera className="w-4 h-4 ml-2" />
+                مشاهده گالری تصاویر
+              </Button>
+            </Card>
           </CardContent>
         </Card>
+      )}
+
+      {imageView && (
+        <div 
+          className="fixed inset-0 z-60 bg-black/80 flex items-center justify-center p-4"
+          onClick={() => setImageView(null)}
+        >
+          <img 
+            src={imageView} 
+            alt="Zoomed view"
+            className="max-w-full max-h-full object-contain rounded-lg"
+          />
+        </div>
       )}
     </div>
   );

@@ -36,7 +36,7 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
       case 'persian-calendar':
         return <PersianCalendar />;
       case 'persian-names':
-        return <PersianNames />;
+        return <PersianNamesEnhanced />;
       case 'handwriting-practice':
         return <CalligraphyPracticeEnhanced />;
       case 'persian-proverbs':
@@ -100,8 +100,6 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
         return <PersianPoetryAnalysis />;
       case 'word-etymology':
         return <WordEtymologyEnhanced />;
-      case 'persian-names':
-        return <PersianNamesEnhanced />;
       case 'historical-timeline':
         return <HistoricalTimelineEnhanced />;
       default:
