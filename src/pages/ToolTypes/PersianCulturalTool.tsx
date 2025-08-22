@@ -173,6 +173,16 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
         return <PersianPoetryAnalysis />;
       case 'word-etymology':
         return <WordEtymology />;
+      case 'persian-literature-enhanced':
+        return (
+          <div>
+            {/* Enhanced Persian Literature will be loaded here */}
+            <div className="text-center p-8">
+              <h2 className="text-xl font-bold">ادبیات فارسی پیشرفته</h2>
+              <p className="text-muted-foreground mt-2">این بخش به زودی راه‌اندازی خواهد شد</p>
+            </div>
+          </div>
+        );
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
