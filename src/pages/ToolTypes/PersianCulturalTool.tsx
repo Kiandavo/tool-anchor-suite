@@ -11,6 +11,17 @@ import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
 import PersianProverbs from '@/pages/ToolTypes/PersianCultural/PersianProverbs';
 import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
 
+// Enhanced Components
+import { PersianArchitectureEnhanced } from '@/components/persian-cultural/PersianArchitectureEnhanced';
+import { HistoricalTimelineEnhanced } from '@/components/persian-cultural/HistoricalTimelineEnhanced';
+import { PersianLiteratureEnhanced } from '@/components/persian-cultural/PersianLiteratureEnhanced';
+import { WordEtymologyEnhanced } from '@/components/persian-cultural/WordEtymologyEnhanced';
+import { CalligraphyPracticeEnhanced } from '@/components/persian-cultural/CalligraphyPracticeEnhanced';
+import { PersianLanguageEnhanced } from '@/components/persian-cultural/PersianLanguageEnhanced';
+import { PersianCuisineEnhanced } from '@/components/persian-cultural/PersianCuisineEnhanced';
+import { PersianMusicEnhanced } from '@/components/persian-cultural/PersianMusicEnhanced';
+import { PersianNamesEnhanced } from '@/components/persian-cultural/PersianNamesEnhanced';
+
 interface PersianCulturalToolProps {
   slug: string;
 }
@@ -27,104 +38,13 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
       case 'persian-names':
         return <PersianNames />;
       case 'handwriting-practice':
-        return (
-          <div>
-            <h3 className="text-2xl font-bold text-center mb-4">تمرین خوشنویسی فارسی</h3>
-            <p className="text-center text-muted-foreground">این بخش به زودی راه‌اندازی خواهد شد</p>
-          </div>
-        );
+        return <CalligraphyPracticeEnhanced />;
       case 'persian-proverbs':
         return <PersianProverbs />;
       case 'farsi-learning':
-        return (
-          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-indigo-50 to-blue-50">
-            <div className="text-center space-y-4">
-              <div className="text-6xl">📖</div>
-              <h3 className="text-2xl font-bold text-indigo-800">آموزش زبان فارسی</h3>
-              <p className="text-gray-700 max-w-md mx-auto">
-                Learn Farsi - Common phrases and alphabet
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-bold mb-2">Common Phrases</h4>
-                  <div className="text-sm space-y-1">
-                    <div>سلام - Hello (Salaam)</div>
-                    <div>خداحافظ - Goodbye (Khodahafez)</div>
-                    <div>متشکرم - Thank you (Moteshakeram)</div>
-                  </div>
-                </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-bold mb-2">Alphabet</h4>
-                  <div className="text-sm space-y-1">
-                    <div>الف - A (Alef)</div>
-                    <div>ب - B (Be)</div>
-                    <div>پ - P (Pe)</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'persian-literature':
-        return (
-          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-purple-50 to-violet-50">
-            <div className="text-center space-y-4">
-              <div className="text-6xl">📜</div>
-              <h3 className="text-2xl font-bold text-purple-800">ادبیات فارسی</h3>
-              <div className="bg-white p-4 rounded-lg max-w-lg mx-auto text-right">
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-bold">حافظ شیرازی</h4>
-                    <p className="text-sm italic">به کوی میکده رفتن از ما به است</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold">مولانا</h4>
-                    <p className="text-sm italic">بشنو از نی چون حکایت می‌کند</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold">فردوسی</h4>
-                    <p className="text-sm italic">به نام خداوند جان و خرد</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <PersianLanguageEnhanced />;
       case 'persian-cuisine':
-        return (
-          <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-red-50 to-orange-50">
-            <div className="text-center space-y-4">
-              <div className="text-6xl">🍽️</div>
-              <h3 className="text-2xl font-bold text-red-800">آشپزی ایرانی</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-bold mb-2">چلو کباب</h4>
-                  <p className="text-sm text-gray-600">
-                    برنج با کباب کوبیده - غذای ملی ایران
-                  </p>
-                </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-bold mb-2">قورمه سبزی</h4>
-                  <p className="text-sm text-gray-600">
-                    خورش سبزیجات با گوشت و لوبیا قرمز
-                  </p>
-                </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-bold mb-2">فسنجان</h4>
-                  <p className="text-sm text-gray-600">
-                    خورش انار و گردو با مرغ
-                  </p>
-                </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-bold mb-2">تاچین</h4>
-                  <p className="text-sm text-gray-600">
-                    برنج لایه‌ای با مرغ و زعفران
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <PersianCuisineEnhanced />;
       case 'traditional-persian-games':
         return (
           <div className="rounded-lg border p-6 shadow-sm bg-gradient-to-br from-green-50 to-blue-50">
@@ -171,25 +91,19 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
           </div>
         );
       case 'persian-architecture':
-        return <PersianArchitecture />;
+        return <PersianArchitectureEnhanced />;
       case 'persian-holidays':
         return <PersianHolidays />;
       case 'persian-music':
-        return <PersianMusic />;
+        return <PersianMusicEnhanced />;
       case 'persian-poetry-analysis':
         return <PersianPoetryAnalysis />;
       case 'word-etymology':
-        return <WordEtymology />;
-      case 'persian-literature-enhanced':
-        return (
-          <div>
-            {/* Enhanced Persian Literature will be loaded here */}
-            <div className="text-center p-8">
-              <h2 className="text-xl font-bold">ادبیات فارسی پیشرفته</h2>
-              <p className="text-muted-foreground mt-2">این بخش به زودی راه‌اندازی خواهد شد</p>
-            </div>
-          </div>
-        );
+        return <WordEtymologyEnhanced />;
+      case 'persian-names':
+        return <PersianNamesEnhanced />;
+      case 'historical-timeline':
+        return <HistoricalTimelineEnhanced />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
