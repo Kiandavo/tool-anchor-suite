@@ -40,7 +40,7 @@
   /* Transparent Dropdown Styles */
   .dropdown-content {
     @apply bg-white/90 backdrop-blur-lg border border-white/30 shadow-xl;
-    @apply max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20;
+    @apply max-h-60 overflow-y-auto z-50;
   }
 
   .dropdown-trigger {
