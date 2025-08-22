@@ -42,7 +42,7 @@ const internationalTimezones: TimezoneInfo[] = [
 const persianHolidays = [
   { month: 1, day: 1, name: 'نوروز', description: 'سال نو ایرانی' },
   { month: 1, day: 13, name: 'سیزده‌بدر', description: 'روز طبیعت' },
-  { month: 3, day: 15, name: 'رحلت امام خمینی', description: 'رهبر انقلاب' },
+  { month: 3, day: 15, name: 'جشن گلاب‌گیری', description: 'فصل برداشت گل محمدی' },
   { month: 6, day: 31, name: 'شب یلدا', description: 'طولانی‌ترین شب سال' },
 ];
 
