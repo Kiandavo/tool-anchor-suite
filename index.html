@@ -59,31 +59,63 @@
         min-height: 100vh;
       }
       
-      /* Loading fallback */
-      .loading-fallback {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, sans-serif;
-        direction: rtl;
-      }
-      .loading-text {
+      /* Critical hero content for immediate FCP */
+      .hero-content {
+        padding: 8rem 1.5rem 5rem;
         text-align: center;
-        color: #374151;
+        max-width: 75rem;
+        margin: 0 auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
+      .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        line-height: 1.1;
+        color: #171717;
+      }
+      .hero-description {
+        font-size: 1.25rem;
+        color: #64748b;
+        max-width: 48rem;
+        margin: 0 auto 3rem;
+        font-weight: 300;
+        line-height: 1.6;
+      }
+      .hero-loading {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: rgba(59, 130, 246, 0.1);
+        border-radius: 0.5rem;
+        color: #3b82f6;
+        font-weight: 500;
+        margin-top: 1rem;
+      }
+      
+      /* Loading spinner */
       .loading-spinner {
-        width: 24px;
-        height: 24px;
-        border: 2px solid #e5e7eb;
+        width: 16px;
+        height: 16px;
+        border: 2px solid transparent;
         border-top: 2px solid #3b82f6;
         border-radius: 50%;
         animation: spin 1s linear infinite;
-        margin: 0 auto 1rem;
       }
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+      }
+      
+      /* Responsive design */
+      @media (min-width: 640px) {
+        .hero-title { font-size: 4.5rem; }
+        .hero-description { font-size: 1.5rem; }
+        .hero-content { padding: 10rem 2rem 8rem; }
       }
     </style>
     
@@ -98,11 +130,15 @@
   </head>
   <body>
     <div id="root">
-      <!-- Fallback content while JS loads -->
-      <div class="loading-fallback">
-        <div class="loading-text">
+      <!-- Critical above-the-fold content for immediate FCP -->
+      <div class="hero-content">
+        <h1 class="hero-title">لنگر - مجموعه ابزارهای آنلاین</h1>
+        <p class="hero-description">
+          بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
+        </p>
+        <div class="hero-loading">
           <div class="loading-spinner"></div>
-          <p>در حال بارگذاری...</p>
+          در حال بارگذاری...
         </div>
       </div>
     </div>
