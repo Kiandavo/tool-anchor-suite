@@ -112,7 +112,7 @@
 
   /* Enhanced Buttons */
   .fortune-button-primary {
-    @apply relative overflow-hidden group transition-all duration-300;
+    @apply relative overflow-hidden transition-all duration-300;
     @apply shadow-md hover:shadow-lg active:scale-[0.98];
   }
 
