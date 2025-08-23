@@ -37,9 +37,27 @@ const DailyHoroscope = () => {
 
   const generateDailyPrediction = () => {
     if (!selectedSign) return;
-    
+
+    const cacheKey = `daily_horoscope:${selectedSign}`;
+    const now = Date.now();
+    const TTL = 24 * 60 * 60 * 1000; // 24 hours
+
     setIsLoading(true);
     setTimeout(() => {
+      try {
+        const raw = localStorage.getItem(cacheKey);
+        if (raw) {
+          const cached = JSON.parse(raw) as { timestamp: number; prediction: DailyPrediction };
+          if (cached && now - cached.timestamp < TTL && cached.prediction) {
+            setPrediction(cached.prediction);
+            setIsLoading(false);
+            return;
+          }
+        }
+      } catch (e) {
+        // ignore cache errors
+      }
+
       const predictions: DailyPrediction = {
         love: getRandomPrediction('love'),
         career: getRandomPrediction('career'),
@@ -49,7 +67,15 @@ const DailyHoroscope = () => {
         luckyNumber: Math.floor(Math.random() * 99) + 1,
         luckyColor: getRandomColor()
       };
+
       setPrediction(predictions);
+
+      try {
+        localStorage.setItem(cacheKey, JSON.stringify({ timestamp: now, prediction: predictions }));
+      } catch (e) {
+        // ignore write errors
+      }
+
       setIsLoading(false);
     }, 1500);
   };
