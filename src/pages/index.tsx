@@ -48,19 +48,18 @@ const Index = () => {
   const combinedSchema = combineSchemas(websiteSchema, faqSchema);
 
   return (
-    <PerformanceOptimizer>
-      <Layout>
-        <SeoHead 
-          title={homeTitle}
-          description={homeDescription}
-          keywords={homeKeywords}
-          schema={combinedSchema}
-          canonical="https://langar.co/"
-        />
-        
-        <PageBreadcrumbs />
-        
-        <div className="flex flex-col lg:flex-row gap-8">
+    <Layout>
+      <SeoHead 
+        title={homeTitle}
+        description={homeDescription}
+        keywords={homeKeywords}
+        schema={combinedSchema}
+        canonical="https://langar.co/"
+      />
+      
+      <PageBreadcrumbs />
+      
+      <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
           <div className="flex-1">
             <HeroSection />
@@ -131,7 +130,6 @@ const Index = () => {
           )}
         </div>
       </Layout>
-    </PerformanceOptimizer>
   );
 };
 
