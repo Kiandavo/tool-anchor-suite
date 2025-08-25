@@ -5,8 +5,10 @@ import { getNewTools, getPopularTools } from '@/data/tools';
 import { Sparkles, ChevronLeft, TrendingUp, Zap, Star } from 'lucide-react';
 
 export const EnhancedToolsSection = () => {
+  console.log('EnhancedToolsSection rendering...');
   const newTools = getNewTools();
   const popularTools = getPopularTools();
+  console.log('Tools loaded:', { newTools: newTools.length, popularTools: popularTools.length });
 
   return (
     <>

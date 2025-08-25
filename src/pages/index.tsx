@@ -16,6 +16,8 @@ import { PageBreadcrumbs } from '@/components/seo/PageBreadcrumbs';
 import { PerformanceOptimizer } from '@/components/seo/PerformanceOptimizer';
 
 const Index = () => {
+  console.log('Index component rendering...');
+  
   // Enhanced SEO data for homepage
   const homeTitle = "ابزارهای آنلاین رایگان | محاسبه‌گر، تبدیل متن، ویرایش تصویر - لنگر";
   const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی با طراحی مدرن و کاربری آسان.";
