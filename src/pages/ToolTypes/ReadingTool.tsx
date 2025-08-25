@@ -31,6 +31,7 @@ import { HafezFortune } from '@/components/HafezFortune';
 import { TarotReading } from '@/components/fal/TarotReading';
 import { Horoscope } from '@/components/fal/Horoscope';
 import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
+import { ShahnameReading } from '@/components/fal/ShahnameReading';
 
 interface ReadingToolProps {
   slug: string;
@@ -106,6 +107,9 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
       case 'rumi-istikhara':
         return <RumiIstikhara />;
 
+      case 'shahname-reading':
+        return <ShahnameReading />;
+
       default:
         return <ToolNotImplemented toolName="این ابزار طالع‌بینی" category="readings" />;
     }
@@ -158,7 +162,8 @@ function getToolTitle(slug: string): string {
     'hafez-fortune': 'فال حافظ',
     'tarot-reading': 'فال تاروت',
     'horoscope': 'طالع بینی',
-    'rumi-istikhara': 'استخاره با مولانا'
+    'rumi-istikhara': 'استخاره با مولانا',
+    'shahname-reading': 'راهنمایی از شاهنامه'
   };
   
   return titles[slug] || 'ابزار طالع‌بینی';

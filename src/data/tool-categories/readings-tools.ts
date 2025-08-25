@@ -53,6 +53,16 @@ export const readingsTools: Tool[] = [
     isComingSoon: false
   },
   {
+    id: "shahname-reading",
+    slug: "shahname-reading",
+    name: "راهنمایی از شاهنامه",
+    category: "readings",
+    description: "دریافت حکمت و اندرز از شاهنامه فردوسی",
+    isNew: true,
+    icon: "crown",
+    isComingSoon: false
+  },
+  {
     id: "persian-superstitions",
     slug: "persian-superstitions",
     name: "راهنمای خرافات ایرانی",
