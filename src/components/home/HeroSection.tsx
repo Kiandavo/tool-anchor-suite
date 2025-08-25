@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 export const HeroSection = () => {
   return <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden scroll-smooth">
-      {/* Apple-style background elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-apple-light-gray/30 via-transparent to-apple-light-gray/20" />
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-transparent to-muted/20" />
       <div className="absolute inset-0 apple-glass" />
       
       <EnhancedGraphics variant="floating-orbs" className="absolute inset-0 opacity-60" />
       
       {/* Refined background elements */}
-      <div className="absolute top-20 right-[15%] w-96 h-96 rounded-full bg-gradient-to-br from-apple-blue/20 to-apple-purple/15 blur-3xl animate-float" />
-      <div className="absolute bottom-20 left-[15%] w-80 h-80 rounded-full bg-gradient-to-tr from-apple-green/20 to-apple-cyan/15 blur-3xl animate-float" style={{
+      <div className="absolute top-20 right-[15%] w-96 h-96 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/15 blur-3xl animate-float" />
+      <div className="absolute bottom-20 left-[15%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-500/20 to-cyan-500/15 blur-3xl animate-float" style={{
       animationDelay: '2s'
     }} />
       
@@ -33,35 +33,35 @@ export const HeroSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 sm:mb-16 animate-slide-up">
             <Link to="/category/calculators" className="block group">
               <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-purple to-apple-indigo flex items-center justify-center mx-auto mb-6 shadow-apple">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <Sparkles size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-apple-dark-gray">ابزارهای تخصصی و کاربردی</h3>
-                <p className="text-apple-gray text-base leading-relaxed">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">ابزارهای تخصصی و کاربردی</h3>
+                <p className="text-muted-foreground text-base leading-relaxed">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
               </div>
             </Link>
             
             <Link to="/category/persian-cultural" className="block group">
               <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-blue to-apple-cyan flex items-center justify-center mx-auto mb-6 shadow-apple animate-pulse-subtle" style={{
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-6 shadow-lg animate-pulse-subtle" style={{
                 animationDelay: '0.5s'
               }}>
                   <Globe size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-apple-dark-gray">فرهنگ و زبان فارسی</h3>
-                <p className="text-apple-gray text-base leading-relaxed">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">فرهنگ و زبان فارسی</h3>
+                <p className="text-muted-foreground text-base leading-relaxed">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
               </div>
             </Link>
             
             <Link to="/category/readings" className="block group">
               <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-apple-green to-apple-teal flex items-center justify-center mx-auto mb-6 shadow-apple animate-scale-subtle" style={{
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-lg animate-scale-subtle" style={{
                 animationDelay: '1s'
               }}>
                   <BookOpen size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-apple-dark-gray">طالع‌بینی و فال</h3>
-                <p className="text-apple-gray text-base leading-relaxed">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">طالع‌بینی و فال</h3>
+                <p className="text-muted-foreground text-base leading-relaxed">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
               </div>
             </Link>
           </div>
@@ -80,7 +80,7 @@ export const HeroSection = () => {
             </Button>
           </div>
           
-          <div className="max-w-2xl mx-auto h-0.5 bg-gradient-to-r from-transparent via-apple-blue/40 to-transparent mt-20 rounded-full animate-shimmer" />
+          <div className="max-w-2xl mx-auto h-0.5 bg-gradient-to-r from-transparent via-primary/40 to-transparent mt-20 rounded-full animate-shimmer" />
         </div>
       </div>
     </section>;
