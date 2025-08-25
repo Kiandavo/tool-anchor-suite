@@ -11,7 +11,6 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  console.log('Layout component rendering...');
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {

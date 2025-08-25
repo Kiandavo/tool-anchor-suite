@@ -43,37 +43,9 @@ export default defineConfig(({ mode }) => ({
     },
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // Vendor chunks for better caching
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('react-router')) {
-              return 'router';
-            }
-            if (id.includes('@radix-ui') || id.includes('lucide-react')) {
-              return 'ui-vendor';
-            }
-            if (id.includes('framer-motion') || id.includes('@react-three')) {
-              return 'animation-vendor';
-            }
-            return 'vendor';
-          }
-          
-          // App chunks by feature
-          if (id.includes('/readings/') || id.includes('/fortune/')) {
-            return 'readings';
-          }
-          if (id.includes('/tools/') && !id.includes('/readings/')) {
-            return 'tools';
-          }
-          if (id.includes('/home/') || id.includes('/components/home/')) {
-            return 'home';
-          }
-          if (id.includes('/seo/') || id.includes('/analytics/')) {
-            return 'seo-analytics';
-          }
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'router': ['react-router-dom'],
         },
       }
     },
