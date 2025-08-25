@@ -40,10 +40,69 @@ const internationalTimezones: TimezoneInfo[] = [
 ];
 
 const persianHolidays = [
-  { month: 1, day: 1, name: 'نوروز', description: 'سال نو ایرانی' },
-  { month: 1, day: 13, name: 'سیزده‌بدر', description: 'روز طبیعت' },
-  { month: 3, day: 15, name: 'جشن گلاب‌گیری', description: 'فصل برداشت گل محمدی' },
-  { month: 6, day: 31, name: 'شب یلدا', description: 'طولانی‌ترین شب سال' },
+  // فروردین
+  { month: 1, day: 1, name: 'نوروز', description: 'سال نو ایرانی و جشن بهاران' },
+  { month: 1, day: 2, name: 'عیدنوروز', description: 'دومین روز نوروز' },
+  { month: 1, day: 3, name: 'عیدنوروز', description: 'سومین روز نوروز' },
+  { month: 1, day: 4, name: 'عیدنوروز', description: 'چهارمین روز نوروز' },
+  { month: 1, day: 12, name: 'روز جمهوری اسلامی ایران', description: 'روز ملی جمهوری اسلامی' },
+  { month: 1, day: 13, name: 'سیزه‌بدر', description: 'روز طبیعت و پایان تعطیلات نوروز' },
+  { month: 1, day: 18, name: 'روز زمین پاک', description: 'روز محیط زیست' },
+  
+  // اردیبهشت  
+  { month: 2, day: 2, name: 'روز معلم', description: 'روز بزرگداشت مقام معلم' },
+  { month: 2, day: 9, name: 'روز ملی خلیج فارس', description: 'روز بزرگداشت خلیج فارس' },
+  { month: 2, day: 18, name: 'روز بزرگداشت شیخ بهایی', description: 'ریاضیدان و معمار بزرگ ایرانی' },
+  { month: 2, day: 25, name: 'روز بزرگداشت فردوسی', description: 'شاعر حماسه‌سرای ایران' },
+  
+  // خرداد
+  { month: 3, day: 14, name: 'رحلت امام خمینی', description: 'بنیانگذار جمهوری اسلامی ایران' },
+  { month: 3, day: 15, name: 'قیام ۱۵ خرداد', description: 'قیام مردم علیه رژیم پهلوی' },
+  { month: 3, day: 31, name: 'شهادت دکتر چمران', description: 'دانشمند و رزمنده دفاع مقدس' },
+  
+  // تیر  
+  { month: 4, day: 7, name: 'روز قلم', description: 'روز بزرگداشت نویسندگان و روزنامه‌نگاران' },
+  { month: 4, day: 13, name: 'شب شعر و ادب فارسی', description: 'روز بزرگداشت حافظ شیرازی' },
+  { month: 4, day: 14, name: 'روز بزرگداشت حافظ', description: 'شاعر غزل‌سرای شیراز' },
+  
+  // مرداد
+  { month: 5, day: 1, name: 'روز بزرگداشت ابوعلی سینا و روز پزشک', description: 'حکیم و فیلسوف بزرگ ایرانی' },
+  { month: 5, day: 9, name: 'روز بزرگداشت شیخ شهاب‌الدین سهروردی', description: 'فیلسوف اشراقی' },
+  { month: 5, day: 28, name: 'روز بزرگداشت ابوریحان بیرونی', description: 'دانشمند و ریاضیدان بزرگ' },
+  
+  // شهریور
+  { month: 6, day: 8, name: 'روز بزرگداشت مولوی', description: 'عارف و شاعر نامی پارسی‌گو' },
+  { month: 6, day: 27, name: 'روز شعر و ادب فارسی', description: 'روز بزرگداشت استاد شهریار' },
+  
+  // مهر
+  { month: 7, day: 1, name: 'آغاز هفته دفاع مقدس', description: 'یادآوری دفاع از میهن' },
+  { month: 7, day: 8, name: 'روز بزرگداشت مولانا', description: 'روز ادب فارسی' },
+  { month: 7, day: 13, name: 'روز ملی کودک', description: 'روز اختصاص به کودکان' },
+  { month: 7, day: 20, name: 'روز بزرگداشت حکیم عمر خیام', description: 'ریاضیدان، شاعر و ستاره‌شناس' },
+  
+  // آبان  
+  { month: 8, day: 7, name: 'زادروز کوروش بزرگ', description: 'بنیانگذار امپراتوری هخامنشی' },
+  { month: 8, day: 13, name: 'روز دانش‌آموز', description: 'یادآوری قیام دانش‌آموزان در ۱۳ آبان' },
+  { month: 8, day: 24, name: 'روز کتاب و کتابخوانی', description: 'ترویج فرهنگ مطالعه' },
+  
+  // آذر
+  { month: 9, day: 7, name: 'روز نجوم', description: 'روز علم ستاره‌شناسی' },
+  { month: 9, day: 16, name: 'روز دانشجو', description: 'یادآوری قیام ۱۶ آذر دانشجویان' },
+  
+  // دی  
+  { month: 10, day: 11, name: 'روز بزرگداشت ابونصر فارابی', description: 'فیلسوف و موسیقیدان' },
+  { month: 10, day: 21, name: 'روز بزرگداشت یلدا', description: 'جشن زمستان و شب چله' },
+  { month: 10, day: 30, name: 'شب یلدا', description: 'طولانی‌ترین شب سال و جشن زمستان' },
+  
+  // بهمن
+  { month: 11, day: 15, name: 'روز بزرگداشت فردوسی', description: 'سراینده شاهنامه' },
+  { month: 11, day: 22, name: 'پیروزی انقلاب اسلامی', description: 'روز ملی ایران' },
+  
+  // اسفند  
+  { month: 12, day: 5, name: 'روز درختکاری', description: 'روز محیط زیست و کاشت درخت' },
+  { month: 12, day: 15, name: 'روز بزرگداشت خواجه نصیرالدین طوسی', description: 'ریاضیدان و ستاره‌شناس بزرگ' },
+  { month: 12, day: 20, name: 'روز ملی فرهنگ ایران باستان', description: 'بزرگداشت میراث فرهنگی' },
+  { month: 12, day: 29, name: 'روز ملی خلیج فارس', description: 'اهمیت ژئوپولیتیک خلیج فارس' }
 ];
 
 // Simple Persian calendar conversion (approximation)
@@ -201,6 +260,7 @@ export const PersianCalendarWidget = () => {
                   </div>
                   <div className="text-3xl font-bold text-purple-900 font-mono">
                     {currentTime.toLocaleTimeString('fa-IR', { 
+                      timeZone: 'Asia/Tehran',
                       hour: '2-digit', 
                       minute: '2-digit', 
                       second: '2-digit',
