@@ -18,119 +18,139 @@ import { PerformanceOptimizer } from '@/components/seo/PerformanceOptimizer';
 const Index = () => {
   console.log('Index component rendering...');
   
-  // Enhanced SEO data for homepage
-  const homeTitle = "ابزارهای آنلاین رایگان | محاسبه‌گر، تبدیل متن، ویرایش تصویر - لنگر";
-  const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی با طراحی مدرن و کاربری آسان.";
-  const homeKeywords = "ابزار آنلاین, محاسبه گر آنلاین, تبدیل متن, ویرایش تصویر, سئو, فال آنلاین, ابزار فارسی, لنگر, محاسبه بیمه, تبدیل واحد, طالع بینی, ایرانی, رایگان";
+  try {
+    // Enhanced SEO data for homepage
+    const homeTitle = "ابزارهای آنلاین رایگان | محاسبه‌گر، تبدیل متن، ویرایش تصویر - لنگر";
+    const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی با طراحی مدرن و کاربری آسان.";
+    const homeKeywords = "ابزار آنلاین, محاسبه گر آنلاین, تبدیل متن, ویرایش تصویر, سئو, فال آنلاین, ابزار فارسی, لنگر, محاسبه بیمه, تبدیل واحد, طالع بینی, ایرانی, رایگان";
 
-  // Common FAQ for homepage
-  const homeFAQ = [
-    {
-      question: "آیا ابزارهای لنگر رایگان هستند؟",
-      answer: "بله، تمام ابزارهای لنگر کاملاً رایگان هستند و نیازی به ثبت نام یا پرداخت ندارند."
-    },
-    {
-      question: "آیا ابزارها روی موبایل کار می‌کنند؟",
-      answer: "بله، تمام ابزارهای لنگر طراحی ریسپانسیو دارند و روی موبایل، تبلت و دسکتاپ عالی کار می‌کنند."
-    },
-    {
-      question: "چند ابزار در لنگر موجود است؟",
-      answer: "لنگر بیش از ۱۰۰ ابزار آنلاین مختلف در زمینه‌های محاسبات، متن، تصویر، سئو و فرهنگ ایرانی ارائه می‌دهد."
-    },
-    {
-      question: "آیا اطلاعات من در لنگر ذخیره می‌شود؟",
-      answer: "خیر، تمام محاسبات در مرورگر شما انجام می‌شود و هیچ اطلاعاتی در سرورهای ما ذخیره نمی‌شود."
-    }
-  ];
+    console.log('Basic data loaded successfully');
 
-  const websiteSchema = generateWebsiteSchema();
-  const faqSchema = generateFAQSchema(homeFAQ);
-  const combinedSchema = combineSchemas(websiteSchema, faqSchema);
+    // Common FAQ for homepage
+    const homeFAQ = [
+      {
+        question: "آیا ابزارهای لنگر رایگان هستند؟",
+        answer: "بله، تمام ابزارهای لنگر کاملاً رایگان هستند و نیازی به ثبت نام یا پرداخت ندارند."
+      },
+      {
+        question: "آیا ابزارها روی موبایل کار می‌کنند؟",
+        answer: "بله، تمام ابزارهای لنگر طراحی ریسپانسیو دارند و روی موبایل، تبلت و دسکتاپ عالی کار می‌کنند."
+      },
+      {
+        question: "چند ابزار در لنگر موجود است؟",
+        answer: "لنگر بیش از ۱۰۰ ابزار آنلاین مختلف در زمینه‌های محاسبات، متن، تصویر، سئو و فرهنگ ایرانی ارائه می‌دهد."
+      },
+      {
+        question: "آیا اطلاعات من در لنگر ذخیره می‌شود؟",
+        answer: "خیر، تمام محاسبات در مرورگر شما انجام می‌شود و هیچ اطلاعاتی در سرورهای ما ذخیره نمی‌شود."
+      }
+    ];
 
-  return (
-    <Layout>
-      <SeoHead 
-        title={homeTitle}
-        description={homeDescription}
-        keywords={homeKeywords}
-        schema={combinedSchema}
-        canonical="https://langar.co/"
-      />
-      
-      <PageBreadcrumbs />
-      
-      <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main Content */}
-          <div className="flex-1">
-            <HeroSection />
-            
-            <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
+    console.log('FAQ data loaded successfully');
+
+    const websiteSchema = generateWebsiteSchema();
+    const faqSchema = generateFAQSchema(homeFAQ);
+    const combinedSchema = combineSchemas(websiteSchema, faqSchema);
+
+    console.log('Schema generation completed');
+
+    return (
+      <Layout>
+        <SeoHead 
+          title={homeTitle}
+          description={homeDescription}
+          keywords={homeKeywords}
+          schema={combinedSchema}
+          canonical="https://langar.co/"
+        />
+        
+        <PageBreadcrumbs />
+        
+        <div className="flex flex-col lg:flex-row gap-8">
+            {/* Main Content */}
+            <div className="flex-1">
+              <HeroSection />
               
-              {/* Enhanced Tools Section */}
-              <div id="tools-sections">
-                <EnhancedToolsSection />
-              </div>
-
-              {/* Strategic Ad Placement - After Tools */}
-              {shouldShowAds() && (
-                <ResponsiveAd 
-                  adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
-                  className="my-8 max-w-4xl mx-auto"
-                />
-              )}
-
-              {/* Persian Calendar Widget */}
-              <PersianCalendarWidget />
-
-              <ModernProfessionalToolsSection />
-              
-              {/* Strategic Ad Placement - Middle Content */}
-              {shouldShowAds() && (
-                <ResponsiveAd 
-                  adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
-                  className="my-8 max-w-4xl mx-auto"
-                />
-              )}
-
-              <PersianCulturalEnhancedSection />
-              <MysticalReadingsSection />
-              <InteractiveCategoriesSection />
-            </div>
-          </div>
-
-          {/* Sidebar with ads - Desktop only */}
-          {shouldShowAds() && (
-            <div className="hidden lg:block w-80 flex-shrink-0">
-              <div className="sticky top-20 space-y-8">
-                <SidebarAd 
-                  adSlot={getAdSlot('HOMEPAGE_SIDEBAR')} 
-                  className="mb-8"
-                />
+              <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
                 
-                {/* Additional sidebar content */}
-                <div className="bg-card rounded-lg p-6 border border-border/50">
-                  <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
-                  <div className="space-y-2 text-sm">
-                    <a href="/tool/qr-code-generator" className="block hover:text-primary transition-colors">
-                      تولید QR کد
-                    </a>
-                    <a href="/tool/color-palette-generator" className="block hover:text-primary transition-colors">
-                      پالت رنگ
-                    </a>
-                    <a href="/tool/password-generator" className="block hover:text-primary transition-colors">
-                      تولید رمز عبور
-                    </a>
-                    <a href="/tool/word-etymology" className="block hover:text-primary transition-colors">
-                      ریشه‌شناسی کلمات
-                    </a>
+                {/* Enhanced Tools Section */}
+                <div id="tools-sections">
+                  <EnhancedToolsSection />
+                </div>
+
+                {/* Strategic Ad Placement - After Tools */}
+                {shouldShowAds() && (
+                  <ResponsiveAd 
+                    adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
+                    className="my-8 max-w-4xl mx-auto"
+                  />
+                )}
+
+                {/* Persian Calendar Widget */}
+                <PersianCalendarWidget />
+
+                <ModernProfessionalToolsSection />
+                
+                {/* Strategic Ad Placement - Middle Content */}
+                {shouldShowAds() && (
+                  <ResponsiveAd 
+                    adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
+                    className="my-8 max-w-4xl mx-auto"
+                  />
+                )}
+
+                <PersianCulturalEnhancedSection />
+                <MysticalReadingsSection />
+                <InteractiveCategoriesSection />
+              </div>
+            </div>
+
+            {/* Sidebar with ads - Desktop only */}
+            {shouldShowAds() && (
+              <div className="hidden lg:block w-80 flex-shrink-0">
+                <div className="sticky top-20 space-y-8">
+                  <SidebarAd 
+                    adSlot={getAdSlot('HOMEPAGE_SIDEBAR')} 
+                    className="mb-8"
+                  />
+                  
+                  {/* Additional sidebar content */}
+                  <div className="bg-card rounded-lg p-6 border border-border/50">
+                    <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
+                    <div className="space-y-2 text-sm">
+                      <a href="/tool/qr-code-generator" className="block hover:text-primary transition-colors">
+                        تولید QR کد
+                      </a>
+                      <a href="/tool/color-palette-generator" className="block hover:text-primary transition-colors">
+                        پالت رنگ
+                      </a>
+                      <a href="/tool/password-generator" className="block hover:text-primary transition-colors">
+                        تولید رمز عبور
+                      </a>
+                      <a href="/tool/word-etymology" className="block hover:text-primary transition-colors">
+                        ریشه‌شناسی کلمات
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        </Layout>
+    );
+  } catch (error) {
+    console.error('Error in Index component:', error);
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <h2 className="text-xl font-bold text-foreground mb-2">خطا در بارگذاری صفحه</h2>
+            <p className="text-muted-foreground">لطفا صفحه را مجددا بارگذاری کنید</p>
+          </div>
         </div>
       </Layout>
-  );
+    );
+  }
 };
 
 export default Index;
