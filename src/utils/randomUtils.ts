@@ -84,26 +84,14 @@ export const generateRandomQuote = (): string => {
   return quotes[Math.floor(Math.random() * quotes.length)];
 };
 
+// Re-export movie functionality from the movies data file
+export { getRandomMovie } from '@/data/movies';
+
+// Legacy function for backward compatibility
 export const suggestRandomMovie = (): string => {
-  const movies = [
-    "پدرخوانده",
-    "شاوشنک",
-    "پالپ فیکشن",
-    "فارست گامپ",
-    "ماتریکس",
-    "گلادیاتور",
-    "شوالیه تاریکی",
-    "شتاب",
-    "بین ستاره‌ای",
-    "ارباب حلقه‌ها",
-    "انگل",
-    "مرد عنکبوتی: درون دنیای عنکبوتی",
-    "اپنهایمر",
-    "بلید رانر ۲۰۴۹",
-    "جوکر"
-  ];
-  
-  return movies[Math.floor(Math.random() * movies.length)];
+  const { getRandomMovie } = require('@/data/movies');
+  const movie = getRandomMovie();
+  return movie.persianTitle;
 };
 
 export const suggestRandomRecipe = (): string => {

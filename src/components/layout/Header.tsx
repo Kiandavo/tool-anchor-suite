@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Settings, Home, Menu, X, Calculator, Type, Image, Shuffle, Search, Hash } from 'lucide-react';
+import { ArrowRight, Settings, Home, Menu, X, Calculator, Type, Sparkles, Wrench, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
   title?: string;
@@ -13,15 +13,47 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const categories = [
-    { id: 'calculator', name: 'ماشین‌حساب', icon: Calculator },
-    { id: 'text', name: 'متن', icon: Type },
-    { id: 'image', name: 'تصویر', icon: Image },
-    { id: 'random', name: 'تصادفی', icon: Shuffle },
-    { id: 'seo', name: 'سئو', icon: Search },
-    { id: 'number', name: 'عدد', icon: Hash },
+  const mainCategories = [
+    { 
+      id: 'calculators', 
+      name: 'محاسبات', 
+      icon: Calculator,
+      subcategories: ['calculator', 'utility']
+    },
+    { 
+      id: 'text-image', 
+      name: 'متن و تصویر', 
+      icon: Type,
+      subcategories: ['text', 'image', 'design']
+    },
+    { 
+      id: 'persian-culture', 
+      name: 'فرهنگ پارسی', 
+      icon: Sparkles,
+      subcategories: ['persian-cultural', 'readings']
+    },
+    { 
+      id: 'tools', 
+      name: 'سایر ابزارها', 
+      icon: Wrench,
+      subcategories: ['productivity', 'educational', 'random']
+    }
   ];
+
+  const categoryLabels: Record<string, string> = {
+    calculator: 'ماشین‌حساب',
+    text: 'متن',
+    image: 'تصویر',
+    design: 'طراحی',
+    utility: 'ابزار کاربردی',
+    'persian-cultural': 'فرهنگ پارسی',
+    readings: 'فال و خواندنی',
+    productivity: 'بهره‌وری',
+    educational: 'آموزشی',
+    random: 'تصادفی'
+  };
 
   const handleBack = () => {
     if (backUrl) {
@@ -32,22 +64,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
         const category = referrer.split('/category/')[1];
         navigate(`/category/${category}`);
       } else {
-        const toolPath = location.pathname.split('/tool/')[1];
-        if (toolPath && toolPath.includes('calculator')) {
-          navigate('/category/calculator');
-        } else if (toolPath.includes('text')) {
-          navigate('/category/text');
-        } else if (toolPath.includes('image')) {
-          navigate('/category/image');
-        } else if (toolPath.includes('random')) {
-          navigate('/category/random');
-        } else if (toolPath.includes('seo')) {
-          navigate('/category/seo');
-        } else if (toolPath.includes('number')) {
-          navigate('/category/number');
-        } else {
-          navigate(-1);
-        }
+        navigate(-1);
       }
     } else {
       navigate(-1);
@@ -76,15 +93,36 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
-              {categories.map((category) => (
-                <Link
-                  key={category.id}
-                  to={`/category/${category.id}`}
-                  className="flex items-center gap-2 px-4 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium group"
-                >
-                  <category.icon size={16} className="group-hover:scale-110 transition-transform" />
-                  <span>{category.name}</span>
-                </Link>
+              {mainCategories.map((category) => (
+                <div key={category.id} className="relative">
+                  <button
+                    onMouseEnter={() => setOpenDropdown(category.id)}
+                    onMouseLeave={() => setOpenDropdown(null)}
+                    className="flex items-center gap-2 px-4 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium group"
+                  >
+                    <category.icon size={16} className="group-hover:scale-110 transition-transform" />
+                    <span>{category.name}</span>
+                    <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
+                  </button>
+                  
+                  {openDropdown === category.id && (
+                    <div 
+                      className="absolute top-full left-0 mt-1 bg-white/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl min-w-48 z-50"
+                      onMouseEnter={() => setOpenDropdown(category.id)}
+                      onMouseLeave={() => setOpenDropdown(null)}
+                    >
+                      {category.subcategories.map((subcat) => (
+                        <Link
+                          key={subcat}
+                          to={`/category/${subcat}`}
+                          className="block px-4 py-3 text-gray-800 hover:bg-primary/10 hover:text-primary transition-colors text-sm first:rounded-t-lg last:rounded-b-lg"
+                        >
+                          {categoryLabels[subcat]}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
               <Link
                 to="/all-tools"
@@ -131,19 +169,28 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
-          <div className="fixed top-16 left-0 right-0 bg-primary/98 backdrop-blur-md border-b border-primary/20 shadow-xl">
+          <div className="fixed top-16 left-0 right-0 bg-primary/98 backdrop-blur-md border-b border-primary/20 shadow-xl max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="container mx-auto px-4 py-6">
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                {categories.map((category) => (
-                  <Link
-                    key={category.id}
-                    to={`/category/${category.id}`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-4 text-white/90 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all duration-200 group"
-                  >
-                    <category.icon size={20} className="group-hover:scale-110 transition-transform" />
-                    <span className="font-medium">{category.name}</span>
-                  </Link>
+              <div className="space-y-4 mb-6">
+                {mainCategories.map((category) => (
+                  <div key={category.id} className="space-y-2">
+                    <div className="flex items-center gap-3 p-3 text-white font-medium bg-white/10 rounded-xl">
+                      <category.icon size={20} />
+                      <span>{category.name}</span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-2 pr-8">
+                      {category.subcategories.map((subcat) => (
+                        <Link
+                          key={subcat}
+                          to={`/category/${subcat}`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block p-3 text-white/80 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-all duration-200 text-sm"
+                        >
+                          {categoryLabels[subcat]}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
               <Link
