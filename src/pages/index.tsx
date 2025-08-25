@@ -12,6 +12,8 @@ import { SeoHead } from '@/components/seo/SeoHead';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
+import { PageBreadcrumbs } from '@/components/seo/PageBreadcrumbs';
+import { PerformanceOptimizer } from '@/components/seo/PerformanceOptimizer';
 
 const Index = () => {
   // Enhanced SEO data for homepage
@@ -44,86 +46,90 @@ const Index = () => {
   const combinedSchema = combineSchemas(websiteSchema, faqSchema);
 
   return (
-    <Layout>
-      <SeoHead 
-        title={homeTitle}
-        description={homeDescription}
-        keywords={homeKeywords}
-        schema={combinedSchema}
-        canonical="https://langar.co/"
-      />
-      
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Main Content */}
-        <div className="flex-1">
-          <HeroSection />
-          
-          <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
+    <PerformanceOptimizer>
+      <Layout>
+        <SeoHead 
+          title={homeTitle}
+          description={homeDescription}
+          keywords={homeKeywords}
+          schema={combinedSchema}
+          canonical="https://langar.co/"
+        />
+        
+        <PageBreadcrumbs />
+        
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Main Content */}
+          <div className="flex-1">
+            <HeroSection />
             
-            {/* Enhanced Tools Section */}
-            <div id="tools-sections">
-              <EnhancedToolsSection />
-            </div>
-
-            {/* Strategic Ad Placement - After Tools */}
-            {shouldShowAds() && (
-              <ResponsiveAd 
-                adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
-                className="my-8 max-w-4xl mx-auto"
-              />
-            )}
-
-            {/* Persian Calendar Widget */}
-            <PersianCalendarWidget />
-
-            <ModernProfessionalToolsSection />
-            
-            {/* Strategic Ad Placement - Middle Content */}
-            {shouldShowAds() && (
-              <ResponsiveAd 
-                adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
-                className="my-8 max-w-4xl mx-auto"
-              />
-            )}
-
-            <PersianCulturalEnhancedSection />
-            <MysticalReadingsSection />
-            <InteractiveCategoriesSection />
-          </div>
-        </div>
-
-        {/* Sidebar with ads - Desktop only */}
-        {shouldShowAds() && (
-          <div className="hidden lg:block w-80 flex-shrink-0">
-            <div className="sticky top-20 space-y-8">
-              <SidebarAd 
-                adSlot={getAdSlot('HOMEPAGE_SIDEBAR')} 
-                className="mb-8"
-              />
+            <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
               
-              {/* Additional sidebar content */}
-              <div className="bg-card rounded-lg p-6 border border-border/50">
-                <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
-                <div className="space-y-2 text-sm">
-                  <a href="/tool/qr-code-generator" className="block hover:text-primary transition-colors">
-                    تولید QR کد
-                  </a>
-                  <a href="/tool/color-palette-generator" className="block hover:text-primary transition-colors">
-                    پالت رنگ
-                  </a>
-                  <a href="/tool/password-generator" className="block hover:text-primary transition-colors">
-                    تولید رمز عبور
-                  </a>
-                  <a href="/tool/word-etymology" className="block hover:text-primary transition-colors">
-                    ریشه‌شناسی کلمات
-                  </a>
+              {/* Enhanced Tools Section */}
+              <div id="tools-sections">
+                <EnhancedToolsSection />
+              </div>
+
+              {/* Strategic Ad Placement - After Tools */}
+              {shouldShowAds() && (
+                <ResponsiveAd 
+                  adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
+                  className="my-8 max-w-4xl mx-auto"
+                />
+              )}
+
+              {/* Persian Calendar Widget */}
+              <PersianCalendarWidget />
+
+              <ModernProfessionalToolsSection />
+              
+              {/* Strategic Ad Placement - Middle Content */}
+              {shouldShowAds() && (
+                <ResponsiveAd 
+                  adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
+                  className="my-8 max-w-4xl mx-auto"
+                />
+              )}
+
+              <PersianCulturalEnhancedSection />
+              <MysticalReadingsSection />
+              <InteractiveCategoriesSection />
+            </div>
+          </div>
+
+          {/* Sidebar with ads - Desktop only */}
+          {shouldShowAds() && (
+            <div className="hidden lg:block w-80 flex-shrink-0">
+              <div className="sticky top-20 space-y-8">
+                <SidebarAd 
+                  adSlot={getAdSlot('HOMEPAGE_SIDEBAR')} 
+                  className="mb-8"
+                />
+                
+                {/* Additional sidebar content */}
+                <div className="bg-card rounded-lg p-6 border border-border/50">
+                  <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
+                  <div className="space-y-2 text-sm">
+                    <a href="/tool/qr-code-generator" className="block hover:text-primary transition-colors">
+                      تولید QR کد
+                    </a>
+                    <a href="/tool/color-palette-generator" className="block hover:text-primary transition-colors">
+                      پالت رنگ
+                    </a>
+                    <a href="/tool/password-generator" className="block hover:text-primary transition-colors">
+                      تولید رمز عبور
+                    </a>
+                    <a href="/tool/word-etymology" className="block hover:text-primary transition-colors">
+                      ریشه‌شناسی کلمات
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-    </Layout>
+          )}
+        </div>
+      </Layout>
+    </PerformanceOptimizer>
   );
 };
 
