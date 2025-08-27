@@ -79,6 +79,12 @@
     <link rel="preload" href="/src/App.tsx" as="script">
     <link rel="preload" href="/src/components/Layout.tsx" as="script">
     
+    <!-- Additional resource hints for better TTI -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="prefetch" href="/src/components/ui/button.tsx" as="script">
+    <link rel="prefetch" href="/src/components/ui/card.tsx" as="script">
+    
     <!-- Optimize font loading for faster FCP -->
     <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin>
@@ -270,13 +276,22 @@
       }
     </style>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5JG2WQN86"></script>
+    <!-- Defer Google Analytics to improve TTI -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);} 
-      gtag('js', new Date());
-      gtag('config', 'G-P5JG2WQN86');
+      // Defer Google Analytics loading to improve TTI
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-P5JG2WQN86';
+          document.head.appendChild(script);
+          
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);} 
+          gtag('js', new Date());
+          gtag('config', 'G-P5JG2WQN86');
+        }, 1000); // Delay GA loading by 1 second
+      });
     </script>
   </head>
   <body>
@@ -293,19 +308,38 @@
         </div>
       </div>
     </div>
-    <script type="module" src="/src/main.tsx" defer></script>
+    <script type="module" src="/src/main.tsx"></script>
     <script>
+      // Defer service worker registration to improve TTI
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
+          setTimeout(() => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+          }, 2000); // Delay SW registration
         });
       }
       
-      // Ensure immediate content visibility
+      // Ensure immediate content visibility and improve TTI
       document.addEventListener('DOMContentLoaded', function() {
         document.body.style.visibility = 'visible';
         document.body.style.opacity = '1';
+        
+        // Remove loading state immediately for better perceived performance
+        const heroLoading = document.querySelector('.hero-loading');
+        if (heroLoading) {
+          heroLoading.style.display = 'none';
+        }
       });
+      
+      // Optimize main thread by yielding control
+      function yieldToMain() {
+        return new Promise(resolve => {
+          setTimeout(resolve, 0);
+        });
+      }
+      
+      // Break up long tasks for better TTI
+      window.breakUpLongTasks = yieldToMain;
     </script>
   </body>
 </html>
