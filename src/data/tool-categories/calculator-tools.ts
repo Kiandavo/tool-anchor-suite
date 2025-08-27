@@ -109,33 +109,6 @@ export const calculatorTools: Tool[] = [
     isNew: false,
     icon: "calculator"
   },
-  {
-    id: "74",
-    slug: "font-size-calculator",
-    name: "محاسبه‌گر اندازه فونت",
-    category: "calculators",
-    description: "اندازه فونت مناسب وب را پیدا کنید",
-    isNew: false,
-    icon: "calculator"
-  },
-  {
-    id: "91",
-    slug: "range-calculator",
-    name: "محاسبه بازه",
-    category: "calculators",
-    description: "بازه اعداد را محاسبه کنید",
-    isNew: false,
-    icon: "calculator"
-  },
-  {
-    id: "104",
-    slug: "unit-list-generator",
-    name: "تولید لیست واحدها",
-    category: "calculators",
-    description: "لیست تبدیل واحدها را بسازید",
-    isNew: false,
-    icon: "calculator"
-  },
   // Adding 10 new calculator tools
   {
     id: "105",

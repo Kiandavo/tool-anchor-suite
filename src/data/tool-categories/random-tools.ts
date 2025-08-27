@@ -50,15 +50,6 @@ export const randomTools: Tool[] = [
     isComingSoon: false
   },
   {
-    id: "67",
-    slug: "coin-flip",
-    name: "شیر یا خط",
-    category: "random",
-    description: "سکه بیاندازید: شیر یا خط؟",
-    isNew: false,
-    icon: "dice"
-  },
-  {
     id: "68",
     slug: "random-picker",
     name: "انتخابگر تصادفی",
@@ -86,25 +77,6 @@ export const randomTools: Tool[] = [
     icon: "random"
   },
   {
-    id: "71",
-    slug: "dice-roller",
-    name: "تاس بریز",
-    category: "random",
-    description: "تاس شش‌وجهی دیجیتال",
-    isNew: false,
-    icon: "dice"
-  },
-  {
-    id: "72",
-    slug: "random-user-generator",
-    name: "کاربر تصادفی",
-    category: "random",
-    description: "یک نام کاربری و پروفایل ساختگی بساز",
-    isNew: false,
-    icon: "key",
-    isComingSoon: true
-  },
-  {
     id: "73",
     slug: "random-quote-generator",
     name: "جمله قصار تصادفی",
@@ -121,16 +93,6 @@ export const randomTools: Tool[] = [
     description: "نام کاربری تصادفی خلق کنید",
     isNew: false,
     icon: "key"
-  },
-  {
-    id: "77",
-    slug: "password-strength-check",
-    name: "بررسی قدرت رمز عبور",
-    category: "random",
-    description: "قدرت رمز عبور خود را بسنجید",
-    isNew: false,
-    icon: "key",
-    isComingSoon: true
   },
   {
     id: "92",
@@ -153,15 +115,6 @@ export const randomTools: Tool[] = [
     isComingSoon: false
   },
   {
-    id: "108",
-    slug: "random-lottery-numbers",
-    name: "اعداد لاتاری تصادفی",
-    category: "random",
-    description: "تولید اعداد تصادفی برای لاتاری",
-    isNew: true,
-    icon: "star"
-  },
-  {
     id: "109",
     slug: "random-team-generator",
     name: "تولید تیم تصادفی",
@@ -179,16 +132,6 @@ export const randomTools: Tool[] = [
     isNew: true,
     icon: "random",
     isComingSoon: false
-  },
-  {
-    id: "111",
-    slug: "random-gift-picker",
-    name: "انتخاب هدیه تصادفی",
-    category: "random",
-    description: "برای مناسبت‌های مختلف هدیه تصادفی پیشنهاد می‌دهد",
-    isNew: true,
-    icon: "gift",
-    isComingSoon: true
   },
   {
     id: "112",
@@ -209,65 +152,6 @@ export const randomTools: Tool[] = [
     isNew: true,
     icon: "random",
     isComingSoon: false
-  },
-  {
-    id: "114",
-    slug: "random-tournament-bracket",
-    name: "جدول مسابقات تصادفی",
-    category: "random",
-    description: "یک جدول مسابقات با جایگیری تصادفی بسازید",
-    isNew: true,
-    icon: "award",
-    isComingSoon: true
-  },
-  {
-    id: "115",
-    slug: "random-map-location",
-    name: "مکان تصادفی روی نقشه",
-    category: "random",
-    description: "یک نقطه تصادفی روی نقشه جهان پیدا کنید",
-    isNew: true,
-    icon: "random",
-    isComingSoon: true
-  },
-  {
-    id: "116",
-    slug: "random-prize-wheel",
-    name: "چرخ شانس",
-    category: "random",
-    description: "یک چرخ شانس با گزینه‌های سفارشی بسازید",
-    isNew: true,
-    icon: "random",
-    isComingSoon: true
-  },
-  {
-    id: "117",
-    slug: "random-character-generator",
-    name: "تولید شخصیت تصادفی",
-    category: "random",
-    description: "یک شخصیت تصادفی با ویژگی‌های مختلف بسازید",
-    isNew: true,
-    icon: "sparkles",
-    isComingSoon: true
-  },
-  {
-    id: "118",
-    slug: "random-task-assigner",
-    name: "تخصیص تصادفی وظایف",
-    category: "random",
-    description: "وظایف را به صورت تصادفی بین افراد تقسیم کنید",
-    isNew: true,
-    icon: "random",
-    isComingSoon: true
-  },
-  {
-    id: "119",
-    slug: "random-bible-verse",
-    name: "آیه تصادفی کتاب مقدس",
-    category: "random",
-    description: "یک آیه تصادفی از کتاب مقدس را نمایش دهید",
-    isNew: true,
-    icon: "star"
   },
   {
     id: "120",

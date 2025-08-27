@@ -38,42 +38,6 @@ export const numberTools: Tool[] = [
     icon: "binary"
   },
   {
-    id: "57",
-    slug: "decimal-binary-converter",
-    name: "تبدیل مبنای ده به دودویی",
-    category: "number",
-    description: "تبدیل اعداد بین مبناها",
-    isNew: false,
-    icon: "binary"
-  },
-  {
-    id: "58",
-    slug: "decimal-hex-converter",
-    name: "تبدیل مبنای ده به هگزادسیمال",
-    category: "number",
-    description: "تبدیل اعداد به هگزادسیمال",
-    isNew: false,
-    icon: "binary"
-  },
-  {
-    id: "59",
-    slug: "decimal-octal-converter",
-    name: "تبدیل مبنای ده به اکتال",
-    category: "number",
-    description: "تبدیل اعداد از ده به اکتال",
-    isNew: false,
-    icon: "binary"
-  },
-  {
-    id: "60",
-    slug: "even-odd-checker",
-    name: "تشخیص زوج یا فرد",
-    category: "number",
-    description: "عدد دهید و زوج یا فرد بودن را ببینید",
-    isNew: false,
-    icon: "hash"
-  },
-  {
     id: "61",
     slug: "sum-calculator",
     name: "محاسبه مجموع اعداد",

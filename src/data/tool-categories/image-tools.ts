@@ -48,16 +48,6 @@ export const imageTools: Tool[] = [
     isComingSoon: false
   },
   {
-    id: "28",
-    slug: "image-editor",
-    name: "ویرایش ساده تصویر",
-    category: "image",
-    description: "افزودن فیلتر یا تغییر روشنایی تصویر",
-    isNew: false,
-    icon: "image",
-    isComingSoon: true
-  },
-  {
     id: "29",
     slug: "image-rotate",
     name: "چرخش تصویر",
@@ -74,16 +64,6 @@ export const imageTools: Tool[] = [
     description: "تصویر را به صورت افقی یا عمودی وارونه کنید",
     isNew: false,
     icon: "image"
-  },
-  {
-    id: "31",
-    slug: "remove-bg",
-    name: "حذف پس‌زمینه تصویر",
-    category: "image",
-    description: "پس‌زمینه تصویر را حذف کنید (ابزار ابتدایی)",
-    isNew: false,
-    icon: "image",
-    isComingSoon: true
   },
   {
     id: "32",
@@ -130,26 +110,6 @@ export const imageTools: Tool[] = [
     isNew: false,
     icon: "image",
     isComingSoon: false
-  },
-  {
-    id: "88",
-    slug: "batch-image-converter",
-    name: "تبدیل گروهی عکس",
-    category: "image",
-    description: "تبدیل فرمت چندین عکس به صورت همزمان",
-    isNew: false,
-    icon: "image",
-    isComingSoon: true
-  },
-  {
-    id: "106",
-    slug: "image-pixelator",
-    name: "پیکسلی کردن تصویر",
-    category: "image",
-    description: "بر روی عکس خود افکت پیکسلی اعمال کنید",
-    isNew: false,
-    icon: "image",
-    isComingSoon: true
   },
   {
     id: "109",
