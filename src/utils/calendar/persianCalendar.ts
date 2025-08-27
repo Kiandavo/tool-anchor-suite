@@ -212,7 +212,7 @@ export function hijriToGregorian(hYear: number, hMonth: number, hDay: number): C
   const jd = Math.floor((11 * hYear + 3) / 30) + 354 * hYear + 30 * hMonth -
     Math.floor((hMonth - 1) / 2) + hDay + 1948440 - 385;
   
-  const l = jd + 68569;
+  let l = jd + 68569;
   const n = Math.floor((4 * l) / 146097);
   l = l - Math.floor((146097 * n + 3) / 4);
   
