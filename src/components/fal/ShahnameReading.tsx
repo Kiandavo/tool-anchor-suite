@@ -27,7 +27,7 @@ export const ShahnameReading = () => {
 
   return (
     <div className="space-y-8">
-      <Card className="bg-gradient-to-br from-background via-background/90 to-muted/30 border-primary/20 shadow-lg overflow-hidden relative backdrop-blur-sm">
+      <Card className="lcp-tool-card">
         {/* Persian epic background graphics */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-500/5 via-transparent to-orange-500/5"></div>
@@ -36,17 +36,17 @@ export const ShahnameReading = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-amber-100/10 text-8xl">📜</div>
         </div>
       
-        <CardHeader className="bg-gradient-to-r from-amber-600 to-orange-600 text-center pb-3 py-4 relative border-b border-amber-600/30">
+        <CardHeader className="lcp-tool-header">
           <div className="flex items-center justify-center">
             <Crown className="text-amber-100 mr-2" size={18} />
-            <h2 className="text-base font-bold text-amber-100 flex items-center">
+            <h2 className="lcp-tool-title">
               راهنمایی از شاهنامه فردوسی
               <span className="mr-2 inline-block"><Sparkles size={14} className="text-amber-100 animate-pulse" /></span>
             </h2>
           </div>
           
           {/* Enhanced subtitle */}
-          <p className="text-amber-100/80 text-xs mt-1 font-medium">
+          <p className="lcp-tool-subtitle">
             حکمت و اندرز از حماسه ملی ایران
           </p>
           
@@ -54,7 +54,7 @@ export const ShahnameReading = () => {
           <ShahnameGuide />
         </CardHeader>
       
-        <CardContent className="pt-4 px-4 relative min-h-[300px]">
+        <CardContent className="lcp-content-area">
           <div className="space-y-3">
             {showIntention ? (
               <ShahnameIntention onSetIntention={prepareForReading} />
