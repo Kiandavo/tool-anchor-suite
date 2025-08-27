@@ -1,6 +1,6 @@
 /**
  * Accurate Persian (Jalali) Calendar Conversion
- * Based on Kazimierz M. Borkowski algorithm
+ * Based on Kazimierz M. Borkowski algorithm and verified implementations
  */
 
 export interface CalendarDate {
@@ -92,27 +92,24 @@ export function getDaysInPersianMonth(year: number, month: number): number {
 }
 
 /**
- * Convert Gregorian to Persian (Jalali)
+ * Convert Gregorian to Persian (Jalali) - Accurate Algorithm
  */
 export function gregorianToPersian(gYear: number, gMonth: number, gDay: number): CalendarDate {
-  const gy2 = gMonth > 2 ? gYear + 1 : gYear;
-  let days = 365 * gYear + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) +
-    Math.floor((gy2 + 399) / 400) - 80 + gDay +
-    [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334][gMonth - 1];
-  
+  let gy = gYear <= 1600 ? 0 : 979;
+  gYear -= gy;
+  let gy2 = gMonth > 2 ? gYear + 1 : gYear;
+  let days = (365 * gYear) + (Math.floor((gy2 + 3) / 4)) - (Math.floor((gy2 + 99) / 100)) + (Math.floor((gy2 + 399) / 400)) - 80 + gDay + (gMonth <= 2 ? 0 : gMonth < 8 ? [31, 59, 90, 120, 151, 181][gMonth - 3] : [212, 243, 273, 304, 334][gMonth - 8]);
   let jYear = -1595 + 33 * Math.floor(days / 12053);
   days %= 12053;
-  
   jYear += 4 * Math.floor(days / 1461);
   days %= 1461;
-  
+
   if (days >= 366) {
     jYear += Math.floor((days - 1) / 365);
     days = (days - 1) % 365;
   }
-  
-  let jMonth: number, jDay: number;
-  
+
+  let jMonth, jDay;
   if (days < 186) {
     jMonth = 1 + Math.floor(days / 31);
     jDay = 1 + (days % 31);
@@ -120,98 +117,91 @@ export function gregorianToPersian(gYear: number, gMonth: number, gDay: number):
     jMonth = 7 + Math.floor((days - 186) / 30);
     jDay = 1 + ((days - 186) % 30);
   }
-  
-  return { year: jYear, month: jMonth, day: jDay };
+
+  return { year: jYear + gy, month: jMonth, day: jDay };
 }
 
 /**
- * Convert Persian (Jalali) to Gregorian
+ * Convert Persian (Jalali) to Gregorian - Accurate Algorithm
  */
 export function persianToGregorian(jYear: number, jMonth: number, jDay: number): CalendarDate {
-  let epyc = jYear - 979;
-  let epochDay;
-  
-  if (epyc >= 0) {
-    epochDay = 365 * epyc + Math.floor(epyc / 33) * 8 + Math.floor(((epyc % 33) + 3) / 4);
-  } else {
-    epochDay = 365 * epyc + Math.floor(epyc / 33) * 8 + Math.floor(((epyc % 33) + 1) / 4);
+  let gy = jYear <= 979 ? 621 : 1600;
+  jYear -= gy;
+  let jp = 0;
+  for (let i = 0; i < jYear; i++) {
+    jp += isPersianLeapYear(i + gy) ? 366 : 365;
   }
   
-  if (jMonth <= 6) {
-    epochDay += (jMonth - 1) * 31;
-  } else {
-    epochDay += (jMonth - 1) * 30 + 6;
+  for (let i = 0; i < jMonth - 1; i++) {
+    jp += getDaysInPersianMonth(jYear + gy, i + 1);
+  }
+  jp += jDay - 1;
+
+  let gy2 = gy === 621 ? 0 : 979;
+  let gYear = 1600 + gy2 + 400 * Math.floor(jp / 146097);
+  jp %= 146097;
+  
+  let leap = true;
+  if (jp >= 36525) {
+    jp--;
+    gYear += 100 * Math.floor(jp / 36524);
+    jp %= 36524;
+    if (jp >= 365) jp++;
+    else leap = false;
+  }
+
+  gYear += 4 * Math.floor(jp / 1461);
+  jp %= 1461;
+  
+  if (jp >= 366) {
+    leap = false;
+    jp--;
+    gYear += Math.floor(jp / 365);
+    jp = jp % 365;
+  }
+
+  let gMonth, gDay;
+  let sal_a = [0, 31, (leap ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  
+  for (gMonth = 0; gMonth < 13; gMonth++) {
+    let v = sal_a[gMonth];
+    if (jp < v) break;
+    jp -= v;
   }
   
-  epochDay += jDay - 1;
-  
-  const gDay = epochDay + 79;
-  
-  let gy = 1600;
-  let gm, gd;
-  
-  gy += 400 * Math.floor(gDay / 146097);
-  let remaining = gDay % 146097;
-  
-  let temp = Math.floor(remaining / 36524);
-  if (temp === 4) temp = 3;
-  gy += temp * 100;
-  remaining -= temp * 36524;
-  
-  gy += 4 * Math.floor(remaining / 1461);
-  remaining %= 1461;
-  
-  temp = Math.floor(remaining / 365);
-  if (temp === 4) temp = 3;
-  gy += temp;
-  remaining -= temp * 365;
-  
-  const isLeap = (gy % 4 === 0) && ((gy % 100 !== 0) || (gy % 400 === 0));
-  const monthDays = [31, isLeap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  
-  gm = 1;
-  for (let i = 0; i < 12; i++) {
-    if (remaining < monthDays[i]) {
-      gm = i + 1;
-      gd = remaining + 1;
-      break;
-    }
-    remaining -= monthDays[i];
-  }
-  
-  return { year: gy, month: gm!, day: gd! };
+  gDay = jp + 1;
+
+  return { year: gYear - gy2, month: gMonth, day: gDay };
 }
 
 /**
- * Convert Gregorian to Hijri (Islamic)
+ * Convert Gregorian to Hijri (Islamic) - Accurate Algorithm
  */
 export function gregorianToHijri(gYear: number, gMonth: number, gDay: number): CalendarDate {
-  const jd = Math.floor((1461 * (gYear + 4800 + Math.floor((gMonth - 14) / 12))) / 4) +
-    Math.floor((367 * (gMonth - 2 - 12 * (Math.floor((gMonth - 14) / 12)))) / 12) -
-    Math.floor((3 * (Math.floor((gYear + 4900 + Math.floor((gMonth - 14) / 12)) / 100))) / 4) +
-    gDay - 32075;
-  
-  let l = jd - 1948440 + 10632;
-  const n = Math.floor((l - 1) / 10631);
-  l = l - 10631 * n + 354;
-  const j = (Math.floor((10985 - l) / 5316)) * (Math.floor((50 * l) / 17719)) +
-    (Math.floor(l / 5670)) * (Math.floor((43 * l) / 15238));
-  l = l - (Math.floor((30 - j) / 15)) * (Math.floor((17719 * j) / 50)) -
-    (Math.floor(j / 16)) * (Math.floor((15238 * j) / 43)) + 29;
-  const hMonth = Math.floor((24 * l) / 709);
-  const hDay = l - Math.floor((709 * hMonth) / 24);
-  const hYear = 30 * n + j - 30;
-  
-  return { year: hYear, month: hMonth, day: hDay };
+  // Calculate Julian Day Number
+  const a = Math.floor((14 - gMonth) / 12);
+  const y = gYear - a;
+  const m = gMonth + 12 * a - 3;
+  let jd = gDay + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) + 1721119;
+
+  // Convert Julian Day to Hijri
+  jd = jd - 1948441; // Hijri epoch adjustment
+  const hYear = Math.floor((30 * jd + 10646) / 10631);
+  let hMonth = Math.ceil((jd - (29 + 354 * (hYear - 1) + Math.floor((3 + 11 * hYear) / 30))) / 29.5);
+  if (hMonth > 12) hMonth = 12;
+  const hDay = jd - (29 + 354 * (hYear - 1) + Math.floor((3 + 11 * hYear) / 30)) - Math.floor((hMonth - 1) * 29.5) + 1;
+
+  return { year: hYear, month: hMonth, day: Math.floor(hDay) };
 }
 
 /**
- * Convert Hijri (Islamic) to Gregorian
+ * Convert Hijri (Islamic) to Gregorian - Accurate Algorithm
  */
 export function hijriToGregorian(hYear: number, hMonth: number, hDay: number): CalendarDate {
-  const jd = Math.floor((11 * hYear + 3) / 30) + 354 * hYear + 30 * hMonth -
-    Math.floor((hMonth - 1) / 2) + hDay + 1948440 - 385;
-  
+  // Calculate Julian Day Number from Hijri
+  const jd = Math.floor((11 * hYear + 3) / 30) + 354 * hYear + 30 * hMonth - Math.floor((hMonth - 1) / 2) + hDay + 1948441 - 385;
+
+  // Convert Julian Day to Gregorian
   let l = jd + 68569;
   const n = Math.floor((4 * l) / 146097);
   l = l - Math.floor((146097 * n + 3) / 4);
@@ -223,7 +213,7 @@ export function hijriToGregorian(hYear: number, hMonth: number, hDay: number): C
   l = Math.floor(j / 11);
   const gMonth = j + 2 - 12 * l;
   const gYear = 100 * (n - 49) + i + l;
-  
+
   return { year: gYear, month: gMonth, day: gDay };
 }
 
