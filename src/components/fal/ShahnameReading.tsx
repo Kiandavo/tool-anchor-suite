@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Crown, Copy, RefreshCw, Sparkles, RotateCw } from "lucide-react";
@@ -7,7 +7,8 @@ import { useShahnameReading } from '@/hooks/useShahnameReading';
 import { ShahnameIntention } from './shahname/ShahnameIntention';
 import { ShahnameDisplay } from './shahname/ShahnameDisplay';
 import { ShahnameGuide } from './shahname/ShahnameGuide';
-import { ToolSeoContent } from '@/components/seo/ToolSeoContent';
+import { lazyImport } from '@/utils/performance/lazyImport';
+const ToolSeoContent = lazyImport(() => import('@/components/seo/ToolSeoContent'), 'ToolSeoContent');
 import { shahnameSeoContent } from '@/data/shahname-seo-content';
 
 export const ShahnameReading = () => {
@@ -127,16 +128,20 @@ export const ShahnameReading = () => {
         </CardFooter>
       </Card>
       
-      {/* SEO Content Section */}
-      <ToolSeoContent
-        toolName="راهنمایی از شاهنامه فردوسی"
-        category="ابزارهای طالع‌بینی و فرهنگ ایرانی"
-        description={shahnameSeoContent.description}
-        benefits={shahnameSeoContent.benefits}
-        howToUse={shahnameSeoContent.howToUse}
-        faq={shahnameSeoContent.faq}
-        relatedTools={shahnameSeoContent.relatedTools}
-      />
+      {/* SEO Content Section (deferred) */}
+      <section data-defer>
+        <Suspense fallback={<div aria-hidden="true" style={{ minHeight: '200px' }} />}> 
+          <ToolSeoContent
+            toolName="راهنمایی از شاهنامه فردوسی"
+            category="ابزارهای طالع‌بینی و فرهنگ ایرانی"
+            description={shahnameSeoContent.description}
+            benefits={shahnameSeoContent.benefits}
+            howToUse={shahnameSeoContent.howToUse}
+            faq={shahnameSeoContent.faq}
+            relatedTools={shahnameSeoContent.relatedTools}
+          />
+        </Suspense>
+      </section>
     </div>
   );
 };

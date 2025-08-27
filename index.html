@@ -86,8 +86,8 @@
     <link rel="prefetch" href="/src/components/ui/card.tsx" as="script">
     
     <!-- Optimize font loading for faster FCP -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
     
     <!-- Load critical font CSS with font-display: swap for immediate text rendering -->
     <style>
@@ -274,6 +274,12 @@
         opacity: 1;
         will-change: auto;
       }
+      
+      /* Offscreen rendering optimization */
+      .cv-auto {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 1000px; /* Reserve space to avoid layout shift */
+      }
     </style>
     
     <!-- Defer Google Analytics to improve TTI -->
@@ -340,6 +346,46 @@
       
       // Break up long tasks for better TTI
       window.breakUpLongTasks = yieldToMain;
+      
+      // Improve Speed Index: lazy-load offscreen images and apply content-visibility to offscreen sections
+      function optimizeOffscreen() {
+        try {
+          const vh = window.innerHeight || 800;
+          // Apply content-visibility to offscreen sections/articles
+          const sections = document.querySelectorAll('main > section, section, article, [data-defer]');
+          sections.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top > vh * 1.2) {
+              el.classList.add('cv-auto');
+            }
+          });
+          
+          // Lazy-load offscreen images and deprioritize fetching
+          const images = Array.from(document.images || []);
+          images.forEach(img => {
+            const rect = img.getBoundingClientRect();
+            if (rect.top > vh * 1.2) {
+              if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+              img.setAttribute('decoding', 'async');
+              img.setAttribute('fetchpriority', 'low');
+            } else {
+              // Prioritize above-the-fold images
+              if (!img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority', 'high');
+            }
+          });
+        } catch (_) { /* noop */ }
+      }
+      
+      window.addEventListener('load', optimizeOffscreen, { once: true });
+      document.addEventListener('DOMContentLoaded', optimizeOffscreen, { once: true });
+      window.addEventListener('resize', () => {
+        if ('requestIdleCallback' in window) {
+          // @ts-ignore
+          requestIdleCallback(optimizeOffscreen);
+        } else {
+          setTimeout(optimizeOffscreen, 200);
+        }
+      });
     </script>
   </body>
 </html>
