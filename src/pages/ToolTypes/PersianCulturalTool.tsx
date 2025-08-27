@@ -21,6 +21,7 @@ import { PersianLanguageEnhanced } from '@/components/persian-cultural/PersianLa
 import { PersianCuisineEnhanced } from '@/components/persian-cultural/PersianCuisineEnhanced';
 import { PersianMusicEnhanced } from '@/components/persian-cultural/PersianMusicEnhanced';
 import { PersianNamesEnhanced } from '@/components/persian-cultural/PersianNamesEnhanced';
+import { PersianRegionalDialectsEnhanced } from '@/components/persian-cultural/PersianRegionalDialectsEnhanced';
 
 interface PersianCulturalToolProps {
   slug: string;
@@ -102,6 +103,8 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
         return <WordEtymologyEnhanced />;
       case 'historical-timeline':
         return <HistoricalTimelineEnhanced />;
+      case 'persian-regional-dialects':
+        return <PersianRegionalDialectsEnhanced />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
