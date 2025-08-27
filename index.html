@@ -29,6 +29,51 @@
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="dns-prefetch" href="//googletagmanager.com">
     
+    <!-- CSS Preloading Script for non-render-blocking CSS -->
+    <script>
+      // Function to preload CSS files asynchronously
+      function loadCSS(href, before, media) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.media = media || 'all';
+        if (before) {
+          before.parentNode.insertBefore(link, before);
+        } else {
+          document.head.appendChild(link);
+        }
+        return link;
+      }
+      
+      // Preload CSS with high priority but non-blocking
+      function preloadCSS(href, media) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function() {
+          this.onload = null;
+          this.rel = 'stylesheet';
+          this.media = media || 'all';
+        };
+        document.head.appendChild(link);
+        
+        // Fallback for browsers that don't support preload
+        const fallback = document.createElement('noscript');
+        const fallbackLink = document.createElement('link');
+        fallbackLink.rel = 'stylesheet';
+        fallbackLink.href = href;
+        fallback.appendChild(fallbackLink);
+        document.head.appendChild(fallback);
+        
+        return link;
+      }
+      
+      // Store function globally for use by Vite
+      window.preloadCSS = preloadCSS;
+      window.loadCSS = loadCSS;
+    </script>
+    
     <!-- Preload critical JavaScript modules for faster TTI -->
     <link rel="modulepreload" href="/src/main.tsx">
     <link rel="preload" href="/src/App.tsx" as="script">
