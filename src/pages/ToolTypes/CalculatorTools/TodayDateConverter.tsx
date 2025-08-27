@@ -4,17 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
+import { getCurrentDates, formatPersianDate, formatHijriDate, formatGregorianDate } from '@/utils/calendar/persianCalendar';
 
 export default function TodayDateConverter() {
-  const today = new Date();
+  const { gregorian, persian, hijri } = getCurrentDates();
   
-  // Convert to Persian date
-  const persianDate = today.toLocaleDateString('fa-IR');
-  
-  // Format Gregorian date
-  const gregorianDate = format(today, 'MMMM d, yyyy');
-  
-  const dateInfo = `تاریخ شمسی: ${persianDate}\nتاریخ میلادی: ${gregorianDate}`;
+  const dateInfo = `تاریخ شمسی: ${formatPersianDate(persian)}
+تاریخ قمری: ${formatHijriDate(hijri)}
+تاریخ میلادی: ${formatGregorianDate(gregorian)}`;
 
   return (
     <Card>

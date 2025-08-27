@@ -35,131 +35,23 @@ const gregorianMonths = [
   'September', 'October', 'November', 'December'
 ];
 
-// Persian calendar conversion functions
+import { 
+  gregorianToPersian, 
+  persianToGregorian, 
+  gregorianToHijri, 
+  hijriToGregorian,
+  type CalendarDate
+} from '@/utils/calendar/persianCalendar';
+
+// Persian calendar conversion functions - using accurate algorithms
 function gregorianToJalali(gy: number, gm: number, gd: number): [number, number, number] {
-  const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-  let jy = gy - 621;
-  const gy2 = gm > 2 ? gy + 1 : gy;
-  let days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
-  jy += 33 * Math.floor(days / 12053);
-  days %= 12053;
-  jy += 4 * Math.floor(days / 1461);
-  days %= 1461;
-  if (days > 365) {
-    jy += Math.floor((days - 1) / 365);
-    days = (days - 1) % 365;
-  }
-  const jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
-  const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
-  return [jy, jm, jd];
+  const result = gregorianToPersian(gy, gm, gd);
+  return [result.year, result.month, result.day];
 }
 
 function jalaliToGregorian(jy: number, jm: number, jd: number): [number, number, number] {
-  let gy = jy + 621;
-  const days = jalaliDaysFromBase(jy, jm, jd);
-  const gd = gregorianFromBase(days).day;
-  const gm = gregorianFromBase(days).month;
-  gy = gregorianFromBase(days).year;
-  return [gy, gm, gd];
-}
-
-function jalaliDaysFromBase(jy: number, jm: number, jd: number): number {
-  const base = jalaliToBase(jy);
-  const offset = jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186;
-  return base + offset + jd - 1;
-}
-
-function jalaliToBase(jy: number): number {
-  const breaks = [
-    -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
-    1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456
-  ];
-  
-  let bl = breaks.length;
-  let gy = jy + 621;
-  let leapJ = -14;
-  let jp = breaks[0];
-  
-  if (jy < jp || jy >= breaks[bl - 1]) {
-    throw new Error('Invalid Jalali year ' + jy);
-  }
-  
-  let jump;
-  for (let i = 1; i < bl; i += 1) {
-    const jm = breaks[i];
-    jump = jm - jp;
-    if (jy < jm) {
-      break;
-    }
-    leapJ = leapJ + Math.floor(jump / 33) * 8 + Math.floor(((jump % 33) + 3) / 4);
-    jp = jm;
-  }
-  
-  let n = jy - jp;
-  leapJ = leapJ + Math.floor(n / 33) * 8 + Math.floor(((n % 33) + 3) / 4);
-  
-  const leapG = Math.floor(gy / 4) - Math.floor(gy / 100) + Math.floor(gy / 400) - 150;
-  
-  const march = 20 + leapJ - leapG;
-  
-  return Math.floor((gy - 1) * 365.25) - 79 + 1 + Math.floor(30.6 * (1)) + march;
-}
-
-function gregorianFromBase(baseDate: number): { year: number; month: number; day: number } {
-  const j = baseDate + 1401 + Math.floor(((Math.floor(4 * baseDate + 274277) / 146097) * 3) / 4) - 38;
-  const je = 4 * j + 3;
-  const jf = Math.floor(je / 1461);
-  const je2 = je - 1461 * jf;
-  const jg = Math.floor(je2 / 365 + 0.25);
-  const jh = je2 - 365 * jg + 30;
-  const day = Math.floor(jh / 30.6) * 30.6 - Math.floor(jh / 30.6) * 30.6;
-  const month = Math.floor(jh / 30.6) + 2;
-  const year = jf + jg + 1401 - 1;
-
-  return { year, month, day: Math.floor(day) + 1 };
-}
-
-function gregorianToHijri(year: number, month: number, day: number): [number, number, number] {
-  const gregorianDate = new Date(year, month - 1, day);
-  const timestamp = gregorianDate.getTime();
-  const hijriYear = Math.floor((year - 622) * (33 / 32));
-  const hijriDays = Math.floor(timestamp / (1000 * 60 * 60 * 24) - (227023.7991));
-  const hijriCycle = Math.floor(hijriDays / 10631);
-  const hijriYearsInCycle = Math.floor((hijriDays - hijriCycle * 10631) / 354.367);
-  const hijriDaysInYear = Math.floor(hijriDays - hijriCycle * 10631 - hijriYearsInCycle * 354.367);
-  
-  let hijriMonth = 1;
-  let hijriDay = hijriDaysInYear;
-  
-  const monthDays = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];
-  
-  for (let i = 0; i < 12; i++) {
-    if (hijriDay <= monthDays[i]) {
-      hijriMonth = i + 1;
-      break;
-    }
-    hijriDay -= monthDays[i];
-  }
-  
-  return [hijriYear, hijriMonth, hijriDay];
-}
-
-function hijriToGregorian(year: number, month: number, day: number): [number, number, number] {
-  const gregorianYear = Math.floor(year * (32 / 33) + 622);
-  
-  let totalDays = (year - 1) * 354;
-  totalDays += Math.floor((year - 1) / 30) * 11;
-  
-  for (let i = 1; i < month; i++) {
-    totalDays += i % 2 === 1 ? 30 : 29;
-  }
-  
-  totalDays += day;
-  
-  const gregorianDate = new Date(622, 6, 16);
-  gregorianDate.setDate(gregorianDate.getDate() + totalDays);
-  
-  return [gregorianDate.getFullYear(), gregorianDate.getMonth() + 1, gregorianDate.getDate()];
+  const result = persianToGregorian(jy, jm, jd);
+  return [result.year, result.month, result.day];
 }
 
 export default function PersianCalendar() {
@@ -219,7 +111,8 @@ export default function PersianCalendar() {
       if (sourceDate.format === 'jalali') {
         gregorianDate = jalaliToGregorian(sourceDate.year, sourceDate.month, sourceDate.day);
       } else if (sourceDate.format === 'hijri') {
-        gregorianDate = hijriToGregorian(sourceDate.year, sourceDate.month, sourceDate.day);
+        const hijriResult = hijriToGregorian(sourceDate.year, sourceDate.month, sourceDate.day);
+        gregorianDate = [hijriResult.year, hijriResult.month, hijriResult.day];
       } else {
         gregorianDate = [sourceDate.year, sourceDate.month, sourceDate.day];
       }
@@ -231,7 +124,8 @@ export default function PersianCalendar() {
         convertedDate = gregorianToJalali(gregorianDate[0], gregorianDate[1], gregorianDate[2]);
         resultText = `${convertedDate[2]} ${persianMonths[convertedDate[1]-1]} ${convertedDate[0]}`;
       } else if (targetFormat === 'hijri') {
-        convertedDate = gregorianToHijri(gregorianDate[0], gregorianDate[1], gregorianDate[2]);
+        const hijriResult = gregorianToHijri(gregorianDate[0], gregorianDate[1], gregorianDate[2]);
+        convertedDate = [hijriResult.year, hijriResult.month, hijriResult.day];
         resultText = `${convertedDate[2]} ${hijriMonths[convertedDate[1]-1]} ${convertedDate[0]}`;
       }
 
