@@ -79,9 +79,27 @@
     <link rel="preload" href="/src/App.tsx" as="script">
     <link rel="preload" href="/src/components/Layout.tsx" as="script">
     
-    <!-- Preload critical font files directly to break dependency chain -->
+    <!-- Optimize font loading for faster FCP -->
     <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Load critical font CSS with font-display: swap for immediate text rendering -->
+    <style>
+      @font-face {
+        font-family: 'Vazirmatn';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+      }
+    </style>
     
     <!-- Preload critical font CSS for faster rendering -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Vazirmatn:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -89,17 +107,17 @@
     <!-- Fallback for browsers that don't support preload -->
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap"></noscript>
     
-    <!-- Async load additional font weights -->
+    <!-- Async load additional font weights for non-critical content -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;700&family=Vazirmatn:wght@300;600;700&display=swap" media="print" onload="this.media='all'">
     
     <!-- Critical inline styles for immediate rendering -->
     <style>
       html {
         direction: rtl;
-        font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
       }
       body {
-        font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
         background-color: #fafaff;
         margin: 0;
         padding: 0;
@@ -132,6 +150,7 @@
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        font-family: 'Vazirmatn', sans-serif;
       }
       .hero-description {
         font-size: 1.25rem;
@@ -140,6 +159,7 @@
         margin: 0 auto 3rem;
         font-weight: 300;
         line-height: 1.6;
+        font-family: 'Vazirmatn', sans-serif;
       }
       .hero-loading {
         display: inline-flex;
@@ -153,6 +173,7 @@
         margin-top: 1rem;
         border: 1px solid rgba(59, 130, 246, 0.2);
         backdrop-filter: blur(8px);
+        font-family: 'Vazirmatn', sans-serif;
       }
       
       /* Critical layout elements */
@@ -174,6 +195,7 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: #171717;
+        font-family: 'Vazirmatn', sans-serif;
       }
       
       /* Critical content cards preview */
@@ -202,11 +224,13 @@
         font-weight: 600;
         color: #374151;
         margin-bottom: 1rem;
+        font-family: 'Vazirmatn', sans-serif;
       }
       .critical-card p {
         color: #64748b;
         font-size: 0.95rem;
         line-height: 1.5;
+        font-family: 'Vazirmatn', sans-serif;
       }
       
       /* Loading spinner */
@@ -229,6 +253,20 @@
         .hero-description { font-size: 1.5rem; }
         .hero-content { padding: 10rem 2rem 8rem; }
         .critical-header { padding: 0 2rem; }
+      }
+      
+      /* Ensure immediate text visibility */
+      body { 
+        font-display: swap; 
+        visibility: visible;
+        opacity: 1;
+      }
+      
+      /* Force immediate rendering of critical content */
+      .hero-content, .hero-title, .hero-description {
+        visibility: visible;
+        opacity: 1;
+        will-change: auto;
       }
     </style>
     
@@ -255,13 +293,19 @@
         </div>
       </div>
     </div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" defer></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js').catch(() => {});
         });
       }
+      
+      // Ensure immediate content visibility
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
+      });
     </script>
   </body>
 </html>
