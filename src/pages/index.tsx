@@ -8,6 +8,7 @@ import { PersianCulturalEnhancedSection } from '@/components/home/PersianCultura
 import { MysticalReadingsSection } from '@/components/home/MysticalReadingsSection';
 import { InteractiveCategoriesSection } from '@/components/home/InteractiveCategoriesSection';
 import { PersianCalendarWidget } from '@/components/home/PersianCalendarWidget';
+import { QuickToolsSection } from '@/components/home/QuickToolsSection';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
@@ -60,6 +61,9 @@ const Index = () => {
           
           <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
             
+            {/* Quick Tools Section */}
+            <QuickToolsSection />
+
             {/* Enhanced Tools Section */}
             <div id="tools-sections">
               <EnhancedToolsSection />

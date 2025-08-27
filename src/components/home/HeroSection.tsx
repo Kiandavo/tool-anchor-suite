@@ -25,9 +25,61 @@ export const HeroSection = () => {
             </span>
           </h1>
           
-          <p className="text-xl sm:text-2xl max-w-3xl mx-auto leading-relaxed text-muted-foreground font-light mb-10 sm:mb-12 animate-fade-in">
+          <p className="text-xl sm:text-2xl max-w-3xl mx-auto leading-relaxed text-muted-foreground font-light mb-8 sm:mb-10 animate-fade-in">
             بیش از ۱۲۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
           </p>
+
+          {/* Quick Search */}
+          <div className="max-w-2xl mx-auto mb-10 sm:mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="جستجو در ابزارها... (مثلاً: محاسبه‌گر، QR کد، تبدیل متن)"
+                className="w-full px-6 py-4 text-lg rounded-2xl border border-border/50 bg-card/80 backdrop-blur-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    const query = (e.target as HTMLInputElement).value;
+                    if (query.trim()) {
+                      window.location.href = `/all-tools?search=${encodeURIComponent(query)}`;
+                    }
+                  }
+                }}
+              />
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+                  <span className="text-xs text-primary">🔍</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Quick Access Buttons */}
+            <div className="flex flex-wrap justify-center gap-3 mt-4">
+              <button
+                onClick={() => window.location.href = '/tool/qr-code-generator'}
+                className="px-4 py-2 text-sm bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all duration-200 hover:scale-105"
+              >
+                QR کد
+              </button>
+              <button
+                onClick={() => window.location.href = '/tool/password-generator'}
+                className="px-4 py-2 text-sm bg-green-500/10 hover:bg-green-500/20 text-green-600 rounded-full transition-all duration-200 hover:scale-105"
+              >
+                رمز عبور
+              </button>
+              <button
+                onClick={() => window.location.href = '/tool/color-palette-generator'}
+                className="px-4 py-2 text-sm bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 rounded-full transition-all duration-200 hover:scale-105"
+              >
+                پالت رنگ
+              </button>
+              <button
+                onClick={() => window.location.href = '/tool/text-analyzer'}
+                className="px-4 py-2 text-sm bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 rounded-full transition-all duration-200 hover:scale-105"
+              >
+                تحلیل متن
+              </button>
+            </div>
+          </div>
           
           {/* Apple-style feature highlights */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 sm:mb-16 animate-slide-up">

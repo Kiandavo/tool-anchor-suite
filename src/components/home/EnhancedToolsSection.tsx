@@ -40,17 +40,24 @@ export const EnhancedToolsSection = () => {
 
               {/* Tools Grid */}
               <div className="p-6">
-                <div className="grid grid-cols-2 gap-4">
-                  {newTools.slice(0, 4).map((tool, index) => (
-                    <div 
-                      key={tool.id} 
-                      className="animate-fade-in hover-lift"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <ToolCard tool={tool} highlight />
-                    </div>
-                  ))}
-                </div>
+                {newTools.length === 0 ? (
+                  <div className="text-center text-muted-foreground py-8">
+                    <p>همه ابزارها به‌روزرسانی شده‌اند!</p>
+                    <p className="text-sm mt-2">به زودی ابزارهای جدید اضافه می‌شوند.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {newTools.slice(0, 4).map((tool, index) => (
+                      <div 
+                        key={tool.id} 
+                        className="animate-fade-in hover-lift"
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <ToolCard tool={tool} highlight />
+                      </div>
+                    ))}
+                  </div>
+                )}
                 
                 <Link 
                   to="/all-tools?filter=new" 
@@ -89,7 +96,7 @@ export const EnhancedToolsSection = () => {
 
               {/* Tools Grid */}
               <div className="p-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {popularTools.slice(0, 4).map((tool, index) => (
                     <div 
                       key={tool.id} 
