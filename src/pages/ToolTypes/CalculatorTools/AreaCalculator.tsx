@@ -1,113 +1,279 @@
 
-import React, { useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+import React, { useState, useMemo, useCallback } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue } from "@/components/ui/select";
-import { calculateArea } from '@/utils/calculatorUtils';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
+import { 
+  Square, 
+  Circle, 
+  Triangle, 
+  Calculator, 
+  Ruler, 
+  RotateCcw,
+  Shapes,
+  PieChart
+} from "lucide-react";
+import { toast } from 'sonner';
 
+// Enhanced shape definitions with formulas and visual guides
 const shapes = [
-  { name: 'مربع', type: 'square' as const },
-  { name: 'مستطیل', type: 'rectangle' as const },
-  { name: 'دایره', type: 'circle' as const },
-  { name: 'مثلث', type: 'triangle' as const },
+  { 
+    name: 'مربع', 
+    type: 'square' as const, 
+    icon: Square,
+    formula: 'مساحت = ضلع²',
+    fields: ['ضلع'],
+    calculate: (dimensions: number[]) => dimensions[0] * dimensions[0]
+  },
+  { 
+    name: 'مستطیل', 
+    type: 'rectangle' as const, 
+    icon: Square,
+    formula: 'مساحت = طول × عرض',
+    fields: ['طول', 'عرض'],
+    calculate: (dimensions: number[]) => dimensions[0] * dimensions[1]
+  },
+  { 
+    name: 'دایره', 
+    type: 'circle' as const, 
+    icon: Circle,
+    formula: 'مساحت = π × شعاع²',
+    fields: ['شعاع'],
+    calculate: (dimensions: number[]) => Math.PI * dimensions[0] * dimensions[0]
+  },
+  { 
+    name: 'مثلث', 
+    type: 'triangle' as const, 
+    icon: Triangle,
+    formula: 'مساحت = (قاعده × ارتفاع) ÷ ۲',
+    fields: ['قاعده', 'ارتفاع'],
+    calculate: (dimensions: number[]) => (dimensions[0] * dimensions[1]) / 2
+  }
 ];
 
-const AreaCalculator = () => {
-  const [shape, setShape] = useState(shapes[0]);
-  const [dimensions, setDimensions] = useState<number[]>([0, 0]);
-  const [result, setResult] = useState<number | null>(null);
+interface AreaResult {
+  area: number;
+  perimeter: number;
+  shape: string;
+  dimensions: number[];
+  unit: string;
+}
 
-  const handleCalculate = () => {
-    if (dimensions.every(d => !isNaN(d) && d >= 0)) {
-      const area = calculateArea(shape.type, dimensions);
-      setResult(area);
+const AreaCalculator = () => {
+  const [selectedShape, setSelectedShape] = useState(shapes[0]);
+  const [dimensions, setDimensions] = useState<string[]>(['', '']);
+  const [unit, setUnit] = useState<string>('متر');
+  const [result, setResult] = useState<AreaResult | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const handleCalculate = useCallback(async () => {
+    setIsCalculating(true);
+    
+    try {
+      const numDimensions = dimensions.map(d => parseFloat(d));
+      
+      if (numDimensions.some(d => isNaN(d) || d <= 0)) {
+        toast.error("ابعاد نامعتبر", {
+          description: "لطفا تمام ابعاد را صحیح وارد کنید",
+          position: "top-center",
+        });
+        return;
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const area = selectedShape.calculate(numDimensions);
+      let perimeter = 0;
+
+      // Calculate perimeter based on shape
+      switch (selectedShape.type) {
+        case 'square':
+          perimeter = 4 * numDimensions[0];
+          break;
+        case 'rectangle':
+          perimeter = 2 * (numDimensions[0] + numDimensions[1]);
+          break;
+        case 'circle':
+          perimeter = 2 * Math.PI * numDimensions[0];
+          break;
+        case 'triangle':
+          // Assuming equilateral triangle for perimeter
+          perimeter = 3 * numDimensions[0];
+          break;
+      }
+
+      setResult({
+        area,
+        perimeter,
+        shape: selectedShape.name,
+        dimensions: numDimensions,
+        unit
+      });
+      
+      toast.success("مساحت محاسبه شد", {
+        description: `مساحت: ${area.toFixed(2)} ${unit} مربع`,
+        position: "top-center",
+      });
+      
+    } catch (error) {
+      toast.error("خطا در محاسبه", {
+        position: "top-center",
+      });
+    } finally {
+      setIsCalculating(false);
     }
-  };
+  }, [selectedShape, dimensions, unit]);
 
   return (
-    <Card>
-      <CardContent className="p-6 space-y-4">
-        <div className="space-y-4">
-          <Select
-            value={shape.name}
-            onValueChange={(value) => {
-              const newShape = shapes.find(s => s.name === value);
-              if (newShape) {
-                setShape(newShape);
-                setDimensions([0, 0]);
-                setResult(null);
-              }
-            }}
-          >
-            <SelectTrigger>
-              <SelectValue>{shape.name}</SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {shapes.map((s) => (
-                <SelectItem key={s.name} value={s.name}>
-                  {s.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+    <div className="space-y-6 animate-fade-in">
+      <Card className="vibrant-card overflow-hidden">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 justify-center">
+            <div className="icon-container">
+              <Shapes className="h-6 w-6 text-primary" />
+            </div>
+            محاسبه‌گر پیشرفته مساحت
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Shape Selection */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {shapes.map((shape) => {
+              const IconComponent = shape.icon;
+              return (
+                <Button
+                  key={shape.type}
+                  variant={selectedShape.type === shape.type ? 'default' : 'outline'}
+                  onClick={() => {
+                    setSelectedShape(shape);
+                    setDimensions(['', '']);
+                    setResult(null);
+                  }}
+                  className="glass-effect h-20 flex flex-col items-center justify-center hover:-translate-y-1 transition-transform duration-300"
+                >
+                  <IconComponent className="h-6 w-6 mb-2" />
+                  <span className="text-xs">{shape.name}</span>
+                </Button>
+              );
+            })}
+          </div>
 
-          <div className="space-y-2">
-            {shape.type === 'circle' ? (
-              <Input
-                type="number"
-                placeholder="شعاع"
-                value={dimensions[0] || ''}
-                onChange={(e) => {
-                  const value = parseFloat(e.target.value);
-                  setDimensions([value, 0]);
-                  if (!isNaN(value)) handleCalculate();
+          {/* Formula Display */}
+          <div className="glass-effect rounded-xl p-4 text-center">
+            <h3 className="font-medium mb-2 flex items-center justify-center">
+              <Calculator className="ml-2 h-4 w-4 text-primary" />
+              فرمول محاسبه {selectedShape.name}
+            </h3>
+            <p className="text-primary font-mono">{selectedShape.formula}</p>
+          </div>
+
+          {/* Dimension Inputs */}
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {selectedShape.fields.map((field, index) => (
+                <div key={field} className="space-y-2">
+                  <Label htmlFor={`dim-${index}`} className="flex items-center text-sm font-medium">
+                    <Ruler className="ml-1 h-3 w-3 text-primary" />
+                    {field} ({unit})
+                  </Label>
+                  <Input
+                    id={`dim-${index}`}
+                    value={dimensions[index] || ''}
+                    onChange={(e) => {
+                      const newDimensions = [...dimensions];
+                      newDimensions[index] = e.target.value;
+                      setDimensions(newDimensions);
+                    }}
+                    placeholder={`${field} را وارد کنید`}
+                    type="text"
+                    dir="ltr"
+                    className="glass-effect transition-all duration-300 focus:scale-105"
+                  />
+                </div>
+              ))}
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">واحد اندازه‌گیری</Label>
+                <Select value={unit} onValueChange={setUnit}>
+                  <SelectTrigger className="glass-effect">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="متر">متر</SelectItem>
+                    <SelectItem value="سانتی‌متر">سانتی‌متر</SelectItem>
+                    <SelectItem value="میلی‌متر">میلی‌متر</SelectItem>
+                    <SelectItem value="اینچ">اینچ</SelectItem>
+                    <SelectItem value="فوت">فوت</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-4">
+              <Button 
+                onClick={handleCalculate}
+                disabled={isCalculating}
+                className="vibrant-button flex items-center justify-center hover:scale-105 transition-transform duration-300"
+              >
+                <Calculator className={`ml-2 h-5 w-5 ${isCalculating ? 'animate-spin' : ''}`} />
+                {isCalculating ? 'در حال محاسبه...' : 'محاسبه مساحت'}
+              </Button>
+              
+              <Button 
+                onClick={() => {
+                  setDimensions(['', '']);
+                  setResult(null);
+                  toast.info("فرم پاک شد", { position: "top-center" });
                 }}
-              />
-            ) : shape.type === 'square' ? (
-              <Input
-                type="number"
-                placeholder="طول ضلع"
-                value={dimensions[0] || ''}
-                onChange={(e) => {
-                  const value = parseFloat(e.target.value);
-                  setDimensions([value, 0]);
-                  if (!isNaN(value)) handleCalculate();
-                }}
-              />
-            ) : (
-              <div className="grid grid-cols-2 gap-4">
-                <Input
-                  type="number"
-                  placeholder={shape.type === 'rectangle' ? 'طول' : 'قاعده'}
-                  value={dimensions[0] || ''}
-                  onChange={(e) => {
-                    const value = parseFloat(e.target.value);
-                    setDimensions([value, dimensions[1]]);
-                    if (!isNaN(value) && !isNaN(dimensions[1])) handleCalculate();
-                  }}
+                variant="outline"
+                className="glass-effect flex items-center justify-center hover:-translate-y-1 transition-transform duration-300"
+              >
+                <RotateCcw className="ml-2 h-4 w-4" />
+                پاک کردن
+              </Button>
+            </div>
+          </div>
+
+          {/* Results */}
+          {result && (
+            <div className="space-y-4 animate-fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <OutcomeInfoCard 
+                  outcome={`مساحت ${result.shape}: ${result.area.toFixed(4)} ${result.unit} مربع`}
                 />
-                <Input
-                  type="number"
-                  placeholder={shape.type === 'rectangle' ? 'عرض' : 'ارتفاع'}
-                  value={dimensions[1] || ''}
-                  onChange={(e) => {
-                    const value = parseFloat(e.target.value);
-                    setDimensions([dimensions[0], value]);
-                    if (!isNaN(value) && !isNaN(dimensions[0])) handleCalculate();
-                  }}
+                <OutcomeInfoCard 
+                  outcome={`محیط: ${result.perimeter.toFixed(4)} ${result.unit}`}
                 />
               </div>
-            )}
-          </div>
-        </div>
-        {result !== null && (
-          <OutcomeInfoCard
-            outcome={`مساحت ${shape.name}: ${result} متر مربع`}
-          />
-        )}
-      </CardContent>
-    </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="neo-glass rounded-xl p-5">
+                  <div className="flex items-center mb-3">
+                    <PieChart className="h-5 w-5 text-primary ml-2" />
+                    <h3 className="font-medium">مساحت</h3>
+                  </div>
+                  <p className="text-2xl font-bold text-primary">{result.area.toFixed(4)}</p>
+                  <p className="text-sm text-muted-foreground">{result.unit} مربع</p>
+                </div>
+                
+                <div className="neo-glass rounded-xl p-5">
+                  <div className="flex items-center mb-3">
+                    <Ruler className="h-5 w-5 text-blue-600 ml-2" />
+                    <h3 className="font-medium">محیط</h3>
+                  </div>
+                  <p className="text-2xl font-bold text-blue-600">{result.perimeter.toFixed(4)}</p>
+                  <p className="text-sm text-muted-foreground">{result.unit}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

@@ -65,15 +65,6 @@ export const calculatorTools: Tool[] = [
     icon: "calculator"
   },
   {
-    id: "49",
-    slug: "currency-converter",
-    name: "تبدیل ارز",
-    category: "calculators",
-    description: "تبدیل قیمت بین ارزهای مختلف",
-    isNew: false,
-    icon: "calculator"
-  },
-  {
     id: "50",
     slug: "date-difference",
     name: "محاسبه اختلاف تاریخ",

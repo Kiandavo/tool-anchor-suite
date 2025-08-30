@@ -9,7 +9,6 @@ import AgeCalculator from './CalculatorTools/AgeCalculator';
 import AreaCalculator from './CalculatorTools/AreaCalculator';
 import BmiCalculator from './CalculatorTools/BmiCalculator';
 import CalorieCalculator from './CalculatorTools/CalorieCalculator';
-import CurrencyConverter from './CalculatorTools/CurrencyConverter';
 import DateDifferenceCalculator from './CalculatorTools/DateDifferenceCalculator';
 import DiscountCalculator from './CalculatorTools/DiscountCalculator';
 import InvestmentCalculator from './CalculatorTools/InvestmentCalculator';
@@ -51,8 +50,6 @@ export default function CalculatorTool({ slug, type }: CalculatorToolProps) {
         return <BmiCalculator />;
       case 'calorie-calculator':
         return <CalorieCalculator />;
-      case 'currency-converter':
-        return <CurrencyConverter />;
       case 'date-difference':
         return <DateDifferenceCalculator />;
       case 'discount-calculator':
