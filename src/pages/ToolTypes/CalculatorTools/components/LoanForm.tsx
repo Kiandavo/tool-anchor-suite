@@ -19,11 +19,14 @@ interface LoanFormProps {
   loanTerm: number;
   paymentType?: 'monthly' | 'yearly';
   advanced?: boolean;
+  isCalculating?: boolean;
+  additionalPayment?: string;
   onLoanAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onInterestRateChange: (value: string) => void;
   onLoanTermChange: (value: number[]) => void;
   onPaymentTypeChange?: (value: string) => void;
   onCalculate: () => void;
+  onAdditionalPaymentChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const LoanForm: React.FC<LoanFormProps> = ({
@@ -32,11 +35,14 @@ export const LoanForm: React.FC<LoanFormProps> = ({
   loanTerm,
   paymentType = 'monthly',
   advanced = false,
+  isCalculating = false,
+  additionalPayment = '0',
   onLoanAmountChange,
   onInterestRateChange,
   onLoanTermChange,
   onPaymentTypeChange,
   onCalculate,
+  onAdditionalPaymentChange,
 }) => {
   return (
     <div className="flex flex-col space-y-6">
@@ -143,9 +149,11 @@ export const LoanForm: React.FC<LoanFormProps> = ({
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="additionalPayment">پرداخت اضافه ماهانه</Label>
+              <Label htmlFor="additionalPayment">پرداخت اضافه ماهانه (تومان)</Label>
               <Input
                 id="additionalPayment"
+                value={additionalPayment}
+                onChange={onAdditionalPaymentChange}
                 placeholder="مثال: 1,000,000"
                 dir="ltr"
                 className="glass-effect"
@@ -157,10 +165,11 @@ export const LoanForm: React.FC<LoanFormProps> = ({
 
       <Button
         onClick={onCalculate}
-        className="vibrant-button flex items-center justify-center hover:scale-105 transition-transform duration-300"
+        disabled={isCalculating}
+        className="vibrant-button flex items-center justify-center hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <Calculator className="ml-2 h-5 w-5" />
-        محاسبه کن
+        <Calculator className={`ml-2 h-5 w-5 ${isCalculating ? 'animate-spin' : ''}`} />
+        {isCalculating ? 'در حال محاسبه...' : 'محاسبه کن'}
       </Button>
     </div>
   );

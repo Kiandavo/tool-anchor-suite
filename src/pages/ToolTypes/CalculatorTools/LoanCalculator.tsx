@@ -1,9 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Card } from '@/components/ui/card';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
-import { CirclePercent, CreditCard, Calculator, AlertCircle, FileText, Printer } from 'lucide-react';
+import { CirclePercent, CreditCard, Calculator, AlertCircle, FileText, Printer, TrendingUp, PieChart, BarChart3 } from 'lucide-react';
 import { formatToToman, convertNumberToPersianWords } from '@/utils/calculatorUtils';
+import { Progress } from '@/components/ui/progress';
 import { LoanForm } from './components/LoanForm';
 import { PaymentScheduleTable } from './components/PaymentScheduleTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -40,6 +41,10 @@ interface LoanSummary {
   interestRate: number;
   loanTerm: number;
   paymentCount: number;
+  interestPercentage: number;
+  avgMonthlyInterest: number;
+  avgMonthlyPrincipal: number;
+  payoffDate: string;
 }
 
 export default function LoanCalculator() {
@@ -52,6 +57,8 @@ export default function LoanCalculator() {
   const [summary, setSummary] = useState<LoanSummary | null>(null);
   const [amountInWords, setAmountInWords] = useState<string | null>(null);
   const [showPrintDialog, setShowPrintDialog] = useState<boolean>(false);
+  const [isCalculating, setIsCalculating] = useState<boolean>(false);
+  const [additionalPayment, setAdditionalPayment] = useState<string>('0');
 
   const handleLoanAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[^\d]/g, '');
@@ -71,6 +78,28 @@ export default function LoanCalculator() {
     setPaymentType(value as 'monthly' | 'yearly');
   };
 
+  const handleAdditionalPaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/[^\d]/g, '');
+    
+    if (rawValue) {
+      setAdditionalPayment(Number(rawValue).toLocaleString());
+    } else {
+      setAdditionalPayment('0');
+    }
+  };
+
+  // Memoized calculations for performance
+  const loanMetrics = useMemo(() => {
+    if (!summary) return null;
+    
+    return {
+      debtToIncomeRatio: summary.monthlyPayment / (summary.monthlyPayment * 4), // Assuming 25% DTI
+      interestToTotalRatio: (summary.totalInterest / summary.totalPayment) * 100,
+      principalToTotalRatio: (summary.loanAmount / summary.totalPayment) * 100,
+      breakEvenMonth: Math.floor(summary.loanTerm * 0.6), // Approximate break-even point
+    };
+  }, [summary]);
+
   const printLoanDetails = () => {
     setShowPrintDialog(true);
   };
@@ -85,36 +114,56 @@ export default function LoanCalculator() {
     setShowPrintDialog(false);
   };
 
-  const calculate = () => {
-    const amount = parseFloat(loanAmount.replace(/,/g, ''));
-    const rate = parseFloat(interestRate) / 100;
-    const termMonths = paymentType === 'monthly' ? loanTerm : loanTerm * 12;
-    const monthlyRate = rate / 12;
+  const calculate = useCallback(async () => {
+    setIsCalculating(true);
+    
+    try {
+      const amount = parseFloat(loanAmount.replace(/,/g, ''));
+      const rate = parseFloat(interestRate) / 100;
+      const termMonths = paymentType === 'monthly' ? loanTerm : loanTerm * 12;
+      const monthlyRate = rate / 12;
+      const extraPayment = parseFloat(additionalPayment.replace(/,/g, '')) || 0;
 
-    if (isNaN(amount) || isNaN(rate) || isNaN(termMonths) || amount <= 0 || rate <= 0 || termMonths <= 0) {
-      toast.error("لطفا تمام فیلدها را به درستی پر کنید", {
-        description: "مقادیر وارد شده نامعتبر هستند",
-        position: "top-center",
+      if (isNaN(amount) || isNaN(rate) || isNaN(termMonths) || amount <= 0 || rate <= 0 || termMonths <= 0) {
+        toast.error("لطفا تمام فیلدها را به درستی پر کنید", {
+          description: "مقادیر وارد شده نامعتبر هستند",
+          position: "top-center",
+        });
+        return;
+      }
+
+      // Simulate calculation delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      // Calculate monthly payment using the loan payment formula
+      const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termMonths));
+      const totalPayment = monthlyPayment * termMonths;
+      const totalInterest = totalPayment - amount;
+      
+      // Calculate payoff date
+      const currentDate = new Date();
+      const payoffDate = new Date(currentDate);
+      payoffDate.setMonth(payoffDate.getMonth() + termMonths);
+      
+      const interestPercentage = (totalInterest / amount) * 100;
+      const avgMonthlyInterest = totalInterest / termMonths;
+      const avgMonthlyPrincipal = amount / termMonths;
+
+      setSummary({
+        monthlyPayment,
+        totalPayment,
+        totalInterest,
+        loanAmount: amount,
+        interestRate: parseFloat(interestRate),
+        loanTerm: termMonths,
+        paymentCount: termMonths,
+        interestPercentage,
+        avgMonthlyInterest,
+        avgMonthlyPrincipal,
+        payoffDate: payoffDate.toLocaleDateString('fa-IR')
       });
-      return;
-    }
 
-    // Calculate monthly payment using the loan payment formula
-    const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termMonths));
-    const totalPayment = monthlyPayment * termMonths;
-    const totalInterest = totalPayment - amount;
-
-    setSummary({
-      monthlyPayment,
-      totalPayment,
-      totalInterest,
-      loanAmount: amount,
-      interestRate: parseFloat(interestRate),
-      loanTerm: termMonths,
-      paymentCount: termMonths
-    });
-
-    setAmountInWords(`مبلغ وام به حروف: ${convertNumberToPersianWords(amount)} تومان`);
+      setAmountInWords(`مبلغ وام به حروف: ${convertNumberToPersianWords(amount)} تومان`);
 
     const schedule: PaymentScheduleItem[] = [];
     let remainingBalance = amount;
@@ -166,10 +215,19 @@ export default function LoanCalculator() {
     
     setExtendedSchedule(extended);
 
-    toast.success("محاسبه با موفقیت انجام شد", {
-      position: "top-center",
-    });
-  };
+      toast.success("محاسبه با موفقیت انجام شد", {
+        description: `پرداخت ماهیانه: ${formatToToman(monthlyPayment)} تومان`,
+        position: "top-center",
+      });
+    } catch (error) {
+      toast.error("خطا در محاسبه", {
+        description: "لطفا مقادیر را بررسی کنید",
+        position: "top-center",
+      });
+    } finally {
+      setIsCalculating(false);
+    }
+  }, [loanAmount, interestRate, loanTerm, paymentType, additionalPayment]);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -198,6 +256,7 @@ export default function LoanCalculator() {
                 onLoanTermChange={handleLoanTermChange}
                 onPaymentTypeChange={handlePaymentTypeChange}
                 onCalculate={calculate}
+                isCalculating={isCalculating}
               />
             </TabsContent>
             <TabsContent value="advanced" className="mt-4">
@@ -224,6 +283,9 @@ export default function LoanCalculator() {
                   onPaymentTypeChange={handlePaymentTypeChange}
                   onCalculate={calculate}
                   advanced={true}
+                  isCalculating={isCalculating}
+                  additionalPayment={additionalPayment}
+                  onAdditionalPaymentChange={handleAdditionalPaymentChange}
                 />
               </div>
             </TabsContent>
@@ -231,37 +293,103 @@ export default function LoanCalculator() {
 
           {summary && (
             <div className="space-y-4 animate-fade-in">
-              <OutcomeInfoCard outcome={`پرداخت ماهیانه: ${formatToToman(summary.monthlyPayment)} تومان - کل پرداختی: ${formatToToman(summary.totalPayment)} تومان - کل بهره: ${formatToToman(summary.totalInterest)} تومان`} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <OutcomeInfoCard 
+                  outcome={`پرداخت ماهیانه: ${formatToToman(summary.monthlyPayment)} تومان`}
+                />
+                <OutcomeInfoCard 
+                  outcome={`تاریخ پایان وام: ${summary.payoffDate}`}
+                />
+              </div>
               
-              <div className="glass-effect text-primary p-4 rounded-xl text-center text-sm">
+              <div className="glass-effect text-primary p-4 rounded-xl text-center text-sm mb-6">
                 {amountInWords}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
+              {/* Loan Progress Visualization */}
+              <div className="neo-glass rounded-xl p-6 mb-6">
+                <h3 className="font-semibold text-lg mb-4 flex items-center">
+                  <PieChart className="ml-2 h-5 w-5 text-primary" />
+                  تحلیل ساختار وام
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-medium">اصل وام</span>
+                      <span className="text-sm text-primary font-semibold">
+                        {loanMetrics?.principalToTotalRatio.toFixed(1)}%
+                      </span>
+                    </div>
+                    <Progress value={loanMetrics?.principalToTotalRatio} className="h-2" />
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-medium">بهره</span>
+                      <span className="text-sm text-amber-600 font-semibold">
+                        {loanMetrics?.interestToTotalRatio.toFixed(1)}%
+                      </span>
+                    </div>
+                    <Progress value={loanMetrics?.interestToTotalRatio} className="h-2" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <div className="flex items-center mb-2">
                     <CreditCard className="h-5 w-5 text-primary ml-2" />
-                    <h3 className="font-medium">پرداخت ماهیانه</h3>
+                    <h3 className="font-medium text-sm">پرداخت ماهیانه</h3>
                   </div>
-                  <p className="text-xl font-bold vibrant-gradient">{formatToToman(summary.monthlyPayment)} تومان</p>
+                  <p className="text-lg font-bold vibrant-gradient">{formatToToman(summary.monthlyPayment)}</p>
+                  <p className="text-xs text-muted-foreground mt-1">تومان</p>
                 </div>
                 
-                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
+                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <div className="flex items-center mb-2">
                     <Calculator className="h-5 w-5 text-primary ml-2" />
-                    <h3 className="font-medium">تعداد پرداخت</h3>
+                    <h3 className="font-medium text-sm">کل پرداختی</h3>
                   </div>
-                  <p className="text-xl font-bold vibrant-gradient">{summary.paymentCount} قسط</p>
+                  <p className="text-lg font-bold text-blue-600">{formatToToman(summary.totalPayment)}</p>
+                  <p className="text-xs text-muted-foreground mt-1">تومان</p>
                 </div>
                 
-                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 col-span-1 md:col-span-2 lg:col-span-1">
+                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <div className="flex items-center mb-2">
-                    <CirclePercent className="h-5 w-5 text-primary ml-2" />
-                    <h3 className="font-medium">نسبت بهره به اصل</h3>
+                    <TrendingUp className="h-5 w-5 text-amber-600 ml-2" />
+                    <h3 className="font-medium text-sm">کل بهره</h3>
                   </div>
-                  <p className="text-xl font-bold vibrant-gradient">
-                    {((summary.totalInterest / summary.loanAmount) * 100).toFixed(1)}%
+                  <p className="text-lg font-bold text-amber-600">{formatToToman(summary.totalInterest)}</p>
+                  <p className="text-xs text-muted-foreground mt-1">تومان</p>
+                </div>
+                
+                <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                  <div className="flex items-center mb-2">
+                    <BarChart3 className="h-5 w-5 text-green-600 ml-2" />
+                    <h3 className="font-medium text-sm">درصد بهره</h3>
+                  </div>
+                  <p className="text-lg font-bold text-green-600">
+                    {summary.interestPercentage.toFixed(1)}%
                   </p>
+                  <p className="text-xs text-muted-foreground mt-1">از کل وام</p>
+                </div>
+              </div>
+
+              {/* Additional Metrics */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div className="glass-effect rounded-xl p-4">
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">میانگین بهره ماهیانه</h4>
+                  <p className="text-lg font-semibold text-amber-600">{formatToToman(summary.avgMonthlyInterest)} تومان</p>
+                </div>
+                
+                <div className="glass-effect rounded-xl p-4">
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">میانگین اصل ماهیانه</h4>
+                  <p className="text-lg font-semibold text-blue-600">{formatToToman(summary.avgMonthlyPrincipal)} تومان</p>
+                </div>
+                
+                <div className="glass-effect rounded-xl p-4">
+                  <h4 className="font-medium text-sm text-muted-foreground mb-1">تعداد اقساط</h4>
+                  <p className="text-lg font-semibold text-primary">{summary.paymentCount} ماه</p>
                 </div>
               </div>
 
