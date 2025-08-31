@@ -221,15 +221,41 @@ export function hijriToGregorian(hYear: number, hMonth: number, hDay: number): C
  * Get current date in all three calendars
  */
 export function getCurrentDates() {
+  // Use local noon to avoid timezone edge cases that can shift the day near midnight
   const now = new Date();
+  const localNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0);
+
   const gregorian = {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1,
-    day: now.getDate()
+    year: localNoon.getFullYear(),
+    month: localNoon.getMonth() + 1,
+    day: localNoon.getDate()
   };
-  
-  const persian = gregorianToPersian(gregorian.year, gregorian.month, gregorian.day);
-  const hijri = gregorianToHijri(gregorian.year, gregorian.month, gregorian.day);
+
+  // Helper: normalize Persian/Arabic-Indic digits to English digits
+  const toEnglishDigits = (str: string) => {
+    const map: Record<string, string> = {
+      '۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9',
+      '٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'
+    };
+    return str.replace(/[۰-۹٠-٩]/g, (d) => map[d] ?? d);
+  };
+
+  // Prefer Intl API for accuracy, fallback to algorithm if not available
+  const getFromIntl = (locale: string): CalendarDate | null => {
+    try {
+      const parts = new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(localNoon);
+      const year = Number(toEnglishDigits(parts.find(p => p.type === 'year')?.value || ''));
+      const month = Number(toEnglishDigits(parts.find(p => p.type === 'month')?.value || ''));
+      const day = Number(toEnglishDigits(parts.find(p => p.type === 'day')?.value || ''));
+      if (year && month && day) return { year, month, day };
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
+  const persian = getFromIntl('fa-IR-u-ca-persian') || gregorianToPersian(gregorian.year, gregorian.month, gregorian.day);
+  const hijri = getFromIntl('ar-SA-u-ca-islamic-umalqura') || getFromIntl('ar-SA-u-ca-islamic') || gregorianToHijri(gregorian.year, gregorian.month, gregorian.day);
   
   return { gregorian, persian, hijri };
 }
