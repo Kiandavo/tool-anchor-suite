@@ -24,8 +24,14 @@ export const useShahnameReading = () => {
 
     // Simulate API delay for better UX
     setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * shahnameVerses.length);
-      const selectedVerse = shahnameVerses[randomIndex];
+      // Apply positive bias similar to Hafez fortune
+      const positiveVerses = shahnameVerses.filter(v => v.isPositive === true);
+      const versesToChooseFrom = positiveVerses.length > 0 
+        ? (Math.random() < 0.7 ? positiveVerses : shahnameVerses) // 70% chance of positive verse
+        : shahnameVerses;
+        
+      const randomIndex = Math.floor(Math.random() * versesToChooseFrom.length);
+      const selectedVerse = versesToChooseFrom[randomIndex];
       
       SetVerse(selectedVerse);
       setIsLoading(false);

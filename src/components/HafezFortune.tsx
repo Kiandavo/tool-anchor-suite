@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Book, Copy, RefreshCw, Sparkles } from "lucide-react";
+import { Book, Copy, RefreshCw, Sparkles, Heart } from "lucide-react";
 import { copyToClipboard } from "@/utils/randomUtils";
 import { hafezGhazals, HafezPoem } from "@/data/hafez-ghazals";
 import { HafezGuide } from "./fal/hafez/HafezGuide";
@@ -69,8 +69,27 @@ export const HafezFortune = () => {
   
   const copyFortune = () => {
     if (poem) {
-      copyToClipboard(`${poem.title}\n\n${poem.text}\n\nتفسیر:\n${poem.interpretation}`);
-      toast.success("فال کپی شد!");
+      const fortuneText = `
+🏛️ فال حافظ 🏛️
+
+📜 ${poem.title}
+
+📖 متن غزل:
+${poem.text}
+
+🌟 تفسیر و راهنمایی:
+${poem.interpretation}
+
+💎 نکات کاربردی:
+• این پیام برای ۳ روز آینده معتبر است
+• در تصمیم‌گیری‌ها به درون خود گوش دهید
+• توجه به جزئیات و نشانه‌های پیرامون مهم است
+
+🔗 ایجاد شده با ابزارهای فال و طالع‌بینی
+      `.trim();
+      
+      copyToClipboard(fortuneText);
+      toast.success("فال حافظ کپی شد!");
     }
   };
 
@@ -127,9 +146,30 @@ export const HafezFortune = () => {
                 <pre className="text-[#4b5563] text-sm font-medium leading-6 whitespace-pre-wrap text-right">{poem.text}</pre>
               </div>
               
-              <div className="bg-[#f5f6f7] p-3 rounded-lg border border-[#d1d5db]/50">
-                <h4 className="font-medium text-[#4b5563] text-xs mb-2">تفسیر:</h4>
-                <p className="text-[#4b5563]/80 text-xs leading-5">{poem.interpretation}</p>
+              <div className="bg-[#f5f6f7] p-4 rounded-lg border border-[#d1d5db]/50">
+                <h4 className="font-medium text-[#4b5563] text-sm mb-3 flex items-center">
+                  <Heart size={16} className="ml-1 text-red-400" />
+                  تفسیر و راهنمایی:
+                </h4>
+                <p className="text-[#4b5563]/90 text-sm leading-6 mb-3">{poem.interpretation}</p>
+                
+                <div className="bg-white/70 p-3 rounded-lg border border-[#d1d5db]/30 mt-3">
+                  <h5 className="font-medium text-[#4b5563] text-xs mb-2 flex items-center">
+                    <Sparkles size={14} className="ml-1 text-amber-500" />
+                    نکات کاربردی:
+                  </h5>
+                  <ul className="text-[#4b5563]/80 text-xs leading-5 space-y-1">
+                    <li>• این پیام برای ۳ روز آینده معتبر است</li>
+                    <li>• در تصمیم‌گیری‌ها به درون خود گوش دهید</li>
+                    <li>• توجه به جزئیات و نشانه‌های پیرامون مهم است</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-gradient-to-r from-amber-50/50 to-orange-50/50 p-3 rounded-lg border border-amber-200/30 mt-3">
+                  <p className="text-amber-700 text-xs text-center">
+                    🌟 حافظ می‌گوید: هر چه در دل داری، در این غزل پاسخش هست
+                  </p>
+                </div>
               </div>
             </div>
           )}

@@ -171,9 +171,74 @@ export default function CoffeeReading() {
     setCupPhoto(null);
   };
 
-  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const validateCoffeeImage = (file: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        // Simple validation - check if it's an image and reasonable dimensions
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(false);
+          return;
+        }
+        
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        
+        // Get image data to analyze colors (coffee cups typically have brown/dark colors)
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        let brownPixels = 0;
+        let darkPixels = 0;
+        let totalPixels = data.length / 4;
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          
+          // Check for brown/coffee colors
+          if (r > g && r > b && r > 80 && r < 200) {
+            brownPixels++;
+          }
+          
+          // Check for dark colors (coffee residue)
+          if (r < 100 && g < 100 && b < 100) {
+            darkPixels++;
+          }
+        }
+        
+        const brownPercentage = (brownPixels / totalPixels) * 100;
+        const darkPercentage = (darkPixels / totalPixels) * 100;
+        
+        // Accept if image has reasonable amount of brown/dark colors typical of coffee cups
+        resolve(brownPercentage > 5 || darkPercentage > 10);
+      };
+      
+      img.onerror = () => resolve(false);
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Validate if it's a coffee-related image
+      const isValidCoffeeImage = await validateCoffeeImage(file);
+      
+      if (!isValidCoffeeImage) {
+        toast({
+          title: "تصویر نامناسب ❌",
+          description: "لطفاً عکس فنجان قهوه آماده شده ارسال کنید. تصاویر غیرمرتبط پذیرفته نمی‌شود.",
+          variant: "destructive"
+        });
+        event.target.value = ''; // Reset input
+        return;
+      }
+      
       const reader = new FileReader();
       reader.onload = (e) => {
         setCupPhoto(e.target?.result as string);
