@@ -254,10 +254,11 @@ export function getCurrentDates() {
     }
   };
 
-  const persian = getFromIntl('fa-IR-u-ca-persian') || gregorianToPersian(gregorian.year, gregorian.month, gregorian.day);
-  const hijri = getFromIntl('ar-SA-u-ca-islamic-umalqura') || getFromIntl('ar-SA-u-ca-islamic') || gregorianToHijri(gregorian.year, gregorian.month, gregorian.day);
-  
-  return { gregorian, persian, hijri };
+   // Use our accurate algorithm instead of browser's potentially inaccurate Intl API
+   const persian = gregorianToPersian(gregorian.year, gregorian.month, gregorian.day);
+   const hijri = gregorianToHijri(gregorian.year, gregorian.month, gregorian.day);
+   
+   return { gregorian, persian, hijri };
 }
 
 /**

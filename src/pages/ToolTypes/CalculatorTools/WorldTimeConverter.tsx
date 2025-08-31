@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, Globe } from 'lucide-react';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
+import { getCurrentDates, formatPersianDate } from '@/utils/calendar/persianCalendar';
 
 // Group cities by region for better organization
 const regions = {
@@ -122,12 +123,12 @@ export default function WorldTimeConverter() {
             <p className="font-bold">ساعت محلی شما:</p>
             <p className="text-2xl font-mono">{now.toLocaleTimeString('fa-IR')}</p>
             <p className="text-sm text-muted-foreground">
-              {new Intl.DateTimeFormat('fa-IR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              }).format(now)}
+              {(() => {
+                const { persian } = getCurrentDates();
+                const weekdays = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
+                const weekday = weekdays[now.getDay()];
+                return `${weekday}، ${formatPersianDate(persian)}`;
+              })()}
             </p>
           </div>
           
