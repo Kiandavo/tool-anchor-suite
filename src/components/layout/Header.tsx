@@ -14,6 +14,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
 
   const mainCategories = [
     { 
@@ -41,6 +42,37 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       subcategories: ['productivity', 'educational', 'random']
     }
   ];
+
+  const handleMouseEnter = (categoryId: string) => {
+    if (dropdownTimer) {
+      clearTimeout(dropdownTimer);
+      setDropdownTimer(null);
+    }
+    setOpenDropdown(categoryId);
+  };
+
+  const handleMouseLeave = () => {
+    const timer = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 300); // 300ms delay
+    setDropdownTimer(timer);
+  };
+
+  const handleDropdownClick = (categoryId: string) => {
+    if (dropdownTimer) {
+      clearTimeout(dropdownTimer);
+      setDropdownTimer(null);
+    }
+    setOpenDropdown(openDropdown === categoryId ? null : categoryId);
+  };
+
+  const handleMenuItemClick = () => {
+    if (dropdownTimer) {
+      clearTimeout(dropdownTimer);
+      setDropdownTimer(null);
+    }
+    setOpenDropdown(null);
+  };
 
   const categoryLabels: Record<string, string> = {
     calculator: 'ماشین‌حساب',
@@ -96,9 +128,9 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {mainCategories.map((category) => (
                 <div key={category.id} className="relative">
                   <button
-                    onMouseEnter={() => setOpenDropdown(category.id)}
-                    onMouseLeave={() => setOpenDropdown(null)}
-                    onClick={() => setOpenDropdown(openDropdown === category.id ? null : category.id)}
+                    onMouseEnter={() => handleMouseEnter(category.id)}
+                    onMouseLeave={handleMouseLeave}
+                    onClick={() => handleDropdownClick(category.id)}
                     className="flex items-center gap-2 px-4 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium group"
                   >
                     <category.icon size={16} className="group-hover:scale-110 transition-transform" />
@@ -108,15 +140,15 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                   
                   {openDropdown === category.id && (
                     <div 
-                      className="absolute top-full left-0 mt-1 bg-white shadow-2xl border border-gray-200 rounded-lg min-w-48 z-50"
-                      onMouseEnter={() => setOpenDropdown(category.id)}
-                      onMouseLeave={() => setOpenDropdown(null)}
+                      className="absolute top-full left-0 mt-0 bg-white shadow-2xl border border-gray-200 rounded-lg min-w-48 z-50 overflow-hidden"
+                      onMouseEnter={() => handleMouseEnter(category.id)}
+                      onMouseLeave={handleMouseLeave}
                     >
                       {category.subcategories.map((subcat) => (
                         <Link
                           key={subcat}
                           to={`/category/${subcat}`}
-                          onClick={() => setOpenDropdown(null)}
+                          onClick={handleMenuItemClick}
                           className="block px-4 py-3 text-gray-800 hover:bg-primary/10 hover:text-primary transition-colors text-sm first:rounded-t-lg last:rounded-b-lg"
                         >
                           {categoryLabels[subcat]}
