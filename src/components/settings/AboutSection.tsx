@@ -10,7 +10,7 @@ const AboutSection = () => {
         <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100">درباره لنگر</h3>
       </div>
       <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 pr-9">
-        لنگر مجموعه‌ای از بیش از ۱۲۰ ابزار رایگان تحت وب است که بدون نیاز به ثبت‌نام و با حفظ حریم خصوصی شما ارائه می‌شود.
+        لنگر مجموعه‌ای از +۸۰ ابزار رایگان تحت وب است که بدون نیاز به ثبت‌نام و با حفظ حریم خصوصی شما ارائه می‌شود.
       </p>
       
       <div className="icon-text mb-4 mt-6">
