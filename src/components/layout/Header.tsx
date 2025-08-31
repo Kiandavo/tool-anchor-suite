@@ -98,16 +98,17 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                   <button
                     onMouseEnter={() => setOpenDropdown(category.id)}
                     onMouseLeave={() => setOpenDropdown(null)}
+                    onClick={() => setOpenDropdown(openDropdown === category.id ? null : category.id)}
                     className="flex items-center gap-2 px-4 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium group"
                   >
                     <category.icon size={16} className="group-hover:scale-110 transition-transform" />
                     <span>{category.name}</span>
-                    <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
+                    <ChevronDown size={14} className={`transition-transform ${openDropdown === category.id ? 'rotate-180' : ''}`} />
                   </button>
                   
                   {openDropdown === category.id && (
                     <div 
-                      className="absolute top-full left-0 mt-1 bg-white/95 backdrop-blur-sm border border-white/20 rounded-lg shadow-xl min-w-48 z-50"
+                      className="absolute top-full left-0 mt-1 bg-white shadow-2xl border border-gray-200 rounded-lg min-w-48 z-50"
                       onMouseEnter={() => setOpenDropdown(category.id)}
                       onMouseLeave={() => setOpenDropdown(null)}
                     >
@@ -115,6 +116,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                         <Link
                           key={subcat}
                           to={`/category/${subcat}`}
+                          onClick={() => setOpenDropdown(null)}
                           className="block px-4 py-3 text-gray-800 hover:bg-primary/10 hover:text-primary transition-colors text-sm first:rounded-t-lg last:rounded-b-lg"
                         >
                           {categoryLabels[subcat]}
