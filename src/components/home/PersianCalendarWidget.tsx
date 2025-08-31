@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, Globe, Star, Sun, Moon } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Clock, Globe, Star, Sun, Moon, Globe2, MapPin } from 'lucide-react';
+import { getCurrentDates } from '@/utils/calendar/persianCalendar';
 
 interface PersianDate {
   year: number;
@@ -105,23 +109,18 @@ const persianHolidays = [
   { month: 12, day: 29, name: 'روز ملی خلیج فارس', description: 'اهمیت ژئوپولیتیک خلیج فارس' }
 ];
 
-// Simple Persian calendar conversion (approximation)
-function gregorianToPersian(date: Date): PersianDate {
-  const gregorianYear = date.getFullYear();
-  const gregorianMonth = date.getMonth() + 1;
-  const gregorianDay = date.getDate();
-  
-  // Simple approximation - in real app would use proper conversion library
-  const persianYear = gregorianYear - 621;
-  const persianMonth = ((gregorianMonth + 9) % 12) + 1;
-  const persianDay = gregorianDay;
+// Get accurate Persian date using our utility
+function getAccuratePersianDate(): PersianDate {
+  const { persian } = getCurrentDates();
+  const weekdays = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
+  const currentDate = new Date();
   
   return {
-    year: persianYear,
-    month: persianMonth,
-    day: persianDay,
-    monthName: persianMonths[persianMonth - 1],
-    weekDay: persianWeekDays[date.getDay()]
+    year: persian.year,
+    month: persian.month,
+    day: persian.day,
+    monthName: persianMonths[persian.month - 1],
+    weekDay: weekdays[currentDate.getDay()]
   };
 }
 
@@ -137,7 +136,7 @@ export const PersianCalendarWidget = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const persianDate = gregorianToPersian(currentTime);
+  const persianDate = getAccuratePersianDate();
   const hijriYear = persianDate.year + 579; // Approximate conversion
   
   const formatTime = (date: Date, offset: string): string => {
