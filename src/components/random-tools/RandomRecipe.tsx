@@ -18,8 +18,8 @@ export function RandomRecipe() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleGenerateRecipe} className="flex items-center gap-2 w-full">
-          <Sparkles size={18} />
+        <Button onClick={handleGenerateRecipe} size="lg" className="w-full icon-text">
+          <Sparkles size={20} />
           پیشنهاد دستور پخت تصادفی
         </Button>
         {recipe && (

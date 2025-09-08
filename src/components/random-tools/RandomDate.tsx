@@ -21,8 +21,8 @@ export function RandomDate() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleGenerateDate} className="flex items-center gap-2">
-          <Calendar size={18} />
+        <Button onClick={handleGenerateDate} size="lg" className="w-full icon-text">
+          <Calendar size={20} />
           تولید تاریخ تصادفی
         </Button>
         {randomDate && (

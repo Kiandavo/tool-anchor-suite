@@ -24,7 +24,7 @@ export const RandomArrayShuffler: React.FC = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <Textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="هر مورد را در یک خط بنویسید" />
-        <Button onClick={() => setResult(shuffle(items))} className="w-full">درهم‌ریزی</Button>
+        <Button onClick={() => setResult(shuffle(items))} size="lg" className="w-full">درهم‌ریزی</Button>
         {result.length > 0 && (
           <ul className="list-disc pr-6 space-y-1">
             {result.map((r, i) => (<li key={i}>{r}</li>))}

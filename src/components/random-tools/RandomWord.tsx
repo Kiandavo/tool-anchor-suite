@@ -18,8 +18,8 @@ export function RandomWord() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleGenerateWord} className="flex items-center gap-2 w-full">
-          <Dices size={18} />
+        <Button onClick={handleGenerateWord} size="lg" className="w-full icon-text">
+          <Dices size={20} />
           تولید کلمه تصادفی
         </Button>
         {word && (

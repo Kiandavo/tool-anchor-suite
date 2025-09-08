@@ -45,8 +45,8 @@ export function RandomLotteryNumbers() {
             />
           </div>
           
-          <Button onClick={handleGenerateLotteryNumbers} className="w-full flex items-center gap-2">
-            <Ticket size={18} />
+          <Button onClick={handleGenerateLotteryNumbers} size="lg" className="w-full icon-text">
+            <Ticket size={20} />
             تولید اعداد لاتاری
           </Button>
         </div>

@@ -24,7 +24,7 @@ export const RandomQRCodeGenerator: React.FC = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="متن یا لینک را وارد کنید" />
-        <Button onClick={generate} className="w-full">تولید QR</Button>
+        <Button onClick={generate} size="lg" className="w-full">تولید QR</Button>
         {dataUrl && (
           <div className="flex justify-center">
             <img src={dataUrl} alt="qr code" width={256} height={256} loading="lazy" />

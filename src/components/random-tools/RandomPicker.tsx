@@ -32,8 +32,8 @@ export function RandomPicker() {
             value={items}
             onChange={(e) => setItems(e.target.value)}
           />
-          <Button onClick={handlePick} className="flex items-center gap-2">
-            <Dices size={18} />
+          <Button onClick={handlePick} size="lg" className="w-full icon-text">
+            <Dices size={20} />
             انتخاب تصادفی
           </Button>
         </div>

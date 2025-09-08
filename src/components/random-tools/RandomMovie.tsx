@@ -46,8 +46,8 @@ export function RandomMovie() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleGenerateMovie} className="flex items-center gap-2 w-full">
-          <Film size={18} />
+        <Button onClick={handleGenerateMovie} size="lg" className="w-full icon-text">
+          <Film size={20} />
           پیشنهاد فیلم تصادفی
         </Button>
         

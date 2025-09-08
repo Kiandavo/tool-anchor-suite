@@ -32,7 +32,7 @@ export const RandomNumber: React.FC = () => {
             <Input id="max" type="number" value={max} onChange={(e) => setMax(Number(e.target.value))} />
           </div>
         </div>
-        <Button onClick={generate} className="w-full">تولید</Button>
+        <Button onClick={generate} size="lg" className="w-full">تولید</Button>
         {value !== null && (
           <div className="text-center text-2xl font-bold">{value}</div>
         )}

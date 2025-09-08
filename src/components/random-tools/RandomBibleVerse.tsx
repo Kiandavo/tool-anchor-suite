@@ -18,8 +18,8 @@ export function RandomBibleVerse() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleGenerateVerse} className="flex items-center gap-2 w-full">
-          <Book size={18} />
+        <Button onClick={handleGenerateVerse} size="lg" className="w-full icon-text">
+          <Book size={20} />
           آیه تصادفی کتاب مقدس
         </Button>
         {verse && (

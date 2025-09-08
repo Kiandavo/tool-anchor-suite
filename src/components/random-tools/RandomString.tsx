@@ -31,8 +31,8 @@ export function RandomString() {
             className="w-32"
             placeholder="طول رشته"
           />
-          <Button onClick={handleGenerateString} className="flex items-center gap-2">
-            <Dices size={18} />
+          <Button onClick={handleGenerateString} size="lg" className="w-full icon-text">
+            <Dices size={20} />
             تولید رشته تصادفی
           </Button>
         </div>

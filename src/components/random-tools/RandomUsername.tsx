@@ -31,8 +31,8 @@ export function RandomUsername() {
               <SelectItem value="professional">حرفه‌ای</SelectItem>
             </SelectContent>
           </Select>
-          <Button onClick={handleGenerateUsername} className="flex items-center gap-2">
-            <User size={18} />
+          <Button onClick={handleGenerateUsername} size="lg" className="w-full icon-text">
+            <User size={20} />
             تولید نام کاربری
           </Button>
         </div>

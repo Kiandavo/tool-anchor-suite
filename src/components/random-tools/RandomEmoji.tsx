@@ -18,8 +18,8 @@ export function RandomEmoji() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleGenerateEmoji} className="flex items-center gap-2 w-full">
-          <Sparkles size={18} />
+        <Button onClick={handleGenerateEmoji} size="lg" className="w-full icon-text">
+          <Sparkles size={20} />
           تولید ایموجی تصادفی
         </Button>
         {emoji && (

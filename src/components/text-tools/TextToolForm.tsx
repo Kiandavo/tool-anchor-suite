@@ -72,14 +72,16 @@ export function TextToolForm({
           </div>
         </RadioGroup>
       )}
-      <Button type="button" onClick={handleProcess}>{processButtonText}</Button>
+      <Button type="button" onClick={handleProcess} size="lg" className="w-full">{processButtonText}</Button>
       <Label>خروجی:</Label>
       <Textarea value={textOutput} readOnly rows={7} />
       <Button
         type="button"
         variant="outline"
+        size="default"
         onClick={handleCopy}
         disabled={!textOutput}
+        className="w-full"
       >
         کپی خروجی
       </Button>

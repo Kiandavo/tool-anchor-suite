@@ -110,8 +110,8 @@ export function PasswordGenerator() {
             </div>
           </div>
 
-          <Button onClick={generatePassword} className="w-full flex items-center gap-2">
-            <Key size={18} />
+          <Button onClick={generatePassword} size="lg" className="w-full icon-text">
+            <Key size={20} />
             تولید رمز عبور
           </Button>
         </div>

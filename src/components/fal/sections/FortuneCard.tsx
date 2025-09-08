@@ -28,11 +28,11 @@ export const FortuneCard: React.FC<FortuneCardProps> = ({
         <Button 
           onClick={onLoadComponent}
           variant="apple"
-          size="apple-sm"
-          className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border-none shadow-lg font-semibold px-6 py-3 rounded-2xl transition-all duration-300 hover:scale-105"
+          size="apple-lg"
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white border-none shadow-lg font-semibold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105 icon-text"
         >
           {buttonText}
-          <ChevronRight size={18} className="mr-2 rtl:rotate-180 text-white" />
+          <ChevronRight size={20} className="mr-2 rtl:rotate-180 text-white" />
         </Button>
       </div>
     </div>

@@ -20,7 +20,7 @@ export const RandomCardPicker: React.FC = () => {
         <CardTitle>انتخاب کارت تصادفی</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Button onClick={pick} className="w-full">انتخاب کارت</Button>
+        <Button onClick={pick} size="lg" className="w-full">انتخاب کارت</Button>
         {card && <div className="text-center text-2xl font-bold">{card}</div>}
       </CardContent>
     </Card>

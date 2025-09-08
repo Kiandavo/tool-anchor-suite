@@ -48,8 +48,8 @@ export function RandomTeam() {
             />
           </div>
           
-          <Button onClick={handleGenerateTeams} className="w-full flex items-center gap-2">
-            <Users size={18} />
+          <Button onClick={handleGenerateTeams} size="lg" className="w-full icon-text">
+            <Users size={20} />
             تشکیل تیم‌های تصادفی
           </Button>
         </div>

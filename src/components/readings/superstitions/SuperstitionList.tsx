@@ -23,7 +23,8 @@ const SuperstitionList: React.FC<SuperstitionListProps> = ({ superstitions, onSe
         <Button
           key={index}
           variant="outline"
-          className="w-full justify-start text-right p-3 h-auto"
+          size="default"
+          className="w-full justify-start text-right p-4 h-auto"
           onClick={() => onSelectSuperstition(superstition)}
         >
           <div className="text-right">

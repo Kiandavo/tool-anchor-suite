@@ -18,8 +18,8 @@ export function RandomDice() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleRollDice} className="flex items-center gap-2 w-full">
-          <Dices size={18} />
+        <Button onClick={handleRollDice} size="lg" className="w-full icon-text">
+          <Dices size={20} />
           پرتاب تاس
         </Button>
         {diceValue && (

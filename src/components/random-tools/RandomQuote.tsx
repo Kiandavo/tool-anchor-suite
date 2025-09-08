@@ -18,8 +18,8 @@ export function RandomQuote() {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <Button onClick={handleGenerateQuote} className="flex items-center gap-2 w-full">
-          <Quote size={18} />
+        <Button onClick={handleGenerateQuote} size="lg" className="w-full icon-text">
+          <Quote size={20} />
           تولید نقل قول تصادفی
         </Button>
         {quote && (
