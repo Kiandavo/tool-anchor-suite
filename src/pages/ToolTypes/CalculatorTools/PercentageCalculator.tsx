@@ -20,20 +20,38 @@ export default function PercentageCalculator() {
       return;
     }
 
+    // Helper function to format numbers precisely
+    const formatPreciseNumber = (num: number): string => {
+      // Remove trailing zeros and format with Persian numerals
+      const formatted = parseFloat(num.toPrecision(15)).toString();
+      return formatted.replace(/\./g, '.').replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d)]);
+    };
+
     if (calcType === 'percentOf') {
       // Calculate X% of Y
       const calculatedResult = (numPercentage / 100) * numValue;
-      setResult(`${numPercentage}% از ${numValue} برابر است با ${calculatedResult.toLocaleString('fa-IR')}`);
+      const formattedResult = formatPreciseNumber(calculatedResult);
+      setResult(`${formatPreciseNumber(numPercentage)}% از ${formatPreciseNumber(numValue)} برابر است با ${formattedResult}`);
     } else if (calcType === 'isWhatPercent') {
       // X is what percent of Y
+      if (numPercentage === 0) {
+        setResult('تقسیم بر صفر امکان‌پذیر نیست');
+        return;
+      }
       const calculatedResult = (numValue / numPercentage) * 100;
-      setResult(`${numValue} برابر است با ${calculatedResult.toLocaleString('fa-IR')}% از ${numPercentage}`);
+      const formattedResult = formatPreciseNumber(calculatedResult);
+      setResult(`${formatPreciseNumber(numValue)} برابر است با ${formattedResult}% از ${formatPreciseNumber(numPercentage)}`);
     } else if (calcType === 'percentIncrease') {
       // Percent increase/decrease from X to Y
+      if (numValue === 0) {
+        setResult('تقسیم بر صفر امکان‌پذیر نیست');
+        return;
+      }
       const change = numPercentage - numValue;
       const percentChange = (change / numValue) * 100;
       const increaseOrDecrease = percentChange >= 0 ? 'افزایش' : 'کاهش';
-      setResult(`تغییر از ${numValue} به ${numPercentage} برابر است با ${Math.abs(percentChange).toLocaleString('fa-IR')}% ${increaseOrDecrease}`);
+      const formattedChange = formatPreciseNumber(Math.abs(percentChange));
+      setResult(`تغییر از ${formatPreciseNumber(numValue)} به ${formatPreciseNumber(numPercentage)} برابر است با ${formattedChange}% ${increaseOrDecrease}`);
     }
   };
 
