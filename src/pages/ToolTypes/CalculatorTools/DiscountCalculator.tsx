@@ -65,6 +65,13 @@ const DiscountCalculator = () => {
     return cleaned;
   };
 
+  // Precise number formatting without rounding (Persian digits)
+  const toPersianDigits = (s: string): string => s.replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d)]);
+  const formatPreciseNumber = (num: number): string => {
+    if (!isFinite(num)) return 'نامعتبر';
+    const trimmed = parseFloat(num.toPrecision(15)).toString();
+    return toPersianDigits(trimmed);
+  };
   // Calculate simple discount
   const calculateDiscount = useCallback(async () => {
     setIsCalculating(true);
@@ -137,7 +144,7 @@ const DiscountCalculator = () => {
       setReverseResult(discountPercentage);
       
       toast.success("درصد تخفیف محاسبه شد", {
-        description: `درصد تخفیف: ${discountPercentage.toFixed(1)}%`,
+        description: `درصد تخفیف: ${formatPreciseNumber(discountPercentage)}%`,
         position: "top-center",
       });
       
@@ -449,11 +456,11 @@ const DiscountCalculator = () => {
                       <Percent className="h-8 w-8 text-primary ml-3" />
                       <div>
                         <h3 className="font-semibold text-lg">درصد تخفیف</h3>
-                        <p className="text-3xl font-bold text-primary">{reverseResult.toFixed(1)}%</p>
+                        <p className="text-3xl font-bold text-primary">{formatPreciseNumber(reverseResult)}%</p>
                       </div>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      شما {((parseFloat(priceBeforeDiscount) - parseFloat(priceAfterDiscount)) / parseFloat(priceBeforeDiscount) * 100).toFixed(1)}% 
+                      شما {formatPreciseNumber(((parseFloat(priceBeforeDiscount) - parseFloat(priceAfterDiscount)) / parseFloat(priceBeforeDiscount)) * 100)}%
                       صرفه‌جویی کرده‌اید
                     </p>
                   </div>
