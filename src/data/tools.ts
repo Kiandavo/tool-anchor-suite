@@ -62,35 +62,60 @@ export const getNewTools = (): Tool[] => {
 };
 
 export const getPopularTools = (): Tool[] => {
-  // Return most useful and frequently used tools
-  const popularToolIds = [
-    'qr-code-generator',
-    'password-generator', 
-    'color-palette-generator',
-    'text-analyzer',
-    'hafez-fortune',
-    'horoscope',
-    'svg-to-png-converter',
+  // Prioritize general-purpose tools with broad appeal
+  const essentialToolIds = [
+    // Calculators - most universally needed
     'bmi-calculator',
-    'url-shortener',
-    'json-formatter',
+    'percentage-calculator',
+    'discount-calculator',
+    'unit-converter',
+    'date-difference',
+    'mortgage-calculator',
+    
+    // Text tools - daily use
+    'text-counter',
     'base64-encoder-decoder',
-    'mortgage-calculator'
+    'url-encoder-decoder',
+    'text-to-uppercase',
+    'text-to-lowercase',
+    'json-formatter',
+    
+    // Image tools - common needs
+    'image-compressor',
+    'image-resizer',
+    'svg-to-png-converter',
+    'image-cropper',
+    
+    // SEO tools - business value
+    'meta-tag-generator',
+    'keyword-density',
+    'robots-txt-generator',
+    
+    // Utility tools - frequent use
+    'qr-code-generator',
+    'password-generator',
+    'color-palette-generator'
   ];
   
-  const popularTools = popularToolIds
+  const popularTools = essentialToolIds
     .map(id => tools.find(tool => tool.slug === id || tool.id === id))
     .filter((tool): tool is Tool => tool !== undefined && !tool.isComingSoon);
   
-  // If we don't have enough from the predefined list, add more from available tools
-  if (popularTools.length < 8) {
+  // If we don't have enough from the predefined list, add more general-purpose tools
+  if (popularTools.length < 12) {
+    const generalPurposeCategories = ['calculators', 'text', 'image', 'seo'];
     const remainingTools = tools
-      .filter(tool => !tool.isComingSoon && !popularToolIds.includes(tool.slug) && !popularToolIds.includes(tool.id))
-      .slice(0, 8 - popularTools.length);
+      .filter(tool => 
+        !tool.isComingSoon && 
+        !essentialToolIds.includes(tool.slug) && 
+        !essentialToolIds.includes(tool.id) &&
+        generalPurposeCategories.includes(tool.category)
+      )
+      .slice(0, 12 - popularTools.length);
     popularTools.push(...remainingTools);
   }
   
-  return popularTools.slice(0, 8);
+  return popularTools.slice(0, 12);
 };
 
 export const getProfessionalTools = (): Tool[] => {

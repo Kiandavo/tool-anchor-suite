@@ -9,67 +9,79 @@ export const QuickToolsSection = () => {
       slug: 'bmi-calculator',
       icon: Calculator,
       color: 'bg-blue-500',
-      description: 'محاسبه شاخص توده بدنی'
+      description: 'محاسبه شاخص توده بدنی',
+      category: 'محاسبات'
+    },
+    {
+      name: 'شمارنده متن',
+      slug: 'text-counter',
+      icon: FileText,
+      color: 'bg-amber-500',
+      description: 'شمارش کلمات، حروف و خطوط',
+      category: 'متن'
     },
     {
       name: 'تولید QR کد',
       slug: 'qr-code-generator', 
       icon: QrCode,
       color: 'bg-green-500',
-      description: 'ایجاد QR کد از متن یا لینک'
+      description: 'ایجاد QR کد از متن یا لینک',
+      category: 'ابزار کاربردی'
+    },
+    {
+      name: 'فشرده‌ساز تصویر',
+      slug: 'image-compressor',
+      icon: Image,
+      color: 'bg-indigo-500',
+      description: 'کاهش حجم عکس بدون کم شدن کیفیت',
+      category: 'تصویر'
+    },
+    {
+      name: 'محاسبه‌گر درصد',
+      slug: 'percentage-calculator',
+      icon: Calculator,
+      color: 'bg-teal-500',
+      description: 'انواع محاسبات درصدی',
+      category: 'محاسبات'
     },
     {
       name: 'تولید رمز عبور',
       slug: 'password-generator',
       icon: Lock,
       color: 'bg-red-500',
-      description: 'ایجاد رمز عبور قوی و امن'
+      description: 'ایجاد رمز عبور قوی و امن',
+      category: 'امنیت'
     },
     {
-      name: 'پالت رنگ',
-      slug: 'color-palette-generator',
-      icon: Palette,
-      color: 'bg-purple-500',
-      description: 'تولید ترکیب رنگ‌های هماهنگ'
-    },
-    {
-      name: 'تحلیل متن',
-      slug: 'text-analyzer',
-      icon: FileText,
-      color: 'bg-amber-500',
-      description: 'شمارش کلمات و تحلیل متن'
-    },
-    {
-      name: 'تبدیل SVG به PNG',
-      slug: 'svg-to-png-converter',
-      icon: Image,
-      color: 'bg-indigo-500',
-      description: 'تبدیل فایل‌های وکتور به تصویر'
-    },
-    {
-      name: 'فال حافظ',
-      slug: 'hafez-fortune',
-      icon: Star,
-      color: 'bg-rose-500',
-      description: 'فال و غزل حافظ شیرازی'
-    },
-    {
-      name: 'فرمت JSON',
-      slug: 'json-formatter',
+      name: 'انکودر Base64',
+      slug: 'base64-encoder-decoder',
       icon: Code,
-      color: 'bg-teal-500',
-      description: 'تنظیم و بررسی فرمت JSON'
+      color: 'bg-purple-500',
+      description: 'تبدیل متن به Base64 و بالعکس',
+      category: 'متن'
+    },
+    {
+      name: 'تبدیل واحدها',
+      slug: 'unit-converter',
+      icon: Calculator,
+      color: 'bg-violet-500',
+      description: 'تبدیل طول، وزن، حجم و دما',
+      category: 'محاسبات'
     }
   ];
 
   return (
     <section className="mb-20 sm:mb-32">
       <div className="text-center mb-12">
+        <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-600 px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <Star size={16} />
+          دسترسی سریع
+        </div>
         <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-          دسترسی سریع به ابزارهای پرکاربرد
+          ابزارهای کاربردی روزانه
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          ابزارهای محبوب که بیشتر کاربران از آن‌ها استفاده می‌کنند
+          ابزارهای پایه‌ای که در زندگی روزمره به آن‌ها نیاز دارید
         </p>
       </div>
 
@@ -90,6 +102,9 @@ export const QuickToolsSection = () => {
                 <div className={`w-14 h-14 ${tool.color} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300`}>
                   <Icon size={24} className="text-white" />
                 </div>
+                <span className="text-xs font-medium text-muted-foreground bg-muted/50 px-2 py-1 rounded-md mb-3 inline-block">
+                  {tool.category}
+                </span>
                 <h3 className="font-semibold text-sm sm:text-base text-foreground mb-2 group-hover:text-primary transition-colors">
                   {tool.name}
                 </h3>

@@ -9,6 +9,7 @@ import { MysticalReadingsSection } from '@/components/home/MysticalReadingsSecti
 import { InteractiveCategoriesSection } from '@/components/home/InteractiveCategoriesSection';
 import { PersianCalendarWidget } from '@/components/home/PersianCalendarWidget';
 import { QuickToolsSection } from '@/components/home/QuickToolsSection';
+import { EssentialToolsSection } from '@/components/home/EssentialToolsSection';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
@@ -61,6 +62,9 @@ const Index = () => {
           
           <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
             
+            {/* Essential Tools Section - Most Important */}
+            <EssentialToolsSection />
+
             {/* Quick Tools Section */}
             <QuickToolsSection />
 
@@ -109,17 +113,23 @@ const Index = () => {
               <div className="bg-card rounded-lg p-6 border border-border/50">
                 <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
                 <div className="space-y-2 text-sm">
+                  <a href="/tool/bmi-calculator" className="block hover:text-primary transition-colors">
+                    محاسبه‌گر BMI
+                  </a>
+                  <a href="/tool/text-counter" className="block hover:text-primary transition-colors">
+                    شمارنده متن
+                  </a>
                   <a href="/tool/qr-code-generator" className="block hover:text-primary transition-colors">
                     تولید QR کد
                   </a>
-                  <a href="/tool/color-palette-generator" className="block hover:text-primary transition-colors">
-                    پالت رنگ
+                  <a href="/tool/image-compressor" className="block hover:text-primary transition-colors">
+                    فشرده‌ساز تصویر
+                  </a>
+                  <a href="/tool/percentage-calculator" className="block hover:text-primary transition-colors">
+                    محاسبه‌گر درصد
                   </a>
                   <a href="/tool/password-generator" className="block hover:text-primary transition-colors">
                     تولید رمز عبور
-                  </a>
-                  <a href="/tool/word-etymology" className="block hover:text-primary transition-colors">
-                    ریشه‌شناسی کلمات
                   </a>
                 </div>
               </div>
