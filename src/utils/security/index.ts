@@ -8,6 +8,7 @@ export * from './domSecurity';
 export * from './secureStorage';
 export * from './securityHeaders';
 export * from './apiSecurity';
+export * from './safeMathEvaluator';
 
 // Initialize security features when imported
 import { addCSPMetaTag } from './domSecurity';

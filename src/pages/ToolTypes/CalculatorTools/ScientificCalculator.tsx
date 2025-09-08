@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calculator, Pi, Equal, Hash } from 'lucide-react';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
+import { safeMathEval } from '@/utils/security/safeMathEvaluator';
 
 export default function ScientificCalculator() {
   const [input, setInput] = useState('');
@@ -25,16 +26,8 @@ export default function ScientificCalculator() {
 
   const calculateResult = () => {
     try {
-      // Replace special symbols with JavaScript math operations
-      let expression = input
-        .replace('×', '*')
-        .replace('÷', '/')
-        .replace('π', Math.PI.toString())
-        .replace('√', 'Math.sqrt')
-        .replace('^', '**');
-
-      // Evaluate the expression
-      const evalResult = Function('"use strict";return (' + expression + ')')();
+      // Use safe mathematical expression evaluator
+      const evalResult = safeMathEval(input);
       setResult(evalResult.toString());
     } catch (error) {
       setResult('خطا');
