@@ -64,17 +64,55 @@ export const convertToFormat = (file: File, format: string): Promise<Blob> => {
         canvas.width = img.width; canvas.height = img.height;
         const ctx = canvas.getContext('2d');
         if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
+        
+        // For PNG conversion, ensure transparent background is preserved
+        if (format === 'png') {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        
         ctx.drawImage(img, 0, 0);
         let mimeType;
-        switch(format) {
-          case 'webp': mimeType = 'image/webp'; break;
-          case 'jpg': case 'jpeg': mimeType = 'image/jpeg'; break;
-          case 'png': mimeType = 'image/png'; break;
-          default: mimeType = 'image/jpeg';
+        let quality = 0.95; // High quality for format conversion
+        
+        switch(format.toLowerCase()) {
+          case 'webp': 
+            mimeType = 'image/webp';
+            // Check WebP support
+            if (!document.createElement('canvas').toDataURL('image/webp').startsWith('data:image/webp')) {
+              console.warn('WebP format not supported by this browser, falling back to JPEG');
+              mimeType = 'image/jpeg';
+            }
+            break;
+          case 'jpg': 
+          case 'jpeg': 
+            mimeType = 'image/jpeg'; 
+            break;
+          case 'png': 
+            mimeType = 'image/png'; 
+            quality = undefined; // PNG doesn't use quality parameter
+            break;
+          default: 
+            mimeType = 'image/jpeg';
         }
+        
         canvas.toBlob(
-          (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
-          mimeType, 0.9
+          (blob) => { 
+            if (!blob) { 
+              reject(new Error(`Canvas toBlob failed - format ${format} may not be supported`)); 
+              return; 
+            }
+            // Additional debugging info
+            console.log(`Format conversion complete:`, {
+              requestedFormat: format,
+              outputMimeType: mimeType,
+              blobType: blob.type,
+              blobSize: blob.size,
+              browserSupportsWebP: document.createElement('canvas').toDataURL('image/webp').startsWith('data:image/webp')
+            });
+            resolve(blob); 
+          },
+          mimeType, 
+          quality
         );
       };
       img.onerror = () => { reject(new Error('Failed to load image')); };
@@ -315,6 +353,35 @@ export const adjustHueRotate = (file: File, degrees: number): Promise<Blob> => {
         if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
         ctx.filter = `hue-rotate(${degrees}deg)`;
         ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
+          'image/jpeg', 0.9
+        );
+      };
+      img.onerror = () => { reject(new Error('Failed to load image')); };
+      img.src = event.target?.result as string;
+    };
+    reader.onerror = () => { reject(new Error('Failed to read file')); };
+    reader.readAsDataURL(file);
+  });
+};
+
+export const applySepia = (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Failed to get canvas context')); return; }
+        ctx.drawImage(img, 0, 0);
+        
+        // Apply sepia filter using canvas filter
+        ctx.filter = 'sepia(100%)';
+        ctx.drawImage(img, 0, 0);
+        
         canvas.toBlob(
           (blob) => { if (!blob) { reject(new Error('Canvas toBlob failed')); return; } resolve(blob); },
           'image/jpeg', 0.9

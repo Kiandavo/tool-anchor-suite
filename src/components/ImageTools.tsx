@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { compressImage, resizeImage, convertToFormat, rotateImage, flipImage, applyGrayscale, applyBlur, invertImage, adjustContrast, adjustBrightness, adjustSaturation, adjustHueRotate } from "@/utils/imageUtils";
+import { compressImage, resizeImage, convertToFormat, rotateImage, flipImage, applyGrayscale, applyBlur, invertImage, adjustContrast, adjustBrightness, adjustSaturation, adjustHueRotate, applySepia } from "@/utils/imageUtils";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -111,6 +111,10 @@ export default function ImageTools({ slug }: ImageToolsProps) {
           processedBlob = await adjustHueRotate(selectedFile, hueRotate);
           setOutcomeMsg(`چرخش رنگ تصویر به ${hueRotate} درجه تغییر یافت.`);
           break;
+        case 'image-sepia':
+          processedBlob = await applySepia(selectedFile);
+          setOutcomeMsg("فیلتر سپیا (قهوه‌ای کلاسیک) روی تصویر اعمال شد.");
+          break;
         default:
           toast({
             title: "خطا",
@@ -187,6 +191,7 @@ export default function ImageTools({ slug }: ImageToolsProps) {
         processedImageURL={processedImageURL}
         selectedFile={selectedFile}
         onOutcomeUpdate={setOutcomeMsg}
+        slug={slug}
       />
 
       {outcomeMsg && <OutcomeInfoCard outcome={outcomeMsg} />}
