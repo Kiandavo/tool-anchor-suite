@@ -23,7 +23,7 @@ export const characterMappings: Record<string, string> = {
   'ä': 'ع',
   '\'': 'ع',
   
-  // Single character mappings
+  // Single character mappings - improved آ vs ا detection
   'a': 'ا',
   'b': 'ب',
   'c': 'س',
@@ -87,3 +87,37 @@ export const characterMappings: Record<string, string> = {
   '-etan': '‌تان',
   '-eshan': '‌شان',
 };
+
+// Words that typically start with آ (alef-madda)
+export const wordsWithAlefMadda = [
+  'ab', 'abi', 'abadi', 'abane', 'aban', 'abeshom', 'abgosht',
+  'aghaz', 'aghazie', 'akhond', 'akhoond', 'akhtar', 'alamat',
+  'alem', 'alman', 'almaniye', 'amadan', 'amade', 'amal', 'aman',
+  'amandan', 'amozesh', 'anke', 'aparateman', 'aram', 'arayesh',
+  'aseman', 'ashena', 'ashegh', 'asheghi', 'ashpazi', 'asti',
+  'asude', 'atash', 'atashe', 'avaz', 'avazan', 'ayande', 'azad',
+  'azadi', 'azadane', 'aziz', 'azizam'
+];
+
+// Function to determine if 'a' should be آ or ا
+export function shouldUseAlefMadda(word: string, position: number): boolean {
+  // If it's at the beginning of the word and the word is in our list
+  if (position === 0) {
+    return wordsWithAlefMadda.includes(word.toLowerCase());
+  }
+  
+  // If preceded by certain consonants and followed by vowels, might be آ
+  if (position > 0) {
+    const prevChar = word[position - 1];
+    const nextChar = word[position + 1];
+    
+    // Common patterns for آ in middle of words
+    if (prevChar && nextChar && 
+        ['b', 'd', 'g', 'k', 'l', 'm', 'n', 'r', 's', 't', 'v', 'z'].includes(prevChar) &&
+        ['b', 'd', 'h', 'n', 'r', 's', 't', 'z'].includes(nextChar)) {
+      return true;
+    }
+  }
+  
+  return false;
+}

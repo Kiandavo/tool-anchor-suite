@@ -1,5 +1,5 @@
 
-import { characterMappings } from './finglishMappings';
+import { characterMappings, shouldUseAlefMadda } from './finglishMappings';
 import { noDuplicationChars } from './persianCharacterRules';
 import { finglishWordDatabase } from './finglishWordDatabase';
 
@@ -55,7 +55,14 @@ export function convertWord(word: string): string {
     
     // Single character conversion
     const char = lowerWord[i];
-    if (characterMappings[char]) {
+    if (char === 'a') {
+      // Use smart detection for آ vs ا
+      const persianChar = shouldUseAlefMadda(lowerWord, i) ? 'آ' : 'ا';
+      if (!noDuplicationChars.has(persianChar) || persianChar !== lastChar) {
+        converted += persianChar;
+        lastChar = persianChar;
+      }
+    } else if (characterMappings[char]) {
       const persianChar = characterMappings[char];
       if (!noDuplicationChars.has(persianChar) || persianChar !== lastChar) {
         converted += persianChar;

@@ -34,9 +34,10 @@ export function TextTranslation({ type, text, setText, outcomeMsg, setOutcomeMsg
         result = removeNonPersianCharacters(text);
         setOutcomeMsg("کاراکترهای غیر فارسی حذف شدند!");
         break;
-      case "persian-text-normalizer":
-        result = normalizePersianText(text);
-        setOutcomeMsg("متن فارسی نرمالایز شد!");
+      case "text-translator":
+        // Simple placeholder for translation (would need actual API)
+        result = "ترجمه: " + text + " (نیاز به API ترجمه دارد)";
+        setOutcomeMsg("ترجمه انجام شد!");
         break;
     }
     setOutput(result);

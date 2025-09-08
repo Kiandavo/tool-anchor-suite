@@ -1,5 +1,6 @@
 import { Tool } from '@/types/tool-types';
 
+// Remove duplicate date difference calculator entry
 export const calculatorTools: Tool[] = [
   {
     id: "4",
@@ -197,15 +198,6 @@ export const calculatorTools: Tool[] = [
     name: "تبدیل تاریخ امروز",
     category: "calculators",
     description: "تبدیل تاریخ امروز به شمسی، قمری و میلادی",
-    isNew: true,
-    icon: "calendar"
-  },
-  {
-    id: "116",
-    slug: "date-difference",
-    name: "محاسبه اختلاف تاریخ",
-    category: "calculators",
-    description: "محاسبه اختلاف بین دو تاریخ",
     isNew: true,
     icon: "calendar"
   },

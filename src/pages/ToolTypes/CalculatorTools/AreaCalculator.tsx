@@ -74,7 +74,11 @@ const AreaCalculator = () => {
     setIsCalculating(true);
     
     try {
+      console.log('Selected shape:', selectedShape);
+      console.log('Dimensions:', dimensions);
+      
       const numDimensions = dimensions.map(d => parseFloat(d));
+      console.log('Numeric dimensions:', numDimensions);
       
       if (numDimensions.some(d => isNaN(d) || d <= 0)) {
         toast.error("ابعاد نامعتبر", {
@@ -87,18 +91,21 @@ const AreaCalculator = () => {
       await new Promise(resolve => setTimeout(resolve, 500));
 
       const area = selectedShape.calculate(numDimensions);
+      console.log('Calculated area:', area);
       let perimeter = 0;
 
       // Calculate perimeter based on shape
       switch (selectedShape.type) {
         case 'square':
           perimeter = 4 * numDimensions[0];
+          console.log('Square perimeter:', perimeter);
           break;
         case 'rectangle':
           perimeter = 2 * (numDimensions[0] + numDimensions[1]);
           break;
         case 'circle':
           perimeter = 2 * Math.PI * numDimensions[0];
+          console.log('Circle perimeter (circumference):', perimeter);
           break;
         case 'triangle':
           // Assuming equilateral triangle for perimeter
@@ -106,13 +113,16 @@ const AreaCalculator = () => {
           break;
       }
 
-      setResult({
+      const result = {
         area,
         perimeter,
         shape: selectedShape.name,
         dimensions: numDimensions,
         unit
-      });
+      };
+      
+      console.log('Final result:', result);
+      setResult(result);
       
       toast.success("مساحت محاسبه شد", {
         description: `مساحت: ${area.toFixed(2)} ${unit} مربع`,
@@ -120,6 +130,7 @@ const AreaCalculator = () => {
       });
       
     } catch (error) {
+      console.error('Calculation error:', error);
       toast.error("خطا در محاسبه", {
         position: "top-center",
       });

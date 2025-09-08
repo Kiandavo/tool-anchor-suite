@@ -26,9 +26,15 @@ export function TextFormatting({ type, text, setText, outcomeMsg, setOutcomeMsg 
         result = removeExtraSpaces(text);
         setOutcomeMsg("خطوط خالی حذف شدند!");
         break;
-      case "word-counter":
-        result = `تعداد کلمات: ${calculateWordCount(text)}`;
-        setOutcomeMsg("شمارش کلمات انجام شد!");
+      case "text-repeater":
+        const repeatCount = parseInt(prompt("چند بار تکرار شود؟") || "1");
+        if (isNaN(repeatCount) || repeatCount <= 0) {
+          result = text;
+          setOutcomeMsg("تعداد تکرار نامعتبر است!");
+        } else {
+          result = Array(repeatCount).fill(text).join('\n');
+          setOutcomeMsg(`متن ${repeatCount} بار تکرار شد!`);
+        }
         break;
       case "character-counter":
         result = `تعداد کاراکترها: ${calculateCharacterCount(text)}`;
