@@ -200,20 +200,36 @@ export default function AgeCalculator() {
   // Handle changes to the manual input fields
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>, 
-    field: 'year' | 'month' | 'day', 
-    max: number
+    field: 'year' | 'month' | 'day'
   ) => {
-    // Only allow numbers
-    let value = e.target.value.replace(/[^0-9]/g, '');
+    const value = e.target.value;
     
-    // Limit to max value
-    if (value && parseInt(value) > max) {
-      value = max.toString();
+    // Allow numbers and Persian/Arabic numerals, convert to English
+    const englishValue = value
+      .replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString())
+      .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString())
+      .replace(/[^0-9]/g, '');
+    
+    // Apply field-specific limits
+    let limitedValue = englishValue;
+    if (field === 'year' && englishValue && parseInt(englishValue) > 2100) {
+      limitedValue = '2100';
+    } else if (field === 'month' && englishValue && parseInt(englishValue) > 12) {
+      limitedValue = '12';
+    } else if (field === 'day' && englishValue && parseInt(englishValue) > 31) {
+      limitedValue = '31';
+    }
+    
+    // Limit length
+    if (field === 'year' && limitedValue.length > 4) {
+      limitedValue = limitedValue.slice(0, 4);
+    } else if ((field === 'month' || field === 'day') && limitedValue.length > 2) {
+      limitedValue = limitedValue.slice(0, 2);
     }
     
     setManualInput({
       ...manualInput,
-      [field]: value
+      [field]: limitedValue
     });
     
     // Clear date picker selection when manually entering dates
@@ -293,10 +309,12 @@ export default function AgeCalculator() {
                 <Input
                   id="birthYear"
                   value={manualInput.year}
-                  onChange={(e) => handleInputChange(e, 'year', 2100)}
+                  onChange={(e) => handleInputChange(e, 'year')}
                   placeholder="مثال: 1370"
-                  type="text"
+                  type="tel"
+                  inputMode="numeric"
                   dir="ltr"
+                  maxLength={4}
                   className="glass-effect transition-all duration-300 focus:scale-105"
                 />
               </div>
@@ -308,10 +326,12 @@ export default function AgeCalculator() {
                 <Input
                   id="birthMonth"
                   value={manualInput.month}
-                  onChange={(e) => handleInputChange(e, 'month', 12)}
+                  onChange={(e) => handleInputChange(e, 'month')}
                   placeholder="مثال: 6"
-                  type="text"
+                  type="tel"
+                  inputMode="numeric"
                   dir="ltr"
+                  maxLength={2}
                   className="glass-effect transition-all duration-300 focus:scale-105"
                 />
               </div>
@@ -323,10 +343,12 @@ export default function AgeCalculator() {
                 <Input
                   id="birthDay"
                   value={manualInput.day}
-                  onChange={(e) => handleInputChange(e, 'day', 31)}
+                  onChange={(e) => handleInputChange(e, 'day')}
                   placeholder="مثال: 15"
-                  type="text"
+                  type="tel"
+                  inputMode="numeric"
                   dir="ltr"
+                  maxLength={2}
                   className="glass-effect transition-all duration-300 focus:scale-105"
                 />
               </div>
