@@ -29,6 +29,9 @@ import VolumeCalculator from './CalculatorTools/VolumeCalculator';
 import WeightConverter from './CalculatorTools/WeightConverter';
 import WorldTimeConverter from './CalculatorTools/WorldTimeConverter';
 import SpeedCalculator from './CalculatorTools/SpeedCalculator';
+import UnitConverter from './CalculatorTools/UnitConverter';
+import LengthConverter from './CalculatorTools/LengthConverter';
+import GpaCalculator from './CalculatorTools/GpaCalculator';
 
 interface CalculatorToolProps {
   slug: string;
@@ -93,6 +96,12 @@ export default function CalculatorTool({ slug, type }: CalculatorToolProps) {
         return <EquationSolver />;
       case 'speed-calculator':
         return <SpeedCalculator />;
+      case 'unit-converter':
+        return <UnitConverter />;
+      case 'length-converter':
+        return <LengthConverter />;
+      case 'gpa-calculator':
+        return <GpaCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
