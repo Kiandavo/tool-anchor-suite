@@ -90,27 +90,31 @@ export default function SalaryTaxCalculator() {
 
   // Enhanced tax calculation with comprehensive analysis
   const calculateTax = useCallback(async (yearToCalculate: string = taxYear): Promise<TaxResult | null> => {
-    const salaryValue = parseFloat(salary.replace(/,/g, ''));
+    const salaryValueRaw = parseFloat(salary.replace(/,/g, ''));
     
-    if (isNaN(salaryValue) || salaryValue < 0) {
+    if (isNaN(salaryValueRaw) || salaryValueRaw < 0) {
       return null;
     }
 
+    // Normalize to monthly for calculation since brackets are monthly
+    const isYearly = calculationType === 'yearly';
+    const salaryMonthly = isYearly ? salaryValueRaw / 12 : salaryValueRaw;
+
     const brackets = TAX_BRACKETS[yearToCalculate as keyof typeof TAX_BRACKETS];
-    let totalTax = 0;
-    let remainingSalary = salaryValue;
-    const details: TaxDetail[] = [];
+    let totalTaxMonthly = 0;
+    let remainingSalaryMonthly = salaryMonthly;
+    const detailsMonthly: TaxDetail[] = [];
     let previousMax = 0;
     
-    // Apply each tax bracket
+    // Apply each tax bracket (monthly)
     for (const bracket of brackets) {
-      const bracketRange = bracket.max === Infinity ? remainingSalary : Math.min(bracket.max - previousMax, remainingSalary);
+      const bracketRange = bracket.max === Infinity ? remainingSalaryMonthly : Math.min(bracket.max - previousMax, remainingSalaryMonthly);
       
       if (bracketRange > 0) {
         const taxForBracket = bracketRange * bracket.rate;
-        totalTax += taxForBracket;
+        totalTaxMonthly += taxForBracket;
         
-        details.push({
+        detailsMonthly.push({
           bracket: `${formatRial(previousMax)} تا ${bracket.max !== Infinity ? formatRial(bracket.max) : 'بی‌نهایت'}`,
           amount: bracketRange,
           rate: bracket.rate * 100,
@@ -118,9 +122,9 @@ export default function SalaryTaxCalculator() {
           name: bracket.name
         });
         
-        remainingSalary -= bracketRange;
+        remainingSalaryMonthly -= bracketRange;
         
-        if (remainingSalary <= 0) {
+        if (remainingSalaryMonthly <= 0) {
           break;
         }
       }
@@ -128,21 +132,30 @@ export default function SalaryTaxCalculator() {
       previousMax = bracket.max === Infinity ? previousMax : bracket.max;
     }
 
-    const netSalary = salaryValue - totalTax;
-    const effectiveTaxRate = salaryValue > 0 ? (totalTax / salaryValue) * 100 : 0;
+    // Convert back to selected unit
+    const grossSalary = isYearly ? salaryMonthly * 12 : salaryMonthly;
+    const totalTax = isYearly ? totalTaxMonthly * 12 : totalTaxMonthly;
+    const netSalary = grossSalary - totalTax;
+    const effectiveTaxRate = grossSalary > 0 ? (totalTax / grossSalary) * 100 : 0;
     
     // Find marginal tax rate (highest bracket used)
-    const marginalTaxRate = details.length > 0 ? details[details.length - 1].rate : 0;
+    const marginalTaxRate = detailsMonthly.length > 0 ? detailsMonthly[detailsMonthly.length - 1].rate : 0;
+
+    const details = detailsMonthly.map(d => ({
+      ...d,
+      amount: isYearly ? d.amount * 12 : d.amount,
+      tax: isYearly ? d.tax * 12 : d.tax,
+    }));
 
     return {
-      grossSalary: salaryValue,
+      grossSalary,
       totalTax,
       netSalary,
       effectiveTaxRate,
       marginalTaxRate,
       details
     };
-  }, [salary, taxYear]);
+  }, [salary, taxYear, calculationType]);
 
   const handleCalculate = async () => {
     setIsCalculating(true);
@@ -208,18 +221,23 @@ export default function SalaryTaxCalculator() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Tax Information */}
           <div className="neo-glass rounded-xl p-4">
             <h3 className="font-medium mb-3 flex items-center gap-2">
               <Info className="h-4 w-4 text-primary" />
-              پلکان‌های مالیاتی سال {taxYear}
+              پلکان‌های مالیاتی سال {taxYear} ({calculationType === 'monthly' ? 'ماهیانه' : 'سالیانه'})
             </h3>
             <div className="text-sm text-muted-foreground space-y-1">
-              {TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS].map((bracket, index) => (
-                <p key={index}>
-                  • {bracket.name}: {bracket.max === Infinity ? 'بیش از ' + formatRial(TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS][index - 1]?.max || 0) : `تا ${formatRial(bracket.max)}`}
-                </p>
-              ))}
+              {TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS].map((bracket, index) => {
+                const isYearly = calculationType === 'yearly';
+                const prevMax = TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS][index - 1]?.max || 0;
+                const displayPrev = isYearly ? prevMax * 12 : prevMax;
+                const displayMax = bracket.max === Infinity ? Infinity : (isYearly ? bracket.max * 12 : bracket.max);
+                return (
+                  <p key={index}>
+                    • {bracket.name}: {displayMax === Infinity ? 'بیش از ' + formatRial(displayPrev) : `تا ${formatRial(displayMax)}`}
+                  </p>
+                );
+              })}
             </div>
           </div>
           
