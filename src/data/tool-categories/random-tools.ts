@@ -3,6 +3,15 @@ import { Tool } from '@/types/tool-types';
 
 export const randomTools: Tool[] = [
   {
+    id: "password-generator",
+    slug: "password-generator", 
+    name: "تولید رمز عبور",
+    category: "random",
+    description: "ایجاد رمزهای عبور قوی و امن",
+    isNew: false,
+    icon: "key"
+  },
+  {
     id: "6",
     slug: "random-password",
     name: "رمز عبور تصادفی",

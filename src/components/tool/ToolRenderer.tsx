@@ -36,6 +36,9 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (tool.slug === 'text-analyzer') {
     return <TextAnalyzer />;
   }
+  if (tool.slug === 'password-generator') {
+    return <UtilityToolRenderer slug={slug} type="random-password" />;
+  }
   // Route tools based on their category
   switch (tool.category) {
     case 'calculators':
