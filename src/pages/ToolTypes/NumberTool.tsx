@@ -7,6 +7,9 @@ import { EvenOddChecker } from '@/components/number-tools/EvenOddChecker';
 import { SumCalculator } from '@/components/number-tools/SumCalculator';
 import { NumberFormatter } from '@/components/number-tools/NumberFormatter';
 import { NumberRounder } from '@/components/number-tools/NumberRounder';
+import { RomanNumeralConverter } from '@/components/number-tools/RomanNumeralConverter';
+import { PerfectNumberChecker } from '@/components/number-tools/PerfectNumberChecker';
+import { GcdCalculator } from '@/components/number-tools/GcdCalculator';
 
 interface NumberToolProps {
   slug: string;
@@ -33,6 +36,13 @@ export default function NumberTool({ slug }: NumberToolProps) {
         return <NumberFormatter />;
       case 'number-rounder':
         return <NumberRounder />;
+      case 'roman-numeral-converter':
+      case 'decimal-to-roman':
+        return <RomanNumeralConverter />;
+      case 'perfect-number-checker':
+        return <PerfectNumberChecker />;
+      case 'gcd-calculator':
+        return <GcdCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

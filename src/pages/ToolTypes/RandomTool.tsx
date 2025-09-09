@@ -23,6 +23,7 @@ import { RandomNumber } from '@/components/random-tools/RandomNumber';
 import { RandomArrayShuffler } from '@/components/random-tools/RandomArrayShuffler';
 import { RandomCardPicker } from '@/components/random-tools/RandomCardPicker';
 import { RandomQRCodeGenerator } from '@/components/random-tools/RandomQRCodeGenerator';
+import { RandomMoviePicker } from '@/components/random-tools/RandomMoviePicker';
 
 interface RandomToolProps {
   slug: string;
@@ -77,6 +78,8 @@ export default function RandomTool({ slug }: RandomToolProps) {
         return <RandomCardPicker />;
       case 'random-qrcode-generator':
         return <RandomQRCodeGenerator />;
+      case 'random-movie-picker':
+        return <RandomMoviePicker />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

@@ -10,6 +10,7 @@ import { RobotsTxtGenerator } from '@/components/seo/RobotsTxtGenerator';
 import { UTMBuilder } from '@/components/seo/UTMBuilder';
 import { OGTagGenerator } from '@/components/seo/OGTagGenerator';
 import { SitemapGenerator } from '@/components/seo/SitemapGenerator';
+import { SchemaGenerator } from '@/components/seo-tools/SchemaGenerator';
 
 interface SeoToolProps {
   slug: string;
@@ -38,6 +39,8 @@ export default function SeoTool({ slug }: SeoToolProps) {
         return <OGTagGenerator />;
       case 'sitemap-generator':
         return <SitemapGenerator />;
+      case 'schema-generator':
+        return <SchemaGenerator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
