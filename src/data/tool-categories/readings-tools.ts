@@ -171,5 +171,15 @@ export const readingsTools: Tool[] = [
     isNew: false,
     icon: "palette",
     isComingSoon: false
+  },
+  {
+    id: "music-fortune",
+    slug: "music-fortune",
+    name: "فال موسیقی",
+    category: "readings",
+    description: "فال‌گیری با آهنگ‌های محبوب ایرانی و تعبیر آن‌ها",
+    isNew: true,
+    icon: "music",
+    isComingSoon: false
   }
 ];
