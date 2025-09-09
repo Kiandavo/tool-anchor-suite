@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { RumiPoem } from '@/data/rumi-poems';
-import { Book, Sparkles } from 'lucide-react';
+import { Book, Sparkles, Heart, ArrowRight } from 'lucide-react';
 
 interface RumiDisplayProps {
   poem: RumiPoem;
@@ -84,19 +84,37 @@ export const RumiDisplay: React.FC<RumiDisplayProps> = ({ poem, isAnimating, has
         <div className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1 bg-white p-1 rounded-full">
           <Book size={16} className={themeTextColor} />
         </div>
-        <h4 className={`font-medium ${themeTextColor} text-xs mb-2`}>تفسیر:</h4>
+        <h4 className={`font-medium ${themeTextColor} text-xs mb-2`}>تفسیر اولیه:</h4>
         <p className="text-[#5c3f14]/90 text-xs leading-6">{poem.interpretation}</p>
+      </div>
+
+      <div className={`p-4 rounded-lg border ${themeColor.replace('border-', 'border-2 border-')} relative bg-white/50`}>
+        <div className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1 bg-white p-1 rounded-full">
+          <Heart size={16} className={themeTextColor} />
+        </div>
+        <h4 className={`font-semibold ${themeTextColor} text-sm mb-3`}>راهنمایی تفصیلی:</h4>
+        <p className="text-[#5c3f14] text-sm leading-7 mb-4">{poem.detailedGuidance}</p>
+        
+        <div className="border-t border-[#c19e67]/30 pt-3">
+          <div className="flex items-center mb-2">
+            <ArrowRight size={14} className={themeTextColor} />
+            <h5 className={`font-medium ${themeTextColor} text-sm mr-2`}>توصیه عملی:</h5>
+          </div>
+          <p className="text-[#5c3f14]/95 text-sm leading-6 bg-[#fff9f0]/80 p-3 rounded-md border border-[#c19e67]/20">
+            {poem.actionableAdvice}
+          </p>
+        </div>
         
         {/* Visual indicator of positive/negative reading */}
-        <div className="flex justify-end mt-3">
+        <div className="flex justify-end mt-4">
           {poem.isPositive ? (
-            <span className="inline-flex items-center text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
-              <Sparkles size={10} className="mr-1" />
+            <span className="inline-flex items-center text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+              <Sparkles size={12} className="mr-1" />
               فال نیک
             </span>
           ) : (
-            <span className="inline-flex items-center text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-              <Sparkles size={10} className="mr-1" />
+            <span className="inline-flex items-center text-sm text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+              <Sparkles size={12} className="mr-1" />
               نیاز به تأمل
             </span>
           )}
