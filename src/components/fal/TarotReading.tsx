@@ -101,13 +101,15 @@ export const TarotReading = () => {
             />
           )}
           
-          <TarotCardDisplay 
-            selectedCards={selectedCards}
-            isRevealed={isRevealed}
-            isAnimating={isAnimating}
-            readingType={readingType}
-            reversedCards={reversedCards}
-          />
+              <TarotCardDisplay 
+                selectedCards={selectedCards} 
+                isRevealed={isRevealed}
+                isAnimating={isAnimating}
+                readingType={readingType}
+                reversedCards={reversedCards}
+                userQuestion={userQuestion}
+                questionnaireAnswers={questionnaireAnswers}
+              />
         </div>
       </CardContent>
       
