@@ -2,6 +2,15 @@ import { Tool } from '@/types/tool-types';
 
 export const textTools: Tool[] = [
   {
+    id: "text-analyzer",
+    slug: "text-analyzer",
+    name: "تحلیل‌گر متن",
+    category: "text",
+    description: "تحلیل جامع متن شامل آمار، خوانایی و کلمات کلیدی",
+    isNew: true,
+    icon: "file-text"
+  },
+  {
     id: "text-counter",
     slug: "text-counter",
     name: "شمارنده متن",

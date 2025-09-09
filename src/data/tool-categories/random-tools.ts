@@ -13,6 +13,15 @@ export const randomTools: Tool[] = [
     isComingSoon: false
   },
   {
+    id: "qr-code-generator",
+    slug: "qr-code-generator",
+    name: "تولید کننده QR کد",
+    category: "random",
+    description: "ایجاد QR کد از متن، URL و محتوای دیگر",
+    isNew: false,
+    icon: "qr-code"
+  },
+  {
     id: "64",
     slug: "random-color-generator",
     name: "تولید رنگ تصادفی",

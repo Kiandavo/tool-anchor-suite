@@ -9,6 +9,7 @@ import { ProductivityToolRenderer } from './renderers/ProductivityToolRenderer';
 import { EducationalToolRenderer } from './renderers/EducationalToolRenderer';
 import ReadingTool from '@/pages/ToolTypes/ReadingTool';
 import PersianCulturalTool from '@/pages/ToolTypes/PersianCulturalTool';
+import TextAnalyzer from '@/pages/ToolTypes/TextTools/TextAnalyzer';
 
 interface ToolRendererProps {
   tool: Tool;
@@ -28,6 +29,12 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   }
   if (tool.slug === 'robots-txt-generator') {
     return <UtilityToolRenderer slug={slug} type="robots-txt-generator" />;
+  }
+  if (tool.slug === 'qr-code-generator') {
+    return <UtilityToolRenderer slug={slug} type="qr-code-generator" />;
+  }
+  if (tool.slug === 'text-analyzer') {
+    return <TextAnalyzer />;
   }
   // Route tools based on their category
   switch (tool.category) {

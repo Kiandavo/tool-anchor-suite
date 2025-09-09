@@ -8,10 +8,11 @@ import NumberTool from '@/pages/ToolTypes/NumberTool';
 import PrimeChecker from '@/pages/ToolTypes/NumberTools/PrimeChecker';
 import TextCounter from '@/pages/ToolTypes/TextTools/TextCounter';
 import RobotsTxtGenerator from '@/pages/ToolTypes/SeoTools/RobotsTxtGenerator';
+import UtilityTool from '@/pages/ToolTypes/UtilityTool';
 
 interface UtilityToolRendererProps {
   slug: string;
-  type: 'random-password' | 'prime-checker' | 'seo' | 'random' | 'number' | 'text-counter' | 'robots-txt-generator';
+  type: 'random-password' | 'prime-checker' | 'seo' | 'random' | 'number' | 'text-counter' | 'robots-txt-generator' | 'qr-code-generator';
 }
 
 export const UtilityToolRenderer: React.FC<UtilityToolRendererProps> = ({ slug, type }) => {
@@ -24,6 +25,9 @@ export const UtilityToolRenderer: React.FC<UtilityToolRendererProps> = ({ slug, 
   }
   if (slug === 'robots-txt-generator') {
     return <RobotsTxtGenerator />;
+  }
+  if (slug === 'qr-code-generator') {
+    return <UtilityTool slug={slug} />;
   }
 
   switch (type) {
@@ -41,6 +45,8 @@ export const UtilityToolRenderer: React.FC<UtilityToolRendererProps> = ({ slug, 
       return <TextCounter />;
     case 'robots-txt-generator':
       return <RobotsTxtGenerator />;
+    case 'qr-code-generator':
+      return <UtilityTool slug={slug} />;
     default:
       return null;
   }
