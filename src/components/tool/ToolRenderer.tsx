@@ -23,6 +23,12 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   if (tool.slug === 'prime-checker') {
     return <UtilityToolRenderer slug={slug} type="prime-checker" />;
   }
+  if (tool.slug === 'text-counter') {
+    return <UtilityToolRenderer slug={slug} type="text-counter" />;
+  }
+  if (tool.slug === 'robots-txt-generator') {
+    return <UtilityToolRenderer slug={slug} type="robots-txt-generator" />;
+  }
   // Route tools based on their category
   switch (tool.category) {
     case 'calculators':
@@ -75,7 +81,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
   }
 };
 
-function getCalculatorType(slug: string): 'calculator' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit' | 'scientific-calculator' | 'rent-factors' | 'loan-calculator' {
+function getCalculatorType(slug: string): 'calculator' | 'investment-calculator' | 'mortgage-calculator' | 'today-date' | 'date-difference' | 'world-time' | 'profit' | 'scientific-calculator' | 'rent-factors' | 'loan-calculator' | 'power-calculator' | 'tip-calculator' | 'volume-calculator' {
   switch (slug) {
     case 'investment-calculator':
       return 'investment-calculator';
@@ -96,6 +102,12 @@ function getCalculatorType(slug: string): 'calculator' | 'investment-calculator'
       return 'rent-factors';
     case 'loan-calculator':
       return 'loan-calculator';
+    case 'power-calculator':
+      return 'power-calculator';
+    case 'tip-calculator':
+      return 'tip-calculator';
+    case 'volume-calculator':
+      return 'volume-calculator';
     default:
       return 'calculator';
   }
