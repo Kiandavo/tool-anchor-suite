@@ -3,7 +3,7 @@ import {
   Crown, Heart, Star, LucideIcon, Globe, Landmark
 } from 'lucide-react';
 
-export type TarotReadingType = 'three-card' | 'celtic-cross' | 'relationship' | 'career' | 'yes-no' | 'detailed-future' | 'love-timeline' | 'financial' | 'spiritual-path' | 'health-guidance';
+export type TarotReadingType = 'three-card' | 'celtic-cross' | 'relationship' | 'career' | 'yes-no' | 'detailed-future' | 'love-timeline' | 'financial' | 'spiritual-path' | 'health-guidance' | 'tree-of-life' | 'horseshoe' | 'relationship-cross';
 
 export interface TarotCardType {
   name: string;

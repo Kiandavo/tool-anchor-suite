@@ -1,5 +1,5 @@
 // Traditional Tarot Spreads with authentic positioning and meanings
-import { TarotReadingConfig, DetailedQuestion } from './types';
+import { TarotReadingConfig, DetailedQuestion, TarotReadingType } from './types';
 
 export interface SpreadPosition {
   id: string;
@@ -335,7 +335,7 @@ export const traditionalSpreads: TraditionalSpread[] = [
 
 // Convert traditional spreads to TarotReadingConfig format
 export const enhancedTarotReadingTypes: TarotReadingConfig[] = traditionalSpreads.map(spread => ({
-  id: spread.id as any,
+  id: spread.id as TarotReadingType,
   name: spread.name,
   description: spread.description,
   cardCount: spread.cardCount,
