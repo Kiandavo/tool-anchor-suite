@@ -11,7 +11,7 @@ interface DesignToolRendererProps {
 
 export const DesignToolRenderer: React.FC<DesignToolRendererProps> = ({ slug }) => {
   switch (slug) {
-    case 'color-palette':
+    case 'color-palette-generator':
       return <ColorPalette />;
     
     default:
