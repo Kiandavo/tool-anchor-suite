@@ -10,6 +10,8 @@ import { NumberRounder } from '@/components/number-tools/NumberRounder';
 import { RomanNumeralConverter } from '@/components/number-tools/RomanNumeralConverter';
 import { PerfectNumberChecker } from '@/components/number-tools/PerfectNumberChecker';
 import { GcdCalculator } from '@/components/number-tools/GcdCalculator';
+import { FibonacciGenerator } from '@/components/number-tools/FibonacciGenerator';
+import { FactorialCalculator } from '@/components/number-tools/FactorialCalculator';
 
 interface NumberToolProps {
   slug: string;
@@ -43,6 +45,10 @@ export default function NumberTool({ slug }: NumberToolProps) {
         return <PerfectNumberChecker />;
       case 'gcd-calculator':
         return <GcdCalculator />;
+      case 'fibonacci-generator':
+        return <FibonacciGenerator />;
+      case 'factorial-calculator':
+        return <FactorialCalculator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">

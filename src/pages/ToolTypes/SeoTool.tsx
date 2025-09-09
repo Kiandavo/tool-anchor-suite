@@ -2,7 +2,7 @@
 import React from 'react';
 import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
-import { MetaTagGenerator } from '@/components/seo/MetaTagGenerator';
+import { MetaTagGenerator as SeoMetaTagGenerator } from '@/components/seo/MetaTagGenerator';
 import { HtmlTools } from '@/components/seo/HtmlTools';
 import { KeywordDensity } from '@/components/seo/KeywordDensity';
 import { KeywordExtractor } from '@/components/seo/KeywordExtractor';
@@ -11,6 +11,7 @@ import { UTMBuilder } from '@/components/seo/UTMBuilder';
 import { OGTagGenerator } from '@/components/seo/OGTagGenerator';
 import { SitemapGenerator } from '@/components/seo/SitemapGenerator';
 import { SchemaGenerator } from '@/components/seo-tools/SchemaGenerator';
+import { MetaTagGenerator } from '@/components/seo-tools/MetaTagGenerator';
 
 interface SeoToolProps {
   slug: string;
