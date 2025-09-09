@@ -1,5 +1,6 @@
 import { PredictionType } from './horoscopeTypes';
 import { ariesPredictions, taurusPredictions } from './expandedPredictions';
+import { enhancedZodiacSigns, astrologicalHouses } from './advancedAstrology';
 
 // Horoscope predictions for each sign
 export const horoscopePredictions: Record<string, Record<PredictionType, string[]>> = {

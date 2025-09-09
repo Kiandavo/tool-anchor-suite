@@ -35,7 +35,13 @@ export interface TarotReadingConfig {
   accuracyFactors?: string[];
 }
 
+// Import enhanced spreads
+import { enhancedTarotReadingTypes } from './traditionalSpreads';
+
 export const tarotReadingTypes: TarotReadingConfig[] = [
+  // Traditional enhanced spreads
+  ...enhancedTarotReadingTypes,
+  
   {
     id: 'three-card',
     name: 'گذشته، حال، آینده',
@@ -43,7 +49,7 @@ export const tarotReadingTypes: TarotReadingConfig[] = [
     cardCount: 3,
     positions: ['گذشته', 'حال', 'آینده'],
     hasTimeline: true,
-    accuracyFactors: ['تمرکز روی سوال', 'صداقت پاسخ‌ها', 'زمان مناسب']
+    accuracyFactors: ['تمرکز روی سوال', 'صداقت پاسخ‌ها', 'زمان مناسب', 'فاز مناسب ماه']
   },
   {
     id: 'detailed-future',
