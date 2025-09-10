@@ -15,8 +15,10 @@ import TermsOfService from "@/pages/terms-of-service";
 import NotFound from "@/pages/NotFound";
 
 export const AppRoutes = () => {
+  console.log('AppRoutes component loading...');
   useScrollToTop();
   
+  console.log('AppRoutes rendering routes...');
   return (
     <Routes>
       <Route path="/" element={<Index />} />

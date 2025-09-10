@@ -17,6 +17,7 @@ import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
 
 const Index = () => {
+  console.log('Index page component initializing...');
   // Enhanced SEO data for homepage
   const homeTitle = "ابزارهای آنلاین رایگان | محاسبه‌گر، تبدیل متن، ویرایش تصویر - لنگر";
   const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی با طراحی مدرن و کاربری آسان.";
