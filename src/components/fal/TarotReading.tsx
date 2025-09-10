@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import { CosmicStarField, MysticalSymbols } from './graphics/TarotGraphics';
 
 export const TarotReading = () => {
+  console.log('TarotReading component initializing...');
   const {
     selectedCards,
     isAnimating,
@@ -29,6 +30,8 @@ export const TarotReading = () => {
     handleQuestionChange,
     handleQuestionnaireAnswerChange
   } = useTarotReading();
+
+  console.log('TarotReading hook returned:', { selectedCards: selectedCards.length, isAnimating, isRevealed, readingType: readingType.name });
 
   return (
     <Card className="fortune-card-enhanced fortune-card-tarot">
