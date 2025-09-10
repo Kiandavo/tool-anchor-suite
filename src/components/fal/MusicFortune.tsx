@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Music, Copy, RefreshCw, Play, Heart, Sparkles } from "lucide-react";
-import { getRandomSong, PersianSong } from '@/data/persian-songs';
+import { getRandomSong, getSongBasedOnQuestion, PersianSong } from '@/data/persian-songs';
 import { toast } from "sonner";
 import { ToolSeoContent } from '@/components/seo/ToolSeoContent';
 
@@ -39,10 +39,10 @@ export const MusicFortune = () => {
 
     // Simulate loading time for better UX
     setTimeout(() => {
-      const randomSong = getRandomSong();
+      const selectedSong = getSongBasedOnQuestion(state.question);
       setState(prev => ({ 
         ...prev, 
-        selectedSong: randomSong, 
+        selectedSong: selectedSong, 
         isLoading: false,
         isAnimating: false
       }));

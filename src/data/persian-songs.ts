@@ -246,3 +246,102 @@ export const getSongsByTone = (tone: PersianSong['emotionalTone']): PersianSong[
 export const getSongsByGenre = (genre: string): PersianSong[] => {
   return persianSongs.filter(song => song.genre === genre);
 };
+
+// Keywords for matching questions to appropriate songs
+const questionKeywords = {
+  love: ['عشق', 'عاشق', 'دوست', 'محبت', 'دل', 'قلب', 'عاشقانه', 'دلبر', 'معشوق', 'یار', 'دلدار'],
+  sadness: ['غم', 'غمگین', 'تنها', 'تنهایی', 'دلتنگ', 'اندوه', 'ناراحت', 'افسرده', 'سوگ', 'غصه'],
+  hope: ['امید', 'امیدوار', 'آینده', 'روشن', 'خوشبین', 'مثبت', 'بهتر', 'موفقیت', 'پیروزی'],
+  decision: ['تصمیم', 'انتخاب', 'راه', 'مسیر', 'چکار', 'چی کار', 'باید', 'نباید', 'درست', 'غلط'],
+  spiritual: ['خدا', 'دعا', 'معنوی', 'روحانی', 'عرفان', 'الهی', 'آسمان', 'فرشته', 'نور', 'هدایت'],
+  life: ['زندگی', 'دنیا', 'عمر', 'سال', 'روز', 'شب', 'وقت', 'زمان', 'گذر', 'گذشت'],
+  family: ['خانواده', 'مادر', 'پدر', 'فرزند', 'بچه', 'برادر', 'خواهر', 'همسر', 'عروس', 'داماد'],
+  work: ['کار', 'شغل', 'کسب', 'درس', 'تحصیل', 'دانشگاه', 'مدرسه', 'استخدام', 'موفقیت'],
+  nostalgia: ['گذشته', 'یادآوری', 'خاطره', 'قدیم', 'دلتنگی', 'یاد', 'بود', 'روزگار', 'زمانی'],
+  happiness: ['خوشی', 'شادی', 'خنده', 'لبخند', 'شاد', 'خوشحال', 'لذت', 'کیف', 'خرم']
+};
+
+// Song categories based on themes
+const songCategories = {
+  love: persianSongs.filter(song => 
+    song.emotionalTone === 'romantic' || 
+    song.genre === 'عاشقانه' ||
+    song.lyrics.includes('عشق') || 
+    song.lyrics.includes('دل') ||
+    song.lyrics.includes('یار')
+  ),
+  sadness: persianSongs.filter(song => 
+    song.emotionalTone === 'sad' ||
+    song.lyrics.includes('غم') ||
+    song.lyrics.includes('تنها') ||
+    song.lyrics.includes('اندوه')
+  ),
+  hope: persianSongs.filter(song => 
+    song.emotionalTone === 'hopeful' ||
+    song.lyrics.includes('امید') ||
+    song.lyrics.includes('آینده') ||
+    song.lyrics.includes('روشن')
+  ),
+  decision: persianSongs.filter(song => 
+    song.lyrics.includes('راه') ||
+    song.lyrics.includes('انتخاب') ||
+    song.lyrics.includes('تصمیم') ||
+    song.meaning.includes('تصمیم') ||
+    song.interpretation.includes('انتخاب')
+  ),
+  spiritual: persianSongs.filter(song => 
+    song.genre === 'عرفانی' ||
+    song.emotionalTone === 'philosophical' ||
+    song.lyrics.includes('خدا') ||
+    song.lyrics.includes('الهی')
+  ),
+  life: persianSongs.filter(song => 
+    song.lyrics.includes('زندگی') ||
+    song.lyrics.includes('دنیا') ||
+    song.meaning.includes('زندگی')
+  ),
+  nostalgia: persianSongs.filter(song => 
+    song.emotionalTone === 'nostalgic' ||
+    song.lyrics.includes('گذشته') ||
+    song.lyrics.includes('یاد')
+  ),
+  happiness: persianSongs.filter(song => 
+    song.emotionalTone === 'happy' ||
+    song.lyrics.includes('شادی') ||
+    song.lyrics.includes('خوشی')
+  )
+};
+
+export const getSongBasedOnQuestion = (question: string): PersianSong => {
+  const normalizedQuestion = question.toLowerCase();
+  
+  // Score each category based on keyword matches
+  const categoryScores = Object.entries(questionKeywords).map(([category, keywords]) => {
+    const score = keywords.reduce((acc, keyword) => {
+      return acc + (normalizedQuestion.includes(keyword) ? 1 : 0);
+    }, 0);
+    return { category, score };
+  });
+  
+  // Find the category with the highest score
+  const bestMatch = categoryScores.reduce((max, current) => 
+    current.score > max.score ? current : max
+  );
+  
+  // If no keywords matched, return random song
+  if (bestMatch.score === 0) {
+    return getRandomSong();
+  }
+  
+  // Get songs from the best matching category
+  const relevantSongs = songCategories[bestMatch.category as keyof typeof songCategories];
+  
+  // If no songs in category, fallback to random
+  if (!relevantSongs || relevantSongs.length === 0) {
+    return getRandomSong();
+  }
+  
+  // Return random song from the relevant category
+  const randomIndex = Math.floor(Math.random() * relevantSongs.length);
+  return relevantSongs[randomIndex];
+};
