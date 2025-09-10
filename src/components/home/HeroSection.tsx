@@ -86,7 +86,7 @@ export const HeroSection = () => {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <Sparkles size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">ابزارهای تخصصی و کاربردی</h3>
+                <h2 className="text-xl font-semibold mb-3 text-foreground">ابزارهای تخصصی و کاربردی</h2>
                 <p className="text-muted-foreground text-base leading-relaxed">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
               </div>
             </Link>
@@ -98,7 +98,7 @@ export const HeroSection = () => {
               }}>
                   <Globe size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">فرهنگ و زبان فارسی</h3>
+                <h2 className="text-xl font-semibold mb-3 text-foreground">فرهنگ و زبان فارسی</h2>
                 <p className="text-muted-foreground text-base leading-relaxed">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
               </div>
             </Link>
@@ -110,7 +110,7 @@ export const HeroSection = () => {
               }}>
                   <BookOpen size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">طالع‌بینی و فال</h3>
+                <h2 className="text-xl font-semibold mb-3 text-foreground">طالع‌بینی و فال</h2>
                 <p className="text-muted-foreground text-base leading-relaxed">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
               </div>
             </Link>
