@@ -41,7 +41,7 @@ export const traditionalSpreads: TraditionalSpread[] = [
         id: 'present_situation',
         name: 'وضعیت فعلی',
         meaning: 'شرایط کنونی شما و محیط پیرامون',
-        astrologicalCorrespondence: 'خانه اول (عاکس)',
+        astrologicalCorrespondence: 'خانه اول (طالع - برج طلوع)',
         traditionalInterpretation: 'این کارت جوهره موضوع و انرژی غالب بر وضعیت فعلی را نشان می‌دهد',
         timingIndicator: 'اکنون'
       },
@@ -89,7 +89,7 @@ export const traditionalSpreads: TraditionalSpread[] = [
         id: 'your_approach',
         name: 'رویکرد شما',
         meaning: 'نحوه نگرش و برخورد شما',
-        astrologicalCorrespondence: 'طالع (شخصیت ظاهری)',
+        astrologicalCorrespondence: 'طالع (شخصیت ظاهری و نحوه بروز)',
         traditionalInterpretation: 'چگونگی درک شما از موضوع و روش مقابله‌تان',
         timingIndicator: 'نگرش کنونی'
       },
@@ -191,7 +191,7 @@ export const traditionalSpreads: TraditionalSpread[] = [
         id: 'hod',
         name: 'هود (جلال)',
         meaning: 'فکر و ارتباط',
-        astrologicalCorrespondence: 'تیر',
+        astrologicalCorrespondence: 'عطارد (سیاره ارتباطات)',
         traditionalInterpretation: 'توانایی‌های فکری و ارتباطی شما',
         timingIndicator: 'زمان یادگیری'
       },

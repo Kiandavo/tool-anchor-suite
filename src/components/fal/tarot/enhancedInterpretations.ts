@@ -51,6 +51,38 @@ const personalizedElements = {
     "هر پایانی آغازی تازه است", "صبر کلید حل مشکلات است",
     "تغییر تنها راه رشد است", "خودشناسی اولین قدم موفقیت است",
     "عشق قدرتمندترین انرژی جهان است", "اعتماد به نفس پایه هر موفقیتی است"
+  ],
+  manifestations: [
+    "تجلی در زندگی شما", "ظهور استعدادهای پنهان", "بروز قابلیت‌های شما",
+    "آشکار شدن فرصت‌ها", "نمایان شدن راه‌حل‌ها", "پیدایش امکانات جدید"
+  ],
+  specificAdvice: [
+    "تمرکز روی اهداف کوتاه‌مدت داشته باشید", "به فرآیند اعتماد کنید",
+    "از تجربیات گذشته درس بگیرید", "روابط خود را تقویت کنید",
+    "به تعادل کار و استراحت توجه کنید", "به صدای درون خود گوش دهید"
+  ],
+  careerAdvice: [
+    "فرصت‌های پیش‌رفت شغلی را بررسی کنید", "مهارت‌های جدید یاد بگیرید",
+    "با همکاران ارتباط بهتری برقرار کنید", "پروژه‌های چالش‌برانگیز بپذیرید",
+    "برای تغییر شغلی آماده شوید", "استعدادهای خود را بیشتر بشناسید"
+  ],
+  spiritualGuidance: [
+    "زمان مراقبه و تأمل را افزایش دهید", "با طبیعت بیشتر وقت بگذرانید",
+    "کتاب‌های معنوی مطالعه کنید", "به دعا و نیایش بپردازید",
+    "با افراد مثبت وقت بگذرانید", "به کمک خیریه فکر کنید"
+  ],
+  spiritualNeeds: [
+    "آرامش درونی", "هدف‌یابی در زندگی", "اتصال عمیق‌تر با خدا",
+    "یافتن معنای زندگی", "رشد روحی", "پاکسازی انرژی‌های منفی"
+  ],
+  lifeLessons: [
+    "یادگیری صبر در مواجهه با چالش‌ها", "پذیرش تغییرات ناگزیر زندگی",
+    "اهمیت خودشناسی و خودپذیری", "قدر عشق و روابط انسانی",
+    "ارزش تلاش و پشتکار", "اهمیت تعادل در همه جنبه‌های زندگی"
+  ],
+  growthPaths: [
+    "مسیر خودشناسی و آگاهی", "راه توسعه استعدادها", "جهت تقویت روابط انسانی",
+    "مسیر تعادل کار و زندگی", "راه یافتن هدف واقعی", "جهت رشد معنوی و عاطفی"
   ]
 };
 
@@ -84,7 +116,17 @@ export const generatePersonalizedInterpretation = (
     .replace('{emotional_guidance}', personalizedElements.emotionalGuidance[Math.floor(Math.random() * personalizedElements.emotionalGuidance.length)])
     .replace('{action_needed}', personalizedElements.actionNeeded[Math.floor(Math.random() * personalizedElements.actionNeeded.length)])
     .replace('{wisdom}', personalizedElements.wisdom[Math.floor(Math.random() * personalizedElements.wisdom.length)])
-    .replace('{time_context}', timeContext || 'در زمان حال');
+    .replace('{time_context}', timeContext || 'در زمان حال')
+    .replace('{manifestation}', personalizedElements.manifestations[Math.floor(Math.random() * personalizedElements.manifestations.length)])
+    .replace('{specific_advice}', personalizedElements.specificAdvice[Math.floor(Math.random() * personalizedElements.specificAdvice.length)])
+    .replace('{career_advice}', personalizedElements.careerAdvice[Math.floor(Math.random() * personalizedElements.careerAdvice.length)])
+    .replace('{spiritual_guidance}', personalizedElements.spiritualGuidance[Math.floor(Math.random() * personalizedElements.spiritualGuidance.length)])
+    .replace('{spiritual_need}', personalizedElements.spiritualNeeds[Math.floor(Math.random() * personalizedElements.spiritualNeeds.length)])
+    .replace('{life_lesson}', personalizedElements.lifeLessons[Math.floor(Math.random() * personalizedElements.lifeLessons.length)])
+    .replace('{growth_path}', personalizedElements.growthPaths[Math.floor(Math.random() * personalizedElements.growthPaths.length)]);
+
+  // Defensive cleanup - replace any remaining unreplaced placeholders
+  interpretation = interpretation.replace(/\{[^}]+\}/g, 'راهنمایی ویژه');
   
   // Add position-specific guidance if available
   if (cardPosition) {

@@ -84,7 +84,7 @@ export const TarotControls: React.FC<TarotControlsProps> = ({
                 onCheckedChange={onToggleReversedCards}
               />
               <Label htmlFor="reversed-cards" className="text-xs text-[#143a5c]">
-                استفاده از کارت‌های معکوس
+                استفاده از کارت‌های معکوس (وارونه - برای دقت بیشتر)
               </Label>
             </div>
           )}

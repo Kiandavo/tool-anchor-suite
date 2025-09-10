@@ -70,19 +70,23 @@ export const TarotGuide: React.FC = () => {
             <div className="space-y-2">
               <div className="icon-text-sm">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full inline-block ml-2"></span>
-                <span className="text-sm text-gray-700">سوالات تفصیلی را کامل پاسخ دهید</span>
+                <span className="text-sm text-gray-700">سوالات تفصیلی را کامل پاسخ دهید (برای شخصی‌سازی بیشتر)</span>
               </div>
               <div className="icon-text-sm">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full inline-block ml-2"></span>
-                <span className="text-sm text-gray-700">در زمان مناسب و با ذهن آرام فال بگیرید</span>
+                <span className="text-sm text-gray-700">در زمان مناسب و با ذهن آرام فال بگیرید (انرژی مثبت)</span>
               </div>
               <div className="icon-text-sm">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full inline-block ml-2"></span>
-                <span className="text-sm text-gray-700">صادقانه به سوالات پاسخ دهید</span>
+                <span className="text-sm text-gray-700">صادقانه به سوالات پاسخ دهید (دقت بیشتر)</span>
               </div>
               <div className="icon-text-sm">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full inline-block ml-2"></span>
-                <span className="text-sm text-gray-700">روی هدف یا نگرانی خاص تمرکز کنید</span>
+                <span className="text-sm text-gray-700">روی هدف یا نگرانی خاص تمرکز کنید (وضوح بیشتر)</span>
+              </div>
+              <div className="icon-text-sm">
+                <span className="w-2 h-2 bg-purple-500 rounded-full inline-block ml-2"></span>
+                <span className="text-sm text-gray-700">کارت‌های معکوس (وارونه): تأخیر یا جنبه درونی معنا</span>
               </div>
             </div>
           </div>
@@ -158,24 +162,30 @@ export const TarotGuide: React.FC = () => {
           <div>
             <h3 className="text-[#143a5c] font-bold mb-3">معنای برخی کارت‌های اصلی</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-              <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
-                <strong className="text-[#143a5c]">برج:</strong> <span className="text-[#143a5c]/80 text-xs">تغییرات ناگهانی، آغاز راه جدید</span>
-              </div>
-              <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
-                <strong className="text-[#143a5c]">ماه:</strong> <span className="text-[#143a5c]/80 text-xs">ناخودآگاه، رویاها، ترس‌های پنهان</span>
-              </div>
-              <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
-                <strong className="text-[#143a5c]">خورشید:</strong> <span className="text-[#143a5c]/80 text-xs">موفقیت، شادمانی، انرژی مثبت</span>
-              </div>
-              <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
-                <strong className="text-[#143a5c]">عاشقان:</strong> <span className="text-[#143a5c]/80 text-xs">عشق، هماهنگی، انتخاب‌های مهم</span>
-              </div>
-              <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
-                <strong className="text-[#143a5c]">عدالت:</strong> <span className="text-[#143a5c]/80 text-xs">تعادل، صداقت، حقیقت</span>
-              </div>
-              <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
-                <strong className="text-[#143a5c]">مرگ:</strong> <span className="text-[#143a5c]/80 text-xs">پایان، تغییر، تولد دوباره</span>
-              </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">برج:</strong> <span className="text-[#143a5c]/80 text-xs">تغییرات ناگهانی، آغاز راه جدید، فروپاشی باورهای قدیمی</span>
+          </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">ماه:</strong> <span className="text-[#143a5c]/80 text-xs">ناخودآگاه، رویاها، ترس‌های پنهان، شهود</span>
+          </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">خورشید:</strong> <span className="text-[#143a5c]/80 text-xs">موفقیت، شادمانی، انرژی مثبت، روشنایی</span>
+          </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">عاشقان:</strong> <span className="text-[#143a5c]/80 text-xs">عشق، هماهنگی، انتخاب‌های مهم، ارتباط قلبی</span>
+          </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">عدالت:</strong> <span className="text-[#143a5c]/80 text-xs">تعادل، صداقت، حقیقت، قانون کیهانی</span>
+          </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">مرگ:</strong> <span className="text-[#143a5c]/80 text-xs">پایان، تغییر، تولد دوباره، تحول عمیق</span>
+          </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">معکوس:</strong> <span className="text-[#143a5c]/80 text-xs">کارت وارونه - تأخیر، مقاومت یا جنبه درونی</span>
+          </div>
+          <div className="bg-white/50 p-2 rounded border border-[#b0c8e6]/30">
+            <strong className="text-[#143a5c]">طالع:</strong> <span className="text-[#143a5c]/80 text-xs">برج طلوع در تولد - شخصیت ظاهری</span>
+          </div>
             </div>
           </div>
           
