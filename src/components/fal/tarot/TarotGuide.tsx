@@ -41,24 +41,122 @@ export const TarotGuide: React.FC = () => {
             </p>
           </div>
           
-          {/* New Reading Types Section */}
-          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
-            <h3 className="text-[#143a5c] font-bold mb-3">انواع خوانش‌های پیشرفته</h3>
+          {/* Traditional Spread Formats Section */}
+          <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-5 rounded-lg border border-purple-200">
+            <h3 className="text-[#143a5c] font-bold mb-4 text-center">🔮 انواع پخش‌های سنتی تاروت 🔮</h3>
+            <p className="text-[#143a5c]/70 text-sm text-center mb-4">هر پخش برای نوع خاصی از سوال و نیاز طراحی شده است</p>
+            
+            <div className="space-y-4">
+              {/* Celtic Cross */}
+              <div className="bg-white p-4 rounded-lg border border-purple-100 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-purple-700 font-bold text-base">صلیب سلتیک (Celtic Cross)</h4>
+                  <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs">۱۰ کارت</span>
+                </div>
+                <div className="mb-2">
+                  <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded text-xs ml-2">متوسط</span>
+                  <span className="text-purple-600 text-xs">📅 قرن ۱۹ - انگلستان</span>
+                </div>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>کاربرد:</strong> کلاسیک‌ترین پخش تاروت - تحلیل کامل وضعیت زندگی و راهنمایی جامع
+                </p>
+                <p className="text-xs text-gray-600 mb-2">
+                  <strong>مناسب برای:</strong> سوالات پیچیده • بررسی کلی زندگی • تصمیم‌گیری‌های مهم
+                </p>
+                <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+                  <strong>موقعیت‌های کارت:</strong> وضعیت فعلی، چالش‌ها، گذشته، آینده، تأثیرات خارجی، امیدها و ترس‌ها و...
+                </div>
+              </div>
+
+              {/* Tree of Life */}
+              <div className="bg-white p-4 rounded-lg border border-indigo-100 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-indigo-700 font-bold text-base">درخت حیات (Tree of Life)</h4>
+                  <span className="bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full text-xs">۱۰ کارت</span>
+                </div>
+                <div className="mb-2">
+                  <span className="bg-red-100 text-red-800 px-2 py-0.5 rounded text-xs ml-2">خبره</span>
+                  <span className="text-indigo-600 text-xs">📜 کابالای عبری - قرون وسطی</span>
+                </div>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>کاربرد:</strong> پخش مقدس کابالا بر اساس سفیروت (Sefirot) - راهنمایی معنوی عمیق
+                </p>
+                <p className="text-xs text-gray-600 mb-2">
+                  <strong>مناسب برای:</strong> رشد معنوی • خودشناسی عمیق • سوالات فلسفی و روحانی
+                </p>
+                <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+                  <strong>سفیروت:</strong> کتر (تاج)، خکمه (حکمت)، بینه (فهم)، حسد (رحمت)، گبوره (قدرت)، تیفرت (زیبایی) و...
+                </div>
+              </div>
+
+              {/* Horseshoe */}
+              <div className="bg-white p-4 rounded-lg border border-green-100 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-green-700 font-bold text-base">نعل اسب (Horseshoe)</h4>
+                  <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">۷ کارت</span>
+                </div>
+                <div className="mb-2">
+                  <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded text-xs ml-2">متوسط</span>
+                  <span className="text-green-600 text-xs">🍀 سنت اروپایی - قرن ۱۸</span>
+                </div>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>کاربرد:</strong> پخش عملی برای سوالات مشخص و پیدا کردن راه‌حل سریع
+                </p>
+                <p className="text-xs text-gray-600 mb-2">
+                  <strong>مناسب برای:</strong> سوالات عملی • حل مشکل • تصمیم‌گیری سریع
+                </p>
+                <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+                  <strong>ترتیب کارت‌ها:</strong> گذشته → حال → عوامل پنهان → راهکار → آینده → محیط → نتیجه نهایی
+                </div>
+              </div>
+
+              {/* Relationship Cross */}
+              <div className="bg-white p-4 rounded-lg border border-pink-100 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-pink-700 font-bold text-base">صلیب رابطه (Relationship Cross)</h4>
+                  <span className="bg-pink-100 text-pink-700 px-2 py-1 rounded-full text-xs">۸ کارت</span>
+                </div>
+                <div className="mb-2">
+                  <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded text-xs ml-2">متوسط</span>
+                  <span className="text-pink-600 text-xs">💕 مدرن - قرن ۲۰</span>
+                </div>
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>کاربرد:</strong> تحلیل عمیق روابط دونفره - درک احساسات و انگیزه‌های طرفین
+                </p>
+                <p className="text-xs text-gray-600 mb-2">
+                  <strong>مناسب برای:</strong> مسائل عاطفی • تحلیل رابطه • حل تعارض در روابط
+                </p>
+                <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+                  <strong>تقسیم‌بندی:</strong> شما (آگاه/ناخودآگاه) • طرف مقابل (آگاه/ناخودآگاه) • پایه رابطه • چالش • پتانسیل • راهنمایی
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 p-3 bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg">
+              <p className="text-xs text-center text-gray-700">
+                💡 <strong>نکته:</strong> برای انتخاب پخش مناسب، ابتدا نوع سوال خود را مشخص کنید. سوالات عمومی → صلیب سلتیک، مسائل عاطفی → صلیب رابطه، مسائل معنوی → درخت حیات، سوالات سریع → نعل اسب
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Reading Types Section */}
+          <div className="bg-gradient-to-r from-blue-50 to-teal-50 p-4 rounded-lg border border-blue-200">
+            <h3 className="text-[#143a5c] font-bold mb-3">انواع خوانش‌های سریع</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="bg-white p-3 rounded border border-purple-100">
-                <h4 className="text-purple-700 font-medium text-sm mb-1">آینده تفصیلی</h4>
+              <div className="bg-white p-3 rounded border border-blue-100">
+                <h4 className="text-blue-700 font-medium text-sm mb-1">آینده تفصیلی</h4>
                 <p className="text-xs text-gray-600">پیش‌بینی ۶ ماه آینده با زمان‌بندی دقیق</p>
               </div>
               <div className="bg-white p-3 rounded border border-pink-100">
                 <h4 className="text-pink-700 font-medium text-sm mb-1">زمان‌بندی عشق</h4>
                 <p className="text-xs text-gray-600">فال عاشقانه با پیش‌بینی زمان رویدادها</p>
               </div>
-              <div className="bg-white/70 p-3 rounded border border-green-100">
+              <div className="bg-white p-3 rounded border border-green-100">
                 <h4 className="text-green-700 font-medium text-sm mb-1">وضعیت مالی</h4>
                 <p className="text-xs text-gray-600">تحلیل درآمد، هزینه و سرمایه‌گذاری</p>
               </div>
-              <div className="bg-white/70 p-3 rounded border border-blue-100">
-                <h4 className="text-blue-700 font-medium text-sm mb-1">مسیر معنوی</h4>
+              <div className="bg-white p-3 rounded border border-purple-100">
+                <h4 className="text-purple-700 font-medium text-sm mb-1">مسیر معنوی</h4>
                 <p className="text-xs text-gray-600">راهنمایی برای رشد روحی و معنوی</p>
               </div>
             </div>
