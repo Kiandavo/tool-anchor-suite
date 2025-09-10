@@ -270,14 +270,14 @@ ${poem.interpretation}
                 <div className="bg-white/70 p-3 rounded-lg border border-[#d1d5db]/30 mt-3">
                   <h5 className="font-medium text-[#4b5563] text-xs mb-2 flex items-center">
                     <Sparkles size={14} className="ml-1 text-amber-500" />
-                    نکات کاربردی و دعا:
+                    نکات کاربردی برای بهبود زندگی:
                   </h5>
                   <ul className="text-[#4b5563]/80 text-xs leading-5 space-y-1">
-                    <li>• هر شب قبل از خواب، ۳ بار "یا الله" بگویید</li>
+                    <li>• هر شب قبل از خواب، چند دقیقه مراقبه کنید</li>
                     <li>• صبح‌ها با شکرگزاری روز را شروع کنید</li>
                     <li>• به نیازمندان کمک کنید، حتی اگر کم باشد</li>
-                    <li>• در تصمیم‌گیری‌ها عجله نکنید و استخاره کنید</li>
-                    <li>• از آب زمزم یا آب مقدس استفاده کنید</li>
+                    <li>• در تصمیم‌گیری‌ها عجله نکنید و فکر کنید</li>
+                    <li>• آب کافی بنوشید و سالم زندگی کنید</li>
                     <li>• هر روز حداقل ۱۰ دقیقه به طبیعت نگاه کنید</li>
                   </ul>
                 </div>
