@@ -193,6 +193,34 @@ export const generateFAQSchema = (
   }
 };
 
+// HowTo schema for step-by-step instructions on tool pages
+export const generateHowToSchema = (
+  name: string,
+  description: string,
+  steps: { step: number; instruction: string }[],
+  totalTime?: string
+) => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": name,
+      "description": description,
+      "inLanguage": "fa-IR",
+      ...(totalTime && { "totalTime": totalTime }),
+      "step": steps.map(s => ({
+        "@type": "HowToStep",
+        "position": s.step,
+        "name": `مرحله ${s.step}`,
+        "text": s.instruction
+      }))
+    };
+  } catch (error) {
+    console.error('Error generating HowTo schema:', error);
+    return null;
+  }
+};
+
 // Combine multiple schema objects
 export const combineSchemas = (...schemas: any[]) => {
   try {

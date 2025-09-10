@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toolsSeoData } from '@/data/seo-content';
-import { generateToolSchema, generateBreadcrumbSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
+import { generateToolSchema, generateBreadcrumbSchema, generateFAQSchema, generateHowToSchema, combineSchemas } from '@/utils/schemaUtils';
 
 interface EnhancedSeoHeadProps {
   toolSlug?: string;
@@ -59,6 +59,16 @@ export const EnhancedSeoHead: React.FC<EnhancedSeoHeadProps> = ({
     if (toolSeoData.faq?.length > 0) {
       const faqSchema = generateFAQSchema(toolSeoData.faq);
       if (faqSchema) schemas.push(faqSchema);
+    }
+
+    // HowTo schema from how-to steps
+    if (toolSeoData.howToUse?.length > 0) {
+      const howToSchema = generateHowToSchema(
+        toolSeoData.title,
+        toolSeoData.description,
+        toolSeoData.howToUse
+      );
+      if (howToSchema) schemas.push(howToSchema);
     }
   }
   
