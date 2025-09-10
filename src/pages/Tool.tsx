@@ -6,10 +6,11 @@ import { ToolRenderer } from '@/components/tool/ToolRenderer';
 import { BreadcrumbNavigation } from '@/components/ui/breadcrumb-navigation';
 import { tools, categoryLabels } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
-import { SeoHead } from '@/components/seo/SeoHead';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
-import { generateToolSchema, generateBreadcrumbSchema, combineSchemas } from '@/utils/schemaUtils';
-import { generateRumiStructuredData } from '@/components/seo/RumiSeoData';
+import { ToolSeoContent } from '@/components/seo/ToolSeoContent';
+import { SuggestedTools } from '@/components/seo/SuggestedTools';
+import { toolsSeoData } from '@/data/seo-content';
+import { getRelatedTools } from '@/utils/related-tools';
 
 const Tool = () => {
   const { slug } = useParams();
@@ -45,6 +46,8 @@ const Tool = () => {
 
   // Enhanced SEO data
   const categoryLabel = (categoryLabels as any)[tool.category] || tool.category;
+  const toolSeoData = toolsSeoData[tool.slug];
+  const relatedTools = getRelatedTools(tool);
 
   return (
     <Layout>
@@ -68,6 +71,29 @@ const Tool = () => {
       </div>
       
       <ToolRenderer tool={tool} slug={slug!} />
+      
+      {/* Rich SEO Content */}
+      {toolSeoData && (
+        <>
+          <ToolSeoContent
+            toolName={tool.name}
+            category={categoryLabel}
+            description={toolSeoData.longDescription}
+            benefits={toolSeoData.benefits}
+            howToUse={toolSeoData.howToUse}
+            faq={toolSeoData.faq}
+            relatedTools={relatedTools}
+          />
+          
+          {/* Suggested Tools for Internal Linking */}
+          <div className="mt-8">
+            <SuggestedTools 
+              category={tool.category} 
+              currentToolSlug={tool.slug} 
+            />
+          </div>
+        </>
+      )}
     </Layout>
   );
 };

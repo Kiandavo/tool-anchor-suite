@@ -125,9 +125,11 @@ export const ToolSeoContent: React.FC<ToolSeoContentProps> = ({
             <h3 className="text-lg font-semibold mb-4">ابزارهای مرتبط</h3>
             <div className="flex flex-wrap gap-2">
               {relatedTools.map((tool) => (
-                <Badge key={tool.slug} variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground">
-                  {tool.name}
-                </Badge>
+                <a key={tool.slug} href={`/tool/${tool.slug}`}>
+                  <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
+                    {tool.name}
+                  </Badge>
+                </a>
               ))}
             </div>
           </CardContent>
