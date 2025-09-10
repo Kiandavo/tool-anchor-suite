@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://langar.co/</loc>
+    <image:image>
+      <image:loc>https://langar.co/og-image.jpg</image:loc>
+      <image:title>لنگر - ابزارهای آنلاین رایگان فارسی</image:title>
+      <image:caption>بیش از 100 ابزار آنلاین رایگان فارسی برای محاسبات، متن، تصویر و موارد دیگر</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/percentage-calculator</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/percent.svg</image:loc>
+      <image:title>محاسبه گر درصد</image:title>
+      <image:caption>محاسبات درصدی را به سرعت انجام دهید</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/bmi-calculator</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/activity.svg</image:loc>
+      <image:title>محاسبه گر BMI</image:title>
+      <image:caption>شاخص توده بدنی خود را محاسبه کنید</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/text-counter</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/type.svg</image:loc>
+      <image:title>شمارش کلمات و کاراکترها</image:title>
+      <image:caption>تعداد کلمات، کاراکترها و پاراگراف‌های متن را بشمارید</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/qr-code-generator</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/qr-code.svg</image:loc>
+      <image:title>تولید QR کد</image:title>
+      <image:caption>QR کد سفارشی برای لینک‌ها و متن‌ها بسازید</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/color-palette-generator</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/palette.svg</image:loc>
+      <image:title>تولید پالت رنگ</image:title>
+      <image:caption>پالت‌های رنگی زیبا و هماهنگ تولید کنید</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/hafez-fal</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/book-open.svg</image:loc>
+      <image:title>فال حافظ</image:title>
+      <image:caption>استخاره با دیوان حافظ شیرازی</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/rumi-istikhara</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/heart.svg</image:loc>
+      <image:title>استخاره با مولانا</image:title>
+      <image:caption>دریافت راهنمایی از اشعار مولانا</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/meta-tag-generator</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/code.svg</image:loc>
+      <image:title>ایجاد کننده متا تگ</image:title>
+      <image:caption>تگ‌های متا برای سایت خود را بسازید</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+  <url>
+    <loc>https://langar.co/tool/image-compressor</loc>
+    <image:image>
+      <image:loc>https://langar.co/icons/image.svg</image:loc>
+      <image:title>فشرده‌ساز تصاویر</image:title>
+      <image:caption>کاهش حجم تصاویر بدون کم شدن کیفیت</image:caption>
+    </image:image>
+    <lastmod>2025-01-10</lastmod>
+  </url>
+</urlset>
