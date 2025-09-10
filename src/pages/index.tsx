@@ -10,7 +10,7 @@ import { InteractiveCategoriesSection } from '@/components/home/InteractiveCateg
 import { PersianCalendarWidget } from '@/components/home/PersianCalendarWidget';
 import { QuickToolsSection } from '@/components/home/QuickToolsSection';
 import { EssentialToolsSection } from '@/components/home/EssentialToolsSection';
-import { SeoHead } from '@/components/seo/SeoHead';
+import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
@@ -47,12 +47,13 @@ const Index = () => {
 
   return (
     <Layout>
-      <SeoHead 
+      <EnhancedSeoHead 
+        pageType="home"
         title={homeTitle}
         description={homeDescription}
         keywords={homeKeywords}
-        schema={combinedSchema}
         canonical="https://langar.co/"
+        faq={homeFAQ}
       />
       
       <div className="flex flex-col lg:flex-row gap-8">

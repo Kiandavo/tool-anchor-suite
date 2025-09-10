@@ -5,8 +5,9 @@ import { Layout } from '@/components/Layout';
 import { ToolCard } from '@/components/ToolCard';
 import { getToolsByCategory, categoryLabels, ToolCategory } from '@/data/tools';
 import { Search } from 'lucide-react';
-import { SeoHead } from '@/components/seo/SeoHead';
-import { generateCategorySchema, generateBreadcrumbSchema, combineSchemas } from '@/utils/schemaUtils';
+import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { CategorySeoContent } from '@/components/seo/CategorySeoContent';
+import { SocialShare } from '@/components/social/SocialShare';
 
 const Category = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -24,66 +25,54 @@ const Category = () => {
 
   const categoryName = categoryLabels[category];
   
-  // Generate SEO metadata based on category
-  const seoData = useMemo(() => {
-    let title = `${categoryName} - ابزارهای آنلاین لنگر | Langar Tools`;
-    let description = `مجموعه کامل ابزارهای آنلاین ${categoryName} در لنگر. ${allTools.length} ابزار کاربردی برای ${categoryName}.`;
-    let keywords = `ابزارهای ${categoryName}, لنگر, ابزار آنلاین, Langar Tools`;
-    
+  // Generate enhanced SEO metadata
+  const seoTitle = `${categoryName} - ابزارهای آنلاین لنگر | ${allTools.length} ابزار رایگان`;
+  const seoDescription = (() => {
     if (category === 'persian-cultural') {
-      title = 'ابزارهای فرهنگ و زبان فارسی - آموزش فارسی، تقویم، ضرب المثل و نام‌های ایرانی | لنگر';
-      description = 'مجموعه ابزارهای فرهنگ و زبان فارسی شامل آموزش زبان فارسی، تبدیل تاریخ، معانی نام‌های ایرانی، ریشه‌شناسی کلمات و ضرب‌المثل‌های فارسی';
-      keywords = 'آموزش زبان فارسی, تقویم شمسی, معانی نام‌های ایرانی, ریشه‌شناسی, ضرب المثل فارسی, فرهنگ فارسی, تمرین خوشنویسی';
+      return 'ابزارهای فرهنگ و زبان فارسی: تبدیل تاریخ، معانی نام‌های ایرانی، ضرب‌المثل‌های فارسی، آموزش خوشنویسی و بیشتر. مجموعه کاملی از ابزارهای فرهنگی ایرانی.';
     } else if (category === 'readings') {
-      title = 'فال و طالع‌بینی - فال حافظ، تاروت، طالع روزانه | لنگر';
-      description = 'فال و طالع‌بینی رایگان: فال حافظ، فال تاروت، طالع روزانه، استخاره با مولانا، تعبیر خواب، فال قهوه و اعدادشناسی در لنگر.';
-      keywords = 'فال حافظ, فال تاروت, طالع‌بینی, طالع روزانه, استخاره, تعبیر خواب, فال قهوه, اعداد شناسی, فال دست, خواندن هاله, خرافات ایرانی, جهان موازی, فال آنلاین';
+      return 'فال و طالع‌بینی رایگان: فال حافظ، تاروت، استخاره با مولانا، تعبیر خواب، طالع روزانه و ابزارهای معنوی برای خودشناسی و سرگرمی.';
     }
-    
-    // Create schema.org structured data
-    const categorySchema = generateCategorySchema(
-      categoryName,
-      description,
-      category,
-      allTools.map(tool => ({
-        name: tool.name,
-        slug: tool.slug,
-        description: tool.description
-      }))
-    );
-    
-    // Add breadcrumb schema
-    const breadcrumbSchema = generateBreadcrumbSchema([
-      { name: 'لنگر', url: 'https://langar.co/' },
-      { name: categoryName, url: `https://langar.co/category/${category}` }
-    ]);
-    
-    // Combine schemas
-    const combinedSchema = combineSchemas(categorySchema, breadcrumbSchema);
-    
-    return { 
-      title, 
-      description, 
-      keywords, 
-      schema: combinedSchema 
-    };
-  }, [category, categoryName, allTools]);
+    return `${allTools.length} ابزار ${categoryName} رایگان و آنلاین. بهترین ابزارهای ${categoryName} برای استفاده روزمره با کیفیت بالا و رابط کاربری آسان.`;
+  })();
+  
+  const seoKeywords = (() => {
+    const baseKeywords = [`ابزارهای ${categoryName}`, 'لنگر', 'ابزار آنلاین', 'رایگان'];
+    if (category === 'persian-cultural') {
+      return [...baseKeywords, 'فرهنگ ایرانی', 'تقویم فارسی', 'نام‌های ایرانی', 'ضرب المثل'];
+    } else if (category === 'readings') {
+      return [...baseKeywords, 'فال حافظ', 'تاروت', 'طالع‌بینی', 'استخاره', 'تعبیر خواب'];
+    }
+    return baseKeywords;
+  })();
 
   return (
     <Layout>
-      <SeoHead 
-        title={seoData.title}
-        description={seoData.description}
-        keywords={seoData.keywords}
-        schema={seoData.schema}
+      <EnhancedSeoHead 
+        pageType="category"
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords.join(', ')}
         canonical={`https://langar.co/category/${category}`}
+        breadcrumbs={[
+          { name: 'لنگر', url: 'https://langar.co/' },
+          { name: categoryName, url: `https://langar.co/category/${category}` }
+        ]}
       />
 
-      <div className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">{categoryName}</h1>
-          <p className="text-gray-600 text-xs sm:text-sm">{allTools.length} ابزار در این دسته‌بندی</p>
-          <p className="text-gray-700 text-xs sm:text-sm mt-2 leading-relaxed">
+      <div className="mb-6 flex flex-col sm:flex-row items-start justify-between gap-4">
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">{categoryName}</h1>
+            <SocialShare 
+              url={`https://langar.co/category/${category}`}
+              title={seoTitle}
+              description={seoDescription}
+              size="sm"
+            />
+          </div>
+          <p className="text-gray-600 text-xs sm:text-sm mb-2">{allTools.length} ابزار در این دسته‌بندی</p>
+          <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
             {category === 'readings'
               ? 'ابزارهای رایگان فال و طالع‌بینی: فال حافظ، فال تاروت، طالع‌بینی روزانه، استخاره با مولانا، تعبیر خواب و موارد دیگر برای سرگرمی و خودشناسی.'
               : `مجموعه‌ای از ابزارهای ${categoryName} برای انجام سریع و آسان کارهای روزمره شما در لنگر.`}
@@ -117,6 +106,14 @@ const Category = () => {
           </div>
         )}
       </div>
+
+      {/* Enhanced SEO Content */}
+      <CategorySeoContent 
+        categoryName={categoryName}
+        categorySlug={category}
+        toolCount={allTools.length}
+        relatedTools={allTools.slice(0, 8).map(tool => ({ name: tool.name, slug: tool.slug }))}
+      />
     </Layout>
   );
 };
