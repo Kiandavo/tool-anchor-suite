@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { LazyToolGrid } from '@/components/performance/LazyToolGrid';
 import { 
   Calculator, 
   FileText, 
@@ -142,8 +143,13 @@ export const EssentialToolsSection = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {essentialTools.map((tool, index) => {
+      <LazyToolGrid
+        tools={essentialTools}
+        initialDisplayCount={6}
+        loadMoreCount={6}
+        gridClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        showMoreText="نمایش ابزارهای بیشتر"
+        renderTool={(tool, index) => {
           const Icon = tool.icon;
           return (
             <Link
@@ -196,8 +202,8 @@ export const EssentialToolsSection = () => {
               </div>
             </Link>
           );
-        })}
-      </div>
+        }}
+      />
 
       {/* Call to action */}
       <div className="text-center mt-12">

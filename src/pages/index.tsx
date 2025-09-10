@@ -11,6 +11,7 @@ import { PersianCalendarWidget } from '@/components/home/PersianCalendarWidget';
 import { QuickToolsSection } from '@/components/home/QuickToolsSection';
 import { EssentialToolsSection } from '@/components/home/EssentialToolsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { LazySection } from '@/components/performance/LazySection';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
@@ -70,9 +71,11 @@ const Index = () => {
             <QuickToolsSection />
 
             {/* Enhanced Tools Section */}
-            <div id="tools-sections">
-              <EnhancedToolsSection />
-            </div>
+            <LazySection className="mb-16 sm:mb-24" rootMargin="200px">
+              <div id="tools-sections">
+                <EnhancedToolsSection />
+              </div>
+            </LazySection>
 
             {/* Strategic Ad Placement - After Tools */}
             {shouldShowAds() && (
@@ -83,9 +86,13 @@ const Index = () => {
             )}
 
             {/* Persian Calendar Widget */}
-            <PersianCalendarWidget />
+            <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
+              <PersianCalendarWidget />
+            </LazySection>
 
-            <ModernProfessionalToolsSection />
+            <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
+              <ModernProfessionalToolsSection />
+            </LazySection>
             
             {/* Strategic Ad Placement - Middle Content */}
             {shouldShowAds() && (
@@ -95,9 +102,17 @@ const Index = () => {
               />
             )}
 
-            <PersianCulturalEnhancedSection />
-            <MysticalReadingsSection />
-            <InteractiveCategoriesSection />
+            <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
+              <PersianCulturalEnhancedSection />
+            </LazySection>
+            
+            <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
+              <MysticalReadingsSection />
+            </LazySection>
+            
+            <LazySection rootMargin="150px">
+              <InteractiveCategoriesSection />
+            </LazySection>
           </div>
         </div>
 

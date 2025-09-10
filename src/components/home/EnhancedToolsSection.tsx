@@ -47,7 +47,7 @@ export const EnhancedToolsSection = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {newTools.slice(0, 4).map((tool, index) => (
+                    {newTools.slice(0, 2).map((tool, index) => (
                       <div 
                         key={tool.id} 
                         className="animate-fade-in hover-lift"
@@ -97,7 +97,7 @@ export const EnhancedToolsSection = () => {
               {/* Tools Grid */}
               <div className="p-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {popularTools.slice(0, 4).map((tool, index) => (
+                  {popularTools.slice(0, 2).map((tool, index) => (
                     <div 
                       key={tool.id} 
                       className="animate-fade-in hover-lift"

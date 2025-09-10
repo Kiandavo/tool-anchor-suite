@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { LazyToolGrid } from '@/components/performance/LazyToolGrid';
 import { Calculator, Palette, Lock, QrCode, FileText, Image, Star, Code } from 'lucide-react';
 
 export const QuickToolsSection = () => {
@@ -85,8 +86,13 @@ export const QuickToolsSection = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-        {quickTools.map((tool, index) => {
+      <LazyToolGrid
+        tools={quickTools}
+        initialDisplayCount={6}
+        loadMoreCount={4}
+        gridClassName="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+        showMoreText="نمایش ابزارهای بیشتر"
+        renderTool={(tool, index) => {
           const Icon = tool.icon;
           return (
             <Link
@@ -114,8 +120,8 @@ export const QuickToolsSection = () => {
               </div>
             </Link>
           );
-        })}
-      </div>
+        }}
+      />
     </section>
   );
 };
