@@ -1,11 +1,11 @@
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "@/providers/HelmetProvider";
 import { AppRoutes } from "@/components/AppRoutes";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
-import { LoadingPlaceholder } from "@/components/fal/sections/LoadingPlaceholder";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,9 +25,7 @@ const App = () => {
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <GoogleAnalytics />
-          <Suspense fallback={<LoadingPlaceholder />}>
-            <AppRoutes />
-          </Suspense>
+          <AppRoutes />
         </QueryClientProvider>
       </HelmetProvider>
     </ErrorBoundary>
