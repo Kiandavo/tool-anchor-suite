@@ -181,5 +181,76 @@ export const readingsTools: Tool[] = [
     isNew: true,
     icon: "music",
     isComingSoon: false
+  },
+  // NEW HIGH-PRIORITY TOOLS
+  {
+    id: "birth-chart",
+    slug: "birth-chart",
+    name: "نقشه آسمان تولد",
+    category: "readings",
+    description: "محاسبه و تفسیر کامل نقشه نجومی تولد شما",
+    isNew: true,
+    icon: "star-map",
+    isComingSoon: false
+  },
+  {
+    id: "crystal-ball",
+    slug: "crystal-ball",
+    name: "گوی کریستالی",
+    category: "readings",
+    description: "نگاه به آینده از طریق گوی جادویی کریستالی",
+    isNew: true,
+    icon: "crystal-ball",
+    isComingSoon: false
+  },
+  {
+    id: "life-path-numerology",
+    slug: "life-path-numerology",
+    name: "اعداد مسیر زندگی",
+    category: "readings",
+    description: "کشف مسیر زندگی و سرنوشت از طریق اعداد پیشرفته",
+    isNew: true,
+    icon: "route",
+    isComingSoon: false
+  },
+  {
+    id: "saadi-oracle",
+    slug: "saadi-oracle",
+    name: "پیام از سعدی",
+    category: "readings",
+    description: "دریافت حکمت و راهنمایی از بوستان و گلستان سعدی",
+    isNew: true,
+    icon: "book-heart",
+    isComingSoon: false
+  },
+  {
+    id: "rune-casting",
+    slug: "rune-casting",
+    name: "فال رونی",
+    category: "readings",
+    description: "راهنمایی باستانی با استفاده از نمادهای رونیک",
+    isNew: true,
+    icon: "scroll",
+    isComingSoon: false
+  },
+  {
+    id: "compatibility-reading",
+    slug: "compatibility-reading",
+    name: "تطبیق عاشقانه",
+    category: "readings",
+    description: "بررسی سازگاری عاطفی و روحی دو نفر",
+    isNew: true,
+    icon: "heart",
+    isComingSoon: false
+  },
+  {
+    id: "chakra-reading",
+    slug: "chakra-reading",
+    name: "خواندن چاکراها",
+    category: "readings",
+    description: "تحلیل و تعادل انرژی چاکراهای بدن",
+    isNew: true,
+    icon: "circle-dot",
+    isComingSoon: false
   }
 ];
