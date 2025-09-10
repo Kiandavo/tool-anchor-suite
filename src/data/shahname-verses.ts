@@ -210,3 +210,93 @@ export const shahnameVerses: ShahnameVerse[] = [
     isPositive: true
   }
 ];
+
+// Keywords for matching questions to appropriate Shahname verses
+const questionKeywords = {
+  justice: ['عدالت', 'انصاف', 'حق', 'ظلم', 'بی‌عدالتی', 'داوری', 'قضاوت', 'حکم', 'قانون'],
+  wisdom: ['خرد', 'حکمت', 'دانش', 'عقل', 'اندیشه', 'فکر', 'تدبیر', 'بصیرت', 'فهم', 'درایت'],
+  love: ['عشق', 'عاشق', 'دوست', 'محبت', 'دل', 'قلب', 'عاشقانه', 'دلبر', 'معشوق', 'یار'],
+  heroism: ['شجاعت', 'جنگ', 'نبرد', 'پهلوان', 'قهرمان', 'دلاوری', 'مردانگی', 'بطولت', 'غیرت'],
+  betrayal: ['خیانت', 'دشمنی', 'فریب', 'نیرنگ', 'مکر', 'حیله', 'دروغ', 'ناوفایی', 'غدر'],
+  victory: ['پیروزی', 'فتح', 'موفقیت', 'برد', 'غلبه', 'ظفر', 'کامیابی', 'کامرانی'],
+  destiny: ['تقدیر', 'سرنوشت', 'آینده', 'فال', 'بخت', 'طالع', 'قسمت', 'نصیب', 'مقدرات'],
+  honor: ['آبرو', 'ناموس', 'شرف', 'وجهه', 'منزلت', 'کرامت', 'عزت', 'وفا', 'امانت'],
+  decision: ['تصمیم', 'انتخاب', 'راه', 'مسیر', 'چکار', 'چی کار', 'باید', 'نباید', 'درست', 'غلط'],
+  family: ['خانواده', 'مادر', 'پدر', 'فرزند', 'پسر', 'دختر', 'برادر', 'خواهر', 'همسر', 'عروس'],
+  leadership: ['رهبری', 'پادشاه', 'حکومت', 'سلطنت', 'مدیریت', 'فرماندهی', 'رئیس', 'سرپرست'],
+  patience: ['صبر', 'تحمل', 'بردباری', 'شکیبایی', 'استقامت', 'مقاومت', 'پایداری']
+};
+
+// Theme-based verse categorization
+const verseCategories = {
+  justice: shahnameVerses.filter(verse => verse.theme === 'justice'),
+  wisdom: shahnameVerses.filter(verse => verse.theme === 'wisdom'),
+  love: shahnameVerses.filter(verse => verse.theme === 'love'),
+  heroism: shahnameVerses.filter(verse => verse.theme === 'heroism'),
+  betrayal: shahnameVerses.filter(verse => verse.theme === 'betrayal'),
+  victory: shahnameVerses.filter(verse => verse.theme === 'victory'),
+  destiny: shahnameVerses.filter(verse => verse.theme === 'destiny'),
+  honor: shahnameVerses.filter(verse => verse.theme === 'honor'),
+  decision: shahnameVerses.filter(verse => 
+    verse.interpretation.includes('تصمیم') || 
+    verse.interpretation.includes('انتخاب') ||
+    verse.interpretation.includes('راه')
+  ),
+  family: shahnameVerses.filter(verse => 
+    verse.character === 'رودابه' || 
+    verse.character === 'تهمینه' || 
+    verse.interpretation.includes('خانواده')
+  ),
+  leadership: shahnameVerses.filter(verse => 
+    ['فریدون', 'جمشید', 'کیخسرو', 'انوشیروان', 'کاووس'].includes(verse.character)
+  ),
+  patience: shahnameVerses.filter(verse => 
+    verse.character === 'تهمینه' || 
+    verse.interpretation.includes('صبر') ||
+    verse.interpretation.includes('تحمل')
+  )
+};
+
+export const getVerseBasedOnQuestion = (question: string): ShahnameVerse => {
+  const normalizedQuestion = question.toLowerCase();
+  
+  // Score each category based on keyword matches
+  const categoryScores = Object.entries(questionKeywords).map(([category, keywords]) => {
+    const score = keywords.reduce((acc, keyword) => {
+      return acc + (normalizedQuestion.includes(keyword) ? 1 : 0);
+    }, 0);
+    return { category, score };
+  });
+  
+  // Find the category with the highest score
+  const bestMatch = categoryScores.reduce((max, current) => 
+    current.score > max.score ? current : max
+  );
+  
+  // If no keywords matched, return random verse with positive bias
+  if (bestMatch.score === 0) {
+    const positiveVerses = shahnameVerses.filter(v => v.isPositive === true);
+    const versesToChooseFrom = positiveVerses.length > 0 
+      ? (Math.random() < 0.7 ? positiveVerses : shahnameVerses)
+      : shahnameVerses;
+    const randomIndex = Math.floor(Math.random() * versesToChooseFrom.length);
+    return versesToChooseFrom[randomIndex];
+  }
+  
+  // Get verses from the best matching category
+  const relevantVerses = verseCategories[bestMatch.category as keyof typeof verseCategories];
+  
+  // If no verses in category, fallback to random with positive bias
+  if (!relevantVerses || relevantVerses.length === 0) {
+    const positiveVerses = shahnameVerses.filter(v => v.isPositive === true);
+    const versesToChooseFrom = positiveVerses.length > 0 
+      ? (Math.random() < 0.7 ? positiveVerses : shahnameVerses)
+      : shahnameVerses;
+    const randomIndex = Math.floor(Math.random() * versesToChooseFrom.length);
+    return versesToChooseFrom[randomIndex];
+  }
+  
+  // Return random verse from the relevant category
+  const randomIndex = Math.floor(Math.random() * relevantVerses.length);
+  return relevantVerses[randomIndex];
+};

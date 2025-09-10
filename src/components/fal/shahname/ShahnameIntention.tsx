@@ -4,16 +4,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Crown, Heart } from "lucide-react";
 
 interface ShahnameIntentionProps {
-  onSetIntention: () => void;
+  onSetIntention: (intention: string) => void;
 }
 
 export const ShahnameIntention: React.FC<ShahnameIntentionProps> = ({ onSetIntention }) => {
   const [intention, setIntention] = useState('');
 
   const handleSubmit = () => {
-    if (intention.trim()) {
-      onSetIntention();
-    }
+    onSetIntention(intention.trim() || 'راهنمایی عمومی');
   };
 
   return (

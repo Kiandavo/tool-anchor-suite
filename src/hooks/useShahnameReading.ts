@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { shahnameVerses, ShahnameVerse } from '@/data/shahname-verses';
+import { shahnameVerses, ShahnameVerse, getVerseBasedOnQuestion } from '@/data/shahname-verses';
 import { toast } from 'sonner';
 
 export const useShahnameReading = () => {
@@ -9,8 +9,10 @@ export const useShahnameReading = () => {
   const [hasNewReading, setHasNewReading] = useState(false);
   const [showIntention, setShowIntention] = useState(true);
   const [hasSetIntention, setHasSetIntention] = useState(false);
+  const [userIntention, setUserIntention] = useState('');
 
-  const prepareForReading = useCallback(() => {
+  const prepareForReading = useCallback((intention: string) => {
+    setUserIntention(intention);
     setShowIntention(false);
     setHasSetIntention(true);
     setIsAnimating(true);
@@ -24,14 +26,7 @@ export const useShahnameReading = () => {
 
     // Simulate API delay for better UX
     setTimeout(() => {
-      // Apply positive bias similar to Hafez fortune
-      const positiveVerses = shahnameVerses.filter(v => v.isPositive === true);
-      const versesToChooseFrom = positiveVerses.length > 0 
-        ? (Math.random() < 0.7 ? positiveVerses : shahnameVerses) // 70% chance of positive verse
-        : shahnameVerses;
-        
-      const randomIndex = Math.floor(Math.random() * versesToChooseFrom.length);
-      const selectedVerse = versesToChooseFrom[randomIndex];
+      const selectedVerse = getVerseBasedOnQuestion(userIntention);
       
       SetVerse(selectedVerse);
       setIsLoading(false);
@@ -42,7 +37,7 @@ export const useShahnameReading = () => {
         setIsAnimating(false);
       }, 1500);
     }, 2000);
-  }, []);
+  }, [userIntention]);
 
   const copyReading = useCallback(() => {
     if (!verse) return;
@@ -84,6 +79,7 @@ ${verse.interpretationEn}
     setHasSetIntention(false);
     setIsAnimating(false);
     setHasNewReading(false);
+    setUserIntention('');
   }, []);
 
   return {
