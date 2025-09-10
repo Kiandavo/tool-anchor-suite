@@ -60,12 +60,6 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
       return <UtilityToolRenderer slug={slug} type="number" />;
     
     case 'readings':
-      return <ReadingTool slug={slug} />;
-    
-    case 'persian-cultural':
-      return <PersianCulturalTool slug={slug} />;
-    
-    case 'readings':
       // Handle specific new readings tools
       if (slug === 'birth-chart') {
         const BirthChart = React.lazy(() => import('@/components/fal/BirthChart').then(m => ({ default: m.BirthChart })));
@@ -75,7 +69,7 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
         const CrystalBall = React.lazy(() => import('@/components/fal/CrystalBall').then(m => ({ default: m.CrystalBall })));
         return <React.Suspense fallback={<div>Loading...</div>}><CrystalBall /></React.Suspense>;
       }
-      return <ReadingTool />;
+      return <ReadingTool slug={slug} />;
     
     case 'design':
       return <DesignToolRenderer slug={slug} />;
