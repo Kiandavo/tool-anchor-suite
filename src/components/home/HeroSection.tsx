@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
+import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 export const HeroSection = () => {
   return <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden scroll-smooth">
       {/* Background elements */}
@@ -27,28 +28,9 @@ export const HeroSection = () => {
             +۸۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
           </p>
 
-          {/* Quick Search */}
+          {/* Enhanced Search */}
           <div className="max-w-2xl mx-auto mb-10 sm:mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="جستجو در ابزارها... (مثلاً: محاسبه‌گر، QR کد، تبدیل متن)"
-                className="w-full px-6 py-4 text-lg rounded-2xl border border-border/50 bg-card/80 backdrop-blur-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl"
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    const query = (e.target as HTMLInputElement).value;
-                    if (query.trim()) {
-                      window.location.href = `/all-tools?search=${encodeURIComponent(query)}`;
-                    }
-                  }
-                }}
-              />
-              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-xs text-primary">🔍</span>
-                </div>
-              </div>
-            </div>
+            <EnhancedSearchBar />
             
             {/* Quick Access Buttons */}
             <div className="flex flex-wrap justify-center gap-3 mt-4">
