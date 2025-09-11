@@ -19,7 +19,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   keywords = 'ابزار آنلاین, لنگر',
   schema,
   canonical,
-  ogImage = 'https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png',
+  ogImage = '/src/assets/social-logo.jpg',
   ogType = 'website',
   noindex = false
 }) => {

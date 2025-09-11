@@ -39,7 +39,7 @@ export const EnhancedSeoHead: React.FC<EnhancedSeoHeadProps> = ({
   const finalDescription = description || toolSeoData?.metaDescription || 'بیش از 100 ابزار آنلاین رایگان فارسی';
   const finalKeywords = keywords || toolSeoData?.keywords.join(', ') || 'ابزار آنلاین, رایگان, فارسی';
   const finalCanonical = canonical || (toolSlug ? `https://langar.co/tool/${toolSlug}` : 'https://langar.co/');
-  const finalOgImage = ogImage || 'https://langar.co/og-image.jpg';
+  const finalOgImage = ogImage || '/src/assets/social-logo.jpg';
   
   // Generate rich schemas
   let schemas: any[] = [];

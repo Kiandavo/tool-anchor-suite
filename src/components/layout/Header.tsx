@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Home, Menu, X, Calculator, Type, Sparkles, Wrench, ChevronDown } from 'lucide-react';
+import logoSvg from '@/assets/logo.svg';
 
 interface HeaderProps {
   title?: string;
@@ -129,9 +130,13 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             {/* Logo */}
             <Link
               to="/"
-              className="flex items-center gap-2 text-white hover:text-primary-foreground/90 transition-all duration-200 group"
+              className="flex items-center gap-3 text-white hover:text-primary-foreground/90 transition-all duration-200 group"
             >
-              <Home size={24} className="text-white group-hover:scale-110 transition-transform" />
+              <img 
+                src={logoSvg} 
+                alt="لنگر" 
+                className="h-8 w-auto group-hover:scale-110 transition-transform duration-200" 
+              />
               <span className="text-xl font-bold bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent">لنگر</span>
             </Link>
 
