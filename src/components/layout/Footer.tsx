@@ -2,6 +2,7 @@
 import React from 'react';
 import { Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import logoSvg from '@/assets/logo.svg';
 
 export function Footer() {
   return (
@@ -11,7 +12,14 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-6 md:col-span-2 lg:col-span-1">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">لنگر</h3>
+              <div className="flex items-center gap-3">
+                <img 
+                  src={logoSvg} 
+                  alt="لنگر" 
+                  className="h-8 w-auto" 
+                />
+                <h3 className="text-2xl font-bold text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">لنگر</h3>
+              </div>
               <p className="text-muted-foreground text-base leading-relaxed max-w-sm">
                 مجموعه جامع ابزارهای آنلاین فارسی برای تسهیل کارهای روزمره و افزایش بهره‌وری
               </p>

@@ -19,7 +19,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   keywords = 'ابزار آنلاین, لنگر',
   schema,
   canonical,
-  ogImage = '/src/assets/social-logo.jpg',
+  ogImage = '/assets/social-logo.jpg',
   ogType = 'website',
   noindex = false
 }) => {
