@@ -10,7 +10,11 @@ export const readingsTools: Tool[] = [
     description: "دریافت فال و پیام از دیوان حافظ شیرازی",
     isNew: true,
     icon: "book-open",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "poetry",
+    difficulty: "quick",
+    estimatedTime: 2,
+    subcategory: "classical-poetry"
   },
   {
     id: "tarot-reading",
@@ -20,7 +24,11 @@ export const readingsTools: Tool[] = [
     description: "فال‌گیری با کارت‌های تاروت و تفسیر آن‌ها",
     isNew: true,
     icon: "sparkles",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "divination",
+    difficulty: "deep",
+    estimatedTime: 8,
+    subcategory: "card-reading"
   },
   {
     id: "horoscope",
@@ -30,7 +38,11 @@ export const readingsTools: Tool[] = [
     description: "مشاهده طالع و پیش‌بینی بر اساس برج تولد",
     isNew: true,
     icon: "star",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "astrology",
+    difficulty: "quick",
+    estimatedTime: 3,
+    subcategory: "western-astrology"
   },
   {
     id: "daily-horoscope",
@@ -40,7 +52,11 @@ export const readingsTools: Tool[] = [
     description: "طالع و پیش‌بینی تفصیلی روزانه بر اساس برج تولد شما",
     isNew: true,
     icon: "sun",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "astrology",
+    difficulty: "quick",
+    estimatedTime: 2,
+    subcategory: "daily-predictions"
   },
   {
     id: "rumi-istikhara",
@@ -50,7 +66,11 @@ export const readingsTools: Tool[] = [
     description: "دریافت راهنمایی از اشعار مولوی",
     isNew: true,
     icon: "scroll-text",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "poetry",
+    difficulty: "quick",
+    estimatedTime: 3,
+    subcategory: "spiritual-guidance"
   },
   {
     id: "shahname-reading",
@@ -60,7 +80,11 @@ export const readingsTools: Tool[] = [
     description: "دریافت حکمت و اندرز از شاهنامه فردوسی",
     isNew: true,
     icon: "crown",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "poetry",
+    difficulty: "deep",
+    estimatedTime: 5,
+    subcategory: "epic-poetry"
   },
   {
     id: "persian-superstitions",
@@ -70,7 +94,11 @@ export const readingsTools: Tool[] = [
     description: "مجموعه‌ای از خرافات و باورهای سنتی ایرانی با توضیحات کامل",
     isNew: true,
     icon: "book",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "cultural",
+    difficulty: "quick",
+    estimatedTime: 3,
+    subcategory: "folk-beliefs"
   },
   {
     id: "parallel-universe",
@@ -80,7 +108,11 @@ export const readingsTools: Tool[] = [
     description: "کشف داستان‌ها و احتمالات زندگی در جهان‌های موازی",
     isNew: true,
     icon: "globe",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "modern",
+    difficulty: "deep",
+    estimatedTime: 10,
+    subcategory: "speculative"
   },
   {
     id: "dream-interpretation",
@@ -90,7 +122,11 @@ export const readingsTools: Tool[] = [
     description: "تفسیر و تعبیر رویاها بر اساس نمادها و معانی",
     isNew: false,
     icon: "moon",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "dreams",
+    difficulty: "deep",
+    estimatedTime: 6,
+    subcategory: "symbolism"
   },
   {
     id: "name-numerology",
@@ -100,7 +136,11 @@ export const readingsTools: Tool[] = [
     description: "تحلیل شخصیت و سرنوشت از طریق حروف نام",
     isNew: false,
     icon: "hash",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "numerology",
+    difficulty: "quick",
+    estimatedTime: 3,
+    subcategory: "name-analysis"
   },
   {
     id: "coffee-reading",
@@ -110,7 +150,11 @@ export const readingsTools: Tool[] = [
     description: "تفسیر اشکال ته فنجان قهوه برای پیش‌بینی آینده",
     isNew: false,
     icon: "coffee",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "divination",
+    difficulty: "deep",
+    estimatedTime: 8,
+    subcategory: "tasseography"
   },
   {
     id: "numerology",
@@ -120,7 +164,11 @@ export const readingsTools: Tool[] = [
     description: "محاسبه و تفسیر اعداد سرنوشت بر اساس تاریخ تولد",
     isNew: false,
     icon: "calculator",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "numerology",
+    difficulty: "deep",
+    estimatedTime: 7,
+    subcategory: "life-path"
   },
   {
     id: "palm-reading", 
@@ -130,7 +178,11 @@ export const readingsTools: Tool[] = [
     description: "خط‌شناسی و تفسیر خطوط کف دست",
     isNew: false,
     icon: "hand",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "divination",
+    difficulty: "deep",
+    estimatedTime: 10,
+    subcategory: "palmistry"
   },
   {
     id: "aura-reading",
@@ -140,7 +192,11 @@ export const readingsTools: Tool[] = [
     description: "تشخیص و تفسیر رنگ‌های هاله انرژی اطراف شما",
     isNew: false,
     icon: "zap",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "modern",
+    difficulty: "deep",
+    estimatedTime: 6,
+    subcategory: "energy-reading"
   },
   {
     id: "cartomancy",
@@ -150,7 +206,11 @@ export const readingsTools: Tool[] = [
     description: "فال‌گیری با کارت‌های بازی معمولی",
     isNew: false,
     icon: "spade",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "divination",
+    difficulty: "deep",
+    estimatedTime: 7,
+    subcategory: "card-reading"
   },
   {
     id: "coin-oracle",
@@ -160,7 +220,11 @@ export const readingsTools: Tool[] = [
     description: "استفاده از سکه برای پاسخ به سوالات مهم زندگی",
     isNew: false,
     icon: "coins",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "traditional",
+    difficulty: "quick",
+    estimatedTime: 1,
+    subcategory: "binary-oracle"
   },
   {
     id: "color-reading",
@@ -170,7 +234,11 @@ export const readingsTools: Tool[] = [
     description: "تحلیل شخصیت بر اساس رنگ‌های مورد علاقه",
     isNew: false,
     icon: "palette",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "modern",
+    difficulty: "quick",
+    estimatedTime: 2,
+    subcategory: "psychology"
   },
   {
     id: "music-fortune",
@@ -180,7 +248,11 @@ export const readingsTools: Tool[] = [
     description: "فال‌گیری با آهنگ‌های محبوب ایرانی و تعبیر آن‌ها",
     isNew: true,
     icon: "music",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "cultural",
+    difficulty: "quick",
+    estimatedTime: 2,
+    subcategory: "musical-interpretation"
   },
   // NEW HIGH-PRIORITY TOOLS
   {
@@ -191,7 +263,11 @@ export const readingsTools: Tool[] = [
     description: "محاسبه و تفسیر کامل نقشه نجومی تولد شما",
     isNew: true,
     icon: "star-map",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "astrology",
+    difficulty: "deep",
+    estimatedTime: 15,
+    subcategory: "natal-chart"
   },
   {
     id: "crystal-ball",
@@ -201,7 +277,11 @@ export const readingsTools: Tool[] = [
     description: "نگاه به آینده از طریق گوی جادویی کریستالی",
     isNew: true,
     icon: "crystal-ball",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "divination",
+    difficulty: "deep",
+    estimatedTime: 8,
+    subcategory: "scrying"
   },
   {
     id: "life-path-numerology",
@@ -211,7 +291,11 @@ export const readingsTools: Tool[] = [
     description: "کشف مسیر زندگی و سرنوشت از طریق اعداد پیشرفته",
     isNew: true,
     icon: "route",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "numerology",
+    difficulty: "deep",
+    estimatedTime: 12,
+    subcategory: "advanced-numerology"
   },
   {
     id: "saadi-oracle",
@@ -221,7 +305,11 @@ export const readingsTools: Tool[] = [
     description: "دریافت حکمت و راهنمایی از بوستان و گلستان سعدی",
     isNew: true,
     icon: "book-heart",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "poetry",
+    difficulty: "quick",
+    estimatedTime: 3,
+    subcategory: "classical-wisdom"
   },
   {
     id: "rune-casting",
@@ -231,7 +319,11 @@ export const readingsTools: Tool[] = [
     description: "راهنمایی باستانی با استفاده از نمادهای رونیک",
     isNew: true,
     icon: "scroll",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "traditional",
+    difficulty: "deep",
+    estimatedTime: 9,
+    subcategory: "ancient-symbols"
   },
   {
     id: "compatibility-reading",
@@ -241,7 +333,11 @@ export const readingsTools: Tool[] = [
     description: "بررسی سازگاری عاطفی و روحی دو نفر",
     isNew: true,
     icon: "heart",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "modern",
+    difficulty: "deep",
+    estimatedTime: 10,
+    subcategory: "relationship-analysis"
   },
   {
     id: "chakra-reading",
@@ -251,6 +347,10 @@ export const readingsTools: Tool[] = [
     description: "تحلیل و تعادل انرژی چاکراهای بدن",
     isNew: true,
     icon: "circle-dot",
-    isComingSoon: false
+    isComingSoon: false,
+    readingCategory: "modern",
+    difficulty: "deep",
+    estimatedTime: 8,
+    subcategory: "energy-centers"
   }
 ];
