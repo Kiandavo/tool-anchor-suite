@@ -127,16 +127,12 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+            {/* Title */}
             <Link
               to="/"
               className="flex items-center text-white hover:text-primary-foreground/90 transition-all duration-200 group"
             >
-              <img 
-                src={logoSvg} 
-                alt="لنگر - ابزارهای آنلاین" 
-                className="h-10 w-auto group-hover:scale-110 transition-transform duration-200 drop-shadow-lg" 
-              />
+              <span className="text-xl font-bold bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent">لنگر</span>
             </Link>
 
             {/* Desktop Navigation */}
