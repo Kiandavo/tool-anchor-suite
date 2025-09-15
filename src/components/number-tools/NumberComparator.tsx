@@ -159,13 +159,13 @@ export const NumberComparator: React.FC = () => {
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground">بیشترین</p>
                       <p className="text-lg font-semibold text-green-600">
-                        {result.max.toLocaleString()}
+                        {result.max.toLocaleString('fa-IR')}
                       </p>
                     </div>
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground">میانگین</p>
                       <p className="text-lg font-semibold text-blue-600">
-                        {result.average.toFixed(2).toLocaleString('fa-IR')}
+                        {Number(result.average.toFixed(2)).toLocaleString('fa-IR')}
                       </p>
                     </div>
                     <div className="text-center">

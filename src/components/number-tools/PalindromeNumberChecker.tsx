@@ -119,7 +119,7 @@ export const PalindromeNumberChecker: React.FC = () => {
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground">عدد معکوس</p>
                       <Badge variant="outline" className="text-lg px-3 py-1">
-                        {result.reversed.toLocaleString('fa-IR')}
+                        {result.reversed.toLocaleString()}
                       </Badge>
                     </div>
                   </div>
