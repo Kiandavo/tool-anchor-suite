@@ -219,7 +219,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+                className="lg:hidden p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 z-50 relative"
                 aria-label="منوی موبایل"
               >
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -232,35 +232,46 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
-          <div className="fixed top-16 left-0 right-0 bg-primary/98 backdrop-blur-md border-b border-primary/20 shadow-xl max-h-[calc(100vh-4rem)] overflow-y-auto">
-            <div className="container mx-auto px-4 py-6">
-              <div className="space-y-3 mb-6">
-                {mainCategories.map((category) => (
-                  <div key={category.id} className="space-y-2">
-                    <div className="flex items-center gap-3 p-3 text-white font-support bg-white/10 rounded-xl border border-white/20">
-                      <category.icon size={20} />
-                      <span>{category.name}</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 pr-6">
-                      {category.subcategories.map((subcat) => (
-                        <Link
-                          key={subcat}
-                          to={`/category/${subcat}`}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="block p-3 text-white/80 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-support text-center border border-white/10"
-                        >
-                          {categoryLabels[subcat]}
-                        </Link>
-                      ))}
-                    </div>
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
+          <div className="fixed top-0 right-0 w-80 h-full bg-background/95 backdrop-blur-md border-l border-border/50 shadow-2xl overflow-y-auto">
+            {/* Mobile Header */}
+            <div className="flex items-center justify-between p-4 border-b border-border/50">
+              <h3 className="text-lg font-display text-foreground">منوی اصلی</h3>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all duration-200"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            {/* Menu Content */}
+            <div className="p-4 space-y-4">
+              {mainCategories.map((category) => (
+                <div key={category.id} className="space-y-2">
+                  <div className="flex items-center gap-3 p-3 text-foreground font-support bg-muted rounded-xl">
+                    <category.icon size={18} />
+                    <span>{category.name}</span>
                   </div>
-                ))}
-              </div>
+                  <div className="grid grid-cols-1 gap-1 pr-6">
+                    {category.subcategories.map((subcat) => (
+                      <Link
+                        key={subcat}
+                        to={`/category/${subcat}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block p-3 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200 text-sm font-support border border-border/30"
+                      >
+                        {categoryLabels[subcat]}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              
               <Link
                 to="/all-tools"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full p-4 text-center text-white font-support bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-200 border border-white/20"
+                className="block w-full p-4 text-center text-primary font-support bg-primary/10 hover:bg-primary/15 rounded-xl transition-all duration-200 border border-primary/20 mt-6"
               >
                 مشاهده همه ابزارها
               </Link>
