@@ -419,25 +419,8 @@
       </div>
     </div>
     
-    <!-- Defer React loading for better FCP -->
-    <script>
-      // Show content immediately, defer React initialization
-      document.addEventListener('DOMContentLoaded', function() {
-        // Ensure immediate visibility
-        document.body.style.visibility = 'visible';
-        document.body.style.opacity = '1';
-        
-        // Defer React loading after FCP
-        requestAnimationFrame(function() {
-          setTimeout(function() {
-            const script = document.createElement('script');
-            script.type = 'module';
-            script.src = '/src/main.tsx';
-            document.head.appendChild(script);
-          }, 100); // Small delay to ensure FCP is measured
-        });
-      });
-    </script>
+    <!-- Load React app directly -->
+    <script type="module" src="/src/main.tsx"></script>
     <script>
       // Defer service worker registration to improve TTI
       if ('serviceWorker' in navigator) {

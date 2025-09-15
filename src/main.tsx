@@ -70,7 +70,11 @@ const initializeApp = () => {
   }
 };
 
-// Initialize app - called by deferred script in HTML
+// Initialize app when DOM is ready
 if (typeof window !== 'undefined') {
-  initializeApp();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+  } else {
+    initializeApp();
+  }
 }
