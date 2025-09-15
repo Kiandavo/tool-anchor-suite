@@ -24,9 +24,19 @@ export const HeroSection = () => {
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl sm:text-7xl font-bold mb-8 sm:mb-12 leading-tight tracking-tight text-foreground">
-            لنگر - مجموعه ابزارهای آنلاین
-          </h1>
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <img 
+              src="/src/assets/logo.svg" 
+              alt="لنگر" 
+              className="h-16 sm:h-20 w-auto drop-shadow-2xl" 
+            />
+            <h1 className="text-4xl sm:text-6xl font-bold leading-tight tracking-tight text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              لنگر
+            </h1>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-semibold mb-8 sm:mb-12 leading-tight text-muted-foreground">
+            مجموعه ابزارهای آنلاین
+          </h2>
           
           <p className="text-xl sm:text-2xl max-w-3xl mx-auto leading-relaxed text-muted-foreground font-light mb-8 sm:mb-10 animate-fade-in">
             +۸۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.

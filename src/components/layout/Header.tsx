@@ -130,14 +130,13 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             {/* Logo */}
             <Link
               to="/"
-              className="flex items-center gap-3 text-white hover:text-primary-foreground/90 transition-all duration-200 group"
+              className="flex items-center text-white hover:text-primary-foreground/90 transition-all duration-200 group"
             >
               <img 
                 src={logoSvg} 
-                alt="لنگر" 
-                className="h-8 w-auto group-hover:scale-110 transition-transform duration-200" 
+                alt="لنگر - ابزارهای آنلاین" 
+                className="h-10 w-auto group-hover:scale-110 transition-transform duration-200 drop-shadow-lg" 
               />
-              <span className="text-xl font-bold bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent">لنگر</span>
             </Link>
 
             {/* Desktop Navigation */}
