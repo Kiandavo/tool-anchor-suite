@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Menu, X } from 'lucide-react';
+import laangarLogo from '@/assets/laangar-logo.png';
 
 interface HeaderProps {
   title?: string;
@@ -48,12 +49,13 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="flex-1 flex justify-center lg:flex-none lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
               <Link
                 to="/"
-                className="flex items-center text-white hover:text-primary-foreground/90 transition-all duration-200 group"
+                className="flex items-center hover:opacity-90 transition-all duration-200 group"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center ml-3 shadow-lg backdrop-blur-sm border border-white/20 group-hover:scale-105 transition-transform">
-                  <span className="text-lg font-bold text-white">ل</span>
-                </div>
-                <span className="text-heading-md font-display bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent">لنگر</span>
+                <img 
+                  src={laangarLogo} 
+                  alt="لنگر" 
+                  className="h-10 w-auto group-hover:scale-105 transition-transform duration-200"
+                />
               </Link>
             </div>
 
