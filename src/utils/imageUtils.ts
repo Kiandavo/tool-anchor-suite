@@ -1,4 +1,31 @@
-export const compressImage = (file: File, quality: number = 0.7): Promise<Blob> => {
+// Helper function to convert HEIC files to JPEG if needed
+const processHEICFile = async (file: File): Promise<File> => {
+  const isHEIC = file.type === 'image/heic' || file.type === 'image/HEIC' || 
+                 file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.HEIC');
+  
+  if (isHEIC) {
+    try {
+      // Import heic2any dynamically
+      const heic2any = (await import('heic2any')).default;
+      // Convert HEIC to JPEG first
+      const convertedBlob = await heic2any({
+        blob: file,
+        toType: 'image/jpeg',
+        quality: 0.95
+      }) as Blob;
+      return new File([convertedBlob], file.name.replace(/\.heic$/i, '.jpg'), {
+        type: 'image/jpeg'
+      });
+    } catch (error) {
+      throw new Error('Failed to convert HEIC file. Please use a supported image format.');
+    }
+  }
+  
+  return file;
+};
+
+export const compressImage = async (file: File, quality: number = 0.7): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -20,11 +47,12 @@ export const compressImage = (file: File, quality: number = 0.7): Promise<Blob> 
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const resizeImage = (file: File, maxWidth: number, maxHeight: number): Promise<Blob> => {
+export const resizeImage = async (file: File, maxWidth: number, maxHeight: number): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -50,7 +78,7 @@ export const resizeImage = (file: File, maxWidth: number, maxHeight: number): Pr
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
@@ -147,7 +175,8 @@ export const convertToFormat = async (file: File, format: string): Promise<Blob>
   });
 };
 
-export const rotateImage = (file: File, degrees: number): Promise<Blob> => {
+export const rotateImage = async (file: File, degrees: number): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -175,11 +204,12 @@ export const rotateImage = (file: File, degrees: number): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const flipImage = (file: File, direction: 'horizontal' | 'vertical'): Promise<Blob> => {
+export const flipImage = async (file: File, direction: 'horizontal' | 'vertical'): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -201,11 +231,12 @@ export const flipImage = (file: File, direction: 'horizontal' | 'vertical'): Pro
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const applyGrayscale = (file: File): Promise<Blob> => {
+export const applyGrayscale = async (file: File): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -232,11 +263,12 @@ export const applyGrayscale = (file: File): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const applyBlur = (file: File, blurAmount: number): Promise<Blob> => {
+export const applyBlur = async (file: File, blurAmount: number): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -260,11 +292,12 @@ export const applyBlur = (file: File, blurAmount: number): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const invertImage = (file: File): Promise<Blob> => {
+export const invertImage = async (file: File): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -286,11 +319,12 @@ export const invertImage = (file: File): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const adjustContrast = (file: File, contrast: number): Promise<Blob> => {
+export const adjustContrast = async (file: File, contrast: number): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -311,11 +345,12 @@ export const adjustContrast = (file: File, contrast: number): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const adjustBrightness = (file: File, brightness: number): Promise<Blob> => {
+export const adjustBrightness = async (file: File, brightness: number): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -336,11 +371,12 @@ export const adjustBrightness = (file: File, brightness: number): Promise<Blob> 
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const adjustSaturation = (file: File, saturation: number): Promise<Blob> => {
+export const adjustSaturation = async (file: File, saturation: number): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -361,11 +397,12 @@ export const adjustSaturation = (file: File, saturation: number): Promise<Blob> 
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const adjustHueRotate = (file: File, degrees: number): Promise<Blob> => {
+export const adjustHueRotate = async (file: File, degrees: number): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -386,11 +423,12 @@ export const adjustHueRotate = (file: File, degrees: number): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
-export const applySepia = (file: File): Promise<Blob> => {
+export const applySepia = async (file: File): Promise<Blob> => {
+  const processedFile = await processHEICFile(file);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -415,6 +453,6 @@ export const applySepia = (file: File): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
