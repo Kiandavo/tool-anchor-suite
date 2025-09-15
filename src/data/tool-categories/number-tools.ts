@@ -72,7 +72,7 @@ export const numberTools: Tool[] = [
     description: "بررسی عدد در دنباله فیبوناچی",
     isNew: false,
     icon: "hash",
-    isComingSoon: true
+    isComingSoon: false
   },
   {
     id: "81",

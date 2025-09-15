@@ -11,6 +11,7 @@ import { RomanNumeralConverter } from '@/components/number-tools/RomanNumeralCon
 import { PerfectNumberChecker } from '@/components/number-tools/PerfectNumberChecker';
 import { GcdCalculator } from '@/components/number-tools/GcdCalculator';
 import { FibonacciGenerator } from '@/components/number-tools/FibonacciGenerator';
+import { FibonacciChecker } from '@/components/number-tools/FibonacciChecker';
 import { FactorialCalculator } from '@/components/number-tools/FactorialCalculator';
 
 interface NumberToolProps {
@@ -47,6 +48,8 @@ export default function NumberTool({ slug }: NumberToolProps) {
         return <GcdCalculator />;
       case 'fibonacci-generator':
         return <FibonacciGenerator />;
+      case 'fibonacci-finder':
+        return <FibonacciChecker />;
       case 'factorial-calculator':
         return <FactorialCalculator />;
       default:
