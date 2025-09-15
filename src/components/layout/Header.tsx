@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Settings, Home, Menu, X, Calculator, Type, Sparkles, Wrench, ChevronDown } from 'lucide-react';
-import logoSvg from '@/assets/logo.svg';
+import { ArrowRight, Settings, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   title?: string;
@@ -14,91 +13,6 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
-
-  const mainCategories = [
-    { 
-      id: 'calculators', 
-      name: 'محاسبات', 
-      icon: Calculator,
-      subcategories: ['calculator', 'utility']
-    },
-    { 
-      id: 'text-image', 
-      name: 'متن و تصویر', 
-      icon: Type,
-      subcategories: ['text', 'image', 'design']
-    },
-    { 
-      id: 'persian-culture', 
-      name: 'فرهنگ پارسی', 
-      icon: Sparkles,
-      subcategories: ['persian-cultural', 'readings']
-    },
-    { 
-      id: 'tools', 
-      name: 'سایر ابزارها', 
-      icon: Wrench,
-      subcategories: ['productivity', 'educational', 'random']
-    }
-  ];
-
-  const handleMouseEnter = (categoryId: string) => {
-    if (dropdownTimer) {
-      clearTimeout(dropdownTimer);
-      setDropdownTimer(null);
-    }
-    setOpenDropdown(categoryId);
-  };
-
-  const handleMouseLeave = () => {
-    const timer = setTimeout(() => {
-      setOpenDropdown(null);
-    }, 800); // Increased delay to 800ms
-    setDropdownTimer(timer);
-  };
-
-  const handleDropdownClick = (categoryId: string) => {
-    if (dropdownTimer) {
-      clearTimeout(dropdownTimer);  
-      setDropdownTimer(null);
-    }
-    setOpenDropdown(openDropdown === categoryId ? null : categoryId);
-  };
-
-  const handleMenuItemClick = () => {
-    if (dropdownTimer) {
-      clearTimeout(dropdownTimer);
-      setDropdownTimer(null);
-    }
-    setOpenDropdown(null);
-  };
-
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    const handleClickOutside = () => {
-      if (openDropdown) {
-        setOpenDropdown(null);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [openDropdown]);
-
-  const categoryLabels: Record<string, string> = {
-    calculator: 'ماشین‌حساب',
-    text: 'متن',
-    image: 'تصویر',
-    design: 'طراحی',
-    utility: 'ابزار کاربردی',
-    'persian-cultural': 'فرهنگ پارسی',
-    readings: 'فال و خواندنی',
-    productivity: 'بهره‌وری',
-    educational: 'آموزشی',
-    random: 'تصادفی'
-  };
 
   const handleBack = () => {
     if (backUrl) {
@@ -127,54 +41,8 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex items-center justify-between h-16">
-            {/* Left Side - Navigation Menu */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {mainCategories.map((category) => (
-                <div key={category.id} className="relative group">
-                  <button
-                    onMouseEnter={() => handleMouseEnter(category.id)}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDropdownClick(category.id);
-                    }}
-                    className="flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium group"
-                  >
-                    <category.icon size={16} className="group-hover:scale-110 transition-transform" />
-                    <span className="font-support">{category.name}</span>
-                    <ChevronDown size={12} className={`transition-transform duration-200 ${openDropdown === category.id ? 'rotate-180' : ''}`} />
-                  </button>
-                  
-                  {openDropdown === category.id && (
-                    <div 
-                      className="absolute top-full left-0 pt-2 z-50"
-                      onMouseEnter={() => handleMouseEnter(category.id)}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <div className="bg-background shadow-xl border border-border rounded-xl min-w-52 overflow-hidden backdrop-blur-md">
-                        {category.subcategories.map((subcat, index) => (
-                          <Link
-                            key={subcat}
-                            to={`/category/${subcat}`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleMenuItemClick();
-                            }}
-                            className={`block px-4 py-3 text-foreground hover:bg-primary/5 hover:text-primary transition-all duration-200 text-sm font-support border-b border-border/50 last:border-b-0 ${
-                              index === 0 ? 'rounded-t-xl' : ''
-                            } ${
-                              index === category.subcategories.length - 1 ? 'rounded-b-xl' : ''
-                            }`}
-                          >
-                            {categoryLabels[subcat]}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
+            {/* Left Side - Empty Space */}
+            <div className="hidden lg:block"></div>
 
             {/* Center - Logo */}
             <div className="flex-1 flex justify-center lg:flex-none lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
@@ -247,31 +115,10 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             
             {/* Menu Content */}
             <div className="p-4 space-y-4">
-              {mainCategories.map((category) => (
-                <div key={category.id} className="space-y-2">
-                  <div className="flex items-center gap-3 p-3 text-foreground font-support bg-muted rounded-xl">
-                    <category.icon size={18} />
-                    <span>{category.name}</span>
-                  </div>
-                  <div className="grid grid-cols-1 gap-1 pr-6">
-                    {category.subcategories.map((subcat) => (
-                      <Link
-                        key={subcat}
-                        to={`/category/${subcat}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block p-3 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200 text-sm font-support border border-border/30"
-                      >
-                        {categoryLabels[subcat]}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-              
               <Link
                 to="/all-tools"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full p-4 text-center text-primary font-support bg-primary/10 hover:bg-primary/15 rounded-xl transition-all duration-200 border border-primary/20 mt-6"
+                className="block w-full p-4 text-center text-primary font-support bg-primary/10 hover:bg-primary/15 rounded-xl transition-all duration-200 border border-primary/20"
               >
                 مشاهده همه ابزارها
               </Link>
