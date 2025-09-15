@@ -39,21 +39,16 @@ const LanguageLearning = () => {
   ];
 
   const quizQuestions = [
-    {
-      question: "معنی کلمه 'دوست' چیست؟",
-      options: ["Enemy", "Friend", "Family", "Teacher"],
-      correct: 1
-    },
-    {
-      question: "ترجمه 'Good morning' به فارسی:",
-      options: ["شب بخیر", "صبح بخیر", "ظهر بخیر", "عصر بخیر"],
-      correct: 1
-    },
-    {
-      question: "فعل 'رفتن' در زمان حال برای 'من':",
-      options: ["رفتم", "می‌روم", "خواهم رفت", "برو"],
-      correct: 1
-    }
+    { question: "معنی کلمه 'دوست' چیست؟", options: ["Enemy", "Friend", "Family", "Teacher"], correct: 1 },
+    { question: "ترجمه 'Good morning' به فارسی:", options: ["شب بخیر", "صبح بخیر", "ظهر بخیر", "عصر بخیر"], correct: 1 },
+    { question: "فعل 'رفتن' در زمان حال برای 'من':", options: ["رفتم", "می‌روم", "خواهم رفت", "برو"], correct: 1 },
+    { question: "کلمه 'کتاب' به انگلیسی چیست؟", options: ["Book", "Paper", "Pen", "Read"], correct: 0 },
+    { question: "ترجمه 'خانه' به انگلیসی:", options: ["House", "Car", "School", "Park"], correct: 0 },
+    { question: "معنی 'آب' چیست؟", options: ["Fire", "Water", "Air", "Earth"], correct: 1 },
+    { question: "فعل 'خوردن' در گذشته برای 'او':", options: ["خورد", "می‌خورد", "خواهد خورد", "بخور"], correct: 0 },
+    { question: "کلمه 'مادر' به انگلیسی:", options: ["Father", "Mother", "Sister", "Brother"], correct: 1 },
+    { question: "ترجمه 'سلام' به انگلیسی:", options: ["Goodbye", "Hello", "Thanks", "Sorry"], correct: 1 },
+    { question: "معنی 'قرمز' چیست؟", options: ["Blue", "Green", "Red", "Yellow"], correct: 2 }
   ];
 
   const handleQuizAnswer = (answerIndex: number) => {

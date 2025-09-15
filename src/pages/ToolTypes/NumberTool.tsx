@@ -13,6 +13,16 @@ import { GcdCalculator } from '@/components/number-tools/GcdCalculator';
 import { FibonacciGenerator } from '@/components/number-tools/FibonacciGenerator';
 import { FibonacciFinder } from '@/components/number-tools/FibonacciFinder';
 import { FactorialCalculator } from '@/components/number-tools/FactorialCalculator';
+import { NumberShuffler } from '@/components/number-tools/NumberShuffler';
+import { NumberComparator } from '@/components/number-tools/NumberComparator';
+import { DuplicateNumberFinder } from '@/components/number-tools/DuplicateNumberFinder';
+import { RandomNumberPicker } from '@/components/number-tools/RandomNumberPicker';
+import { EvenOddList } from '@/components/number-tools/EvenOddList';
+import { PalindromeNumberChecker } from '@/components/number-tools/PalindromeNumberChecker';
+import { ArmstrongNumberChecker } from '@/components/number-tools/ArmstrongNumberChecker';
+import { LcmCalculator } from '@/components/number-tools/LcmCalculator';
+import { FactorsFinder } from '@/components/number-tools/FactorsFinder';
+import { BinaryOperations } from '@/components/number-tools/BinaryOperations';
 
 interface NumberToolProps {
   slug: string;
@@ -52,6 +62,27 @@ export default function NumberTool({ slug }: NumberToolProps) {
         return <FibonacciFinder />;
       case 'factorial-calculator':
         return <FactorialCalculator />;
+      case 'number-shuffler':
+        return <NumberShuffler />;
+      case 'number-comparator':
+        return <NumberComparator />;
+      case 'duplicate-number-finder':
+        return <DuplicateNumberFinder />;
+      case 'random-number-picker':
+        return <RandomNumberPicker />;
+      case 'even-number-list':
+      case 'odd-number-list':
+        return <EvenOddList />;
+      case 'palindrome-number-checker':
+        return <PalindromeNumberChecker />;
+      case 'armstrong-number-checker':
+        return <ArmstrongNumberChecker />;
+      case 'lcm-calculator':
+        return <LcmCalculator />;
+      case 'factors-finder':
+        return <FactorsFinder />;
+      case 'binary-operations':
+        return <BinaryOperations />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
