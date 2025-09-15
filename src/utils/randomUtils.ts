@@ -15,12 +15,54 @@ export const rollDice = (): number => {
 };
 
 export const generateRandomWord = (): string => {
-  const words = [
-    'خورشید', 'ماه', 'ستاره', 'آسمان', 'دریا', 'کوه', 'جنگل', 'گل', 
-    'پرنده', 'کتاب', 'قلم', 'موسیقی', 'رنگ', 'باران', 'برف', 'باد', 
-    'رویا', 'امید', 'عشق', 'زندگی', 'لبخند', 'دوست', 'خانواده', 'سفر'
+  const persianWords = [
+    // طبیعت
+    'خورشید', 'ماه', 'ستاره', 'آسمان', 'دریا', 'کوه', 'جنگل', 'گل', 'پرنده', 'درخت',
+    'باران', 'برف', 'باد', 'ابر', 'رودخانه', 'چشمه', 'صحرا', 'دشت', 'آبشار', 'غروب',
+    
+    // احساسات
+    'عشق', 'امید', 'خوشی', 'آرامش', 'شادی', 'لبخند', 'سکوت', 'آرزو', 'رویا', 'خاطره',
+    'دلتنگی', 'شوق', 'انتظار', 'غم', 'شجاعت', 'مهربانی', 'صبر', 'ایمان', 'اعتماد', 'یقین',
+    
+    // اشیاء و مفاهیم
+    'کتاب', 'قلم', 'موسیقی', 'شعر', 'هنر', 'زندگی', 'راه', 'سفر', 'خانه', 'مدرسه',
+    'دانش', 'یادگیری', 'تجربه', 'حکمت', 'صداقت', 'وفاداری', 'دوستی', 'خانواده', 'مادر', 'پدر',
+    
+    // رنگ‌ها
+    'سرخ', 'آبی', 'سبز', 'زرد', 'بنفش', 'نارنجی', 'سفید', 'سیاه', 'طلایی', 'نقره‌ای',
+    
+    // حیوانات
+    'شیر', 'پلنگ', 'آهو', 'اسب', 'گربه', 'سگ', 'عقاب', 'کبوتر', 'ماهی', 'پروانه',
+    
+    // زمان
+    'صبح', 'ظهر', 'عصر', 'شب', 'بهار', 'تابستان', 'پاییز', 'زمستان', 'امروز', 'فردا',
+    
+    // مکان‌ها
+    'ایران', 'تهران', 'اصفهان', 'شیراز', 'تبریز', 'کاشان', 'یزد', 'کرمان', 'رشت', 'مشهد',
+    
+    // ادبیات و فرهنگ
+    'حافظ', 'سعدی', 'فردوسی', 'مولانا', 'خیام', 'شاهنامه', 'دیوان', 'غزل', 'مثنوی', 'رباعی',
+    
+    // کلمات زیبا
+    'نور', 'کوثر', 'فرشته', 'بهشت', 'جنت', 'نعمت', 'برکت', 'سعادت', 'فلاح', 'رستگاری'
   ];
-  return words[Math.floor(Math.random() * words.length)];
+  
+  const englishWords = [
+    // Nature
+    'mountain', 'ocean', 'forest', 'sunrise', 'moonlight', 'star', 'rainbow', 'garden', 'flower', 'butterfly',
+    'river', 'waterfall', 'desert', 'meadow', 'breeze', 'thunder', 'lightning', 'crystal', 'diamond', 'pearl',
+    
+    // Emotions & Abstract
+    'love', 'hope', 'peace', 'joy', 'dream', 'wonder', 'magic', 'mystery', 'harmony', 'serenity',
+    'wisdom', 'courage', 'freedom', 'triumph', 'success', 'victory', 'glory', 'honor', 'truth', 'beauty',
+    
+    // Technology & Modern
+    'digital', 'virtual', 'cyber', 'quantum', 'infinite', 'matrix', 'neural', 'cosmic', 'stellar', 'galactic',
+    'phoenix', 'dragon', 'griffin', 'unicorn', 'legend', 'myth', 'epic', 'saga', 'quest', 'adventure'
+  ];
+  
+  const allWords = [...persianWords, ...englishWords];
+  return allWords[Math.floor(Math.random() * allWords.length)];
 };
 
 export const copyToClipboard = (text: string) => {
@@ -28,14 +70,28 @@ export const copyToClipboard = (text: string) => {
   toast.success("در حافظه کپی شد");
 };
 
-export const generateRandomUsername = (type: string = 'general'): string => {
+export const generateRandomUsername = (type: string = 'general', customPrefix?: string, useNumbers: boolean = true): string => {
   const prefixes = {
-    general: ['کاربر', 'مهمان', 'دوست', 'همراه', 'بازدیدکننده'],
-    gaming: ['گیمر', 'پلیر', 'قهرمان', 'جنگجو', 'نینجا'],
-    professional: ['مهندس', 'دکتر', 'استاد', 'متخصص', 'مشاور']
+    general: customPrefix ? [customPrefix] : ['کاربر', 'مهمان', 'دوست', 'همراه', 'بازدیدکننده', 'کاوشگر', 'ماجراجو', 'خلاق'],
+    gaming: customPrefix ? [customPrefix] : ['گیمر', 'پلیر', 'قهرمان', 'جنگجو', 'نینجا', 'شکارچی', 'محافظ', 'جادوگر', 'سلحشور'],
+    professional: customPrefix ? [customPrefix] : ['مهندس', 'دکتر', 'استاد', 'متخصص', 'مشاور', 'طراح', 'توسعه‌دهنده', 'تحلیلگر'],
+    creative: customPrefix ? [customPrefix] : ['هنرمند', 'نویسنده', 'شاعر', 'طراح', 'خلاق', 'آهنگساز', 'نقاش', 'عکاس'],
+    social: customPrefix ? [customPrefix] : ['دوست', 'همکار', 'همراه', 'یار', 'رفیق', 'مهربان', 'صمیمی', 'وفادار']
   };
   
-  const suffixes = ['خوب', 'عالی', 'برتر', 'باهوش', 'فعال'];
+  const suffixes = ['خوب', 'عالی', 'برتر', 'باهوش', 'فعال', 'موفق', 'خلاق', 'مهربان', 'دوستانه', 'جذاب'];
+  const numbers = useNumbers ? Math.floor(Math.random() * 9999) : '';
+  
+  const categoryPrefixes = prefixes[type as keyof typeof prefixes] || prefixes.general;
+  const randomPrefix = categoryPrefixes[Math.floor(Math.random() * categoryPrefixes.length)];
+  const randomSuffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+  
+  if (useNumbers && Math.random() > 0.5) {
+    return `${randomPrefix}${numbers}`;
+  } else {
+    return `${randomPrefix}_${randomSuffix}`;
+  }
+};
   const numbers = Math.floor(Math.random() * 1000);
   
   const prefix = prefixes[type as keyof typeof prefixes][Math.floor(Math.random() * prefixes[type as keyof typeof prefixes].length)];

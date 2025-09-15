@@ -5,21 +5,11 @@ export const randomTools: Tool[] = [
   {
     id: "password-generator",
     slug: "password-generator", 
-    name: "تولید رمز عبور",
+    name: "تولید رمز عبور امن",
     category: "random",
-    description: "ایجاد رمزهای عبور قوی و امن",
+    description: "ایجاد رمزهای عبور قوی و امن با تنظیمات کامل",
     isNew: false,
     icon: "key"
-  },
-  {
-    id: "6",
-    slug: "random-password",
-    name: "رمز عبور تصادفی",
-    category: "random",
-    description: "ایجاد رمزهای عبور قوی و تصادفی",
-    isNew: true,
-    icon: "key",
-    isComingSoon: false
   },
   {
     id: "qr-code-generator",
@@ -90,7 +80,7 @@ export const randomTools: Tool[] = [
     slug: "random-word-generator",
     name: "تولید واژه تصادفی",
     category: "random",
-    description: "تولید یک کلمه یا اسم تصادفی",
+    description: "تولید کلمات فارسی و انگلیسی تصادفی",
     isNew: false,
     icon: "random"
   },
@@ -106,9 +96,9 @@ export const randomTools: Tool[] = [
   {
     id: "101",
     slug: "random-username-generator",
-    name: "تولید نام کاربری تصادفی",
+    name: "تولید نام کاربری هوشمند",
     category: "random",
-    description: "نام کاربری تصادفی خلق کنید",
+    description: "نام کاربری تصادفی بر اساس ترجیحات شما",
     isNew: false,
     icon: "key"
   },

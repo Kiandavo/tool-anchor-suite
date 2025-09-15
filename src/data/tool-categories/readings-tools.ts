@@ -115,20 +115,6 @@ export const readingsTools: Tool[] = [
     subcategory: "speculative"
   },
   {
-    id: "dream-interpretation",
-    slug: "dream-interpretation",
-    name: "تعبیر خواب",
-    category: "readings",
-    description: "تفسیر و تعبیر رویاها بر اساس نمادها و معانی",
-    isNew: false,
-    icon: "moon",
-    isComingSoon: false,
-    readingCategory: "dreams",
-    difficulty: "deep",
-    estimatedTime: 6,
-    subcategory: "symbolism"
-  },
-  {
     id: "name-numerology",
     slug: "name-numerology", 
     name: "اعداد شناسی نام",

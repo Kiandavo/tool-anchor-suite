@@ -71,7 +71,8 @@ export const numberTools: Tool[] = [
     category: "number",
     description: "بررسی عدد در دنباله فیبوناچی",
     isNew: false,
-    icon: "hash"
+    icon: "hash",
+    isComingSoon: true
   },
   {
     id: "81",
@@ -88,15 +89,6 @@ export const numberTools: Tool[] = [
     name: "لیست اعداد فرد",
     category: "number",
     description: "تولید لیست اعداد فرد در بازه دلخواه",
-    isNew: false,
-    icon: "hash"
-  },
-  {
-    id: "83",
-    slug: "decimal-to-roman",
-    name: "مبدل عدد ده‌دهی به رومی",
-    category: "number",
-    description: "تبدیل اعداد ده‌دهی به رومی",
     isNew: false,
     icon: "hash"
   },
