@@ -311,8 +311,7 @@ export default function AgeCalculator() {
                   value={manualInput.year}
                   onChange={(e) => handleInputChange(e, 'year')}
                   placeholder="مثال: 1370"
-                  type="tel"
-                  inputMode="numeric"
+                  type="number"
                   dir="ltr"
                   maxLength={4}
                   className="glass-effect transition-all duration-300 focus:scale-105"
@@ -328,8 +327,7 @@ export default function AgeCalculator() {
                   value={manualInput.month}
                   onChange={(e) => handleInputChange(e, 'month')}
                   placeholder="مثال: 6"
-                  type="tel"
-                  inputMode="numeric"
+                  type="number"
                   dir="ltr"
                   maxLength={2}
                   className="glass-effect transition-all duration-300 focus:scale-105"
@@ -345,8 +343,7 @@ export default function AgeCalculator() {
                   value={manualInput.day}
                   onChange={(e) => handleInputChange(e, 'day')}
                   placeholder="مثال: 15"
-                  type="tel"
-                  inputMode="numeric"
+                  type="number"
                   dir="ltr"
                   maxLength={2}
                   className="glass-effect transition-all duration-300 focus:scale-105"
@@ -411,7 +408,7 @@ export default function AgeCalculator() {
                         <h3 className="font-medium text-sm">پیشرفت زندگی</h3>
                       </div>
                       <Progress value={result.lifeProgress} className="h-3 mb-2" />
-                      <p className="text-xs text-muted-foreground">{result.lifeProgress.toFixed(1)}% از ۸۰ سال</p>
+                      <p className="text-xs text-muted-foreground">{Math.floor(result.lifeProgress)}% از ۸۰ سال</p>
                     </div>
                     
                     <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">

@@ -20,10 +20,10 @@ export default function PercentageCalculator() {
       return;
     }
 
-    // Helper function to format numbers precisely
+    // Helper function to format numbers precisely without approximation
     const formatPreciseNumber = (num: number): string => {
-      // Remove trailing zeros and format with Persian numerals
-      const formatted = parseFloat(num.toPrecision(15)).toString();
+      // Keep exact precision and format with Persian numerals
+      const formatted = num.toString();
       return formatted.replace(/\./g, '.').replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d)]);
     };
 
