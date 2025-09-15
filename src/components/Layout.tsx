@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Helmet } from 'react-helmet-async';
 import { AdSenseScript } from '@/components/ads/AdSenseScript';
 import { ADS_CONFIG } from '@/config/ads';
+import { InstallPrompt } from '@/components/pwa/InstallPrompt';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -71,6 +72,9 @@ export const Layout = ({ children }: LayoutProps) => {
       </main>
 
       <Footer />
+      
+      {/* PWA Install Prompt */}
+      <InstallPrompt />
     </div>
   );
 };
