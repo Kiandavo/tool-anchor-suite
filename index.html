@@ -98,95 +98,91 @@
     <link rel="prefetch" href="/src/components/ui/button.tsx" as="script">
     <link rel="prefetch" href="/src/components/ui/card.tsx" as="script">
     
-    <!-- Enhanced Modern Persian Fonts - Optimized Loading -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <!-- Modern Font Loading - Performance Optimized -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
     
-    <!-- Critical Persian fonts preload for immediate rendering -->
+    <!-- Critical modern fonts preload for immediate rendering -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/manrope/v15/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk59FO_F87jxeN7B.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
     <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/woff2/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/woff2/Estedad-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/woff2/Sahel-FD.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    
+    <!-- Modern Google Fonts with variable weights -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Persian fonts from CDN -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- Critical inline font styles for immediate text rendering -->
     <style>
-      /* Vazirmatn - Primary UI Font */
+      /* Manrope - Modern Display/Heading Font */
+      @font-face {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 200 800;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/manrope/v15/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk59FO_F87jxeN7B.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      /* Inter Variable - Modern Body Font */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      /* JetBrains Mono - Modern Monospace */
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-style: normal;
+        font-weight: 100 800;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY_J-oE_sw4OQEeuHKreHPnO6t59dZgWiH_1jQ4dw.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      /* Vazirmatn - Persian Body Font */
       @font-face {
         font-family: 'Vazirmatn';
         font-style: normal;
-        font-weight: 400;
+        font-weight: 100 900;
         font-display: swap;
         src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/woff2/Vazirmatn-Regular.woff2') format('woff2');
         unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
       }
-      @font-face {
-        font-family: 'Vazirmatn';
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/woff2/Vazirmatn-Bold.woff2') format('woff2');
-        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
-      }
 
-      /* Estedad - Headers and Emphasis */
+      /* Shabnam - Persian Accent Font */
       @font-face {
-        font-family: 'Estedad';
+        font-family: 'Shabnam';
         font-style: normal;
-        font-weight: 400;
+        font-weight: 100 900;
         font-display: swap;
-        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/woff2/Estedad-Regular.woff2') format('woff2');
+        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/woff2/Shabnam-FD.woff2') format('woff2');
         unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
-      }
-      @font-face {
-        font-family: 'Estedad';
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/woff2/Estedad-Bold.woff2') format('woff2');
-        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
-      }
-
-      /* Sahel - Supporting Text */
-      @font-face {
-        font-family: 'Sahel';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/woff2/Sahel-FD.woff2') format('woff2');
-        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
-      }
-      
-      /* Inter - Latin fallback */
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
       }
     </style>
     
-    <!-- Async load complete font families -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/webfont/estedad-webfont.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    
     <!-- Fallback for browsers that don't support preload -->
     <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/font-face.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/webfont/estedad-webfont.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css">
     </noscript>
     
     <!-- Critical inline styles for immediate rendering -->
     <style>
       html {
         direction: rtl;
-        font-family: 'Vazirmatn', 'Estedad', 'Sahel', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
       }
       body {
-        font-family: 'Vazirmatn', 'Estedad', 'Sahel', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
         background-color: #fafaff;
         margin: 0;
         padding: 0;
@@ -208,7 +204,7 @@
         justify-content: center;
         position: relative;
         background: linear-gradient(to bottom, rgba(248, 250, 252, 0.3), transparent, rgba(248, 250, 252, 0.2));
-        font-family: 'Vazirmatn', 'Estedad', 'Sahel', 'Inter', system-ui, -apple-system, sans-serif;
+        font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, sans-serif;
       }
       .hero-title {
         font-size: 4rem;
@@ -220,7 +216,7 @@
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-family: 'Estedad', 'Vazirmatn', sans-serif;
+        font-family: 'Manrope', 'Vazirmatn', sans-serif;
         letter-spacing: -0.02em;
         -webkit-font-smoothing: antialiased;
       }
@@ -231,7 +227,7 @@
         margin: 0 auto 3rem;
         font-weight: 400;
         line-height: 1.6;
-        font-family: 'Vazirmatn', 'Sahel', sans-serif;
+        font-family: 'Inter', 'Vazirmatn', sans-serif;
         text-wrap: balance;
       }
       .hero-loading {
@@ -246,7 +242,7 @@
         margin-top: 1rem;
         border: 1px solid rgba(59, 130, 246, 0.2);
         backdrop-filter: blur(8px);
-        font-family: 'Vazirmatn', 'Sahel', sans-serif;
+        font-family: 'Inter', 'Vazirmatn', sans-serif;
       }
       
       /* Critical layout elements */
@@ -268,7 +264,7 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: #171717;
-        font-family: 'Estedad', 'Vazirmatn', sans-serif;
+        font-family: 'Manrope', 'Vazirmatn', sans-serif;
         -webkit-font-smoothing: antialiased;
       }
       
@@ -288,7 +284,7 @@
         font-weight: 600;
         font-size: 0.9rem;
         transition: all 0.2s ease;
-        font-family: 'Vazirmatn', 'Sahel', sans-serif;
+        font-family: 'Inter', 'Vazirmatn', sans-serif;
         border: 2px solid transparent;
       }
       .quick-btn:hover {
@@ -342,13 +338,13 @@
         font-weight: 600;
         color: #374151;
         margin-bottom: 1rem;
-        font-family: 'Vazirmatn', 'Sahel', sans-serif;
+        font-family: 'Inter', 'Vazirmatn', sans-serif;
       }
       .critical-card p {
         color: #64748b;
         font-size: 0.95rem;
         line-height: 1.5;
-        font-family: 'Vazirmatn', 'Sahel', sans-serif;
+        font-family: 'Inter', 'Vazirmatn', sans-serif;
       }
       
       /* Critical LCP tool card styles for immediate rendering */
@@ -372,7 +368,7 @@
         font-size: 1rem;
         font-weight: 700;
         color: rgba(254, 243, 199, 1);
-        font-family: 'Estedad', 'Vazirmatn', sans-serif;
+        font-family: 'Manrope', 'Vazirmatn', sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -383,7 +379,7 @@
         font-size: 0.75rem;
         margin-top: 0.25rem;
         font-weight: 500;
-        font-family: 'Estedad', 'Vazirmatn', sans-serif;
+        font-family: 'Manrope', 'Vazirmatn', sans-serif;
       }
       .lcp-content-area {
         padding: 1rem;

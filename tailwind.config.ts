@@ -19,22 +19,29 @@ export default {
 			}
 		},
 		fontFamily: {
-			// Modern Persian Font Hierarchy
-			'primary': ['Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
-			'heading': ['Estedad', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
-			'body': ['Vazirmatn', 'Sahel', 'Inter', 'system-ui', 'sans-serif'],
-			'support': ['Sahel', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
-			'display': ['Estedad', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			// Modern typography hierarchy with updated fonts
+			'primary': ['Inter', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			'heading': ['Manrope', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'body': ['Inter', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			'support': ['Shabnam', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'display': ['Manrope', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'mono': ['JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
+			'accent': ['Shabnam', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
 			
-			// Legacy support (maintained for compatibility)
+			// Individual modern fonts
+			'manrope': ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
+			'inter': ['Inter', 'system-ui', 'sans-serif'],
+			'jetbrains': ['JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
 			'vazirmatn': ['Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
-			'estedad': ['Estedad', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
-			'sahel': ['Sahel', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
-			'inter': ['Inter', 'Vazirmatn', 'system-ui', 'sans-serif'],
-			'byekan': ['B Yekan', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'shabnam': ['Shabnam', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			
+			// Legacy compatibility (map old fonts to new ones)
+			'estedad': ['Manrope', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'sahel': ['Shabnam', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'byekan': ['Shabnam', 'Vazirmatn', 'Tahoma', 'system-ui', 'sans-serif'],
 			
 			// Default
-			'sans': ['Vazirmatn', 'Estedad', 'Sahel', 'Inter', 'system-ui', 'sans-serif'],
+			'sans': ['Inter', 'Vazirmatn', 'Manrope', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {
