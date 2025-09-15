@@ -59,7 +59,7 @@ export default function DiscountCalculator() {
     setFinalPrice(formatNumber(finalPriceValue.toString()));
 
     setIsCalculating(false);
-    toast.success('محاسبه تخفیف با موفقیت انجام شد');
+    toast.success('برآورد تخفیف با موفقیت انجام شد');
   };
 
   const calculateByAmount = async () => {
@@ -93,7 +93,7 @@ export default function DiscountCalculator() {
     setFinalPrice(formatNumber(finalPriceValue.toString()));
 
     setIsCalculating(false);
-    toast.success('محاسبه تخفیف با موفقیت انجام شد');
+    toast.success('برآورد تخفیف با موفقیت انجام شد');
   };
 
   const calculateByFinalPrice = async () => {
@@ -127,7 +127,7 @@ export default function DiscountCalculator() {
     setDiscountAmount(formatNumber(discountAmountValue.toString()));
 
     setIsCalculating(false);
-    toast.success('محاسبه تخفیف با موفقیت انجام شد');
+    toast.success('برآورد تخفیف با موفقیت انجام شد');
   };
 
   const handleReset = () => {

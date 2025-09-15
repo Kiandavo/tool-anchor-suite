@@ -182,13 +182,13 @@ export default function AgeCalculator() {
       
       setResult(ageStats);
       
-      toast.success("محاسبه با موفقیت انجام شد", {
+      toast.success("برآورد با موفقیت انجام شد", {
         description: `شما ${ageYears} سال و ${ageMonths} ماه دارید`,
         position: "top-center",
       });
       
     } catch (error) {
-      toast.error("خطا در محاسبه", {
+      toast.error("خطا در برآورد", {
         description: "لطفا مقادیر را بررسی کنید",
         position: "top-center",
       });

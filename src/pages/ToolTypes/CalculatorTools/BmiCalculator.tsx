@@ -188,13 +188,13 @@ export default function BmiCalculator() {
 
       setResult(bmiResult);
       
-      toast.success("محاسبه BMI با موفقیت انجام شد", {
+      toast.success("برآورد BMI با موفقیت انجام شد", {
         description: `BMI شما: ${roundedBmi} - ${category}`,
         position: "top-center",
       });
       
     } catch (error) {
-      toast.error("خطا در محاسبه", {
+      toast.error("خطا در برآورد", {
         description: "لطفا مقادیر را بررسی کنید",
         position: "top-center",
       });

@@ -55,7 +55,7 @@ export const BirthChart = () => {
           disabled={isLoading || !birthData.date || !birthData.time || !birthData.location}
           className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-6 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl disabled:opacity-50"
         >
-          {isLoading ? 'در حال محاسبه...' : 'محاسبه نقشه تولد'}
+          {isLoading ? 'در حال برآورد...' : 'برآورد نقشه تولد'}
         </Button>
         
         {chart && (

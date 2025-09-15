@@ -98,7 +98,7 @@ const SpeedCalculator = () => {
         setResult(`زمان: ${finalTime.toFixed(2)} ${timeUnits[timeUnit as keyof typeof timeUnits]}`);
       }
     } catch (error) {
-      setResult("خطا در محاسبه. لطفاً اعداد معتبر وارد کنید.");
+      setResult("خطا در برآورد. لطفاً اعداد معتبر وارد کنید.");
     }
   };
 
@@ -218,7 +218,7 @@ const SpeedCalculator = () => {
           <div className="flex gap-3">
             <Button onClick={calculate} className="flex items-center gap-2">
               <Calculator className="w-4 h-4" />
-              محاسبه
+               برآورد
             </Button>
             <Button variant="outline" onClick={clearAll}>
               پاک کردن

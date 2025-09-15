@@ -28,7 +28,7 @@ export const FactorialCalculator: React.FC = () => {
 
     const factorial = calculateFactorial(n);
     setResult(factorial.toString());
-    toast.success('فاکتوریل محاسبه شد');
+    toast.success('فاکتوریل برآورد شد');
   };
 
   const copyResult = () => {

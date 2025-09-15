@@ -215,12 +215,12 @@ export default function LoanCalculator() {
     
     setExtendedSchedule(extended);
 
-      toast.success("محاسبه با موفقیت انجام شد", {
+      toast.success("برآورد با موفقیت انجام شد", {
         description: `پرداخت ماهیانه: ${formatToToman(monthlyPayment)} تومان`,
         position: "top-center",
       });
     } catch (error) {
-      toast.error("خطا در محاسبه", {
+      toast.error("خطا در برآورد", {
         description: "لطفا مقادیر را بررسی کنید",
         position: "top-center",
       });

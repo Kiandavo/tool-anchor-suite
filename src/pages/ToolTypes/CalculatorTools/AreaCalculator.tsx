@@ -124,14 +124,14 @@ const AreaCalculator = () => {
       console.log('Final result:', result);
       setResult(result);
       
-      toast.success("مساحت محاسبه شد", {
+      toast.success("مساحت برآورد شد", {
         description: `مساحت: ${area.toFixed(2)} ${unit} مربع`,
         position: "top-center",
       });
       
     } catch (error) {
       console.error('Calculation error:', error);
-      toast.error("خطا در محاسبه", {
+      toast.error("خطا در برآورد", {
         position: "top-center",
       });
     } finally {

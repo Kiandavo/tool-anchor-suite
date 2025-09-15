@@ -134,7 +134,7 @@ export const Numerology: React.FC = () => {
         setIsRevealed(true);
         toast.success("اعداد شناسی با موفقیت انجام شد!");
       } catch (error: any) {
-        toast.error(error.message || "خطا در محاسبه اعداد شناسی");
+        toast.error(error.message || "خطا در برآورد اعداد شناسی");
         setIsLoading(false);
       }
     }, 1500);

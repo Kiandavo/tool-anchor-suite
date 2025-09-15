@@ -163,13 +163,13 @@ export default function DateDifferenceCalculator() {
 
       setResult(analysis);
       
-      toast.success("محاسبه انجام شد", {
+      toast.success("برآورد انجام شد", {
         description: `اختلاف: ${days} روز`,
         position: "top-center",
       });
       
     } catch (error) {
-      toast.error("خطا در محاسبه", {
+      toast.error("خطا در برآورد", {
         description: "لطفا تاریخ‌ها را بررسی کنید",
         position: "top-center",
       });

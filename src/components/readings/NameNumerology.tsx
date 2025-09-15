@@ -137,7 +137,7 @@ const NameNumerology = () => {
       setIsCalculating(false);
       
       toast({
-        title: "محاسبه تکمیل شد! ✨",
+        title: "برآورد تکمیل شد! ✨",
         description: "تحلیل کامل اعداد شناسی شما آماده است",
       });
     }, 2000);

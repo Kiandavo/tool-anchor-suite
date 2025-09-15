@@ -36,7 +36,7 @@ export const KeywordDensity = () => {
       density: parseFloat(density.toFixed(2))
     });
     
-    toast.success("چگالی کلمه کلیدی محاسبه شد");
+    toast.success("چگالی کلمه کلیدی برآورد شد");
   };
 
   return (

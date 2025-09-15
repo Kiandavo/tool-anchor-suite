@@ -84,9 +84,9 @@ export const useBirthChart = () => {
         chart: newChart
       }));
 
-      toast.success('نقشه تولد با موفقیت محاسبه شد');
+      toast.success('نقشه تولد با موفقیت برآورد شد');
     } catch (error) {
-      toast.error('خطا در محاسبه نقشه تولد');
+      toast.error('خطا در برآورد نقشه تولد');
     } finally {
       setIsLoading(false);
       setTimeout(() => setIsAnimating(false), 300);
