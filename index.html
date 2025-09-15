@@ -98,19 +98,64 @@
     <link rel="prefetch" href="/src/components/ui/button.tsx" as="script">
     <link rel="prefetch" href="/src/components/ui/card.tsx" as="script">
     
-    <!-- Optimize font loading for faster FCP -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    <!-- Enhanced Modern Persian Fonts - Optimized Loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
     
-    <!-- Load critical font CSS with font-display: swap for immediate text rendering -->
+    <!-- Critical Persian fonts preload for immediate rendering -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/woff2/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/woff2/Estedad-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/woff2/Sahel-FD.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    
+    <!-- Critical inline font styles for immediate text rendering -->
     <style>
+      /* Vazirmatn - Primary UI Font */
       @font-face {
         font-family: 'Vazirmatn';
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url('https://fonts.gstatic.com/s/vazirmatn/v15/Dxxo8j6PP2D_kU2muijlHcWWIGroew.woff2') format('woff2');
+        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/woff2/Vazirmatn-Regular.woff2') format('woff2');
+        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
       }
+      @font-face {
+        font-family: 'Vazirmatn';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/woff2/Vazirmatn-Bold.woff2') format('woff2');
+        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
+      }
+
+      /* Estedad - Headers and Emphasis */
+      @font-face {
+        font-family: 'Estedad';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/woff2/Estedad-Regular.woff2') format('woff2');
+        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
+      }
+      @font-face {
+        font-family: 'Estedad';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/woff2/Estedad-Bold.woff2') format('woff2');
+        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
+      }
+
+      /* Sahel - Supporting Text */
+      @font-face {
+        font-family: 'Sahel';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/woff2/Sahel-FD.woff2') format('woff2');
+        unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153;
+      }
+      
+      /* Inter - Latin fallback */
       @font-face {
         font-family: 'Inter';
         font-style: normal;
@@ -120,23 +165,28 @@
       }
     </style>
     
-    <!-- Preload critical font CSS for faster rendering -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Vazirmatn:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Async load complete font families -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/webfont/estedad-webfont.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- Fallback for browsers that don't support preload -->
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap"></noscript>
-    
-    <!-- Async load additional font weights for non-critical content -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;700&family=Vazirmatn:wght@300;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/font-face.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/estedad@v7.3.0/fonts/webfont/estedad-webfont.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    </noscript>
     
     <!-- Critical inline styles for immediate rendering -->
     <style>
       html {
         direction: rtl;
-        font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Vazirmatn', 'Estedad', 'Sahel', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
       }
       body {
-        font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Vazirmatn', 'Estedad', 'Sahel', 'Inter', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
         background-color: #fafaff;
         margin: 0;
         padding: 0;
@@ -146,7 +196,7 @@
         min-height: 100vh;
       }
       
-      /* Critical hero content for immediate FCP */
+      /* Critical hero content for immediate FCP with enhanced fonts */
       .hero-content {
         padding: 8rem 1.5rem 5rem;
         text-align: center;
@@ -158,27 +208,31 @@
         justify-content: center;
         position: relative;
         background: linear-gradient(to bottom, rgba(248, 250, 252, 0.3), transparent, rgba(248, 250, 252, 0.2));
+        font-family: 'Vazirmatn', 'Estedad', 'Sahel', 'Inter', system-ui, -apple-system, sans-serif;
       }
       .hero-title {
-        font-size: 3rem;
+        font-size: 4rem;
         font-weight: 700;
-        margin-bottom: 2rem;
-        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        line-height: 1;
         color: #171717;
         background: linear-gradient(to bottom, #171717, #64748b);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Estedad', 'Vazirmatn', sans-serif;
+        letter-spacing: -0.02em;
+        -webkit-font-smoothing: antialiased;
       }
       .hero-description {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         color: #64748b;
         max-width: 48rem;
         margin: 0 auto 3rem;
-        font-weight: 300;
+        font-weight: 400;
         line-height: 1.6;
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Vazirmatn', 'Sahel', sans-serif;
+        text-wrap: balance;
       }
       .hero-loading {
         display: inline-flex;
@@ -192,7 +246,7 @@
         margin-top: 1rem;
         border: 1px solid rgba(59, 130, 246, 0.2);
         backdrop-filter: blur(8px);
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Vazirmatn', 'Sahel', sans-serif;
       }
       
       /* Critical layout elements */
@@ -214,7 +268,8 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: #171717;
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Estedad', 'Vazirmatn', sans-serif;
+        -webkit-font-smoothing: antialiased;
       }
       
       /* Quick access buttons */
@@ -233,7 +288,7 @@
         font-weight: 600;
         font-size: 0.9rem;
         transition: all 0.2s ease;
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Vazirmatn', 'Sahel', sans-serif;
         border: 2px solid transparent;
       }
       .quick-btn:hover {
@@ -287,13 +342,13 @@
         font-weight: 600;
         color: #374151;
         margin-bottom: 1rem;
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Vazirmatn', 'Sahel', sans-serif;
       }
       .critical-card p {
         color: #64748b;
         font-size: 0.95rem;
         line-height: 1.5;
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Vazirmatn', 'Sahel', sans-serif;
       }
       
       /* Critical LCP tool card styles for immediate rendering */
@@ -317,7 +372,7 @@
         font-size: 1rem;
         font-weight: 700;
         color: rgba(254, 243, 199, 1);
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Estedad', 'Vazirmatn', sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -328,7 +383,7 @@
         font-size: 0.75rem;
         margin-top: 0.25rem;
         font-weight: 500;
-        font-family: 'Vazirmatn', sans-serif;
+        font-family: 'Estedad', 'Vazirmatn', sans-serif;
       }
       .lcp-content-area {
         padding: 1rem;
@@ -401,9 +456,9 @@
     <div id="root">
       <!-- Critical above-the-fold content for immediate FCP -->
       <div class="hero-content" id="critical-hero">
-        <h1 class="hero-title">لنگر - مجموعه ابزارهای آنلاین</h1>
+        <h1 class="hero-title">لنگر - مجموعه ابزارهای آنلاین فارسی</h1>
         <p class="hero-description">
-          +۸۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
+          بیش از ۸۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه.
         </p>
         
         <!-- Quick access buttons for immediate interactivity -->

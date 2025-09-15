@@ -19,11 +19,22 @@ export default {
 			}
 		},
 		fontFamily: {
+			// Modern Persian Font Hierarchy
+			'primary': ['Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'heading': ['Estedad', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'body': ['Vazirmatn', 'Sahel', 'Inter', 'system-ui', 'sans-serif'],
+			'support': ['Sahel', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'display': ['Estedad', 'Vazirmatn', 'system-ui', 'sans-serif'],
+			
+			// Legacy support (maintained for compatibility)
 			'vazirmatn': ['Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'estedad': ['Estedad', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
+			'sahel': ['Sahel', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
 			'inter': ['Inter', 'Vazirmatn', 'system-ui', 'sans-serif'],
-			'sf': ['"SF Pro Display"', 'Inter', 'Vazirmatn', 'system-ui', 'sans-serif'],
 			'byekan': ['B Yekan', 'Vazirmatn', 'Inter', 'system-ui', 'sans-serif'],
-			'sans': ['Vazirmatn', 'Inter', '"SF Pro Display"', 'system-ui', 'sans-serif'],
+			
+			// Default
+			'sans': ['Vazirmatn', 'Estedad', 'Sahel', 'Inter', 'system-ui', 'sans-serif'],
 		},
 		extend: {
 			colors: {

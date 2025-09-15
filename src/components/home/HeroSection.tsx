@@ -24,15 +24,15 @@ export const HeroSection = () => {
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-6xl font-bold leading-tight tracking-tight text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-4">
+          <h1 className="text-display-2xl font-display smooth-fonts leading-none tracking-tight text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-6 persian-optimized">
             لنگر
           </h1>
-          <h2 className="text-2xl sm:text-4xl font-semibold mb-8 sm:mb-12 leading-tight text-muted-foreground">
-            مجموعه ابزارهای آنلاین
+          <h2 className="text-display-sm font-heading mb-10 sm:mb-12 leading-tight text-muted-foreground persian-optimized">
+            مجموعه ابزارهای آنلاین فارسی
           </h2>
           
-          <p className="text-xl sm:text-2xl max-w-3xl mx-auto leading-relaxed text-muted-foreground font-light mb-8 sm:mb-10 animate-fade-in">
-            +۸۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما.
+          <p className="text-body-xl max-w-3xl mx-auto leading-relaxed-plus text-muted-foreground mb-8 sm:mb-10 animate-fade-in persian-optimized text-balance">
+            بیش از ۸۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه.
           </p>
 
           {/* Enhanced Search */}
@@ -75,8 +75,8 @@ export const HeroSection = () => {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <Sparkles size={24} className="text-white" />
                 </div>
-                <h2 className="text-xl font-semibold mb-3 text-foreground">ابزارهای تخصصی و کاربردی</h2>
-                <p className="text-muted-foreground text-base leading-relaxed">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه</p>
+                <h2 className="text-heading-md font-heading mb-3 text-foreground persian-optimized">ابزارهای تخصصی و کاربردی</h2>
+                <p className="text-support-md leading-relaxed persian-optimized text-balance">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه شما</p>
               </div>
             </Link>
             
@@ -87,8 +87,8 @@ export const HeroSection = () => {
               }}>
                   <Globe size={24} className="text-white" />
                 </div>
-                <h2 className="text-xl font-semibold mb-3 text-foreground">فرهنگ و زبان فارسی</h2>
-                <p className="text-muted-foreground text-base leading-relaxed">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات، موسیقی و جشن‌های سنتی</p>
+                <h2 className="text-heading-md font-heading mb-3 text-foreground persian-optimized">فرهنگ و زبان فارسی</h2>
+                <p className="text-support-md leading-relaxed persian-optimized text-balance">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات کلاسیک، موسیقی و جشن‌های سنتی</p>
               </div>
             </Link>
             
@@ -99,8 +99,8 @@ export const HeroSection = () => {
               }}>
                   <BookOpen size={24} className="text-white" />
                 </div>
-                <h2 className="text-xl font-semibold mb-3 text-foreground">طالع‌بینی و فال</h2>
-                <p className="text-muted-foreground text-base leading-relaxed">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی</p>
+                <h2 className="text-heading-md font-heading mb-3 text-foreground persian-optimized">طالع‌بینی و فال</h2>
+                <p className="text-support-md leading-relaxed persian-optimized text-balance">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی ایرانی</p>
               </div>
             </Link>
           </div>

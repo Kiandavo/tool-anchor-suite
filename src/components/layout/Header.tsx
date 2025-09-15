@@ -132,7 +132,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               to="/"
               className="flex items-center text-white hover:text-primary-foreground/90 transition-all duration-200 group"
             >
-              <span className="text-xl font-bold bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent">لنگر</span>
+              <span className="text-heading-md font-display bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent smooth-fonts">لنگر</span>
             </Link>
 
             {/* Desktop Navigation */}

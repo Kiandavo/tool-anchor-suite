@@ -25,7 +25,7 @@ export const Layout = ({ children }: LayoutProps) => {
   }, []);
 
   return (
-    <div className="min-h-screen" dir="rtl">
+    <div className="min-h-screen font-body persian-optimized" dir="rtl">
       <Helmet>
         {/* Enhanced Security Headers */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
@@ -37,11 +37,11 @@ export const Layout = ({ children }: LayoutProps) => {
         {/* Content Security Policy - AdSense Ready */}
         <meta httpEquiv="Content-Security-Policy" content="
           default-src 'self';
-          script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://pagead2.googlesyndication.com https://www.googletagservices.com https://www.google.com https://googleads.g.doubleclick.net;
-          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+          script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://www.googletagservices.com https://www.google.com https://googleads.g.doubleclick.net;
+          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
           img-src 'self' data: https: blob: https://pagead2.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net;
-          font-src 'self' https://fonts.gstatic.com;
-          connect-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com;
+          font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
+          connect-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://cdn.jsdelivr.net;
           frame-src https://googleads.g.doubleclick.net https://www.google.com;
           object-src 'none';
           base-uri 'self';
@@ -60,6 +60,9 @@ export const Layout = ({ children }: LayoutProps) => {
         {/* Additional Security */}
         <meta name="robots" content="index, follow" />
         <meta name="format-detection" content="telephone=no, email=no, address=no" />
+        
+        {/* Font Optimization */}
+        <meta name="font-display" content="swap" />
       </Helmet>
       
       {/* Load AdSense Script */}
@@ -67,7 +70,7 @@ export const Layout = ({ children }: LayoutProps) => {
       
       <Header isScrolled={isScrolled} />
       
-      <main className="container mx-auto px-4 py-6 max-w-6xl pt-24">
+      <main className="container mx-auto px-4 py-6 max-w-6xl pt-24 font-body">
         {children}
       </main>
 

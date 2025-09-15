@@ -5,6 +5,7 @@ import { HelmetProvider } from "@/providers/HelmetProvider";
 import { AppRoutes } from "@/components/AppRoutes";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { initializeFontOptimization } from "@/utils/fontOptimization";
 
 
 const queryClient = new QueryClient({
@@ -19,6 +20,11 @@ const queryClient = new QueryClient({
 
 const App = () => {
   console.log('App component initializing...');
+  
+  // Initialize font optimization on app startup
+  React.useEffect(() => {
+    initializeFontOptimization();
+  }, []);
   
   return (
     <ErrorBoundary>
