@@ -19,7 +19,8 @@ import {
   RotateCcw,
   Users,
   Sun,
-  Moon
+  Moon,
+  Globe
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -45,6 +46,7 @@ interface AgeStats {
 export default function AgeCalculator() {
   const { getClasses } = useTypographyClasses();
   const [result, setResult] = useState<AgeStats | null>(null);
+  const [calendarType, setCalendarType] = useState<'persian' | 'gregorian'>('persian');
   const [selectedDate, setSelectedDate] = useState({
     year: '',
     month: '',
@@ -52,39 +54,66 @@ export default function AgeCalculator() {
   });
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Generate year options (1900 to current year)
+  // Generate year options based on calendar type
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 1899 }, (_, i) => currentYear - i);
+  const currentPersianYear = currentYear - 621; // Approximate Persian year
   
-  // Generate month options
-  const months = [
-    { value: '1', label: 'فروردین', gregorian: 1 },
-    { value: '2', label: 'اردیبهشت', gregorian: 2 },
-    { value: '3', label: 'خرداد', gregorian: 3 },
-    { value: '4', label: 'تیر', gregorian: 4 },
-    { value: '5', label: 'مرداد', gregorian: 5 },
-    { value: '6', label: 'شهریور', gregorian: 6 },
-    { value: '7', label: 'مهر', gregorian: 7 },
-    { value: '8', label: 'آبان', gregorian: 8 },
-    { value: '9', label: 'آذر', gregorian: 9 },
-    { value: '10', label: 'دی', gregorian: 10 },
-    { value: '11', label: 'بهمن', gregorian: 11 },
-    { value: '12', label: 'اسفند', gregorian: 12 }
+  const years = calendarType === 'persian' 
+    ? Array.from({ length: currentPersianYear - 1299 }, (_, i) => currentPersianYear - i)
+    : Array.from({ length: currentYear - 1899 }, (_, i) => currentYear - i);
+  
+  // Generate month options based on calendar type
+  const persianMonths = [
+    { value: '1', label: 'فروردین' },
+    { value: '2', label: 'اردیبهشت' },
+    { value: '3', label: 'خرداد' },
+    { value: '4', label: 'تیر' },
+    { value: '5', label: 'مرداد' },
+    { value: '6', label: 'شهریور' },
+    { value: '7', label: 'مهر' },
+    { value: '8', label: 'آبان' },
+    { value: '9', label: 'آذر' },
+    { value: '10', label: 'دی' },
+    { value: '11', label: 'بهمن' },
+    { value: '12', label: 'اسفند' }
   ];
 
-  // Generate day options based on selected month
+  const gregorianMonths = [
+    { value: '1', label: 'January' },
+    { value: '2', label: 'February' },
+    { value: '3', label: 'March' },
+    { value: '4', label: 'April' },
+    { value: '5', label: 'May' },
+    { value: '6', label: 'June' },
+    { value: '7', label: 'July' },
+    { value: '8', label: 'August' },
+    { value: '9', label: 'September' },
+    { value: '10', label: 'October' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'December' }
+  ];
+
+  const months = calendarType === 'persian' ? persianMonths : gregorianMonths;
+
+  // Generate day options based on selected month and calendar type
   const getDaysInMonth = (month: string, year: string) => {
     if (!month || !year) return 31;
     const monthNum = parseInt(month);
     const yearNum = parseInt(year);
     
-    // Persian calendar days in month
-    if (monthNum <= 6) return 31; // فروردین تا شهریور
-    if (monthNum <= 11) return 30; // مهر تا بهمن
-    
-    // اسفند - check for leap year (simplified)
-    const isLeapYear = ((yearNum - 979) % 33) % 4 === 1;
-    return isLeapYear ? 30 : 29;
+    if (calendarType === 'persian') {
+      // Persian calendar days in month
+      if (monthNum <= 6) return 31; // فروردین تا شهریور
+      if (monthNum <= 11) return 30; // مهر تا بهمن
+      
+      // اسفند - check for leap year (simplified)
+      const isLeapYear = ((yearNum - 979) % 33) % 4 === 1;
+      return isLeapYear ? 30 : 29;
+    } else {
+      // Gregorian calendar
+      const date = new Date(yearNum, monthNum, 0);
+      return date.getDate();
+    }
   };
 
   const days = Array.from({ length: getDaysInMonth(selectedDate.month, selectedDate.year) }, (_, i) => i + 1);
@@ -168,20 +197,39 @@ export default function AgeCalculator() {
         return;
       }
       
-      if (isNaN(year) || isNaN(month) || isNaN(day) || 
-          year < 1300 || year > 1500 || 
-          month < 1 || month > 12 || 
-          day < 1 || day > getDaysInMonth(selectedDate.month, selectedDate.year)) {
-        toast.error("تاریخ نامعتبر", {
-          description: "لطفا تاریخ معتبری وارد کنید",
-          position: "top-center",
-        });
-        setIsCalculating(false);
-        return;
-      }
+      let birthDateObj: Date;
       
-      // Convert Persian date to Gregorian
-      const birthDateObj = persianToGregorian(year, month, day);
+      if (calendarType === 'persian') {
+        if (isNaN(year) || isNaN(month) || isNaN(day) || 
+            year < 1300 || year > 1500 || 
+            month < 1 || month > 12 || 
+            day < 1 || day > getDaysInMonth(selectedDate.month, selectedDate.year)) {
+          toast.error("تاریخ نامعتبر", {
+            description: "لطفا تاریخ معتبری وارد کنید",
+            position: "top-center",
+          });
+          setIsCalculating(false);
+          return;
+        }
+        
+        // Convert Persian date to Gregorian
+        birthDateObj = persianToGregorian(year, month, day);
+      } else {
+        if (isNaN(year) || isNaN(month) || isNaN(day) || 
+            year < 1900 || year > new Date().getFullYear() || 
+            month < 1 || month > 12 || 
+            day < 1 || day > getDaysInMonth(selectedDate.month, selectedDate.year)) {
+          toast.error("تاریخ نامعتبر", {
+            description: "لطفا تاریخ معتبری وارد کنید",
+            position: "top-center",
+          });
+          setIsCalculating(false);
+          return;
+        }
+        
+        // Use Gregorian date directly
+        birthDateObj = new Date(year, month - 1, day);
+      }
       
       const today = new Date();
       
@@ -270,6 +318,7 @@ export default function AgeCalculator() {
   const handleReset = () => {
     setSelectedDate({ year: '', month: '', day: '' });
     setResult(null);
+    setCalendarType('persian');
   };
 
   // Handle date selection changes
@@ -302,20 +351,60 @@ export default function AgeCalculator() {
           محاسبه‌گر پیشرفته سن
         </h1>
         <p className={cn("text-support-lg max-w-2xl mx-auto text-balance", getClasses('support'))}>
-          سن خود را بر اساس تاریخ تولد شمسی محاسبه کنید و اطلاعات جامعی درباره زندگی‌تان کسب کنید
+          سن خود را بر اساس تاریخ تولد محاسبه کنید و اطلاعات جامعی درباره زندگی‌تان کسب کنید
         </p>
       </div>
 
       <Card className="neo-glass border-primary/20 shadow-xl overflow-hidden">
         <div className="p-8 space-y-8">
-          {/* Date Selection Section */}
+          {/* Calendar Type Selection */}
           <div className="space-y-6">
-            <div className="text-center">
+            <div className="text-center space-y-4">
               <h2 className={cn("text-heading-lg font-heading mb-2", getClasses('heading'))}>
-                تاریخ تولد خود را انتخاب کنید
+                نوع تقویم و تاریخ تولد را انتخاب کنید
               </h2>
+              
+              {/* Calendar Type Selector */}
+              <div className="flex justify-center">
+                <div className="flex items-center gap-4 p-2 bg-background/50 backdrop-blur-sm rounded-xl border border-primary/20">
+                  <button
+                    onClick={() => {
+                      setCalendarType('persian');
+                      setSelectedDate({ year: '', month: '', day: '' });
+                    }}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300",
+                      calendarType === 'persian' 
+                        ? "bg-primary text-white shadow-lg" 
+                        : "text-gray-600 hover:bg-primary/10"
+                    )}
+                  >
+                    <Sun className="h-4 w-4" />
+                    تقویم شمسی (فارسی)
+                  </button>
+                  <button
+                    onClick={() => {
+                      setCalendarType('gregorian');
+                      setSelectedDate({ year: '', month: '', day: '' });
+                    }}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300",
+                      calendarType === 'gregorian' 
+                        ? "bg-primary text-white shadow-lg" 
+                        : "text-gray-600 hover:bg-primary/10"
+                    )}
+                  >
+                    <Globe className="h-4 w-4" />
+                    تقویم میلادی (انگلیسی)
+                  </button>
+                </div>
+              </div>
+              
               <p className={cn("text-support-md", getClasses('support'))}>
-                سال، ماه و روز تولد خود را به تقویم شمسی وارد کنید
+                {calendarType === 'persian' 
+                  ? 'سال، ماه و روز تولد خود را به تقویم شمسی وارد کنید' 
+                  : 'سال، ماه و روز تولد خود را به تقویم میلادی وارد کنید'
+                }
               </p>
             </div>
 
@@ -325,7 +414,7 @@ export default function AgeCalculator() {
               <div className="space-y-3">
                 <Label className={cn("flex items-center text-heading-sm font-heading", getClasses('heading'))}>
                   <Calendar className="ml-2 h-4 w-4 text-primary" />
-                  سال تولد (شمسی)
+                  سال تولد ({calendarType === 'persian' ? 'شمسی' : 'میلادی'})
                 </Label>
                 <Select value={selectedDate.year} onValueChange={(value) => handleDateChange('year', value)}>
                   <SelectTrigger className="h-12 text-right bg-background/50 backdrop-blur-sm border-primary/30 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02]">

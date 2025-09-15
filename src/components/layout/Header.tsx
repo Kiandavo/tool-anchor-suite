@@ -127,13 +127,18 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex items-center justify-between h-16">
-            {/* Title */}
-            <Link
-              to="/"
-              className="flex items-center text-white hover:text-primary-foreground/90 transition-all duration-200 group"
-            >
-              <span className="text-heading-md font-display bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent smooth-fonts">لنگر</span>
-            </Link>
+            {/* Logo - Centered on Mobile, Left on Desktop */}
+            <div className="flex-1 lg:flex-none">
+              <Link
+                to="/"
+                className="flex items-center justify-center lg:justify-start text-white hover:text-primary-foreground/90 transition-all duration-200 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center mr-3 shadow-lg backdrop-blur-sm border border-white/20">
+                  <span className="text-lg font-bold text-white">ل</span>
+                </div>
+                <span className="text-heading-md font-display bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent smooth-fonts">لنگر</span>
+              </Link>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
