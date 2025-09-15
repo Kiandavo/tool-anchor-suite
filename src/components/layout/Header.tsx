@@ -127,20 +127,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex items-center justify-between h-16">
-            {/* Logo - Centered on Mobile, Left on Desktop */}
-            <div className="flex-1 lg:flex-none">
-              <Link
-                to="/"
-                className="flex items-center justify-center lg:justify-start text-white hover:text-primary-foreground/90 transition-all duration-200 group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center mr-3 shadow-lg backdrop-blur-sm border border-white/20">
-                  <span className="text-lg font-bold text-white">ل</span>
-                </div>
-                <span className="text-heading-md font-display bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent smooth-fonts">لنگر</span>
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
+            {/* Left Side - Navigation Menu */}
             <nav className="hidden lg:flex items-center gap-1">
               {mainCategories.map((category) => (
                 <div key={category.id} className="relative group">
@@ -151,11 +138,11 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                       e.stopPropagation();
                       handleDropdownClick(category.id);
                     }}
-                    className="flex items-center gap-2 px-4 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium group"
+                    className="flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium group"
                   >
                     <category.icon size={16} className="group-hover:scale-110 transition-transform" />
-                    <span>{category.name}</span>
-                    <ChevronDown size={14} className={`transition-transform ${openDropdown === category.id ? 'rotate-180' : ''}`} />
+                    <span className="font-support">{category.name}</span>
+                    <ChevronDown size={12} className={`transition-transform duration-200 ${openDropdown === category.id ? 'rotate-180' : ''}`} />
                   </button>
                   
                   {openDropdown === category.id && (
@@ -164,8 +151,8 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                       onMouseEnter={() => handleMouseEnter(category.id)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="bg-white shadow-2xl border border-gray-200 rounded-lg min-w-48 overflow-hidden">
-                        {category.subcategories.map((subcat) => (
+                      <div className="bg-background shadow-xl border border-border rounded-xl min-w-52 overflow-hidden backdrop-blur-md">
+                        {category.subcategories.map((subcat, index) => (
                           <Link
                             key={subcat}
                             to={`/category/${subcat}`}
@@ -173,7 +160,11 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                               e.stopPropagation();
                               handleMenuItemClick();
                             }}
-                            className="block px-4 py-3 text-gray-800 hover:bg-primary/10 hover:text-primary transition-colors text-sm first:rounded-t-lg last:rounded-b-lg"
+                            className={`block px-4 py-3 text-foreground hover:bg-primary/5 hover:text-primary transition-all duration-200 text-sm font-support border-b border-border/50 last:border-b-0 ${
+                              index === 0 ? 'rounded-t-xl' : ''
+                            } ${
+                              index === category.subcategories.length - 1 ? 'rounded-b-xl' : ''
+                            }`}
                           >
                             {categoryLabels[subcat]}
                           </Link>
@@ -183,16 +174,30 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                   )}
                 </div>
               ))}
+            </nav>
+
+            {/* Center - Logo */}
+            <div className="flex-1 flex justify-center lg:flex-none lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
+              <Link
+                to="/"
+                className="flex items-center text-white hover:text-primary-foreground/90 transition-all duration-200 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center ml-3 shadow-lg backdrop-blur-sm border border-white/20 group-hover:scale-105 transition-transform">
+                  <span className="text-lg font-bold text-white">ل</span>
+                </div>
+                <span className="text-heading-md font-display bg-gradient-to-r from-white to-primary-foreground/90 bg-clip-text text-transparent">لنگر</span>
+              </Link>
+            </div>
+
+            {/* Right Side - Actions & Mobile Menu */}
+            <div className="flex items-center gap-2">
               <Link
                 to="/all-tools"
-                className="px-4 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium mr-2 border border-white/20"
+                className="hidden lg:flex px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-support border border-white/20"
               >
                 همه ابزارها
               </Link>
-            </nav>
 
-            {/* Right Side Actions */}
-            <div className="flex items-center gap-2">
               <Link
                 to="/settings"
                 className="p-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 group"
@@ -204,7 +209,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {showBackButton && (
                 <button
                   onClick={handleBack}
-                  className="flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-200 text-sm font-medium border border-white/20"
+                  className="flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-200 text-sm font-support border border-white/20"
                 >
                   <ArrowRight size={16} />
                   <span className="hidden sm:inline">بازگشت</span>
@@ -230,20 +235,20 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
           <div className="fixed top-16 left-0 right-0 bg-primary/98 backdrop-blur-md border-b border-primary/20 shadow-xl max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="container mx-auto px-4 py-6">
-              <div className="space-y-4 mb-6">
+              <div className="space-y-3 mb-6">
                 {mainCategories.map((category) => (
                   <div key={category.id} className="space-y-2">
-                    <div className="flex items-center gap-3 p-3 text-white font-medium bg-white/10 rounded-xl">
+                    <div className="flex items-center gap-3 p-3 text-white font-support bg-white/10 rounded-xl border border-white/20">
                       <category.icon size={20} />
                       <span>{category.name}</span>
                     </div>
-                    <div className="grid grid-cols-1 gap-2 pr-8">
+                    <div className="grid grid-cols-2 gap-2 pr-6">
                       {category.subcategories.map((subcat) => (
                         <Link
                           key={subcat}
                           to={`/category/${subcat}`}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="block p-3 text-white/80 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-all duration-200 text-sm"
+                          className="block p-3 text-white/80 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-support text-center border border-white/10"
                         >
                           {categoryLabels[subcat]}
                         </Link>
@@ -255,7 +260,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               <Link
                 to="/all-tools"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full p-4 text-center text-white font-medium bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-200 border border-white/20"
+                className="block w-full p-4 text-center text-white font-support bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-200 border border-white/20"
               >
                 مشاهده همه ابزارها
               </Link>
