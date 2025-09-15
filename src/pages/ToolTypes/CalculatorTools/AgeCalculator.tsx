@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
 import { Progress } from '@/components/ui/progress';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   Calculator, 
   Calendar, 
@@ -15,19 +16,17 @@ import {
   TrendingUp,
   Timer,
   Sparkles,
-  RotateCcw
+  RotateCcw,
+  Users,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useTypographyClasses } from '@/hooks/useFontOptimization';
 
 interface AgeStats {
   years: number;
@@ -44,14 +43,51 @@ interface AgeStats {
 }
 
 export default function AgeCalculator() {
-  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
+  const { getClasses } = useTypographyClasses();
   const [result, setResult] = useState<AgeStats | null>(null);
-  const [manualInput, setManualInput] = useState({
+  const [selectedDate, setSelectedDate] = useState({
     year: '',
     month: '',
     day: ''
   });
   const [isCalculating, setIsCalculating] = useState(false);
+
+  // Generate year options (1900 to current year)
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: currentYear - 1899 }, (_, i) => currentYear - i);
+  
+  // Generate month options
+  const months = [
+    { value: '1', label: 'فروردین', gregorian: 1 },
+    { value: '2', label: 'اردیبهشت', gregorian: 2 },
+    { value: '3', label: 'خرداد', gregorian: 3 },
+    { value: '4', label: 'تیر', gregorian: 4 },
+    { value: '5', label: 'مرداد', gregorian: 5 },
+    { value: '6', label: 'شهریور', gregorian: 6 },
+    { value: '7', label: 'مهر', gregorian: 7 },
+    { value: '8', label: 'آبان', gregorian: 8 },
+    { value: '9', label: 'آذر', gregorian: 9 },
+    { value: '10', label: 'دی', gregorian: 10 },
+    { value: '11', label: 'بهمن', gregorian: 11 },
+    { value: '12', label: 'اسفند', gregorian: 12 }
+  ];
+
+  // Generate day options based on selected month
+  const getDaysInMonth = (month: string, year: string) => {
+    if (!month || !year) return 31;
+    const monthNum = parseInt(month);
+    const yearNum = parseInt(year);
+    
+    // Persian calendar days in month
+    if (monthNum <= 6) return 31; // فروردین تا شهریور
+    if (monthNum <= 11) return 30; // مهر تا بهمن
+    
+    // اسفند - check for leap year (simplified)
+    const isLeapYear = ((yearNum - 979) % 33) % 4 === 1;
+    return isLeapYear ? 30 : 29;
+  };
+
+  const days = Array.from({ length: getDaysInMonth(selectedDate.month, selectedDate.year) }, (_, i) => i + 1);
 
   // Zodiac signs calculation
   const getZodiacSign = (month: number, day: number): string => {
@@ -85,54 +121,87 @@ export default function AgeCalculator() {
     return 'نامشخص';
   };
 
+  // Convert Persian date to Gregorian (simplified conversion)
+  const persianToGregorian = (persianYear: number, persianMonth: number, persianDay: number) => {
+    // Simplified conversion - this is an approximation
+    // For accurate conversion, you'd need a proper Persian calendar library
+    const baseYear = 1979; // Base year for conversion
+    const gregorianYear = persianYear + 621;
+    
+    // Approximate month conversion
+    let gregorianMonth = persianMonth;
+    let gregorianDay = persianDay;
+    
+    // Adjust for Persian calendar specifics
+    if (persianMonth <= 6) {
+      // First 6 months have 31 days
+      gregorianMonth = Math.min(persianMonth + 2, 12);
+    } else if (persianMonth <= 9) {
+      // Months 7-9
+      gregorianMonth = persianMonth - 6;
+      gregorianDay = Math.min(persianDay, 30);
+    } else {
+      // Last 3 months
+      gregorianMonth = persianMonth - 9;
+      gregorianDay = Math.min(persianDay, persianMonth === 12 ? 29 : 30);
+    }
+    
+    return new Date(gregorianYear, gregorianMonth - 1, gregorianDay);
+  };
+
   // Enhanced calculate function with comprehensive age statistics
   const calculate = useCallback(async () => {
     setIsCalculating(true);
     
     try {
-      let selectedDate: Date;
+      const year = parseInt(selectedDate.year);
+      const month = parseInt(selectedDate.month);
+      const day = parseInt(selectedDate.day);
       
-      // Check if using date picker or manual input
-      if (birthDate) {
-        selectedDate = birthDate;
-      } else {
-        const year = parseInt(manualInput.year);
-        const month = parseInt(manualInput.month) - 1; // JS months are 0-indexed
-        const day = parseInt(manualInput.day);
-        
-        // Enhanced validation
-        if (isNaN(year) || isNaN(month) || isNaN(day) || 
-            year < 1900 || year > 2100 || 
-            month < 0 || month > 11 || 
-            day < 1 || day > 31) {
-          toast.error("تاریخ نامعتبر", {
-            description: "لطفا تاریخ معتبری وارد کنید",
-            position: "top-center",
-          });
-          return;
-        }
-        
-        selectedDate = new Date(year, month, day);
+      // Enhanced validation
+      if (!selectedDate.year || !selectedDate.month || !selectedDate.day) {
+        toast.error("تاریخ نامعتبر", {
+          description: "لطفا همه فیلدها را پر کنید",
+          position: "top-center",
+        });
+        setIsCalculating(false);
+        return;
       }
+      
+      if (isNaN(year) || isNaN(month) || isNaN(day) || 
+          year < 1300 || year > 1500 || 
+          month < 1 || month > 12 || 
+          day < 1 || day > getDaysInMonth(selectedDate.month, selectedDate.year)) {
+        toast.error("تاریخ نامعتبر", {
+          description: "لطفا تاریخ معتبری وارد کنید",
+          position: "top-center",
+        });
+        setIsCalculating(false);
+        return;
+      }
+      
+      // Convert Persian date to Gregorian
+      const birthDateObj = persianToGregorian(year, month, day);
       
       const today = new Date();
       
       // Basic validation for impossible dates
-      if (selectedDate > today) {
+      if (birthDateObj > today) {
         toast.error("تاریخ نامعتبر", {
           description: "تاریخ تولد نمی‌تواند در آینده باشد!",
           position: "top-center",
         });
+        setIsCalculating(false);
         return;
       }
 
       // Simulate calculation delay for better UX
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Calculate detailed age statistics
-      let ageYears = today.getFullYear() - selectedDate.getFullYear();
-      let ageMonths = today.getMonth() - selectedDate.getMonth();
-      let ageDays = today.getDate() - selectedDate.getDate();
+      let ageYears = today.getFullYear() - birthDateObj.getFullYear();
+      let ageMonths = today.getMonth() - birthDateObj.getMonth();
+      let ageDays = today.getDate() - birthDateObj.getDate();
       
       // Adjust for negative days/months
       if (ageDays < 0) {
@@ -147,14 +216,14 @@ export default function AgeCalculator() {
       }
       
       // Calculate comprehensive statistics
-      const totalDays = differenceInDays(today, selectedDate);
+      const totalDays = differenceInDays(today, birthDateObj);
       const totalWeeks = Math.floor(totalDays / 7);
-      const totalHours = differenceInHours(today, selectedDate);
-      const totalMinutes = differenceInMinutes(today, selectedDate);
-      const totalSeconds = differenceInSeconds(today, selectedDate);
+      const totalHours = differenceInHours(today, birthDateObj);
+      const totalMinutes = differenceInMinutes(today, birthDateObj);
+      const totalSeconds = differenceInSeconds(today, birthDateObj);
       
       // Next birthday calculation
-      const nextBirthday = new Date(today.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+      const nextBirthday = new Date(today.getFullYear(), birthDateObj.getMonth(), birthDateObj.getDate());
       if (nextBirthday < today) {
         nextBirthday.setFullYear(today.getFullYear() + 1);
       }
@@ -164,7 +233,7 @@ export default function AgeCalculator() {
       const lifeProgress = Math.min((ageYears / 80) * 100, 100);
       
       // Zodiac sign
-      const zodiacSign = getZodiacSign(selectedDate.getMonth() + 1, selectedDate.getDate());
+      const zodiacSign = getZodiacSign(birthDateObj.getMonth() + 1, birthDateObj.getDate());
       
       const ageStats: AgeStats = {
         years: ageYears,
@@ -195,314 +264,390 @@ export default function AgeCalculator() {
     } finally {
       setIsCalculating(false);
     }
-  }, [birthDate, manualInput]);
-  
-  // Handle changes to the manual input fields
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>, 
-    field: 'year' | 'month' | 'day'
-  ) => {
-    const value = e.target.value;
-    
-    // Allow numbers and Persian/Arabic numerals, convert to English
-    const englishValue = value
-      .replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString())
-      .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString())
-      .replace(/[^0-9]/g, '');
-    
-    // Apply field-specific limits
-    let limitedValue = englishValue;
-    if (field === 'year' && englishValue && parseInt(englishValue) > 2100) {
-      limitedValue = '2100';
-    } else if (field === 'month' && englishValue && parseInt(englishValue) > 12) {
-      limitedValue = '12';
-    } else if (field === 'day' && englishValue && parseInt(englishValue) > 31) {
-      limitedValue = '31';
-    }
-    
-    // Limit length
-    if (field === 'year' && limitedValue.length > 4) {
-      limitedValue = limitedValue.slice(0, 4);
-    } else if ((field === 'month' || field === 'day') && limitedValue.length > 2) {
-      limitedValue = limitedValue.slice(0, 2);
-    }
-    
-    setManualInput({
-      ...manualInput,
-      [field]: limitedValue
-    });
-    
-    // Clear date picker selection when manually entering dates
-    if (birthDate) {
-      setBirthDate(undefined);
-    }
-  };
+  }, [selectedDate]);
 
   // Reset all inputs
   const handleReset = () => {
-    setBirthDate(undefined);
-    setManualInput({ year: '', month: '', day: '' });
+    setSelectedDate({ year: '', month: '', day: '' });
     setResult(null);
   };
 
+  // Handle date selection changes
+  const handleDateChange = (field: 'year' | 'month' | 'day', value: string) => {
+    const newDate = { ...selectedDate, [field]: value };
+    
+    // If day is selected but month/year changed, validate day
+    if (field === 'month' || field === 'year') {
+      const maxDays = getDaysInMonth(
+        field === 'month' ? value : selectedDate.month,
+        field === 'year' ? value : selectedDate.year
+      );
+      
+      if (parseInt(selectedDate.day) > maxDays) {
+        newDate.day = maxDays.toString();
+      }
+    }
+    
+    setSelectedDate(newDate);
+  };
+
   return (
-    <div className="space-y-6 animate-fade-in">
-      <Card className="vibrant-card overflow-hidden">
-        <div className="flex flex-col space-y-6 p-6">
-          <div className="flex items-center justify-center space-x-2 space-x-reverse mb-4">
-            <div className="icon-container">
-              <Calculator className="text-primary h-6 w-6" />
-            </div>
-            <h2 className="text-xl font-bold text-center">محاسبه‌گر پیشرفته سن</h2>
-          </div>
+    <div className="space-y-8 animate-fade-in font-body persian-optimized">
+      {/* Header Section */}
+      <div className="text-center space-y-4 mb-8">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/30 rounded-2xl mb-4">
+          <Calculator className="h-8 w-8 text-primary" />
+        </div>
+        <h1 className={cn("text-display-lg font-heading text-primary smooth-fonts", getClasses('heading'))}>
+          محاسبه‌گر پیشرفته سن
+        </h1>
+        <p className={cn("text-support-lg max-w-2xl mx-auto text-balance", getClasses('support'))}>
+          سن خود را بر اساس تاریخ تولد شمسی محاسبه کنید و اطلاعات جامعی درباره زندگی‌تان کسب کنید
+        </p>
+      </div>
 
-          {/* Input Section */}
+      <Card className="neo-glass border-primary/20 shadow-xl overflow-hidden">
+        <div className="p-8 space-y-8">
+          {/* Date Selection Section */}
           <div className="space-y-6">
-            {/* Date Picker */}
-            <div className="flex flex-col space-y-2">
-              <Label className="flex items-center">
-                <Calendar className="ml-2 h-4 w-4 text-primary" />
-                انتخاب تاریخ تولد با تقویم
-              </Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-right glass-effect hover:-translate-y-1 transition-all duration-300",
-                      !birthDate && "text-muted-foreground"
-                    )}
-                  >
-                    <Calendar className="ml-2 h-4 w-4" />
-                    {birthDate ? format(birthDate, "yyyy/MM/dd") : <span>انتخاب تاریخ تولد</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <CalendarComponent
-                    mode="single"
-                    selected={birthDate}
-                    onSelect={(date) => {
-                      setBirthDate(date);
-                      setManualInput({ year: '', month: '', day: '' });
-                    }}
-                    disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                    initialFocus
-                    className={cn("p-3 pointer-events-auto")}
-                  />
-                </PopoverContent>
-              </Popover>
+            <div className="text-center">
+              <h2 className={cn("text-heading-lg font-heading mb-2", getClasses('heading'))}>
+                تاریخ تولد خود را انتخاب کنید
+              </h2>
+              <p className={cn("text-support-md", getClasses('support'))}>
+                سال، ماه و روز تولد خود را به تقویم شمسی وارد کنید
+              </p>
             </div>
 
-            <div className="relative flex items-center">
-              <div className="flex-grow border-t border-primary/20"></div>
-              <span className="mx-4 flex-shrink text-primary font-medium bg-background px-2">یا</span>
-              <div className="flex-grow border-t border-primary/20"></div>
-            </div>
-
-            {/* Manual Date Input */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="birthYear" className="flex items-center text-sm font-medium">
-                  <Sparkles className="ml-1 h-3 w-3 text-primary" />
-                  سال تولد
+            {/* Enhanced Date Selectors */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Year Selector */}
+              <div className="space-y-3">
+                <Label className={cn("flex items-center text-heading-sm font-heading", getClasses('heading'))}>
+                  <Calendar className="ml-2 h-4 w-4 text-primary" />
+                  سال تولد (شمسی)
                 </Label>
-                <Input
-                  id="birthYear"
-                  value={manualInput.year}
-                  onChange={(e) => handleInputChange(e, 'year')}
-                  placeholder="مثال: 1370"
-                  type="number"
-                  dir="ltr"
-                  maxLength={4}
-                  className="glass-effect transition-all duration-300 focus:scale-105"
-                />
+                <Select value={selectedDate.year} onValueChange={(value) => handleDateChange('year', value)}>
+                  <SelectTrigger className="h-12 text-right bg-background/50 backdrop-blur-sm border-primary/30 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02]">
+                    <SelectValue placeholder="انتخاب سال..." className={cn("font-body", getClasses('body'))} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60 bg-background/95 backdrop-blur-md border-primary/20">
+                    {years.map((year) => (
+                      <SelectItem key={year} value={year.toString()} className={cn("font-body", getClasses('body'))}>
+                        {year.toLocaleString('fa-IR')}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="birthMonth" className="flex items-center text-sm font-medium">
-                  <Sparkles className="ml-1 h-3 w-3 text-primary" />
+
+              {/* Month Selector */}
+              <div className="space-y-3">
+                <Label className={cn("flex items-center text-heading-sm font-heading", getClasses('heading'))}>
+                  <Sun className="ml-2 h-4 w-4 text-primary" />
                   ماه تولد
                 </Label>
-                <Input
-                  id="birthMonth"
-                  value={manualInput.month}
-                  onChange={(e) => handleInputChange(e, 'month')}
-                  placeholder="مثال: 6"
-                  type="number"
-                  dir="ltr"
-                  maxLength={2}
-                  className="glass-effect transition-all duration-300 focus:scale-105"
-                />
+                <Select value={selectedDate.month} onValueChange={(value) => handleDateChange('month', value)}>
+                  <SelectTrigger className="h-12 text-right bg-background/50 backdrop-blur-sm border-primary/30 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02]">
+                    <SelectValue placeholder="انتخاب ماه..." className={cn("font-body", getClasses('body'))} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background/95 backdrop-blur-md border-primary/20">
+                    {months.map((month) => (
+                      <SelectItem key={month.value} value={month.value} className={cn("font-body", getClasses('body'))}>
+                        {month.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="birthDay" className="flex items-center text-sm font-medium">
-                  <Sparkles className="ml-1 h-3 w-3 text-primary" />
+
+              {/* Day Selector */}
+              <div className="space-y-3">
+                <Label className={cn("flex items-center text-heading-sm font-heading", getClasses('heading'))}>
+                  <Moon className="ml-2 h-4 w-4 text-primary" />
                   روز تولد
                 </Label>
-                <Input
-                  id="birthDay"
-                  value={manualInput.day}
-                  onChange={(e) => handleInputChange(e, 'day')}
-                  placeholder="مثال: 15"
-                  type="number"
-                  dir="ltr"
-                  maxLength={2}
-                  className="glass-effect transition-all duration-300 focus:scale-105"
-                />
+                <Select 
+                  value={selectedDate.day} 
+                  onValueChange={(value) => handleDateChange('day', value)}
+                  disabled={!selectedDate.month || !selectedDate.year}
+                >
+                  <SelectTrigger className="h-12 text-right bg-background/50 backdrop-blur-sm border-primary/30 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02]">
+                    <SelectValue placeholder="انتخاب روز..." className={cn("font-body", getClasses('body'))} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60 bg-background/95 backdrop-blur-md border-primary/20">
+                    {days.map((day) => (
+                      <SelectItem key={day} value={day.toString()} className={cn("font-body", getClasses('body'))}>
+                        {day.toLocaleString('fa-IR')}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-6">
               <Button 
                 onClick={calculate}
-                disabled={isCalculating}
-                className="vibrant-button flex items-center justify-center hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isCalculating || !selectedDate.year || !selectedDate.month || !selectedDate.day}
+                size="lg"
+                className={cn(
+                  "flex-1 h-14 text-lg font-heading bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+                  getClasses('heading')
+                )}
               >
-                <Calculator className={`ml-2 h-5 w-5 ${isCalculating ? 'animate-spin' : ''}`} />
-                {isCalculating ? 'در حال محاسبه...' : 'محاسبه سن من'}
+                <Calculator className={`ml-3 h-6 w-6 ${isCalculating ? 'animate-spin' : ''}`} />
+                {isCalculating ? 'در حال محاسبه سن...' : 'محاسبه سن من'}
               </Button>
               
               <Button 
                 onClick={handleReset}
                 variant="outline"
-                className="glass-effect flex items-center justify-center hover:-translate-y-1 transition-transform duration-300"
+                size="lg"
+                className={cn(
+                  "h-14 px-8 font-heading border-2 border-primary/30 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 hover:scale-[1.02]",
+                  getClasses('heading')
+                )}
               >
-                <RotateCcw className="ml-2 h-4 w-4" />
+                <RotateCcw className="ml-2 h-5 w-5" />
                 پاک کردن
               </Button>
             </div>
           </div>
-
-          {/* Results Section */}
-          {result && (
-            <div className="space-y-6 animate-fade-in">
-              <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 glass-effect">
-                  <TabsTrigger value="overview" className="flex items-center">
-                    <Star className="ml-1 h-4 w-4" />
-                    خلاصه
-                  </TabsTrigger>
-                  <TabsTrigger value="detailed" className="flex items-center">
-                    <Clock className="ml-1 h-4 w-4" />
-                    جزئیات
-                  </TabsTrigger>
-                  <TabsTrigger value="insights" className="flex items-center">
-                    <TrendingUp className="ml-1 h-4 w-4" />
-                    نکات جالب
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="overview" className="mt-6 space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <OutcomeInfoCard 
-                      outcome={`شما ${result.years.toLocaleString('fa-IR')} سال و ${result.months.toLocaleString('fa-IR')} ماه و ${result.days.toLocaleString('fa-IR')} روز دارید`}
-                    />
-                    <OutcomeInfoCard 
-                      outcome={`تا تولد بعدی شما ${result.nextBirthdayDays.toLocaleString('fa-IR')} روز مانده است`}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
-                      <div className="flex items-center mb-2">
-                        <Heart className="h-5 w-5 text-red-500 ml-2" />
-                        <h3 className="font-medium text-sm">پیشرفت زندگی</h3>
-                      </div>
-                      <Progress value={result.lifeProgress} className="h-3 mb-2" />
-                      <p className="text-xs text-muted-foreground">{Math.floor(result.lifeProgress)}% از ۸۰ سال</p>
-                    </div>
-                    
-                    <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
-                      <div className="flex items-center mb-2">
-                        <Star className="h-5 w-5 text-amber-500 ml-2" />
-                        <h3 className="font-medium text-sm">برج شما</h3>
-                      </div>
-                      <p className="text-lg font-bold text-amber-600">{result.zodiacSign}</p>
-                    </div>
-                    
-                    <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
-                      <div className="flex items-center mb-2">
-                        <Gift className="h-5 w-5 text-purple-500 ml-2" />
-                        <h3 className="font-medium text-sm">تولد بعدی</h3>
-                      </div>
-                      <p className="text-lg font-bold text-purple-600">{result.nextBirthdayDays} روز دیگر</p>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="detailed" className="mt-6 space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="glass-effect rounded-xl p-4">
-                      <h4 className="font-medium text-sm text-muted-foreground mb-1">کل روزها</h4>
-                      <p className="text-lg font-semibold text-blue-600">{result.totalDays.toLocaleString('fa-IR')}</p>
-                    </div>
-                    
-                    <div className="glass-effect rounded-xl p-4">
-                      <h4 className="font-medium text-sm text-muted-foreground mb-1">کل هفته‌ها</h4>
-                      <p className="text-lg font-semibold text-green-600">{result.totalWeeks.toLocaleString('fa-IR')}</p>
-                    </div>
-                    
-                    <div className="glass-effect rounded-xl p-4">
-                      <h4 className="font-medium text-sm text-muted-foreground mb-1">کل ساعت‌ها</h4>
-                      <p className="text-lg font-semibold text-orange-600">{result.totalHours.toLocaleString('fa-IR')}</p>
-                    </div>
-                    
-                    <div className="glass-effect rounded-xl p-4">
-                      <h4 className="font-medium text-sm text-muted-foreground mb-1">کل دقیقه‌ها</h4>
-                      <p className="text-lg font-semibold text-purple-600">{result.totalMinutes.toLocaleString('fa-IR')}</p>
-                    </div>
-                  </div>
-
-                  <div className="glass-effect rounded-xl p-6">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center">
-                      <Timer className="ml-2 h-5 w-5 text-primary" />
-                      آمار دقیق زمان
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <span className="text-muted-foreground">کل ثانیه‌های زندگی: </span>
-                        <span className="font-semibold">{result.totalSeconds.toLocaleString('fa-IR')}</span>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">میانگین روزهای سال: </span>
-                        <span className="font-semibold">{(result.totalDays / result.years).toFixed(1)} روز</span>
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="insights" className="mt-6 space-y-4">
-                  <div className="space-y-4">
-                    <div className="glass-effect rounded-xl p-6">
-                      <h3 className="font-semibold text-lg mb-4 flex items-center">
-                        <Sparkles className="ml-2 h-5 w-5 text-primary" />
-                        حقایق جالب درباره سن شما
-                      </h3>
-                      <div className="space-y-3 text-sm">
-                        <div className="flex items-start">
-                          <div className="w-2 h-2 bg-primary rounded-full mt-2 ml-3 flex-shrink-0"></div>
-                          <span>قلب شما تا الان حدود {(result.totalDays * 100000).toLocaleString('fa-IR')} بار تپیده است</span>
-                        </div>
-                        <div className="flex items-start">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
-                          <span>شما حدود {(result.totalHours * 20).toLocaleString('fa-IR')} بار نفس کشیده‌اید</span>
-                        </div>
-                        <div className="flex items-start">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
-                          <span>شما حدود {(result.totalDays / 365 * 2000).toFixed(0)} کتاب می‌توانستید بخوانید</span>
-                        </div>
-                        <div className="flex items-start">
-                          <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
-                          <span>در طول زندگی‌تان حدود {(result.totalDays / 3).toFixed(0)} روز خوابیده‌اید</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-          )}
         </div>
       </Card>
+
+      {/* Results Section */}
+      {result && (
+        <Card className="neo-glass border-primary/20 shadow-xl animate-fade-in">
+          <div className="p-8">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500/20 to-green-600/30 rounded-2xl mb-4">
+                <Star className="h-8 w-8 text-green-600" />
+              </div>
+              <h2 className={cn("text-display-md font-heading text-green-700 mb-2", getClasses('heading'))}>
+                نتایج محاسبه سن شما
+              </h2>
+              <p className={cn("text-support-lg text-balance", getClasses('support'))}>
+                اطلاعات کامل و جامع درباره سن و زندگی شما
+              </p>
+            </div>
+
+            <Tabs defaultValue="overview" className="w-full">
+              <TabsList className="grid w-full grid-cols-3 h-14 bg-primary/5 rounded-xl border border-primary/20 p-1">
+                <TabsTrigger 
+                  value="overview" 
+                  className={cn("flex items-center gap-2 text-base font-heading data-[state=active]:bg-primary data-[state=active]:text-white", getClasses('heading'))}
+                >
+                  <Star className="h-4 w-4" />
+                  خلاصه
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="detailed" 
+                  className={cn("flex items-center gap-2 text-base font-heading data-[state=active]:bg-primary data-[state=active]:text-white", getClasses('heading'))}
+                >
+                  <Clock className="h-4 w-4" />
+                  جزئیات
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="insights" 
+                  className={cn("flex items-center gap-2 text-base font-heading data-[state=active]:bg-primary data-[state=active]:text-white", getClasses('heading'))}
+                >
+                  <TrendingUp className="h-4 w-4" />
+                  نکات جالب
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="overview" className="mt-8 space-y-6">
+                {/* Main Age Display */}
+                <div className="text-center bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 border border-primary/20">
+                  <h3 className={cn("text-heading-lg font-heading mb-4", getClasses('heading'))}>سن دقیق شما</h3>
+                  <div className={cn("text-display-sm font-display text-primary mb-2", getClasses('display'))}>
+                    {result.years.toLocaleString('fa-IR')} سال، {result.months.toLocaleString('fa-IR')} ماه، {result.days.toLocaleString('fa-IR')} روز
+                  </div>
+                  <p className={cn("text-support-md", getClasses('support'))}>
+                    تولد بعدی‌تان {result.nextBirthdayDays.toLocaleString('fa-IR')} روز دیگر است
+                  </p>
+                </div>
+
+                {/* Statistics Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-6 border border-red-200/50 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                    <div className="flex items-center mb-3">
+                      <Heart className="h-6 w-6 text-red-500 ml-3" />
+                      <h3 className={cn("font-heading text-heading-sm text-red-700", getClasses('heading'))}>پیشرفت زندگی</h3>
+                    </div>
+                    <Progress value={result.lifeProgress} className="h-4 mb-3 bg-red-100" />
+                    <p className={cn("text-support-sm text-red-600", getClasses('support'))}>
+                      {Math.floor(result.lifeProgress).toLocaleString('fa-IR')}% از ۸۰ سال
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-amber-50 to-amber-100/50 rounded-xl p-6 border border-amber-200/50 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                    <div className="flex items-center mb-3">
+                      <Star className="h-6 w-6 text-amber-500 ml-3" />
+                      <h3 className={cn("font-heading text-heading-sm text-amber-700", getClasses('heading'))}>برج شما</h3>
+                    </div>
+                    <p className={cn("text-heading-lg font-heading text-amber-600", getClasses('heading'))}>
+                      {result.zodiacSign}
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-xl p-6 border border-purple-200/50 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                    <div className="flex items-center mb-3">
+                      <Gift className="h-6 w-6 text-purple-500 ml-3" />
+                      <h3 className={cn("font-heading text-heading-sm text-purple-700", getClasses('heading'))}>تولد بعدی</h3>
+                    </div>
+                    <p className={cn("text-heading-lg font-heading text-purple-600", getClasses('heading'))}>
+                      {result.nextBirthdayDays.toLocaleString('fa-IR')} روز
+                    </p>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="detailed" className="mt-8 space-y-6">
+                <h3 className={cn("text-heading-lg font-heading text-center mb-6", getClasses('heading'))}>
+                  آمار تفصیلی زندگی شما
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-5 border border-blue-200/50 text-center hover:shadow-lg transition-all duration-300">
+                    <h4 className={cn("font-heading text-heading-sm text-blue-700 mb-2", getClasses('heading'))}>کل روزها</h4>
+                    <p className={cn("text-display-sm font-display text-blue-600", getClasses('display'))}>{result.totalDays.toLocaleString('fa-IR')}</p>
+                    <p className={cn("text-support-xs text-blue-500", getClasses('support'))}>روز زیسته‌اید</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-green-50 to-green-100/50 rounded-xl p-5 border border-green-200/50 text-center hover:shadow-lg transition-all duration-300">
+                    <h4 className={cn("font-heading text-heading-sm text-green-700 mb-2", getClasses('heading'))}>کل هفته‌ها</h4>
+                    <p className={cn("text-display-sm font-display text-green-600", getClasses('display'))}>{result.totalWeeks.toLocaleString('fa-IR')}</p>
+                    <p className={cn("text-support-xs text-green-500", getClasses('support'))}>هفته زیسته‌اید</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-xl p-5 border border-orange-200/50 text-center hover:shadow-lg transition-all duration-300">
+                    <h4 className={cn("font-heading text-heading-sm text-orange-700 mb-2", getClasses('heading'))}>کل ساعت‌ها</h4>
+                    <p className={cn("text-display-sm font-display text-orange-600", getClasses('display'))}>{result.totalHours.toLocaleString('fa-IR')}</p>
+                    <p className={cn("text-support-xs text-orange-500", getClasses('support'))}>ساعت زیسته‌اید</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-xl p-5 border border-purple-200/50 text-center hover:shadow-lg transition-all duration-300">
+                    <h4 className={cn("font-heading text-heading-sm text-purple-700 mb-2", getClasses('heading'))}>کل دقیقه‌ها</h4>
+                    <p className={cn("text-display-sm font-display text-purple-600", getClasses('display'))}>{result.totalMinutes.toLocaleString('fa-IR')}</p>
+                    <p className={cn("text-support-xs text-purple-500", getClasses('support'))}>دقیقه زیسته‌اید</p>
+                  </div>
+                </div>
+
+                {/* Additional Statistics */}
+                <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20">
+                  <h3 className={cn("text-heading-md font-heading mb-4 flex items-center", getClasses('heading'))}>
+                    <Timer className="ml-2 h-5 w-5 text-primary" />
+                    آمار دقیق زمان و زندگی
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className={cn("text-support-md", getClasses('support'))}>کل ثانیه‌های زندگی:</span>
+                        <span className={cn("font-heading text-heading-sm", getClasses('heading'))}>{result.totalSeconds.toLocaleString('fa-IR')}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className={cn("text-support-md", getClasses('support'))}>میانگین روز در سال:</span>
+                        <span className={cn("font-heading text-heading-sm", getClasses('heading'))}>{result.years > 0 ? (result.totalDays / result.years).toFixed(1) : '0'}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className={cn("text-support-md", getClasses('support'))}>سال‌های باقی‌مانده:</span>
+                        <span className={cn("font-heading text-heading-sm", getClasses('heading'))}>{80 - result.years > 0 ? (80 - result.years).toLocaleString('fa-IR') : '0'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className={cn("text-support-md", getClasses('support'))}>روزهای باقی‌مانده:</span>
+                        <span className={cn("font-heading text-heading-sm", getClasses('heading'))}>{((80 - result.years) * 365).toLocaleString('fa-IR')}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="insights" className="mt-8 space-y-6">
+                <h3 className={cn("text-heading-lg font-heading text-center mb-6", getClasses('heading'))}>
+                  حقایق جالب درباره زندگی شما
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 rounded-xl p-6 border border-indigo-200/50">
+                    <h4 className={cn("text-heading-md font-heading text-indigo-700 mb-4 flex items-center", getClasses('heading'))}>
+                      <Heart className="ml-2 h-5 w-5" />
+                      حقایق فیزیولوژیکی
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex items-start">
+                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                        <span className={cn("text-support-md", getClasses('support'))}>
+                          قلب شما حدود <strong>{(result.totalDays * 100000).toLocaleString('fa-IR')}</strong> بار تپیده است
+                        </span>
+                      </div>
+                      <div className="flex items-start">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                        <span className={cn("text-support-md", getClasses('support'))}>
+                          شما حدود <strong>{(result.totalHours * 20).toLocaleString('fa-IR')}</strong> بار نفس کشیده‌اید
+                        </span>
+                      </div>
+                      <div className="flex items-start">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                        <span className={cn("text-support-md", getClasses('support'))}>
+                          در طول زندگی <strong>{(result.totalDays / 3).toFixed(0)}</strong> روز خوابیده‌اید
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-xl p-6 border border-emerald-200/50">
+                    <h4 className={cn("text-heading-md font-heading text-emerald-700 mb-4 flex items-center", getClasses('heading'))}>
+                      <Users className="ml-2 h-5 w-5" />
+                      حقایق اجتماعی
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex items-start">
+                        <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                        <span className={cn("text-support-md", getClasses('support'))}>
+                          شما <strong>{(result.totalDays / 365 * 2000).toFixed(0)}</strong> کتاب می‌توانستید بخوانید
+                        </span>
+                      </div>
+                      <div className="flex items-start">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                        <span className={cn("text-support-md", getClasses('support'))}>
+                          حدود <strong>{(result.totalDays * 3).toLocaleString('fa-IR')}</strong> وعده غذا خورده‌اید
+                        </span>
+                      </div>
+                      <div className="flex items-start">
+                        <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 ml-3 flex-shrink-0"></div>
+                        <span className={cn("text-support-md", getClasses('support'))}>
+                          اگر روزی ۸ ساعت کار کنید، <strong>{(result.totalDays / 3).toFixed(0)}</strong> روز کار کرده‌اید
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Motivational Section */}
+                <div className="bg-gradient-to-br from-rose-50 to-pink-100/50 rounded-2xl p-8 border border-rose-200/50 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-rose-500/20 to-pink-500/30 rounded-2xl mb-4">
+                    <Sparkles className="h-8 w-8 text-rose-600" />
+                  </div>
+                  <h4 className={cn("text-heading-lg font-heading text-rose-700 mb-3", getClasses('heading'))}>
+                    پیام انگیزشی
+                  </h4>
+                  <p className={cn("text-support-lg text-rose-600 max-w-2xl mx-auto text-balance", getClasses('support'))}>
+                    شما تا الان {result.totalDays.toLocaleString('fa-IR')} روز زیبا را تجربه کرده‌اید. 
+                    هر روز فرصت جدیدی برای ساختن خاطرات فوق‌العاده است. 
+                    از زندگی‌تان لذت ببرید و هر لحظه را قدر بدانید! 🌟
+                  </p>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </Card>
+      )}
     </div>
   );
 }
