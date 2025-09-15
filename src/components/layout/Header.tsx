@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Menu, X } from 'lucide-react';
 import laangarLogo from '@/assets/logo.svg';
+import headerBg from '@/assets/header-bg.jpg';
 
 interface HeaderProps {
   title?: string;
@@ -37,10 +38,17 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-background/95 backdrop-blur-md border-b border-border' 
-          : 'bg-background border-b border-border/50'
-      }`}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          ? 'bg-black/50 backdrop-blur-md border-b border-white/10' 
+          : 'bg-black/30 border-b border-white/20'
+      }`}
+        style={{
+          backgroundImage: `url(${headerBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
@@ -51,7 +59,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src={laangarLogo} 
                   alt="لنگر" 
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </Link>
             </div>
@@ -60,14 +68,14 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             <div className="flex items-center gap-3">
               <Link
                 to="/all-tools"
-                className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground hover:text-primary bg-secondary hover:bg-secondary/80 rounded-lg transition-colors duration-200"
+                className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white hover:text-primary bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 backdrop-blur-sm border border-white/20"
               >
                 <span>همه ابزارها</span>
               </Link>
 
               <Link
                 to="/settings"
-                className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors duration-200"
+                className="p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-colors duration-200"
                 aria-label="تنظیمات"
               >
                 <Settings size={20} />
@@ -76,7 +84,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {showBackButton && (
                 <button
                   onClick={handleBack}
-                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors duration-200"
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-colors duration-200"
                 >
                   <ArrowRight size={16} />
                   <span className="hidden sm:inline">بازگشت</span>
@@ -86,7 +94,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors duration-200"
+                className="lg:hidden p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-colors duration-200"
                 aria-label="منوی موبایل"
               >
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
