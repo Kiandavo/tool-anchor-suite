@@ -12,7 +12,7 @@ export function RandomWord() {
   const [language, setLanguage] = useState<string>('mixed');
 
   const handleGenerateWord = () => {
-    const newWord = generateRandomWord();
+    const newWord = generateRandomWord(language);
     setWord(newWord);
     toast.success("کلمه تصادفی تولید شد");
   };

@@ -9,7 +9,7 @@ export const rollDice = (): number => {
   return Math.floor(Math.random() * 6) + 1;
 };
 
-export const generateRandomWord = (): string => {
+export const generateRandomWord = (language: string = 'mixed'): string => {
   const persianWords = [
     // طبیعت
     'خورشید', 'ماه', 'ستاره', 'آسمان', 'دریا', 'کوه', 'جنگل', 'گل', 'پرنده', 'درخت',
@@ -56,8 +56,21 @@ export const generateRandomWord = (): string => {
     'phoenix', 'dragon', 'griffin', 'unicorn', 'legend', 'myth', 'epic', 'saga', 'quest', 'adventure'
   ];
   
-  const allWords = [...persianWords, ...englishWords];
-  return allWords[Math.floor(Math.random() * allWords.length)];
+  let words;
+  switch (language) {
+    case 'persian':
+      words = persianWords;
+      break;
+    case 'english':
+      words = englishWords;
+      break;
+    case 'mixed':
+    default:
+      words = [...persianWords, ...englishWords];
+      break;
+  }
+  
+  return words[Math.floor(Math.random() * words.length)];
 };
 
 export const copyToClipboard = (text: string) => {
