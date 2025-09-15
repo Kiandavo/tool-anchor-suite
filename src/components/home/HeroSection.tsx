@@ -4,8 +4,12 @@ import { ArrowRight, Sparkles, BookOpen, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
+import { CriticalLoader } from '@/components/performance/CriticalLoader';
+
 export const HeroSection = () => {
-  return <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden scroll-smooth">
+  return (
+    <CriticalLoader>
+      <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden scroll-smooth">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-transparent to-muted/20" />
       <div className="absolute inset-0 apple-glass" />
@@ -115,5 +119,7 @@ export const HeroSection = () => {
           <div className="max-w-2xl mx-auto h-0.5 bg-gradient-to-r from-transparent via-primary/40 to-transparent mt-20 rounded-full animate-shimmer" />
         </div>
       </div>
-    </section>;
+      </section>
+    </CriticalLoader>
+  );
 };
