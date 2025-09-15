@@ -54,7 +54,31 @@ export const resizeImage = (file: File, maxWidth: number, maxHeight: number): Pr
   });
 };
 
-export const convertToFormat = (file: File, format: string): Promise<Blob> => {
+export const convertToFormat = async (file: File, format: string): Promise<Blob> => {
+  // Check if the file is HEIC format and convert it first
+  const isHEIC = file.type === 'image/heic' || file.type === 'image/HEIC' || 
+                 file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.HEIC');
+  
+  let processedFile = file;
+  
+  if (isHEIC) {
+    try {
+      // Import heic2any dynamically
+      const heic2any = (await import('heic2any')).default;
+      // Convert HEIC to JPEG first
+      const convertedBlob = await heic2any({
+        blob: file,
+        toType: 'image/jpeg',
+        quality: 0.95
+      }) as Blob;
+      processedFile = new File([convertedBlob], file.name.replace(/\.heic$/i, '.jpg'), {
+        type: 'image/jpeg'
+      });
+    } catch (error) {
+      throw new Error('Failed to convert HEIC file. Please try converting to JPEG format first.');
+    }
+  }
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -119,7 +143,7 @@ export const convertToFormat = (file: File, format: string): Promise<Blob> => {
       img.src = event.target?.result as string;
     };
     reader.onerror = () => { reject(new Error('Failed to read file')); };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(processedFile);
   });
 };
 
