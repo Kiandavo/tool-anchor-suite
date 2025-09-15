@@ -1,6 +1,14 @@
 import React, { lazy, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ToolNotImplemented from './ToolNotImplemented';
+import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { 
+  generateReadingsSeoData, 
+  generateCalendarSeoData,
+  generateLongTailKeywords,
+  generateIntentKeywords,
+  generateCulturalKeywords 
+} from '@/utils/seoUtils';
 
 // Import enhanced reading tools
 import EnhancedDreamInterpretation from '@/components/readings/EnhancedDreamInterpretation';
@@ -40,6 +48,15 @@ interface ReadingToolProps {
 
 export default function ReadingTool({ slug }: ReadingToolProps) {
   console.log("ReadingTool rendering with slug:", slug);
+
+  // Generate enhanced SEO data for readings tools
+  const toolTitle = getToolTitle(slug);
+  const readingsSeoData = generateReadingsSeoData(toolTitle);
+  const enhancedKeywords = [
+    ...generateLongTailKeywords(toolTitle, 'readings'),
+    ...generateIntentKeywords(toolTitle, 'readings'),
+    ...generateCulturalKeywords('readings')
+  ].join(', ');
 
   const renderTool = () => {
     switch (slug) {
@@ -122,6 +139,13 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
   if (slug === 'parallel-universe') {
     return (
       <div className="space-theme gradient-cosmic rounded-xl p-0 min-h-[70vh]">
+        <EnhancedSeoHead
+          toolSlug={slug}
+          pageType="tool"
+          title={readingsSeoData.title}
+          description={readingsSeoData.description}
+          keywords={enhancedKeywords}
+        />
         <Suspense fallback={<div className="p-8 text-center">در حال بارگذاری...</div>}>
           <ParallelUniverseExplorer />
         </Suspense>
@@ -131,10 +155,17 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
 
   return (
     <div className="space-y-6">
+      <EnhancedSeoHead
+        toolSlug={slug}
+        pageType="tool"
+        title={readingsSeoData.title}
+        description={readingsSeoData.description}
+        keywords={enhancedKeywords}
+      />
       <Card className="bg-white border shadow-sm">
         <CardHeader>
           <CardTitle className="text-2xl text-gray-800">
-            {getToolTitle(slug)}
+            {toolTitle}
           </CardTitle>
         </CardHeader>
         <CardContent>

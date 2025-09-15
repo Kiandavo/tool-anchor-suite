@@ -12,6 +12,14 @@ import { OGTagGenerator } from '@/components/seo/OGTagGenerator';
 import { SitemapGenerator } from '@/components/seo/SitemapGenerator';
 import { SchemaGenerator } from '@/components/seo-tools/SchemaGenerator';
 import { MetaTagGenerator } from '@/components/seo-tools/MetaTagGenerator';
+import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { 
+  generateCalendarSeoData, 
+  generateReadingsSeoData, 
+  generateLongTailKeywords,
+  generateIntentKeywords,
+  generateCulturalKeywords 
+} from '@/utils/seoUtils';
 
 interface SeoToolProps {
   slug: string;
@@ -21,6 +29,13 @@ export default function SeoTool({ slug }: SeoToolProps) {
   const toolMeta = tools.find((t) => t.slug === slug);
 
   if (!toolMeta) return null;
+
+  // Generate enhanced SEO data for the tool
+  const enhancedKeywords = [
+    ...generateLongTailKeywords(toolMeta.name, 'seo'),
+    ...generateIntentKeywords(toolMeta.name, 'seo'),
+    ...generateCulturalKeywords('seo')
+  ].join(', ');
 
   const renderToolContent = () => {
     switch (slug) {
@@ -58,10 +73,17 @@ export default function SeoTool({ slug }: SeoToolProps) {
 
   return (
     <div className="space-y-6">
+      <EnhancedSeoHead
+        toolSlug={slug}
+        pageType="tool"
+        title={`${toolMeta.name} | ابزار سئو حرفه‌ای رایگان - لنگر`}
+        description={`✅ ${toolMeta.name} حرفه‌ای | ${toolMeta.description} | بهینه‌سازی سئو | رایگان و کامل | لنگر`}
+        keywords={enhancedKeywords}
+      />
       <ToolInfoCard
         name={toolMeta.name}
         description={toolMeta.description}
-        learnMoreUrl={`https://www.google.com/search?q=${encodeURIComponent(toolMeta.name)}`}
+        learnMoreUrl={`https://www.google.com/search?q=${encodeURIComponent(toolMeta.name + ' سئو')}`}
       />
       {renderToolContent()}
     </div>
