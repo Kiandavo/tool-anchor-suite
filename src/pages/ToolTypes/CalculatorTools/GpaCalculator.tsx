@@ -71,12 +71,12 @@ const GpaCalculator: React.FC = () => {
     }
 
     const calculatedGpa = totalWeightedGrade / totalCred;
-    setGpa(calculatedGpa.toFixed(2));
+    setGpa(Math.floor(calculatedGpa * 100) / 100 + "");
     setTotalCredits(totalCred);
 
     toast({
       title: "محاسبه شد",
-      description: `معدل شما ${calculatedGpa.toFixed(2)} می‌باشد.`,
+      description: `معدل شما ${Math.floor(calculatedGpa * 100) / 100} می‌باشد.`,
     });
   };
 

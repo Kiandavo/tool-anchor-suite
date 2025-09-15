@@ -2,6 +2,7 @@
 // Export directly from modules without re-exporting
 export * from './caseTransform';
 export * from './finglishConverter';
+export * from './enhancedFinglishConverter';
 export * from './finglishMappings';
 export * from './finglishWordDatabase';
 export * from './persianCharacterRules';

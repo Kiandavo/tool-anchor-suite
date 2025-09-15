@@ -35,9 +35,45 @@ export function TextTranslation({ type, text, setText, outcomeMsg, setOutcomeMsg
         setOutcomeMsg("کاراکترهای غیر فارسی حذف شدند!");
         break;
       case "text-translator":
-        // Simple placeholder for translation (would need actual API)
-        result = "ترجمه: " + text + " (نیاز به API ترجمه دارد)";
-        setOutcomeMsg("ترجمه انجام شد!");
+        // Basic Persian-English translation mappings
+        const translations: {[key: string]: string} = {
+          "سلام": "hello",
+          "hello": "سلام", 
+          "خوبی": "how are you",
+          "how are you": "چطوری",
+          "چطوری": "how are you",
+          "ممنون": "thank you",
+          "thank you": "ممنون",
+          "خداحافظ": "goodbye",
+          "goodbye": "خداحافظ",
+          "بله": "yes",
+          "yes": "بله",
+          "نه": "no",
+          "no": "نه",
+          "لطفا": "please",
+          "please": "لطفا",
+          "ببخشید": "sorry",
+          "sorry": "ببخشید",
+          "دوست دارم": "I love",
+          "I love": "دوست دارم",
+          "خانه": "home",
+          "home": "خانه",
+          "آب": "water",
+          "water": "آب",
+          "غذا": "food",
+          "food": "غذا",
+          "کتاب": "book",
+          "book": "کتاب"
+        };
+        
+        const words = text.toLowerCase().split(/\s+/);
+        const translatedWords = words.map(word => {
+          const cleanWord = word.replace(/[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFFa-zA-Z]/g, "");
+          return translations[cleanWord] || translations[word] || word;
+        });
+        
+        result = translatedWords.join(" ");
+        setOutcomeMsg("ترجمه با موفقیت انجام شد!");
         break;
     }
     setOutput(result);

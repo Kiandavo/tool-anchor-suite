@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { finglishToPersian } from "@/utils/text";
+import { finglishToPersian, enhancedFinglishToPersian } from "@/utils/text";
 import { toast } from "sonner";
 import { Check, Copy, Wand2, Book, Trash } from "lucide-react";
 import { copyToClipboard } from "@/utils/randomUtils";
@@ -19,7 +19,7 @@ export function EnhancedFinglishConverter() {
   useEffect(() => {
     if (finglishInput) {
       const timer = setTimeout(() => {
-        setPersianOutput(finglishToPersian(finglishInput));
+        setPersianOutput(enhancedFinglishToPersian(finglishInput));
       }, 300);
       return () => clearTimeout(timer);
     } else {
@@ -37,7 +37,7 @@ export function EnhancedFinglishConverter() {
     
     // Simulate processing time for better UX
     setTimeout(() => {
-      const result = finglishToPersian(finglishInput);
+      const result = enhancedFinglishToPersian(finglishInput);
       setPersianOutput(result);
       
       // Add to recent conversions if not already present
