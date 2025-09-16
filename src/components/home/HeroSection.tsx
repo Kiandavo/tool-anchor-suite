@@ -20,46 +20,27 @@ export const HeroSection = () => {
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Ultra-Modern Title Section */}
-            <div className="mb-12 sm:mb-16 space-y-6 sm:space-y-8">
-              {/* Main Brand Title */}
-              <h1 className="text-7xl sm:text-8xl lg:text-9xl font-display font-black leading-none tracking-tighter">
-                <span className="bg-gradient-to-br from-primary via-primary/95 to-accent bg-clip-text text-transparent filter drop-shadow-lg">
+            {/* Main Title with Enhanced Typography */}
+            <div className="mb-8 sm:mb-12">
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-4 sm:mb-6">
+                <span className="bg-gradient-to-r from-primary via-primary/90 to-accent bg-clip-text text-transparent drop-shadow-sm">
                   لنگر
                 </span>
               </h1>
               
-              {/* Modern Subtitle */}
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-light text-foreground/90 tracking-wide leading-tight">
-                مجموعه ابزارهای آنلاین 
-                <span className="font-medium text-primary">فارسی</span>
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium text-muted-foreground mb-6 sm:mb-8 tracking-wide">
+                مجموعه ابزارهای آنلاین فارسی
               </h2>
             </div>
             
-            {/* Modern Description Block */}
-            <div className="max-w-5xl mx-auto mb-12 sm:mb-16 space-y-6 sm:space-y-8">
-              {/* Primary Value Proposition */}
-              <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-accent/5 rounded-3xl p-6 sm:p-8 backdrop-blur-sm border border-primary/10">
-                <p className="text-2xl sm:text-3xl lg:text-4xl font-heading font-semibold leading-tight text-center">
-                  <span className="text-primary font-bold">+۸۰</span>
-                  <span className="text-foreground mx-3">ابزار رایگان</span>
-                  <span className="text-muted-foreground font-normal text-xl sm:text-2xl block mt-2">
-                    و کاربردی تحت وب
-                  </span>
-                </p>
-              </div>
-              
-              {/* Secondary Description */}
-              <div className="max-w-4xl mx-auto">
-                <p className="text-lg sm:text-xl lg:text-2xl font-body font-light leading-relaxed text-center text-muted-foreground">
-                  <span className="text-foreground font-medium">بدون نیاز به ثبت‌نام</span>، 
-                  با تمرکز کامل بر 
-                  <span className="text-primary font-medium">حریم خصوصی</span> شما
-                </p>
-                <p className="text-base sm:text-lg font-body text-muted-foreground/80 mt-4 leading-relaxed text-center max-w-3xl mx-auto">
-                  طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه
-                </p>
-              </div>
+            {/* Enhanced Description */}
+            <div className="max-w-4xl mx-auto mb-10 sm:mb-14">
+              <p className="text-lg sm:text-xl lg:text-2xl font-body leading-relaxed text-foreground/80 mb-6 px-4">
+                <span className="font-semibold text-primary">بیش از ۸۰ ابزار رایگان</span> و کاربردی تحت وب
+              </p>
+              <p className="text-base sm:text-lg font-body leading-relaxed text-muted-foreground max-w-3xl mx-auto px-4">
+                بدون نیاز به ثبت‌نام، با تمرکز کامل بر حریم خصوصی شما. طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه.
+              </p>
             </div>
 
             {/* Modern Search Section */}
