@@ -1,64 +1,62 @@
 
-@layer utilities {
-  /* Extended animation utilities */
-  .hover-lift {
-    @apply transition-transform duration-300 ease-out hover:-translate-y-1;
+/* Extended animation utilities */
+.hover-lift {
+  @apply transition-transform duration-300 ease-out hover:-translate-y-1;
+}
+
+.hover-glow {
+  @apply transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105;
+}
+
+.hover-reveal {
+  @apply relative overflow-hidden;
+}
+
+.hover-reveal::after {
+  @apply content-[''] absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300;
+}
+
+.hover-reveal:hover::after {
+  @apply opacity-100;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent;
+}
+
+/* Pulse animation */
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
   }
-  
-  .hover-glow {
-    @apply transition-all duration-300 ease-out hover:shadow-lg hover:brightness-105;
+  50% {
+    opacity: 0.8;
   }
-  
-  .hover-reveal {
-    @apply relative overflow-hidden;
-  }
-  
-  .hover-reveal::after {
-    @apply content-[''] absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300;
-  }
-  
-  .hover-reveal:hover::after {
-    @apply opacity-100;
-  }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent;
-  }
-  
-  /* Pulse animation */
-  .pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-  }
-  
-  /* Shimmer effect */
-  .shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .shimmer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -100%;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
-    animation: shimmer 2s infinite;
-  }
-  
-  @keyframes shimmer {
-    to {
-      right: 100%;
-    }
+}
+
+/* Shimmer effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -100%;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    right: 100%;
   }
 }

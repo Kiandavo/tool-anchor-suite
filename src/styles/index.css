@@ -87,4 +87,38 @@
   .hero-gradient {
     @apply bg-gradient-to-b from-background via-background/95 to-background/90;
   }
+
+  /* Modern Breadcrumb Styles */
+  .modern-breadcrumb-link {
+    @apply font-inter text-sm font-medium text-white;
+    @apply px-3 py-1.5 rounded-full;
+    @apply bg-gradient-to-r from-apple-blue to-apple-cyan;
+    @apply shadow-apple-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:scale-105 hover:shadow-apple;
+    @apply hover:from-apple-purple hover:to-apple-pink;
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-apple-blue/50;
+  }
+
+  .modern-breadcrumb-current {
+    @apply font-inter text-sm font-semibold text-white;
+    @apply px-4 py-2 rounded-full;
+    @apply bg-gradient-to-r from-apple-purple to-apple-pink;
+    @apply shadow-apple-lg;
+    @apply border border-white/20;
+    @apply backdrop-blur-sm;
+  }
+
+  .dark .modern-breadcrumb-link {
+    @apply bg-gradient-to-r from-apple-indigo to-apple-purple;
+    @apply hover:from-apple-cyan hover:to-apple-teal;
+    @apply shadow-apple-lg;
+  }
+
+  .dark .modern-breadcrumb-current {
+    @apply bg-gradient-to-r from-apple-purple to-apple-indigo;
+    @apply border-white/30;
+    @apply shadow-apple-xl;
+  }
 }

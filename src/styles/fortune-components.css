@@ -1,26 +1,24 @@
 
-@layer components {
-  .fortune-card {
-    @apply relative overflow-hidden rounded-2xl border bg-card shadow-md transition-all duration-300 hover:shadow-lg;
-  }
-  
-  .fortune-card-front {
-    @apply absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-purple-100 to-indigo-100 p-6 text-center transition-all duration-500;
-  }
-  
-  .fortune-card-back {
-    @apply absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100 p-6 text-center transition-opacity duration-500;
-  }
-  
-  .fortune-button {
-    @apply mt-4 inline-flex items-center justify-center rounded-full bg-white/80 px-6 py-2 font-medium shadow-sm transition-all duration-300 hover:bg-white hover:shadow;
-  }
-  
-  .fortune-heading {
-    @apply text-3xl font-bold text-gradient;
-  }
-  
-  .fortune-text {
-    @apply mt-4 leading-relaxed text-gray-700;
-  }
+.fortune-card {
+  @apply relative overflow-hidden rounded-2xl border bg-card shadow-md transition-all duration-300 hover:shadow-lg;
+}
+
+.fortune-card-front {
+  @apply absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-purple-100 to-indigo-100 p-6 text-center transition-all duration-500;
+}
+
+.fortune-card-back {
+  @apply absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-amber-100 to-orange-100 p-6 text-center transition-opacity duration-500;
+}
+
+.fortune-button {
+  @apply mt-4 inline-flex items-center justify-center rounded-full bg-white/80 px-6 py-2 font-medium shadow-sm transition-all duration-300 hover:bg-white hover:shadow;
+}
+
+.fortune-heading {
+  @apply text-3xl font-bold text-gradient;
+}
+
+.fortune-text {
+  @apply mt-4 leading-relaxed text-gray-700;
 }

@@ -1,5 +1,5 @@
 
-@layer utilities {
+@layer components {
   .shadow-soft {
     @apply shadow-[0_2px_10px_0_rgba(0,0,0,0.05)];
   }

@@ -1,89 +1,85 @@
 
 /* Critical CSS for above-the-fold content */
-@layer base {
-  :root {
-    --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
-    --font-persian: 'B Yekan', sans-serif;
-    --apple-blue: 37 99 235;
-    --apple-purple: 124 58 237;
-    --apple-green: 22 163 74;
-    --apple-orange: 234 88 12;
-    --text-primary: 23 23 23;
-    --text-secondary: 51 65 85;
-  }
 
-  html {
-    scroll-behavior: smooth;
-    direction: rtl;
-  }
-
-  body {
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-    background-color: #fafaff;
-    color: rgb(var(--text-primary));
-    font-size: 1rem;
-    line-height: 1.5;
-  }
+/* Root variables */
+:root {
+  --font-sans: 'SF Pro Display', 'B Yekan', system-ui, sans-serif;
+  --font-persian: 'B Yekan', sans-serif;
+  --apple-blue: 37 99 235;
+  --apple-purple: 124 58 237;
+  --apple-green: 22 163 74;
+  --apple-orange: 234 88 12;
+  --text-primary: 23 23 23;
+  --text-secondary: 51 65 85;
 }
 
-@layer components {
-  /* Critical loading styles */
-  .apple-spinner {
-    @apply relative w-12 h-12 mx-auto;
-  }
-  
-  .apple-spinner::before {
-    @apply absolute inset-0 rounded-full border-3 border-gray-200;
-    content: '';
-  }
-  
-  .apple-spinner::after {
-    @apply absolute inset-0 rounded-full border-3 border-blue-600 border-t-transparent animate-spin;
-    content: '';
-  }
-
-  /* Optimized glass effects */
-  .neo-glass {
-    @apply bg-white/80 backdrop-blur-sm border border-white/40;
-  }
-
-  .glass-nav {
-    @apply bg-white/90 backdrop-blur-md border-b border-gray-200/50;
-    transition: background-color 0.2s ease-out;
-  }
-
-  /* Performance-optimized animations */
-  .animate-fade-in {
-    animation: fadeIn 400ms ease-out forwards;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 500ms ease-out forwards;
-  }
-
-  .card-hover-glow {
-    @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
-    will-change: transform, box-shadow;
-  }
+html {
+  scroll-behavior: smooth;
+  direction: rtl;
 }
 
-@layer utilities {
-  /* Essential animations only */
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Interactive cursor */
-  .cursor-pointer { cursor: pointer; }
-  
-  /* RTL support */
-  .rtl { direction: rtl; text-align: right; }
-  .ltr { direction: ltr; text-align: left; }
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  background-color: #fafaff;
+  color: rgb(var(--text-primary));
+  font-size: 1rem;
+  line-height: 1.5;
 }
+
+/* Critical loading styles */
+.apple-spinner {
+  @apply relative w-12 h-12 mx-auto;
+}
+
+.apple-spinner::before {
+  @apply absolute inset-0 rounded-full border-3 border-gray-200;
+  content: '';
+}
+
+.apple-spinner::after {
+  @apply absolute inset-0 rounded-full border-3 border-blue-600 border-t-transparent animate-spin;
+  content: '';
+}
+
+/* Optimized glass effects */
+.neo-glass {
+  @apply bg-white/80 backdrop-blur-sm border border-white/40;
+}
+
+.glass-nav {
+  @apply bg-white/90 backdrop-blur-md border-b border-gray-200/50;
+  transition: background-color 0.2s ease-out;
+}
+
+/* Performance-optimized animations */
+.animate-fade-in {
+  animation: fadeIn 400ms ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 500ms ease-out forwards;
+}
+
+.card-hover-glow {
+  @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
+  will-change: transform, box-shadow;
+}
+
+/* Essential animations only */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Interactive cursor */
+.cursor-pointer { cursor: pointer; }
+
+/* RTL support */
+.rtl { direction: rtl; text-align: right; }
+.ltr { direction: ltr; text-align: left; }

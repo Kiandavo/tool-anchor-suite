@@ -1,122 +1,120 @@
 
-@layer utilities {
-  /* Essential visual effects only */
-  .glass-morphism {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  }
+/* Essential visual effects only */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
 
-  .gradient-mesh {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient-shift 15s ease infinite;
-  }
+.gradient-mesh {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
 
-  .text-shine {
-    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-    background-size: 200% 200%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s ease-in-out infinite;
-  }
+.text-shine {
+  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s ease-in-out infinite;
+}
 
-  .card-hover-glow {
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-  }
+.card-hover-glow {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-  .card-hover-glow:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-  }
+.card-hover-glow:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
 
-  .magnetic-hover {
-    transition: transform 0.2s ease;
-    cursor: pointer;
-  }
+.magnetic-hover {
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
 
-  .magnetic-hover:hover {
-    transform: scale(1.02);
-  }
+.magnetic-hover:hover {
+  transform: scale(1.02);
+}
 
-  /* Essential keyframe animations */
-  @keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+/* Essential keyframe animations */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  @keyframes shine {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+@keyframes shine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  .bounce-subtle {
-    animation: bounce-subtle 2s ease-in-out infinite;
-  }
+.bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
 
-  @keyframes bounce-subtle {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-  }
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
 
-  /* Enhanced colorful gradients */
-  .gradient-persian {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
+/* Enhanced colorful gradients */
+.gradient-persian {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
 
-  .gradient-sunset {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  }
+.gradient-sunset {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
 
-  .gradient-ocean {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  }
+.gradient-ocean {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
 
-  .gradient-rainbow {
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffd93d, #ff6b6b);
-    background-size: 600% 600%;
-    animation: rainbow-shift 8s ease-in-out infinite;
-  }
+.gradient-rainbow {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffd93d, #ff6b6b);
+  background-size: 600% 600%;
+  animation: rainbow-shift 8s ease-in-out infinite;
+}
 
-  .gradient-aurora {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-    background-size: 400% 400%;
-    animation: aurora-shift 12s ease-in-out infinite;
-  }
+.gradient-aurora {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+  background-size: 400% 400%;
+  animation: aurora-shift 12s ease-in-out infinite;
+}
 
-  /* Additional colorful animations */
-  @keyframes rainbow-shift {
-    0%, 100% { background-position: 0% 50%; }
-    25% { background-position: 100% 0%; }
-    50% { background-position: 100% 100%; }
-    75% { background-position: 0% 100%; }
-  }
+/* Additional colorful animations */
+@keyframes rainbow-shift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
 
-  @keyframes aurora-shift {
-    0%, 100% { background-position: 0% 50%; }
-    33% { background-position: 100% 50%; }
-    66% { background-position: 0% 100%; }
-  }
+@keyframes aurora-shift {
+  0%, 100% { background-position: 0% 50%; }
+  33% { background-position: 100% 50%; }
+  66% { background-position: 0% 100%; }
+}
 
-  .colorful-glow {
-    box-shadow: 
-      0 0 20px rgba(102, 126, 234, 0.4),
-      0 0 40px rgba(118, 75, 162, 0.3),
-      0 0 60px rgba(240, 147, 251, 0.2);
-    transition: all 0.3s ease;
-  }
+.colorful-glow {
+  box-shadow: 
+    0 0 20px rgba(102, 126, 234, 0.4),
+    0 0 40px rgba(118, 75, 162, 0.3),
+    0 0 60px rgba(240, 147, 251, 0.2);
+  transition: all 0.3s ease;
+}
 
-  .colorful-glow:hover {
-    box-shadow: 
-      0 0 30px rgba(102, 126, 234, 0.6),
-      0 0 60px rgba(118, 75, 162, 0.5),
-      0 0 90px rgba(240, 147, 251, 0.4);
-  }
+.colorful-glow:hover {
+  box-shadow: 
+    0 0 30px rgba(102, 126, 234, 0.6),
+    0 0 60px rgba(118, 75, 162, 0.5),
+    0 0 90px rgba(240, 147, 251, 0.4);
 }

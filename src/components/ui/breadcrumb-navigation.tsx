@@ -15,16 +15,20 @@ interface BreadcrumbNavigationProps {
 
 export const BreadcrumbNavigation: React.FC<BreadcrumbNavigationProps> = ({ items }) => {
   return (
-    <nav className="flex items-center space-x-1 text-sm text-muted-foreground mb-4" dir="ltr">
+    <nav className="flex items-center gap-2 mb-6 animate-fade-in" dir="ltr">
       {items.map((item, index) => (
         <React.Fragment key={index}>
-          {index > 0 && <ChevronLeft className="w-4 h-4" />}
+          {index > 0 && (
+            <ChevronLeft className="w-3 h-3 text-apple-gray opacity-60 mx-1" />
+          )}
           {item.current ? (
-            <span className="text-foreground font-medium">{item.label}</span>
+            <span className="modern-breadcrumb-current">
+              {item.label}
+            </span>
           ) : (
             <Link 
               to={item.href || '#'} 
-              className="hover:text-foreground/70 transition-colors"
+              className="modern-breadcrumb-link"
             >
               {item.label}
             </Link>
