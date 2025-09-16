@@ -100,26 +100,24 @@ export const HeroSection = () => {
             {/* Main Title with Enhanced Typography */}
             <div className="mb-8 sm:mb-12">
               <h1 className="hero-title text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-4 sm:mb-6 relative">
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-lg text-shine animate-bounce-subtle">
+                <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent drop-shadow-2xl filter brightness-110">
                   لنگر
                 </span>
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 animate-pulse"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-40"></div>
               </h1>
               
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium mb-6 sm:mb-8 tracking-wide">
-                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  مجموعه ابزارهای آنلاین فارسی
-                </span>
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium mb-6 sm:mb-8 tracking-wide text-foreground/85 filter drop-shadow-lg">
+                مجموعه ابزارهای آنلاین فارسی
               </h2>
             </div>
             
             {/* Enhanced Description */}
             <div className="max-w-4xl mx-auto mb-10 sm:mb-14">
-              <p className="text-lg sm:text-xl lg:text-2xl font-body leading-relaxed mb-6 px-4">
-                <span className="font-semibold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">بیش از ۸۰ ابزار رایگان</span> 
-                <span className="text-foreground/90"> و کاربردی تحت وب</span>
+              <p className="text-lg sm:text-xl lg:text-2xl font-body leading-relaxed mb-6 px-4 text-foreground/90 filter drop-shadow-md">
+                <span className="font-semibold text-primary">بیش از ۸۰ ابزار رایگان</span> 
+                <span> و کاربردی تحت وب</span>
               </p>
-              <p className="text-base sm:text-lg font-body leading-relaxed max-w-3xl mx-auto px-4 bg-gradient-to-r from-slate-600 to-slate-400 bg-clip-text text-transparent">
+              <p className="text-base sm:text-lg font-body leading-relaxed max-w-3xl mx-auto px-4 text-muted-foreground filter drop-shadow-sm">
                 بدون نیاز به ثبت‌نام، با تمرکز کامل بر حریم خصوصی شما. طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه.
               </p>
             </div>
