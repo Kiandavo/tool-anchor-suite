@@ -38,15 +38,9 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-black/50 backdrop-blur-md border-b border-white/10' 
-          : 'bg-black/30 border-b border-white/20'
+          ? 'bg-primary/95 backdrop-blur-md border-b border-white/10' 
+          : 'bg-primary border-b border-white/20'
       }`}
-        style={{
-          backgroundImage: `url(${headerBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
-        }}
       >
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex items-center justify-between h-16">
