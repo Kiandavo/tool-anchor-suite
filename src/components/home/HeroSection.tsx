@@ -9,119 +9,139 @@ import { CriticalLoader } from '@/components/performance/CriticalLoader';
 export const HeroSection = () => {
   return (
     <CriticalLoader>
-      <section className="pt-32 pb-20 sm:pt-40 sm:pb-32 mb-20 relative overflow-hidden scroll-smooth">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-transparent to-muted/20" />
-      <div className="absolute inset-0 apple-glass" />
-      
-      <EnhancedGraphics variant="floating-orbs" className="absolute inset-0 opacity-60" />
-      
-      {/* Refined background elements */}
-      <div className="absolute top-20 right-[15%] w-96 h-96 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/15 blur-3xl animate-float" />
-      <div className="absolute bottom-20 left-[15%] w-80 h-80 rounded-full bg-gradient-to-tr from-green-500/20 to-cyan-500/15 blur-3xl animate-float" style={{
-      animationDelay: '2s'
-    }} />
-      
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-display-2xl font-display smooth-fonts leading-none tracking-tight text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-6 persian-optimized">
-            لنگر
-          </h1>
-          <h2 className="text-display-sm font-heading mb-10 sm:mb-12 leading-tight text-muted-foreground persian-optimized">
-            مجموعه ابزارهای آنلاین فارسی
-          </h2>
-          
-          <p className="text-body-xl max-w-3xl mx-auto leading-relaxed-plus text-muted-foreground mb-8 sm:mb-10 animate-fade-in persian-optimized text-balance">
-            بیش از ۸۰ ابزار رایگان و کاربردی تحت وب، بدون نیاز به ثبت‌نام و با تمرکز کامل بر حریم خصوصی شما. طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه.
-          </p>
-
-          {/* Enhanced Search */}
-          <div className="max-w-2xl mx-auto mb-10 sm:mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <EnhancedSearchBar />
-            
-            {/* Quick Access Buttons */}
-            <div className="flex flex-wrap justify-center gap-3 mt-4">
-              <button
-                onClick={() => window.location.href = '/tool/qr-code-generator'}
-                className="px-4 py-2 text-sm bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all duration-200 hover:scale-105"
-              >
-                QR کد
-              </button>
-              <button
-                onClick={() => window.location.href = '/tool/password-generator'}
-                className="px-4 py-2 text-sm bg-green-500/10 hover:bg-green-500/20 text-green-600 rounded-full transition-all duration-200 hover:scale-105"
-              >
-                رمز عبور
-              </button>
-              <button
-                onClick={() => window.location.href = '/tool/color-palette-generator'}
-                className="px-4 py-2 text-sm bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 rounded-full transition-all duration-200 hover:scale-105"
-              >
-                پالت رنگ
-              </button>
-              <button
-                onClick={() => window.location.href = '/tool/text-analyzer'}
-                className="px-4 py-2 text-sm bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 rounded-full transition-all duration-200 hover:scale-105"
-              >
-                تحلیل متن
-              </button>
+      <section className="pt-20 pb-16 sm:pt-32 sm:pb-24 mb-16 relative overflow-hidden">
+        {/* Modern Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/20 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5" />
+        
+        {/* Floating Elements */}
+        <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-pulse" />
+        <div className="absolute bottom-32 left-10 w-96 h-96 rounded-full bg-accent/10 blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Main Title with Enhanced Typography */}
+            <div className="mb-8 sm:mb-12">
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-4 sm:mb-6">
+                <span className="bg-gradient-to-r from-primary via-primary/90 to-accent bg-clip-text text-transparent drop-shadow-sm">
+                  لنگر
+                </span>
+              </h1>
+              
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium text-muted-foreground mb-6 sm:mb-8 tracking-wide">
+                مجموعه ابزارهای آنلاین فارسی
+              </h2>
             </div>
-          </div>
-          
-          {/* Apple-style feature highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 sm:mb-16 animate-slide-up">
-            <Link to="/category/calculators" className="block group">
-              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <Sparkles size={24} className="text-white" />
-                </div>
-                <h2 className="text-heading-md font-heading mb-3 text-foreground persian-optimized">ابزارهای تخصصی و کاربردی</h2>
-                <p className="text-support-md leading-relaxed persian-optimized text-balance">مجموعه کامل از ابزارهای محاسباتی، طراحی، متنی و تصویری برای کارهای روزانه شما</p>
-              </div>
-            </Link>
             
-            <Link to="/category/persian-cultural" className="block group">
-              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-6 shadow-lg animate-pulse-subtle" style={{
-                animationDelay: '0.5s'
-              }}>
-                  <Globe size={24} className="text-white" />
-                </div>
-                <h2 className="text-heading-md font-heading mb-3 text-foreground persian-optimized">فرهنگ و زبان فارسی</h2>
-                <p className="text-support-md leading-relaxed persian-optimized text-balance">ابزارهایی برای آشنایی با فرهنگ ایرانی، آشپزی، ادبیات کلاسیک، موسیقی و جشن‌های سنتی</p>
-              </div>
-            </Link>
-            
-            <Link to="/category/readings" className="block group">
-              <div className="apple-card p-8 rounded-3xl shadow-apple-lg hover:shadow-apple-xl transition-all duration-500 hover:scale-105 hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-background group-hover:to-muted/50">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-lg animate-scale-subtle" style={{
-                animationDelay: '1s'
-              }}>
-                  <BookOpen size={24} className="text-white" />
-                </div>
-                <h2 className="text-heading-md font-heading mb-3 text-foreground persian-optimized">طالع‌بینی و فال</h2>
-                <p className="text-support-md leading-relaxed persian-optimized text-balance">انواع ابزارهای فال حافظ، طالع‌بینی، استخاره، فال تاروت و سایر خوانش‌های سنتی ایرانی</p>
-              </div>
-            </Link>
-          </div>
+            {/* Enhanced Description */}
+            <div className="max-w-4xl mx-auto mb-10 sm:mb-14">
+              <p className="text-lg sm:text-xl lg:text-2xl font-body leading-relaxed text-foreground/80 mb-6 px-4">
+                <span className="font-semibold text-primary">بیش از ۸۰ ابزار رایگان</span> و کاربردی تحت وب
+              </p>
+              <p className="text-base sm:text-lg font-body leading-relaxed text-muted-foreground max-w-3xl mx-auto px-4">
+                بدون نیاز به ثبت‌نام، با تمرکز کامل بر حریم خصوصی شما. طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه.
+              </p>
+            </div>
 
-          <div className="flex flex-wrap justify-center gap-6 mb-16">
-            <Button size="lg" className="icon-text shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 font-semibold text-lg bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-2xl hover:-translate-y-1" asChild>
-              <Link to="/all-tools">
-                <span>مشاهده همه ابزارها</span>
-                <ArrowRight className="h-5 w-5 rtl:rotate-180" />
+            {/* Modern Search Section */}
+            <div className="max-w-2xl mx-auto mb-12 sm:mb-16">
+              <div className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-border/50 shadow-lg">
+                <EnhancedSearchBar />
+                
+                {/* Quick Access Pills */}
+                <div className="flex flex-wrap justify-center gap-2 mt-6">
+                  <button
+                    onClick={() => window.location.href = '/tool/qr-code-generator'}
+                    className="px-4 py-2 text-sm font-medium bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all duration-300 hover:scale-105 border border-primary/20"
+                  >
+                    QR کد
+                  </button>
+                  <button
+                    onClick={() => window.location.href = '/tool/password-generator'}
+                    className="px-4 py-2 text-sm font-medium bg-green-500/10 hover:bg-green-500/20 text-green-600 rounded-full transition-all duration-300 hover:scale-105 border border-green-500/20"
+                  >
+                    رمز عبور
+                  </button>
+                  <button
+                    onClick={() => window.location.href = '/tool/color-palette-generator'}
+                    className="px-4 py-2 text-sm font-medium bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 rounded-full transition-all duration-300 hover:scale-105 border border-purple-500/20"
+                  >
+                    پالت رنگ
+                  </button>
+                  <button
+                    onClick={() => window.location.href = '/tool/text-analyzer'}
+                    className="px-4 py-2 text-sm font-medium bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 rounded-full transition-all duration-300 hover:scale-105 border border-amber-500/20"
+                  >
+                    تحلیل متن
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Modern Feature Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12 sm:mb-16">
+              <Link to="/category/calculators" className="group">
+                <div className="bg-card/40 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-border/30 transition-all duration-500 hover:shadow-xl hover:bg-card/60 hover:border-primary/20 hover:-translate-y-2 hover:scale-105">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                    <Sparkles size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-heading font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+                    ابزارهای تخصصی
+                  </h3>
+                  <p className="text-sm sm:text-base font-body text-muted-foreground leading-relaxed">
+                    مجموعه کامل از ابزارهای محاسباتی، طراحی و متنی
+                  </p>
+                </div>
               </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="glass-morphism hover:shadow-lg border-primary/30 text-primary hover:bg-primary/10 transition-all duration-500 hover:scale-105 font-semibold text-lg px-8 py-4 rounded-2xl hover:-translate-y-1 backdrop-blur-sm" asChild>
-              <Link to="/#popular-tools">
-                ابزارهای محبوب
+              
+              <Link to="/category/persian-cultural" className="group">
+                <div className="bg-card/40 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-border/30 transition-all duration-500 hover:shadow-xl hover:bg-card/60 hover:border-primary/20 hover:-translate-y-2 hover:scale-105">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                    <Globe size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-heading font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+                    فرهنگ فارسی
+                  </h3>
+                  <p className="text-sm sm:text-base font-body text-muted-foreground leading-relaxed">
+                    ابزارهایی برای فرهنگ ایرانی، ادبیات و موسیقی
+                  </p>
+                </div>
               </Link>
-            </Button>
+              
+              <Link to="/category/readings" className="group">
+                <div className="bg-card/40 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-border/30 transition-all duration-500 hover:shadow-xl hover:bg-card/60 hover:border-primary/20 hover:-translate-y-2 hover:scale-105">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                    <BookOpen size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-heading font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+                    طالع‌بینی و فال
+                  </h3>
+                  <p className="text-sm sm:text-base font-body text-muted-foreground leading-relaxed">
+                    انواع فال حافظ، طالع‌بینی و تاروت سنتی
+                  </p>
+                </div>
+              </Link>
+            </div>
+
+            {/* Modern CTA Buttons */}
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16">
+              <Button size="lg" className="group font-heading font-semibold text-lg px-8 py-4 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1" asChild>
+                <Link to="/all-tools">
+                  <span>مشاهده همه ابزارها</span>
+                  <ArrowRight className="h-5 w-5 rtl:rotate-180 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" className="font-heading font-semibold text-lg px-8 py-4 rounded-2xl border-2 border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:-translate-y-1" asChild>
+                <Link to="/#popular-tools">
+                  ابزارهای محبوب
+                </Link>
+              </Button>
+            </div>
+            
+            {/* Modern Divider */}
+            <div className="max-w-xs mx-auto h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent mt-16 rounded-full" />
           </div>
-          
-          <div className="max-w-2xl mx-auto h-0.5 bg-gradient-to-r from-transparent via-primary/40 to-transparent mt-20 rounded-full animate-shimmer" />
         </div>
-      </div>
       </section>
     </CriticalLoader>
   );
