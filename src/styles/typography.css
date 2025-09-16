@@ -1,318 +1,312 @@
 /* Enhanced Typography System with Modern Persian Fonts */
 
-@layer base {
-  /* Modern Font Feature Optimization */
-  @font-feature-values 'Inter' {
-    @styleset {
-      stylistic-set-01: 1;
-      contextual-alternates: 1;
-    }
-  }
-  
-  @font-feature-values 'Manrope' {
-    @styleset {
-      stylistic-set-01: 1;
-    }
-  }
-
-  @font-feature-values 'Vazirmatn' {
-    @styleset {
-      persian-numerals: 1;
-    }
-  }
-
-  /* Modern Base Typography */
-  html {
-    font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, sans-serif;
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "cv11" 1, "ss01" 1;
-    text-rendering: optimizeSpeed;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-optical-sizing: auto;
-    font-variant-numeric: tabular-nums;
-  }
-
-  body {
-    font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    letter-spacing: 0.01em;
-    font-optical-sizing: auto;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Persian Text Optimization */
-  [lang="fa"], .persian-text {
-    font-family: 'Inter', 'Vazirmatn', 'Shabnam', sans-serif;
-    direction: rtl;
-    text-align: right;
-  }
-
-  /* Modern Headings with Manrope */
-  h1, h2, h3, h4, h5, h6,
-  .heading-font {
-    font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
-    font-feature-settings: "ss01" 1, "cv11" 1;
-    font-optical-sizing: auto;
-  }
-
-  /* Modern Body Text with Inter */
-  p, span, div, 
-  .body-font {
-    font-family: 'Inter', 'Vazirmatn', sans-serif;
-    font-feature-settings: "kern" 1, "liga" 1, "cv11" 1, "ss01" 1;
-    font-optical-sizing: auto;
-  }
-
-  /* Supporting Text with Shabnam */
-  .text-support,
-  .support-font {
-    font-family: 'Shabnam', 'Vazirmatn', 'Inter', sans-serif;
-    font-weight: 400;
-  }
-
-  /* Display Text with Manrope */
-  .text-display,
-  .display-font {
-    font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    font-feature-settings: "ss01" 1, "cv11" 1;
-    font-optical-sizing: auto;
-  }
-
-  /* Monospace Text with JetBrains Mono */
-  .text-mono,
-  .mono-font,
-  code, pre {
-    font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-    font-feature-settings: "cv01" 1, "cv02" 1, "cv03" 1, "cv04" 1;
-    font-variant-numeric: slashed-zero;
+/* Modern Font Feature Optimization */
+@font-feature-values 'Inter' {
+  @styleset {
+    stylistic-set-01: 1;
+    contextual-alternates: 1;
   }
 }
 
-@layer components {
-  /* Typography Scale */
-  .text-display-2xl {
-    @apply text-6xl font-display font-bold tracking-tight leading-none;
-  }
-
-  .text-display-xl {
-    @apply text-5xl font-display font-bold tracking-tight leading-none;
-  }
-
-  .text-display-lg {
-    @apply text-4xl font-heading font-bold tracking-tight leading-tight;
-  }
-
-  .text-display-md {
-    @apply text-3xl font-heading font-bold tracking-tight leading-tight;
-  }
-
-  .text-display-sm {
-    @apply text-2xl font-heading font-semibold tracking-tight leading-tight;
-  }
-
-  /* Heading Scale */
-  .text-heading-xl {
-    @apply text-3xl font-heading font-bold leading-tight;
-  }
-
-  .text-heading-lg {
-    @apply text-2xl font-heading font-semibold leading-tight;
-  }
-
-  .text-heading-md {
-    @apply text-xl font-heading font-semibold leading-tight;
-  }
-
-  .text-heading-sm {
-    @apply text-lg font-heading font-medium leading-tight;
-  }
-
-  /* Body Scale */
-  .text-body-xl {
-    @apply text-xl font-body leading-relaxed;
-  }
-
-  .text-body-lg {
-    @apply text-lg font-body leading-relaxed;
-  }
-
-  .text-body-md {
-    @apply text-base font-body leading-normal;
-  }
-
-  .text-body-sm {
-    @apply text-sm font-body leading-normal;
-  }
-
-  .text-body-xs {
-    @apply text-xs font-body leading-normal;
-  }
-
-  /* Support Text Scale */
-  .text-support-lg {
-    @apply text-lg font-support leading-relaxed;
-  }
-
-  .text-support-md {
-    @apply text-base font-support leading-normal;
-  }
-
-  .text-support-sm {
-    @apply text-sm font-support leading-normal;
-  }
-
-  .text-support-xs {
-    @apply text-xs font-support leading-tight;
-  }
-
-  /* Persian Number Styles */
-  .persian-numbers {
-    font-variant-numeric: normal;
-    font-feature-settings: "tnum" 0;
-  }
-
-  .latin-numbers {
-    font-variant-numeric: lining-nums;
-    font-feature-settings: "tnum" 1;
-  }
-
-  /* Typography Improvements */
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .leading-relaxed-plus {
-    line-height: 1.75;
-  }
-
-  .leading-loose-plus {
-    line-height: 2;
-  }
-
-  /* Better Typography Rhythm */
-  .typography-rhythm > * + * {
-    margin-top: 1.5rem;
-  }
-
-  .typography-rhythm-tight > * + * {
-    margin-top: 1rem;
-  }
-
-  .typography-rhythm-loose > * + * {
-    margin-top: 2rem;
-  }
-
-  /* Enhanced Persian Text Rendering */
-  .persian-optimized {
-    font-family: 'Inter', 'Vazirmatn', 'Shabnam', 'Manrope', sans-serif;
-    direction: rtl;
-    text-align: right;
-    hyphens: auto;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    font-feature-settings: "ss01" 1, "cv11" 1, "liga" 1, "kern" 1;
-    font-optical-sizing: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Font Loading States */
-  .font-loading {
-    font-display: swap;
-    visibility: hidden;
-  }
-
-  .font-loaded {
-    visibility: visible;
-  }
-
-  /* Responsive Typography */
-  @media (max-width: 640px) {
-    .text-display-2xl { @apply text-4xl; }
-    .text-display-xl { @apply text-3xl; }
-    .text-display-lg { @apply text-2xl; }
-    .text-display-md { @apply text-xl; }
-    .text-heading-xl { @apply text-2xl; }
-    .text-heading-lg { @apply text-xl; }
+@font-feature-values 'Manrope' {
+  @styleset {
+    stylistic-set-01: 1;
   }
 }
 
-@layer utilities {
-  /* Font Optimization Utilities */
-  .optimize-legibility {
-    text-rendering: optimizeLegibility;
+@font-feature-values 'Vazirmatn' {
+  @styleset {
+    persian-numerals: 1;
   }
+}
 
-  .optimize-speed {
-    text-rendering: optimizeSpeed;
-  }
+/* Modern Base Typography */
+html {
+  font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "cv11" 1, "ss01" 1;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-variant-numeric: tabular-nums;
+}
 
-  .smooth-fonts {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+body {
+  font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  font-optical-sizing: auto;
+  font-variant-numeric: tabular-nums;
+}
 
-  /* Persian Typography Utilities */
-  .rtl-text {
-    direction: rtl;
-    text-align: right;
-  }
+/* Persian Text Optimization */
+[lang="fa"], .persian-text {
+  font-family: 'Inter', 'Vazirmatn', 'Shabnam', sans-serif;
+  direction: rtl;
+  text-align: right;
+}
 
-  .ltr-text {
-    direction: ltr;
-    text-align: left;
-  }
+/* Modern Headings with Manrope */
+h1, h2, h3, h4, h5, h6,
+.heading-font {
+  font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-feature-settings: "ss01" 1, "cv11" 1;
+  font-optical-sizing: auto;
+}
 
-  /* Advanced Typography */
-  .kerning-auto {
-    font-kerning: auto;
-  }
+/* Modern Body Text with Inter */
+p, span, div, 
+.body-font {
+  font-family: 'Inter', 'Vazirmatn', sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "cv11" 1, "ss01" 1;
+  font-optical-sizing: auto;
+}
 
-  .kerning-normal {
-    font-kerning: normal;
-  }
+/* Supporting Text with Shabnam */
+.text-support,
+.support-font {
+  font-family: 'Shabnam', 'Vazirmatn', 'Inter', sans-serif;
+  font-weight: 400;
+}
 
-  .kerning-none {
-    font-kerning: none;
-  }
+/* Display Text with Manrope */
+.text-display,
+.display-font {
+  font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-feature-settings: "ss01" 1, "cv11" 1;
+  font-optical-sizing: auto;
+}
 
-  /* Modern Typography Context */
-  .heading-context h1,
-  .heading-context h2,
-  .heading-context h3,
-  .heading-context h4,
-  .heading-context h5,
-  .heading-context h6 {
-    font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
-    font-feature-settings: "ss01" 1, "cv11" 1;
-    font-optical-sizing: auto;
-  }
+/* Monospace Text with JetBrains Mono */
+.text-mono,
+.mono-font,
+code, pre {
+  font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+  font-feature-settings: "cv01" 1, "cv02" 1, "cv03" 1, "cv04" 1;
+  font-variant-numeric: slashed-zero;
+}
 
-  .body-context p,
-  .body-context span,
-  .body-context div {
-    font-family: 'Inter', 'Vazirmatn', sans-serif;
-    font-feature-settings: "kern" 1, "liga" 1, "cv11" 1, "ss01" 1;
-    font-optical-sizing: auto;
-  }
+/* Typography Scale */
+.text-display-2xl {
+  @apply text-6xl font-display font-bold tracking-tight leading-none;
+}
 
-  .mono-context *,
-  .mono-context code,
-  .mono-context pre {
-    font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-    font-feature-settings: "cv01" 1, "cv02" 1, "cv03" 1, "cv04" 1;
-    font-variant-numeric: slashed-zero;
-  }
+.text-display-xl {
+  @apply text-5xl font-display font-bold tracking-tight leading-none;
+}
 
-  .accent-context * {
-    font-family: 'Shabnam', 'Vazirmatn', 'Inter', sans-serif;
-    font-feature-settings: "ss01" 1, "cv11" 1;
-  }
+.text-display-lg {
+  @apply text-4xl font-heading font-bold tracking-tight leading-tight;
+}
+
+.text-display-md {
+  @apply text-3xl font-heading font-bold tracking-tight leading-tight;
+}
+
+.text-display-sm {
+  @apply text-2xl font-heading font-semibold tracking-tight leading-tight;
+}
+
+/* Heading Scale */
+.text-heading-xl {
+  @apply text-3xl font-heading font-bold leading-tight;
+}
+
+.text-heading-lg {
+  @apply text-2xl font-heading font-semibold leading-tight;
+}
+
+.text-heading-md {
+  @apply text-xl font-heading font-semibold leading-tight;
+}
+
+.text-heading-sm {
+  @apply text-lg font-heading font-medium leading-tight;
+}
+
+/* Body Scale */
+.text-body-xl {
+  @apply text-xl font-body leading-relaxed;
+}
+
+.text-body-lg {
+  @apply text-lg font-body leading-relaxed;
+}
+
+.text-body-md {
+  @apply text-base font-body leading-normal;
+}
+
+.text-body-sm {
+  @apply text-sm font-body leading-normal;
+}
+
+.text-body-xs {
+  @apply text-xs font-body leading-normal;
+}
+
+/* Support Text Scale */
+.text-support-lg {
+  @apply text-lg font-support leading-relaxed;
+}
+
+.text-support-md {
+  @apply text-base font-support leading-normal;
+}
+
+.text-support-sm {
+  @apply text-sm font-support leading-normal;
+}
+
+.text-support-xs {
+  @apply text-xs font-support leading-tight;
+}
+
+/* Persian Number Styles */
+.persian-numbers {
+  font-variant-numeric: normal;
+  font-feature-settings: "tnum" 0;
+}
+
+.latin-numbers {
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Typography Improvements */
+.text-balance {
+  text-wrap: balance;
+}
+
+.leading-relaxed-plus {
+  line-height: 1.75;
+}
+
+.leading-loose-plus {
+  line-height: 2;
+}
+
+/* Better Typography Rhythm */
+.typography-rhythm > * + * {
+  margin-top: 1.5rem;
+}
+
+.typography-rhythm-tight > * + * {
+  margin-top: 1rem;
+}
+
+.typography-rhythm-loose > * + * {
+  margin-top: 2rem;
+}
+
+/* Enhanced Persian Text Rendering */
+.persian-optimized {
+  font-family: 'Inter', 'Vazirmatn', 'Shabnam', 'Manrope', sans-serif;
+  direction: rtl;
+  text-align: right;
+  hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  font-feature-settings: "ss01" 1, "cv11" 1, "liga" 1, "kern" 1;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font Loading States */
+.font-loading {
+  font-display: swap;
+  visibility: hidden;
+}
+
+.font-loaded {
+  visibility: visible;
+}
+
+/* Responsive Typography */
+@media (max-width: 640px) {
+  .text-display-2xl { @apply text-4xl; }
+  .text-display-xl { @apply text-3xl; }
+  .text-display-lg { @apply text-2xl; }
+  .text-display-md { @apply text-xl; }
+  .text-heading-xl { @apply text-2xl; }
+  .text-heading-lg { @apply text-xl; }
+}
+
+/* Font Optimization Utilities */
+.optimize-legibility {
+  text-rendering: optimizeLegibility;
+}
+
+.optimize-speed {
+  text-rendering: optimizeSpeed;
+}
+
+.smooth-fonts {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Persian Typography Utilities */
+.rtl-text {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr-text {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Advanced Typography */
+.kerning-auto {
+  font-kerning: auto;
+}
+
+.kerning-normal {
+  font-kerning: normal;
+}
+
+.kerning-none {
+  font-kerning: none;
+}
+
+/* Modern Typography Context */
+.heading-context h1,
+.heading-context h2,
+.heading-context h3,
+.heading-context h4,
+.heading-context h5,
+.heading-context h6 {
+  font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
+  font-feature-settings: "ss01" 1, "cv11" 1;
+  font-optical-sizing: auto;
+}
+
+.body-context p,
+.body-context span,
+.body-context div {
+  font-family: 'Inter', 'Vazirmatn', sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "cv11" 1, "ss01" 1;
+  font-optical-sizing: auto;
+}
+
+.mono-context *,
+.mono-context code,
+.mono-context pre {
+  font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+  font-feature-settings: "cv01" 1, "cv02" 1, "cv03" 1, "cv04" 1;
+  font-variant-numeric: slashed-zero;
+}
+
+.accent-context * {
+  font-family: 'Shabnam', 'Vazirmatn', 'Inter', sans-serif;
+  font-feature-settings: "ss01" 1, "cv11" 1;
 }

@@ -1,26 +1,24 @@
 
-@layer components {
-  .shadow-soft {
-    @apply shadow-[0_2px_10px_0_rgba(0,0,0,0.05)];
-  }
-  
-  .shadow-medium {
-    @apply shadow-[0_4px_20px_0_rgba(0,0,0,0.08)];
-  }
-  
-  .shadow-hard {
-    @apply shadow-[0_8px_30px_0_rgba(0,0,0,0.12)];
-  }
-  
-  .text-shadow-sm {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  }
-  
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  }
-  
-  .text-shadow-lg {
-    text-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  }
+.shadow-soft {
+  @apply shadow-[0_2px_10px_0_rgba(0,0,0,0.05)];
+}
+
+.shadow-medium {
+  @apply shadow-[0_4px_20px_0_rgba(0,0,0,0.08)];
+}
+
+.shadow-hard {
+  @apply shadow-[0_8px_30px_0_rgba(0,0,0,0.12)];
+}
+
+.text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }

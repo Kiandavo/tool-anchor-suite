@@ -1,68 +1,66 @@
 
-@layer components {
-  /* Highly optimized critical component styles */
-  
-  /* Skip to content link for keyboard users */
-  .skip-to-content {
-    @apply bg-white text-blue-700 fixed top-0 left-0 p-3 m-3 transition-transform duration-200 z-50;
-    transform: translateY(-120%);
-  }
+/* Highly optimized critical component styles */
 
-  .skip-to-content:focus {
-    transform: translateY(0);
-  }
-  
-  /* Blurred background elements with performance optimizations */
-  .bg-blur-element {
-    @apply absolute pointer-events-none opacity-70 blur-3xl;
-    z-index: -1;
-    will-change: transform, opacity;
-  }
+/* Skip to content link for keyboard users */
+.skip-to-content {
+  @apply bg-white text-blue-700 fixed top-0 left-0 p-3 m-3 transition-transform duration-200 z-50;
+  transform: translateY(-120%);
+}
 
-  /* Glass navigation effect - optimized for performance */
-  .glass-nav {
-    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 z-30;
-    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
-  }
-  
-  /* Optimized button styles */
-  .btn-base {
-    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
-  }
-  
-  /* Enhanced card styles */
-  .card-base {
-    @apply rounded-xl border bg-card text-card-foreground shadow-sm;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .card-interactive {
-    @apply card-base hover:shadow-md hover:-translate-y-0.5;
-  }
-  
-  .card-elevated {
-    @apply card-base shadow-lg;
-  }
-  
-  /* Form control styles */
-  .form-control {
-    @apply flex flex-col space-y-2;
-  }
-  
-  .form-group {
-    @apply space-y-3;
-  }
-  
-  /* Enhanced interactive elements */
-  .interactive-element {
-    @apply transition-all duration-200 ease-out;
-  }
-  
-  .hover-scale-subtle {
-    @apply interactive-element hover:scale-[1.02];
-  }
-  
-  .hover-brightness {
-    @apply interactive-element hover:brightness-110;
-  }
+.skip-to-content:focus {
+  transform: translateY(0);
+}
+
+/* Blurred background elements with performance optimizations */
+.bg-blur-element {
+  @apply absolute pointer-events-none opacity-70 blur-3xl;
+  z-index: -1;
+  will-change: transform, opacity;
+}
+
+/* Glass navigation effect - optimized for performance */
+.glass-nav {
+  @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 z-30;
+  transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+/* Optimized button styles */
+.btn-base {
+  @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+}
+
+/* Enhanced card styles */
+.card-base {
+  @apply rounded-xl border bg-card text-card-foreground shadow-sm;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-interactive {
+  @apply card-base hover:shadow-md hover:-translate-y-0.5;
+}
+
+.card-elevated {
+  @apply card-base shadow-lg;
+}
+
+/* Form control styles */
+.form-control {
+  @apply flex flex-col space-y-2;
+}
+
+.form-group {
+  @apply space-y-3;
+}
+
+/* Enhanced interactive elements */
+.interactive-element {
+  @apply transition-all duration-200 ease-out;
+}
+
+.hover-scale-subtle {
+  @apply interactive-element hover:scale-[1.02];
+}
+
+.hover-brightness {
+  @apply interactive-element hover:brightness-110;
 }

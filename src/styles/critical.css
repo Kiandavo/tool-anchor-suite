@@ -33,12 +33,12 @@ body {
 }
 
 .apple-spinner::before {
-  @apply absolute inset-0 rounded-full border-3 border-gray-200;
+  @apply absolute inset-0 rounded-full border-2 border-gray-200;
   content: '';
 }
 
 .apple-spinner::after {
-  @apply absolute inset-0 rounded-full border-3 border-blue-600 border-t-transparent animate-spin;
+  @apply absolute inset-0 rounded-full border-2 border-blue-600 border-t-transparent animate-spin;
   content: '';
 }
 

@@ -16,7 +16,7 @@
 }
 
 .fortune-heading {
-  @apply text-3xl font-bold text-gradient;
+  @apply text-3xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent;
 }
 
 .fortune-text {
