@@ -63,7 +63,7 @@ const Index = () => {
         title={homeTitle}
         description={homeDescription}
         keywords={homeKeywords}
-        canonical="https://langar.co/"
+        canonical="https://laangar.com/"
         faq={homeFAQ}
       />
       

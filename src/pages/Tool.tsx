@@ -85,9 +85,9 @@ const Tool = () => {
         description={optimizedDescription}
         keywords={comprehensiveKeywords}
         breadcrumbs={[
-          { name: 'لنگر', url: 'https://langar.co/' },
-          { name: categoryLabel, url: `https://langar.co/category/${tool.category}` },
-          { name: tool.name, url: `https://langar.co/tool/${tool.slug}` }
+          { name: 'لنگر', url: 'https://laangar.com/' },
+          { name: categoryLabel, url: `https://laangar.com/category/${tool.category}` },
+          { name: tool.name, url: `https://laangar.com/tool/${tool.slug}` }
         ]}
         faq={finalFAQ}
       />

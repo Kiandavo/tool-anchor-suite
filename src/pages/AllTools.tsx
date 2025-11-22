@@ -66,7 +66,7 @@ const AllTools = () => {
         title="همه ابزارها - لنگر | فهرست کامل ابزارهای آنلاین"
         description="فهرست کامل ابزارهای آنلاین رایگان لنگر بر اساس دسته‌بندی: محاسبه‌گر، متن، تصویر، سئو، فرهنگ فارسی، طالع‌بینی و بیشتر."
         keywords="همه ابزارها, ابزار آنلاین, لنگر, فهرست ابزار, محاسبه‌گر, ابزار متنی, ابزار تصویری, سئو, طالع‌بینی"
-        canonical="https://langar.co/all-tools"
+        canonical="https://laangar.com/all-tools"
       />
       <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 text-center">همه ابزارها بر اساس دسته‌بندی</h1>
       <p className="text-gray-600 text-sm sm:text-base text-center mb-6">همه ابزارهای رایگان لنگر در یک صفحه؛ به سرعت ابزار مناسب خود را بر اساس دسته‌بندی پیدا کنید.</p>

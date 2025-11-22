@@ -25,7 +25,7 @@ export const SoftwareApplicationSchema: React.FC<SoftwareApplicationSchemaProps>
   description,
   applicationCategory,
   operatingSystem = "Web Browser",
-  url = "https://langar.co",
+  url = "https://laangar.com",
   author = "لنگر",
   aggregateRating,
   offers = { price: "0", priceCurrency: "IRR" },

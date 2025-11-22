@@ -17,7 +17,7 @@ export default function CalculatorsGuide() {
         title="راهنمای جامع محاسبه‌گرهای آنلاین رایگان ۲۰۲۵ | +50 ابزار | لنگر"
         description="راهنمای کامل استفاده از محاسبه‌گرهای آنلاین: BMI، درصد، تبدیل واحد، وام، بیمه و 50+ ابزار دیگر. رایگان، سریع و دقیق ✅"
         keywords="محاسبه‌گر آنلاین, راهنمای محاسبه‌گر, ماشین حساب رایگان, محاسبه BMI, محاسبه درصد, تبدیل واحد, لنگر ۲۰۲۵"
-        canonical="https://langar.co/guides/calculators"
+        canonical="https://laangar.com/guides/calculators"
       />
 
       <article className="max-w-5xl mx-auto">

@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
       <SeoHead 
         title="سیاست حریم خصوصی - لنگر"
         description="سیاست حریم خصوصی وب‌سایت لنگر - نحوه جمع‌آوری، استفاده و محافظت از اطلاعات شخصی کاربران"
-        canonical="https://langar.co/privacy-policy"
+        canonical="https://laangar.com/privacy-policy"
       />
       
       <div className="max-w-4xl mx-auto">
@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
           <section>
             <h2 className="text-2xl font-semibold mb-4">مقدمه</h2>
             <p className="text-muted-foreground leading-relaxed">
-              وب‌سایت لنگر (langar.co) متعهد به حفاظت از حریم خصوصی کاربران خود است. 
+              وب‌سایت لنگر (laangar.com) متعهد به حفاظت از حریم خصوصی کاربران خود است. 
               این سیاست نحوه جمع‌آوری، استفاده، و محافظت از اطلاعات شما را توضیح می‌دهد.
             </p>
           </section>

@@ -244,7 +244,7 @@ export default function FAQEnhanced() {
         title="سوالات متداول (FAQ) - راهنمای کامل استفاده از لنگر ۲۰۲۵"
         description="پاسخ به بیش از 50 سوال متداول درباره استفاده از ابزارهای لنگر: امنیت، محاسبه‌گرها، ابزارهای متنی، تصویر، سئو و بیشتر ✅"
         keywords="سوالات متداول لنگر, راهنمای استفاده, FAQ, پشتیبانی, کمک"
-        canonical="https://langar.co/faq"
+        canonical="https://laangar.com/faq"
       />
 
       <div className="max-w-4xl mx-auto">

@@ -8,7 +8,7 @@ const TermsOfService = () => {
       <SeoHead 
         title="شرایط استفاده - لنگر"
         description="شرایط و قوانین استفاده از وب‌سایت و ابزارهای آنلاین لنگر"
-        canonical="https://langar.co/terms-of-service"
+        canonical="https://laangar.com/terms-of-service"
       />
       
       <div className="max-w-4xl mx-auto">
@@ -18,7 +18,7 @@ const TermsOfService = () => {
           <section>
             <h2 className="text-2xl font-semibold mb-4">پذیرش شرایط</h2>
             <p className="text-muted-foreground leading-relaxed">
-              با استفاده از وب‌سایت لنگر (langar.co)، شما این شرایط و قوانین را می‌پذیرید. 
+              با استفاده از وب‌سایت لنگر (laangar.com)، شما این شرایط و قوانین را می‌پذیرید. 
               اگر با این شرایط موافق نیستید، لطفاً از استفاده از خدمات خودداری کنید.
             </p>
           </section>
