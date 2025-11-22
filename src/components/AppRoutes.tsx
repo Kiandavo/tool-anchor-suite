@@ -15,6 +15,9 @@ import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
 import NotFound from "@/pages/NotFound";
 import CalculatorsGuide from "@/pages/guides/CalculatorsGuide";
+import PressKit from "@/pages/PressKit";
+import Resources from "@/pages/Resources";
+import WidgetsPage from "@/pages/WidgetsPage";
 
 export const AppRoutes = () => {
   console.log('AppRoutes component loading...');
@@ -38,6 +41,12 @@ export const AppRoutes = () => {
       <Route path="/وبلاگ/:slug" element={<BlogPost />} />
       <Route path="/guides/calculators" element={<CalculatorsGuide />} />
       <Route path="/راهنما/محاسبه‌گرها" element={<CalculatorsGuide />} />
+      <Route path="/press-kit" element={<PressKit />} />
+      <Route path="/کیت-رسانه‌ای" element={<PressKit />} />
+      <Route path="/resources" element={<Resources />} />
+      <Route path="/منابع" element={<Resources />} />
+      <Route path="/widgets" element={<WidgetsPage />} />
+      <Route path="/ویجت" element={<WidgetsPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="*" element={<NotFound />} />
