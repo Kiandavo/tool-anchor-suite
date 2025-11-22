@@ -16,13 +16,6 @@ const initializeApp = () => {
     throw new Error('Root element not found');
   }
 
-  // Preserve critical hero content during hydration
-  const criticalHero = document.getElementById('critical-hero');
-  let heroHTML = '';
-  if (criticalHero) {
-    heroHTML = criticalHero.outerHTML;
-  }
-
   console.log('Root element found, creating React root...');
 
   try {
