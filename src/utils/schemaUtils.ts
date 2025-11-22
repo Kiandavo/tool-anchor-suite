@@ -221,6 +221,148 @@ export const generateHowToSchema = (
   }
 };
 
+// Organization schema for better brand recognition
+export const generateOrganizationSchema = () => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "لنگر",
+      "alternateName": "Langar Online Tools",
+      "url": "https://langar.co",
+      "logo": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png",
+      "description": "ارائه‌دهنده بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر و سئو",
+      "foundingDate": "2024",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "availableLanguage": ["fa-IR", "en"]
+      },
+      "sameAs": [
+        "https://www.instagram.com/kiandavo"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IR",
+        "addressLocality": "تهران"
+      }
+    };
+  } catch (error) {
+    console.error('Error generating organization schema:', error);
+    return null;
+  }
+};
+
+// Article schema for blog posts and guides
+export const generateArticleSchema = (
+  headline: string,
+  description: string,
+  author: string,
+  datePublished: string,
+  dateModified: string,
+  imageUrl?: string,
+  articleUrl?: string
+) => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": headline,
+      "description": description,
+      "image": imageUrl || "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png",
+      "author": {
+        "@type": "Person",
+        "name": author
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "لنگر",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+        }
+      },
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": articleUrl || "https://langar.co"
+      },
+      "inLanguage": "fa-IR"
+    };
+  } catch (error) {
+    console.error('Error generating article schema:', error);
+    return null;
+  }
+};
+
+// Video schema for tutorial videos
+export const generateVideoSchema = (
+  name: string,
+  description: string,
+  thumbnailUrl: string,
+  uploadDate: string,
+  duration: string,
+  contentUrl?: string
+) => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": name,
+      "description": description,
+      "thumbnailUrl": thumbnailUrl,
+      "uploadDate": uploadDate,
+      "duration": duration,
+      ...(contentUrl && { "contentUrl": contentUrl }),
+      "publisher": {
+        "@type": "Organization",
+        "name": "لنگر",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+        }
+      },
+      "inLanguage": "fa-IR"
+    };
+  } catch (error) {
+    console.error('Error generating video schema:', error);
+    return null;
+  }
+};
+
+// Review/Rating schema for tools
+export const generateReviewSchema = (
+  itemName: string,
+  ratingValue: number,
+  reviewCount: number,
+  bestRating: number = 5
+) => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": itemName,
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": ratingValue.toString(),
+        "reviewCount": reviewCount.toString(),
+        "bestRating": bestRating.toString(),
+        "worstRating": "1"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      }
+    };
+  } catch (error) {
+    console.error('Error generating review schema:', error);
+    return null;
+  }
+};
+
 // Combine multiple schema objects
 export const combineSchemas = (...schemas: any[]) => {
   try {

@@ -9,6 +9,7 @@ import { useRecentTools } from '@/hooks/useRecentTools';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { ToolSeoContent } from '@/components/seo/ToolSeoContent';
 import { SuggestedTools } from '@/components/seo/SuggestedTools';
+import { RelatedToolsWidget } from '@/components/seo/RelatedToolsWidget';
 import { toolsSeoData } from '@/data/seo-content';
 import { getRelatedTools } from '@/utils/related-tools';
 
@@ -94,6 +95,13 @@ const Tool = () => {
           </div>
         </>
       )}
+      
+      {/* Enhanced Related Tools Widget for Better Internal Linking */}
+      <RelatedToolsWidget 
+        category={tool.category}
+        currentToolSlug={tool.slug}
+        limit={4}
+      />
     </Layout>
   );
 };

@@ -15,7 +15,7 @@ import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { LazySection } from '@/components/performance/LazySection';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
-import { generateWebsiteSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
+import { generateWebsiteSchema, generateFAQSchema, generateOrganizationSchema, combineSchemas } from '@/utils/schemaUtils';
 import { BackToTop } from '@/components/ui/BackToTop';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 
@@ -47,8 +47,9 @@ const Index = () => {
   ];
 
   const websiteSchema = generateWebsiteSchema();
+  const organizationSchema = generateOrganizationSchema();
   const faqSchema = generateFAQSchema(homeFAQ);
-  const combinedSchema = combineSchemas(websiteSchema, faqSchema);
+  const combinedSchema = combineSchemas(websiteSchema, organizationSchema, faqSchema);
 
   return (
     <Layout>
