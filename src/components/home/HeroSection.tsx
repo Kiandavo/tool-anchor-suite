@@ -6,6 +6,7 @@ import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 import { CriticalLoader } from '@/components/performance/CriticalLoader';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
+import langarLogo from '@/assets/langar-logo.png';
 
 export const HeroSection = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -101,10 +102,14 @@ export const HeroSection = () => {
           <div className="max-w-5xl mx-auto text-center">
             {/* Main Title with Enhanced Typography */}
             <div className="mb-8 sm:mb-12 relative z-30">
-              <h1 className="hero-title text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-4 sm:mb-6 relative z-10">
-                <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent drop-shadow-2xl filter brightness-110 relative z-10">
-                  لنگر
-                </span>
+              <h1 className="hero-title mb-4 sm:mb-6 relative z-10 flex justify-center">
+                <img 
+                  src={langarLogo} 
+                  alt="لنگر - مجموعه ابزارهای آنلاین فارسی"
+                  className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto drop-shadow-2xl filter brightness-110 relative z-10 transition-transform duration-300 hover:scale-105"
+                  fetchPriority="high"
+                  loading="eager"
+                />
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-40 -z-10"></div>
               </h1>
               
