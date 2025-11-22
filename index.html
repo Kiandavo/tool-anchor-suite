@@ -36,11 +36,17 @@
     <meta property="og:locale" content="fa_IR" />
     <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/EcL48iwIIXRo2Db7e5QiOoiuttN2/social-images/social-1757968623837-76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
     
-    <!-- Preload critical resources -->
+    <!-- Preload critical resources for faster LCP -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
     <link rel="dns-prefetch" href="//www.google-analytics.com">
-    <link rel="dns-prefetch" href="//googletagmanager.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    
+    <!-- Preload logo images with explicit dimensions to prevent CLS -->
+    <link rel="preload" as="image" href="/assets/langar-logo-32.png" fetchpriority="high" imagesizes="32px">
+    <link rel="preload" as="image" href="/assets/langar-logo-40.png" fetchpriority="low">
     
     <!-- CSS Preloading Script for non-render-blocking CSS -->
     <script>
@@ -88,13 +94,9 @@
     </script>
     
     <!-- Preload critical JavaScript modules for faster TTI -->
-    <link rel="modulepreload" href="/src/main.tsx">
-    <link rel="preload" href="/src/App.tsx" as="script">
-    <link rel="preload" href="/src/components/Layout.tsx" as="script">
+    <link rel="modulepreload" href="/src/main.tsx" fetchpriority="high">
     
-    <!-- Additional resource hints for better TTI -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <!-- Prefetch non-critical chunks for smoother navigation -->
     <link rel="prefetch" href="/src/components/ui/button.tsx" as="script">
     <link rel="prefetch" href="/src/components/ui/card.tsx" as="script">
     
