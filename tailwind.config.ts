@@ -198,21 +198,21 @@ export default {
     				ring: 'hsl(var(--sidebar-ring))'
     			},
     			apple: {
-    				blue: '#007AFF',
-    				gray: '#8E9196',
-    				'light-gray': '#F6F6F7',
-    				'dark-gray': '#333333',
-    				black: '#000000',
-    				white: '#FFFFFF',
-    				purple: '#9b87f5',
-    				green: '#10B981',
-    				orange: '#F97316',
-    				yellow: '#F7C948',
-    				pink: '#D946EF',
-    				red: '#FF3B30',
-    				teal: '#14B8A6',
-    				cyan: '#06B6D4',
-    				indigo: '#6366F1'
+    				blue: 'hsl(211 100% 50%)',
+    				gray: 'hsl(220 5% 56%)',
+    				'light-gray': 'hsl(210 11% 97%)',
+    				'dark-gray': 'hsl(0 0% 20%)',
+    				black: 'hsl(0 0% 0%)',
+    				white: 'hsl(0 0% 100%)',
+    				purple: 'hsl(254 71% 75%)',
+    				green: 'hsl(158 64% 40%)',
+    				orange: 'hsl(24 95% 53%)',
+    				yellow: 'hsl(45 93% 64%)',
+    				pink: 'hsl(292 84% 61%)',
+    				red: 'hsl(4 100% 60%)',
+    				teal: 'hsl(172 80% 40%)',
+    				cyan: 'hsl(188 95% 43%)',
+    				indigo: 'hsl(239 84% 67%)'
     			}
     		},
     		borderRadius: {
