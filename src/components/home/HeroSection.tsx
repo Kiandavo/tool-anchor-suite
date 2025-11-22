@@ -6,7 +6,7 @@ import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 import { CriticalLoader } from '@/components/performance/CriticalLoader';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import langarLogo from '@/assets/langar-logo-hero.png';
+import langarLogo from '@/assets/laangar-logo.png';
 
 export const HeroSection = () => {
   const heroRef = useRef<HTMLElement>(null);

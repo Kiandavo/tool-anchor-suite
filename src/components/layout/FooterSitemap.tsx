@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getFooterLinks } from '@/utils/internal-linking';
 import { Instagram } from 'lucide-react';
-import logoSvg from '@/assets/langar-logo-64.png';
+import logoSvg from '@/assets/laangar-logo.png';
 
 export function FooterSitemap() {
   const footerCategories = getFooterLinks();
@@ -79,7 +79,7 @@ export function FooterSitemap() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-right">
             {/* Logo & Tagline */}
             <div className="flex items-center gap-3">
-              <img src={logoSvg} alt="لنگر" width={40} height={40} className="h-10 w-auto" />
+              <img src={logoSvg} alt="لنگر" width={110} height={40} className="h-10 w-auto" />
             </div>
 
             {/* Copyright */}
