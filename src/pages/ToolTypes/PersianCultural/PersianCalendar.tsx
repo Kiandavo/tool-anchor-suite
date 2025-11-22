@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { validateDate } from '@/utils/calendar/dateValidators';
+import TripleCalendarGrid from '@/components/calendar/TripleCalendarGrid';
 
 type CalendarType = 'gregorian' | 'jalali' | 'hijri';
 
@@ -97,6 +99,17 @@ export default function PersianCalendar() {
       toast({
         title: "اطلاعات ناقص",
         description: "لطفاً تمام فیلدهای تاریخ را پر کنید.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate the source date
+    const validation = validateDate(sourceDate.format, sourceDate.year, sourceDate.month, sourceDate.day);
+    if (!validation.isValid) {
+      toast({
+        title: "خطا در تاریخ ورودی",
+        description: validation.error,
         variant: "destructive"
       });
       return;
@@ -341,6 +354,11 @@ export default function PersianCalendar() {
           </div>
         </CardFooter>
       </Card>
+
+      {/* Triple Calendar Grid View */}
+      <div className="mt-8">
+        <TripleCalendarGrid />
+      </div>
     </div>
   );
 }
