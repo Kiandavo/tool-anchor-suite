@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
@@ -51,7 +55,10 @@
     --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
     --tracking-normal: 0em;
-    --spacing: 0.25rem
+    --spacing: 0.25rem;
+    
+    /* Mobile-optimized touch targets - Phase 1 SEO Enhancement */
+    --touch-target-min: 44px;
   }
   .dark {
     --background: 222 47% 11%;
@@ -103,5 +110,38 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent text size adjust on orientation change - Phase 1 Mobile Optimization */
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  /* Touch-friendly UI enhancements for mobile - Phase 1 */
+  button, a, [role="button"] {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+  }
+  
+  /* Smooth scrolling for better mobile experience */
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer utilities {
+  /* Touch manipulation utility - Phase 1 Mobile Optimization */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+  }
+  
+  /* Persian text optimization */
+  .persian-optimized {
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
   }
 }

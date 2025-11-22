@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { FooterSitemap } from '@/components/layout/FooterSitemap';
 import { Helmet } from 'react-helmet-async';
 import { AdSenseScript } from '@/components/ads/AdSenseScript';
 import { ADS_CONFIG } from '@/config/ads';
@@ -34,6 +34,17 @@ export const Layout = ({ children }: LayoutProps) => {
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
         
+        {/* Mobile Optimization - Enhanced for Phase 1 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="HandheldFriendly" content="true" />
+        
+        {/* Touch Icon for mobile */}
+        <meta name="msapplication-tap-highlight" content="no" />
+        
         {/* Content Security Policy - AdSense Ready */}
         <meta httpEquiv="Content-Security-Policy" content="
           default-src 'self';
@@ -59,7 +70,6 @@ export const Layout = ({ children }: LayoutProps) => {
         
         {/* Additional Security */}
         <meta name="robots" content="index, follow" />
-        <meta name="format-detection" content="telephone=no, email=no, address=no" />
         
         {/* Font Optimization */}
         <meta name="font-display" content="swap" />
@@ -70,11 +80,11 @@ export const Layout = ({ children }: LayoutProps) => {
       
       <Header isScrolled={isScrolled} />
       
-      <main className="container mx-auto px-4 py-6 max-w-6xl pt-24 font-body">
+      <main className="container mx-auto px-4 py-6 max-w-6xl pt-24 font-body touch-manipulation">
         {children}
       </main>
 
-      <Footer />
+      <FooterSitemap />
       
       {/* PWA Install Prompt */}
       <InstallPrompt />

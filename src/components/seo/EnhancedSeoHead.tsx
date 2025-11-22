@@ -104,6 +104,11 @@ export const EnhancedSeoHead: React.FC<EnhancedSeoHeadProps> = ({
       {/* Canonical */}
       <link rel="canonical" href={finalCanonical} />
       
+      {/* Hreflang tags for Persian language targeting - Phase 1 Enhancement */}
+      <link rel="alternate" hrefLang="fa" href={finalCanonical} />
+      <link rel="alternate" hrefLang="fa-IR" href={finalCanonical} />
+      <link rel="alternate" hrefLang="x-default" href={finalCanonical} />
+      
       {/* Robots */}
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
       <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
