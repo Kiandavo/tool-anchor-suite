@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User } from 'lucide-react';
-import langarLogo from '@/assets/langar-logo.png';
+import langarLogo from '@/assets/langar-logo-64.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 
 interface HeaderProps {
