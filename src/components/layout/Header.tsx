@@ -62,6 +62,8 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                     alt="لنگر"
                     width={32}
                     height={32}
+                    loading="eager"
+                    fetchPriority="high"
                     className="h-8 w-auto transition-all duration-200 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg blur-xl"></div>
