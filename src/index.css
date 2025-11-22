@@ -108,6 +108,12 @@
   * {
     @apply border-border;
   }
+
+  /* Increased base font size for better Persian readability */
+  html {
+    font-size: 17px;
+  }
+  
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -150,6 +156,16 @@
   /* Tighter spacing for monospace code */
   code, pre, .font-mono {
     letter-spacing: -0.01em;
+  }
+
+  /* Persian paragraph optimization */
+  p, .persian-paragraph {
+    line-height: 1.75;
+    margin-bottom: 1em;
+  }
+
+  [lang="fa"] p, .persian-text p {
+    line-height: 1.8;
   }
   
   /* Touch-friendly UI enhancements for mobile - Phase 1 */

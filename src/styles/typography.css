@@ -34,7 +34,7 @@ html {
 body {
   font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, sans-serif;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.75;
   letter-spacing: 0.01em;
   font-optical-sizing: auto;
   font-variant-numeric: tabular-nums;
@@ -52,10 +52,19 @@ h1, h2, h3, h4, h5, h6,
 .heading-font {
   font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.35;
   letter-spacing: -0.025em;
   font-feature-settings: "ss01" 1, "cv11" 1;
   font-optical-sizing: auto;
+}
+
+/* Specific heading line-heights optimized for Persian */
+h1, h2, h3 {
+  line-height: 1.35;
+}
+
+h4, h5, h6 {
+  line-height: 1.4;
 }
 
 /* Modern Body Text with Inter */
@@ -78,7 +87,7 @@ p, span, div,
 .display-font {
   font-family: 'Manrope', 'Vazirmatn', 'Inter', sans-serif;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.25;
   letter-spacing: -0.03em;
   font-feature-settings: "ss01" 1, "cv11" 1;
   font-optical-sizing: auto;
@@ -131,25 +140,30 @@ code, pre {
   @apply text-lg font-heading font-medium leading-tight;
 }
 
-/* Body Scale */
+/* Body Scale - Optimized for Persian */
 .text-body-xl {
-  @apply text-xl font-body leading-relaxed;
+  @apply text-xl font-body;
+  line-height: 1.85;
 }
 
 .text-body-lg {
-  @apply text-lg font-body leading-relaxed;
+  @apply text-lg font-body;
+  line-height: 1.8;
 }
 
 .text-body-md {
-  @apply text-base font-body leading-normal;
+  @apply text-base font-body;
+  line-height: 1.75;
 }
 
 .text-body-sm {
-  @apply text-sm font-body leading-normal;
+  @apply text-sm font-body;
+  line-height: 1.7;
 }
 
 .text-body-xs {
-  @apply text-xs font-body leading-normal;
+  @apply text-xs font-body;
+  line-height: 1.65;
 }
 
 /* Support Text Scale */
@@ -186,10 +200,27 @@ code, pre {
 }
 
 .leading-relaxed-plus {
-  line-height: 1.75;
+  line-height: 1.85;
 }
 
 .leading-loose-plus {
+  line-height: 2.1;
+}
+
+/* Persian-specific line-height utilities */
+.persian-leading-tight {
+  line-height: 1.6;
+}
+
+.persian-leading-normal {
+  line-height: 1.75;
+}
+
+.persian-leading-relaxed {
+  line-height: 1.85;
+}
+
+.persian-leading-loose {
   line-height: 2;
 }
 
@@ -230,7 +261,7 @@ code, pre {
   visibility: visible;
 }
 
-/* Responsive Typography */
+/* Responsive Typography - Enhanced for mobile readability */
 @media (max-width: 640px) {
   .text-display-2xl { @apply text-4xl; }
   .text-display-xl { @apply text-3xl; }
@@ -238,6 +269,27 @@ code, pre {
   .text-display-md { @apply text-xl; }
   .text-heading-xl { @apply text-2xl; }
   .text-heading-lg { @apply text-xl; }
+  
+  /* Increase line-height for better mobile readability */
+  body {
+    line-height: 1.8;
+  }
+  
+  h1, h2, h3 {
+    line-height: 1.4;
+  }
+  
+  h4, h5, h6 {
+    line-height: 1.45;
+  }
+  
+  p, .persian-paragraph {
+    line-height: 1.8;
+  }
+  
+  [lang="fa"] p, .persian-text p {
+    line-height: 1.85;
+  }
 }
 
 /* Font Optimization Utilities */
