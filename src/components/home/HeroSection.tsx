@@ -78,46 +78,46 @@ export const HeroSection = () => {
         className="pt-20 pb-16 sm:pt-32 sm:pb-24 mb-16 relative overflow-hidden min-h-screen"
       >
         {/* Animated Colorful Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-green-900/20 animate-pulse" />
-        <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 via-yellow-500/10 to-cyan-500/10" />
-        <div className="absolute inset-0 gradient-mesh opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-green-900/20 animate-pulse z-0" />
+        <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 via-yellow-500/10 to-cyan-500/10 z-0" />
+        <div className="absolute inset-0 gradient-mesh opacity-30 z-0" />
         
         {/* Dynamic Particles Container */}
-        <div ref={particlesRef} className="absolute inset-0 pointer-events-none" />
+        <div ref={particlesRef} className="absolute inset-0 pointer-events-none z-0" />
         
         {/* Colorful Floating Elements */}
-        <div className="floating-element absolute top-20 right-10 w-72 h-72 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 blur-3xl animate-pulse shadow-2xl" />
-        <div className="floating-element absolute bottom-32 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-500/30 to-cyan-500/30 blur-3xl animate-pulse shadow-2xl" style={{ animationDelay: '1s' }} />
-        <div className="floating-element absolute top-1/2 right-1/4 w-48 h-48 rounded-full bg-gradient-to-br from-green-500/25 to-teal-500/25 blur-2xl animate-bounce" style={{ animationDelay: '2s' }} />
-        <div className="floating-element absolute bottom-1/3 left-1/3 w-64 h-64 rounded-full bg-gradient-to-br from-yellow-500/25 to-orange-500/25 blur-2xl animate-pulse" style={{ animationDelay: '3s' }} />
+        <div className="floating-element absolute top-20 right-10 w-72 h-72 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 blur-3xl animate-pulse shadow-2xl z-0" />
+        <div className="floating-element absolute bottom-32 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-500/30 to-cyan-500/30 blur-3xl animate-pulse shadow-2xl z-0" style={{ animationDelay: '1s' }} />
+        <div className="floating-element absolute top-1/2 right-1/4 w-48 h-48 rounded-full bg-gradient-to-br from-green-500/25 to-teal-500/25 blur-2xl animate-bounce z-0" style={{ animationDelay: '2s' }} />
+        <div className="floating-element absolute bottom-1/3 left-1/3 w-64 h-64 rounded-full bg-gradient-to-br from-yellow-500/25 to-orange-500/25 blur-2xl animate-pulse z-0" style={{ animationDelay: '3s' }} />
         
         {/* Rotating Color Rings */}
-        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-96 h-96 border-4 border-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-spin opacity-20" style={{ animationDuration: '20s' }} />
-        <div className="absolute bottom-1/4 right-1/2 transform translate-x-1/2 w-80 h-80 border-4 border-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-spin opacity-20" style={{ animationDuration: '15s', animationDirection: 'reverse' }} />
+        <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-96 h-96 border-4 border-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-spin opacity-20 z-0" style={{ animationDuration: '20s' }} />
+        <div className="absolute bottom-1/4 right-1/2 transform translate-x-1/2 w-80 h-80 border-4 border-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-spin opacity-20 z-0" style={{ animationDuration: '15s', animationDirection: 'reverse' }} />
         
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-20">
           <div className="max-w-5xl mx-auto text-center">
             {/* Main Title with Enhanced Typography */}
-            <div className="mb-8 sm:mb-12 relative z-20">
-              <h1 className="hero-title text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-4 sm:mb-6 relative">
-                <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent drop-shadow-2xl filter brightness-110">
+            <div className="mb-8 sm:mb-12 relative z-30">
+              <h1 className="hero-title text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-4 sm:mb-6 relative z-10">
+                <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent drop-shadow-2xl filter brightness-110 relative z-10">
                   لنگر
                 </span>
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-40 -z-10"></div>
               </h1>
               
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium mb-6 sm:mb-8 tracking-wide text-foreground/85 filter drop-shadow-lg relative">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium mb-6 sm:mb-8 tracking-wide text-foreground/85 filter drop-shadow-lg relative z-10">
                 مجموعه ابزارهای آنلاین فارسی
               </h2>
             </div>
             
             {/* Enhanced Description */}
-            <div className="max-w-4xl mx-auto mb-10 sm:mb-14 relative z-20">
-              <p className="text-lg sm:text-xl lg:text-2xl font-body leading-relaxed mb-6 px-4 text-foreground/90 filter drop-shadow-md">
+            <div className="max-w-4xl mx-auto mb-10 sm:mb-14 relative z-30">
+              <p className="text-lg sm:text-xl lg:text-2xl font-body leading-relaxed mb-6 px-4 text-foreground/90 filter drop-shadow-md relative z-10">
                 <span className="font-semibold text-primary">بیش از ۸۰ ابزار رایگان</span> 
                 <span> و کاربردی تحت وب</span>
               </p>
-              <p className="text-base sm:text-lg font-body leading-relaxed max-w-3xl mx-auto px-4 text-muted-foreground filter drop-shadow-sm">
+              <p className="text-base sm:text-lg font-body leading-relaxed max-w-3xl mx-auto px-4 text-muted-foreground filter drop-shadow-sm relative z-10">
                 بدون نیاز به ثبت‌نام، با تمرکز کامل بر حریم خصوصی شما. طراحی شده با فناوری‌های مدرن برای تجربه کاربری بهینه.
               </p>
             </div>
