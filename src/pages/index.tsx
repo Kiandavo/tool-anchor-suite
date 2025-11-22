@@ -22,6 +22,7 @@ import { TestimonialSection } from '@/components/testimonials/TestimonialSection
 import { TrustBadges } from '@/components/trust/TrustBadges';
 import { SeasonalToolsSection } from '@/components/persian/SeasonalToolsSection';
 import { GeoTargeting } from '@/components/seo/GeoTargeting';
+import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
 
 const Index = () => {
   console.log('Index page component initializing...');
@@ -70,6 +71,14 @@ const Index = () => {
         title={homeTitle}
         description={homeDescription}
         canonical="https://langar.co/"
+      />
+      
+      <OpenGraphTags
+        title={homeTitle}
+        description={homeDescription}
+        url="https://langar.co/"
+        type="website"
+        siteName="لنگر - ابزارهای آنلاین فارسی"
       />
       
       <div className="flex flex-col lg:flex-row gap-8">

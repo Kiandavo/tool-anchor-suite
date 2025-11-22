@@ -92,13 +92,28 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Resources & Media */}
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">قوانین و مقررات</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">منابع و رسانه</h4>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link to="/press-kit" className="text-muted-foreground hover:text-primary transition-colors">
+                  کیت رسانه‌ای
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources" className="text-muted-foreground hover:text-primary transition-colors">
+                  منابع مفید
+                </Link>
+              </li>
+              <li>
+                <Link to="/widgets" className="text-muted-foreground hover:text-primary transition-colors">
+                  ویجت‌های اشتراک
+                </Link>
+              </li>
+              <li>
                 <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">
-                  سیاست حریم خصوصی
+                  حریم خصوصی
                 </Link>
               </li>
               <li>
@@ -107,11 +122,6 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-            <div className="mt-4 pt-4 border-t border-border/50">
-              <p className="text-xs text-muted-foreground mb-2">🔒 امنیت SSL</p>
-              <p className="text-xs text-muted-foreground mb-2">🛡️ حفظ حریم خصوصی</p>
-              <p className="text-xs text-muted-foreground">✅ 98% رضایت کاربران</p>
-            </div>
           </div>
         </div>
 
