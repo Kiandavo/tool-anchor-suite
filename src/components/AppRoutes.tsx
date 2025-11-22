@@ -18,6 +18,8 @@ import CalculatorsGuide from "@/pages/guides/CalculatorsGuide";
 import PressKit from "@/pages/PressKit";
 import Resources from "@/pages/Resources";
 import WidgetsPage from "@/pages/WidgetsPage";
+import Bookmarks from "@/pages/Bookmarks";
+import ToolComparison from "@/pages/ToolComparison";
 
 export const AppRoutes = () => {
   console.log('AppRoutes component loading...');
@@ -47,6 +49,10 @@ export const AppRoutes = () => {
       <Route path="/منابع" element={<Resources />} />
       <Route path="/widgets" element={<WidgetsPage />} />
       <Route path="/ویجت" element={<WidgetsPage />} />
+      <Route path="/bookmarks" element={<Bookmarks />} />
+      <Route path="/نشان-شده-ها" element={<Bookmarks />} />
+      <Route path="/compare" element={<ToolComparison />} />
+      <Route path="/مقایسه" element={<ToolComparison />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="*" element={<NotFound />} />
