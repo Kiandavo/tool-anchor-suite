@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, X, ArrowRight } from 'lucide-react';
+import { Search, X, ArrowRight, TrendingUp } from 'lucide-react';
 import { useSearchModal } from '@/hooks/useSearchModal';
-import { tools } from '@/data/tools';
+import { tools, getPopularTools } from '@/data/tools';
 import { categoryLabels } from '@/data/tools';
 import { Tool } from '@/types/tool-types';
 
@@ -13,6 +13,7 @@ export const SearchModal = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+  const popularTools = getPopularTools().slice(0, 8);
 
   useEffect(() => {
     if (isOpen) {
@@ -105,8 +106,8 @@ export const SearchModal = () => {
             </div>
           </div>
 
-          {/* Results */}
-          {query.trim() && (
+          {/* Results or Popular Tools */}
+          {query.trim() ? (
             <div className="bg-card/95 backdrop-blur-2xl rounded-3xl border border-border/50 shadow-2xl max-h-[60vh] overflow-y-auto">
               {results.length > 0 ? (
                 <div className="p-4">
@@ -156,6 +157,43 @@ export const SearchModal = () => {
                   </p>
                 </div>
               )}
+            </div>
+          ) : (
+            <div className="bg-card/95 backdrop-blur-2xl rounded-3xl border border-border/50 shadow-2xl max-h-[60vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <TrendingUp className="text-primary" size={20} />
+                  <h3 className="text-lg font-semibold text-foreground">ابزارهای محبوب</h3>
+                </div>
+                <div className="grid gap-3">
+                  {popularTools.map((tool, index) => (
+                    <button
+                      key={tool.id}
+                      onClick={() => handleSelectTool(tool)}
+                      className="w-full text-right p-4 rounded-2xl transition-all duration-200 hover:bg-secondary/30 border border-transparent hover:border-primary/20 group"
+                      onMouseEnter={() => setSelectedIndex(index)}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <span className="text-2xl">{tool.icon}</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
+                            {tool.name}
+                          </h3>
+                          <p className="text-sm text-muted-foreground truncate">
+                            {tool.description}
+                          </p>
+                        </div>
+                        <ArrowRight
+                          className="flex-shrink-0 text-muted-foreground group-hover:text-primary transition-all rtl:rotate-180"
+                          size={18}
+                        />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 

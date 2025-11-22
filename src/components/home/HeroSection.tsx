@@ -98,21 +98,21 @@ export const HeroSection = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             {/* Main Title with Enhanced Typography */}
-            <div className="mb-8 sm:mb-12">
+            <div className="mb-8 sm:mb-12 relative z-20">
               <h1 className="hero-title text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-4 sm:mb-6 relative">
                 <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent drop-shadow-2xl filter brightness-110">
                   لنگر
                 </span>
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-40"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-40 -z-10"></div>
               </h1>
               
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium mb-6 sm:mb-8 tracking-wide text-foreground/85 filter drop-shadow-lg">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium mb-6 sm:mb-8 tracking-wide text-foreground/85 filter drop-shadow-lg relative">
                 مجموعه ابزارهای آنلاین فارسی
               </h2>
             </div>
             
             {/* Enhanced Description */}
-            <div className="max-w-4xl mx-auto mb-10 sm:mb-14">
+            <div className="max-w-4xl mx-auto mb-10 sm:mb-14 relative z-20">
               <p className="text-lg sm:text-xl lg:text-2xl font-body leading-relaxed mb-6 px-4 text-foreground/90 filter drop-shadow-md">
                 <span className="font-semibold text-primary">بیش از ۸۰ ابزار رایگان</span> 
                 <span> و کاربردی تحت وب</span>
