@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User } from 'lucide-react';
 import laangarLogo from '@/assets/logo.svg';
+import { useSearchModal } from '@/hooks/useSearchModal';
 
 interface HeaderProps {
   title?: string;
@@ -14,6 +15,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { open: openSearch } = useSearchModal();
 
   const handleBack = () => {
     if (backUrl) {
@@ -69,7 +71,10 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             {/* Center Section - Search & Tools (Desktop) */}
             <div className="hidden lg:flex items-center justify-center flex-1 max-w-lg mx-8">
               <div className="flex items-center gap-2 w-full">
-                <button className="flex items-center gap-2 px-4 py-2.5 bg-secondary/50 hover:bg-secondary/70 text-foreground/80 hover:text-foreground rounded-full transition-all duration-200 hover:scale-105 active:scale-95 border border-border/30 backdrop-blur-sm shadow-sm hover:shadow-md">
+                <button 
+                  onClick={openSearch}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-secondary/50 hover:bg-secondary/70 text-foreground/80 hover:text-foreground rounded-full transition-all duration-200 hover:scale-105 active:scale-95 border border-border/30 backdrop-blur-sm shadow-sm hover:shadow-md"
+                >
                   <Search size={16} />
                   <span className="text-sm font-medium">جستجو در ابزارها</span>
                 </button>
@@ -155,7 +160,13 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               <div className="space-y-3">
                 <h4 className="text-sm font-medium text-foreground/60 uppercase tracking-wide">دسترسی سریع</h4>
                 
-                <button className="flex items-center gap-3 w-full p-4 bg-secondary/30 hover:bg-secondary/50 rounded-2xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border border-border/30">
+                <button 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openSearch();
+                  }}
+                  className="flex items-center gap-3 w-full p-4 bg-secondary/30 hover:bg-secondary/50 rounded-2xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border border-border/30"
+                >
                   <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
                     <Search size={18} className="text-white" />
                   </div>

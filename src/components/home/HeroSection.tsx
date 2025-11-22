@@ -133,30 +133,30 @@ export const HeroSection = () => {
                 
                 {/* Colorful Quick Access Pills */}
                 <div className="flex flex-wrap justify-center gap-3 mt-6 relative z-10">
-                  <button
-                    onClick={() => window.location.href = '/tool/qr-code-generator'}
+                  <Link
+                    to="/tool/qr-code-generator"
                     className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-600 hover:text-purple-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-purple-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
                   >
                     QR کد
-                  </button>
-                  <button
-                    onClick={() => window.location.href = '/tool/password-generator'}
+                  </Link>
+                  <Link
+                    to="/tool/password-generator"
                     className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 text-green-600 hover:text-green-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-green-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
                   >
                     رمز عبور
-                  </button>
-                  <button
-                    onClick={() => window.location.href = '/tool/color-palette-generator'}
+                  </Link>
+                  <Link
+                    to="/tool/color-palette-generator"
                     className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-indigo-500/20 to-blue-500/20 hover:from-indigo-500/30 hover:to-blue-500/30 text-indigo-600 hover:text-indigo-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-indigo-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
                   >
                     پالت رنگ
-                  </button>
-                  <button
-                    onClick={() => window.location.href = '/tool/text-analyzer'}
+                  </Link>
+                  <Link
+                    to="/tool/text-analyzer"
                     className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-600 hover:text-amber-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-amber-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
                   >
                     تحلیل متن
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
