@@ -2,7 +2,7 @@
 import React from 'react';
 import { Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import logoSvg from '@/assets/langar-logo.png';
+import logoSvg from '@/assets/langar-logo-64.png';
 
 export function Footer() {
   return (
