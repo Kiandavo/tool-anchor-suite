@@ -261,7 +261,43 @@
     <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/EcL48iwIIXRo2Db7e5QiOoiuttN2/social-images/social-1757968623837-76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png">
 </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Critical inline skeleton for immediate FCP -->
+      <div id="critical-hero" style="min-height: 100vh; display: flex; flex-direction: column;">
+        <!-- Header skeleton -->
+        <div style="padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e7eb;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 0.5rem;"></div>
+            <h1 class="hero-title" style="margin: 0; font-size: 1.25rem; font-weight: 700; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">لنگر - مجموعه ابزارهای آنلاین فارسی</h1>
+          </div>
+        </div>
+        
+        <!-- Hero content skeleton -->
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+          <div style="text-align: center; max-width: 800px;">
+            <div style="height: 2.5rem; background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 0.5rem; margin-bottom: 1rem;"></div>
+            <div style="height: 1.5rem; background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 0.5rem; margin-bottom: 0.5rem;"></div>
+            <div style="height: 1.5rem; background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 0.5rem; width: 80%; margin: 0 auto;"></div>
+          </div>
+        </div>
+      </div>
+      
+      <style>
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        #critical-hero {
+          animation: fadeOut 0.3s ease-out 0.5s forwards;
+        }
+        @keyframes fadeOut {
+          to {
+            opacity: 0;
+            pointer-events: none;
+          }
+        }
+      </style>
+    </div>
     
     <!-- Load React app directly -->
     <script type="module" src="/src/main.tsx"></script>
@@ -278,7 +314,27 @@
       // Ensure immediate content visibility and improve TTI
       document.addEventListener('DOMContentLoaded', function() {
         document.body.style.visibility = 'visible';
-        document.body.style.opacity = '1';
+        
+        // Remove critical hero when React app mounts
+        const checkReactMount = setInterval(function() {
+          const root = document.getElementById('root');
+          const criticalHero = document.getElementById('critical-hero');
+          
+          // Check if React has rendered content (more than just skeleton)
+          if (root && root.children.length > 1 && criticalHero) {
+            criticalHero.style.display = 'none';
+            clearInterval(checkReactMount);
+          }
+        }, 100);
+        
+        // Fallback: remove skeleton after 3 seconds regardless
+        setTimeout(function() {
+          const criticalHero = document.getElementById('critical-hero');
+          if (criticalHero) {
+            criticalHero.style.display = 'none';
+          }
+          clearInterval(checkReactMount);
+        }, 3000);
       });
       
       // Optimize main thread by yielding control
