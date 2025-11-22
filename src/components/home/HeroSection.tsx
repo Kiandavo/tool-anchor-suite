@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 import { EnhancedGraphics } from '@/components/ui/enhanced-graphics';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 import { CriticalLoader } from '@/components/performance/CriticalLoader';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 export const HeroSection = () => {
   const heroRef = useRef<HTMLElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
+  const { scrollToElement } = useSmoothScroll();
 
   useEffect(() => {
     // Interactive mouse movement effect
@@ -214,10 +216,16 @@ export const HeroSection = () => {
                   <ArrowRight className="h-6 w-6 rtl:rotate-180 group-hover:translate-x-2 transition-transform duration-300" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="font-heading font-semibold text-lg px-10 py-5 rounded-2xl border-3 border-gradient-to-r from-cyan-400 to-purple-400 bg-gradient-to-r from-cyan-50/10 to-purple-50/10 hover:from-cyan-100/20 hover:to-purple-100/20 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-500 backdrop-blur-sm transition-all duration-500 hover:scale-110 hover:-translate-y-2 glass-morphism" asChild>
-                <Link to="/#popular-tools">
-                  <span className="bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent">ابزارهای محبوب</span>
-                </Link>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="font-heading font-semibold text-lg px-10 py-5 rounded-2xl border-3 border-gradient-to-r from-cyan-400 to-purple-400 bg-gradient-to-r from-cyan-50/10 to-purple-50/10 hover:from-cyan-100/20 hover:to-purple-100/20 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-500 backdrop-blur-sm transition-all duration-500 hover:scale-110 hover:-translate-y-2 glass-morphism"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToElement('popular-tools');
+                }}
+              >
+                <span className="bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent">ابزارهای محبوب</span>
               </Button>
             </div>
             

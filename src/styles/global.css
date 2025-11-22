@@ -482,6 +482,121 @@
     @apply bg-orange-100 text-orange-800 border-orange-200;
   }
 
+  /* Scroll Margin for Fixed Header */
+  .scroll-mt-header {
+    scroll-margin-top: 5rem;
+  }
+
+  #essential-tools,
+  #quick-tools,
+  #tools-sections,
+  #popular-tools,
+  #persian-cultural,
+  #readings,
+  #categories {
+    @apply scroll-mt-header;
+  }
+
+  /* Enhanced Animations */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.2);
+    }
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
+
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Hover Effects */
+  .hover-scale-110 {
+    @apply transition-transform duration-300;
+  }
+
+  .hover-scale-110:hover {
+    @apply scale-110;
+  }
+
+  .hover-rotate {
+    @apply transition-transform duration-300;
+  }
+
+  .hover-rotate:hover {
+    @apply rotate-3;
+  }
+
+  /* Text Effects */
+  .text-shimmer {
+    @apply bg-gradient-to-r from-foreground via-primary to-foreground;
+    @apply bg-clip-text text-transparent;
+    @apply animate-gradient;
+  }
+
+  /* Card Apple Gradient */
+  .card-apple-gradient {
+    @apply bg-gradient-to-br from-white via-white/95 to-white/90;
+    @apply border border-border/50;
+    @apply transition-all duration-300;
+  }
+
+  .card-apple-gradient:hover {
+    @apply border-primary/20;
+    @apply shadow-lg;
+  }
+
+  /* Colorful Glow Effect */
+  .colorful-glow {
+    @apply relative;
+  }
+
+  .colorful-glow::before {
+    content: '';
+    @apply absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600;
+    @apply blur-lg opacity-30 rounded-2xl;
+    @apply transition-opacity duration-300;
+  }
+
+  .colorful-glow:hover::before {
+    @apply opacity-50;
+  }
+
+  /* Ripple Effect */
+  .ripple-effect {
+    @apply relative overflow-hidden;
+  }
+
+  .ripple-effect::after {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-white/30;
+    @apply transform scale-0;
+    @apply transition-transform duration-500;
+  }
+
+  .ripple-effect:active::after {
+    @apply scale-100 opacity-0;
+  }
+
   /* Accessibility improvements */
   @media (prefers-reduced-motion: reduce) {
     .animate-float,

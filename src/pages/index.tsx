@@ -16,6 +16,8 @@ import { LazySection } from '@/components/performance/LazySection';
 import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, combineSchemas } from '@/utils/schemaUtils';
+import { BackToTop } from '@/components/ui/BackToTop';
+import { SectionDivider } from '@/components/ui/SectionDivider';
 
 const Index = () => {
   console.log('Index page component initializing...');
@@ -67,10 +69,18 @@ const Index = () => {
           <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
             
             {/* Essential Tools Section - Most Important */}
-            <EssentialToolsSection />
+            <div id="essential-tools">
+              <EssentialToolsSection />
+            </div>
+
+            <SectionDivider variant="dots" />
 
             {/* Quick Tools Section */}
-            <QuickToolsSection />
+            <div id="quick-tools">
+              <QuickToolsSection />
+            </div>
+
+            <SectionDivider variant="gradient" />
 
             {/* Enhanced Tools Section */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="200px">
@@ -78,6 +88,8 @@ const Index = () => {
                 <EnhancedToolsSection />
               </div>
             </LazySection>
+
+            <SectionDivider variant="line" />
 
             {/* Strategic Ad Placement - After Tools */}
             {shouldShowAds() && (
@@ -92,9 +104,15 @@ const Index = () => {
               <PersianCalendarWidget />
             </LazySection>
 
+            <SectionDivider variant="wave" />
+
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <ModernProfessionalToolsSection />
+              <div id="popular-tools">
+                <ModernProfessionalToolsSection />
+              </div>
             </LazySection>
+
+            <SectionDivider variant="dots" />
             
             {/* Strategic Ad Placement - Middle Content */}
             {shouldShowAds() && (
@@ -105,18 +123,31 @@ const Index = () => {
             )}
 
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <PersianCulturalEnhancedSection />
+              <div id="persian-cultural">
+                <PersianCulturalEnhancedSection />
+              </div>
             </LazySection>
+
+            <SectionDivider variant="gradient" />
             
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <MysticalReadingsSection />
+              <div id="readings">
+                <MysticalReadingsSection />
+              </div>
             </LazySection>
+
+            <SectionDivider variant="line" />
             
             <LazySection rootMargin="150px">
-              <InteractiveCategoriesSection />
+              <div id="categories">
+                <InteractiveCategoriesSection />
+              </div>
             </LazySection>
           </div>
         </div>
+
+        {/* Back to Top Button */}
+        <BackToTop />
 
         {/* Sidebar with ads - Desktop only */}
         {shouldShowAds() && (
