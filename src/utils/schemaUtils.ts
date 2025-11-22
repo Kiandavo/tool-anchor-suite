@@ -12,7 +12,7 @@ export const generateWebsiteSchema = () => {
       "@type": "WebSite",
       "name": "لنگر - ابزارهای آنلاین رایگان",
       "alternateName": "Langar Online Tools",
-      "url": "https://langar.co",
+      "url": "https://laangar.com",
       "description": "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی.",
       "keywords": "ابزار آنلاین, محاسبه گر, تبدیل متن, ویرایش تصویر, سئو, فال, ابزار فارسی, لنگر",
       "inLanguage": "fa-IR",
@@ -23,16 +23,16 @@ export const generateWebsiteSchema = () => {
       "author": {
         "@type": "Organization",
         "name": "لنگر",
-        "url": "https://langar.co"
+        "url": "https://laangar.com"
       },
       "publisher": {
         "@type": "Organization",
         "name": "لنگر",
-        "url": "https://langar.co"
+        "url": "https://laangar.com"
       },
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://langar.co/search?q={search_term_string}",
+        "target": "https://laangar.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       },
       "mainEntity": {
@@ -63,7 +63,7 @@ export const generateToolSchema = (
       "@type": "SoftwareApplication",
       "name": name,
       "description": description,
-      "url": `https://langar.co/tool/${slug}`,
+      "url": `https://laangar.com/tool/${slug}`,
       "applicationCategory": category,
       "applicationSubCategory": "Web Application",
       "operatingSystem": "Any",
@@ -82,17 +82,17 @@ export const generateToolSchema = (
       "author": {
         "@type": "Organization",
         "name": "لنگر",
-        "url": "https://langar.co"
+        "url": "https://laangar.com"
       },
       "publisher": {
         "@type": "Organization",
         "name": "لنگر",
-        "url": "https://langar.co"
+        "url": "https://laangar.com"
       },
       "isPartOf": {
         "@type": "WebSite",
         "name": "لنگر - ابزارهای آنلاین",
-        "url": "https://langar.co"
+        "url": "https://laangar.com"
       },
       "featureList": [
         "ابزار آنلاین رایگان",
@@ -142,12 +142,12 @@ export const generateCategorySchema = (
       "@type": "CollectionPage",
       "name": name,
       "description": description,
-      "url": `https://langar.co/category/${slug}`,
+      "url": `https://laangar.com/category/${slug}`,
       "inLanguage": "fa-IR",
       "isPartOf": {
         "@type": "WebSite",
         "name": "لنگر - ابزارهای آنلاین",
-        "url": "https://langar.co"
+        "url": "https://laangar.com"
       },
       "about": {
         "@type": "Thing",
@@ -160,7 +160,7 @@ export const generateCategorySchema = (
           "@type": "WebApplication",
           "name": tool.name,
           "description": tool.description,
-          "url": `https://langar.co/tool/${tool.slug}`
+          "url": `https://laangar.com/tool/${tool.slug}`
         }
       }))
     };
@@ -229,8 +229,8 @@ export const generateOrganizationSchema = () => {
       "@type": "Organization",
       "name": "لنگر",
       "alternateName": "Langar Online Tools",
-      "url": "https://langar.co",
-      "logo": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png",
+      "url": "https://laangar.com",
+      "logo": "https://laangar.com/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png",
       "description": "ارائه‌دهنده بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر و سئو",
       "foundingDate": "2024",
       "contactPoint": {
@@ -269,7 +269,7 @@ export const generateArticleSchema = (
       "@type": "Article",
       "headline": headline,
       "description": description,
-      "image": imageUrl || "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png",
+      "image": imageUrl || "https://laangar.com/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png",
       "author": {
         "@type": "Person",
         "name": author
@@ -279,14 +279,14 @@ export const generateArticleSchema = (
         "name": "لنگر",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+          "url": "https://laangar.com/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
         }
       },
       "datePublished": datePublished,
       "dateModified": dateModified,
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": articleUrl || "https://langar.co"
+        "@id": articleUrl || "https://laangar.com"
       },
       "inLanguage": "fa-IR"
     };
@@ -320,7 +320,7 @@ export const generateVideoSchema = (
         "name": "لنگر",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://langar.co/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
+          "url": "https://laangar.com/lovable-uploads/76e15b28-6fa7-4dd3-bb57-922abbe9dca7.png"
         }
       },
       "inLanguage": "fa-IR"

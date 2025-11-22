@@ -280,7 +280,7 @@ export function generateToolsSitemapEntries(): string[] {
     const lastmod = new Date().toISOString().split('T')[0];
     
     return `  <url>
-    <loc>https://langar.co/tool/${tool.slug}</loc>
+    <loc>https://laangar.com/tool/${tool.slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
@@ -294,7 +294,7 @@ export function generateToolsSitemapEntries(): string[] {
 export function generateCategorySitemapEntries(): string[] {
   return Object.keys(categoryLabels).map(category => {
     return `  <url>
-    <loc>https://langar.co/category/${category}</loc>
+    <loc>https://laangar.com/category/${category}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
