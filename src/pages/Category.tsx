@@ -25,23 +25,30 @@ const Category = () => {
 
   const categoryName = categoryLabels[category];
   
-  // Generate enhanced SEO metadata
-  const seoTitle = `${categoryName} - ابزارهای آنلاین لنگر | ${allTools.length} ابزار رایگان`;
+  // Phase 2: Enhanced SEO metadata with power words and year
+  const seoTitle = `بهترین ${categoryName} رایگان ۲۰۲۵ | ${allTools.length} ابزار حرفه‌ای | لنگر`;
   const seoDescription = (() => {
     if (category === 'persian-cultural') {
-      return 'ابزارهای فرهنگ و زبان فارسی: تبدیل تاریخ، معانی نام‌های ایرانی، ضرب‌المثل‌های فارسی، آموزش خوشنویسی و بیشتر. مجموعه کاملی از ابزارهای فرهنگی ایرانی.';
+      return `${allTools.length} ابزار فرهنگ فارسی رایگان: تقویم شمسی، تبدیل تاریخ، معانی نام. استفاده فوری ✅ | لنگر ۲۰۲۵`;
     } else if (category === 'readings') {
-      return 'فال و طالع‌بینی رایگان: فال حافظ، تاروت، استخاره با مولانا، تعبیر خواب، طالع روزانه و ابزارهای معنوی برای خودشناسی و سرگرمی.';
+      return `${allTools.length} ابزار فال و طالع‌بینی رایگان: فال حافظ، تاروت، استخاره. سرگرم‌کننده و جذاب ✅ | لنگر ۲۰۲۵`;
     }
-    return `${allTools.length} ابزار ${categoryName} رایگان و آنلاین. بهترین ابزارهای ${categoryName} برای استفاده روزمره با کیفیت بالا و رابط کاربری آسان.`;
+    return `${allTools.length} ابزار ${categoryName} رایگان و حرفه‌ای. سریع، دقیق و آسان. استفاده فوری بدون ثبت‌نام ✅ | لنگر ۲۰۲۵`;
   })();
   
   const seoKeywords = (() => {
-    const baseKeywords = [`ابزارهای ${categoryName}`, 'لنگر', 'ابزار آنلاین', 'رایگان'];
+    const baseKeywords = [
+      `${categoryName} رایگان`,
+      `${categoryName} آنلاین`,
+      `${categoryName} ۲۰۲۵`,
+      'لنگر',
+      'ابزار حرفه‌ای',
+      'بدون ثبت‌نام'
+    ];
     if (category === 'persian-cultural') {
-      return [...baseKeywords, 'فرهنگ ایرانی', 'تقویم فارسی', 'نام‌های ایرانی', 'ضرب المثل'];
+      return [...baseKeywords, 'فرهنگ ایرانی', 'تقویم شمسی', 'تاریخ فارسی', 'نام‌های ایرانی'];
     } else if (category === 'readings') {
-      return [...baseKeywords, 'فال حافظ', 'تاروت', 'طالع‌بینی', 'استخاره', 'تعبیر خواب'];
+      return [...baseKeywords, 'فال حافظ', 'تاروت رایگان', 'استخاره آنلاین', 'طالع‌بینی'];
     }
     return baseKeywords;
   })();
@@ -63,7 +70,10 @@ const Category = () => {
       <div className="mb-6 flex flex-col sm:flex-row items-start justify-between gap-4">
         <div className="flex-1">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">{categoryName}</h1>
+            {/* H1 with optimized title */}
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+              {categoryName} - ابزارهای رایگان ۲۰۲۵
+            </h1>
             <SocialShare 
               url={`https://langar.co/category/${category}`}
               title={seoTitle}
@@ -71,11 +81,13 @@ const Category = () => {
               size="sm"
             />
           </div>
-          <p className="text-gray-600 text-xs sm:text-sm mb-2">{allTools.length} ابزار در این دسته‌بندی</p>
-          <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
+          <p className="text-muted-foreground text-sm mb-3">
+            {allTools.length} ابزار حرفه‌ای و رایگان | بدون ثبت‌نام | استفاده فوری
+          </p>
+          <p className="text-foreground text-sm leading-relaxed">
             {category === 'readings'
-              ? 'ابزارهای رایگان فال و طالع‌بینی: فال حافظ، فال تاروت، طالع‌بینی روزانه، استخاره با مولانا، تعبیر خواب و موارد دیگر برای سرگرمی و خودشناسی.'
-              : `مجموعه‌ای از ابزارهای ${categoryName} برای انجام سریع و آسان کارهای روزمره شما در لنگر.`}
+              ? 'مجموعه کامل ابزارهای فال و طالع‌بینی رایگان: فال حافظ، فال تاروت، طالع‌بینی روزانه، استخاره با مولانا، تعبیر خواب و موارد دیگر برای سرگرمی و خودشناسی.'
+              : `بهترین مجموعه ${categoryName} آنلاین برای انجام سریع، دقیق و آسان کارهای روزمره. تمام ابزارها رایگان، بدون نیاز به نصب و با پشتیبانی کامل فارسی.`}
           </p>
         </div>
       </div>

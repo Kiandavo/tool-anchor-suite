@@ -21,10 +21,10 @@ import { SectionDivider } from '@/components/ui/SectionDivider';
 
 const Index = () => {
   console.log('Index page component initializing...');
-  // Enhanced SEO data for homepage
-  const homeTitle = "ابزارهای آنلاین رایگان | محاسبه‌گر، تبدیل متن، ویرایش تصویر - لنگر";
-  const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی. بهترین ابزارهای آنلاین ایرانی با طراحی مدرن و کاربری آسان.";
-  const homeKeywords = "ابزار آنلاین, محاسبه گر آنلاین, تبدیل متن, ویرایش تصویر, سئو, فال آنلاین, ابزار فارسی, لنگر, محاسبه بیمه, تبدیل واحد, طالع بینی, ایرانی, رایگان";
+  // Enhanced SEO data for homepage - Phase 2 Optimizations
+  const homeTitle = "ابزارهای آنلاین رایگان فارسی ۲۰۲۵ | +۱۰۰ ابزار حرفه‌ای | لنگر";
+  const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. استفاده فوری بدون ثبت‌نام ✅ سریع، دقیق و امن | لنگر ۲۰۲۵";
+  const homeKeywords = "ابزار آنلاین رایگان, محاسبه گر ۲۰۲۵, تبدیل متن فارسی, ویرایش تصویر آنلاین, ابزار سئو, فال رایگان, ابزار حرفه‌ای, لنگر, بدون ثبت‌نام, استفاده فوری";
 
   // Common FAQ for homepage
   const homeFAQ = [
