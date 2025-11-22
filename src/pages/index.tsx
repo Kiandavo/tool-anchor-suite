@@ -19,6 +19,7 @@ import { generateWebsiteSchema, generateFAQSchema, generateOrganizationSchema, c
 import { BackToTop } from '@/components/ui/BackToTop';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { TestimonialSection } from '@/components/testimonials/TestimonialSection';
+import { TrustBadges } from '@/components/trust/TrustBadges';
 
 const Index = () => {
   console.log('Index page component initializing...');
@@ -149,6 +150,19 @@ const Index = () => {
             {/* Testimonials Section - Phase 3 */}
             <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
               <TestimonialSection />
+            </LazySection>
+
+            {/* Trust Badges Section - Phase 4 */}
+            <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  اعتماد و امنیت
+                </h2>
+                <p className="text-muted-foreground">
+                  امنیت و حریم خصوصی شما برای ما در اولویت است
+                </p>
+              </div>
+              <TrustBadges variant="horizontal" />
             </LazySection>
           </div>
         </div>
