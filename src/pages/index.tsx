@@ -1,14 +1,7 @@
-
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
-import { EnhancedToolsSection } from '@/components/home/EnhancedToolsSection';
-import { ModernProfessionalToolsSection } from '@/components/home/ModernProfessionalToolsSection';
-import { PersianCulturalEnhancedSection } from '@/components/home/PersianCulturalEnhancedSection';
-import { MysticalReadingsSection } from '@/components/home/MysticalReadingsSection';
-import { InteractiveCategoriesSection } from '@/components/home/InteractiveCategoriesSection';
-import { PersianCalendarWidget } from '@/components/home/PersianCalendarWidget';
 import { QuickToolsSection } from '@/components/home/QuickToolsSection';
 import { EssentialToolsSection } from '@/components/home/EssentialToolsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
@@ -18,11 +11,19 @@ import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, generateOrganizationSchema, combineSchemas } from '@/utils/schemaUtils';
 import { BackToTop } from '@/components/ui/BackToTop';
 import { SectionDivider } from '@/components/ui/SectionDivider';
-import { TestimonialSection } from '@/components/testimonials/TestimonialSection';
-import { TrustBadges } from '@/components/trust/TrustBadges';
-import { SeasonalToolsSection } from '@/components/persian/SeasonalToolsSection';
 import { GeoTargeting } from '@/components/seo/GeoTargeting';
 import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
+
+// Lazy load below-the-fold components for better initial load performance
+const EnhancedToolsSection = lazy(() => import('@/components/home/EnhancedToolsSection').then(m => ({ default: m.EnhancedToolsSection })));
+const ModernProfessionalToolsSection = lazy(() => import('@/components/home/ModernProfessionalToolsSection').then(m => ({ default: m.ModernProfessionalToolsSection })));
+const PersianCulturalEnhancedSection = lazy(() => import('@/components/home/PersianCulturalEnhancedSection').then(m => ({ default: m.PersianCulturalEnhancedSection })));
+const MysticalReadingsSection = lazy(() => import('@/components/home/MysticalReadingsSection').then(m => ({ default: m.MysticalReadingsSection })));
+const InteractiveCategoriesSection = lazy(() => import('@/components/home/InteractiveCategoriesSection').then(m => ({ default: m.InteractiveCategoriesSection })));
+const PersianCalendarWidget = lazy(() => import('@/components/home/PersianCalendarWidget').then(m => ({ default: m.PersianCalendarWidget })));
+const TestimonialSection = lazy(() => import('@/components/testimonials/TestimonialSection').then(m => ({ default: m.TestimonialSection })));
+const TrustBadges = lazy(() => import('@/components/trust/TrustBadges').then(m => ({ default: m.TrustBadges })));
+const SeasonalToolsSection = lazy(() => import('@/components/persian/SeasonalToolsSection').then(m => ({ default: m.SeasonalToolsSection })));
 
 const Index = () => {
   console.log('Index page component initializing...');
@@ -104,9 +105,11 @@ const Index = () => {
 
             {/* Enhanced Tools Section */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="200px">
-              <div id="tools-sections">
-                <EnhancedToolsSection />
-              </div>
+              <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div id="tools-sections">
+                  <EnhancedToolsSection />
+                </div>
+              </Suspense>
             </LazySection>
 
             <SectionDivider variant="line" />
@@ -121,15 +124,19 @@ const Index = () => {
 
             {/* Persian Calendar Widget */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <PersianCalendarWidget />
+              <Suspense fallback={<div className="h-64 animate-pulse bg-muted/30 rounded-lg" />}>
+                <PersianCalendarWidget />
+              </Suspense>
             </LazySection>
 
             <SectionDivider variant="wave" />
 
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <div id="popular-tools">
-                <ModernProfessionalToolsSection />
-              </div>
+              <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div id="popular-tools">
+                  <ModernProfessionalToolsSection />
+                </div>
+              </Suspense>
             </LazySection>
 
             <SectionDivider variant="dots" />
@@ -143,52 +150,64 @@ const Index = () => {
             )}
 
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <div id="persian-cultural">
-                <PersianCulturalEnhancedSection />
-              </div>
+              <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div id="persian-cultural">
+                  <PersianCulturalEnhancedSection />
+                </div>
+              </Suspense>
             </LazySection>
 
             <SectionDivider variant="gradient" />
             
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <div id="readings">
-                <MysticalReadingsSection />
-              </div>
+              <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div id="readings">
+                  <MysticalReadingsSection />
+                </div>
+              </Suspense>
             </LazySection>
 
             <SectionDivider variant="dots" />
 
             {/* Seasonal Persian Tools - Phase 5 */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
-              <div id="seasonal-tools">
-                <SeasonalToolsSection />
-              </div>
+              <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div id="seasonal-tools">
+                  <SeasonalToolsSection />
+                </div>
+              </Suspense>
             </LazySection>
 
             <SectionDivider variant="line" />
             
             <LazySection rootMargin="150px">
-              <div id="categories">
-                <InteractiveCategoriesSection />
-              </div>
+              <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div id="categories">
+                  <InteractiveCategoriesSection />
+                </div>
+              </Suspense>
             </LazySection>
             
             {/* Testimonials Section - Phase 3 */}
             <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
-              <TestimonialSection />
+              <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30 rounded-lg" />}>
+                <TestimonialSection />
+              </Suspense>
             </LazySection>
 
             {/* Trust Badges Section - Phase 4 */}
             <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                  اعتماد و امنیت
-                </h2>
-                <p className="text-muted-foreground">
-                  امنیت و حریم خصوصی شما برای ما در اولویت است
-                </p>
-              </div>
-              <TrustBadges variant="horizontal" />
+              <Suspense fallback={<div className="h-64 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                    اعتماد و امنیت
+                  </h2>
+                  <p className="text-muted-foreground">
+                    امنیت و حریم خصوصی شما برای ما در اولویت است
+                  </p>
+                </div>
+                <TrustBadges variant="horizontal" />
+              </Suspense>
             </LazySection>
           </div>
         </div>
