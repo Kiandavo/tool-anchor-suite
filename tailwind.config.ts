@@ -21,34 +21,46 @@ export default {
     	fontFamily: {
     		primary: [
     			'Inter',
+    			'Inter-fallback',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		heading: [
     			'Manrope',
+    			'Manrope-fallback',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		body: [
     			'Inter',
+    			'Inter-fallback',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		support: [
     			'Shabnam',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		display: [
     			'Manrope',
+    			'Manrope-fallback',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
@@ -67,12 +79,15 @@ export default {
     		],
     		manrope: [
     			'Manrope',
+    			'Manrope-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		inter: [
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
@@ -84,42 +99,55 @@ export default {
     		],
     		vazirmatn: [
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		shabnam: [
     			'Shabnam',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		estedad: [
     			'Manrope',
+    			'Manrope-fallback',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		sahel: [
     			'Shabnam',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		byekan: [
     			'Shabnam',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Tahoma',
     			'system-ui',
     			'sans-serif'
     		],
     		sans: [
     			'Inter',
+    			'Inter-fallback',
     			'Vazirmatn',
+    			'Vazirmatn-fallback',
     			'Manrope',
+    			'Manrope-fallback',
     			'system-ui',
     			'sans-serif'
     		]
@@ -287,6 +315,7 @@ export default {
     		fontFamily: {
     			sans: [
     				'Inter',
+    				'Inter-fallback',
     				'ui-sans-serif',
     				'system-ui',
     				'-apple-system',

@@ -115,8 +115,36 @@
     <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
-    <!-- Critical inline font styles for immediate text rendering -->
+    <!-- Critical inline font styles with metric overrides to prevent CLS -->
     <style>
+      /* Fallback font adjustments to match web fonts and prevent layout shift */
+      @font-face {
+        font-family: 'Manrope-fallback';
+        src: local('Arial');
+        size-adjust: 107%;
+        ascent-override: 92%;
+        descent-override: 24%;
+        line-gap-override: 0%;
+      }
+
+      @font-face {
+        font-family: 'Inter-fallback';
+        src: local('Arial');
+        size-adjust: 107%;
+        ascent-override: 90%;
+        descent-override: 22%;
+        line-gap-override: 0%;
+      }
+
+      @font-face {
+        font-family: 'Vazirmatn-fallback';
+        src: local('Tahoma');
+        size-adjust: 100%;
+        ascent-override: 92%;
+        descent-override: 24%;
+        line-gap-override: 0%;
+      }
+
       /* Manrope - Modern Display/Heading Font */
       @font-face {
         font-family: 'Manrope';
@@ -179,10 +207,10 @@
     <style>
       html {
         direction: rtl;
-        font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Inter', 'Inter-fallback', 'Vazirmatn', 'Vazirmatn-fallback', 'Manrope', 'Manrope-fallback', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
       }
       body {
-        font-family: 'Inter', 'Vazirmatn', 'Manrope', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+        font-family: 'Inter', 'Inter-fallback', 'Vazirmatn', 'Vazirmatn-fallback', 'Manrope', 'Manrope-fallback', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
         background-color: #fafaff;
         margin: 0;
         padding: 0;
