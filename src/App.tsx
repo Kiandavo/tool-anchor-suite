@@ -6,6 +6,7 @@ import { AppRoutes } from "@/components/AppRoutes";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { initializeFontOptimization } from "@/utils/fontOptimization";
+import { SearchModal } from "@/components/search/SearchModal";
 
 
 const queryClient = new QueryClient({
@@ -31,6 +32,7 @@ const App = () => {
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <GoogleAnalytics />
+          <SearchModal />
           <AppRoutes />
         </QueryClientProvider>
       </HelmetProvider>

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
 import { EnhancedToolsSection } from '@/components/home/EnhancedToolsSection';
@@ -130,24 +131,24 @@ const Index = () => {
               <div className="bg-card rounded-lg p-6 border border-border/50">
                 <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
                 <div className="space-y-2 text-sm">
-                  <a href="/tool/bmi-calculator" className="block hover:text-primary transition-colors">
+                  <Link to="/tool/bmi-calculator" className="block hover:text-primary transition-colors">
                     محاسبه‌گر BMI
-                  </a>
-                  <a href="/tool/text-counter" className="block hover:text-primary transition-colors">
+                  </Link>
+                  <Link to="/tool/text-counter" className="block hover:text-primary transition-colors">
                     شمارنده متن
-                  </a>
-                  <a href="/tool/qr-code-generator" className="block hover:text-primary transition-colors">
+                  </Link>
+                  <Link to="/tool/qr-code-generator" className="block hover:text-primary transition-colors">
                     تولید QR کد
-                  </a>
-                  <a href="/tool/image-compressor" className="block hover:text-primary transition-colors">
+                  </Link>
+                  <Link to="/tool/image-compressor" className="block hover:text-primary transition-colors">
                     فشرده‌ساز تصویر
-                  </a>
-                  <a href="/tool/percentage-calculator" className="block hover:text-primary transition-colors">
+                  </Link>
+                  <Link to="/tool/percentage-calculator" className="block hover:text-primary transition-colors">
                     محاسبه‌گر درصد
-                  </a>
-                  <a href="/tool/password-generator" className="block hover:text-primary transition-colors">
+                  </Link>
+                  <Link to="/tool/password-generator" className="block hover:text-primary transition-colors">
                     تولید رمز عبور
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
