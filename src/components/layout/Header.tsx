@@ -143,9 +143,13 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
             {/* Menu Header */}
             <div className="flex items-center justify-between p-6 border-b border-border/30 bg-gradient-to-b from-background to-background/95">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
-                  <Menu size={16} className="text-primary-foreground" />
-                </div>
+                <img 
+                  src={langarLogo} 
+                  alt="لنگر"
+                  width={32}
+                  height={32}
+                  className="h-8 w-auto"
+                />
                 <h3 className="text-lg font-semibold text-foreground">منوی اصلی</h3>
               </div>
               <button
