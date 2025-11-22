@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User } from 'lucide-react';
-import langarLogo from '@/assets/langar-logo-64.png';
+import langarLogo from '@/assets/laangar-logo.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 
 interface HeaderProps {
@@ -60,11 +60,11 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                   <img 
                     src={langarLogo} 
                     alt="لنگر"
-                    width={32}
-                    height={32}
+                    width={120}
+                    height={40}
                     loading="eager"
                     fetchPriority="high"
-                    className="h-8 w-auto transition-all duration-200 group-hover:scale-110"
+                    className="h-10 w-auto transition-all duration-200 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg blur-xl"></div>
                 </div>
@@ -146,9 +146,9 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src={langarLogo} 
                   alt="لنگر"
-                  width={32}
-                  height={32}
-                  className="h-8 w-auto"
+                  width={100}
+                  height={35}
+                  className="h-9 w-auto"
                 />
                 <h3 className="text-lg font-semibold text-foreground">منوی اصلی</h3>
               </div>
