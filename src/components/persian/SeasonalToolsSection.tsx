@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Moon, Sunset, Clock } from 'lucide-react';
 import { toPersianNumber, getPersianMonthName, getUpcomingPersianHolidays } from '@/utils/persianUtils';
+import { getCurrentDates, formatPersianDate } from '@/utils/calendar/persianCalendar';
 
 export function SeasonalToolsSection() {
   const [holidays, setHolidays] = useState<ReturnType<typeof getUpcomingPersianHolidays>>([]);
@@ -11,14 +12,9 @@ export function SeasonalToolsSection() {
   useEffect(() => {
     setHolidays(getUpcomingPersianHolidays());
     
-    // Simple Persian date display
-    const now = new Date();
-    const persianYear = now.getFullYear() - 621;
-    const month = now.getMonth() + 1;
-    const monthName = getPersianMonthName(month > 3 ? month - 3 : month + 9);
-    const day = now.getDate();
-    
-    setCurrentPersianDate(`${toPersianNumber(day)} ${monthName} ${toPersianNumber(persianYear)}`);
+    // Get current Persian date using proper conversion
+    const { persian } = getCurrentDates();
+    setCurrentPersianDate(formatPersianDate(persian));
   }, []);
 
   const seasonalTools = [

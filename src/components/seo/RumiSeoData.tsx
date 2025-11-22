@@ -6,10 +6,10 @@ export const generateRumiStructuredData = () => {
     "@graph": [
       {
         "@type": "WebApplication",
-        "@id": "https://langar.co/tool/rumi-istikhara#webapp",
+        "@id": "https://laangar.com/tool/rumi-istikhara#webapp",
         "name": "استخاره با مولانا",
         "description": rumiSeoContent.description,
-        "url": "https://langar.co/tool/rumi-istikhara",
+        "url": "https://laangar.com/tool/rumi-istikhara",
         "applicationCategory": "LifestyleApplication",
         "operatingSystem": "Web Browser",
         "offers": {
@@ -28,19 +28,19 @@ export const generateRumiStructuredData = () => {
         "author": {
           "@type": "Organization",
           "name": "لنگر",
-          "url": "https://langar.co"
+          "url": "https://laangar.com"
         },
         "potentialAction": {
           "@type": "UseAction",
-          "target": "https://langar.co/tool/rumi-istikhara"
+          "target": "https://laangar.com/tool/rumi-istikhara"
         }
       },
       {
         "@type": "FAQPage",
-        "@id": "https://langar.co/tool/rumi-istikhara#faq",
+        "@id": "https://laangar.com/tool/rumi-istikhara#faq",
         "mainEntity": rumiSeoContent.faq.map((item, index) => ({
           "@type": "Question",
-          "@id": `https://langar.co/tool/rumi-istikhara#faq-${index}`,
+          "@id": `https://laangar.com/tool/rumi-istikhara#faq-${index}`,
           "name": item.question,
           "acceptedAnswer": {
             "@type": "Answer",
@@ -50,7 +50,7 @@ export const generateRumiStructuredData = () => {
       },
       {
         "@type": "HowTo",
-        "@id": "https://langar.co/tool/rumi-istikhara#howto",
+        "@id": "https://laangar.com/tool/rumi-istikhara#howto",
         "name": "نحوه استفاده از استخاره با مولانا",
         "description": "راهنمای گام به گام استفاده از ابزار استخاره با مولانا",
         "step": rumiSeoContent.howToUse.map((step, index) => ({
@@ -58,12 +58,12 @@ export const generateRumiStructuredData = () => {
           "position": step.step,
           "name": `مرحله ${step.step}`,
           "text": step.instruction,
-          "url": `https://langar.co/tool/rumi-istikhara#step-${index}`
+          "url": `https://laangar.com/tool/rumi-istikhara#step-${index}`
         }))
       },
       {
         "@type": "Person",
-        "@id": "https://langar.co/tool/rumi-istikhara#rumi",
+        "@id": "https://laangar.com/tool/rumi-istikhara#rumi",
         "name": "جلال‌الدین مولوی",
         "alternateName": ["مولانا", "رومی"],
         "description": "عارف، شاعر و فیلسوف بزرگ قرن هفتم هجری",
@@ -74,25 +74,25 @@ export const generateRumiStructuredData = () => {
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://langar.co/tool/rumi-istikhara#breadcrumb",
+        "@id": "https://laangar.com/tool/rumi-istikhara#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "لنگر",
-            "item": "https://langar.co/"
+            "item": "https://laangar.com/"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "ابزارهای طالع‌بینی",
-            "item": "https://langar.co/category/readings"
+            "item": "https://laangar.com/category/readings"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "استخاره با مولانا",
-            "item": "https://langar.co/tool/rumi-istikhara"
+            "item": "https://laangar.com/tool/rumi-istikhara"
           }
         ]
       }

@@ -10,7 +10,7 @@ import { generateToolsSitemapEntries, generateCategorySitemapEntries } from './s
  * Generate main sitemap.xml with all static pages and dynamic content
  */
 export function generateMainSitemap(): string {
-  const baseUrl = 'https://langar.co';
+  const baseUrl = 'https://laangar.com';
   const today = new Date().toISOString().split('T')[0];
   
   // Static pages with their priorities and change frequencies
@@ -52,7 +52,7 @@ ${toolsXml}
  * Generate tools-specific sitemap
  */
 export function generateToolsSitemap(): string {
-  const baseUrl = 'https://langar.co';
+  const baseUrl = 'https://laangar.com';
   
   const toolsXml = tools.map(tool => {
     const priority = tool.isNew ? '0.9' : tool.category === 'calculators' ? '0.8' : '0.7';
@@ -78,7 +78,7 @@ ${toolsXml}
  * Generate images sitemap for better image SEO
  */
 export function generateImagesSitemap(): string {
-  const baseUrl = 'https://langar.co';
+  const baseUrl = 'https://laangar.com';
   const today = new Date().toISOString().split('T')[0];
   
   // Generate image entries for tools (icons and screenshots)
@@ -116,7 +116,7 @@ ${toolImagesXml}
  * Generate sitemap index file
  */
 export function generateSitemapIndex(): string {
-  const baseUrl = 'https://langar.co';
+  const baseUrl = 'https://laangar.com';
   const today = new Date().toISOString().split('T')[0];
   
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -144,10 +144,10 @@ export function generateRobotsTxt(): string {
 Allow: /
 
 # Sitemaps
-Sitemap: https://langar.co/sitemap-index.xml
-Sitemap: https://langar.co/sitemap.xml
-Sitemap: https://langar.co/sitemap-tools.xml
-Sitemap: https://langar.co/sitemap-images.xml
+Sitemap: https://laangar.com/sitemap-index.xml
+Sitemap: https://laangar.com/sitemap.xml
+Sitemap: https://laangar.com/sitemap-tools.xml
+Sitemap: https://laangar.com/sitemap-images.xml
 
 # Block admin areas
 Disallow: /admin/
@@ -165,5 +165,5 @@ Allow: /assets/
 Crawl-delay: 1
 
 # Host declaration
-Host: https://langar.co`;
+Host: https://laangar.com`;
 }
