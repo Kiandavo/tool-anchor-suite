@@ -10,6 +10,7 @@ import { SearchModal } from "@/components/search/SearchModal";
 import { registerServiceWorker } from "@/utils/serviceWorkerRegistration";
 import { DefaultResourceHints } from "@/components/performance/ResourceHints";
 import { CoreWebVitals } from "@/components/performance/CoreWebVitals";
+import { SplashScreen } from "@/components/SplashScreen";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,8 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const [showSplash, setShowSplash] = React.useState(true);
+  
   console.log('App component initializing...');
   
   // Initialize font optimization and service worker on app startup
@@ -29,6 +32,10 @@ const App = () => {
     initializeFontOptimization();
     registerServiceWorker();
   }, []);
+
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
   
   return (
     <ErrorBoundary>
