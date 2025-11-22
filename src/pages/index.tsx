@@ -2,19 +2,18 @@ import React, { Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
-import { QuickToolsSection } from '@/components/home/QuickToolsSection';
 import { EssentialToolsSection } from '@/components/home/EssentialToolsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { LazySection } from '@/components/performance/LazySection';
-import { ResponsiveAd, SidebarAd } from '@/components/ads';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, generateOrganizationSchema, combineSchemas } from '@/utils/schemaUtils';
-import { BackToTop } from '@/components/ui/BackToTop';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { GeoTargeting } from '@/components/seo/GeoTargeting';
 import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
 
 // Lazy load below-the-fold components for better initial load performance
+// Core sections - split into separate chunks
+const QuickToolsSection = lazy(() => import('@/components/home/QuickToolsSection').then(m => ({ default: m.QuickToolsSection })));
 const EnhancedToolsSection = lazy(() => import('@/components/home/EnhancedToolsSection').then(m => ({ default: m.EnhancedToolsSection })));
 const ModernProfessionalToolsSection = lazy(() => import('@/components/home/ModernProfessionalToolsSection').then(m => ({ default: m.ModernProfessionalToolsSection })));
 const PersianCulturalEnhancedSection = lazy(() => import('@/components/home/PersianCulturalEnhancedSection').then(m => ({ default: m.PersianCulturalEnhancedSection })));
@@ -24,6 +23,13 @@ const PersianCalendarWidget = lazy(() => import('@/components/home/PersianCalend
 const TestimonialSection = lazy(() => import('@/components/testimonials/TestimonialSection').then(m => ({ default: m.TestimonialSection })));
 const TrustBadges = lazy(() => import('@/components/trust/TrustBadges').then(m => ({ default: m.TrustBadges })));
 const SeasonalToolsSection = lazy(() => import('@/components/persian/SeasonalToolsSection').then(m => ({ default: m.SeasonalToolsSection })));
+
+// Lazy load ad components - split into separate chunk
+const ResponsiveAd = lazy(() => import('@/components/ads').then(m => ({ default: m.ResponsiveAd })));
+const SidebarAd = lazy(() => import('@/components/ads').then(m => ({ default: m.SidebarAd })));
+
+// Lazy load BackToTop - non-critical UI
+const BackToTop = lazy(() => import('@/components/ui/BackToTop').then(m => ({ default: m.BackToTop })));
 
 const Index = () => {
   console.log('Index page component initializing...');
@@ -97,9 +103,13 @@ const Index = () => {
             <SectionDivider variant="dots" />
 
             {/* Quick Tools Section */}
-            <div id="quick-tools">
-              <QuickToolsSection />
-            </div>
+            <LazySection className="mb-16 sm:mb-24" rootMargin="100px">
+              <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30 rounded-lg" />}>
+                <div id="quick-tools">
+                  <QuickToolsSection />
+                </div>
+              </Suspense>
+            </LazySection>
 
             <SectionDivider variant="gradient" />
 
@@ -116,10 +126,12 @@ const Index = () => {
 
             {/* Strategic Ad Placement - After Tools */}
             {shouldShowAds() && (
-              <ResponsiveAd 
-                adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
-                className="my-8 max-w-4xl mx-auto"
-              />
+              <Suspense fallback={<div className="h-32 animate-pulse bg-muted/20 rounded-lg" />}>
+                <ResponsiveAd 
+                  adSlot={getAdSlot('HOMEPAGE_TOP_BANNER')} 
+                  className="my-8 max-w-4xl mx-auto"
+                />
+              </Suspense>
             )}
 
             {/* Persian Calendar Widget */}
@@ -143,10 +155,12 @@ const Index = () => {
             
             {/* Strategic Ad Placement - Middle Content */}
             {shouldShowAds() && (
-              <ResponsiveAd 
-                adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
-                className="my-8 max-w-4xl mx-auto"
-              />
+              <Suspense fallback={<div className="h-32 animate-pulse bg-muted/20 rounded-lg" />}>
+                <ResponsiveAd 
+                  adSlot={getAdSlot('HOMEPAGE_MIDDLE_BANNER')} 
+                  className="my-8 max-w-4xl mx-auto"
+                />
+              </Suspense>
             )}
 
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
@@ -213,16 +227,20 @@ const Index = () => {
         </div>
 
         {/* Back to Top Button */}
-        <BackToTop />
+        <Suspense fallback={null}>
+          <BackToTop />
+        </Suspense>
 
         {/* Sidebar with ads - Desktop only */}
         {shouldShowAds() && (
           <div className="hidden lg:block w-80 flex-shrink-0">
             <div className="sticky top-20 space-y-8">
-              <SidebarAd 
-                adSlot={getAdSlot('HOMEPAGE_SIDEBAR')} 
-                className="mb-8"
-              />
+              <Suspense fallback={<div className="h-96 animate-pulse bg-muted/20 rounded-lg" />}>
+                <SidebarAd 
+                  adSlot={getAdSlot('HOMEPAGE_SIDEBAR')} 
+                  className="mb-8"
+                />
+              </Suspense>
               
               {/* Additional sidebar content */}
               <div className="bg-card rounded-lg p-6 border border-border/50">
