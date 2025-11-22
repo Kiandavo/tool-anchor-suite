@@ -103,14 +103,20 @@ export const HeroSection = () => {
             {/* Main Title with Enhanced Typography */}
             <div className="mb-8 sm:mb-12 relative z-30">
               <h1 className="hero-title mb-4 sm:mb-6 relative z-10 flex justify-center">
-                <img 
-                  src={langarLogo} 
-                  alt="لنگر - مجموعه ابزارهای آنلاین فارسی"
-                  className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto drop-shadow-2xl filter brightness-110 relative z-10 transition-transform duration-300 hover:scale-105"
-                  fetchPriority="high"
-                  loading="eager"
-                />
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg blur opacity-40 -z-10"></div>
+                <div className="relative inline-block">
+                  {/* Animated gradient glow layers */}
+                  <div className="absolute -inset-4 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full blur-2xl opacity-30 animate-pulse -z-10"></div>
+                  <div className="absolute -inset-6 bg-gradient-to-br from-purple-400 via-pink-400 to-cyan-400 rounded-full blur-3xl opacity-20 animate-pulse -z-20" style={{ animationDelay: '0.5s', animationDuration: '3s' }}></div>
+                  <div className="absolute -inset-8 bg-gradient-to-tr from-indigo-400 via-purple-400 to-pink-400 rounded-full blur-3xl opacity-15 animate-pulse -z-30" style={{ animationDelay: '1s', animationDuration: '4s' }}></div>
+                  
+                  <img 
+                    src={langarLogo} 
+                    alt="لنگر - مجموعه ابزارهای آنلاین فارسی"
+                    className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto drop-shadow-2xl filter brightness-110 relative z-10 transition-all duration-500 hover:scale-110 hover:drop-shadow-[0_0_30px_rgba(168,85,247,0.6)]"
+                    fetchPriority="high"
+                    loading="eager"
+                  />
+                </div>
               </h1>
               
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-medium mb-6 sm:mb-8 tracking-wide text-foreground/85 filter drop-shadow-lg relative z-10">
