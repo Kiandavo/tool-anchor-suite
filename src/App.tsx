@@ -7,7 +7,9 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { initializeFontOptimization } from "@/utils/fontOptimization";
 import { SearchModal } from "@/components/search/SearchModal";
-
+import { registerServiceWorker } from "@/utils/serviceWorkerRegistration";
+import { DefaultResourceHints } from "@/components/performance/ResourceHints";
+import { CoreWebVitals } from "@/components/performance/CoreWebVitals";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,15 +24,18 @@ const queryClient = new QueryClient({
 const App = () => {
   console.log('App component initializing...');
   
-  // Initialize font optimization on app startup
+  // Initialize font optimization and service worker on app startup
   React.useEffect(() => {
     initializeFontOptimization();
+    registerServiceWorker();
   }, []);
   
   return (
     <ErrorBoundary>
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
+          <DefaultResourceHints />
+          <CoreWebVitals />
           <GoogleAnalytics />
           <SearchModal />
           <AppRoutes />
