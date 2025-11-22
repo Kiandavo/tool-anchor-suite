@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getFooterLinks } from '@/utils/internal-linking';
 import { Instagram } from 'lucide-react';
-import logoSvg from '@/assets/langar-logo-40.png';
+import logoSvg from '@/assets/langar-logo.png';
 
 export function FooterSitemap() {
   const footerCategories = getFooterLinks();
