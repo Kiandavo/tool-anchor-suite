@@ -292,36 +292,66 @@
       window.breakUpLongTasks = yieldToMain;
       
       // Improve Speed Index: lazy-load offscreen images and apply content-visibility to offscreen sections
+      // Optimized to prevent forced reflows by batching reads before writes
       function optimizeOffscreen() {
         try {
           const vh = window.innerHeight || 800;
-          // Apply content-visibility to offscreen sections/articles
+          const threshold = vh * 1.2;
+          
+          // Batch all reads first to prevent forced reflows
           const sections = document.querySelectorAll('main > section, section, article, [data-defer]');
-          sections.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top > vh * 1.2) {
+          const sectionData = Array.from(sections).map(el => ({
+            el,
+            top: el.getBoundingClientRect().top
+          }));
+          
+          const images = Array.from(document.images || []);
+          const imageData = images.map(img => ({
+            img,
+            top: img.getBoundingClientRect().top,
+            hasLoading: img.hasAttribute('loading'),
+            hasFetchPriority: img.hasAttribute('fetchpriority')
+          }));
+          
+          // Now do all writes without interleaving reads
+          // Apply content-visibility to offscreen sections
+          sectionData.forEach(({ el, top }) => {
+            if (top > threshold) {
               el.classList.add('cv-auto');
             }
           });
           
-          // Lazy-load offscreen images and deprioritize fetching
-          const images = Array.from(document.images || []);
-          images.forEach(img => {
-            const rect = img.getBoundingClientRect();
-            if (rect.top > vh * 1.2) {
-              if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+          // Lazy-load offscreen images and set fetch priorities
+          imageData.forEach(({ img, top, hasLoading, hasFetchPriority }) => {
+            if (top > threshold) {
+              if (!hasLoading) img.setAttribute('loading', 'lazy');
               img.setAttribute('decoding', 'async');
               img.setAttribute('fetchpriority', 'low');
             } else {
               // Prioritize above-the-fold images
-              if (!img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority', 'high');
+              if (!hasFetchPriority) img.setAttribute('fetchpriority', 'high');
             }
           });
         } catch (_) { /* noop */ }
       }
       
-      window.addEventListener('load', optimizeOffscreen, { once: true });
-      document.addEventListener('DOMContentLoaded', optimizeOffscreen, { once: true });
+      window.addEventListener('load', () => {
+        // Use requestAnimationFrame to avoid layout thrashing
+        if ('requestAnimationFrame' in window) {
+          requestAnimationFrame(optimizeOffscreen);
+        } else {
+          optimizeOffscreen();
+        }
+      }, { once: true });
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        if ('requestAnimationFrame' in window) {
+          requestAnimationFrame(optimizeOffscreen);
+        } else {
+          optimizeOffscreen();
+        }
+      }, { once: true });
+      
       window.addEventListener('resize', () => {
         if ('requestIdleCallback' in window) {
           // @ts-ignore
