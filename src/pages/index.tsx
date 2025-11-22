@@ -18,6 +18,7 @@ import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateWebsiteSchema, generateFAQSchema, generateOrganizationSchema, combineSchemas } from '@/utils/schemaUtils';
 import { BackToTop } from '@/components/ui/BackToTop';
 import { SectionDivider } from '@/components/ui/SectionDivider';
+import { TestimonialSection } from '@/components/testimonials/TestimonialSection';
 
 const Index = () => {
   console.log('Index page component initializing...');
@@ -144,6 +145,11 @@ const Index = () => {
                 <InteractiveCategoriesSection />
               </div>
             </LazySection>
+            
+            {/* Testimonials Section - Phase 3 */}
+            <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
+              <TestimonialSection />
+            </LazySection>
           </div>
         </div>
 
@@ -160,6 +166,21 @@ const Index = () => {
               />
               
               {/* Additional sidebar content */}
+              <div className="bg-card rounded-lg p-6 border border-border/50">
+                <h3 className="text-lg font-semibold mb-4">راهنماهای جامع</h3>
+                <div className="space-y-2 text-sm">
+                  <Link to="/guides/calculators" className="block hover:text-primary transition-colors">
+                    📊 راهنمای محاسبه‌گرها
+                  </Link>
+                  <Link to="/faq" className="block hover:text-primary transition-colors">
+                    ❓ سوالات متداول
+                  </Link>
+                  <Link to="/blog" className="block hover:text-primary transition-colors">
+                    📝 وبلاگ و مقالات
+                  </Link>
+                </div>
+              </div>
+              
               <div className="bg-card rounded-lg p-6 border border-border/50">
                 <h3 className="text-lg font-semibold mb-4">ابزارهای پربازدید</h3>
                 <div className="space-y-2 text-sm">

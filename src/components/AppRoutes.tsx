@@ -8,11 +8,13 @@ import AllTools from "@/pages/AllTools";
 import Settings from "@/pages/Settings";
 import AboutUs from "@/pages/AboutUs";
 import FAQ from "@/pages/FAQ";
+import FAQEnhanced from "@/pages/FAQEnhanced";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
 import NotFound from "@/pages/NotFound";
+import CalculatorsGuide from "@/pages/guides/CalculatorsGuide";
 
 export const AppRoutes = () => {
   console.log('AppRoutes component loading...');
@@ -28,12 +30,14 @@ export const AppRoutes = () => {
       <Route path="/settings" element={<Settings />} />
       <Route path="/about" element={<AboutUs />} />
       <Route path="/درباره-ما" element={<AboutUs />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/سوالات-متداول" element={<FAQ />} />
+      <Route path="/faq" element={<FAQEnhanced />} />
+      <Route path="/سوالات-متداول" element={<FAQEnhanced />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/وبلاگ" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/وبلاگ/:slug" element={<BlogPost />} />
+      <Route path="/guides/calculators" element={<CalculatorsGuide />} />
+      <Route path="/راهنما/محاسبه‌گرها" element={<CalculatorsGuide />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="*" element={<NotFound />} />
