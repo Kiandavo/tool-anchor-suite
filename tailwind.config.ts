@@ -20,28 +20,29 @@ export default {
     	},
     	fontFamily: {
     		primary: [
-    			'Inter',
-    			'Inter-fallback',
     			'Vazirmatn',
     			'Vazirmatn-fallback',
+    			'Shabnam',
+    			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		heading: [
-    			'Manrope',
-    			'Manrope-fallback',
     			'Vazirmatn',
     			'Vazirmatn-fallback',
-    			'Inter',
-    			'Inter-fallback',
+    			'Shabnam',
+    			'Manrope',
+    			'Manrope-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		body: [
-    			'Inter',
-    			'Inter-fallback',
     			'Vazirmatn',
     			'Vazirmatn-fallback',
+    			'Shabnam',
+    			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
@@ -142,12 +143,11 @@ export default {
     			'sans-serif'
     		],
     		sans: [
-    			'Inter',
-    			'Inter-fallback',
     			'Vazirmatn',
     			'Vazirmatn-fallback',
-    			'Manrope',
-    			'Manrope-fallback',
+    			'Shabnam',
+    			'Inter',
+    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		]
@@ -312,21 +312,17 @@ export default {
     			'scale-subtle': 'scale-subtle 4s ease-in-out infinite',
     			shimmer: 'shimmer 3s infinite'
     		},
-    		fontFamily: {
-    			sans: [
-    				'Inter',
-    				'Inter-fallback',
-    				'ui-sans-serif',
-    				'system-ui',
-    				'-apple-system',
-    				'BlinkMacSystemFont',
-    				'Segoe UI',
-    				'Roboto',
-    				'Helvetica Neue',
-    				'Arial',
-    				'Noto Sans',
-    				'sans-serif'
-    			],
+     		fontFamily: {
+     			sans: [
+     				'Vazirmatn',
+     				'Vazirmatn-fallback',
+     				'Shabnam',
+     				'ui-sans-serif',
+     				'system-ui',
+     				'Tahoma',
+     				'Arial',
+     				'sans-serif'
+     			],
     			serif: [
     				'Lora',
     				'ui-serif',
