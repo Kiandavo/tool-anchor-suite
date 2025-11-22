@@ -2,7 +2,7 @@
 import React from 'react';
 import { Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import logoSvg from '@/assets/logo.svg';
+import logoSvg from '@/assets/langar-logo.png';
 
 export function Footer() {
   return (
@@ -13,8 +13,7 @@ export function Footer() {
           {/* About Column */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img src={logoSvg} alt="لنگر" className="h-8 w-8" />
-              <h3 className="text-lg font-bold text-foreground">لنگر</h3>
+              <img src={logoSvg} alt="لنگر" className="h-10 w-auto" />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               بزرگترین مجموعه ابزارهای آنلاین فارسی با بیش از 80 ابزار رایگان و 500,000 کاربر فعال

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User } from 'lucide-react';
-import laangarLogo from '@/assets/logo.svg';
+import langarLogo from '@/assets/langar-logo.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 
 interface HeaderProps {
@@ -58,13 +58,12 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               >
                 <div className="relative">
                   <img 
-                    src={laangarLogo} 
+                    src={langarLogo} 
                     alt="لنگر" 
-                    className="h-7 w-auto filter brightness-0 dark:invert transition-all duration-200 group-hover:brightness-90"
+                    className="h-8 w-auto transition-all duration-200 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg blur-xl"></div>
                 </div>
-                <span className="hidden sm:block text-lg font-semibold text-foreground/90 group-hover:text-foreground transition-colors duration-200">لنگر</span>
               </Link>
             </div>
 
