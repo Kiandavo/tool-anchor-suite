@@ -24,9 +24,9 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   noindex = false
 }) => {
   // Safe URL generation with fallback
-  let currentUrl = 'https://langar.co/';
+  let currentUrl = 'https://laangar.com/';
   try {
-    currentUrl = canonical || `https://langar.co${window.location.pathname}`;
+    currentUrl = canonical || `https://laangar.com${window.location.pathname}`;
   } catch (error) {
     console.log('Using fallback URL due to window access error');
   }

@@ -16,7 +16,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
   type,
   name,
   description,
-  url = "https://langar.co",
+  url = "https://laangar.com",
   keywords = [],
   author = "لنگر",
   datePublished = "2024-01-01",
@@ -35,7 +35,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
     "publisher": {
       "@type": "Organization",
       "name": "لنگر",
-      "url": "https://langar.co"
+      "url": "https://laangar.com"
     },
     "datePublished": datePublished,
     "inLanguage": "fa-IR",

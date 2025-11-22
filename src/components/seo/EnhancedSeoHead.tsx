@@ -38,7 +38,7 @@ export const EnhancedSeoHead: React.FC<EnhancedSeoHeadProps> = ({
   const finalTitle = title || toolSeoData?.metaTitle || 'لنگر - ابزارهای آنلاین رایگان';
   const finalDescription = description || toolSeoData?.metaDescription || 'بیش از 100 ابزار آنلاین رایگان فارسی';
   const finalKeywords = keywords || toolSeoData?.keywords.join(', ') || 'ابزار آنلاین, رایگان, فارسی';
-  const finalCanonical = canonical || (toolSlug ? `https://langar.co/tool/${toolSlug}` : 'https://langar.co/');
+  const finalCanonical = canonical || (toolSlug ? `https://laangar.com/tool/${toolSlug}` : 'https://laangar.com/');
   const finalOgImage = ogImage || '/assets/social-logo.jpg';
   
   // Generate rich schemas
