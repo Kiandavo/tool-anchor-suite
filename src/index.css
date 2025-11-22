@@ -116,6 +116,40 @@
     /* Prevent text size adjust on orientation change - Phase 1 Mobile Optimization */
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+    /* Persian text optimization */
+    letter-spacing: 0.01em;
+  }
+  
+  /* Persian-specific letter spacing optimizations */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: 0.02em;
+  }
+  
+  /* Fine-tuned spacing for different text sizes */
+  .text-xs, .text-sm {
+    letter-spacing: 0.015em;
+  }
+  
+  .text-base {
+    letter-spacing: 0.01em;
+  }
+  
+  .text-lg, .text-xl {
+    letter-spacing: 0.012em;
+  }
+  
+  .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl {
+    letter-spacing: 0.02em;
+  }
+  
+  /* Buttons and labels benefit from slightly wider spacing */
+  button, [role="button"], .btn {
+    letter-spacing: 0.025em;
+  }
+  
+  /* Tighter spacing for monospace code */
+  code, pre, .font-mono {
+    letter-spacing: -0.01em;
   }
   
   /* Touch-friendly UI enhancements for mobile - Phase 1 */
@@ -138,10 +172,32 @@
     -webkit-touch-callout: none;
   }
   
-  /* Persian text optimization */
+  /* Persian text optimization utility class */
   .persian-optimized {
     text-rendering: optimizeLegibility;
     font-feature-settings: "kern" 1;
     -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.015em;
+    word-spacing: 0.05em;
+  }
+  
+  /* Tight letter spacing utility for compact text */
+  .persian-tight {
+    letter-spacing: 0.005em;
+  }
+  
+  /* Normal letter spacing utility */
+  .persian-normal {
+    letter-spacing: 0.01em;
+  }
+  
+  /* Wide letter spacing utility for headings */
+  .persian-wide {
+    letter-spacing: 0.025em;
+  }
+  
+  /* Extra wide for display text */
+  .persian-wider {
+    letter-spacing: 0.04em;
   }
 }
