@@ -20,6 +20,8 @@ import { BackToTop } from '@/components/ui/BackToTop';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { TestimonialSection } from '@/components/testimonials/TestimonialSection';
 import { TrustBadges } from '@/components/trust/TrustBadges';
+import { SeasonalToolsSection } from '@/components/persian/SeasonalToolsSection';
+import { GeoTargeting } from '@/components/seo/GeoTargeting';
 
 const Index = () => {
   console.log('Index page component initializing...');
@@ -62,6 +64,12 @@ const Index = () => {
         keywords={homeKeywords}
         canonical="https://langar.co/"
         faq={homeFAQ}
+      />
+      
+      <GeoTargeting 
+        title={homeTitle}
+        description={homeDescription}
+        canonical="https://langar.co/"
       />
       
       <div className="flex flex-col lg:flex-row gap-8">
@@ -136,6 +144,15 @@ const Index = () => {
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
               <div id="readings">
                 <MysticalReadingsSection />
+              </div>
+            </LazySection>
+
+            <SectionDivider variant="dots" />
+
+            {/* Seasonal Persian Tools - Phase 5 */}
+            <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
+              <div id="seasonal-tools">
+                <SeasonalToolsSection />
               </div>
             </LazySection>
 
