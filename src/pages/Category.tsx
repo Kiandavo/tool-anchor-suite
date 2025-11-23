@@ -71,9 +71,9 @@ const Category = () => {
         <div className="flex-1">
           <div className="flex items-center justify-between mb-2">
             {/* H1 with optimized title */}
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-              {categoryName} - ابزارهای رایگان ۲۰۲۵
-            </h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+          {categoryName}
+        </h1>
             <SocialShare 
               url={`https://langar.co/category/${category}`}
               title={seoTitle}
