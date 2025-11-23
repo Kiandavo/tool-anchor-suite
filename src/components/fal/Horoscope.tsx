@@ -10,9 +10,10 @@ import { PredictionTypeSelector } from './horoscope/PredictionTypeSelector';
 import { PredictionDisplay } from './horoscope/PredictionDisplay';
 import { EmptyStateDisplay } from './horoscope/EmptyStateDisplay';
 import { ZodiacConstellation, PlanetaryOrbit, ZodiacWheel } from './graphics/HoroscopeGraphics';
+import { EnhancedReadingWrapper } from '@/components/readings/EnhancedReadingWrapper';
+import { TutorialStep } from '@/components/readings/TutorialSystem';
 
 export const Horoscope = () => {
-  // ... keep existing code (hooks, component logic)
   const {
     selectedSign,
     setSelectedSign,
@@ -28,7 +29,47 @@ export const Horoscope = () => {
 
   console.log("Horoscope rendering with selectedSign:", selectedSign, "and predictionType:", predictionType);
 
+  // Generate reading data for export
+  const readingData = prediction ? {
+    title: `طالع ${selectedSign} - ${predictionType}`,
+    content: prediction,
+    timestamp: new Date(),
+    type: 'horoscope',
+    metadata: { sign: selectedSign, type: predictionType }
+  } : undefined;
+
+  // Generate narration text
+  const narrationText = prediction ? `
+    طالع ${selectedSign} برای ${predictionType === 'today' ? 'امروز' : predictionType === 'week' ? 'این هفته' : 'این ماه'}.
+    ${prediction}
+  ` : undefined;
+
+  // Tutorial steps
+  const tutorialSteps: TutorialStep[] = [
+    {
+      target: '#zodiac-selector',
+      title: 'انتخاب ماه تولد',
+      description: 'ابتدا ماه تولد خود را انتخاب کنید',
+      position: 'bottom'
+    },
+    {
+      target: '#prediction-type-selector',
+      title: 'نوع پیش‌بینی',
+      description: 'روزانه، هفتگی یا ماهانه را انتخاب کنید',
+      position: 'bottom'
+    },
+  ];
+
   return (
+    <EnhancedReadingWrapper
+      readingType="horoscope"
+      readingData={readingData}
+      narrationText={narrationText}
+      elementId="horoscope-content"
+      tutorialSteps={tutorialSteps}
+      isLoading={isAnimating}
+      loadingType="stars"
+    >
     <Card className="fortune-card-enhanced fortune-card-horoscope">
       {/* Enhanced astrology graphics */}
       <ZodiacConstellation sign={selectedSign} />
@@ -53,8 +94,8 @@ export const Horoscope = () => {
         <HoroscopeGuide />
       </CardHeader>
       
-      <CardContent className="pt-3 px-3">
-        <div className="space-y-3">
+      <CardContent className="pt-3 px-3" id="horoscope-content">
+        <div className="space-y-3" id="zodiac-selector">
           <div className="bg-white p-3 rounded-lg border border-[#e6c8b0]/20 text-center text-xs text-[#5c3f14] mb-2">
             لطفاً ماه تولد و نوع پیش‌بینی مورد نظر خود را انتخاب کنید
           </div>
@@ -63,8 +104,10 @@ export const Horoscope = () => {
             selectedSign={selectedSign} 
             onSelectSign={setSelectedSign} 
           />
+          </div>
           
-          <PredictionTypeSelector 
+          <div id="prediction-type-selector">
+          <PredictionTypeSelector
             predictionType={predictionType} 
             onSelectType={setPredictionType} 
           />
@@ -121,6 +164,7 @@ export const Horoscope = () => {
         )}
       </CardFooter>
     </Card>
+    </EnhancedReadingWrapper>
   );
 };
 
