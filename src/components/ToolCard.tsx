@@ -10,6 +10,8 @@ interface ToolCardProps {
 }
 
 export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) => {
+  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
+  
   const getIcon = (category: string, iconName?: string) => {
     const iconSize = "w-6 h-6";
     
@@ -99,17 +101,18 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) =
   return (
     <Link 
       to={`/tool/${tool.slug}`}
-      className={cardClass}
+      className={`${cardClass} transition-all duration-300 hover-scale`}
+      onMouseEnter={() => setIsImageLoaded(true)}
     >
-      <div className="icon-text mb-3">
+      <div className="icon-text mb-3 animate-fade-in">
         {getIcon(tool.category, tool.icon)}
         <div className="flex items-center gap-2 flex-wrap">
           <h3 className="font-medium">{tool.name}</h3>
           {tool.isNew && (
-            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-lg font-medium">جدید</span>
+            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-lg font-medium animate-fade-in">جدید</span>
           )}
           {tool.isComingSoon && (
-            <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-lg font-medium">به زودی</span>
+            <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-lg font-medium animate-fade-in">به زودی</span>
           )}
         </div>
       </div>
