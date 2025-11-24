@@ -4,8 +4,13 @@ import { Button } from "@/components/ui/button";
 import { useBirthChart } from './birthChart/useBirthChart';
 import { BirthDataForm } from './birthChart/BirthDataForm';
 import { ChartDisplay } from './birthChart/ChartDisplay';
-import { AstrologyGuide } from './shared/AstrologyGuide';
-// Remove ZodiacConstellation import for now
+import { ChartWheel } from './birthChart/ChartWheel';
+import { PlanetaryAspects } from './birthChart/PlanetaryAspects';
+import { HouseInterpretations } from './birthChart/HouseInterpretations';
+import { SynastryComparison } from './birthChart/SynastryComparison';
+import { AspectGrid } from './birthChart/AspectGrid';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { EnhancedReadingWrapper } from '@/components/readings/EnhancedReadingWrapper';
 
 export const BirthChart = () => {
   const {
@@ -18,8 +23,31 @@ export const BirthChart = () => {
     copyChart
   } = useBirthChart();
   
+  const mockAspects = [
+    { planet1: 'خورشید', planet2: 'ماه', type: 'trine' as const, angle: 120, strength: 'strong' as const, nature: 'harmonious' as const, interpretation: 'هماهنگی عالی بین ذهن و احساس' }
+  ];
+  
+  const mockHouses = Array.from({ length: 12 }, (_, i) => ({
+    number: i + 1,
+    sign: chart?.sunSign || 'حمل',
+    ruler: 'مریخ',
+    planets: []
+  }));
+
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-gradient-to-br from-indigo-50/80 to-purple-50/80 backdrop-blur-sm shadow-2xl border-purple-200/50 relative overflow-hidden">
+    <EnhancedReadingWrapper
+      readingType="birth-chart"
+      readingData={chart ? {
+        type: 'horoscope',
+        title: 'نقشه طالع',
+        content: `خورشید: ${chart.sunSign}, ماه: ${chart.moonSign}`,
+        timestamp: new Date()
+      } : undefined}
+      elementId="birth-chart-content"
+      isLoading={isLoading}
+      loadingType="stars"
+    >
+    <Card id="birth-chart-content" className="w-full max-w-4xl mx-auto bg-gradient-to-br from-indigo-50/80 to-purple-50/80 backdrop-blur-sm shadow-2xl border-purple-200/50 relative overflow-hidden">
       <div className="absolute inset-0 opacity-30">
         {/* Zodiac background pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-indigo-100/20"></div>
@@ -69,5 +97,6 @@ export const BirthChart = () => {
         )}
       </CardFooter>
     </Card>
+    </EnhancedReadingWrapper>
   );
 };
