@@ -66,7 +66,7 @@ export const Numerology: React.FC = () => {
                 <Input 
                   value={persianName} 
                   onChange={(e) => setPersianName(e.target.value)} 
-                  placeholder="نام فارسی (اختیاریy)" 
+                  placeholder="نام فارسی (اختیاری)" 
                   className="mt-2" 
                 />
               </div>
@@ -116,7 +116,7 @@ export const Numerology: React.FC = () => {
                 <TabsTrigger value="core">اعداد اصلی</TabsTrigger>
                 <TabsTrigger value="persian">حساب ابجد</TabsTrigger>
                 <TabsTrigger value="forecast">پیش‌بینی</TabsTrigger>
-                <TabsTrigger value="compatibility">سازگاریy</TabsTrigger>
+                <TabsTrigger value="compatibility">سازگاری</TabsTrigger>
               </TabsList>
               
               <TabsContent value="core">
