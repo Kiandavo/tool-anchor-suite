@@ -60,7 +60,6 @@ export const BirthChart = () => {
         <p className="text-purple-700 text-sm">
           کشف رازهای شخصیت و سرنوشت از طریق موقعیت ستارگان
         </p>
-        <AstrologyGuide />
       </CardHeader>
 
       <CardContent className="space-y-6 relative z-10">
