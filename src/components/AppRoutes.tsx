@@ -21,6 +21,7 @@ const Resources = lazy(() => import("@/pages/Resources"));
 const WidgetsPage = lazy(() => import("@/pages/WidgetsPage"));
 const Bookmarks = lazy(() => import("@/pages/Bookmarks"));
 const ToolComparison = lazy(() => import("@/pages/ToolComparison"));
+const AstrologyGuide = lazy(() => import("@/pages/AstrologyGuide"));
 
 const RouteLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -64,6 +65,8 @@ export const AppRoutes = () => {
         <Route path="/نشان-شده-ها" element={<Bookmarks />} />
         <Route path="/compare" element={<ToolComparison />} />
         <Route path="/مقایسه" element={<ToolComparison />} />
+        <Route path="/astrology-guide" element={<AstrologyGuide />} />
+        <Route path="/راهنمای-طالع‌بینی" element={<AstrologyGuide />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="*" element={<NotFound />} />
