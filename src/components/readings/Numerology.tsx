@@ -67,12 +67,19 @@ const PERSONALITY_TRAITS: Record<number, string[]> = {
   33: ['معلم', 'درمانگر', 'مهربان', 'بخشنده', 'فداکار']
 };
 
+import { useAdvancedNumerology } from '@/hooks/useAdvancedNumerology';
+import { NumerologyChart } from './numerology/NumerologyChart';
+import { PersianAbjad } from './numerology/PersianAbjad';
+import { PersonalYear } from './numerology/PersonalYear';
+import { RelationshipCompatibility } from './numerology/RelationshipCompatibility';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { EnhancedReadingWrapper } from './EnhancedReadingWrapper';
+
 export const Numerology: React.FC = () => {
-  const [isRevealed, setIsRevealed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
+  const [persianName, setPersianName] = useState('');
   const [birthDate, setBirthDate] = useState('');
-  const [lifePathNumber, setLifePathNumber] = useState(0);
+  const { chart, isLoading, generateCompleteChart } = useAdvancedNumerology();
   const [destinyNumber, setDestinyNumber] = useState(0);
   const [personalityTraits, setPersonalityTraits] = useState<string[]>([]);
   const [compatibleWith, setCompatibleWith] = useState<number[]>([]);
@@ -80,12 +87,20 @@ export const Numerology: React.FC = () => {
   const [luckyDays, setLuckyDays] = useState<string[]>([]);
   const [interpretation, setInterpretation] = useState('');
 
-  // Calculate numerology values
-  const calculateNumerology = () => {
+  const handleCalculate = () => {
     if (!name || !birthDate) {
       toast.error("لطفاً نام و تاریخ تولد خود را وارد کنید");
       return;
     }
+    
+    const date = new Date(birthDate);
+    generateCompleteChart(
+      name,
+      date.getDate(),
+      date.getMonth() + 1,
+      date.getFullYear(),
+      persianName
+    );
     
     setIsLoading(true);
     
@@ -321,7 +336,19 @@ export const Numerology: React.FC = () => {
   };
 
   return (
-    <Card className="bg-gradient-to-b from-[#eef9ff] to-[#e0f2ff] border-[#b3d7ff] shadow-md overflow-hidden relative">
+    <EnhancedReadingWrapper
+      readingType="numerology"
+      readingData={chart ? {
+        type: 'numerology',
+        title: `اعداد شناسی ${name}`,
+        content: `عدد مسیر زندگی: ${chart.lifePathNumber}، عدد بیان: ${chart.expressionNumber}`,
+        timestamp: new Date()
+      } : undefined}
+      elementId="numerology-content"
+      isLoading={isLoading}
+      loadingType="spiral"
+    >
+    <Card id="numerology-content" className="bg-gradient-to-b from-[#eef9ff] to-[#e0f2ff] border-[#b3d7ff] shadow-md overflow-hidden relative">
       <CardHeader className="bg-gradient-to-r from-[#b3d7ff] to-[#8fbbee] text-center pb-2 py-2 relative border-b border-[#b3d7ff]">
         <h2 className="text-sm font-bold text-[#1a365d] flex items-center justify-center">
           <Hash className="mr-2" size={16} />
@@ -331,10 +358,11 @@ export const Numerology: React.FC = () => {
       
       <CardContent className="pt-4 px-4 relative z-10">
         <div className="space-y-4">
-          {!isRevealed ? (
+          {!chart ? (
             <>
               <div className="bg-white/60 p-4 rounded-lg shadow-sm border border-[#b3d7ff]/30 text-center">
                 <p className="text-sm text-[#1a365d]">
+                  <Input value={persianName} onChange={(e) => setPersianName(e.target.value)} placeholder="نام فارسی (اختیاری)" className="mb-2" />
                   اعداد شناسی یا نومرولوژی، علم باستانی مطالعه تأثیر اعداد بر زندگی و شخصیت انسان‌هاست. با وارد کردن نام و تاریخ تولد، اعداد مهم زندگی و معنای آن‌ها را کشف کنید.
                 </p>
               </div>
