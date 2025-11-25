@@ -10,6 +10,7 @@ import WordEtymology from '@/pages/ToolTypes/PersianCultural/WordEtymology';
 import PersianNames from '@/pages/ToolTypes/PersianCultural/PersianNames';
 import PersianProverbs from '@/pages/ToolTypes/PersianCultural/PersianProverbs';
 import PersianCalendar from '@/pages/ToolTypes/PersianCultural/PersianCalendar';
+import PersianDateEvents from '@/pages/ToolTypes/PersianCultural/PersianDateEvents';
 
 // Enhanced Components
 import { PersianArchitectureEnhanced } from '@/components/persian-cultural/PersianArchitectureEnhanced';
@@ -99,6 +100,8 @@ export default function PersianCulturalTool({ slug }: PersianCulturalToolProps) 
         return <PersianMusicEnhanced />;
       case 'persian-poetry-analysis':
         return <PersianPoetryAnalysis />;
+      case 'persian-date-events':
+        return <PersianDateEvents />;
       case 'word-etymology':
         return <WordEtymologyEnhanced />;
       case 'historical-timeline':

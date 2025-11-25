@@ -22,6 +22,9 @@ const WidgetsPage = lazy(() => import("@/pages/WidgetsPage"));
 const Bookmarks = lazy(() => import("@/pages/Bookmarks"));
 const ToolComparison = lazy(() => import("@/pages/ToolComparison"));
 const AstrologyGuide = lazy(() => import("@/pages/AstrologyGuide"));
+const HoroscopeForecasts = lazy(() => import("@/pages/HoroscopeForecasts"));
+const AstrologyQuiz = lazy(() => import("@/pages/AstrologyQuiz"));
+const PersianDateEvents = lazy(() => import("@/pages/ToolTypes/PersianCultural/PersianDateEvents"));
 
 const RouteLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -67,6 +70,14 @@ export const AppRoutes = () => {
         <Route path="/مقایسه" element={<ToolComparison />} />
         <Route path="/astrology-guide" element={<AstrologyGuide />} />
         <Route path="/راهنمای-طالع‌بینی" element={<AstrologyGuide />} />
+        <Route path="/horoscope-forecasts" element={<HoroscopeForecasts />} />
+        <Route path="/horoscope-forecasts/:sign/:period" element={<HoroscopeForecasts />} />
+        <Route path="/طالع-روزانه" element={<HoroscopeForecasts />} />
+        <Route path="/astrology-quiz" element={<AstrologyQuiz />} />
+        <Route path="/astrology-quiz/:category" element={<AstrologyQuiz />} />
+        <Route path="/آزمون-طالع‌بینی" element={<AstrologyQuiz />} />
+        <Route path="/persian-date-events" element={<PersianDateEvents />} />
+        <Route path="/رویدادهای-تاریخی" element={<PersianDateEvents />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="*" element={<NotFound />} />
