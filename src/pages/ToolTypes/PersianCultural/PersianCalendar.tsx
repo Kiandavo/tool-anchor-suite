@@ -10,7 +10,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { validateDate } from '@/utils/calendar/dateValidators';
 import TripleCalendarGrid from '@/components/calendar/TripleCalendarGrid';
 import PersianPoetryQuote from '@/components/calendar/PersianPoetryQuote';
-import { motion } from 'framer-motion';
+import PersianCarpetPattern from '@/components/calendar/PersianCarpetPattern';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type CalendarType = 'gregorian' | 'jalali' | 'hijri';
 
@@ -183,12 +184,11 @@ export default function PersianCalendar() {
   const targetColors = getCalendarColors(targetFormat);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-persian-turquoise/5 to-persian-gold/5 relative overflow-hidden">
-      {/* Persian Decorative Pattern Background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-[radial-gradient(circle,_hsl(var(--persian-turquoise))_1px,_transparent_1px)] bg-[length:20px_20px]" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[radial-gradient(circle,_hsl(var(--persian-gold))_1px,_transparent_1px)] bg-[length:20px_20px]" />
-      </div>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Persian Carpet Background */}
+      <AnimatePresence mode="wait">
+        <PersianCarpetPattern key={sourceDate.format} type={sourceDate.format === 'gregorian' ? 'gregorian' : sourceDate.format === 'hijri' ? 'hijri' : 'jalali'} />
+      </AnimatePresence>
 
       <div className="relative p-6 max-w-4xl mx-auto">
         {/* Ornamental Header */}
