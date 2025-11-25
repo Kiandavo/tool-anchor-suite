@@ -1,153 +1,218 @@
-
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RulerIcon } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Ruler, Copy, ArrowLeftRight } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { CalculatorCard } from '@/components/calculator/CalculatorCard';
+import { VisualizationCard } from '@/components/calculator/VisualizationCard';
+import { motion } from 'framer-motion';
+import { formatPersianNumber } from '@/utils/persianNumbers';
 
 const lengthUnits = [
-  { name: 'میلی‌متر', value: 0.001, symbol: 'mm' },
-  { name: 'سانتی‌متر', value: 0.01, symbol: 'cm' },
-  { name: 'متر', value: 1, symbol: 'm' },
-  { name: 'کیلومتر', value: 1000, symbol: 'km' },
-  { name: 'اینچ', value: 0.0254, symbol: 'in' },
-  { name: 'فوت', value: 0.3048, symbol: 'ft' },
-  { name: 'یارد', value: 0.9144, symbol: 'yd' },
-  { name: 'مایل', value: 1609.344, symbol: 'mi' },
+  { name: 'متر', factor: 1, symbol: 'm' },
+  { name: 'کیلومتر', factor: 0.001, symbol: 'km' },
+  { name: 'سانتی‌متر', factor: 100, symbol: 'cm' },
+  { name: 'میلی‌متر', factor: 1000, symbol: 'mm' },
+  { name: 'مایل', factor: 0.000621371, symbol: 'mi' },
+  { name: 'یارد', factor: 1.09361, symbol: 'yd' },
+  { name: 'فوت', factor: 3.28084, symbol: 'ft' },
+  { name: 'اینچ', factor: 39.3701, symbol: 'in' },
 ];
 
-const LengthConverter: React.FC = () => {
-  const [value, setValue] = useState<string>('1');
-  const [fromUnit, setFromUnit] = useState<string>('m');
-  const [toUnit, setToUnit] = useState<string>('cm');
-  const [result, setResult] = useState<string>('100');
+const LengthConverter = () => {
+  const [value, setValue] = useState<string>('');
+  const [fromUnit, setFromUnit] = useState(lengthUnits[0]);
+  const [toUnit, setToUnit] = useState(lengthUnits[1]);
+  const [result, setResult] = useState<string>('');
+  const [allConversions, setAllConversions] = useState<any[]>([]);
 
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+  useEffect(() => {
+    if (value && !isNaN(parseFloat(value))) {
+      const numValue = parseFloat(value);
+      const valueInMeters = numValue / fromUnit.factor;
+      const convertedValue = valueInMeters * toUnit.factor;
+      setResult(convertedValue.toFixed(6));
+
+      const conversions = lengthUnits.map(unit => ({
+        unit,
+        value: (valueInMeters * unit.factor).toFixed(6)
+      }));
+      setAllConversions(conversions);
+    } else {
+      setResult('');
+      setAllConversions([]);
+    }
+  }, [value, fromUnit, toUnit]);
 
   const handleSwapUnits = () => {
-    const temp = fromUnit;
     setFromUnit(toUnit);
-    setToUnit(temp);
+    setToUnit(fromUnit);
   };
 
   const copyResult = () => {
-    navigator.clipboard.writeText(result);
-    toast({
-      title: "کپی شد!",
-      description: `${result} در کلیپ‌بورد ذخیره شد.`,
-      duration: 2000,
-    });
+    if (result) {
+      navigator.clipboard.writeText(`${value} ${fromUnit.name} = ${result} ${toUnit.name}`);
+      toast({
+        title: 'کپی شد!',
+        description: 'نتیجه در کلیپ‌بورد ذخیره شد',
+      });
+    }
   };
 
-  useEffect(() => {
-    const calculateResult = () => {
-      const numValue = parseFloat(value);
-      
-      if (isNaN(numValue)) {
-        setResult('');
-        return;
-      }
-      
-      const fromUnitObj = lengthUnits.find(unit => unit.symbol === fromUnit);
-      const toUnitObj = lengthUnits.find(unit => unit.symbol === toUnit);
-      
-      if (!fromUnitObj || !toUnitObj) {
-        setResult('');
-        return;
-      }
-      
-      // Convert to base unit (meters) then to target unit
-      const valueInMeters = numValue * fromUnitObj.value;
-      const convertedValue = valueInMeters / toUnitObj.value;
-      
-      setResult(convertedValue.toLocaleString('fa-IR', { maximumFractionDigits: 8 }));
-    };
+  const handleReset = () => {
+    setValue('');
+    setResult('');
+    setAllConversions([]);
+  };
+
+  const getLengthComparison = () => {
+    const numValue = parseFloat(value);
+    if (isNaN(numValue) || numValue <= 0) return null;
+
+    const meters = numValue / fromUnit.factor;
     
-    calculateResult();
-  }, [value, fromUnit, toUnit]);
+    if (meters < 0.01) return { emoji: '🐜', text: 'اندازه یک مورچه' };
+    if (meters < 0.2) return { emoji: '📱', text: 'طول یک گوشی' };
+    if (meters < 1) return { emoji: '📏', text: 'طول یک خط‌کش' };
+    if (meters < 2) return { emoji: '🚪', text: 'ارتفاع یک در' };
+    if (meters < 10) return { emoji: '🚌', text: 'طول یک اتوبوس' };
+    if (meters < 100) return { emoji: '🏢', text: 'ارتفاع یک ساختمان' };
+    if (meters < 1000) return { emoji: '⛰️', text: 'ارتفاع یک کوه کوچک' };
+    return { emoji: '🌍', text: 'مسافت زیاد' };
+  };
+
+  const comparison = getLengthComparison();
 
   return (
-    <Card className="w-full" dir="rtl">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-center gap-2">
-          <RulerIcon className="h-5 w-5" />
-          تبدیل واحدهای طول
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="space-y-6">
+      <CalculatorCard title="تبدیل واحدهای طول" icon={Ruler} onReset={handleReset}>
+        <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="length-value">مقدار</Label>
+            <Label>مقدار</Label>
             <Input
-              id="length-value"
               type="number"
               value={value}
-              onChange={handleValueChange}
+              onChange={(e) => setValue(e.target.value)}
               placeholder="مقدار را وارد کنید"
-              className="text-left"
+              dir="ltr"
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="from-unit">از واحد</Label>
-            <Select value={fromUnit} onValueChange={setFromUnit}>
-              <SelectTrigger id="from-unit">
-                <SelectValue placeholder="انتخاب واحد" />
-              </SelectTrigger>
-              <SelectContent>
-                {lengthUnits.map((unit) => (
-                  <SelectItem key={unit.symbol} value={unit.symbol}>
-                    {`${unit.name} (${unit.symbol})`}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="to-unit">به واحد</Label>
-            <Select value={toUnit} onValueChange={setToUnit}>
-              <SelectTrigger id="to-unit">
-                <SelectValue placeholder="انتخاب واحد" />
-              </SelectTrigger>
-              <SelectContent>
-                {lengthUnits.map((unit) => (
-                  <SelectItem key={unit.symbol} value={unit.symbol}>
-                    {`${unit.name} (${unit.symbol})`}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
 
-        <div className="flex justify-center my-4">
-          <button 
-            onClick={handleSwapUnits} 
-            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200"
-          >
-            ⇄
-          </button>
-        </div>
-
-        <div className="space-y-2">
-          <Label>نتیجه</Label>
-          <div className="flex gap-2">
-            <div className="p-3 border rounded-md flex-1 bg-gray-50">
-              {result} {toUnit}
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-2 items-end">
+            <div className="space-y-2">
+              <Label>از واحد</Label>
+              <Select
+                value={fromUnit.name}
+                onValueChange={(unitName) => {
+                  const unit = lengthUnits.find(u => u.name === unitName);
+                  if (unit) setFromUnit(unit);
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {lengthUnits.map((unit) => (
+                    <SelectItem key={unit.name} value={unit.name}>
+                      {unit.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <button 
-              onClick={copyResult}
-              className="p-3 border rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition"
+
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleSwapUnits}
+              className="mb-0"
             >
-              کپی
-            </button>
+              <ArrowLeftRight className="h-4 w-4" />
+            </Button>
+
+            <div className="space-y-2">
+              <Label>به واحد</Label>
+              <Select
+                value={toUnit.name}
+                onValueChange={(unitName) => {
+                  const unit = lengthUnits.find(u => u.name === unitName);
+                  if (unit) setToUnit(unit);
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {lengthUnits.map((unit) => (
+                    <SelectItem key={unit.name} value={unit.name}>
+                      {unit.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+
+        {result && (
+          <>
+            <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground mb-1">نتیجه:</p>
+                  <p className="text-lg font-bold text-primary" dir="ltr">
+                    {formatPersianNumber(parseFloat(value))} {fromUnit.name} = {formatPersianNumber(parseFloat(result))} {toUnit.name}
+                  </p>
+                </div>
+                <Button variant="ghost" size="icon" onClick={copyResult}>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            {comparison && (
+              <VisualizationCard title="مقایسه تقریبی">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.4, type: 'spring' }}
+                  className="text-center space-y-2"
+                >
+                  <div className="text-4xl">{comparison.emoji}</div>
+                  <p className="text-sm font-medium text-muted-foreground">{comparison.text}</p>
+                </motion.div>
+              </VisualizationCard>
+            )}
+
+            {allConversions.length > 0 && (
+              <div className="rounded-xl border bg-muted/30 overflow-hidden">
+                <div className="px-4 py-3 border-b bg-muted/50 font-medium text-sm">
+                  تمام تبدیل‌ها
+                </div>
+                <div className="divide-y">
+                  {allConversions.map((conv, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="flex justify-between items-center px-4 py-3 hover:bg-muted/20 transition-colors"
+                    >
+                      <span className="font-medium">{conv.unit.name}</span>
+                      <span className="text-primary font-bold">
+                        {formatPersianNumber(parseFloat(conv.value))} {conv.unit.symbol}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </CalculatorCard>
+    </div>
   );
 };
 
