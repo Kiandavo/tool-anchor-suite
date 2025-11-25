@@ -99,7 +99,7 @@ const Tool = () => {
       {/* H1 - Main heading */}
       <div className="mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-          {tool.name} - ابزار رایگان ۲۰۲۵
+          {tool.name}
         </h1>
         <p className="text-muted-foreground text-base leading-relaxed">
           {tool.description}
