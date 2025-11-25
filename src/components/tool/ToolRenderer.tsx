@@ -80,6 +80,9 @@ export const ToolRenderer: React.FC<ToolRendererProps> = ({ tool, slug }) => {
     case 'educational':
       return <EducationalToolRenderer slug={slug} />;
     
+    case 'persian-cultural':
+      return <PersianCulturalTool slug={slug} />;
+    
     default:
       return (
         <div className="space-y-6">
