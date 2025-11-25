@@ -211,9 +211,19 @@ export default {
     				pink: 'hsl(292 84% 61%)',
     				red: 'hsl(4 100% 60%)',
     				teal: 'hsl(172 80% 40%)',
-    				cyan: 'hsl(188 95% 43%)',
-    				indigo: 'hsl(239 84% 67%)'
-    			}
+    			cyan: 'hsl(188 95% 43%)',
+    			indigo: 'hsl(239 84% 67%)'
+    		},
+    		persian: {
+    			turquoise: 'hsl(var(--persian-turquoise))',
+    			gold: 'hsl(var(--persian-gold))',
+    			blue: 'hsl(var(--persian-blue))',
+    			red: 'hsl(var(--persian-red))',
+    			green: 'hsl(var(--persian-green))',
+    			purple: 'hsl(var(--persian-purple))',
+    			amber: 'hsl(var(--persian-amber))',
+    			rose: 'hsl(var(--persian-rose))'
+    		}
     		},
     		borderRadius: {
     			lg: 'var(--radius)',

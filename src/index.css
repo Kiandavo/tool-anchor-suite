@@ -104,6 +104,17 @@
     --sidebar-accent-foreground: 222 50% 10%;
     --sidebar-border: 220 40% 22%;
     --sidebar-ring: 200 95% 65%;
+    
+    /* Persian color palette */
+    --persian-turquoise: 180 85% 50%;
+    --persian-gold: 45 100% 55%;
+    --persian-blue: 210 100% 45%;
+    --persian-red: 355 85% 50%;
+    --persian-green: 145 70% 45%;
+    --persian-purple: 280 70% 50%;
+    --persian-amber: 35 95% 55%;
+    --persian-rose: 340 90% 60%;
+    
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
