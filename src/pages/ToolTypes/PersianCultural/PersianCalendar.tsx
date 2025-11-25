@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { validateDate } from '@/utils/calendar/dateValidators';
 import TripleCalendarGrid from '@/components/calendar/TripleCalendarGrid';
+import PersianPoetryQuote from '@/components/calendar/PersianPoetryQuote';
 import { motion } from 'framer-motion';
 
 type CalendarType = 'gregorian' | 'jalali' | 'hijri';
@@ -459,11 +460,23 @@ export default function PersianCalendar() {
           </Card>
         </motion.div>
 
-        {/* Triple Calendar Grid with Persian Styling */}
+        {/* Persian Poetry Quote Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
+          className="mt-12"
+        >
+          <div className="border-2 border-persian-turquoise/20 rounded-3xl p-8 bg-card/50 backdrop-blur-sm shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
+            <PersianPoetryQuote />
+          </div>
+        </motion.div>
+
+        {/* Triple Calendar Grid with Persian Styling */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
           className="mt-12"
         >
           <div className="text-center mb-8">
