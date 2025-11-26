@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import React, { useState, useEffect, useMemo } from 'react';
+import { CalculatorCard } from '@/components/calculator/CalculatorCard';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowRightLeft, Copy, Check } from 'lucide-react';
+import { ArrowRightLeft, Copy, Check, Ruler } from 'lucide-react';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
+import { formatPersianNumber } from '@/utils/persianNumbers';
 
-// Unit conversion data
 const conversionData = {
   length: {
     name: 'طول',
@@ -39,7 +40,7 @@ const conversionData = {
     units: {
       'ml': { name: 'میلی‌لیتر', factor: 0.001 },
       'l': { name: 'لیتر', factor: 1 },
-      'gal': { name: 'گالن آمریکایی', factor: 3.78541 },
+      'gal': { name: 'گالن', factor: 3.78541 },
       'fl_oz': { name: 'اونس مایع', factor: 0.0295735 },
       'cup': { name: 'کاپ', factor: 0.236588 },
       'm3': { name: 'متر مکعب', factor: 1000 },
@@ -54,7 +55,7 @@ const conversionData = {
       'km2': { name: 'کیلومتر مربع', factor: 1000000 },
       'in2': { name: 'اینچ مربع', factor: 0.00064516 },
       'ft2': { name: 'فوت مربع', factor: 0.092903 },
-      'acre': { name: 'جریب (آکر)', factor: 4046.86 },
+      'acre': { name: 'جریب', factor: 4046.86 },
     }
   },
   temperature: {
@@ -68,10 +69,10 @@ const conversionData = {
   speed: {
     name: 'سرعت',
     units: {
-      'ms': { name: 'متر بر ثانیه', factor: 1 },
-      'kmh': { name: 'کیلومتر بر ساعت', factor: 0.277778 },
-      'mph': { name: 'مایل بر ساعت', factor: 0.44704 },
-      'knot': { name: 'گره دریایی', factor: 0.514444 },
+      'ms': { name: 'متر/ثانیه', factor: 1 },
+      'kmh': { name: 'کیلومتر/ساعت', factor: 0.277778 },
+      'mph': { name: 'مایل/ساعت', factor: 0.44704 },
+      'knot': { name: 'گره', factor: 0.514444 },
     }
   }
 };
@@ -84,14 +85,12 @@ export default function UnitConverter() {
   const [result, setResult] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // Reset units when category changes
   useEffect(() => {
     const units = Object.keys(conversionData[activeCategory as keyof typeof conversionData].units);
     setFromUnit(units[0] || '');
     setToUnit(units[1] || units[0] || '');
   }, [activeCategory]);
 
-  // Convert units
   useEffect(() => {
     if (!inputValue || !fromUnit || !toUnit) {
       setResult('');
@@ -107,7 +106,7 @@ export default function UnitConverter() {
     const category = conversionData[activeCategory as keyof typeof conversionData];
     
     if (activeCategory === 'temperature') {
-      setResult(convertTemperature(value, fromUnit, toUnit).toString());
+      setResult(convertTemperature(value, fromUnit, toUnit).toFixed(2));
     } else {
       const fromUnitData = category.units[fromUnit as keyof typeof category.units] as any;
       const toUnitData = category.units[toUnit as keyof typeof category.units] as any;
@@ -119,15 +118,41 @@ export default function UnitConverter() {
     }
   }, [inputValue, fromUnit, toUnit, activeCategory]);
 
+  const allConversions = useMemo(() => {
+    if (!inputValue || !fromUnit) return [];
+
+    const value = parseFloat(inputValue);
+    if (isNaN(value)) return [];
+
+    const category = conversionData[activeCategory as keyof typeof conversionData];
+    const units = Object.entries(category.units);
+
+    if (activeCategory === 'temperature') {
+      return units.map(([key, unit]) => ({
+        unit: unit.name,
+        value: convertTemperature(value, fromUnit, key).toFixed(2)
+      }));
+    }
+
+    const fromUnitData = category.units[fromUnit as keyof typeof category.units] as any;
+    const fromFactor = fromUnitData?.factor || 1;
+    const baseValue = value * fromFactor;
+
+    return units.map(([key, unit]) => {
+      const toFactor = (unit as any).factor || 1;
+      const convertedValue = baseValue / toFactor;
+      return {
+        unit: unit.name,
+        value: convertedValue.toFixed(6).replace(/\.?0+$/, '')
+      };
+    });
+  }, [inputValue, fromUnit, activeCategory]);
+
   const convertTemperature = (value: number, from: string, to: string): number => {
     if (from === to) return value;
-    
-    // Convert to Celsius first
     let celsius = value;
     if (from === 'f') celsius = (value - 32) * 5/9;
     if (from === 'k') celsius = value - 273.15;
-    
-    // Convert from Celsius to target
     if (to === 'f') return celsius * 9/5 + 32;
     if (to === 'k') return celsius + 273.15;
     return celsius;
@@ -141,7 +166,6 @@ export default function UnitConverter() {
 
   const copyResult = async () => {
     if (!result) return;
-    
     try {
       await navigator.clipboard.writeText(result);
       setCopied(true);
@@ -152,122 +176,152 @@ export default function UnitConverter() {
     }
   };
 
+  const handleReset = () => {
+    setInputValue('');
+    setResult('');
+  };
+
   const getCurrentUnits = () => {
     return conversionData[activeCategory as keyof typeof conversionData].units;
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-center">تبدیل واحدها</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
-            {Object.entries(conversionData).map(([key, category]) => (
-              <TabsTrigger key={key} value={key} className="text-xs">
-                {category.name}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+    <CalculatorCard
+      title="تبدیل واحدها"
+      icon={Ruler}
+      onReset={handleReset}
+    >
+      <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full">
+        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
+          {Object.entries(conversionData).map(([key, category]) => (
+            <TabsTrigger key={key} value={key} className="text-xs">
+              {category.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-          {Object.entries(conversionData).map(([categoryKey, category]) => (
-            <TabsContent key={categoryKey} value={categoryKey} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Input Section */}
-                <div className="space-y-4">
-                  <Label>از:</Label>
-                  <div className="space-y-2">
-                    <Select value={fromUnit} onValueChange={setFromUnit}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="واحد مبدأ را انتخاب کنید" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.entries(getCurrentUnits()).map(([key, unit]) => (
-                          <SelectItem key={key} value={key}>
-                            {unit.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Input
-                      type="number"
-                      placeholder="مقدار را وارد کنید"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      className="text-lg"
-                    />
-                  </div>
-                </div>
+        {Object.entries(conversionData).map(([categoryKey]) => (
+          <TabsContent key={categoryKey} value={categoryKey} className="space-y-6 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-6 items-start">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="space-y-3"
+              >
+                <Label className="text-sm font-medium">از:</Label>
+                <Select value={fromUnit} onValueChange={setFromUnit}>
+                  <SelectTrigger className="bg-card border-border">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(getCurrentUnits()).map(([key, unit]) => (
+                      <SelectItem key={key} value={key}>
+                        {unit.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  type="number"
+                  placeholder="مقدار را وارد کنید"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  className="text-lg bg-card border-border"
+                  dir="ltr"
+                />
+              </motion.div>
 
-                {/* Swap Button */}
-                <div className="flex items-center justify-center md:flex-col">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={swapUnits}
-                    className="my-4"
-                  >
-                    <ArrowRightLeft className="h-4 w-4" />
-                  </Button>
-                </div>
-
-                {/* Output Section */}
-                <div className="space-y-4 md:col-start-2">
-                  <Label>به:</Label>
-                  <div className="space-y-2">
-                    <Select value={toUnit} onValueChange={setToUnit}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="واحد مقصد را انتخاب کنید" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.entries(getCurrentUnits()).map(([key, unit]) => (
-                          <SelectItem key={key} value={key}>
-                            {unit.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <div className="relative">
-                      <Input
-                        value={result}
-                        readOnly
-                        className="text-lg bg-muted pr-10"
-                        placeholder="نتیجه"
-                      />
-                      {result && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={copyResult}
-                          className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
-                        >
-                          {copied ? (
-                            <Check className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <Copy className="h-4 w-4" />
-                          )}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </div>
+              <div className="flex items-center justify-center pt-8">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={swapUnits}
+                  className="rounded-full hover:bg-primary/10"
+                >
+                  <ArrowRightLeft className="h-5 w-5 text-primary" />
+                </Button>
               </div>
 
-              {/* Quick Reference */}
-              {result && (
-                <div className="mt-6 p-4 bg-muted rounded-lg">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="space-y-3"
+              >
+                <Label className="text-sm font-medium">به:</Label>
+                <Select value={toUnit} onValueChange={setToUnit}>
+                  <SelectTrigger className="bg-card border-border">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(getCurrentUnits()).map(([key, unit]) => (
+                      <SelectItem key={key} value={key}>
+                        {unit.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="relative">
+                  <Input
+                    value={result}
+                    readOnly
+                    className="text-lg bg-muted/50 border-border"
+                    placeholder="نتیجه"
+                    dir="ltr"
+                  />
+                  {result && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={copyResult}
+                      className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                    >
+                      {copied ? (
+                        <Check className="h-4 w-4 text-green-600" />
+                      ) : (
+                        <Copy className="h-4 w-4" />
+                      )}
+                    </Button>
+                  )}
+                </div>
+              </motion.div>
+            </div>
+
+            {result && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-4"
+              >
+                <div className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl border border-primary/20">
                   <p className="text-center text-lg">
                     {inputValue} {getCurrentUnits()[fromUnit]?.name} = {' '}
                     <span className="font-bold text-primary">{result}</span> {' '}
                     {getCurrentUnits()[toUnit]?.name}
                   </p>
                 </div>
-              )}
-            </TabsContent>
-          ))}
-        </Tabs>
-      </CardContent>
-    </Card>
+
+                <div className="space-y-2">
+                  <h3 className="text-sm font-semibold text-muted-foreground">همه تبدیل‌ها:</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {allConversions.map((conv, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className="p-3 bg-card rounded-lg border border-border hover:border-primary/30 transition-colors"
+                      >
+                        <p className="text-xs text-muted-foreground">{conv.unit}</p>
+                        <p className="text-sm font-semibold" dir="ltr">{conv.value}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </TabsContent>
+        ))}
+      </Tabs>
+    </CalculatorCard>
   );
 }
