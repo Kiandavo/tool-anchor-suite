@@ -130,41 +130,47 @@ export const HeroSection = () => {
               </p>
             </div>
 
-            {/* Colorful Search Section */}
-            <div className="max-w-2xl mx-auto mb-12 sm:mb-16">
-              <div className="glass-morphism rounded-3xl p-6 sm:p-8 border border-purple-200/30 shadow-2xl relative overflow-hidden">
-                {/* Animated background for search box */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 animate-pulse"></div>
-                <div className="relative z-10">
-                  <EnhancedSearchBar />
-                </div>
-                
-                {/* Colorful Quick Access Pills */}
-                <div className="flex flex-wrap justify-center gap-3 mt-6 relative z-10">
-                  <Link
-                    to="/tool/qr-code-generator"
-                    className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 text-purple-600 hover:text-purple-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-purple-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
-                  >
-                    QR کد
-                  </Link>
-                  <Link
-                    to="/tool/password-generator"
-                    className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 text-green-600 hover:text-green-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-green-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
-                  >
-                    رمز عبور
-                  </Link>
-                  <Link
-                    to="/tool/color-palette-generator"
-                    className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-indigo-500/20 to-blue-500/20 hover:from-indigo-500/30 hover:to-blue-500/30 text-indigo-600 hover:text-indigo-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-indigo-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
-                  >
-                    پالت رنگ
-                  </Link>
-                  <Link
-                    to="/tool/text-analyzer"
-                    className="px-5 py-3 text-sm font-medium bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-600 hover:text-amber-700 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-1 border border-amber-300/30 shadow-lg hover:shadow-xl backdrop-blur-sm"
-                  >
-                    تحلیل متن
-                  </Link>
+            {/* Modern Search Section */}
+            <div className="max-w-3xl mx-auto mb-16 sm:mb-20 px-4">
+              {/* Search Label */}
+              <div className="text-center mb-6">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-heading font-medium">
+                  <Sparkles className="w-4 h-4" />
+                  جستجوی هوشمند در ابزارها
+                </span>
+              </div>
+              
+              {/* Enhanced Search Bar */}
+              <EnhancedSearchBar />
+              
+              {/* Quick Access Tags */}
+              <div className="mt-8">
+                <p className="text-center text-sm text-muted-foreground font-body mb-4">
+                  ابزارهای پرکاربرد:
+                </p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  {[
+                    { name: 'QR کد', href: '/tool/qr-code-generator', color: 'from-violet-500 to-purple-600' },
+                    { name: 'رمز عبور', href: '/tool/password-generator', color: 'from-emerald-500 to-teal-600' },
+                    { name: 'پالت رنگ', href: '/tool/color-palette-generator', color: 'from-pink-500 to-rose-600' },
+                    { name: 'تحلیل متن', href: '/tool/text-analyzer', color: 'from-amber-500 to-orange-600' },
+                    { name: 'BMI', href: '/tool/bmi-calculator', color: 'from-cyan-500 to-blue-600' },
+                  ].map((tool) => (
+                    <Link
+                      key={tool.href}
+                      to={tool.href}
+                      className="group relative px-5 py-2.5 rounded-xl font-heading font-medium text-sm transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                    >
+                      {/* Gradient Background */}
+                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${tool.color} opacity-10 group-hover:opacity-20 transition-opacity duration-300`} />
+                      {/* Border */}
+                      <div className={`absolute inset-0 rounded-xl border border-current opacity-20 group-hover:opacity-40 transition-opacity duration-300`} />
+                      {/* Text */}
+                      <span className="relative text-foreground group-hover:text-primary transition-colors duration-300">
+                        {tool.name}
+                      </span>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>

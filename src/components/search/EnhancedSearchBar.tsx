@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, X, Loader2 } from 'lucide-react';
+import { Search, X, Loader2, ArrowLeft, Sparkles } from 'lucide-react';
 import { searchTools } from '@/data/tools';
 import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface EnhancedSearchBarProps {
   className?: string;
@@ -12,7 +13,7 @@ interface EnhancedSearchBarProps {
 
 export const EnhancedSearchBar: React.FC<EnhancedSearchBarProps> = ({
   className = '',
-  placeholder = 'جستجو در ابزارها... (مثلاً: محاسبه‌گر، QR کد، تبدیل متن)',
+  placeholder = 'چه ابزاری نیاز دارید؟',
   onSearch
 }) => {
   const [query, setQuery] = useState('');
@@ -20,6 +21,7 @@ export const EnhancedSearchBar: React.FC<EnhancedSearchBarProps> = ({
   const [results, setResults] = useState<any[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isFocused, setIsFocused] = useState(false);
   
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,12 +38,12 @@ export const EnhancedSearchBar: React.FC<EnhancedSearchBarProps> = ({
     setIsLoading(true);
     
     const timeoutId = setTimeout(() => {
-      const searchResults = searchTools(query).slice(0, 8); // Limit to 8 results
+      const searchResults = searchTools(query).slice(0, 6);
       setResults(searchResults);
       setShowResults(true);
       setIsLoading(false);
       setSelectedIndex(-1);
-    }, 300);
+    }, 200);
 
     return () => clearTimeout(timeoutId);
   }, [query]);
@@ -52,6 +54,7 @@ export const EnhancedSearchBar: React.FC<EnhancedSearchBarProps> = ({
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowResults(false);
         setSelectedIndex(-1);
+        setIsFocused(false);
       }
     };
 
@@ -85,6 +88,7 @@ export const EnhancedSearchBar: React.FC<EnhancedSearchBarProps> = ({
       case 'Escape':
         setShowResults(false);
         setSelectedIndex(-1);
+        setIsFocused(false);
         inputRef.current?.blur();
         break;
     }
@@ -104,119 +108,210 @@ export const EnhancedSearchBar: React.FC<EnhancedSearchBarProps> = ({
     onSearch?.(value);
   };
 
-  const handleResultClick = (tool: any) => {
+  const handleResultClick = () => {
     setShowResults(false);
     setQuery('');
   };
 
   return (
-    <div ref={searchRef} className={cn("relative", className)}>
-      <div className="relative">
-        <input
-          ref={inputRef}
-          type="text"
-          value={query}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          onFocus={() => query.trim() && setShowResults(true)}
-          placeholder={placeholder}
-          className="w-full px-6 py-4 text-lg rounded-2xl border border-border/50 bg-card/80 backdrop-blur-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 shadow-lg hover:shadow-xl"
-        />
-        
-        {/* Search Icon */}
-        <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-          {isLoading ? (
-            <Loader2 className="w-5 h-5 text-primary animate-spin" />
-          ) : (
-            <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-              <Search className="w-4 h-4 text-primary" />
-            </div>
-          )}
-        </div>
-
-        {/* Clear Button */}
-        {query && (
-          <button
-            onClick={handleClear}
-            className="absolute left-12 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
-          >
-            <X size={16} />
-          </button>
+    <div ref={searchRef} className={cn("relative w-full", className)}>
+      {/* Main Search Container */}
+      <motion.div 
+        className={cn(
+          "relative rounded-2xl transition-all duration-500",
+          isFocused ? "shadow-2xl shadow-primary/20" : "shadow-xl"
         )}
-      </div>
+        animate={{ scale: isFocused ? 1.02 : 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        {/* Gradient Border Effect */}
+        <div className={cn(
+          "absolute -inset-[2px] rounded-2xl bg-gradient-to-r from-primary via-accent to-primary opacity-0 transition-opacity duration-500 blur-sm",
+          isFocused && "opacity-60"
+        )} />
+        
+        {/* Input Container */}
+        <div className="relative bg-card rounded-2xl border border-border/50 overflow-hidden">
+          {/* Background Shimmer */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full animate-[shimmer_3s_infinite]" />
+          
+          <div className="relative flex items-center">
+            {/* Search Icon */}
+            <div className="pr-5 pl-2">
+              <motion.div 
+                className={cn(
+                  "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300",
+                  isFocused 
+                    ? "bg-primary text-primary-foreground" 
+                    : "bg-muted text-muted-foreground"
+                )}
+                animate={{ rotate: isLoading ? 360 : 0 }}
+                transition={{ duration: 1, repeat: isLoading ? Infinity : 0, ease: "linear" }}
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5" />
+                ) : (
+                  <Search className="w-5 h-5" />
+                )}
+              </motion.div>
+            </div>
+
+            {/* Input Field */}
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              onFocus={() => {
+                setIsFocused(true);
+                if (query.trim()) setShowResults(true);
+              }}
+              placeholder={placeholder}
+              className="flex-1 py-5 text-lg font-body bg-transparent text-foreground placeholder:text-muted-foreground/70 focus:outline-none"
+            />
+
+            {/* Clear Button */}
+            <AnimatePresence>
+              {query && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={handleClear}
+                  className="ml-2 p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+                >
+                  <X size={18} />
+                </motion.button>
+              )}
+            </AnimatePresence>
+
+            {/* Submit Button */}
+            <button
+              onClick={() => {
+                if (query.trim()) {
+                  window.location.href = `/all-tools?search=${encodeURIComponent(query)}`;
+                }
+              }}
+              className={cn(
+                "ml-3 px-6 py-3 rounded-xl font-heading font-medium text-sm transition-all duration-300",
+                query.trim() 
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl" 
+                  : "bg-muted text-muted-foreground cursor-not-allowed"
+              )}
+              disabled={!query.trim()}
+            >
+              جستجو
+            </button>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Search Results Dropdown */}
-      {showResults && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl z-50 max-h-96 overflow-y-auto">
-          {isLoading ? (
-            <div className="p-6 text-center">
-              <Loader2 className="w-6 h-6 text-primary animate-spin mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">در حال جستجو...</p>
-            </div>
-          ) : results.length > 0 ? (
-            <>
-              <div className="p-4 border-b border-border/30">
-                <p className="text-sm text-muted-foreground">
-                  {results.length} نتیجه برای "{query}"
-                </p>
+      <AnimatePresence>
+        {showResults && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full left-0 right-0 mt-3 bg-card border border-border rounded-2xl shadow-2xl z-50 overflow-hidden"
+          >
+            {isLoading ? (
+              <div className="p-8 text-center">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  className="w-10 h-10 mx-auto mb-3 rounded-full border-2 border-primary border-t-transparent"
+                />
+                <p className="text-sm text-muted-foreground font-body">در حال جستجو...</p>
               </div>
-              <div className="p-2">
-                {results.map((tool, index) => (
-                  <Link
-                    key={tool.id}
-                    to={`/tool/${tool.slug}`}
-                    onClick={() => handleResultClick(tool)}
-                    className={cn(
-                      "flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-colors group",
-                      selectedIndex === index && "bg-muted/70"
-                    )}
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <Search className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-foreground truncate">
-                        {tool.name}
-                      </h4>
-                      <p className="text-sm text-muted-foreground truncate">
-                        {tool.description}
-                      </p>
-                    </div>
-                    <div className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded-md">
-                      {tool.category}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-              {results.length >= 8 && (
-                <div className="p-4 border-t border-border/30">
-                  <Link
-                    to={`/all-tools?search=${encodeURIComponent(query)}`}
-                    className="block w-full text-center py-2 text-primary hover:text-primary/80 transition-colors font-medium"
-                    onClick={() => setShowResults(false)}
-                  >
-                    مشاهده همه نتایج ({searchTools(query).length} ابزار)
-                  </Link>
+            ) : results.length > 0 ? (
+              <>
+                <div className="p-4 bg-muted/30 border-b border-border/50">
+                  <p className="text-sm text-muted-foreground font-body flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <span>{results.length} نتیجه برای</span>
+                    <span className="font-heading font-medium text-foreground">"{query}"</span>
+                  </p>
                 </div>
-              )}
-            </>
-          ) : (
-            <div className="p-6 text-center">
-              <div className="text-4xl mb-2">🔍</div>
-              <p className="text-sm text-muted-foreground mb-2">
-                نتیجه‌ای برای "{query}" یافت نشد
-              </p>
-              <Link
-                to="/all-tools"
-                className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
-                onClick={() => setShowResults(false)}
-              >
-                مشاهده همه ابزارها
-              </Link>
-            </div>
-          )}
-        </div>
-      )}
+                <div className="p-2 max-h-80 overflow-y-auto">
+                  {results.map((tool, index) => (
+                    <Link
+                      key={tool.id}
+                      to={`/tool/${tool.slug}`}
+                      onClick={handleResultClick}
+                      className={cn(
+                        "flex items-center gap-4 p-4 rounded-xl transition-all duration-200 group",
+                        selectedIndex === index 
+                          ? "bg-primary/10 border border-primary/20" 
+                          : "hover:bg-muted/50"
+                      )}
+                    >
+                      <div className={cn(
+                        "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 shrink-0",
+                        selectedIndex === index 
+                          ? "bg-primary text-primary-foreground" 
+                          : "bg-muted group-hover:bg-primary/20 text-muted-foreground group-hover:text-primary"
+                      )}>
+                        <Search className="w-5 h-5" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-heading font-semibold text-foreground truncate mb-1">
+                          {tool.name}
+                        </h4>
+                        <p className="text-sm text-muted-foreground font-body truncate">
+                          {tool.description}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-xs text-muted-foreground bg-muted px-3 py-1.5 rounded-lg font-body">
+                          {tool.category}
+                        </span>
+                        <ArrowLeft className={cn(
+                          "w-4 h-4 transition-all duration-200",
+                          selectedIndex === index 
+                            ? "text-primary opacity-100 -translate-x-1" 
+                            : "text-muted-foreground opacity-0 group-hover:opacity-100"
+                        )} />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                {results.length >= 6 && (
+                  <div className="p-4 border-t border-border/50 bg-muted/20">
+                    <Link
+                      to={`/all-tools?search=${encodeURIComponent(query)}`}
+                      className="flex items-center justify-center gap-2 py-3 text-primary hover:text-primary/80 transition-colors font-heading font-medium"
+                      onClick={() => setShowResults(false)}
+                    >
+                      <span>مشاهده همه نتایج ({searchTools(query).length} ابزار)</span>
+                      <ArrowLeft className="w-4 h-4" />
+                    </Link>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="p-8 text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-muted flex items-center justify-center">
+                  <Search className="w-8 h-8 text-muted-foreground" />
+                </div>
+                <p className="text-muted-foreground font-body mb-3">
+                  نتیجه‌ای برای "<span className="font-heading font-medium text-foreground">{query}</span>" یافت نشد
+                </p>
+                <Link
+                  to="/all-tools"
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-heading font-medium"
+                  onClick={() => setShowResults(false)}
+                >
+                  <span>مشاهده همه ابزارها</span>
+                  <ArrowLeft className="w-4 h-4" />
+                </Link>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
