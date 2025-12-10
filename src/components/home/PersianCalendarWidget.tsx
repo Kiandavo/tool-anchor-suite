@@ -127,6 +127,13 @@ export const PersianCalendarWidget = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedTab, setSelectedTab] = useState<'calendar' | 'timezones' | 'events'>('calendar');
   
+  const persianDate = getAccuratePersianDate();
+  const hijriDate = getAccurateHijriDate();
+  
+  // State for mini calendar navigation
+  const [displayedMonth, setDisplayedMonth] = useState(persianDate.month);
+  const [displayedYear, setDisplayedYear] = useState(persianDate.year);
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -135,8 +142,29 @@ export const PersianCalendarWidget = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const persianDate = getAccuratePersianDate();
-  const hijriDate = getAccurateHijriDate();
+  // Navigation functions for mini calendar
+  const goToPreviousMonth = () => {
+    if (displayedMonth === 1) {
+      setDisplayedMonth(12);
+      setDisplayedYear(displayedYear - 1);
+    } else {
+      setDisplayedMonth(displayedMonth - 1);
+    }
+  };
+
+  const goToNextMonth = () => {
+    if (displayedMonth === 12) {
+      setDisplayedMonth(1);
+      setDisplayedYear(displayedYear + 1);
+    } else {
+      setDisplayedMonth(displayedMonth + 1);
+    }
+  };
+
+  const goToToday = () => {
+    setDisplayedMonth(persianDate.month);
+    setDisplayedYear(persianDate.year);
+  };
   
   const formatTime = (date: Date, offset: string): string => {
     const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
@@ -379,12 +407,45 @@ export const PersianCalendarWidget = () => {
 
                   {/* Mini Persian Calendar Grid */}
                   <motion.div
-                    whileHover={{ scale: 1.01 }}
                     className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-amber-500/10 backdrop-blur-sm p-6"
                   >
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                      <Calendar className="w-5 h-5 text-amber-600" />
-                      <h3 className="font-bold text-amber-700 text-lg">{persianDate.monthName} {persianDate.year}</h3>
+                    {/* Header with Navigation */}
+                    <div className="flex items-center justify-between mb-4">
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={goToNextMonth}
+                        className="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </motion.button>
+                      
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-bold text-amber-700 text-lg">
+                          {persianMonths[displayedMonth - 1]} {displayedYear}
+                        </h3>
+                        {(displayedMonth !== persianDate.month || displayedYear !== persianDate.year) && (
+                          <motion.button
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={goToToday}
+                            className="text-xs px-2 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-700 font-medium transition-colors"
+                          >
+                            امروز
+                          </motion.button>
+                        )}
+                      </div>
+                      
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={goToPreviousMonth}
+                        className="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </motion.button>
                     </div>
                     
                     {/* Weekday Headers */}
@@ -399,8 +460,8 @@ export const PersianCalendarWidget = () => {
                     {/* Calendar Days Grid */}
                     <div className="grid grid-cols-7 gap-1">
                       {(() => {
-                        const daysInMonth = getDaysInPersianMonth(persianDate.year, persianDate.month);
-                        const firstDayOfWeek = getFirstDayOfPersianMonth(persianDate.year, persianDate.month);
+                        const daysInMonth = getDaysInPersianMonth(displayedYear, displayedMonth);
+                        const firstDayOfWeek = getFirstDayOfPersianMonth(displayedYear, displayedMonth);
                         const days = [];
                         
                         // Empty cells before first day
@@ -410,7 +471,7 @@ export const PersianCalendarWidget = () => {
                         
                         // Days of month
                         for (let day = 1; day <= daysInMonth; day++) {
-                          const isToday = day === persianDate.day;
+                          const isToday = day === persianDate.day && displayedMonth === persianDate.month && displayedYear === persianDate.year;
                           const isFriday = (firstDayOfWeek + day - 1) % 7 === 6;
                           
                           days.push(
