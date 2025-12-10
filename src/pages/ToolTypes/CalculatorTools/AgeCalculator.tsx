@@ -130,59 +130,62 @@ export default function AgeCalculator() {
     return signs[month - 1] || 'نامشخص';
   };
 
-  // Accurate Persian to Gregorian conversion
+  // Accurate Persian to Gregorian conversion (Jalaali algorithm)
   const persianToGregorian = (jy: number, jm: number, jd: number): Date => {
-    const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+    // Constants for conversion
+    const g_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const j_days_in_month = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
     
-    const jalaliToJulianDay = (jy: number, jm: number, jd: number): number => {
-      let bl = breaks.length;
-      let gy = jy + 621;
-      let leapJ = -14;
-      let jp = breaks[0];
-      let jm1: number;
-      let jump: number = 0;
-      
-      if (jy < jp || jy >= breaks[bl - 1]) {
-        throw new Error('Invalid Persian year');
-      }
-      
-      for (let i = 1; i < bl; i++) {
-        jm1 = breaks[i];
-        jump = jm1 - jp;
-        if (jy < jm1) break;
-        leapJ = leapJ + Math.floor(jump / 33) * 8 + Math.floor((jump % 33) / 4);
-        jp = jm1;
-      }
-      
-      let n = jy - jp;
-      leapJ = leapJ + Math.floor(n / 33) * 8 + Math.floor(((n % 33) + 3) / 4);
-      if ((jump % 33) === 4 && (jump - n) === 4) leapJ++;
-      
-      let leapG = Math.floor(gy / 4) - Math.floor((Math.floor(gy / 100) + 1) * 3 / 4) - 150;
-      let march = 20 + leapJ - leapG;
-      
-      if (jm <= 6) {
-        return 365 * gy - Math.floor((gy + 100) / 100) + Math.floor((gy + 100) / 400) + march + (jm - 1) * 31 + jd - 1;
-      }
-      return 365 * gy - Math.floor((gy + 100) / 100) + Math.floor((gy + 100) / 400) + march + 186 + (jm - 7) * 30 + jd - 1;
-    };
+    // Calculate days from Persian epoch (Farvardin 1, year 1)
+    let jy2 = jy - 979;
+    let jm2 = jm - 1;
+    let jd2 = jd - 1;
     
-    const julianDayToGregorian = (jdn: number): Date => {
-      let l = jdn + 68569;
-      let n = Math.floor(4 * l / 146097);
-      l = l - Math.floor((146097 * n + 3) / 4);
-      let i = Math.floor(4000 * (l + 1) / 1461001);
-      l = l - Math.floor(1461 * i / 4) + 31;
-      let j = Math.floor(80 * l / 2447);
-      let day = l - Math.floor(2447 * j / 80);
-      l = Math.floor(j / 11);
-      let month = j + 2 - 12 * l;
-      let year = 100 * (n - 49) + i + l;
-      return new Date(year, month - 1, day);
-    };
+    let j_day_no = 365 * jy2 + Math.floor(jy2 / 33) * 8 + Math.floor((jy2 % 33 + 3) / 4);
+    for (let i = 0; i < jm2; i++) {
+      j_day_no += j_days_in_month[i];
+    }
+    j_day_no += jd2;
     
-    const jdn = jalaliToJulianDay(jy, jm, jd);
-    return julianDayToGregorian(jdn);
+    // Convert to Gregorian
+    let g_day_no = j_day_no + 79;
+    
+    let gy = 1600 + 400 * Math.floor(g_day_no / 146097);
+    g_day_no = g_day_no % 146097;
+    
+    let leap = true;
+    if (g_day_no >= 36525) {
+      g_day_no--;
+      gy += 100 * Math.floor(g_day_no / 36524);
+      g_day_no = g_day_no % 36524;
+      
+      if (g_day_no >= 365) {
+        g_day_no++;
+      } else {
+        leap = false;
+      }
+    }
+    
+    gy += 4 * Math.floor(g_day_no / 1461);
+    g_day_no = g_day_no % 1461;
+    
+    if (g_day_no >= 366) {
+      leap = false;
+      g_day_no--;
+      gy += Math.floor(g_day_no / 365);
+      g_day_no = g_day_no % 365;
+    }
+    
+    let gm = 0;
+    let g_dm = g_days_in_month.slice();
+    if (leap) g_dm[1] = 29;
+    
+    while (g_day_no >= g_dm[gm]) {
+      g_day_no -= g_dm[gm];
+      gm++;
+    }
+    
+    return new Date(gy, gm, g_day_no + 1);
   };
 
   const calculate = useCallback(async () => {
