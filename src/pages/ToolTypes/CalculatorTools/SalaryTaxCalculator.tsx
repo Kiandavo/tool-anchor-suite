@@ -18,25 +18,31 @@ import {
   Info,
   DollarSign,
   RotateCcw,
-  Download
+  Download,
+  BarChart3,
+  Clock,
+  Calendar,
+  Wallet
 } from "lucide-react";
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPie, Pie, Cell, Legend } from 'recharts';
 
 // Enhanced tax brackets for different years
 const TAX_BRACKETS = {
   '1403': [
-    { max: 8_800_000, rate: 0, name: 'معاف از مالیات' },
-    { max: 13_200_000, rate: 0.10, name: 'پله اول - ۱۰٪' },
-    { max: 22_000_000, rate: 0.15, name: 'پله دوم - ۱۵٪' },
-    { max: 30_800_000, rate: 0.20, name: 'پله سوم - ۲۰٪' },
-    { max: Infinity, rate: 0.30, name: 'پله چهارم - ۳۰٪' },
+    { max: 8_800_000, rate: 0, name: 'معاف از مالیات', color: '#22c55e' },
+    { max: 13_200_000, rate: 0.10, name: 'پله اول - ۱۰٪', color: '#84cc16' },
+    { max: 22_000_000, rate: 0.15, name: 'پله دوم - ۱۵٪', color: '#eab308' },
+    { max: 30_800_000, rate: 0.20, name: 'پله سوم - ۲۰٪', color: '#f97316' },
+    { max: Infinity, rate: 0.30, name: 'پله چهارم - ۳۰٪', color: '#ef4444' },
   ],
   '1402': [
-    { max: 7_000_000, rate: 0, name: 'معاف از مالیات' },
-    { max: 10_500_000, rate: 0.10, name: 'پله اول - ۱۰٪' },
-    { max: 17_500_000, rate: 0.15, name: 'پله دوم - ۱۵٪' },
-    { max: 24_500_000, rate: 0.20, name: 'پله سوم - ۲۰٪' },
-    { max: Infinity, rate: 0.30, name: 'پله چهارم - ۳۰٪' },
+    { max: 7_000_000, rate: 0, name: 'معاف از مالیات', color: '#22c55e' },
+    { max: 10_500_000, rate: 0.10, name: 'پله اول - ۱۰٪', color: '#84cc16' },
+    { max: 17_500_000, rate: 0.15, name: 'پله دوم - ۱۵٪', color: '#eab308' },
+    { max: 24_500_000, rate: 0.20, name: 'پله سوم - ۲۰٪', color: '#f97316' },
+    { max: Infinity, rate: 0.30, name: 'پله چهارم - ۳۰٪', color: '#ef4444' },
   ]
 };
 
@@ -46,6 +52,7 @@ interface TaxDetail {
   rate: number;
   tax: number;
   name: string;
+  color: string;
 }
 
 interface TaxResult {
@@ -57,46 +64,44 @@ interface TaxResult {
   details: TaxDetail[];
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
 export default function SalaryTaxCalculator() {
   const [salary, setSalary] = useState<string>('');
   const [taxYear, setTaxYear] = useState<string>('1403');
   const [calculationType, setCalculationType] = useState<string>('monthly');
   const [result, setResult] = useState<TaxResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
-  const [compareToYear, setCompareToYear] = useState<string>('1402');
-  const [showComparison, setShowComparison] = useState(false);
   
   // Format input with thousands separator
   const formatInput = (value: string): string => {
     const plainNumber = value.replace(/[^\d]/g, '');
-    
-    if (plainNumber === '') {
-      return '';
-    }
-    
+    if (plainNumber === '') return '';
     return plainNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  // Handle salary input change
   const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatInput(e.target.value);
     setSalary(formatted);
   };
   
-  // Format Rial amount to display
   const formatRial = (amount: number): string => {
-    return new Intl.NumberFormat('fa-IR').format(amount) + ' تومان';
+    return new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
   };
 
-  // Enhanced tax calculation with comprehensive analysis
   const calculateTax = useCallback(async (yearToCalculate: string = taxYear): Promise<TaxResult | null> => {
     const salaryValueRaw = parseFloat(salary.replace(/,/g, ''));
     
-    if (isNaN(salaryValueRaw) || salaryValueRaw < 0) {
-      return null;
-    }
+    if (isNaN(salaryValueRaw) || salaryValueRaw < 0) return null;
 
-    // Normalize to monthly for calculation since brackets are monthly
     const isYearly = calculationType === 'yearly';
     const salaryMonthly = isYearly ? salaryValueRaw / 12 : salaryValueRaw;
 
@@ -106,7 +111,6 @@ export default function SalaryTaxCalculator() {
     const detailsMonthly: TaxDetail[] = [];
     let previousMax = 0;
     
-    // Apply each tax bracket (monthly)
     for (const bracket of brackets) {
       const bracketRange = bracket.max === Infinity ? remainingSalaryMonthly : Math.min(bracket.max - previousMax, remainingSalaryMonthly);
       
@@ -119,26 +123,21 @@ export default function SalaryTaxCalculator() {
           amount: bracketRange,
           rate: bracket.rate * 100,
           tax: taxForBracket,
-          name: bracket.name
+          name: bracket.name,
+          color: bracket.color
         });
         
         remainingSalaryMonthly -= bracketRange;
-        
-        if (remainingSalaryMonthly <= 0) {
-          break;
-        }
+        if (remainingSalaryMonthly <= 0) break;
       }
       
       previousMax = bracket.max === Infinity ? previousMax : bracket.max;
     }
 
-    // Convert back to selected unit
     const grossSalary = isYearly ? salaryMonthly * 12 : salaryMonthly;
     const totalTax = isYearly ? totalTaxMonthly * 12 : totalTaxMonthly;
     const netSalary = grossSalary - totalTax;
     const effectiveTaxRate = grossSalary > 0 ? (totalTax / grossSalary) * 100 : 0;
-    
-    // Find marginal tax rate (highest bracket used)
     const marginalTaxRate = detailsMonthly.length > 0 ? detailsMonthly[detailsMonthly.length - 1].rate : 0;
 
     const details = detailsMonthly.map(d => ({
@@ -147,14 +146,7 @@ export default function SalaryTaxCalculator() {
       tax: isYearly ? d.tax * 12 : d.tax,
     }));
 
-    return {
-      grossSalary,
-      totalTax,
-      netSalary,
-      effectiveTaxRate,
-      marginalTaxRate,
-      details
-    };
+    return { grossSalary, totalTax, netSalary, effectiveTaxRate, marginalTaxRate, details };
   }, [salary, taxYear, calculationType]);
 
   const handleCalculate = async () => {
@@ -164,31 +156,19 @@ export default function SalaryTaxCalculator() {
       const salaryValue = parseFloat(salary.replace(/,/g, ''));
       
       if (isNaN(salaryValue) || salaryValue < 0) {
-        toast.error("مقدار نامعتبر", {
-          description: "لطفا مقدار معتبری برای حقوق وارد کنید",
-          position: "top-center",
-        });
+        toast.error("مقدار نامعتبر", { description: "لطفا مقدار معتبری برای حقوق وارد کنید", position: "top-center" });
         return;
       }
 
-      // Simulate calculation delay for better UX
       await new Promise(resolve => setTimeout(resolve, 800));
-
       const taxResult = await calculateTax();
       
       if (taxResult) {
         setResult(taxResult);
-        toast.success("محاسبه با موفقیت انجام شد", {
-          description: `مالیات: ${formatRial(taxResult.totalTax)}`,
-          position: "top-center",
-        });
+        toast.success("محاسبه با موفقیت انجام شد", { description: `مالیات: ${formatRial(taxResult.totalTax)}`, position: "top-center" });
       }
-      
     } catch (error) {
-      toast.error("خطا در محاسبه", {
-        description: "لطفا مقادیر را بررسی کنید",
-        position: "top-center",
-      });
+      toast.error("خطا در محاسبه", { description: "لطفا مقادیر را بررسی کنید", position: "top-center" });
     } finally {
       setIsCalculating(false);
     }
@@ -197,16 +177,45 @@ export default function SalaryTaxCalculator() {
   const handleReset = () => {
     setSalary('');
     setResult(null);
-    toast.info("فرم پاک شد", {
-      description: "اطلاعات جدید وارد کنید",
-      position: "top-center",
-    });
+    toast.info("فرم پاک شد", { description: "اطلاعات جدید وارد کنید", position: "top-center" });
   };
 
-  // Tax burden visualization
+  // Tax Bracket Chart Data
+  const taxBracketChartData = useMemo(() => {
+    if (!result) return [];
+    return result.details.filter(d => d.amount > 0).map(d => ({
+      name: d.name.replace(' - ', '\n'),
+      amount: Math.round(d.amount),
+      tax: Math.round(d.tax),
+      fill: d.color
+    }));
+  }, [result]);
+
+  // Pie Chart Data for Net vs Gross
+  const pieChartData = useMemo(() => {
+    if (!result) return [];
+    return [
+      { name: 'حقوق خالص', value: Math.round(result.netSalary), fill: '#22c55e' },
+      { name: 'مالیات', value: Math.round(result.totalTax), fill: '#ef4444' }
+    ];
+  }, [result]);
+
+  // Take-home pay breakdown
+  const takeHomeBreakdown = useMemo(() => {
+    if (!result) return null;
+    const monthly = calculationType === 'yearly' ? result.netSalary / 12 : result.netSalary;
+    return {
+      hourly: monthly / 176, // 22 days * 8 hours
+      daily: monthly / 22,
+      weekly: monthly / 4,
+      monthly: monthly,
+      yearly: monthly * 12
+    };
+  }, [result, calculationType]);
+
   const taxBurdenPercentage = useMemo(() => {
     if (!result) return 0;
-    return Math.min((result.effectiveTaxRate / 30) * 100, 100); // 30% is max tax rate
+    return Math.min((result.effectiveTaxRate / 30) * 100, 100);
   }, [result]);
 
   return (
@@ -224,24 +233,23 @@ export default function SalaryTaxCalculator() {
           <div className="neo-glass rounded-xl p-4">
             <h3 className="font-medium mb-3 flex items-center gap-2">
               <Info className="h-4 w-4 text-primary" />
-              پلکان‌های مالیاتی سال {taxYear} ({calculationType === 'monthly' ? 'ماهیانه' : 'سالیانه'})
+              پلکان‌های مالیاتی سال {taxYear}
             </h3>
             <div className="text-sm text-muted-foreground space-y-1">
               {TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS].map((bracket, index) => {
                 const isYearly = calculationType === 'yearly';
                 const prevMax = TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS][index - 1]?.max || 0;
-                const displayPrev = isYearly ? prevMax * 12 : prevMax;
                 const displayMax = bracket.max === Infinity ? Infinity : (isYearly ? bracket.max * 12 : bracket.max);
                 return (
-                  <p key={index}>
-                    • {bracket.name}: {displayMax === Infinity ? 'بیش از ' + formatRial(displayPrev) : `تا ${formatRial(displayMax)}`}
+                  <p key={index} className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full" style={{ backgroundColor: bracket.color }}></span>
+                    {bracket.name}: {displayMax === Infinity ? 'بیش از ' + formatRial(isYearly ? prevMax * 12 : prevMax) : `تا ${formatRial(displayMax)}`}
                   </p>
                 );
               })}
             </div>
           </div>
           
-          {/* Input Section */}
           <Tabs defaultValue="monthly" value={calculationType} onValueChange={setCalculationType}>
             <TabsList className="grid grid-cols-2 mb-4 glass-effect">
               <TabsTrigger value="monthly">محاسبه ماهیانه</TabsTrigger>
@@ -304,27 +312,28 @@ export default function SalaryTaxCalculator() {
             </div>
           </Tabs>
           
-          {/* Results Section */}
           {result && (
-            <div className="space-y-6 animate-fade-in">
+            <motion.div 
+              className="space-y-6"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
               <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 glass-effect">
+                <TabsList className="grid w-full grid-cols-4 glass-effect">
                   <TabsTrigger value="overview">خلاصه</TabsTrigger>
-                  <TabsTrigger value="details">جزئیات</TabsTrigger>
-                  <TabsTrigger value="analysis">تحلیل</TabsTrigger>
+                  <TabsTrigger value="brackets">پله‌های مالیاتی</TabsTrigger>
+                  <TabsTrigger value="comparison">مقایسه</TabsTrigger>
+                  <TabsTrigger value="breakdown">درآمد خالص</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="overview" className="mt-6 space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <OutcomeInfoCard 
-                      outcome={`حقوق خالص: ${formatRial(result.netSalary)}`}
-                    />
-                    <OutcomeInfoCard 
-                      outcome={`مالیات کل: ${formatRial(result.totalTax)} (${result.effectiveTaxRate.toFixed(2)}%)`}
-                    />
-                  </div>
+                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <OutcomeInfoCard outcome={`حقوق خالص: ${formatRial(result.netSalary)}`} />
+                    <OutcomeInfoCard outcome={`مالیات کل: ${formatRial(result.totalTax)} (${result.effectiveTaxRate.toFixed(2)}%)`} />
+                  </motion.div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
                       <div className="flex items-center mb-2">
                         <DollarSign className="h-5 w-5 text-green-600 ml-2" />
@@ -348,10 +357,9 @@ export default function SalaryTaxCalculator() {
                       </div>
                       <p className="text-lg font-bold text-blue-600">{result.marginalTaxRate.toFixed(0)}%</p>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  {/* Tax Burden Visualization */}
-                  <div className="neo-glass rounded-xl p-6">
+                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
                     <h3 className="font-semibold text-lg mb-4 flex items-center">
                       <PieChart className="ml-2 h-5 w-5 text-primary" />
                       بار مالیاتی
@@ -368,11 +376,33 @@ export default function SalaryTaxCalculator() {
                         <span>۳۰%</span>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </TabsContent>
 
-                <TabsContent value="details" className="mt-6 space-y-4">
-                  <div className="glass-effect rounded-xl overflow-hidden">
+                <TabsContent value="brackets" className="mt-6 space-y-4">
+                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
+                    <h3 className="font-semibold text-lg mb-4 flex items-center">
+                      <BarChart3 className="ml-2 h-5 w-5 text-primary" />
+                      نمودار پله‌های مالیاتی
+                    </h3>
+                    <div className="h-80">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={taxBracketChartData} layout="vertical">
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis type="number" tickFormatter={(v) => (v / 1000000).toFixed(1) + 'M'} />
+                          <YAxis type="category" dataKey="name" width={100} tick={{ fontSize: 12 }} />
+                          <Tooltip 
+                            formatter={(value: number) => formatRial(value)}
+                            labelFormatter={(label) => `پله: ${label}`}
+                          />
+                          <Bar dataKey="amount" name="مبلغ مشمول" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                          <Bar dataKey="tax" name="مالیات" fill="#ef4444" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="glass-effect rounded-xl overflow-hidden">
                     <div className="overflow-x-auto">
                       <table className="min-w-full">
                         <thead className="bg-muted/50">
@@ -386,7 +416,10 @@ export default function SalaryTaxCalculator() {
                         <tbody className="divide-y">
                           {result.details.map((detail, index) => (
                             <tr key={index} className="text-sm hover:bg-muted/20 transition-colors">
-                              <td className="py-3 px-4">{detail.name}</td>
+                              <td className="py-3 px-4 flex items-center gap-2">
+                                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: detail.color }}></span>
+                                {detail.name}
+                              </td>
                               <td className="py-3 px-4">{formatRial(detail.amount)}</td>
                               <td className="py-3 px-4">{detail.rate}٪</td>
                               <td className="py-3 px-4 font-semibold">{formatRial(detail.tax)}</td>
@@ -395,73 +428,118 @@ export default function SalaryTaxCalculator() {
                         </tbody>
                       </table>
                     </div>
-                  </div>
-
-                  {/* Yearly/Monthly Breakdown */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="glass-effect rounded-xl p-4">
-                      <h4 className="font-medium text-sm text-muted-foreground mb-2">
-                        {calculationType === 'monthly' ? 'معادل سالیانه' : 'معادل ماهیانه'}
-                      </h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span>حقوق ناخالص:</span>
-                          <span className="font-semibold">
-                            {formatRial(calculationType === 'monthly' ? result.grossSalary * 12 : result.grossSalary / 12)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>مالیات:</span>
-                          <span className="font-semibold">
-                            {formatRial(calculationType === 'monthly' ? result.totalTax * 12 : result.totalTax / 12)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>حقوق خالص:</span>
-                          <span className="font-semibold">
-                            {formatRial(calculationType === 'monthly' ? result.netSalary * 12 : result.netSalary / 12)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  </motion.div>
                 </TabsContent>
 
-                <TabsContent value="analysis" className="mt-6 space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="glass-effect rounded-xl p-5">
-                      <h4 className="font-medium mb-3 flex items-center">
-                        <TrendingUp className="ml-2 h-4 w-4 text-primary" />
-                        تحلیل مالیاتی
-                      </h4>
-                      <div className="space-y-2 text-sm">
-                        <p>• نرخ مالیات مؤثر شما {result.effectiveTaxRate.toFixed(2)}% است</p>
-                        <p>• در پله مالیاتی {result.marginalTaxRate}% قرار دارید</p>
-                        <p>• از هر ۱۰۰ تومان درآمد، {result.effectiveTaxRate.toFixed(0)} تومان مالیات می‌پردازید</p>
-                        <p>• درآمد خالص شما {((result.netSalary / result.grossSalary) * 100).toFixed(1)}% درآمد ناخالص است</p>
+                <TabsContent value="comparison" className="mt-6 space-y-4">
+                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
+                    <h3 className="font-semibold text-lg mb-4 flex items-center">
+                      <PieChart className="ml-2 h-5 w-5 text-primary" />
+                      مقایسه ناخالص و خالص
+                    </h3>
+                    <div className="h-80">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RechartsPie>
+                          <Pie
+                            data={pieChartData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={100}
+                            paddingAngle={5}
+                            dataKey="value"
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
+                          >
+                            {pieChartData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.fill} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value: number) => formatRial(value)} />
+                          <Legend />
+                        </RechartsPie>
+                      </ResponsiveContainer>
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="neo-glass rounded-xl p-5">
+                      <h4 className="font-medium text-sm text-muted-foreground mb-3">حقوق ناخالص</h4>
+                      <p className="text-2xl font-bold text-green-600">{formatRial(result.grossSalary)}</p>
+                      <div className="mt-2 w-full bg-muted rounded-full h-3">
+                        <div className="bg-green-500 h-3 rounded-full" style={{ width: '100%' }}></div>
                       </div>
                     </div>
-                    
-                    <div className="glass-effect rounded-xl p-5">
-                      <h4 className="font-medium mb-3 flex items-center">
-                        <Info className="ml-2 h-4 w-4 text-primary" />
-                        پیشنهادات بهینه‌سازی
-                      </h4>
-                      <div className="space-y-2 text-sm text-muted-foreground">
-                        {result.effectiveTaxRate > 20 && (
-                          <p>• بررسی امکان استفاده از معافیت‌های مالیاتی</p>
-                        )}
-                        {result.effectiveTaxRate > 15 && (
-                          <p>• مشاوره با مشاور مالیاتی برای بهینه‌سازی</p>
-                        )}
-                        <p>• ثبت هزینه‌های قابل کسر از مالیات</p>
-                        <p>• بررسی امکان پرداخت حق بیمه تکمیلی</p>
+                    <div className="neo-glass rounded-xl p-5">
+                      <h4 className="font-medium text-sm text-muted-foreground mb-3">حقوق خالص</h4>
+                      <p className="text-2xl font-bold text-blue-600">{formatRial(result.netSalary)}</p>
+                      <div className="mt-2 w-full bg-muted rounded-full h-3">
+                        <div className="bg-blue-500 h-3 rounded-full" style={{ width: `${(result.netSalary / result.grossSalary) * 100}%` }}></div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
+                </TabsContent>
+
+                <TabsContent value="breakdown" className="mt-6 space-y-4">
+                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
+                    <h3 className="font-semibold text-lg mb-4 flex items-center">
+                      <Wallet className="ml-2 h-5 w-5 text-primary" />
+                      درآمد خالص به تفکیک
+                    </h3>
+                    {takeHomeBreakdown && (
+                      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <div className="glass-effect rounded-xl p-4 text-center">
+                          <Clock className="h-6 w-6 text-primary mx-auto mb-2" />
+                          <p className="text-xs text-muted-foreground">ساعتی</p>
+                          <p className="text-lg font-bold text-primary">{formatRial(takeHomeBreakdown.hourly)}</p>
+                        </div>
+                        <div className="glass-effect rounded-xl p-4 text-center">
+                          <Calendar className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+                          <p className="text-xs text-muted-foreground">روزانه</p>
+                          <p className="text-lg font-bold text-blue-600">{formatRial(takeHomeBreakdown.daily)}</p>
+                        </div>
+                        <div className="glass-effect rounded-xl p-4 text-center">
+                          <Calendar className="h-6 w-6 text-green-600 mx-auto mb-2" />
+                          <p className="text-xs text-muted-foreground">هفتگی</p>
+                          <p className="text-lg font-bold text-green-600">{formatRial(takeHomeBreakdown.weekly)}</p>
+                        </div>
+                        <div className="glass-effect rounded-xl p-4 text-center">
+                          <Wallet className="h-6 w-6 text-amber-600 mx-auto mb-2" />
+                          <p className="text-xs text-muted-foreground">ماهیانه</p>
+                          <p className="text-lg font-bold text-amber-600">{formatRial(takeHomeBreakdown.monthly)}</p>
+                        </div>
+                        <div className="glass-effect rounded-xl p-4 text-center">
+                          <TrendingUp className="h-6 w-6 text-purple-600 mx-auto mb-2" />
+                          <p className="text-xs text-muted-foreground">سالیانه</p>
+                          <p className="text-lg font-bold text-purple-600">{formatRial(takeHomeBreakdown.yearly)}</p>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
+                    <h3 className="font-semibold text-lg mb-4">تحلیل مالیاتی</h3>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center p-3 glass-effect rounded-lg">
+                        <span>صرفه‌جویی مالیاتی معاف</span>
+                        <span className="font-bold text-green-600">
+                          {formatRial(result.details.find(d => d.rate === 0)?.amount || 0)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center p-3 glass-effect rounded-lg">
+                        <span>بالاترین نرخ مالیاتی اعمال شده</span>
+                        <span className="font-bold text-red-600">{result.marginalTaxRate}%</span>
+                      </div>
+                      <div className="flex justify-between items-center p-3 glass-effect rounded-lg">
+                        <span>میانگین مالیات به ازای هر پله</span>
+                        <span className="font-bold text-blue-600">
+                          {formatRial(result.totalTax / result.details.filter(d => d.tax > 0).length || 0)}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
                 </TabsContent>
               </Tabs>
-            </div>
+            </motion.div>
           )}
         </CardContent>
       </Card>
