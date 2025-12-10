@@ -20,48 +20,29 @@ export default {
     	},
     	fontFamily: {
     		primary: [
+    			'YekanBakh',
     			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Shabnam',
     			'Inter',
-    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		heading: [
+    			'YekanBakh',
     			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Shabnam',
-    			'Manrope',
-    			'Manrope-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		body: [
+    			'YekanBakh',
     			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Shabnam',
     			'Inter',
-    			'Inter-fallback',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		support: [
-    			'Shabnam',
-    			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Inter',
-    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
     		display: [
-    			'Manrope',
-    			'Manrope-fallback',
+    			'YekanBakh',
     			'Vazirmatn',
-    			'Vazirmatn-fallback',
     			'Inter',
-    			'Inter-fallback',
     			'system-ui',
     			'sans-serif'
     		],
@@ -71,84 +52,13 @@ export default {
     			'Monaco',
     			'monospace'
     		],
-    		accent: [
-    			'Shabnam',
-    			'Vazirmatn',
-    			'Inter',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		manrope: [
-    			'Manrope',
-    			'Manrope-fallback',
-    			'Inter',
-    			'Inter-fallback',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		inter: [
-    			'Inter',
-    			'Inter-fallback',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		jetbrains: [
-    			'JetBrains Mono',
-    			'Consolas',
-    			'Monaco',
-    			'monospace'
-    		],
-    		vazirmatn: [
-    			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Inter',
-    			'Inter-fallback',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		shabnam: [
-    			'Shabnam',
-    			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Inter',
-    			'Inter-fallback',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		estedad: [
-    			'Manrope',
-    			'Manrope-fallback',
-    			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Inter',
-    			'Inter-fallback',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		sahel: [
-    			'Shabnam',
-    			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Inter',
-    			'Inter-fallback',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		byekan: [
-    			'Shabnam',
-    			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Tahoma',
-    			'system-ui',
-    			'sans-serif'
-    		],
     		sans: [
+    			'YekanBakh',
     			'Vazirmatn',
-    			'Vazirmatn-fallback',
-    			'Shabnam',
-    			'Inter',
-    			'Inter-fallback',
+    			'ui-sans-serif',
     			'system-ui',
+    			'Tahoma',
+    			'Arial',
     			'sans-serif'
     		]
     	},
@@ -324,9 +234,8 @@ export default {
     		},
      		fontFamily: {
      			sans: [
+     				'YekanBakh',
      				'Vazirmatn',
-     				'Vazirmatn-fallback',
-     				'Shabnam',
      				'ui-sans-serif',
      				'system-ui',
      				'Tahoma',
