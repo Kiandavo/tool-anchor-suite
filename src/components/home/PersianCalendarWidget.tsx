@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Globe, Star, Sun, Moon, Sparkles, MapPin } from 'lucide-react';
-import { getCurrentDates } from '@/utils/calendar/persianCalendar';
+import { Calendar, Clock, Globe, Star, Sun, Moon, Sparkles, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { getCurrentDates, persianMonths as calendarPersianMonths, hijriMonths, gregorianToPersian } from '@/utils/calendar/persianCalendar';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface PersianDate {
@@ -11,6 +11,13 @@ interface PersianDate {
   day: number;
   monthName: string;
   weekDay: string;
+}
+
+interface HijriDate {
+  year: number;
+  month: number;
+  day: number;
+  monthName: string;
 }
 
 interface TimezoneInfo {
@@ -25,6 +32,8 @@ const persianMonths = [
   'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
   'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
 ];
+
+const persianWeekDaysShort = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
 
 const persianWeekDays = [
   'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'
@@ -67,6 +76,53 @@ function getAccuratePersianDate(): PersianDate {
   };
 }
 
+function getAccurateHijriDate(): HijriDate {
+  const { hijri } = getCurrentDates();
+  
+  return {
+    year: hijri.year,
+    month: hijri.month,
+    day: hijri.day,
+    monthName: hijriMonths[hijri.month - 1]
+  };
+}
+
+// Get number of days in a Persian month
+function getDaysInPersianMonth(year: number, month: number): number {
+  if (month <= 6) return 31;
+  if (month <= 11) return 30;
+  // For month 12 (Esfand), check leap year
+  const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+  let jp = breaks[0];
+  let jump = 0;
+  for (let i = 1; i < breaks.length; i++) {
+    const jm = breaks[i];
+    jump = jm - jp;
+    if (year < jm) break;
+    jp = jm;
+  }
+  const n = year - jp;
+  const leapDays = Math.floor(n / 33) * 8 + Math.floor(((n % 33) + 3) / 4);
+  const isLeap = (leapDays % 4) === 0;
+  return isLeap ? 30 : 29;
+}
+
+// Get the weekday index (0=Saturday) for the first day of a Persian month
+function getFirstDayOfPersianMonth(year: number, month: number): number {
+  // Convert first day of Persian month to Gregorian, then get weekday
+  const jy = year;
+  const jm = month;
+  const jd = 1;
+  
+  let days = (jm > 6) ? ((jm - 7) * 30 + 186) : ((jm - 1) * 31);
+  const jy2 = jy + 1595;
+  let totalDays = days + (Math.floor(jy2 / 33) * 8) + Math.floor((jy2 % 33 + 3) / 4) + jy2 * 365 + 10;
+  
+  // Get day of week (0 = Saturday in Persian calendar)
+  const dayOfWeek = (totalDays + 4) % 7;
+  return dayOfWeek;
+}
+
 export const PersianCalendarWidget = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedTab, setSelectedTab] = useState<'calendar' | 'timezones' | 'events'>('calendar');
@@ -80,7 +136,7 @@ export const PersianCalendarWidget = () => {
   }, []);
 
   const persianDate = getAccuratePersianDate();
-  const hijriYear = persianDate.year + 579;
+  const hijriDate = getAccurateHijriDate();
   
   const formatTime = (date: Date, offset: string): string => {
     const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
@@ -235,34 +291,30 @@ export const PersianCalendarWidget = () => {
                   )}
 
                   {/* Main Date Cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Persian Date - Primary */}
                     <motion.div
                       whileHover={{ scale: 1.02, y: -4 }}
-                      className="relative group overflow-hidden rounded-3xl border-2 border-cyan-500/40 bg-gradient-to-br from-cyan-500/15 via-teal-500/10 to-emerald-500/15 backdrop-blur-sm p-8"
+                      className="relative group overflow-hidden rounded-2xl border-2 border-cyan-500/40 bg-gradient-to-br from-cyan-500/15 via-teal-500/10 to-emerald-500/15 backdrop-blur-sm p-6"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/0 to-teal-400/0 group-hover:from-cyan-400/10 group-hover:to-teal-400/10 transition-all duration-300"></div>
-                      <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-cyan-500/20 to-teal-500/20 rounded-full blur-2xl"></div>
                       <div className="relative">
-                        <div className="flex items-center justify-center gap-3 mb-6">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center shadow-lg">
-                            <Sun className="w-5 h-5 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold bg-gradient-to-l from-cyan-600 to-teal-600 bg-clip-text text-transparent">تقویم شمسی</h3>
+                        <div className="flex items-center justify-center gap-2 mb-4">
+                          <Sun className="w-5 h-5 text-cyan-600" />
+                          <h3 className="font-bold text-cyan-700">تقویم شمسی</h3>
                         </div>
-                        <div className="text-center space-y-3">
-                          <div className="text-6xl font-bold bg-gradient-to-b from-cyan-600 to-teal-600 bg-clip-text text-transparent">
+                        <div className="text-center space-y-2">
+                          <div className="text-5xl font-bold bg-gradient-to-b from-cyan-600 to-teal-600 bg-clip-text text-transparent">
                             {persianDate.day}
                           </div>
-                          <div className="text-2xl font-semibold text-cyan-700">
+                          <div className="text-xl font-semibold text-cyan-700">
                             {persianDate.monthName}
                           </div>
-                          <div className="text-xl text-cyan-600 font-medium">
+                          <div className="text-lg text-cyan-600">
                             {persianDate.year}
                           </div>
-                          <div className="flex items-center justify-center gap-2 pt-4 border-t border-cyan-500/20">
-                            <Calendar className="w-4 h-4 text-cyan-500" />
-                            <span className="text-cyan-600 font-medium">{persianDate.weekDay}</span>
+                          <div className="text-sm text-cyan-500/80 pt-2 border-t border-cyan-500/20">
+                            {persianDate.weekDay}
                           </div>
                         </div>
                       </div>
@@ -271,40 +323,122 @@ export const PersianCalendarWidget = () => {
                     {/* Gregorian Date */}
                     <motion.div
                       whileHover={{ scale: 1.02, y: -4 }}
-                      className="relative group overflow-hidden rounded-3xl border-2 border-blue-500/40 bg-gradient-to-br from-blue-500/15 via-indigo-500/10 to-violet-500/15 backdrop-blur-sm p-8"
+                      className="relative group overflow-hidden rounded-2xl border-2 border-blue-500/40 bg-gradient-to-br from-blue-500/15 via-indigo-500/10 to-violet-500/15 backdrop-blur-sm p-6"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-400/0 to-indigo-400/0 group-hover:from-blue-400/10 group-hover:to-indigo-400/10 transition-all duration-300"></div>
-                      <div className="absolute top-4 left-4 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-full blur-2xl"></div>
                       <div className="relative">
-                        <div className="flex items-center justify-center gap-3 mb-6">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-lg">
-                            <Globe className="w-5 h-5 text-white" />
-                          </div>
-                          <h3 className="text-xl font-bold bg-gradient-to-l from-blue-600 to-indigo-600 bg-clip-text text-transparent">تقویم میلادی</h3>
+                        <div className="flex items-center justify-center gap-2 mb-4">
+                          <Globe className="w-5 h-5 text-blue-600" />
+                          <h3 className="font-bold text-blue-700">تقویم میلادی</h3>
                         </div>
-                        <div className="text-center space-y-3">
-                          <div className="text-6xl font-bold bg-gradient-to-b from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        <div className="text-center space-y-2">
+                          <div className="text-5xl font-bold bg-gradient-to-b from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                             {currentTime.getDate()}
                           </div>
-                          <div className="text-2xl font-semibold text-blue-700">
+                          <div className="text-xl font-semibold text-blue-700">
                             {currentTime.toLocaleDateString('en-US', { month: 'long' })}
                           </div>
-                          <div className="text-xl text-blue-600 font-medium">
+                          <div className="text-lg text-blue-600">
                             {currentTime.getFullYear()}
                           </div>
-                          <div className="flex items-center justify-center gap-2 pt-4 border-t border-blue-500/20">
-                            <Calendar className="w-4 h-4 text-blue-500" />
-                            <span className="text-blue-600 font-medium">{currentTime.toLocaleDateString('en-US', { weekday: 'long' })}</span>
+                          <div className="text-sm text-blue-500/80 pt-2 border-t border-blue-500/20">
+                            {currentTime.toLocaleDateString('en-US', { weekday: 'long' })}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Hijri Date */}
+                    <motion.div
+                      whileHover={{ scale: 1.02, y: -4 }}
+                      className="relative group overflow-hidden rounded-2xl border-2 border-emerald-500/40 bg-gradient-to-br from-emerald-500/15 via-green-500/10 to-teal-500/15 backdrop-blur-sm p-6"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/0 to-green-400/0 group-hover:from-emerald-400/10 group-hover:to-green-400/10 transition-all duration-300"></div>
+                      <div className="relative">
+                        <div className="flex items-center justify-center gap-2 mb-4">
+                          <Moon className="w-5 h-5 text-emerald-600" />
+                          <h3 className="font-bold text-emerald-700">تقویم قمری</h3>
+                        </div>
+                        <div className="text-center space-y-2">
+                          <div className="text-5xl font-bold bg-gradient-to-b from-emerald-600 to-green-600 bg-clip-text text-transparent">
+                            {hijriDate.day}
+                          </div>
+                          <div className="text-xl font-semibold text-emerald-700">
+                            {hijriDate.monthName}
+                          </div>
+                          <div className="text-lg text-emerald-600">
+                            {hijriDate.year}
+                          </div>
+                          <div className="text-sm text-emerald-500/80 pt-2 border-t border-emerald-500/20">
+                            هجری قمری
                           </div>
                         </div>
                       </div>
                     </motion.div>
                   </div>
 
+                  {/* Mini Persian Calendar Grid */}
+                  <motion.div
+                    whileHover={{ scale: 1.01 }}
+                    className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-amber-500/10 backdrop-blur-sm p-6"
+                  >
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                      <Calendar className="w-5 h-5 text-amber-600" />
+                      <h3 className="font-bold text-amber-700 text-lg">{persianDate.monthName} {persianDate.year}</h3>
+                    </div>
+                    
+                    {/* Weekday Headers */}
+                    <div className="grid grid-cols-7 gap-1 mb-2">
+                      {persianWeekDaysShort.map((day, index) => (
+                        <div key={index} className={`text-center text-xs font-semibold py-1 ${index === 6 ? 'text-red-500' : 'text-amber-600'}`}>
+                          {day}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Calendar Days Grid */}
+                    <div className="grid grid-cols-7 gap-1">
+                      {(() => {
+                        const daysInMonth = getDaysInPersianMonth(persianDate.year, persianDate.month);
+                        const firstDayOfWeek = getFirstDayOfPersianMonth(persianDate.year, persianDate.month);
+                        const days = [];
+                        
+                        // Empty cells before first day
+                        for (let i = 0; i < firstDayOfWeek; i++) {
+                          days.push(<div key={`empty-${i}`} className="aspect-square"></div>);
+                        }
+                        
+                        // Days of month
+                        for (let day = 1; day <= daysInMonth; day++) {
+                          const isToday = day === persianDate.day;
+                          const isFriday = (firstDayOfWeek + day - 1) % 7 === 6;
+                          
+                          days.push(
+                            <motion.div
+                              key={day}
+                              whileHover={{ scale: 1.1 }}
+                              className={`aspect-square flex items-center justify-center text-sm rounded-lg cursor-pointer transition-all ${
+                                isToday 
+                                  ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold shadow-lg' 
+                                  : isFriday
+                                    ? 'text-red-500 hover:bg-red-500/10'
+                                    : 'text-amber-800 hover:bg-amber-500/20'
+                              }`}
+                            >
+                              {day}
+                            </motion.div>
+                          );
+                        }
+                        
+                        return days;
+                      })()}
+                    </div>
+                  </motion.div>
+
                   {/* Live Time Display */}
                   <motion.div
                     whileHover={{ scale: 1.01 }}
-                    className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 backdrop-blur-sm p-8"
+                    className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10 backdrop-blur-sm p-6"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 animate-pulse"></div>
                     <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -312,7 +446,7 @@ export const PersianCalendarWidget = () => {
                         <Clock className="w-6 h-6 text-purple-600" />
                         <h3 className="font-bold text-purple-700 text-lg">زمان فعلی تهران</h3>
                       </div>
-                      <div className="text-5xl font-bold font-mono bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      <div className="text-4xl font-bold font-mono bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         {currentTime.toLocaleTimeString('fa-IR', { 
                           timeZone: 'Asia/Tehran',
                           hour: '2-digit', 
