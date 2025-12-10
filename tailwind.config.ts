@@ -19,55 +19,17 @@ export default {
     		}
     	},
     	fontFamily: {
-    		primary: [
-    			'YekanBakh',
-    			'Vazirmatn',
-    			'Inter',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		heading: [
-    			'YekanBakh',
-    			'Vazirmatn',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		body: [
-    			'YekanBakh',
-    			'Vazirmatn',
-    			'Inter',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		support: [
-    			'YekanBakh',
-    			'Vazirmatn',
-    			'Inter',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		display: [
-    			'YekanBakh',
-    			'Vazirmatn',
-    			'Inter',
-    			'system-ui',
-    			'sans-serif'
-    		],
-    		mono: [
-    			'JetBrains Mono',
-    			'Consolas',
-    			'Monaco',
-    			'monospace'
-    		],
-    		sans: [
-    			'YekanBakh',
-    			'Vazirmatn',
-    			'ui-sans-serif',
-    			'system-ui',
-    			'Tahoma',
-    			'Arial',
-    			'sans-serif'
-    		]
+    		// Primary Persian fonts
+    		primary: ['YekanBakh', 'Dana', 'Vazirmatn', 'system-ui', 'sans-serif'],
+    		heading: ['YekanBakh', 'Dana', 'system-ui', 'sans-serif'],
+    		body: ['Dana', 'YekanBakh', 'Vazirmatn', 'system-ui', 'sans-serif'],
+    		support: ['Dana', 'YekanBakh', 'system-ui', 'sans-serif'],
+    		display: ['Estedad', 'YekanBakh', 'system-ui', 'sans-serif'],
+    		accent: ['Estedad', 'YekanBakh', 'system-ui', 'sans-serif'],
+    		// Utility fonts
+    		mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
+    		inter: ['Inter', 'system-ui', 'sans-serif'],
+    		sans: ['Dana', 'YekanBakh', 'Vazirmatn', 'ui-sans-serif', 'system-ui', 'Tahoma', 'Arial', 'sans-serif']
     	},
     	extend: {
     		colors: {
@@ -240,15 +202,7 @@ export default {
     			shimmer: 'shimmer 3s infinite'
     		},
      		fontFamily: {
-     			sans: [
-     				'YekanBakh',
-     				'Vazirmatn',
-     				'ui-sans-serif',
-     				'system-ui',
-     				'Tahoma',
-     				'Arial',
-     				'sans-serif'
-     			],
+     			sans: ['Dana', 'YekanBakh', 'Vazirmatn', 'ui-sans-serif', 'system-ui', 'Tahoma', 'Arial', 'sans-serif'],
     			serif: [
     				'Lora',
     				'ui-serif',

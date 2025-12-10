@@ -6,21 +6,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
 
-/* YekanBakh - Modern Persian Font */
-@font-face {
-  font-family: 'YekanBakh';
-  src: url('https://cdn.jsdelivr.net/gh/nicholabs/yekanbakh@main/woff2/YekanBakh-Thin.woff2') format('woff2');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'YekanBakh';
-  src: url('https://cdn.jsdelivr.net/gh/nicholabs/yekanbakh@main/woff2/YekanBakh-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
+/* =====================================================
+   FONT 1: YekanBakh - Modern Headings Font
+   ===================================================== */
 @font-face {
   font-family: 'YekanBakh';
   src: url('https://cdn.jsdelivr.net/gh/nicholabs/yekanbakh@main/woff2/YekanBakh-Regular.woff2') format('woff2');
@@ -59,6 +47,84 @@
 @font-face {
   font-family: 'YekanBakh';
   src: url('https://cdn.jsdelivr.net/gh/nicholabs/yekanbakh@main/woff2/YekanBakh-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =====================================================
+   FONT 2: Dana - Readable Body Font
+   ===================================================== */
+@font-face {
+  font-family: 'Dana';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/dana-font@main/woff2/Dana-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Dana';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/dana-font@main/woff2/Dana-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Dana';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/dana-font@main/woff2/Dana-DemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Dana';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/dana-font@main/woff2/Dana-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =====================================================
+   FONT 3: Estedad - Stylish Display/Accent Font
+   ===================================================== */
+@font-face {
+  font-family: 'Estedad';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/estedad@main/woff2/Estedad-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Estedad';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/estedad@main/woff2/Estedad-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Estedad';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/estedad@main/woff2/Estedad-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Estedad';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/estedad@main/woff2/Estedad-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Estedad';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/estedad@main/woff2/Estedad-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Estedad';
+  src: url('https://cdn.jsdelivr.net/gh/nicholabs/estedad@main/woff2/Estedad-Black.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -111,7 +177,7 @@
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 215 25% 75%;
     --sidebar-ring: 200 95% 42%;
-    --font-sans: 'YekanBakh', 'Vazirmatn', ui-sans-serif, system-ui, Tahoma, Arial, sans-serif;
+    --font-sans: 'Dana', 'YekanBakh', 'Vazirmatn', ui-sans-serif, system-ui, Tahoma, Arial, sans-serif;
     --font-serif: 'Lora', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
     --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --radius: 0.5rem;
