@@ -124,74 +124,77 @@ function julianDayToGregorian(jd: number): CalendarDate {
  * Using accurate algorithm based on astronomical calculations
  */
 export function gregorianToPersian(gYear: number, gMonth: number, gDay: number): CalendarDate {
-  const jd = gregorianToJulianDay(gYear, gMonth, gDay);
+  // Using the accurate Jalaali algorithm
+  const gy = gYear;
+  const gm = gMonth;
+  const gd = gDay;
   
-  // Persian calendar epoch (March 22, 622 CE in Gregorian = 1 Farvardin 1 AP)
-  // Julian Day Number for Persian epoch is 1948321
-  const persianEpoch = 1948321;
-  const daysSinceEpoch = jd - persianEpoch;
+  const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
   
-  // Approximate Persian year
-  let persianYear = Math.floor(daysSinceEpoch / 365.24219);
+  let jy: number;
+  const gy2 = (gm > 2) ? (gy + 1) : gy;
+  let days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
   
-  // Fine-tune the year by checking the actual start of the Persian year
-  while (true) {
-    const marchEquinox = getMarchEquinoxJD(persianYear + 621);
-    if (jd < marchEquinox) {
-      persianYear--;
-    } else {
-      break;
-    }
+  jy = -1595 + (33 * Math.floor(days / 12053));
+  days = days % 12053;
+  
+  jy = jy + (4 * Math.floor(days / 1461));
+  days = days % 1461;
+  
+  if (days > 365) {
+    jy = jy + Math.floor((days - 1) / 365);
+    days = (days - 1) % 365;
   }
   
-  // Calculate the day of the Persian year
-  const yearStartJD = getMarchEquinoxJD(persianYear + 621);
-  const dayOfYear = jd - yearStartJD;
-  
-  // Calculate month and day
-  let persianMonth, persianDay;
-  if (dayOfYear < 186) {
-    // First 6 months have 31 days each
-    persianMonth = Math.floor(dayOfYear / 31) + 1;
-    persianDay = (dayOfYear % 31) + 1;
+  let jm: number, jd: number;
+  if (days < 186) {
+    jm = 1 + Math.floor(days / 31);
+    jd = 1 + (days % 31);
   } else {
-    // Last 6 months have 30 days each (except Esfand which can have 29 or 30)
-    persianMonth = Math.floor((dayOfYear - 186) / 30) + 7;
-    persianDay = ((dayOfYear - 186) % 30) + 1;
+    jm = 7 + Math.floor((days - 186) / 30);
+    jd = 1 + ((days - 186) % 30);
   }
   
-  return { year: persianYear, month: persianMonth, day: persianDay };
-}
-
-/**
- * Approximate March equinox Julian Day for a given Gregorian year
- */
-function getMarchEquinoxJD(year: number): number {
-  // Simple approximation: March 20/21 varies slightly
-  // For years around 2025, March equinox is typically March 20
-  return gregorianToJulianDay(year, 3, 20);
+  return { year: jy, month: jm, day: jd };
 }
 
 /**
  * Convert Persian (Jalali) to Gregorian calendar
  */
 export function persianToGregorian(pYear: number, pMonth: number, pDay: number): CalendarDate {
-  // Calculate days from start of Persian year
-  let dayOfYear = 0;
+  const jy = pYear;
+  const jm = pMonth;
+  const jd = pDay;
   
-  // Add days from complete months
-  for (let m = 1; m < pMonth; m++) {
-    dayOfYear += getDaysInPersianMonth(pYear, m);
+  let gy: number;
+  let days = (jm > 6) ? ((jm - 7) * 30 + 186) : ((jm - 1) * 31);
+  days = days + jd - 1;
+  
+  const jy2 = jy + 1595;
+  gy = -355 + (400 * Math.floor((days + (Math.floor(jy2 / 33) * 8) + Math.floor((jy2 % 33 + 3) / 4) + 10 + jy2 * 365) / 146097));
+  gy = gy + (100 * Math.floor(((days + (Math.floor(jy2 / 33) * 8) + Math.floor((jy2 % 33 + 3) / 4) + 10 + jy2 * 365) % 146097) / 36524));
+  
+  let remain = ((days + (Math.floor(jy2 / 33) * 8) + Math.floor((jy2 % 33 + 3) / 4) + 10 + jy2 * 365) % 146097) % 36524;
+  gy = gy + (4 * Math.floor(remain / 1461));
+  remain = remain % 1461;
+  
+  if (remain >= 366) {
+    gy = gy + Math.floor((remain - 1) / 365);
+    remain = (remain - 1) % 365;
   }
   
-  // Add current day
-  dayOfYear += pDay - 1;
+  const g_d_m = [0, 31, (((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   
-  // Get Julian Day of Persian year start (March equinox)
-  const yearStartJD = getMarchEquinoxJD(pYear + 621);
-  const targetJD = yearStartJD + dayOfYear;
+  let gm = 0;
+  for (let i = 1; i <= 12; i++) {
+    if (remain < g_d_m[i]) {
+      gm = i;
+      break;
+    }
+    remain = remain - g_d_m[i];
+  }
   
-  return julianDayToGregorian(targetJD);
+  return { year: gy, month: gm, day: remain + 1 };
 }
 
 /**
