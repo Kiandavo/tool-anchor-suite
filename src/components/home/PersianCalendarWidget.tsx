@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Globe, Star, Sun, Moon, Sparkles, MapPin, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
-import { getCurrentDates, persianMonths as calendarPersianMonths, hijriMonths, gregorianToPersian } from '@/utils/calendar/persianCalendar';
+import { Calendar, Clock, Globe, Star, Sun, Moon, Sparkles, MapPin, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X, Info } from 'lucide-react';
+import { getCurrentDates, persianMonths as calendarPersianMonths, hijriMonths, gregorianMonths, gregorianToPersian, persianToGregorian, gregorianToHijri } from '@/utils/calendar/persianCalendar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -163,6 +163,15 @@ export const PersianCalendarWidget = () => {
   const [displayedMonth, setDisplayedMonth] = useState(persianDate.month);
   const [displayedYear, setDisplayedYear] = useState(persianDate.year);
   
+  // State for selected day details
+  const [selectedDayDetails, setSelectedDayDetails] = useState<{
+    persian: { year: number; month: number; day: number };
+    gregorian: { year: number; month: number; day: number };
+    hijri: { year: number; month: number; day: number };
+    weekDay: string;
+    holiday: typeof persianHolidays[0] | undefined;
+  } | null>(null);
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -170,6 +179,21 @@ export const PersianCalendarWidget = () => {
     
     return () => clearInterval(timer);
   }, []);
+
+  // Handle day click to show details
+  const handleDayClick = (day: number) => {
+    const persian = { year: displayedYear, month: displayedMonth, day };
+    const gregorian = persianToGregorian(displayedYear, displayedMonth, day);
+    const hijri = gregorianToHijri(gregorian.year, gregorian.month, gregorian.day);
+    const holiday = getHolidayForDay(displayedMonth, day);
+    
+    // Calculate weekday
+    const gregDate = new Date(gregorian.year, gregorian.month - 1, gregorian.day);
+    const weekdays = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
+    const weekDay = weekdays[gregDate.getDay()];
+    
+    setSelectedDayDetails({ persian, gregorian, hijri, weekDay, holiday });
+  };
 
   // Navigation functions for mini calendar
   const goToPreviousMonth = () => {
@@ -532,11 +556,21 @@ export const PersianCalendarWidget = () => {
                             const holiday = getHolidayForDay(displayedMonth, day);
                             const isHoliday = holiday?.isHoliday;
                             
+                            const isSelected = selectedDayDetails?.persian.day === day && 
+                                              selectedDayDetails?.persian.month === displayedMonth && 
+                                              selectedDayDetails?.persian.year === displayedYear;
+                            
                             const dayElement = (
                               <motion.div
                                 key={day}
                                 whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handleDayClick(day)}
                                 className={`aspect-square flex items-center justify-center text-sm rounded-lg cursor-pointer transition-all relative ${
+                                  isSelected
+                                    ? 'ring-2 ring-amber-500 ring-offset-1'
+                                    : ''
+                                } ${
                                   isToday 
                                     ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold shadow-lg' 
                                     : isHoliday
@@ -591,9 +625,93 @@ export const PersianCalendarWidget = () => {
                           <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
                           <span className="text-amber-700">مناسبت</span>
                         </div>
+                        <div className="flex items-center gap-1.5 text-xs">
+                          <Info className="w-3 h-3 text-amber-600" />
+                          <span className="text-amber-700">برای جزئیات کلیک کنید</span>
+                        </div>
                       </div>
                     </motion.div>
                   </TooltipProvider>
+
+                  {/* Selected Day Details Panel */}
+                  <AnimatePresence>
+                    {selectedDayDetails && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20, height: 0 }}
+                        animate={{ opacity: 1, y: 0, height: 'auto' }}
+                        exit={{ opacity: 0, y: -20, height: 0 }}
+                        className="relative overflow-hidden rounded-2xl border border-violet-500/30 bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-violet-500/10 backdrop-blur-sm"
+                      >
+                        {/* Close Button */}
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setSelectedDayDetails(null)}
+                          className="absolute top-3 left-3 w-7 h-7 rounded-lg bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-700 transition-colors z-10"
+                        >
+                          <X className="w-4 h-4" />
+                        </motion.button>
+                        
+                        <div className="p-6">
+                          {/* Header */}
+                          <div className="text-center mb-5">
+                            <h3 className="text-lg font-bold text-violet-700 mb-1">
+                              {selectedDayDetails.weekDay}، {selectedDayDetails.persian.day} {persianMonths[selectedDayDetails.persian.month - 1]} {selectedDayDetails.persian.year}
+                            </h3>
+                            {selectedDayDetails.holiday && (
+                              <Badge className={`${selectedDayDetails.holiday.isHoliday ? 'bg-rose-500/20 text-rose-700 border-rose-500/30' : 'bg-emerald-500/20 text-emerald-700 border-emerald-500/30'}`}>
+                                {selectedDayDetails.holiday.name}
+                              </Badge>
+                            )}
+                          </div>
+                          
+                          {/* Three Calendar Cards */}
+                          <div className="grid grid-cols-3 gap-3">
+                            {/* Persian */}
+                            <div className="text-center p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                              <Sun className="w-5 h-5 text-cyan-600 mx-auto mb-2" />
+                              <p className="text-xs text-cyan-600 mb-1">شمسی</p>
+                              <p className="text-2xl font-bold text-cyan-700">{selectedDayDetails.persian.day}</p>
+                              <p className="text-sm text-cyan-600">{persianMonths[selectedDayDetails.persian.month - 1]}</p>
+                              <p className="text-xs text-cyan-500">{selectedDayDetails.persian.year}</p>
+                            </div>
+                            
+                            {/* Gregorian */}
+                            <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                              <Globe className="w-5 h-5 text-blue-600 mx-auto mb-2" />
+                              <p className="text-xs text-blue-600 mb-1">میلادی</p>
+                              <p className="text-2xl font-bold text-blue-700">{selectedDayDetails.gregorian.day}</p>
+                              <p className="text-sm text-blue-600">{gregorianMonths[selectedDayDetails.gregorian.month - 1]}</p>
+                              <p className="text-xs text-blue-500">{selectedDayDetails.gregorian.year}</p>
+                            </div>
+                            
+                            {/* Hijri */}
+                            <div className="text-center p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                              <Moon className="w-5 h-5 text-emerald-600 mx-auto mb-2" />
+                              <p className="text-xs text-emerald-600 mb-1">قمری</p>
+                              <p className="text-2xl font-bold text-emerald-700">{selectedDayDetails.hijri.day}</p>
+                              <p className="text-sm text-emerald-600">{hijriMonths[selectedDayDetails.hijri.month - 1]}</p>
+                              <p className="text-xs text-emerald-500">{selectedDayDetails.hijri.year}</p>
+                            </div>
+                          </div>
+                          
+                          {/* Holiday Description */}
+                          {selectedDayDetails.holiday && (
+                            <div className="mt-4 p-3 rounded-xl bg-background/50 border border-border/50">
+                              <p className="text-sm text-foreground font-medium mb-1">{selectedDayDetails.holiday.name}</p>
+                              <p className="text-xs text-muted-foreground">{selectedDayDetails.holiday.description}</p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <Badge variant="outline" className="text-xs">{selectedDayDetails.holiday.category}</Badge>
+                                {selectedDayDetails.holiday.isHoliday && (
+                                  <Badge className="text-xs bg-rose-500/20 text-rose-700 border-rose-500/30">تعطیل رسمی</Badge>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   {/* Live Time Display */}
                   <motion.div
