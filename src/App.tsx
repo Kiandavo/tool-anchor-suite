@@ -11,6 +11,7 @@ import { registerServiceWorker } from "@/utils/serviceWorkerRegistration";
 import { DefaultResourceHints } from "@/components/performance/ResourceHints";
 import { CoreWebVitals } from "@/components/performance/CoreWebVitals";
 import { SplashScreen } from "@/components/SplashScreen";
+import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +46,7 @@ const App = () => {
           <CoreWebVitals />
           <GoogleAnalytics />
           <SearchModal />
+          <InstallPrompt />
           <AppRoutes />
         </QueryClientProvider>
       </HelmetProvider>
