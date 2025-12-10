@@ -235,30 +235,34 @@ export const PersianCalendarWidget = () => {
                   )}
 
                   {/* Main Date Cards */}
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    {/* Persian Date */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Persian Date - Primary */}
                     <motion.div
                       whileHover={{ scale: 1.02, y: -4 }}
-                      className="relative group overflow-hidden rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-teal-500/10 backdrop-blur-sm p-6"
+                      className="relative group overflow-hidden rounded-3xl border-2 border-cyan-500/40 bg-gradient-to-br from-cyan-500/15 via-teal-500/10 to-emerald-500/15 backdrop-blur-sm p-8"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/0 to-teal-400/0 group-hover:from-cyan-400/10 group-hover:to-teal-400/10 transition-all duration-300"></div>
+                      <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-cyan-500/20 to-teal-500/20 rounded-full blur-2xl"></div>
                       <div className="relative">
-                        <div className="flex items-center justify-center gap-2 mb-4">
-                          <Sun className="w-5 h-5 text-cyan-600" />
-                          <h3 className="font-bold text-cyan-700">تقویم شمسی</h3>
+                        <div className="flex items-center justify-center gap-3 mb-6">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center shadow-lg">
+                            <Sun className="w-5 h-5 text-white" />
+                          </div>
+                          <h3 className="text-xl font-bold bg-gradient-to-l from-cyan-600 to-teal-600 bg-clip-text text-transparent">تقویم شمسی</h3>
                         </div>
-                        <div className="text-center space-y-2">
-                          <div className="text-4xl font-bold bg-gradient-to-b from-cyan-600 to-teal-600 bg-clip-text text-transparent">
+                        <div className="text-center space-y-3">
+                          <div className="text-6xl font-bold bg-gradient-to-b from-cyan-600 to-teal-600 bg-clip-text text-transparent">
                             {persianDate.day}
                           </div>
-                          <div className="text-xl font-semibold text-cyan-700">
+                          <div className="text-2xl font-semibold text-cyan-700">
                             {persianDate.monthName}
                           </div>
-                          <div className="text-lg text-cyan-600">
+                          <div className="text-xl text-cyan-600 font-medium">
                             {persianDate.year}
                           </div>
-                          <div className="text-sm text-cyan-500/80 pt-2 border-t border-cyan-500/20">
-                            {persianDate.weekDay}
+                          <div className="flex items-center justify-center gap-2 pt-4 border-t border-cyan-500/20">
+                            <Calendar className="w-4 h-4 text-cyan-500" />
+                            <span className="text-cyan-600 font-medium">{persianDate.weekDay}</span>
                           </div>
                         </div>
                       </div>
@@ -267,54 +271,30 @@ export const PersianCalendarWidget = () => {
                     {/* Gregorian Date */}
                     <motion.div
                       whileHover={{ scale: 1.02, y: -4 }}
-                      className="relative group overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 backdrop-blur-sm p-6"
+                      className="relative group overflow-hidden rounded-3xl border-2 border-blue-500/40 bg-gradient-to-br from-blue-500/15 via-indigo-500/10 to-violet-500/15 backdrop-blur-sm p-8"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-400/0 to-indigo-400/0 group-hover:from-blue-400/10 group-hover:to-indigo-400/10 transition-all duration-300"></div>
+                      <div className="absolute top-4 left-4 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-full blur-2xl"></div>
                       <div className="relative">
-                        <div className="flex items-center justify-center gap-2 mb-4">
-                          <Calendar className="w-5 h-5 text-blue-600" />
-                          <h3 className="font-bold text-blue-700">تقویم میلادی</h3>
+                        <div className="flex items-center justify-center gap-3 mb-6">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center shadow-lg">
+                            <Globe className="w-5 h-5 text-white" />
+                          </div>
+                          <h3 className="text-xl font-bold bg-gradient-to-l from-blue-600 to-indigo-600 bg-clip-text text-transparent">تقویم میلادی</h3>
                         </div>
-                        <div className="text-center space-y-2">
-                          <div className="text-4xl font-bold bg-gradient-to-b from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        <div className="text-center space-y-3">
+                          <div className="text-6xl font-bold bg-gradient-to-b from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                             {currentTime.getDate()}
                           </div>
-                          <div className="text-xl font-semibold text-blue-700">
+                          <div className="text-2xl font-semibold text-blue-700">
                             {currentTime.toLocaleDateString('en-US', { month: 'long' })}
                           </div>
-                          <div className="text-lg text-blue-600">
+                          <div className="text-xl text-blue-600 font-medium">
                             {currentTime.getFullYear()}
                           </div>
-                          <div className="text-sm text-blue-500/80 pt-2 border-t border-blue-500/20">
-                            {currentTime.toLocaleDateString('en-US', { weekday: 'long' })}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-
-                    {/* Hijri Date */}
-                    <motion.div
-                      whileHover={{ scale: 1.02, y: -4 }}
-                      className="relative group overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 to-green-500/10 backdrop-blur-sm p-6"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/0 to-green-400/0 group-hover:from-emerald-400/10 group-hover:to-green-400/10 transition-all duration-300"></div>
-                      <div className="relative">
-                        <div className="flex items-center justify-center gap-2 mb-4">
-                          <Moon className="w-5 h-5 text-emerald-600" />
-                          <h3 className="font-bold text-emerald-700">تقویم قمری</h3>
-                        </div>
-                        <div className="text-center space-y-2">
-                          <div className="text-4xl font-bold bg-gradient-to-b from-emerald-600 to-green-600 bg-clip-text text-transparent">
-                            {persianDate.day}
-                          </div>
-                          <div className="text-xl font-semibold text-emerald-700">
-                            {persianMonths[persianDate.month - 1]}
-                          </div>
-                          <div className="text-lg text-emerald-600">
-                            {hijriYear}
-                          </div>
-                          <div className="text-sm text-emerald-500/80 pt-2 border-t border-emerald-500/20">
-                            تقریبی
+                          <div className="flex items-center justify-center gap-2 pt-4 border-t border-blue-500/20">
+                            <Calendar className="w-4 h-4 text-blue-500" />
+                            <span className="text-blue-600 font-medium">{currentTime.toLocaleDateString('en-US', { weekday: 'long' })}</span>
                           </div>
                         </div>
                       </div>
