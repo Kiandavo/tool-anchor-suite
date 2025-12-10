@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Globe, Star, Sun, Moon, Sparkles, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, Globe, Star, Sun, Moon, Sparkles, MapPin, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'lucide-react';
 import { getCurrentDates, persianMonths as calendarPersianMonths, hijriMonths, gregorianToPersian } from '@/utils/calendar/persianCalendar';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface PersianDate {
   year: number;
@@ -54,13 +55,41 @@ const internationalTimezones: TimezoneInfo[] = [
 ];
 
 const persianHolidays = [
-  { month: 1, day: 1, name: 'نوروز', description: 'سال نو ایرانی و جشن بهاران', category: 'ملی' },
-  { month: 1, day: 13, name: 'سیزه‌بدر', description: 'روز طبیعت', category: 'ملی' },
-  { month: 2, day: 2, name: 'روز معلم', description: 'بزرگداشت مقام معلم', category: 'فرهنگی' },
-  { month: 3, day: 14, name: 'رحلت امام خمینی', description: 'بنیانگذار جمهوری اسلامی', category: 'ملی' },
-  { month: 10, day: 30, name: 'شب یلدا', description: 'طولانی‌ترین شب سال', category: 'فرهنگی' },
-  { month: 11, day: 22, name: 'پیروزی انقلاب', description: 'روز ملی ایران', category: 'ملی' },
+  // فروردین
+  { month: 1, day: 1, name: 'نوروز', description: 'سال نو ایرانی', category: 'ملی', isHoliday: true },
+  { month: 1, day: 2, name: 'عید نوروز', description: 'تعطیلات نوروز', category: 'ملی', isHoliday: true },
+  { month: 1, day: 3, name: 'عید نوروز', description: 'تعطیلات نوروز', category: 'ملی', isHoliday: true },
+  { month: 1, day: 4, name: 'عید نوروز', description: 'تعطیلات نوروز', category: 'ملی', isHoliday: true },
+  { month: 1, day: 12, name: 'روز جمهوری اسلامی', description: 'روز جمهوری', category: 'ملی', isHoliday: true },
+  { month: 1, day: 13, name: 'سیزده‌بدر', description: 'روز طبیعت', category: 'ملی', isHoliday: true },
+  // اردیبهشت
+  { month: 2, day: 2, name: 'روز معلم', description: 'بزرگداشت مقام معلم', category: 'فرهنگی', isHoliday: false },
+  { month: 2, day: 10, name: 'روز ملی خلیج فارس', description: 'خلیج فارس', category: 'ملی', isHoliday: false },
+  // خرداد
+  { month: 3, day: 14, name: 'رحلت امام خمینی', description: 'بنیانگذار جمهوری اسلامی', category: 'ملی', isHoliday: true },
+  { month: 3, day: 15, name: 'قیام ۱۵ خرداد', description: 'قیام ملی', category: 'ملی', isHoliday: true },
+  // شهریور
+  { month: 6, day: 31, name: 'روز بزرگداشت شهریار', description: 'شاعر معاصر', category: 'فرهنگی', isHoliday: false },
+  // مهر
+  { month: 7, day: 8, name: 'روز بزرگداشت مولانا', description: 'شاعر بزرگ', category: 'فرهنگی', isHoliday: false },
+  { month: 7, day: 13, name: 'روز نیروی انتظامی', description: 'نیروی انتظامی', category: 'ملی', isHoliday: false },
+  // آبان
+  { month: 8, day: 13, name: 'روز دانش‌آموز', description: 'بزرگداشت دانش‌آموزان', category: 'فرهنگی', isHoliday: false },
+  // آذر
+  { month: 9, day: 5, name: 'روز بسیج', description: 'روز بسیج مستضعفین', category: 'ملی', isHoliday: false },
+  { month: 9, day: 7, name: 'روز دانشجو', description: 'بزرگداشت دانشجویان', category: 'فرهنگی', isHoliday: false },
+  // دی
+  { month: 10, day: 30, name: 'شب یلدا', description: 'طولانی‌ترین شب سال', category: 'فرهنگی', isHoliday: false },
+  // بهمن
+  { month: 11, day: 22, name: 'پیروزی انقلاب', description: 'پیروزی انقلاب اسلامی', category: 'ملی', isHoliday: true },
+  // اسفند
+  { month: 12, day: 29, name: 'روز ملی شدن صنعت نفت', description: 'ملی شدن نفت', category: 'ملی', isHoliday: true },
 ];
+
+// Helper to find holiday for a specific day
+function getHolidayForDay(month: number, day: number) {
+  return persianHolidays.find(h => h.month === month && h.day === day);
+}
 
 function getAccuratePersianDate(): PersianDate {
   const { persian } = getCurrentDates();
@@ -406,95 +435,165 @@ export const PersianCalendarWidget = () => {
                   </div>
 
                   {/* Mini Persian Calendar Grid */}
-                  <motion.div
-                    className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-amber-500/10 backdrop-blur-sm p-6"
-                  >
-                    {/* Header with Navigation */}
-                    <div className="flex items-center justify-between mb-4">
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={goToNextMonth}
-                        className="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </motion.button>
-                      
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-bold text-amber-700 text-lg">
-                          {persianMonths[displayedMonth - 1]} {displayedYear}
-                        </h3>
-                        {(displayedMonth !== persianDate.month || displayedYear !== persianDate.year) && (
-                          <motion.button
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={goToToday}
-                            className="text-xs px-2 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-700 font-medium transition-colors"
-                          >
-                            امروز
-                          </motion.button>
-                        )}
+                  <TooltipProvider>
+                    <motion.div
+                      className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-amber-500/10 backdrop-blur-sm p-6"
+                    >
+                      {/* Header with Navigation */}
+                      <div className="flex items-center justify-between mb-4">
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={goToNextMonth}
+                          className="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </motion.button>
+                        
+                        <div className="flex items-center gap-3">
+                          {/* Month Name */}
+                          <span className="font-bold text-amber-700 text-lg">
+                            {persianMonths[displayedMonth - 1]}
+                          </span>
+                          
+                          {/* Year with Navigation */}
+                          <div className="flex items-center gap-1">
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setDisplayedYear(displayedYear + 1)}
+                              className="w-6 h-6 rounded-md bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
+                            >
+                              <ChevronUp className="w-4 h-4" />
+                            </motion.button>
+                            <span className="font-bold text-amber-700 text-lg min-w-[50px] text-center">
+                              {displayedYear}
+                            </span>
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setDisplayedYear(displayedYear - 1)}
+                              className="w-6 h-6 rounded-md bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
+                            >
+                              <ChevronDown className="w-4 h-4" />
+                            </motion.button>
+                          </div>
+                          
+                          {/* Today Button */}
+                          {(displayedMonth !== persianDate.month || displayedYear !== persianDate.year) && (
+                            <motion.button
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={goToToday}
+                              className="text-xs px-2 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-700 font-medium transition-colors"
+                            >
+                              امروز
+                            </motion.button>
+                          )}
+                        </div>
+                        
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={goToPreviousMonth}
+                          className="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </motion.button>
                       </div>
                       
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={goToPreviousMonth}
-                        className="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 flex items-center justify-center text-amber-700 transition-colors"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </motion.button>
-                    </div>
-                    
-                    {/* Weekday Headers */}
-                    <div className="grid grid-cols-7 gap-1 mb-2">
-                      {persianWeekDaysShort.map((day, index) => (
-                        <div key={index} className={`text-center text-xs font-semibold py-1 ${index === 6 ? 'text-red-500' : 'text-amber-600'}`}>
-                          {day}
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* Calendar Days Grid */}
-                    <div className="grid grid-cols-7 gap-1">
-                      {(() => {
-                        const daysInMonth = getDaysInPersianMonth(displayedYear, displayedMonth);
-                        const firstDayOfWeek = getFirstDayOfPersianMonth(displayedYear, displayedMonth);
-                        const days = [];
-                        
-                        // Empty cells before first day
-                        for (let i = 0; i < firstDayOfWeek; i++) {
-                          days.push(<div key={`empty-${i}`} className="aspect-square"></div>);
-                        }
-                        
-                        // Days of month
-                        for (let day = 1; day <= daysInMonth; day++) {
-                          const isToday = day === persianDate.day && displayedMonth === persianDate.month && displayedYear === persianDate.year;
-                          const isFriday = (firstDayOfWeek + day - 1) % 7 === 6;
+                      {/* Weekday Headers */}
+                      <div className="grid grid-cols-7 gap-1 mb-2">
+                        {persianWeekDaysShort.map((day, index) => (
+                          <div key={index} className={`text-center text-xs font-semibold py-1 ${index === 6 ? 'text-red-500' : 'text-amber-600'}`}>
+                            {day}
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Calendar Days Grid */}
+                      <div className="grid grid-cols-7 gap-1">
+                        {(() => {
+                          const daysInMonth = getDaysInPersianMonth(displayedYear, displayedMonth);
+                          const firstDayOfWeek = getFirstDayOfPersianMonth(displayedYear, displayedMonth);
+                          const days = [];
                           
-                          days.push(
-                            <motion.div
-                              key={day}
-                              whileHover={{ scale: 1.1 }}
-                              className={`aspect-square flex items-center justify-center text-sm rounded-lg cursor-pointer transition-all ${
-                                isToday 
-                                  ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold shadow-lg' 
-                                  : isFriday
-                                    ? 'text-red-500 hover:bg-red-500/10'
-                                    : 'text-amber-800 hover:bg-amber-500/20'
-                              }`}
-                            >
-                              {day}
-                            </motion.div>
-                          );
-                        }
-                        
-                        return days;
-                      })()}
-                    </div>
-                  </motion.div>
+                          // Empty cells before first day
+                          for (let i = 0; i < firstDayOfWeek; i++) {
+                            days.push(<div key={`empty-${i}`} className="aspect-square"></div>);
+                          }
+                          
+                          // Days of month
+                          for (let day = 1; day <= daysInMonth; day++) {
+                            const isToday = day === persianDate.day && displayedMonth === persianDate.month && displayedYear === persianDate.year;
+                            const isFriday = (firstDayOfWeek + day - 1) % 7 === 6;
+                            const holiday = getHolidayForDay(displayedMonth, day);
+                            const isHoliday = holiday?.isHoliday;
+                            
+                            const dayElement = (
+                              <motion.div
+                                key={day}
+                                whileHover={{ scale: 1.1 }}
+                                className={`aspect-square flex items-center justify-center text-sm rounded-lg cursor-pointer transition-all relative ${
+                                  isToday 
+                                    ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold shadow-lg' 
+                                    : isHoliday
+                                      ? 'bg-gradient-to-br from-rose-500/30 to-pink-500/30 text-rose-700 font-semibold border border-rose-400/50'
+                                      : holiday
+                                        ? 'bg-gradient-to-br from-emerald-500/20 to-teal-500/20 text-emerald-700 font-medium border border-emerald-400/30'
+                                        : isFriday
+                                          ? 'text-red-500 hover:bg-red-500/10'
+                                          : 'text-amber-800 hover:bg-amber-500/20'
+                                }`}
+                              >
+                                {day}
+                                {holiday && (
+                                  <span className={`absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full ${isHoliday ? 'bg-rose-500' : 'bg-emerald-500'}`}></span>
+                                )}
+                              </motion.div>
+                            );
+                            
+                            if (holiday) {
+                              days.push(
+                                <Tooltip key={day}>
+                                  <TooltipTrigger asChild>
+                                    {dayElement}
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top" className="bg-background/95 backdrop-blur-sm border-border">
+                                    <div className="text-center">
+                                      <p className="font-bold text-foreground">{holiday.name}</p>
+                                      <p className="text-xs text-muted-foreground">{holiday.description}</p>
+                                      {holiday.isHoliday && (
+                                        <span className="text-xs text-rose-600 font-medium">تعطیل رسمی</span>
+                                      )}
+                                    </div>
+                                  </TooltipContent>
+                                </Tooltip>
+                              );
+                            } else {
+                              days.push(dayElement);
+                            }
+                          }
+                          
+                          return days;
+                        })()}
+                      </div>
+                      
+                      {/* Legend */}
+                      <div className="flex items-center justify-center gap-4 mt-4 pt-3 border-t border-amber-500/20">
+                        <div className="flex items-center gap-1.5 text-xs">
+                          <span className="w-3 h-3 rounded-full bg-rose-500"></span>
+                          <span className="text-amber-700">تعطیل رسمی</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs">
+                          <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
+                          <span className="text-amber-700">مناسبت</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </TooltipProvider>
 
                   {/* Live Time Display */}
                   <motion.div
