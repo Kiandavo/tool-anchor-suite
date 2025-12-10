@@ -39,6 +39,13 @@ export default {
     			'system-ui',
     			'sans-serif'
     		],
+    		support: [
+    			'YekanBakh',
+    			'Vazirmatn',
+    			'Inter',
+    			'system-ui',
+    			'sans-serif'
+    		],
     		display: [
     			'YekanBakh',
     			'Vazirmatn',
