@@ -82,16 +82,12 @@ const itemVariants = {
 export default function AgeCalculator() {
   const { getClasses } = useTypographyClasses();
   const [result, setResult] = useState<AgeStats | null>(null);
-  const [calendarType, setCalendarType] = useState<'persian' | 'gregorian'>('persian');
   const [selectedDate, setSelectedDate] = useState({ year: '', month: '', day: '' });
   const [isCalculating, setIsCalculating] = useState(false);
 
-  const currentYear = new Date().getFullYear();
-  const currentPersianYear = currentYear - 621;
+  const currentPersianYear = 1403; // Current Persian year
   
-  const years = calendarType === 'persian' 
-    ? Array.from({ length: currentPersianYear - 1299 }, (_, i) => currentPersianYear - i)
-    : Array.from({ length: currentYear - 1899 }, (_, i) => currentYear - i);
+  const years = Array.from({ length: currentPersianYear - 1299 }, (_, i) => currentPersianYear - i);
   
   const persianMonths = [
     { value: '1', label: 'فروردین' }, { value: '2', label: 'اردیبهشت' },
@@ -102,78 +98,91 @@ export default function AgeCalculator() {
     { value: '11', label: 'بهمن' }, { value: '12', label: 'اسفند' }
   ];
 
-  const gregorianMonths = [
-    { value: '1', label: 'January' }, { value: '2', label: 'February' },
-    { value: '3', label: 'March' }, { value: '4', label: 'April' },
-    { value: '5', label: 'May' }, { value: '6', label: 'June' },
-    { value: '7', label: 'July' }, { value: '8', label: 'August' },
-    { value: '9', label: 'September' }, { value: '10', label: 'October' },
-    { value: '11', label: 'November' }, { value: '12', label: 'December' }
-  ];
+  const months = persianMonths;
 
-  const months = calendarType === 'persian' ? persianMonths : gregorianMonths;
+  // Check if Persian year is a leap year
+  const isPersianLeapYear = (year: number): boolean => {
+    const breaks = [1, 5, 9, 13, 17, 22, 26, 30];
+    const cycle = year % 33;
+    return breaks.includes(cycle);
+  };
 
   const getDaysInMonth = (month: string, year: string) => {
     if (!month || !year) return 31;
     const monthNum = parseInt(month);
     const yearNum = parseInt(year);
     
-    if (calendarType === 'persian') {
-      if (monthNum <= 6) return 31;
-      if (monthNum <= 11) return 30;
-      const isLeapYear = ((yearNum - 979) % 33) % 4 === 1;
-      return isLeapYear ? 30 : 29;
-    } else {
-      const date = new Date(yearNum, monthNum, 0);
-      return date.getDate();
-    }
+    if (monthNum <= 6) return 31;
+    if (monthNum <= 11) return 30;
+    return isPersianLeapYear(yearNum) ? 30 : 29;
   };
 
   const days = Array.from({ length: getDaysInMonth(selectedDate.month, selectedDate.year) }, (_, i) => i + 1);
 
-  const getZodiacSign = (month: number, day: number): string => {
-    const zodiacSigns = [
-      { name: 'دلو', start: [1, 20], end: [2, 18] },
-      { name: 'حوت', start: [2, 19], end: [3, 20] },
-      { name: 'حمل', start: [3, 21], end: [4, 19] },
-      { name: 'ثور', start: [4, 20], end: [5, 20] },
-      { name: 'جوزا', start: [5, 21], end: [6, 20] },
-      { name: 'سرطان', start: [6, 21], end: [7, 22] },
-      { name: 'اسد', start: [7, 23], end: [8, 22] },
-      { name: 'سنبله', start: [8, 23], end: [9, 22] },
-      { name: 'میزان', start: [9, 23], end: [10, 22] },
-      { name: 'عقرب', start: [10, 23], end: [11, 21] },
-      { name: 'قوس', start: [11, 22], end: [12, 21] },
-      { name: 'جدی', start: [12, 22], end: [1, 19] }
+  // Persian zodiac signs based on Persian calendar months
+  const getPersianZodiacSign = (month: number): string => {
+    const signs = [
+      'حمل (فروردین)', 'ثور (اردیبهشت)', 'جوزا (خرداد)',
+      'سرطان (تیر)', 'اسد (مرداد)', 'سنبله (شهریور)',
+      'میزان (مهر)', 'عقرب (آبان)', 'قوس (آذر)',
+      'جدی (دی)', 'دلو (بهمن)', 'حوت (اسفند)'
     ];
-
-    for (const sign of zodiacSigns) {
-      const [startMonth, startDay] = sign.start;
-      const [endMonth, endDay] = sign.end;
-      if ((month === startMonth && day >= startDay) || (month === endMonth && day <= endDay) ||
-          (startMonth > endMonth && (month === startMonth || month === endMonth))) {
-        return sign.name;
-      }
-    }
-    return 'نامشخص';
+    return signs[month - 1] || 'نامشخص';
   };
 
-  const persianToGregorian = (persianYear: number, persianMonth: number, persianDay: number) => {
-    const gregorianYear = persianYear + 621;
-    let gregorianMonth = persianMonth;
-    let gregorianDay = persianDay;
+  // Accurate Persian to Gregorian conversion
+  const persianToGregorian = (jy: number, jm: number, jd: number): Date => {
+    const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
     
-    if (persianMonth <= 6) {
-      gregorianMonth = Math.min(persianMonth + 2, 12);
-    } else if (persianMonth <= 9) {
-      gregorianMonth = persianMonth - 6;
-      gregorianDay = Math.min(persianDay, 30);
-    } else {
-      gregorianMonth = persianMonth - 9;
-      gregorianDay = Math.min(persianDay, persianMonth === 12 ? 29 : 30);
-    }
+    const jalaliToJulianDay = (jy: number, jm: number, jd: number): number => {
+      let bl = breaks.length;
+      let gy = jy + 621;
+      let leapJ = -14;
+      let jp = breaks[0];
+      let jm1: number;
+      let jump: number = 0;
+      
+      if (jy < jp || jy >= breaks[bl - 1]) {
+        throw new Error('Invalid Persian year');
+      }
+      
+      for (let i = 1; i < bl; i++) {
+        jm1 = breaks[i];
+        jump = jm1 - jp;
+        if (jy < jm1) break;
+        leapJ = leapJ + Math.floor(jump / 33) * 8 + Math.floor((jump % 33) / 4);
+        jp = jm1;
+      }
+      
+      let n = jy - jp;
+      leapJ = leapJ + Math.floor(n / 33) * 8 + Math.floor(((n % 33) + 3) / 4);
+      if ((jump % 33) === 4 && (jump - n) === 4) leapJ++;
+      
+      let leapG = Math.floor(gy / 4) - Math.floor((Math.floor(gy / 100) + 1) * 3 / 4) - 150;
+      let march = 20 + leapJ - leapG;
+      
+      if (jm <= 6) {
+        return 365 * gy - Math.floor((gy + 100) / 100) + Math.floor((gy + 100) / 400) + march + (jm - 1) * 31 + jd - 1;
+      }
+      return 365 * gy - Math.floor((gy + 100) / 100) + Math.floor((gy + 100) / 400) + march + 186 + (jm - 7) * 30 + jd - 1;
+    };
     
-    return new Date(gregorianYear, gregorianMonth - 1, gregorianDay);
+    const julianDayToGregorian = (jdn: number): Date => {
+      let l = jdn + 68569;
+      let n = Math.floor(4 * l / 146097);
+      l = l - Math.floor((146097 * n + 3) / 4);
+      let i = Math.floor(4000 * (l + 1) / 1461001);
+      l = l - Math.floor(1461 * i / 4) + 31;
+      let j = Math.floor(80 * l / 2447);
+      let day = l - Math.floor(2447 * j / 80);
+      l = Math.floor(j / 11);
+      let month = j + 2 - 12 * l;
+      let year = 100 * (n - 49) + i + l;
+      return new Date(year, month - 1, day);
+    };
+    
+    const jdn = jalaliToJulianDay(jy, jm, jd);
+    return julianDayToGregorian(jdn);
   };
 
   const calculate = useCallback(async () => {
@@ -192,23 +201,14 @@ export default function AgeCalculator() {
       
       let birthDateObj: Date;
       
-      if (calendarType === 'persian') {
-        if (isNaN(year) || year < 1300 || year > 1500 || month < 1 || month > 12 || 
-            day < 1 || day > getDaysInMonth(selectedDate.month, selectedDate.year)) {
-          toast.error("تاریخ نامعتبر", { description: "لطفا تاریخ معتبری وارد کنید", position: "top-center" });
-          setIsCalculating(false);
-          return;
-        }
-        birthDateObj = persianToGregorian(year, month, day);
-      } else {
-        if (isNaN(year) || year < 1900 || year > new Date().getFullYear() || month < 1 || month > 12 || 
-            day < 1 || day > getDaysInMonth(selectedDate.month, selectedDate.year)) {
-          toast.error("تاریخ نامعتبر", { description: "لطفا تاریخ معتبری وارد کنید", position: "top-center" });
-          setIsCalculating(false);
-          return;
-        }
-        birthDateObj = new Date(year, month - 1, day);
+      // Persian calendar only
+      if (isNaN(year) || year < 1300 || year > 1500 || month < 1 || month > 12 || 
+          day < 1 || day > getDaysInMonth(selectedDate.month, selectedDate.year)) {
+        toast.error("تاریخ نامعتبر", { description: "لطفا تاریخ معتبری وارد کنید", position: "top-center" });
+        setIsCalculating(false);
+        return;
       }
+      birthDateObj = persianToGregorian(year, month, day);
       
       const today = new Date();
       
@@ -246,7 +246,7 @@ export default function AgeCalculator() {
       const nextBirthdayDays = differenceInDays(nextBirthday, today);
       
       const lifeProgress = Math.min((ageYears / 80) * 100, 100);
-      const zodiacSign = getZodiacSign(birthDateObj.getMonth() + 1, birthDateObj.getDate());
+      const zodiacSign = getPersianZodiacSign(month);
       
       // Additional stats
       const heartbeats = totalDays * 100000; // ~100k beats per day
@@ -267,12 +267,11 @@ export default function AgeCalculator() {
     } finally {
       setIsCalculating(false);
     }
-  }, [selectedDate, calendarType]);
+   }, [selectedDate]);
 
   const handleReset = () => {
     setSelectedDate({ year: '', month: '', day: '' });
     setResult(null);
-    setCalendarType('persian');
   };
 
   const handleDateChange = (field: 'year' | 'month' | 'day', value: string) => {
@@ -346,29 +345,8 @@ export default function AgeCalculator() {
           <div className="space-y-6">
             <div className="text-center space-y-4">
               <h2 className={cn("text-heading-lg font-heading mb-2", getClasses('heading'))}>
-                نوع تقویم و تاریخ تولد را انتخاب کنید
+                تاریخ تولد خود را به تقویم شمسی وارد کنید
               </h2>
-              
-              <div className="flex justify-center">
-                <div className="flex items-center gap-4 p-2 bg-background/50 backdrop-blur-sm rounded-xl border border-primary/20">
-                  <button
-                    onClick={() => { setCalendarType('persian'); setSelectedDate({ year: '', month: '', day: '' }); }}
-                    className={cn("flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300",
-                      calendarType === 'persian' ? "bg-primary text-white shadow-lg" : "text-muted-foreground hover:bg-primary/10")}
-                  >
-                    <Sun className="h-4 w-4" />
-                    تقویم شمسی (فارسی)
-                  </button>
-                  <button
-                    onClick={() => { setCalendarType('gregorian'); setSelectedDate({ year: '', month: '', day: '' }); }}
-                    className={cn("flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300",
-                      calendarType === 'gregorian' ? "bg-primary text-white shadow-lg" : "text-muted-foreground hover:bg-primary/10")}
-                  >
-                    <Globe className="h-4 w-4" />
-                    تقویم میلادی (انگلیسی)
-                  </button>
-                </div>
-              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
