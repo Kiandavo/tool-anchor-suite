@@ -77,7 +77,7 @@ body {
 }
 
 .persian-text {
-  @apply font-byekan;
+  @apply font-body;
   font-feature-settings: "kern" 1;
 }
 
