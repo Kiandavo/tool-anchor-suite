@@ -196,6 +196,13 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
     );
   }
 
+  // Generate breadcrumbs for SEO
+  const breadcrumbs = [
+    { name: 'لنگر', url: 'https://laangar.com/' },
+    { name: 'فال و طالع‌بینی', url: 'https://laangar.com/category/readings' },
+    { name: toolTitle, url: `https://laangar.com/tool/${slug}` }
+  ];
+
   return (
     <div className="space-y-6">
       <EnhancedSeoHead
@@ -205,6 +212,7 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
         description={seoData.description}
         keywords={enhancedKeywords}
         faq={faqData}
+        breadcrumbs={breadcrumbs}
       />
       <Card className="bg-white border shadow-sm">
         <CardHeader>
