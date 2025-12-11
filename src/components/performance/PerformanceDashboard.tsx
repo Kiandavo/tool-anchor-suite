@@ -89,13 +89,19 @@ export const PerformanceDashboard: React.FC = () => {
 
   const saveMetricToDb = async (name: string, value: number, rating: string) => {
     try {
-      await supabase.from('performance_metrics').insert({
-        metric_name: name,
-        metric_value: value,
-        rating: rating,
-        page_url: window.location.href,
-        user_agent: navigator.userAgent.substring(0, 200)
+      const response = await supabase.functions.invoke('submit-metrics', {
+        body: {
+          metric_name: name,
+          metric_value: value,
+          rating: rating,
+          page_url: window.location.href,
+          user_agent: navigator.userAgent.substring(0, 200)
+        }
       });
+      
+      if (response.error) {
+        console.error('Failed to save metric:', response.error);
+      }
     } catch (error) {
       console.error('Failed to save metric:', error);
     }
