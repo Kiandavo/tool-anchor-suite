@@ -41,10 +41,8 @@ const App = () => {
     registerServiceWorker();
   }, []);
 
-  if (showSplash) {
-    return <SplashScreen onComplete={() => setShowSplash(false)} />;
-  }
-  
+  // Render app content immediately with splash overlay on top
+  // This allows LCP to paint while splash shows, improving TTI
   return (
     <ErrorBoundary>
       <HelmetProvider>
@@ -56,6 +54,7 @@ const App = () => {
             <SearchModal />
             <KeyboardShortcutsHelp />
             <InstallPrompt />
+            {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
             <AppRoutes />
           </KeyboardShortcutsProvider>
         </QueryClientProvider>
