@@ -12,7 +12,7 @@ import { GeoTargeting } from '@/components/seo/GeoTargeting';
 import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
 import { ScrollAnimationWrapper } from '@/components/layout/ScrollAnimationWrapper';
 import { ScrollProgressIndicator } from '@/components/ui/ScrollProgressIndicator';
-import { SectionNavDots } from '@/components/ui/SectionNavDots';
+import { FloatingSectionNav } from '@/components/ui/FloatingSectionNav';
 // Lazy load below-the-fold components for better initial load performance
 // Core sections - split into separate chunks
 const QuickToolsSection = lazy(() => import('@/components/home/QuickToolsSection').then(m => ({ default: m.QuickToolsSection })));
@@ -69,7 +69,7 @@ const Index = () => {
   return (
     <Layout>
       <ScrollProgressIndicator />
-      <SectionNavDots />
+      <FloatingSectionNav />
       <EnhancedSeoHead 
         pageType="home"
         title={homeTitle}
