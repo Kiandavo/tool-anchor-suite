@@ -294,6 +294,25 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                     </motion.span>
                   </div>
                   
+                  {/* Pulsing energy waves */}
+                  {[...Array(3)].map((_, i) => (
+                    <motion.div
+                      key={`wave-${i}`}
+                      className="absolute inset-0 rounded-full border-2 border-purple-400/30"
+                      style={{ margin: -10 - i * 15 }}
+                      animate={{
+                        scale: [1, 1.5, 2],
+                        opacity: [0.6, 0.3, 0],
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        delay: i * 0.8,
+                        ease: "easeOut",
+                      }}
+                    />
+                  ))}
+                  
                   {/* Glow effect */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 blur-xl z-0" />
                 </div>
@@ -309,6 +328,59 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                 className="relative bg-gradient-to-b from-cyan-500/20 to-transparent rounded-3xl p-6 border border-cyan-500/20 text-center"
               >
                 <div className="relative w-32 h-32 mx-auto mb-4 flex items-center justify-center">
+                  {/* Orbiting particles for quantum state */}
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={`q-particle-${i}`}
+                      className="absolute left-1/2 top-1/2"
+                      animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
+                      transition={{ 
+                        duration: 4 + i * 0.8, 
+                        repeat: Infinity, 
+                        ease: "linear" 
+                      }}
+                      style={{ 
+                        width: 90 + i * 10, 
+                        height: 90 + i * 10,
+                        marginLeft: -(45 + i * 5),
+                        marginTop: -(45 + i * 5),
+                      }}
+                    >
+                      <motion.div
+                        className="absolute rounded-full"
+                        style={{
+                          width: 3 + (i % 2) * 2,
+                          height: 3 + (i % 2) * 2,
+                          top: 0,
+                          left: '50%',
+                          background: 'linear-gradient(135deg, #06b6d4, #22d3ee)',
+                          boxShadow: '0 0 8px #06b6d4, 0 0 16px #06b6d480',
+                        }}
+                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                      />
+                    </motion.div>
+                  ))}
+                  
+                  {/* Pulsing energy waves for quantum state */}
+                  {[...Array(2)].map((_, i) => (
+                    <motion.div
+                      key={`q-wave-${i}`}
+                      className="absolute rounded-full border border-cyan-400/40"
+                      style={{ width: 60, height: 60 }}
+                      animate={{
+                        scale: [1, 1.8, 2.2],
+                        opacity: [0.5, 0.2, 0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: i * 1,
+                        ease: "easeOut",
+                      }}
+                    />
+                  ))}
+                  
                   <motion.div 
                     className="absolute inset-4 rounded-full border-2 border-dashed border-cyan-400/40"
                     animate={{ rotate: 360 }}
@@ -319,7 +391,14 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                     animate={{ rotate: -360 }}
                     transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                   />
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 shadow-lg shadow-cyan-500/50" />
+                  <motion.div 
+                    className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 shadow-lg shadow-cyan-500/50 z-10"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-cyan-500/10 blur-xl" />
                 </div>
                 <div className="text-cyan-200 font-medium">وضعیت کوانتومی</div>
                 <div className="text-cyan-300/50 text-xs mt-1">Quantum State: Active</div>
@@ -332,9 +411,67 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                 transition={{ delay: 0.2 }}
                 className="relative bg-gradient-to-b from-amber-500/20 to-transparent rounded-3xl p-6 border border-amber-500/20 text-center"
               >
-                <div className="relative w-32 h-32 mx-auto mb-4 flex items-center justify-center">
+                <div className="relative w-32 h-32 mx-auto mb-4 flex items-center justify-center overflow-hidden">
+                  {/* Orbiting particles for multiverse */}
+                  {[...Array(8)].map((_, i) => (
+                    <motion.div
+                      key={`m-particle-${i}`}
+                      className="absolute"
+                      animate={{ 
+                        rotate: i % 2 === 0 ? 360 : -360,
+                      }}
+                      transition={{ 
+                        duration: 5 + i * 0.5, 
+                        repeat: Infinity, 
+                        ease: "linear" 
+                      }}
+                      style={{ 
+                        width: 80 + i * 12, 
+                        height: 80 + i * 12,
+                      }}
+                    >
+                      <motion.div
+                        className="absolute rounded-full"
+                        style={{
+                          width: 4,
+                          height: 4,
+                          top: 0,
+                          left: '50%',
+                          background: i % 2 === 0 
+                            ? 'linear-gradient(135deg, #f59e0b, #f97316)' 
+                            : 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                          boxShadow: '0 0 8px #f59e0b, 0 0 16px #f59e0b80',
+                        }}
+                        animate={{ 
+                          opacity: [0.4, 1, 0.4],
+                          scale: [0.8, 1.3, 0.8],
+                        }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.15 }}
+                      />
+                    </motion.div>
+                  ))}
+                  
+                  {/* Pulsing energy waves for multiverse */}
+                  {[...Array(3)].map((_, i) => (
+                    <motion.div
+                      key={`m-wave-${i}`}
+                      className="absolute rounded-full border border-amber-400/30"
+                      style={{ width: 40, height: 40 }}
+                      animate={{
+                        scale: [1, 2, 2.5],
+                        opacity: [0.6, 0.2, 0],
+                      }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        delay: i * 0.7,
+                        ease: "easeOut",
+                      }}
+                    />
+                  ))}
+                  
                   <motion.div
-                    className="text-5xl font-black text-transparent bg-gradient-to-br from-amber-400 to-orange-500 bg-clip-text"
+                    className="text-5xl font-black text-transparent bg-gradient-to-br from-amber-400 to-orange-500 bg-clip-text z-10 relative"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", delay: 0.3 }}
@@ -348,6 +485,9 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                       transition={{ duration: 2, repeat: Infinity }}
                     />
                   </div>
+                  
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-amber-500/10 blur-xl" />
                 </div>
                 <div className="text-amber-200 font-medium">شاخص چندجهانی</div>
                 <div className="text-amber-300/50 text-xs mt-1">Multiverse Index</div>
