@@ -7,7 +7,9 @@ import {
   generateCalendarSeoData,
   generateLongTailKeywords,
   generateIntentKeywords,
-  generateCulturalKeywords 
+  generateCulturalKeywords,
+  generateHafezFortuneSeoData,
+  generateHafezFortuneFAQ
 } from '@/utils/seoUtils';
 
 // Import enhanced reading tools
@@ -50,14 +52,23 @@ interface ReadingToolProps {
 export default function ReadingTool({ slug }: ReadingToolProps) {
   console.log("ReadingTool rendering with slug:", slug);
 
-  // Generate enhanced SEO data for readings tools
+  // Generate enhanced SEO data - use specific data for hafez-fortune
   const toolTitle = getToolTitle(slug);
-  const readingsSeoData = generateReadingsSeoData(toolTitle);
-  const enhancedKeywords = [
-    ...generateLongTailKeywords(toolTitle, 'readings'),
-    ...generateIntentKeywords(toolTitle, 'readings'),
-    ...generateCulturalKeywords('readings')
-  ].join(', ');
+  const isHafezFortune = slug === 'hafez-fortune';
+  
+  const seoData = isHafezFortune 
+    ? generateHafezFortuneSeoData()
+    : generateReadingsSeoData(toolTitle);
+  
+  const hafezFAQ = isHafezFortune ? generateHafezFortuneFAQ() : undefined;
+  
+  const enhancedKeywords = isHafezFortune 
+    ? seoData.keywords 
+    : [
+        ...generateLongTailKeywords(toolTitle, 'readings'),
+        ...generateIntentKeywords(toolTitle, 'readings'),
+        ...generateCulturalKeywords('readings')
+      ].join(', ');
 
   const renderTool = () => {
     switch (slug) {
@@ -146,8 +157,8 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
         <EnhancedSeoHead
           toolSlug={slug}
           pageType="tool"
-          title={readingsSeoData.title}
-          description={readingsSeoData.description}
+          title={seoData.title}
+          description={seoData.description}
           keywords={enhancedKeywords}
         />
         <Suspense fallback={<div className="p-8 text-center">در حال بارگذاری...</div>}>
@@ -162,9 +173,10 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
       <EnhancedSeoHead
         toolSlug={slug}
         pageType="tool"
-        title={readingsSeoData.title}
-        description={readingsSeoData.description}
+        title={seoData.title}
+        description={seoData.description}
         keywords={enhancedKeywords}
+        faq={hafezFAQ}
       />
       <Card className="bg-white border shadow-sm">
         <CardHeader>
