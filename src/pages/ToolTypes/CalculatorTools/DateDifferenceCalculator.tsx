@@ -53,6 +53,22 @@ export default function DateDifferenceCalculator() {
         setStartDate(format(addDays(today, -7), 'yyyy-MM-dd'));
         setEndDate(todayStr);
         break;
+      case '3-month-ago':
+        setStartDate(format(addDays(today, -90), 'yyyy-MM-dd'));
+        setEndDate(todayStr);
+        break;
+      case '6-month-ago':
+        setStartDate(format(addDays(today, -180), 'yyyy-MM-dd'));
+        setEndDate(todayStr);
+        break;
+      case 'year-ago':
+        setStartDate(format(addDays(today, -365), 'yyyy-MM-dd'));
+        setEndDate(todayStr);
+        break;
+      case 'nowruz':
+        setStartDate(`${today.getFullYear()}-03-21`);
+        setEndDate(todayStr);
+        break;
     }
   };
 
@@ -87,9 +103,13 @@ export default function DateDifferenceCalculator() {
           {/* Quick Presets */}
           <div className="flex flex-wrap justify-center gap-2">
             {[
-              { key: 'year-start', label: 'از ابتدای سال' },
-              { key: 'month-ago', label: '۳۰ روز پیش' },
-              { key: 'week-ago', label: '۷ روز پیش' },
+              { key: 'week-ago', label: '۷ روز' },
+              { key: 'month-ago', label: '۳۰ روز' },
+              { key: '3-month-ago', label: '۳ ماه' },
+              { key: '6-month-ago', label: '۶ ماه' },
+              { key: 'year-ago', label: '۱ سال' },
+              { key: 'year-start', label: 'ابتدای سال' },
+              { key: 'nowruz', label: 'از نوروز' },
             ].map((preset) => (
               <Button
                 key={preset.key}

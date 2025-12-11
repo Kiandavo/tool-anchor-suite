@@ -63,6 +63,22 @@ export default function LengthConverter() {
     setToUnit(lengthUnits[1]);
   };
 
+  const presets = [
+    { value: '1', from: 'm', to: 'ft', label: '۱ متر' },
+    { value: '100', from: 'cm', to: 'm', label: '۱۰۰ سانتی‌متر' },
+    { value: '1', from: 'km', to: 'mi', label: '۱ کیلومتر' },
+    { value: '5280', from: 'ft', to: 'mi', label: '۵,۲۸۰ فوت' },
+    { value: '6', from: 'ft', to: 'm', label: '۶ فوت (قد)' },
+    { value: '12', from: 'in', to: 'cm', label: '۱۲ اینچ' },
+    { value: '42.195', from: 'km', to: 'mi', label: 'ماراتن' },
+  ];
+
+  const applyPreset = (preset: { value: string; from: string; to: string }) => {
+    setValue(preset.value);
+    setFromUnit(lengthUnits.find(u => u.key === preset.from) || lengthUnits[0]);
+    setToUnit(lengthUnits.find(u => u.key === preset.to) || lengthUnits[1]);
+  };
+
   const formatNumber = (num: number) => {
     if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(2) + 'K';
@@ -96,6 +112,21 @@ export default function LengthConverter() {
               <Ruler className="w-4 h-4" />
               <span className="text-sm font-medium">تبدیل واحدهای طول</span>
             </div>
+          </div>
+
+          {/* Quick Presets */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {presets.map((preset, idx) => (
+              <Button
+                key={idx}
+                variant="outline"
+                size="sm"
+                onClick={() => applyPreset(preset)}
+                className="text-xs rounded-full"
+              >
+                {preset.label}
+              </Button>
+            ))}
           </div>
 
           {/* Input */}
