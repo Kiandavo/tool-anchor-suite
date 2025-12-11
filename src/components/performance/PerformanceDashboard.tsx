@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { PerformanceComparison } from './PerformanceComparison';
 
 interface WebVitalMetric {
   name: string;
@@ -413,6 +414,9 @@ export const PerformanceDashboard: React.FC = () => {
           </Tabs>
         </CardContent>
       </Card>
+
+      {/* Performance Comparison */}
+      <PerformanceComparison />
 
       {/* Core Web Vitals Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
