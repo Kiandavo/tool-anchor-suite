@@ -2,7 +2,8 @@
 import React from 'react';
 import { Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import logoSvg from '@/assets/laangar-logo.png';
+// Use public path for consistent caching
+const logoSvg = '/assets/laangar-logo.png';
 
 export function Footer() {
   return (

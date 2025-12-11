@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import laangarLogo from '@/assets/laangar-logo.png';
+
+// Use public path to match preload hint in index.html for better LCP
+const laangarLogo = '/assets/laangar-logo.png';
 
 interface SplashScreenProps {
   onComplete: () => void;

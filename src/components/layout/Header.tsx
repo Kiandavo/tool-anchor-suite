@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User, Home, BookOpen, Calculator, Sparkles, Keyboard } from 'lucide-react';
-import langarLogo from '@/assets/laangar-logo.png';
+// Use public path to match preload hint for better LCP
+const langarLogo = '/assets/laangar-logo.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollProgress } from './ScrollProgress';
