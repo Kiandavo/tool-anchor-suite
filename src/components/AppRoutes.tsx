@@ -26,6 +26,7 @@ const HoroscopeForecasts = lazy(() => import("@/pages/HoroscopeForecasts"));
 const AstrologyQuiz = lazy(() => import("@/pages/AstrologyQuiz"));
 const PersianDateEvents = lazy(() => import("@/pages/ToolTypes/PersianCultural/PersianDateEvents"));
 const SeoAudit = lazy(() => import("@/pages/SeoAudit"));
+const PerformanceDashboard = lazy(() => import("@/pages/PerformanceDashboard"));
 
 const RouteLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -83,6 +84,8 @@ export const AppRoutes = () => {
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/seo-audit" element={<SeoAudit />} />
         <Route path="/ممیزی-سئو" element={<SeoAudit />} />
+        <Route path="/performance" element={<PerformanceDashboard />} />
+        <Route path="/عملکرد" element={<PerformanceDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
