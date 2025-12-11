@@ -55,14 +55,14 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-1 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-background/70 backdrop-blur-2xl shadow-lg shadow-black/5' 
+            ? 'bg-background/80 backdrop-blur-2xl shadow-lg shadow-black/5 border-b border-border/50' 
             : 'bg-transparent'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 sm:h-18">
             
             {/* Logo */}
             <Link

@@ -114,7 +114,7 @@ export const HeroSection = () => {
 
   return (
     <CriticalLoader>
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background">
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background pt-20 sm:pt-24 pb-8">
         {/* Animated Background */}
         <div className="absolute inset-0">
           {/* Gradient mesh with yellow */}
@@ -140,14 +140,14 @@ export const HeroSection = () => {
 
         {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-5xl mx-auto space-y-8">
             
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex justify-center mb-8"
+              className="flex justify-center"
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-orange-500/10 border border-yellow-500/20 text-amber-600 dark:text-yellow-400 text-sm">
                 <Sparkles className="w-4 h-4" />
@@ -156,8 +156,8 @@ export const HeroSection = () => {
             </motion.div>
 
             {/* Main Title */}
-            <div className="text-center mb-6 overflow-hidden">
-              <h1 className="font-heading font-bold text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] tracking-tight">
+            <div className="text-center overflow-hidden">
+              <h1 className="font-heading font-bold text-[clamp(2rem,7vw,4.5rem)] leading-[1.15] tracking-tight">
                 <AnimatedWord delay={0.1}>همه</AnimatedWord>{' '}
                 <AnimatedWord delay={0.2}>ابزارهای</AnimatedWord>{' '}
                 <span className="relative inline-block">
@@ -166,7 +166,7 @@ export const HeroSection = () => {
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
-                    className="absolute -bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-yellow-400/30 via-amber-400/30 to-orange-400/30 -z-10 origin-right"
+                    className="absolute -bottom-1 left-0 right-0 h-2 bg-gradient-to-r from-yellow-400/30 via-amber-400/30 to-orange-400/30 -z-10 origin-right"
                   />
                 </span>
                 <br />
@@ -183,7 +183,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
-              className="text-center text-lg sm:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
+              className="text-center text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto"
             >
               محاسبه‌گر، مبدل، فال و طالع‌بینی، تقویم و ابزارهای فرهنگی فارسی
             </motion.p>
@@ -193,7 +193,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.9 }}
-              className="max-w-2xl mx-auto mb-16"
+              className="max-w-2xl mx-auto"
             >
               <EnhancedSearchBar />
             </motion.div>
@@ -203,7 +203,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 1.1 }}
-              className="flex flex-col items-center gap-6 mb-16"
+              className="flex flex-col items-center gap-4"
             >
               {/* Category Pills */}
               <div className="flex flex-wrap justify-center gap-3">
@@ -260,11 +260,11 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.3 }}
-              className="flex flex-col sm:flex-row justify-center gap-4"
+              className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-4"
             >
               <Button 
                 size="lg" 
-                className="group relative px-8 py-6 text-base font-medium rounded-full overflow-hidden bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 hover:from-yellow-600 hover:via-amber-600 hover:to-orange-600 text-white border-0 shadow-lg shadow-amber-500/25"
+                className="group relative px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium rounded-full overflow-hidden bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 hover:from-yellow-600 hover:via-amber-600 hover:to-orange-600 text-white border-0 shadow-lg shadow-amber-500/25"
                 asChild
               >
                 <Link to="/all-tools">
@@ -279,7 +279,7 @@ export const HeroSection = () => {
               <Button 
                 variant="outline"
                 size="lg" 
-                className="px-8 py-6 text-base font-medium rounded-full border-2 border-amber-500/30 hover:bg-amber-500/5 hover:border-amber-500/50"
+                className="px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium rounded-full border-2 border-amber-500/30 hover:bg-amber-500/5 hover:border-amber-500/50"
                 onClick={() => scrollToElement('popular-tools')}
               >
                 ابزارهای محبوب
@@ -292,7 +292,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.5 }}
-              className="grid grid-cols-2 gap-4 sm:gap-8 mt-16 max-w-lg mx-auto"
+              className="grid grid-cols-2 gap-4 sm:gap-6 max-w-md mx-auto"
             >
               {stats.map((stat, index) => (
                 <motion.div
@@ -302,13 +302,13 @@ export const HeroSection = () => {
                   transition={{ duration: 0.5, delay: 1.6 + index * 0.1 }}
                   className="relative group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-amber-500/10 to-orange-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all opacity-0 group-hover:opacity-100" />
-                  <div className="relative p-4 sm:p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-amber-500/30 transition-all text-center">
-                    <span className="text-2xl mb-2 block">{stat.icon}</span>
-                    <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-amber-500/10 to-orange-500/10 rounded-xl blur-xl group-hover:blur-2xl transition-all opacity-0 group-hover:opacity-100" />
+                  <div className="relative p-3 sm:p-4 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-amber-500/30 transition-all text-center">
+                    <span className="text-xl sm:text-2xl mb-1 block">{stat.icon}</span>
+                    <p className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
                       <AnimatedCounter value={stat.value} suffix={stat.suffix} duration={2.5} />
                     </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">{stat.label}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
                   </div>
                 </motion.div>
               ))}
