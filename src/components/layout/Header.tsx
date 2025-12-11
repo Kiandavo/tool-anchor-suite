@@ -62,7 +62,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
           <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center group">
               <img 
                 src={langarLogo} 
                 alt="لنگر"
@@ -70,7 +70,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 height={64}
                 loading="eager"
                 fetchPriority="high"
-                className="h-16 w-auto"
+                className="h-16 w-auto transition-transform duration-300 ease-out group-hover:scale-105"
               />
             </Link>
 
