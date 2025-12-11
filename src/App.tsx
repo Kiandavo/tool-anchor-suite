@@ -33,7 +33,10 @@ const KeyboardShortcutsProvider = ({ children }: { children: React.ReactNode }) 
 const App = () => {
   const [showSplash, setShowSplash] = React.useState(true);
   
-  console.log('App component initializing...');
+  // Memoize callback to prevent SplashScreen timer reset on re-renders
+  const handleSplashComplete = React.useCallback(() => {
+    setShowSplash(false);
+  }, []);
   
   // Initialize font optimization and service worker on app startup
   React.useEffect(() => {
@@ -54,7 +57,7 @@ const App = () => {
             <SearchModal />
             <KeyboardShortcutsHelp />
             <InstallPrompt />
-            {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+            {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
             <AppRoutes />
           </KeyboardShortcutsProvider>
         </QueryClientProvider>

@@ -19,7 +19,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
     }, 800);
 
     return () => clearTimeout(timer);
-  }, [onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount - onComplete should be stable
 
   return (
     <div

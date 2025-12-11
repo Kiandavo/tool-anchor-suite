@@ -40,7 +40,6 @@ const SidebarAd = lazy(() => import('@/components/ads').then(m => ({ default: m.
 const BackToTop = lazy(() => import('@/components/ui/BackToTop').then(m => ({ default: m.BackToTop })));
 
 const Index = () => {
-  console.log('Index page component initializing...');
   // Enhanced SEO data for homepage - Phase 2 Optimizations
   const homeTitle = "ابزارهای آنلاین رایگان فارسی ۲۰۲۵ | +۱۰۰ ابزار حرفه‌ای | لنگر";
   const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. استفاده فوری بدون ثبت‌نام ✅ سریع، دقیق و امن | لنگر ۲۰۲۵";

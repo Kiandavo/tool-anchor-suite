@@ -38,10 +38,7 @@ const RouteLoader = () => (
 );
 
 export const AppRoutes = () => {
-  console.log('AppRoutes component loading...');
   useScrollToTop();
-  
-  console.log('AppRoutes rendering routes...');
   return (
     <Suspense fallback={<RouteLoader />}>
       <Routes>
