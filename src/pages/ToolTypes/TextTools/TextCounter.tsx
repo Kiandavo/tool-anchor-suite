@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { CalculatorCard } from '@/components/calculator/CalculatorCard';
 import { VisualizationCard } from '@/components/calculator/VisualizationCard';
 import { Textarea } from "@/components/ui/textarea";
@@ -9,12 +9,61 @@ import { motion } from 'framer-motion';
 import { formatPersianNumber } from '@/utils/persianNumbers';
 import { toast } from 'sonner';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import { ToolExamples, ToolExample } from '@/components/tools/ToolExamples';
+import { ToolLimits, ToolLimit } from '@/components/tools/ToolLimits';
+import { ShortcutHint } from '@/components/tools/ToolFeedback';
+import { useToolKeyboardShortcuts } from '@/hooks/useToolKeyboardShortcuts';
 
 const COLORS = ['#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ef4444', '#ec4899'];
+
+// Ready examples for users
+const examples: ToolExample[] = [
+  { 
+    label: 'متن فارسی', 
+    input: 'سلام! این یک متن نمونه فارسی است. لنگر ابزارهای آنلاین رایگان برای همه.',
+    description: 'یک متن ساده فارسی برای تست'
+  },
+  { 
+    label: 'پاراگراف', 
+    input: 'پاراگراف اول: این متن برای تست است.\n\nپاراگراف دوم: شامل چند جمله مختلف. سوال؟ جواب!',
+    description: 'متن با چند پاراگراف'
+  },
+  { 
+    label: 'ترکیبی', 
+    input: 'متن فارسی با English و ۱۲۳ عدد! @#$',
+    description: 'ترکیب فارسی، انگلیسی و اعداد'
+  },
+];
+
+// Tool limits
+const limits: ToolLimit[] = [
+  { type: 'characters', value: 100000, label: 'حداکثر کاراکتر', unit: '' },
+];
 
 export default function TextCounter() {
   const [text, setText] = useState<string>('');
   const [copied, setCopied] = useState(false);
+
+  // Keyboard shortcuts
+  useToolKeyboardShortcuts([
+    {
+      key: 'Enter',
+      ctrlKey: true,
+      callback: () => {
+        if (text.trim()) {
+          handleCopy();
+        }
+      },
+      description: 'کپی گزارش',
+    },
+    {
+      key: 'r',
+      ctrlKey: true,
+      shiftKey: true,
+      callback: () => handleReset(),
+      description: 'پاک کردن',
+    },
+  ]);
 
   const stats = useMemo(() => {
     const characters = text.length;
@@ -90,12 +139,12 @@ export default function TextCounter() {
     ].filter(item => item.value > 0);
   }, [text]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setText('');
     toast.success('متن پاک شد');
-  };
+  }, []);
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     const report = `
 📊 گزارش تحلیل متن
 ━━━━━━━━━━━━━━━━━━
@@ -115,7 +164,12 @@ export default function TextCounter() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     toast.success('گزارش کپی شد');
-  };
+  }, [stats]);
+
+  const handleSelectExample = useCallback((input: string) => {
+    setText(input);
+    toast.success('مثال بارگذاری شد');
+  }, []);
 
   const statItems = [
     { label: 'کاراکتر', value: stats.characters, icon: Type, color: 'from-amber-500 to-orange-500' },
@@ -133,15 +187,28 @@ export default function TextCounter() {
       onReset={handleReset}
     >
       <div className="space-y-6">
+        {/* Examples */}
+        <ToolExamples 
+          examples={examples} 
+          onSelectExample={handleSelectExample}
+        />
+
+        {/* Limits */}
+        <ToolLimits limits={limits} />
+
         {/* Text Input */}
         <div className="space-y-2">
-          <Label htmlFor="text">متن خود را وارد کنید</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="text">متن خود را وارد کنید</Label>
+            <ShortcutHint shortcut="Ctrl+Enter" action="کپی گزارش" />
+          </div>
           <Textarea
             id="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="متن خود را اینجا بنویسید یا پیست کنید..."
             className="min-h-[180px] text-base leading-relaxed resize-y"
+            maxLength={100000}
           />
         </div>
 
