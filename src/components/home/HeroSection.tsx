@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 import { CriticalLoader } from '@/components/performance/CriticalLoader';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const FloatingOrb = ({ delay, size, x, y, color }: { delay: number; size: number; x: string; y: string; color: string }) => (
   <motion.div
@@ -47,10 +48,58 @@ const AnimatedWord = ({ children, delay }: { children: string; delay: number }) 
   </motion.span>
 );
 
+// Animated counter component
+const AnimatedCounter = ({ value, suffix = '', duration = 2 }: { value: number; suffix?: string; duration?: number }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    
+    let startTime: number;
+    let animationFrame: number;
+    
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * value));
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+    
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isInView, value, duration]);
+
+  // Convert to Persian numerals
+  const toPersianNum = (num: number) => {
+    const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    return num.toString().replace(/\d/g, (d) => persianDigits[parseInt(d)]);
+  };
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {toPersianNum(count)}{suffix}
+    </span>
+  );
+};
+
 const categories = [
   { icon: Calculator, label: 'ابزار محاسباتی', count: '۵۰+', href: '/category/calculators' },
   { icon: BookOpen, label: 'فال و طالع‌بینی', count: '۱۰+', href: '/category/readings' },
   { icon: Star, label: 'فرهنگ فارسی', count: '۲۰+', href: '/category/persian-cultural' },
+];
+
+const stats = [
+  { value: 80, suffix: '+', label: 'ابزار آنلاین', icon: '🛠️' },
+  { value: 50000, suffix: '+', label: 'کاربر ماهانه', icon: '👥' },
+  { value: 99, suffix: '%', label: 'رضایت کاربران', icon: '⭐' },
 ];
 
 export const HeroSection = () => {
@@ -237,6 +286,33 @@ export const HeroSection = () => {
                 ابزارهای محبوب
                 <ArrowDown className="w-4 h-4 mr-2" />
               </Button>
+            </motion.div>
+
+            {/* Animated Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.5 }}
+              className="grid grid-cols-3 gap-4 sm:gap-8 mt-16"
+            >
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1.6 + index * 0.1 }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-amber-500/10 to-orange-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all opacity-0 group-hover:opacity-100" />
+                  <div className="relative p-4 sm:p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-amber-500/30 transition-all text-center">
+                    <span className="text-2xl mb-2 block">{stat.icon}</span>
+                    <p className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+                      <AnimatedCounter value={stat.value} suffix={stat.suffix} duration={2.5} />
+                    </p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">{stat.label}</p>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
 
           </div>
