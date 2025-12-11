@@ -7,7 +7,7 @@ import { CriticalLoader } from '@/components/performance/CriticalLoader';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const FloatingOrb = ({ delay, size, x, y }: { delay: number; size: number; x: string; y: string }) => (
+const FloatingOrb = ({ delay, size, x, y, color }: { delay: number; size: number; x: string; y: string; color: string }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0 }}
     animate={{ 
@@ -27,7 +27,7 @@ const FloatingOrb = ({ delay, size, x, y }: { delay: number; size: number; x: st
       height: size,
       left: x,
       top: y,
-      background: 'radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, transparent 70%)',
+      background: color,
     }}
   />
 );
@@ -69,9 +69,10 @@ export const HeroSection = () => {
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background">
         {/* Animated Background */}
         <div className="absolute inset-0">
-          {/* Gradient mesh */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(var(--primary)/0.15),transparent)]" />
+          {/* Gradient mesh with yellow */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(45_100%_60%/0.15),transparent)]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_80%,hsl(var(--primary)/0.1),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_20%_70%,hsl(40_100%_50%/0.1),transparent)]" />
           
           {/* Grid pattern */}
           <div 
@@ -82,10 +83,11 @@ export const HeroSection = () => {
             }}
           />
 
-          {/* Floating orbs */}
-          <FloatingOrb delay={0} size={400} x="10%" y="20%" />
-          <FloatingOrb delay={2} size={300} x="70%" y="60%" />
-          <FloatingOrb delay={4} size={200} x="80%" y="10%" />
+          {/* Floating orbs with yellow tones */}
+          <FloatingOrb delay={0} size={400} x="10%" y="20%" color="radial-gradient(circle, hsl(45 100% 60% / 0.4) 0%, transparent 70%)" />
+          <FloatingOrb delay={2} size={300} x="70%" y="60%" color="radial-gradient(circle, hsl(35 100% 50% / 0.3) 0%, transparent 70%)" />
+          <FloatingOrb delay={4} size={200} x="80%" y="10%" color="radial-gradient(circle, hsl(50 100% 55% / 0.35) 0%, transparent 70%)" />
+          <FloatingOrb delay={3} size={250} x="5%" y="70%" color="radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%)" />
         </div>
 
         {/* Main Content */}
@@ -99,7 +101,7 @@ export const HeroSection = () => {
               transition={{ duration: 0.6 }}
               className="flex justify-center mb-8"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-orange-500/10 border border-yellow-500/20 text-amber-600 dark:text-yellow-400 text-sm">
                 <Sparkles className="w-4 h-4" />
                 <span>بیش از ۸۰ ابزار رایگان آنلاین</span>
               </div>
@@ -116,12 +118,12 @@ export const HeroSection = () => {
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
-                    className="absolute -bottom-2 left-0 right-0 h-3 bg-primary/20 -z-10 origin-right"
+                    className="absolute -bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-yellow-400/30 via-amber-400/30 to-orange-400/30 -z-10 origin-right"
                   />
                 </span>
                 <br />
                 <AnimatedWord delay={0.4}>در</AnimatedWord>{' '}
-                <span className="text-primary">
+                <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
                   <AnimatedWord delay={0.5}>یک</AnimatedWord>{' '}
                   <AnimatedWord delay={0.6}>مکان</AnimatedWord>
                 </span>
@@ -167,8 +169,8 @@ export const HeroSection = () => {
                         className={`
                           flex items-center gap-3 px-5 py-3 rounded-2xl border transition-all duration-300 cursor-pointer
                           ${activeIndex === index 
-                            ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/25' 
-                            : 'bg-card/50 border-border/50 hover:border-primary/30 hover:bg-card'
+                            ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 text-white border-transparent shadow-lg shadow-amber-500/25' 
+                            : 'bg-card/50 border-border/50 hover:border-amber-500/30 hover:bg-card'
                           }
                         `}
                       >
@@ -176,7 +178,7 @@ export const HeroSection = () => {
                         <span className="font-medium">{cat.label}</span>
                         <span className={`
                           text-xs px-2 py-0.5 rounded-full
-                          ${activeIndex === index ? 'bg-primary-foreground/20' : 'bg-primary/10 text-primary'}
+                          ${activeIndex === index ? 'bg-white/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'}
                         `}>
                           {cat.count}
                         </span>
@@ -193,11 +195,12 @@ export const HeroSection = () => {
                     key={index}
                     animate={{
                       width: activeIndex === index ? 24 : 8,
-                      backgroundColor: activeIndex === index 
-                        ? 'hsl(var(--primary))' 
-                        : 'hsl(var(--muted-foreground) / 0.3)'
                     }}
-                    className="h-2 rounded-full cursor-pointer"
+                    className={`h-2 rounded-full cursor-pointer transition-colors ${
+                      activeIndex === index 
+                        ? 'bg-gradient-to-r from-yellow-500 to-amber-500' 
+                        : 'bg-muted-foreground/30'
+                    }`}
                     onClick={() => setActiveIndex(index)}
                   />
                 ))}
@@ -213,23 +216,22 @@ export const HeroSection = () => {
             >
               <Button 
                 size="lg" 
-                className="group relative px-8 py-6 text-base font-medium rounded-full overflow-hidden"
+                className="group relative px-8 py-6 text-base font-medium rounded-full overflow-hidden bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 hover:from-yellow-600 hover:via-amber-600 hover:to-orange-600 text-white border-0 shadow-lg shadow-amber-500/25"
                 asChild
               >
                 <Link to="/all-tools">
                   <span className="relative z-10">مشاهده همه ابزارها</span>
                   <motion.div 
-                    className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary"
+                    className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0"
                     animate={{ x: ['-100%', '100%'] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                    style={{ opacity: 0.3 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
                   />
                 </Link>
               </Button>
               <Button 
                 variant="outline"
                 size="lg" 
-                className="px-8 py-6 text-base font-medium rounded-full border-2 hover:bg-primary/5"
+                className="px-8 py-6 text-base font-medium rounded-full border-2 border-amber-500/30 hover:bg-amber-500/5 hover:border-amber-500/50"
                 onClick={() => scrollToElement('popular-tools')}
               >
                 ابزارهای محبوب
@@ -250,7 +252,7 @@ export const HeroSection = () => {
                 { value: '۲۴/۷', label: 'در دسترس' },
               ].map((stat, index) => (
                 <div key={index} className="text-center">
-                  <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">{stat.value}</p>
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
                 </div>
               ))}
