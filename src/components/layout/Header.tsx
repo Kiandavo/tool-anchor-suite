@@ -59,18 +59,18 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
         )}
       >
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="flex items-center justify-between h-14">
+          <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
             <Link to="/" className="flex items-center">
               <img 
                 src={langarLogo} 
                 alt="لنگر"
-                width={140}
-                height={48}
+                width={200}
+                height={64}
                 loading="eager"
                 fetchPriority="high"
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               />
             </Link>
 
@@ -167,9 +167,9 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src={langarLogo} 
                   alt="لنگر"
-                  width={100}
-                  height={36}
-                  className="h-9 w-auto"
+                  width={140}
+                  height={48}
+                  className="h-12 w-auto"
                 />
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
