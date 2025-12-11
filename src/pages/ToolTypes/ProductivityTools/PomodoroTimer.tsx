@@ -279,25 +279,25 @@ export default function PomodoroTimer() {
                 {/* Mode Selector */}
                 <div className="grid grid-cols-3 gap-2 w-full mb-6">
                   <Button 
-                    variant={mode === 'work' ? 'apple' : 'outline'}
+                    variant={mode === 'work' ? 'default' : 'outline'}
                     size="sm"
-                    className={mode === 'work' ? 'bg-red-600 hover:bg-red-700' : ''}
+                    className={mode === 'work' ? 'bg-red-600 hover:bg-red-700 text-primary-foreground' : ''}
                     onClick={() => switchMode('work')}
                   >
                     تمرکز
                   </Button>
                   <Button 
-                    variant={mode === 'shortBreak' ? 'apple' : 'outline'}
+                    variant={mode === 'shortBreak' ? 'default' : 'outline'}
                     size="sm"
-                    className={mode === 'shortBreak' ? 'bg-green-600 hover:bg-green-700' : ''}
+                    className={mode === 'shortBreak' ? 'bg-green-600 hover:bg-green-700 text-primary-foreground' : ''}
                     onClick={() => switchMode('shortBreak')}
                   >
                     استراحت کوتاه
                   </Button>
                   <Button 
-                    variant={mode === 'longBreak' ? 'apple' : 'outline'}
+                    variant={mode === 'longBreak' ? 'default' : 'outline'}
                     size="sm"
-                    className={mode === 'longBreak' ? 'bg-blue-600 hover:bg-blue-700' : ''}
+                    className={mode === 'longBreak' ? 'bg-blue-600 hover:bg-blue-700 text-primary-foreground' : ''}
                     onClick={() => switchMode('longBreak')}
                   >
                     استراحت طولانی
@@ -307,7 +307,7 @@ export default function PomodoroTimer() {
                 {/* Control Buttons */}
                 <div className="flex gap-2 mb-4">
                   <Button
-                    variant={isRunning ? 'destructive' : 'apple'}
+                    variant={isRunning ? 'destructive' : 'default'}
                     size="lg"
                     className="w-32"
                     onClick={toggleTimer}

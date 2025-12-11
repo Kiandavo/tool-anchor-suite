@@ -60,9 +60,9 @@ export const ReadingsSection = () => {
           </div>
           
           <Button 
-            variant="apple-outline" 
-            size="apple-sm"
-            className="rounded-full flex items-center gap-2 bg-white/20 border-white/40 hover:bg-white/30 hover:border-white/60 text-white backdrop-blur-sm shadow-md"
+            variant="outline" 
+            size="sm"
+            className="rounded-full flex items-center gap-2 bg-background/20 border-border/40 hover:bg-background/30 hover:border-border/60 text-primary-foreground backdrop-blur-sm shadow-md"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? (
@@ -157,9 +157,9 @@ export const ReadingsSection = () => {
         <div className="flex justify-center mt-8">
           <Link to="/category/readings">
             <Button 
-              variant="apple"
-              size="apple-sm"
-              className="bg-white text-cyan-700 hover:bg-gray-50 border-none shadow-lg font-semibold px-6 py-3 rounded-2xl"
+              variant="secondary"
+              size="lg"
+              className="bg-background text-cyan-700 hover:bg-secondary border-none shadow-lg font-semibold px-6 rounded-2xl"
             >
               نمایش همه ابزارهای فال و طالع‌بینی
               <ChevronRight size={18} className="mr-2 rtl:rotate-180" />

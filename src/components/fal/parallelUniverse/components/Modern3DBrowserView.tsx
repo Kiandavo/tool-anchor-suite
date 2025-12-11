@@ -42,10 +42,10 @@ export const Modern3DBrowserView: React.FC<Modern3DBrowserViewProps> = ({
             </div>
             
             <Button 
-              variant="apple-outline" 
-              size="apple"
+              variant="outline" 
+              size="lg"
               onClick={onHideBrowser}
-              className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 font-medium px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 text-lg min-w-[140px]"
+              className="bg-background/10 backdrop-blur-md border-border/20 text-primary-foreground hover:bg-background/20 font-medium px-8 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105"
             >
               بازگشت
               <ArrowLeft className="mr-3" size={20} />

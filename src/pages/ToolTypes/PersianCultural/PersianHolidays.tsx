@@ -311,7 +311,7 @@ const PersianHolidays = () => {
                   </div>
                   <Button 
                     onClick={() => toggleCelebration(celebration.id)}
-                    variant="apple-outline"
+                    variant="outline"
                     size="sm"
                     className="rounded-full hover:shadow-sm"
                   >
