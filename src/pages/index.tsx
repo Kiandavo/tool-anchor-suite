@@ -13,6 +13,10 @@ import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
 import { ScrollAnimationWrapper } from '@/components/layout/ScrollAnimationWrapper';
 import { ScrollProgressIndicator } from '@/components/ui/ScrollProgressIndicator';
 import { FloatingSectionNav } from '@/components/ui/FloatingSectionNav';
+import { KeyboardShortcuts } from '@/components/ui/KeyboardShortcuts';
+import { QuickActions } from '@/components/ui/QuickActions';
+import { ScrollToTopButton } from '@/components/ui/ScrollToTopButton';
+import { WelcomeTooltip } from '@/components/ui/WelcomeTooltip';
 // Lazy load below-the-fold components for better initial load performance
 // Core sections - split into separate chunks
 const QuickToolsSection = lazy(() => import('@/components/home/QuickToolsSection').then(m => ({ default: m.QuickToolsSection })));
@@ -70,6 +74,10 @@ const Index = () => {
     <Layout>
       <ScrollProgressIndicator />
       <FloatingSectionNav />
+      <KeyboardShortcuts />
+      <QuickActions />
+      <ScrollToTopButton />
+      <WelcomeTooltip />
       <EnhancedSeoHead 
         pageType="home"
         title={homeTitle}
