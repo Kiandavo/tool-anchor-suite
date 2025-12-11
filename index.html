@@ -44,8 +44,8 @@
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
     
-    <!-- Preload logo images with explicit dimensions to prevent CLS -->
-    <link rel="preload" as="image" href="/assets/laangar-logo.png" fetchpriority="high" imagesizes="180px" imagesrcset="/assets/laangar-logo.png 1000w">
+    <!-- Preload LCP hero logo image for immediate discovery - critical for reducing render delay -->
+    <link rel="preload" as="image" href="/assets/laangar-logo.png" fetchpriority="high" type="image/png">
     
     <!-- CSS Preloading Script for non-render-blocking CSS -->
     <script>
