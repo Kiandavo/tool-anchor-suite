@@ -22,8 +22,10 @@ export const ModernProfessionalToolsSection = () => {
   return (
     <section className="mb-20 sm:mb-32 animate-slide-up">
       <div className="relative">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 rounded-3xl"></div>
+        {/* Modern gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.02] via-transparent to-indigo-500/[0.02] rounded-3xl"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-blue-400/[0.04] to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-60 h-60 bg-gradient-to-tr from-indigo-400/[0.03] to-transparent rounded-full blur-3xl"></div>
         
         <div className="relative bg-card/90 backdrop-blur-xl border border-border/50 rounded-3xl overflow-hidden shadow-xl">
           

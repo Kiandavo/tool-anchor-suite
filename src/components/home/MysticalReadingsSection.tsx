@@ -49,15 +49,10 @@ export const MysticalReadingsSection = () => {
   return (
     <section className="mb-20 sm:mb-32 animate-slide-up">
       <div className="relative">
-        {/* Mystical Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-indigo-900/5 to-blue-900/10 rounded-3xl"></div>
-        <div className="absolute inset-0 opacity-30">
-          {/* Floating particles effect */}
-          <div className="absolute top-10 left-10 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-20 right-20 w-1 h-1 bg-indigo-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute bottom-20 left-20 w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
-          <div className="absolute bottom-10 right-10 w-1 h-1 bg-purple-300 rounded-full animate-pulse" style={{animationDelay: '3s'}}></div>
-        </div>
+        {/* Modern mystical background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.03] via-transparent to-indigo-500/[0.02] rounded-3xl"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-purple-400/[0.05] to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-indigo-400/[0.04] to-transparent rounded-full blur-3xl"></div>
         
         <div className="relative bg-gradient-to-br from-slate-900/5 to-purple-900/10 backdrop-blur-xl border border-border/50 rounded-3xl overflow-hidden shadow-xl">
           

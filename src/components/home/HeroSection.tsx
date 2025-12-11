@@ -117,19 +117,11 @@ export const HeroSection = () => {
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background pt-20 sm:pt-24 pb-8">
         {/* Animated Background */}
         <div className="absolute inset-0">
-          {/* Gradient mesh with yellow */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(45_100%_60%/0.15),transparent)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_80%,hsl(var(--primary)/0.1),transparent)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_20%_70%,hsl(40_100%_50%/0.1),transparent)]" />
-          
-          {/* Grid pattern */}
-          <div 
-            className="absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-              backgroundSize: '60px 60px',
-            }}
-          />
+          {/* Modern gradient mesh */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(45_100%_60%/0.08),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_80%,hsl(var(--primary)/0.05),transparent)]" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-amber-400/[0.06] to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-primary/[0.04] to-transparent rounded-full blur-3xl" />
 
           {/* Floating orbs with yellow tones */}
           <FloatingOrb delay={0} size={400} x="10%" y="20%" color="radial-gradient(circle, hsl(45 100% 60% / 0.4) 0%, transparent 70%)" />
