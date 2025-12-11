@@ -181,8 +181,78 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                 className="relative bg-gradient-to-b from-purple-500/20 to-transparent rounded-3xl p-6 border border-purple-500/20 text-center"
               >
                 <div className="relative w-32 h-32 mx-auto mb-4">
+                  {/* Orbiting particles */}
+                  {[...Array(8)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute left-1/2 top-1/2"
+                      animate={{ rotate: 360 }}
+                      transition={{ 
+                        duration: 6 + i * 0.5, 
+                        repeat: Infinity, 
+                        ease: "linear",
+                        delay: i * 0.3 
+                      }}
+                      style={{ 
+                        width: 120 + i * 8, 
+                        height: 120 + i * 8,
+                        marginLeft: -(60 + i * 4),
+                        marginTop: -(60 + i * 4),
+                      }}
+                    >
+                      <motion.div
+                        className="absolute rounded-full"
+                        style={{
+                          width: 4 + (i % 3) * 2,
+                          height: 4 + (i % 3) * 2,
+                          top: 0,
+                          left: '50%',
+                          background: i % 2 === 0 
+                            ? 'linear-gradient(135deg, #a855f7, #06b6d4)' 
+                            : 'linear-gradient(135deg, #06b6d4, #a855f7)',
+                          boxShadow: i % 2 === 0 
+                            ? '0 0 10px #a855f7, 0 0 20px #a855f780' 
+                            : '0 0 10px #06b6d4, 0 0 20px #06b6d480',
+                        }}
+                        animate={{ 
+                          opacity: [0.4, 1, 0.4],
+                          scale: [0.8, 1.2, 0.8],
+                        }}
+                        transition={{ 
+                          duration: 2, 
+                          repeat: Infinity, 
+                          delay: i * 0.2 
+                        }}
+                      />
+                    </motion.div>
+                  ))}
+                  
+                  {/* Floating sparkle particles */}
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={`sparkle-${i}`}
+                      className="absolute rounded-full bg-white"
+                      style={{
+                        width: 2,
+                        height: 2,
+                        left: `${20 + Math.random() * 60}%`,
+                        top: `${20 + Math.random() * 60}%`,
+                      }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        scale: [0, 1.5, 0],
+                        y: [-10, 10],
+                      }}
+                      transition={{
+                        duration: 2 + Math.random(),
+                        repeat: Infinity,
+                        delay: i * 0.4,
+                      }}
+                    />
+                  ))}
+                  
                   {/* Circular gauge background */}
-                  <svg className="w-full h-full transform -rotate-90">
+                  <svg className="w-full h-full transform -rotate-90 relative z-10">
                     <circle
                       cx="64"
                       cy="64"
@@ -211,8 +281,9 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                       </linearGradient>
                     </defs>
                   </svg>
+                  
                   {/* Center content */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
                     <motion.span 
                       className="text-3xl font-bold text-white"
                       initial={{ opacity: 0 }}
@@ -222,6 +293,9 @@ export const Modern3DContent: React.FC<Modern3DContentProps> = ({
                       {probabilityPercentage.toFixed(2)}%
                     </motion.span>
                   </div>
+                  
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 blur-xl z-0" />
                 </div>
                 <div className="text-purple-200 font-medium">احتمال وجود</div>
                 <div className="text-purple-300/50 text-xs mt-1">Existence Probability</div>
