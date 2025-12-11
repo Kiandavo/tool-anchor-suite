@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "@/providers/HelmetProvider";
@@ -12,6 +11,8 @@ import { DefaultResourceHints } from "@/components/performance/ResourceHints";
 import { CoreWebVitals } from "@/components/performance/CoreWebVitals";
 import { SplashScreen } from "@/components/SplashScreen";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
+import { KeyboardShortcutsHelp } from "@/components/ui/KeyboardShortcutsHelp";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,12 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+// Component to initialize keyboard shortcuts
+const KeyboardShortcutsProvider = ({ children }: { children: React.ReactNode }) => {
+  useKeyboardShortcuts();
+  return <>{children}</>;
+};
 
 const App = () => {
   const [showSplash, setShowSplash] = React.useState(true);
@@ -42,12 +49,15 @@ const App = () => {
     <ErrorBoundary>
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
-          <DefaultResourceHints />
-          <CoreWebVitals />
-          <GoogleAnalytics />
-          <SearchModal />
-          <InstallPrompt />
-          <AppRoutes />
+          <KeyboardShortcutsProvider>
+            <DefaultResourceHints />
+            <CoreWebVitals />
+            <GoogleAnalytics />
+            <SearchModal />
+            <KeyboardShortcutsHelp />
+            <InstallPrompt />
+            <AppRoutes />
+          </KeyboardShortcutsProvider>
         </QueryClientProvider>
       </HelmetProvider>
     </ErrorBoundary>
