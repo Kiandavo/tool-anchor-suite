@@ -20,7 +20,7 @@ const PersianCulturalEnhancedSection = lazy(() => import('@/components/home/Pers
 const MysticalReadingsSection = lazy(() => import('@/components/home/MysticalReadingsSection').then(m => ({ default: m.MysticalReadingsSection })));
 const InteractiveCategoriesSection = lazy(() => import('@/components/home/InteractiveCategoriesSection').then(m => ({ default: m.InteractiveCategoriesSection })));
 const PersianCalendarWidget = lazy(() => import('@/components/home/PersianCalendarWidget').then(m => ({ default: m.PersianCalendarWidget })));
-const TestimonialSection = lazy(() => import('@/components/testimonials/TestimonialSection').then(m => ({ default: m.TestimonialSection })));
+
 const TrustBadges = lazy(() => import('@/components/trust/TrustBadges').then(m => ({ default: m.TrustBadges })));
 const SeasonalToolsSection = lazy(() => import('@/components/persian/SeasonalToolsSection').then(m => ({ default: m.SeasonalToolsSection })));
 
@@ -220,14 +220,6 @@ const Index = () => {
               </Suspense>
             </LazySection>
             
-            {/* Testimonials Section - Phase 3 */}
-            <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
-              <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30 rounded-lg" />}>
-                <ScrollAnimationWrapper direction="fade" delay={0.1}>
-                  <TestimonialSection />
-                </ScrollAnimationWrapper>
-              </Suspense>
-            </LazySection>
 
             {/* Trust Badges Section - Phase 4 */}
             <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
