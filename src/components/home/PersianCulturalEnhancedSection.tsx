@@ -38,11 +38,10 @@ export const PersianCulturalEnhancedSection = () => {
   return (
     <section className="mb-20 sm:mb-32 animate-slide-up">
       <div className="relative">
-        {/* Persian Pattern Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-teal-50/30 to-cyan-50/40 rounded-3xl"></div>
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20v40c11.046 0 20-8.954 20-20zm10 0c0 11.046 8.954 20 20 20V10C48.954 10 40 18.954 40 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
+        {/* Modern gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/[0.03] via-transparent to-teal-500/[0.02] rounded-3xl"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-emerald-400/[0.05] to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-teal-400/[0.04] to-transparent rounded-full blur-3xl"></div>
         
         <div className="relative bg-card/90 backdrop-blur-xl border border-border/50 rounded-3xl overflow-hidden shadow-xl">
           

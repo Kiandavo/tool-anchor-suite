@@ -34,8 +34,10 @@ export const InteractiveCategoriesSection = () => {
   return (
     <section className="mb-20 sm:mb-32 animate-slide-up">
       <div className="relative">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/20 rounded-3xl"></div>
+        {/* Modern gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] via-transparent to-accent/[0.02] rounded-3xl"></div>
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-400/[0.03] to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-56 h-56 bg-gradient-to-tl from-indigo-400/[0.03] to-transparent rounded-full blur-3xl"></div>
         
         <div className="relative bg-card/90 backdrop-blur-xl border border-border/50 rounded-3xl overflow-hidden shadow-xl">
           
