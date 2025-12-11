@@ -14,13 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      performance_metrics: {
+        Row: {
+          created_at: string
+          id: string
+          metric_name: string
+          metric_value: number
+          page_url: string | null
+          rating: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          metric_name: string
+          metric_value: number
+          page_url?: string | null
+          rating: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          metric_name?: string
+          metric_value?: number
+          page_url?: string | null
+          rating?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_performance_trends: {
+        Args: { p_days?: number; p_metric_name: string }
+        Returns: {
+          avg_value: number
+          max_value: number
+          min_value: number
+          period_start: string
+          sample_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

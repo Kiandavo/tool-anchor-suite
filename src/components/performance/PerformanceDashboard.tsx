@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Activity, Zap, Eye, Clock, Layout, RefreshCw } from 'lucide-react';
+import { Activity, Zap, Eye, Clock, Layout, RefreshCw, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface WebVitalMetric {
   name: string;
@@ -14,6 +16,14 @@ interface WebVitalMetric {
   unit: string;
   icon: React.ReactNode;
   description: string;
+}
+
+interface TrendData {
+  period_start: string;
+  avg_value: number;
+  min_value: number;
+  max_value: number;
+  sample_count: number;
 }
 
 const getMetricRating = (name: string, value: number): 'good' | 'needs-improvement' | 'poor' => {
@@ -56,11 +66,57 @@ const getProgressColor = (rating: 'good' | 'needs-improvement' | 'poor') => {
   }
 };
 
+const getChartColor = (metricName: string) => {
+  const colors: Record<string, string> = {
+    LCP: '#22c55e',
+    FCP: '#eab308',
+    CLS: '#3b82f6',
+    TTFB: '#8b5cf6',
+    INP: '#f97316',
+  };
+  return colors[metricName] || '#6b7280';
+};
+
 export const PerformanceDashboard: React.FC = () => {
   const [metrics, setMetrics] = useState<WebVitalMetric[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [navigationTiming, setNavigationTiming] = useState<Record<string, number>>({});
+  const [trends, setTrends] = useState<Record<string, TrendData[]>>({});
+  const [selectedMetric, setSelectedMetric] = useState<string>('LCP');
+  const [timeRange, setTimeRange] = useState<number>(7);
+
+  const saveMetricToDb = async (name: string, value: number, rating: string) => {
+    try {
+      await supabase.from('performance_metrics').insert({
+        metric_name: name,
+        metric_value: value,
+        rating: rating,
+        page_url: window.location.href,
+        user_agent: navigator.userAgent.substring(0, 200)
+      });
+    } catch (error) {
+      console.error('Failed to save metric:', error);
+    }
+  };
+
+  const fetchTrends = async (metricName: string, days: number = 7) => {
+    try {
+      const { data, error } = await supabase.rpc('get_performance_trends', {
+        p_metric_name: metricName,
+        p_days: days
+      });
+
+      if (error) throw error;
+      
+      setTrends(prev => ({
+        ...prev,
+        [metricName]: (data || []).reverse()
+      }));
+    } catch (error) {
+      console.error('Failed to fetch trends:', error);
+    }
+  };
 
   const collectMetrics = async () => {
     setIsLoading(true);
@@ -72,10 +128,11 @@ export const PerformanceDashboard: React.FC = () => {
 
       const addMetric = (name: string, value: number, target: number, unit: string, icon: React.ReactNode, description: string) => {
         const existingIndex = collectedMetrics.findIndex(m => m.name === name);
+        const rating = getMetricRating(name, value);
         const metric: WebVitalMetric = {
           name,
           value,
-          rating: getMetricRating(name, value),
+          rating,
           target,
           unit,
           icon,
@@ -89,6 +146,12 @@ export const PerformanceDashboard: React.FC = () => {
         }
         
         setMetrics([...collectedMetrics]);
+        
+        // Save to database
+        saveMetricToDb(name, value, rating);
+        
+        // Fetch trends for this metric
+        fetchTrends(name, timeRange);
       };
 
       onLCP((metric) => {
@@ -139,6 +202,13 @@ export const PerformanceDashboard: React.FC = () => {
     collectMetrics();
   }, []);
 
+  useEffect(() => {
+    // Fetch trends for selected metric when time range changes
+    if (selectedMetric) {
+      fetchTrends(selectedMetric, timeRange);
+    }
+  }, [timeRange, selectedMetric]);
+
   const overallScore = metrics.length > 0 
     ? Math.round((metrics.filter(m => m.rating === 'good').length / metrics.length) * 100)
     : 0;
@@ -147,6 +217,26 @@ export const PerformanceDashboard: React.FC = () => {
     if (overallScore >= 80) return 'good';
     if (overallScore >= 50) return 'needs-improvement';
     return 'poor';
+  };
+
+  const getTrendIndicator = (metricName: string) => {
+    const trendData = trends[metricName];
+    if (!trendData || trendData.length < 2) return null;
+    
+    const recent = trendData[trendData.length - 1]?.avg_value || 0;
+    const previous = trendData[Math.max(0, trendData.length - 2)]?.avg_value || 0;
+    
+    if (recent < previous * 0.95) {
+      return { icon: <TrendingDown className="w-4 h-4 text-green-500" />, text: 'بهبود' };
+    } else if (recent > previous * 1.05) {
+      return { icon: <TrendingUp className="w-4 h-4 text-red-500" />, text: 'افت' };
+    }
+    return { icon: <Minus className="w-4 h-4 text-muted-foreground" />, text: 'ثابت' };
+  };
+
+  const formatChartDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:00`;
   };
 
   return (
@@ -227,58 +317,166 @@ export const PerformanceDashboard: React.FC = () => {
         </CardContent>
       </Card>
 
+      {/* Historical Trends */}
+      <Card className="border-border/50 bg-card/50 backdrop-blur">
+        <CardHeader>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <CardTitle className="text-lg">روند تاریخی عملکرد</CardTitle>
+            <div className="flex items-center gap-2">
+              <Button
+                variant={timeRange === 1 ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setTimeRange(1)}
+              >
+                ۲۴ ساعت
+              </Button>
+              <Button
+                variant={timeRange === 7 ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setTimeRange(7)}
+              >
+                ۷ روز
+              </Button>
+              <Button
+                variant={timeRange === 30 ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setTimeRange(30)}
+              >
+                ۳۰ روز
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Tabs value={selectedMetric} onValueChange={setSelectedMetric}>
+            <TabsList className="grid grid-cols-5 mb-4">
+              {['LCP', 'FCP', 'CLS', 'TTFB', 'INP'].map(metric => (
+                <TabsTrigger key={metric} value={metric} className="text-xs">
+                  {metric}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            
+            {['LCP', 'FCP', 'CLS', 'TTFB', 'INP'].map(metric => (
+              <TabsContent key={metric} value={metric}>
+                {trends[metric] && trends[metric].length > 0 ? (
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={trends[metric]}>
+                        <defs>
+                          <linearGradient id={`gradient-${metric}`} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor={getChartColor(metric)} stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor={getChartColor(metric)} stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                        <XAxis 
+                          dataKey="period_start" 
+                          tickFormatter={formatChartDate}
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={10}
+                        />
+                        <YAxis 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={10}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '8px',
+                            direction: 'rtl'
+                          }}
+                          labelFormatter={(label) => `زمان: ${formatChartDate(label as string)}`}
+                          formatter={(value: number) => [
+                            metric === 'CLS' ? value.toFixed(3) : `${Math.round(value)}ms`,
+                            'میانگین'
+                          ]}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="avg_value"
+                          stroke={getChartColor(metric)}
+                          fill={`url(#gradient-${metric})`}
+                          strokeWidth={2}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                ) : (
+                  <div className="h-64 flex items-center justify-center text-muted-foreground">
+                    <p>داده‌ای برای نمایش وجود ندارد</p>
+                  </div>
+                )}
+              </TabsContent>
+            ))}
+          </Tabs>
+        </CardContent>
+      </Card>
+
       {/* Core Web Vitals Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <AnimatePresence mode="popLayout">
-          {metrics.map((metric, index) => (
-            <motion.div
-              key={metric.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card className="border-border/50 bg-card/50 backdrop-blur hover:shadow-lg transition-shadow">
-                <CardHeader className="pb-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className={`p-2 rounded-lg ${getRatingColor(metric.rating)}`}>
-                        {metric.icon}
+          {metrics.map((metric, index) => {
+            const trend = getTrendIndicator(metric.name);
+            return (
+              <motion.div
+                key={metric.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="border-border/50 bg-card/50 backdrop-blur hover:shadow-lg transition-shadow">
+                  <CardHeader className="pb-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className={`p-2 rounded-lg ${getRatingColor(metric.rating)}`}>
+                          {metric.icon}
+                        </div>
+                        <CardTitle className="text-base font-semibold">{metric.name}</CardTitle>
                       </div>
-                      <CardTitle className="text-base font-semibold">{metric.name}</CardTitle>
-                    </div>
-                    <Badge variant="outline" className={getRatingColor(metric.rating)}>
-                      {getRatingLabel(metric.rating)}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-2xl font-bold text-foreground">
-                        {metric.name === 'CLS' ? metric.value.toFixed(3) : Math.round(metric.value)}
-                      </span>
-                      <span className="text-sm text-muted-foreground">{metric.unit}</span>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-xs text-muted-foreground">
-                        <span>هدف: {metric.target}{metric.unit}</span>
-                        <span>{Math.min(100, Math.round((metric.target / metric.value) * 100))}%</span>
-                      </div>
-                      <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
-                        <motion.div
-                          className={`h-full rounded-full ${getProgressColor(metric.rating)}`}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(100, (metric.target / metric.value) * 100)}%` }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                        />
+                      <div className="flex items-center gap-2">
+                        {trend && (
+                          <div className="flex items-center gap-1 text-xs">
+                            {trend.icon}
+                            <span className="text-muted-foreground">{trend.text}</span>
+                          </div>
+                        )}
+                        <Badge variant="outline" className={getRatingColor(metric.rating)}>
+                          {getRatingLabel(metric.rating)}
+                        </Badge>
                       </div>
                     </div>
-                    <p className="text-xs text-muted-foreground">{metric.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-2xl font-bold text-foreground">
+                          {metric.name === 'CLS' ? metric.value.toFixed(3) : Math.round(metric.value)}
+                        </span>
+                        <span className="text-sm text-muted-foreground">{metric.unit}</span>
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>هدف: {metric.target}{metric.unit}</span>
+                          <span>{Math.min(100, Math.round((metric.target / metric.value) * 100))}%</span>
+                        </div>
+                        <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
+                          <motion.div
+                            className={`h-full rounded-full ${getProgressColor(metric.rating)}`}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${Math.min(100, (metric.target / metric.value) * 100)}%` }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                          />
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{metric.description}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
 
