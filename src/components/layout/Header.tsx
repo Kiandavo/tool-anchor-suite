@@ -66,11 +66,11 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               <img 
                 src={langarLogo} 
                 alt="لنگر"
-                width={100}
-                height={32}
+                width={120}
+                height={40}
                 loading="eager"
                 fetchPriority="high"
-                className="h-8 w-auto"
+                className="h-10 w-auto"
               />
             </Link>
 
@@ -167,9 +167,9 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src={langarLogo} 
                   alt="لنگر"
-                  width={80}
-                  height={28}
-                  className="h-7 w-auto"
+                  width={100}
+                  height={36}
+                  className="h-9 w-auto"
                 />
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
