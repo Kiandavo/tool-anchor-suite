@@ -54,24 +54,27 @@ export const ResourceHints: React.FC<ResourceHintsProps> = ({
 // Default resource hints for the app
 export const DefaultResourceHints: React.FC = () => {
   return (
-    <ResourceHints
-      dnsPrefetch={[
-        'https://fonts.googleapis.com',
-        'https://www.googletagmanager.com',
-        'https://www.google-analytics.com'
-      ]}
-      preconnect={[
-        'https://fonts.googleapis.com',
-        'https://fonts.gstatic.com'
-      ]}
-      preload={[
-        {
-          href: '/fonts/vazirmatn-variable.woff2',
-          as: 'font',
-          type: 'font/woff2',
-          crossOrigin: true
-        }
-      ]}
-    />
+    <>
+      <ResourceHints
+        dnsPrefetch={[
+          'https://fonts.googleapis.com',
+          'https://cdn.jsdelivr.net',
+          'https://www.googletagmanager.com'
+        ]}
+        preconnect={[
+          'https://fonts.googleapis.com',
+          'https://fonts.gstatic.com',
+          'https://cdn.jsdelivr.net'
+        ]}
+        preload={[
+          {
+            href: 'https://cdn.jsdelivr.net/gh/nicholabs/yekanbakh@main/woff2/YekanBakh-Bold.woff2',
+            as: 'font',
+            type: 'font/woff2',
+            crossOrigin: true
+          }
+        ]}
+      />
+    </>
   );
 };

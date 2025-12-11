@@ -75,17 +75,54 @@ export default defineConfig(({ mode }) => ({
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'router': ['react-router-dom'],
-          'ui-components': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tabs'],
-          'icons': ['lucide-react', 'react-icons'],
-          'utils': ['clsx', 'tailwind-merge', 'class-variance-authority'],
+        manualChunks(id) {
+          // Core React - smallest possible
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+            return 'react-core';
+          }
+          // Router - loaded on navigation
+          if (id.includes('react-router')) {
+            return 'router';
+          }
+          // Heavy animation library - load on demand
+          if (id.includes('framer-motion')) {
+            return 'animations';
+          }
+          // 3D libraries - very heavy, load only for specific tools
+          if (id.includes('three') || id.includes('@react-three')) {
+            return 'three-vendor';
+          }
+          // Charts - load on demand
+          if (id.includes('recharts') || id.includes('d3')) {
+            return 'charts';
+          }
+          // PDF/Canvas libraries - load on demand
+          if (id.includes('jspdf') || id.includes('html2canvas')) {
+            return 'export-libs';
+          }
+          // Radix UI - split by component
+          if (id.includes('@radix-ui')) {
+            return 'ui-radix';
+          }
+          // Icons - commonly used
+          if (id.includes('lucide-react')) {
+            return 'icons';
+          }
+          // Date utilities
+          if (id.includes('date-fns')) {
+            return 'date-utils';
+          }
+          // Supabase
+          if (id.includes('@supabase')) {
+            return 'supabase';
+          }
+          // Other node_modules
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         },
-        chunkFileNames: (chunkInfo) => {
-          const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId.split('/').pop() : 'chunk';
-          return `assets/[name]-[hash].js`;
-        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
       }
     },
   }
