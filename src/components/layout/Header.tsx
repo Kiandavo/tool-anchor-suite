@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User, Home, BookOpen, Calculator, Sparkles, Keyboard } from 'lucide-react';
-// Use public path to match preload hint for better LCP
+import { ArrowRight, Menu, X, Search, Home, BookOpen, Calculator, Sparkles, LayoutGrid } from 'lucide-react';
 const langarLogo = '/assets/laangar-logo.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollProgress } from './ScrollProgress';
-import { QuickLaunchBar } from '@/components/ui/QuickLaunchBar';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
   title?: string;
@@ -16,7 +15,7 @@ interface HeaderProps {
 
 const navItems = [
   { label: 'خانه', href: '/', icon: Home },
-  { label: 'همه ابزارها', href: '/all-tools', icon: Grid3X3 },
+  { label: 'همه ابزارها', href: '/all-tools', icon: LayoutGrid },
   { label: 'محاسبه‌گر', href: '/category/calculators', icon: Calculator },
   { label: 'فال و طالع', href: '/category/readings', icon: Sparkles },
   { label: 'فرهنگ فارسی', href: '/category/persian-cultural', icon: BookOpen },
@@ -49,42 +48,30 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
   return (
     <>
-      {/* Scroll Progress Bar */}
       <ScrollProgress />
 
-      {/* Modern Navbar */}
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <header
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           isScrolled 
-            ? 'bg-background/80 backdrop-blur-2xl shadow-lg shadow-black/5 border-b border-border/50' 
-            : 'bg-transparent'
-        }`}
+            ? 'bg-background/95 backdrop-blur-xl border-b border-border/40' 
+            : 'bg-background/50 backdrop-blur-sm'
+        )}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="flex items-center justify-between h-16 sm:h-18">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="flex items-center justify-between h-14">
             
             {/* Logo */}
-            <Link
-              to="/"
-              className="group flex items-center gap-2 hover:scale-105 transition-transform duration-200"
-            >
-              <motion.div
-                whileHover={{ rotate: [0, -5, 5, 0] }}
-                transition={{ duration: 0.5 }}
-              >
-                <img 
-                  src={langarLogo} 
-                  alt="لنگر"
-                  width={120}
-                  height={40}
-                  loading="eager"
-                  fetchPriority="high"
-                  className="h-10 w-auto"
-                />
-              </motion.div>
+            <Link to="/" className="flex items-center">
+              <img 
+                src={langarLogo} 
+                alt="لنگر"
+                width={100}
+                height={32}
+                loading="eager"
+                fetchPriority="high"
+                className="h-8 w-auto"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -96,21 +83,22 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                   <Link
                     key={item.href}
                     to={item.href}
-                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    className={cn(
+                      'relative px-3 py-1.5 rounded-md text-sm transition-colors',
                       active 
-                        ? 'text-amber-600 dark:text-amber-400' 
-                        : 'text-foreground/70 hover:text-foreground'
-                    }`}
+                        ? 'text-foreground font-medium' 
+                        : 'text-muted-foreground hover:text-foreground'
+                    )}
                   >
-                    <span className="relative z-10 flex items-center gap-2">
-                      <Icon size={16} />
+                    <span className="flex items-center gap-1.5">
+                      <Icon size={15} className={active ? 'text-primary' : ''} />
                       {item.label}
                     </span>
                     {active && (
                       <motion.div
-                        layoutId="navbar-indicator"
-                        className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-orange-500/10 rounded-full border border-amber-500/20"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        layoutId="nav-indicator"
+                        className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+                        transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                       />
                     )}
                   </Link>
@@ -118,174 +106,122 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               })}
             </nav>
 
-            {/* Quick Launch Bar - Desktop */}
-            <QuickLaunchBar className="hidden xl:flex" />
-
             {/* Right Actions */}
-            <div className="flex items-center gap-2">
-              {/* Search Button */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            <div className="flex items-center gap-1.5">
+              {/* Search */}
+              <button
                 onClick={openSearch}
-                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-secondary/50 hover:bg-secondary/70 rounded-full text-sm text-foreground/70 hover:text-foreground transition-all border border-border/30"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary/60 transition-colors"
               >
                 <Search size={16} />
-                <span className="hidden md:inline">جستجو</span>
-                <kbd className="hidden lg:inline-flex items-center gap-1 px-2 py-0.5 bg-background/50 rounded text-xs text-muted-foreground border border-border/50">
+                <span className="hidden sm:inline">جستجو</span>
+                <kbd className="hidden md:inline px-1.5 py-0.5 text-[10px] bg-muted rounded border border-border/50">
                   /
                 </kbd>
-              </motion.button>
-
-
-              {/* Keyboard Shortcuts Help */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => window.dispatchEvent(new CustomEvent('show-shortcuts-help'))}
-                className="hidden lg:flex p-2.5 bg-secondary/50 hover:bg-secondary/70 rounded-full text-foreground/70 hover:text-foreground transition-all border border-border/30"
-                title="میانبرهای صفحه‌کلید (?)"
-              >
-                <Keyboard size={18} />
-              </motion.button>
+              </button>
 
               {/* Back Button */}
               {showBackButton && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <button
                   onClick={handleBack}
-                  className="flex items-center gap-1.5 px-3 py-2 bg-secondary/50 hover:bg-secondary/70 rounded-full text-sm text-foreground/70 hover:text-foreground transition-all border border-border/30"
+                  className="hidden sm:flex items-center gap-1 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary/60 transition-colors"
                 >
-                  <ArrowRight size={16} />
-                  <span className="hidden sm:inline">بازگشت</span>
-                </motion.button>
+                  <ArrowRight size={15} />
+                  <span>بازگشت</span>
+                </button>
               )}
 
-              {/* Settings */}
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  to="/settings"
-                  className="p-2.5 bg-secondary/50 hover:bg-secondary/70 rounded-full text-foreground/70 hover:text-foreground transition-all border border-border/30 flex items-center justify-center"
-                >
-                  <User size={18} />
-                </Link>
-              </motion.div>
-
               {/* Mobile Menu Toggle */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2.5 bg-secondary/50 hover:bg-secondary/70 rounded-full text-foreground/70 hover:text-foreground transition-all border border-border/30"
+                className="lg:hidden p-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary/60 transition-colors"
               >
-                {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-              </motion.button>
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
             </div>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 z-40 bg-background/60 backdrop-blur-xl lg:hidden"
+              className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
             />
             
-            {/* Menu Panel */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-80 z-50 bg-background/95 backdrop-blur-2xl border-l border-border/50 shadow-2xl lg:hidden overflow-y-auto"
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 w-72 z-50 bg-background border-l border-border lg:hidden"
             >
               {/* Menu Header */}
-              <div className="flex items-center justify-between p-6 border-b border-border/30">
+              <div className="flex items-center justify-between p-4 border-b border-border">
                 <img 
                   src={langarLogo} 
                   alt="لنگر"
-                  width={32}
-                  height={32}
-                  className="h-8 w-auto"
+                  width={80}
+                  height={28}
+                  className="h-7 w-auto"
                 />
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 bg-secondary/50 hover:bg-secondary/70 rounded-full"
+                  className="p-2 text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary/60 transition-colors"
                 >
-                  <X size={20} />
-                </motion.button>
+                  <X size={18} />
+                </button>
               </div>
 
               {/* Search */}
-              <div className="p-4">
-                <motion.button
-                  whileTap={{ scale: 0.98 }}
+              <div className="p-3">
+                <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     openSearch();
                   }}
-                  className="flex items-center gap-3 w-full p-4 bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-orange-500/10 hover:from-yellow-500/20 hover:via-amber-500/20 hover:to-orange-500/20 rounded-2xl border border-amber-500/20 transition-all"
+                  className="flex items-center gap-3 w-full p-3 text-muted-foreground hover:text-foreground rounded-lg hover:bg-secondary/60 transition-colors"
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-xl flex items-center justify-center">
-                    <Search size={18} className="text-white" />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium">جستجو در ابزارها</p>
-                    <p className="text-xs text-muted-foreground">یافتن سریع ابزار</p>
-                  </div>
-                </motion.button>
+                  <Search size={18} />
+                  <span className="text-sm">جستجو در ابزارها</span>
+                </button>
               </div>
 
               {/* Navigation Links */}
-              <div className="p-4 space-y-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 px-2">منو اصلی</p>
+              <div className="px-3 py-2">
+                <p className="text-xs text-muted-foreground mb-2 px-3">منو</p>
                 {navItems.map((item, index) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
                   return (
                     <motion.div
                       key={item.href}
-                      initial={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
+                      transition={{ delay: index * 0.03 }}
                     >
                       <Link
                         to={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                        className={cn(
+                          'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors',
                           active 
-                            ? 'bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-orange-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20' 
-                            : 'hover:bg-secondary/50'
-                        }`}
+                            ? 'bg-secondary text-foreground font-medium' 
+                            : 'text-muted-foreground hover:text-foreground hover:bg-secondary/60'
+                        )}
                       >
-                        <Icon size={20} />
-                        <span className="font-medium">{item.label}</span>
+                        <Icon size={18} className={active ? 'text-primary' : ''} />
+                        <span>{item.label}</span>
                       </Link>
                     </motion.div>
                   );
                 })}
-              </div>
-
-              {/* Settings */}
-              <div className="p-4 border-t border-border/30 mt-4">
-                <Link
-                  to="/settings"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-secondary/50 transition-all"
-                >
-                  <Settings size={20} />
-                  <span className="font-medium">تنظیمات</span>
-                </Link>
               </div>
             </motion.div>
           </>
