@@ -19,17 +19,65 @@ export default {
     		}
     	},
     	fontFamily: {
-    		// Primary Persian fonts
-    		primary: ['YekanBakh', 'Dana', 'Vazirmatn', 'system-ui', 'sans-serif'],
-    		heading: ['YekanBakh', 'Dana', 'system-ui', 'sans-serif'],
-    		body: ['Dana', 'YekanBakh', 'Vazirmatn', 'system-ui', 'sans-serif'],
-    		support: ['Dana', 'YekanBakh', 'system-ui', 'sans-serif'],
-    		display: ['Estedad', 'YekanBakh', 'system-ui', 'sans-serif'],
-    		accent: ['Estedad', 'YekanBakh', 'system-ui', 'sans-serif'],
-    		// Utility fonts
-    		mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
-    		inter: ['Inter', 'system-ui', 'sans-serif'],
-    		sans: ['Dana', 'YekanBakh', 'Vazirmatn', 'ui-sans-serif', 'system-ui', 'Tahoma', 'Arial', 'sans-serif']
+    		primary: [
+    			'YekanBakh',
+    			'Dana',
+    			'Vazirmatn',
+    			'system-ui',
+    			'sans-serif'
+    		],
+    		heading: [
+    			'YekanBakh',
+    			'Dana',
+    			'system-ui',
+    			'sans-serif'
+    		],
+    		body: [
+    			'Dana',
+    			'YekanBakh',
+    			'Vazirmatn',
+    			'system-ui',
+    			'sans-serif'
+    		],
+    		support: [
+    			'Dana',
+    			'YekanBakh',
+    			'system-ui',
+    			'sans-serif'
+    		],
+    		display: [
+    			'Estedad',
+    			'YekanBakh',
+    			'system-ui',
+    			'sans-serif'
+    		],
+    		accent: [
+    			'Estedad',
+    			'YekanBakh',
+    			'system-ui',
+    			'sans-serif'
+    		],
+    		mono: [
+    			'JetBrains Mono',
+    			'Consolas',
+    			'Monaco',
+    			'monospace'
+    		],
+    		inter: [
+    			'Inter',
+    			'system-ui',
+    			'sans-serif'
+    		],
+    		sans: [
+    			'Dana',
+    			'YekanBakh',
+    			'Vazirmatn',
+    			'ui-sans-serif',
+    			'system-ui',
+    			'Tahoma',
+    			'Arial',
+    			'sans-serif'
+    		]
     	},
     	extend: {
     		colors: {
@@ -90,19 +138,19 @@ export default {
     				pink: 'hsl(292 84% 61%)',
     				red: 'hsl(4 100% 60%)',
     				teal: 'hsl(172 80% 40%)',
-    			cyan: 'hsl(188 95% 43%)',
-    			indigo: 'hsl(239 84% 67%)'
-    		},
-    		persian: {
-    			turquoise: 'hsl(var(--persian-turquoise))',
-    			gold: 'hsl(var(--persian-gold))',
-    			blue: 'hsl(var(--persian-blue))',
-    			red: 'hsl(var(--persian-red))',
-    			green: 'hsl(var(--persian-green))',
-    			purple: 'hsl(var(--persian-purple))',
-    			amber: 'hsl(var(--persian-amber))',
-    			rose: 'hsl(var(--persian-rose))'
-    		}
+    				cyan: 'hsl(188 95% 43%)',
+    				indigo: 'hsl(239 84% 67%)'
+    			},
+    			persian: {
+    				turquoise: 'hsl(var(--persian-turquoise))',
+    				gold: 'hsl(var(--persian-gold))',
+    				blue: 'hsl(var(--persian-blue))',
+    				red: 'hsl(var(--persian-red))',
+    				green: 'hsl(var(--persian-green))',
+    				purple: 'hsl(var(--persian-purple))',
+    				amber: 'hsl(var(--persian-amber))',
+    				rose: 'hsl(var(--persian-rose))'
+    			}
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
@@ -115,7 +163,14 @@ export default {
     			'apple-lg': '0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1)',
     			'apple-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
     			neo: '0 8px 32px rgba(0, 0, 0, 0.1)',
-    			'neo-lg': '0 12px 40px rgba(0, 0, 0, 0.15)'
+    			'neo-lg': '0 12px 40px rgba(0, 0, 0, 0.15)',
+    			'2xs': 'var(--shadow-2xs)',
+    			xs: 'var(--shadow-xs)',
+    			sm: 'var(--shadow-sm)',
+    			md: 'var(--shadow-md)',
+    			lg: 'var(--shadow-lg)',
+    			xl: 'var(--shadow-xl)',
+    			'2xl': 'var(--shadow-2xl)'
     		},
     		keyframes: {
     			'accordion-down': {
@@ -201,8 +256,20 @@ export default {
     			'scale-subtle': 'scale-subtle 4s ease-in-out infinite',
     			shimmer: 'shimmer 3s infinite'
     		},
-     		fontFamily: {
-     			sans: ['Dana', 'YekanBakh', 'Vazirmatn', 'ui-sans-serif', 'system-ui', 'Tahoma', 'Arial', 'sans-serif'],
+    		fontFamily: {
+    			sans: [
+    				'Work Sans',
+    				'ui-sans-serif',
+    				'system-ui',
+    				'-apple-system',
+    				'BlinkMacSystemFont',
+    				'Segoe UI',
+    				'Roboto',
+    				'Helvetica Neue',
+    				'Arial',
+    				'Noto Sans',
+    				'sans-serif'
+    			],
     			serif: [
     				'Lora',
     				'ui-serif',
@@ -213,7 +280,7 @@ export default {
     				'serif'
     			],
     			mono: [
-    				'Space Mono',
+    				'Inconsolata',
     				'ui-monospace',
     				'SFMono-Regular',
     				'Menlo',

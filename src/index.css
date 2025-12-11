@@ -5,6 +5,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap");
 
 /* =====================================================
    FONT 1: YekanBakh - Modern Headings Font
@@ -145,42 +147,42 @@
    */
   :root {
     /* Optimized for WCAG AA compliance (4.5:1 contrast ratio minimum) */
-    --background: 210 40% 98%;
-    --foreground: 222 50% 8%;
-    --card: 210 40% 99%;
-    --card-foreground: 222 50% 8%;
-    --popover: 210 40% 95%;
-    --popover-foreground: 222 50% 8%;
-    --primary: 200 95% 42%;
-    --primary-foreground: 210 40% 99%;
-    --secondary: 215 25% 20%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 215 25% 88%;
-    --muted-foreground: 215 30% 30%;
-    --accent: 210 40% 92%;
-    --accent-foreground: 215 25% 20%;
-    --destructive: 0 84% 45%;
-    --destructive-foreground: 0 85% 99%;
-    --border: 215 25% 75%;
-    --input: 215 25% 75%;
-    --ring: 200 95% 42%;
-    --chart-1: 200 95% 55%;
-    --chart-2: 215 90% 60%;
-    --chart-3: 180 85% 50%;
-    --chart-4: 45 93% 55%;
-    --chart-5: 292 84% 55%;
-    --sidebar: 210 40% 99%;
-    --sidebar-foreground: 222 50% 8%;
-    --sidebar-primary: 200 95% 42%;
-    --sidebar-primary-foreground: 210 40% 99%;
-    --sidebar-accent: 215 25% 20%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 215 25% 75%;
-    --sidebar-ring: 200 95% 42%;
-    --font-sans: 'Dana', 'YekanBakh', 'Vazirmatn', ui-sans-serif, system-ui, Tahoma, Arial, sans-serif;
+    --background: 0 0% 96%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 89%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 161 93% 30%;
+    --primary-foreground: 151 80% 95%;
+    --secondary: 0 0% 32%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 63%;
+    --muted-foreground: 0 0% 9%;
+    --accent: 166 76% 96%;
+    --accent-foreground: 173 80% 40%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 85% 97%;
+    --border: 0 0% 83%;
+    --input: 0 0% 83%;
+    --ring: 161 93% 30%;
+    --chart-1: 158 64% 51%;
+    --chart-2: 141 69% 58%;
+    --chart-3: 172 66% 50%;
+    --chart-4: 82 77% 55%;
+    --chart-5: 0 0% 45%;
+    --sidebar: 0 0% 98%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 161 93% 30%;
+    --sidebar-primary-foreground: 151 80% 95%;
+    --sidebar-accent: 0 0% 32%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 83%;
+    --sidebar-ring: 161 93% 30%;
+    --font-sans: 'Work Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
     --font-serif: 'Lora', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
-    --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-    --radius: 0.5rem;
+    --font-mono: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --radius: 0.75rem;
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
@@ -191,45 +193,45 @@
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
     --tracking-normal: 0em;
     --spacing: 0.25rem;
-    
+
     /* Mobile-optimized touch targets - Phase 1 SEO Enhancement */
     --touch-target-min: 44px;
   }
   .dark {
     /* Optimized for WCAG AA compliance in dark mode */
-    --background: 222 50% 8%;
-    --foreground: 210 40% 96%;
-    --card: 220 45% 12%;
-    --card-foreground: 210 40% 96%;
-    --popover: 220 40% 15%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 200 95% 65%;
-    --primary-foreground: 222 50% 8%;
-    --secondary: 210 30% 85%;
-    --secondary-foreground: 222 50% 10%;
-    --muted: 215 20% 25%;
-    --muted-foreground: 215 25% 75%;
-    --accent: 220 45% 16%;
-    --accent-foreground: 210 40% 90%;
-    --destructive: 0 84% 65%;
-    --destructive-foreground: 222 50% 8%;
-    --border: 220 40% 22%;
-    --input: 220 40% 22%;
-    --ring: 200 95% 65%;
-    --chart-1: 200 95% 70%;
-    --chart-2: 215 90% 75%;
-    --chart-3: 180 85% 65%;
-    --chart-4: 45 93% 70%;
-    --chart-5: 292 84% 70%;
-    --sidebar: 220 45% 12%;
-    --sidebar-foreground: 210 40% 96%;
-    --sidebar-primary: 200 95% 65%;
-    --sidebar-primary-foreground: 222 50% 8%;
-    --sidebar-accent: 210 30% 85%;
-    --sidebar-accent-foreground: 222 50% 10%;
-    --sidebar-border: 220 40% 22%;
-    --sidebar-ring: 200 95% 65%;
-    
+    --background: 0 0% 9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 14%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 25%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 158 64% 51%;
+    --primary-foreground: 165 91% 9%;
+    --secondary: 0 0% 45%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 45%;
+    --muted-foreground: 0 0% 98%;
+    --accent: 178 84% 10%;
+    --accent-foreground: 172 66% 50%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 85% 97%;
+    --border: 0 0% 32%;
+    --input: 0 0% 32%;
+    --ring: 158 64% 51%;
+    --chart-1: 156 71% 66%;
+    --chart-2: 141 76% 73%;
+    --chart-3: 170 76% 64%;
+    --chart-4: 81 84% 67%;
+    --chart-5: 0 0% 45%;
+    --sidebar: 0 0% 14%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 158 64% 51%;
+    --sidebar-primary-foreground: 165 91% 9%;
+    --sidebar-accent: 172 66% 50%;
+    --sidebar-accent-foreground: 178 84% 10%;
+    --sidebar-border: 0 0% 32%;
+    --sidebar-ring: 158 64% 51%;
+
     /* Persian color palette */
     --persian-turquoise: 180 85% 50%;
     --persian-gold: 45 100% 55%;
@@ -239,7 +241,7 @@
     --persian-purple: 280 70% 50%;
     --persian-amber: 35 95% 55%;
     --persian-rose: 340 90% 60%;
-    
+
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
@@ -247,8 +249,7 @@
     --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
     --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
     --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
-    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25)
-  }
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25)}
 }
 
 @layer base {
@@ -260,7 +261,7 @@
   html {
     font-size: 17px;
   }
-  
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -272,34 +273,34 @@
     /* Persian text optimization */
     letter-spacing: 0.01em;
   }
-  
+
   /* Persian-specific letter spacing optimizations */
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0.02em;
   }
-  
+
   /* Fine-tuned spacing for different text sizes */
   .text-xs, .text-sm {
     letter-spacing: 0.015em;
   }
-  
+
   .text-base {
     letter-spacing: 0.01em;
   }
-  
+
   .text-lg, .text-xl {
     letter-spacing: 0.012em;
   }
-  
+
   .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl {
     letter-spacing: 0.02em;
   }
-  
+
   /* Buttons and labels benefit from slightly wider spacing */
   button, [role="button"], .btn {
     letter-spacing: 0.025em;
   }
-  
+
   /* Tighter spacing for monospace code */
   code, pre, .font-mono {
     letter-spacing: -0.01em;
@@ -314,13 +315,13 @@
   [lang="fa"] p, .persian-text p {
     line-height: 1.8;
   }
-  
+
   /* Touch-friendly UI enhancements for mobile - Phase 1 */
   button, a, [role="button"] {
     min-height: var(--touch-target-min);
     min-width: var(--touch-target-min);
   }
-  
+
   /* Smooth scrolling for better mobile experience */
   html {
     scroll-behavior: smooth;
@@ -334,7 +335,7 @@
     touch-action: manipulation;
     -webkit-touch-callout: none;
   }
-  
+
   /* Persian text optimization utility class */
   .persian-optimized {
     text-rendering: optimizeLegibility;
@@ -343,22 +344,22 @@
     letter-spacing: 0.015em;
     word-spacing: 0.05em;
   }
-  
+
   /* Tight letter spacing utility for compact text */
   .persian-tight {
     letter-spacing: 0.005em;
   }
-  
+
   /* Normal letter spacing utility */
   .persian-normal {
     letter-spacing: 0.01em;
   }
-  
+
   /* Wide letter spacing utility for headings */
   .persian-wide {
     letter-spacing: 0.025em;
   }
-  
+
   /* Extra wide for display text */
   .persian-wider {
     letter-spacing: 0.04em;
