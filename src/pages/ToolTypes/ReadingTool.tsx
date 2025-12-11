@@ -41,6 +41,7 @@ import { Horoscope } from '@/components/fal/Horoscope';
 import { RumiIstikhara } from '@/components/fal/RumiIstikhara';
 import { ShahnameReading } from '@/components/fal/ShahnameReading';
 import { MusicFortune } from '@/components/fal/MusicFortune';
+import { SaadiOracle } from '@/components/fal/SaadiOracle';
 
 interface ReadingToolProps {
   slug: string;
@@ -131,6 +132,9 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
       case 'music-fortune':
         return <MusicFortune />;
 
+      case 'saadi-oracle':
+        return <SaadiOracle />;
+
       default:
         return <ToolNotImplemented toolName="این ابزار طالع‌بینی" category="readings" />;
     }
@@ -199,7 +203,8 @@ function getToolTitle(slug: string): string {
     'horoscope': 'طالع بینی',
     'rumi-istikhara': 'استخاره با مولانا',
     'shahname-reading': 'راهنمایی از شاهنامه',
-    'music-fortune': 'فال موسیقی'
+    'music-fortune': 'فال موسیقی',
+    'saadi-oracle': 'پیام از سعدی'
   };
   
   return titles[slug] || 'ابزار طالع‌بینی';
