@@ -11,12 +11,12 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Show splash for 2 seconds then fade out
+    // Reduced splash duration from 2s to 800ms for faster TTI
     const timer = setTimeout(() => {
       setIsVisible(false);
       // Wait for fade out animation to complete
-      setTimeout(onComplete, 500);
-    }, 2000);
+      setTimeout(onComplete, 300);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
