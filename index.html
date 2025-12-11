@@ -283,13 +283,12 @@
           100% { background-position: 200% 0; }
         }
         #critical-hero {
-          animation: fadeOut 0.3s ease-out 0.5s forwards;
+          transition: opacity 0.15s ease-out;
         }
-        @keyframes fadeOut {
-          to {
-            opacity: 0;
-            pointer-events: none;
-          }
+        #critical-hero.hidden {
+          opacity: 0;
+          pointer-events: none;
+          display: none;
         }
       </style>
     </div>
@@ -302,35 +301,43 @@
         window.addEventListener('load', () => {
           setTimeout(() => {
             navigator.serviceWorker.register('/sw.js').catch(() => {});
-          }, 2000); // Delay SW registration
+          }, 3000); // Delay SW registration further
         });
       }
       
-      // Ensure immediate content visibility and improve TTI
-      document.addEventListener('DOMContentLoaded', function() {
-        document.body.style.visibility = 'visible';
+      // Immediately visible - remove any blocking
+      document.body.style.visibility = 'visible';
+      
+      // Fast React mount detection using MutationObserver (more efficient than setInterval)
+      (function() {
+        var hero = document.getElementById('critical-hero');
+        var root = document.getElementById('root');
+        if (!hero || !root) return;
         
-        // Remove critical hero when React app mounts
-        const checkReactMount = setInterval(function() {
-          const root = document.getElementById('root');
-          const criticalHero = document.getElementById('critical-hero');
-          
-          // Check if React has rendered content (more than just skeleton)
-          if (root && root.children.length > 1 && criticalHero) {
-            criticalHero.style.display = 'none';
-            clearInterval(checkReactMount);
+        var hideHero = function() {
+          if (hero) {
+            hero.classList.add('hidden');
+            setTimeout(function() { hero.remove(); }, 200);
           }
-        }, 100);
+        };
         
-        // Fallback: remove skeleton after 3 seconds regardless
+        // Use MutationObserver for efficient DOM change detection
+        var observer = new MutationObserver(function(mutations) {
+          // Check if React rendered something besides our skeleton
+          if (root.children.length > 1 || (root.firstElementChild && root.firstElementChild.id !== 'critical-hero')) {
+            observer.disconnect();
+            hideHero();
+          }
+        });
+        
+        observer.observe(root, { childList: true, subtree: false });
+        
+        // Faster fallback: 1.5s max wait
         setTimeout(function() {
-          const criticalHero = document.getElementById('critical-hero');
-          if (criticalHero) {
-            criticalHero.style.display = 'none';
-          }
-          clearInterval(checkReactMount);
-        }, 3000);
-      });
+          observer.disconnect();
+          hideHero();
+        }, 1500);
+      })();
       
       // Optimize main thread by yielding control
       function yieldToMain() {
