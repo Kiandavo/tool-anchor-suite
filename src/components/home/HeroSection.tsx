@@ -239,24 +239,6 @@ export const HeroSection = () => {
               </Button>
             </motion.div>
 
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.5 }}
-              className="flex justify-center gap-8 sm:gap-16 mt-16 pt-8 border-t border-border/30"
-            >
-              {[
-                { value: '۸۰+', label: 'ابزار رایگان' },
-                { value: '۱۰۰٪', label: 'فارسی' },
-                { value: '۲۴/۷', label: 'در دسترس' },
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </div>
-              ))}
-            </motion.div>
           </div>
         </div>
 
@@ -264,7 +246,7 @@ export const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.7 }}
+          transition={{ duration: 0.6, delay: 1.5 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <button
