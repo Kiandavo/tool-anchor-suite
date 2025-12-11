@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ToolCard } from '@/components/ToolCard';
 import { categoryLabels, ToolCategory, tools } from '@/data/tools';
-import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { CategorySeoHead } from '@/components/seo/CategorySeoHead';
 import { ToolFilters } from '@/components/tools/ToolFilters';
 import { RecentlyUsedSection } from '@/components/tools/RecentlyUsedSection';
 import { useToolFilters, FilterType } from '@/hooks/useToolFilters';
@@ -78,21 +78,9 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categorySlug }) => {
     clearFilters,
   } = useToolFilters(category);
 
-  const seoTitle = `${categoryName} آنلاین رایگان | ${allCategoryTools.length} ابزار حرفه‌ای | لنگر`;
-  const seoDescription = categoryDescriptions[category];
-
   return (
     <Layout>
-      <EnhancedSeoHead 
-        pageType="category"
-        title={seoTitle}
-        description={seoDescription}
-        canonical={`https://laangar.com/${slug}`}
-        breadcrumbs={[
-          { name: 'لنگر', url: 'https://laangar.com/' },
-          { name: categoryName, url: `https://laangar.com/${slug}` }
-        ]}
-      />
+      <CategorySeoHead category={category} slug={slug} />
 
       <div className="max-w-6xl mx-auto">
         {/* Breadcrumb */}
@@ -121,13 +109,13 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categorySlug }) => {
             </div>
             <SocialShare 
               url={`https://laangar.com/${slug}`}
-              title={seoTitle}
-              description={seoDescription}
+              title={`${categoryName} | لنگر`}
+              description={categoryDescriptions[category]}
               size="sm"
             />
           </div>
           <p className="text-foreground/80 leading-relaxed">
-            {seoDescription}
+            {categoryDescriptions[category]}
           </p>
         </motion.div>
 

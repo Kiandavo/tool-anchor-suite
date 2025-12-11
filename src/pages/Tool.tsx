@@ -6,7 +6,7 @@ import { ToolRenderer } from '@/components/tool/ToolRenderer';
 import { BreadcrumbNavigation } from '@/components/ui/breadcrumb-navigation';
 import { tools, categoryLabels } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
-import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { ToolSeoHead } from '@/components/seo/ToolSeoHead';
 import { ToolSeoContent } from '@/components/seo/ToolSeoContent';
 import { EnhancedToolContent } from '@/components/seo/EnhancedToolContent';
 import { SuggestedTools } from '@/components/seo/SuggestedTools';
@@ -78,18 +78,9 @@ const Tool = () => {
 
   return (
     <Layout>
-      <EnhancedSeoHead 
-        toolSlug={tool.slug}
-        pageType="tool"
-        title={optimizedTitle}
-        description={optimizedDescription}
-        keywords={comprehensiveKeywords}
-        breadcrumbs={[
-          { name: 'لنگر', url: 'https://laangar.com/' },
-          { name: categoryLabel, url: `https://laangar.com/category/${tool.category}` },
-          { name: tool.name, url: `https://laangar.com/tool/${tool.slug}` }
-        ]}
-        faq={finalFAQ}
+      <ToolSeoHead 
+        tool={tool}
+        howToSteps={finalHowTo}
       />
       
       <div className="mb-6">
