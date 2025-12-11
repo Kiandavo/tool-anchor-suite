@@ -9,7 +9,11 @@ import {
   generateIntentKeywords,
   generateCulturalKeywords,
   generateHafezFortuneSeoData,
-  generateHafezFortuneFAQ
+  generateHafezFortuneFAQ,
+  generateTarotSeoData,
+  generateTarotFAQ,
+  generateRumiSeoData,
+  generateRumiFAQ
 } from '@/utils/seoUtils';
 
 // Import enhanced reading tools
@@ -52,17 +56,41 @@ interface ReadingToolProps {
 export default function ReadingTool({ slug }: ReadingToolProps) {
   console.log("ReadingTool rendering with slug:", slug);
 
-  // Generate enhanced SEO data - use specific data for hafez-fortune
+  // Generate enhanced SEO data - use specific data for popular tools
   const toolTitle = getToolTitle(slug);
-  const isHafezFortune = slug === 'hafez-fortune';
   
-  const seoData = isHafezFortune 
-    ? generateHafezFortuneSeoData()
-    : generateReadingsSeoData(toolTitle);
+  // Get specific SEO data based on slug
+  const getSeoData = () => {
+    switch (slug) {
+      case 'hafez-fortune':
+        return generateHafezFortuneSeoData();
+      case 'tarot-reading':
+        return generateTarotSeoData();
+      case 'rumi-istikhara':
+        return generateRumiSeoData();
+      default:
+        return generateReadingsSeoData(toolTitle);
+    }
+  };
   
-  const hafezFAQ = isHafezFortune ? generateHafezFortuneFAQ() : undefined;
+  const getFAQ = () => {
+    switch (slug) {
+      case 'hafez-fortune':
+        return generateHafezFortuneFAQ();
+      case 'tarot-reading':
+        return generateTarotFAQ();
+      case 'rumi-istikhara':
+        return generateRumiFAQ();
+      default:
+        return undefined;
+    }
+  };
   
-  const enhancedKeywords = isHafezFortune 
+  const seoData = getSeoData();
+  const faqData = getFAQ();
+  const hasSpecificSeo = ['hafez-fortune', 'tarot-reading', 'rumi-istikhara'].includes(slug);
+  
+  const enhancedKeywords = hasSpecificSeo 
     ? seoData.keywords 
     : [
         ...generateLongTailKeywords(toolTitle, 'readings'),
@@ -176,7 +204,7 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
         title={seoData.title}
         description={seoData.description}
         keywords={enhancedKeywords}
-        faq={hafezFAQ}
+        faq={faqData}
       />
       <Card className="bg-white border shadow-sm">
         <CardHeader>
