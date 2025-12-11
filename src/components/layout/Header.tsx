@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User, Home, BookOpen, Calculator, Sparkles } from 'lucide-react';
+import { ArrowRight, Settings, Menu, X, Grid3X3, Search, User, Home, BookOpen, Calculator, Sparkles, Keyboard } from 'lucide-react';
 import langarLogo from '@/assets/laangar-logo.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollProgress } from './ScrollProgress';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { QuickLaunchBar } from '@/components/ui/QuickLaunchBar';
 
 interface HeaderProps {
   title?: string;
@@ -116,6 +118,9 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               })}
             </nav>
 
+            {/* Quick Launch Bar - Desktop */}
+            <QuickLaunchBar className="hidden xl:flex" />
+
             {/* Right Actions */}
             <div className="flex items-center gap-2">
               {/* Search Button */}
@@ -128,8 +133,22 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <Search size={16} />
                 <span className="hidden md:inline">جستجو</span>
                 <kbd className="hidden lg:inline-flex items-center gap-1 px-2 py-0.5 bg-background/50 rounded text-xs text-muted-foreground border border-border/50">
-                  ⌘K
+                  /
                 </kbd>
+              </motion.button>
+
+              {/* Theme Toggle */}
+              <ThemeToggle size="md" />
+
+              {/* Keyboard Shortcuts Help */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.dispatchEvent(new CustomEvent('show-shortcuts-help'))}
+                className="hidden lg:flex p-2.5 bg-secondary/50 hover:bg-secondary/70 rounded-full text-foreground/70 hover:text-foreground transition-all border border-border/30"
+                title="میانبرهای صفحه‌کلید (?)"
+              >
+                <Keyboard size={18} />
               </motion.button>
 
               {/* Back Button */}
