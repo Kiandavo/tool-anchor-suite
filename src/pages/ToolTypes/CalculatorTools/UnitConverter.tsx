@@ -156,12 +156,58 @@ export default function UnitConverter() {
   const copyResult = async () => {
     if (!result) return;
     const category = categories[activeCategory as keyof typeof categories];
-    const fromName = category.units[fromUnit as keyof typeof category.units]?.name;
-    const toName = category.units[toUnit as keyof typeof category.units]?.name;
+    const fromName = (category.units as Record<string, { name: string }>)[fromUnit]?.name;
+    const toName = (category.units as Record<string, { name: string }>)[toUnit]?.name;
     await navigator.clipboard.writeText(`${inputValue} ${fromName} = ${result} ${toName}`);
     setCopied(true);
     toast.success('کپی شد');
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Quick presets for common conversions
+  const presets: Record<string, { from: string; to: string; value: string; label: string }[]> = {
+    length: [
+      { from: 'cm', to: 'm', value: '100', label: '۱۰۰ سانتی‌متر' },
+      { from: 'km', to: 'mi', value: '1', label: '۱ کیلومتر' },
+      { from: 'ft', to: 'm', value: '6', label: '۶ فوت' },
+      { from: 'in', to: 'cm', value: '12', label: '۱۲ اینچ' },
+    ],
+    weight: [
+      { from: 'kg', to: 'lb', value: '70', label: '۷۰ کیلو' },
+      { from: 'g', to: 'oz', value: '100', label: '۱۰۰ گرم' },
+      { from: 'lb', to: 'kg', value: '150', label: '۱۵۰ پوند' },
+      { from: 'ton', to: 'kg', value: '1', label: '۱ تن' },
+    ],
+    volume: [
+      { from: 'l', to: 'gal', value: '1', label: '۱ لیتر' },
+      { from: 'ml', to: 'fl_oz', value: '250', label: '۲۵۰ میلی‌لیتر' },
+      { from: 'gal', to: 'l', value: '5', label: '۵ گالن' },
+      { from: 'cup', to: 'ml', value: '2', label: '۲ کاپ' },
+    ],
+    area: [
+      { from: 'm2', to: 'ft2', value: '100', label: '۱۰۰ متر مربع' },
+      { from: 'km2', to: 'acre', value: '1', label: '۱ کیلومتر مربع' },
+      { from: 'acre', to: 'm2', value: '1', label: '۱ جریب' },
+      { from: 'cm2', to: 'm2', value: '10000', label: '۱۰,۰۰۰ سانتی‌متر مربع' },
+    ],
+    temperature: [
+      { from: 'c', to: 'f', value: '37', label: '۳۷ درجه' },
+      { from: 'f', to: 'c', value: '98.6', label: '۹۸.۶ فارنهایت' },
+      { from: 'c', to: 'k', value: '0', label: '۰ سلسیوس' },
+      { from: 'c', to: 'f', value: '100', label: '۱۰۰ درجه' },
+    ],
+    speed: [
+      { from: 'kmh', to: 'mph', value: '100', label: '۱۰۰ کیلومتر/ساعت' },
+      { from: 'ms', to: 'kmh', value: '10', label: '۱۰ متر/ثانیه' },
+      { from: 'mph', to: 'kmh', value: '60', label: '۶۰ مایل/ساعت' },
+      { from: 'knot', to: 'kmh', value: '20', label: '۲۰ گره' },
+    ],
+  };
+
+  const applyPreset = (preset: { from: string; to: string; value: string }) => {
+    setFromUnit(preset.from);
+    setToUnit(preset.to);
+    setInputValue(preset.value);
   };
 
   const getCurrentUnits = () => categories[activeCategory as keyof typeof categories].units;
@@ -195,6 +241,23 @@ export default function UnitConverter() {
 
             {Object.keys(categories).map((categoryKey) => (
               <TabsContent key={categoryKey} value={categoryKey} className="mt-6 space-y-4">
+                {/* Quick Presets */}
+                {presets[categoryKey] && (
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {presets[categoryKey].map((preset, idx) => (
+                      <Button
+                        key={idx}
+                        variant="outline"
+                        size="sm"
+                        onClick={() => applyPreset(preset)}
+                        className="text-xs rounded-full"
+                      >
+                        {preset.label}
+                      </Button>
+                    ))}
+                  </div>
+                )}
+                
                 {/* Conversion UI */}
                 <div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-end">
                   <div className="space-y-2">

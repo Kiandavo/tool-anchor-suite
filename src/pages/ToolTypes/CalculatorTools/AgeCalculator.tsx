@@ -182,6 +182,28 @@ export default function AgeCalculator() {
             </TabsList>
 
             <TabsContent value="persian" className="mt-4 space-y-4">
+              {/* Quick Persian Year Presets */}
+              <div className="flex flex-wrap gap-2 justify-center">
+                {[
+                  { year: '1380', label: '۱۳۸۰' },
+                  { year: '1375', label: '۱۳۷۵' },
+                  { year: '1370', label: '۱۳۷۰' },
+                  { year: '1365', label: '۱۳۶۵' },
+                  { year: '1360', label: '۱۳۶۰' },
+                  { year: '1350', label: '۱۳۵۰' },
+                ].map((preset) => (
+                  <Button
+                    key={preset.year}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPersianDate({ ...persianDate, year: preset.year })}
+                    className="text-xs rounded-full"
+                  >
+                    {preset.label}
+                  </Button>
+                ))}
+              </div>
+
               <div className="grid grid-cols-3 gap-3">
                 <div className="space-y-2">
                   <Label className="text-xs">سال</Label>
@@ -225,7 +247,28 @@ export default function AgeCalculator() {
               </div>
             </TabsContent>
 
-            <TabsContent value="gregorian" className="mt-4">
+            <TabsContent value="gregorian" className="mt-4 space-y-4">
+              {/* Quick Gregorian Year Presets */}
+              <div className="flex flex-wrap gap-2 justify-center">
+                {[
+                  { year: '2000', label: '2000' },
+                  { year: '1995', label: '1995' },
+                  { year: '1990', label: '1990' },
+                  { year: '1985', label: '1985' },
+                  { year: '1980', label: '1980' },
+                  { year: '1970', label: '1970' },
+                ].map((preset) => (
+                  <Button
+                    key={preset.year}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setGregorianDate(`${preset.year}-01-01`)}
+                    className="text-xs rounded-full"
+                  >
+                    {preset.label}
+                  </Button>
+                ))}
+              </div>
               <div className="space-y-2">
                 <Label className="text-sm">تاریخ تولد</Label>
                 <Input

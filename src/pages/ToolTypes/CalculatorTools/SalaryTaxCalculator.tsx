@@ -111,10 +111,14 @@ export default function SalaryTaxCalculator() {
   };
 
   const presets = [
+    { label: '۸ میلیون', value: '8000000' },
     { label: '۱۰ میلیون', value: '10000000' },
     { label: '۱۵ میلیون', value: '15000000' },
+    { label: '۲۰ میلیون', value: '20000000' },
     { label: '۲۵ میلیون', value: '25000000' },
-    { label: '۴۰ میلیون', value: '40000000' },
+    { label: '۳۵ میلیون', value: '35000000' },
+    { label: '۵۰ میلیون', value: '50000000' },
+    { label: '۱۰۰ میلیون', value: '100000000' },
   ];
 
   return (

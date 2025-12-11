@@ -72,11 +72,27 @@ export default function LoanCalculator() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const presets = [
+  const amountPresets = [
     { label: '۵۰ میلیون', value: '50000000' },
     { label: '۱۰۰ میلیون', value: '100000000' },
     { label: '۲۰۰ میلیون', value: '200000000' },
     { label: '۵۰۰ میلیون', value: '500000000' },
+    { label: '۱ میلیارد', value: '1000000000' },
+    { label: '۲ میلیارد', value: '2000000000' },
+  ];
+
+  const ratePresets = [
+    { label: '۴٪ (بانک مسکن)', value: '4' },
+    { label: '۱۸٪ (بانک ملی)', value: '18' },
+    { label: '۲۳٪ (وام آزاد)', value: '23' },
+  ];
+
+  const termPresets = [
+    { label: '۱ سال', value: 12 },
+    { label: '۲ سال', value: 24 },
+    { label: '۳ سال', value: 36 },
+    { label: '۵ سال', value: 60 },
+    { label: '۱۰ سال', value: 120 },
   ];
 
   return (
@@ -103,7 +119,7 @@ export default function LoanCalculator() {
               dir="ltr"
             />
             <div className="flex flex-wrap gap-2">
-              {presets.map((preset) => (
+              {amountPresets.map((preset) => (
                 <Button
                   key={preset.value}
                   variant="outline"
@@ -115,6 +131,21 @@ export default function LoanCalculator() {
                 </Button>
               ))}
             </div>
+          </div>
+
+          {/* Quick Rate Presets */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {ratePresets.map((preset) => (
+              <Button
+                key={preset.value}
+                variant={interestRate === preset.value ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setInterestRate(preset.value)}
+                className="text-xs rounded-full"
+              >
+                {preset.label}
+              </Button>
+            ))}
           </div>
 
           {/* Interest Rate */}
@@ -152,10 +183,18 @@ export default function LoanCalculator() {
               step={6}
               className="py-2"
             />
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>۶ ماه</span>
-              <span>۵ سال</span>
-              <span>۱۰ سال</span>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {termPresets.map((preset) => (
+                <Button
+                  key={preset.value}
+                  variant={loanTerm === preset.value ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setLoanTerm(preset.value)}
+                  className="text-xs rounded-full"
+                >
+                  {preset.label}
+                </Button>
+              ))}
             </div>
           </div>
 

@@ -50,12 +50,16 @@ export default function DiscountCalculator() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const discountPresets = [10, 20, 30, 50, 70];
+  const discountPresets = [5, 10, 15, 20, 25, 30, 40, 50, 70];
   const pricePresets = [
+    { label: '۵۰ هزار', value: '50000' },
     { label: '۱۰۰ هزار', value: '100000' },
+    { label: '۲۵۰ هزار', value: '250000' },
     { label: '۵۰۰ هزار', value: '500000' },
     { label: '۱ میلیون', value: '1000000' },
+    { label: '۲ میلیون', value: '2000000' },
     { label: '۵ میلیون', value: '5000000' },
+    { label: '۱۰ میلیون', value: '10000000' },
   ];
 
   return (
