@@ -91,9 +91,9 @@ const AnimatedCounter = ({ value, suffix = '', duration = 2 }: { value: number; 
 
 // Main category pillars - clear value proposition
 const mainCategories = [
-  { icon: FileText, label: 'متن و نوشتار', href: '/category/text-tools', color: 'from-blue-500 to-cyan-500' },
-  { icon: Image, label: 'تصویر و فایل', href: '/category/image-tools', color: 'from-purple-500 to-pink-500' },
-  { icon: Hash, label: 'محاسبه و تبدیل', href: '/category/calculators', color: 'from-amber-500 to-orange-500' },
+  { icon: FileText, label: 'متن و نوشتار', href: '/text-tools', color: 'from-blue-500 to-cyan-500' },
+  { icon: Image, label: 'تصویر و فایل', href: '/image-tools', color: 'from-purple-500 to-pink-500' },
+  { icon: Hash, label: 'محاسبه و تبدیل', href: '/calculators', color: 'from-amber-500 to-orange-500' },
 ];
 
 const stats = [
