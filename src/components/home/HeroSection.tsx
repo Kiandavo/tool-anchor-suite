@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowDown, Sparkles, Calculator, BookOpen, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 import { CriticalLoader } from '@/components/performance/CriticalLoader';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 const FloatingOrb = ({ delay, size, x, y, color }: { delay: number; size: number; x: string; y: string; color: string }) => (
   <motion.div
@@ -104,6 +103,19 @@ const stats = [
 export const HeroSection = () => {
   const { scrollToElement } = useSmoothScroll();
   const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Parallax scroll effects
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -114,24 +126,43 @@ export const HeroSection = () => {
 
   return (
     <CriticalLoader>
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background pt-20 sm:pt-24 pb-8">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          {/* Modern gradient mesh */}
+      <section ref={sectionRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background pt-20 sm:pt-24 pb-8">
+        {/* Parallax Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Static gradient mesh */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(45_100%_60%/0.08),transparent)]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_80%_80%,hsl(var(--primary)/0.05),transparent)]" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-amber-400/[0.06] to-transparent rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-primary/[0.04] to-transparent rounded-full blur-3xl" />
+          
+          {/* Parallax layers */}
+          <motion.div 
+            style={{ y: y1 }}
+            className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-amber-400/[0.06] to-transparent rounded-full blur-3xl" 
+          />
+          <motion.div 
+            style={{ y: y2 }}
+            className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-primary/[0.04] to-transparent rounded-full blur-3xl" 
+          />
 
-          {/* Floating orbs with yellow tones */}
-          <FloatingOrb delay={0} size={400} x="10%" y="20%" color="radial-gradient(circle, hsl(45 100% 60% / 0.4) 0%, transparent 70%)" />
-          <FloatingOrb delay={2} size={300} x="70%" y="60%" color="radial-gradient(circle, hsl(35 100% 50% / 0.3) 0%, transparent 70%)" />
-          <FloatingOrb delay={4} size={200} x="80%" y="10%" color="radial-gradient(circle, hsl(50 100% 55% / 0.35) 0%, transparent 70%)" />
-          <FloatingOrb delay={3} size={250} x="5%" y="70%" color="radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%)" />
+          {/* Floating orbs with parallax */}
+          <motion.div style={{ y: y1 }}>
+            <FloatingOrb delay={0} size={400} x="10%" y="20%" color="radial-gradient(circle, hsl(45 100% 60% / 0.4) 0%, transparent 70%)" />
+          </motion.div>
+          <motion.div style={{ y: y3 }}>
+            <FloatingOrb delay={2} size={300} x="70%" y="60%" color="radial-gradient(circle, hsl(35 100% 50% / 0.3) 0%, transparent 70%)" />
+          </motion.div>
+          <motion.div style={{ y: y2 }}>
+            <FloatingOrb delay={4} size={200} x="80%" y="10%" color="radial-gradient(circle, hsl(50 100% 55% / 0.35) 0%, transparent 70%)" />
+          </motion.div>
+          <motion.div style={{ y: y1 }}>
+            <FloatingOrb delay={3} size={250} x="5%" y="70%" color="radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%)" />
+          </motion.div>
         </div>
 
-        {/* Main Content */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Main Content with parallax fade */}
+        <motion.div 
+          style={{ opacity, scale }}
+          className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+        >
           <div className="max-w-5xl mx-auto space-y-8">
             
             {/* Badge */}
@@ -307,7 +338,7 @@ export const HeroSection = () => {
             </motion.div>
 
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll Indicator */}
         <motion.div
