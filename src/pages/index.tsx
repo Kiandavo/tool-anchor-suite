@@ -1,12 +1,13 @@
 import React, { Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
 import { EssentialToolsSection } from '@/components/home/EssentialToolsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { LazySection } from '@/components/performance/LazySection';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
-import { generateWebsiteSchema, generateFAQSchema, generateOrganizationSchema, combineSchemas } from '@/utils/schemaUtils';
+import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { GeoTargeting } from '@/components/seo/GeoTargeting';
 import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
@@ -65,10 +66,11 @@ const Index = () => {
     }
   ];
 
-  const websiteSchema = generateWebsiteSchema();
-  const organizationSchema = generateOrganizationSchema();
+  const websiteSchema = generateEnhancedWebsiteSchema();
+  const organizationSchema = generateEnhancedOrganizationSchema();
+  const localBusinessSchema = generateLocalBusinessSchema();
   const faqSchema = generateFAQSchema(homeFAQ);
-  const combinedSchema = combineSchemas(websiteSchema, organizationSchema, faqSchema);
+  const combinedSchema = combineSchemas(websiteSchema, organizationSchema, localBusinessSchema, faqSchema);
 
   return (
     <Layout>
@@ -87,16 +89,25 @@ const Index = () => {
         faq={homeFAQ}
       />
       
+      {/* JSON-LD Structured Data */}
+      {combinedSchema && (
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify(combinedSchema)}
+          </script>
+        </Helmet>
+      )}
+      
       <GeoTargeting 
         title={homeTitle}
         description={homeDescription}
-        canonical="https://langar.co/"
+        canonical="https://laangar.com/"
       />
       
       <OpenGraphTags
         title={homeTitle}
         description={homeDescription}
-        url="https://langar.co/"
+        url="https://laangar.com/"
         type="website"
         siteName="لنگر - ابزارهای آنلاین فارسی"
       />

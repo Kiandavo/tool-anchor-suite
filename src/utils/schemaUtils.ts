@@ -253,6 +253,216 @@ export const generateOrganizationSchema = () => {
   }
 };
 
+// LocalBusiness schema for local SEO
+export const generateLocalBusinessSchema = () => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://laangar.com/#localbusiness",
+      "name": "لنگر - ابزارهای آنلاین رایگان",
+      "alternateName": "Laangar Online Tools",
+      "description": "ارائه‌دهنده بیش از ۱۰۰ ابزار آنلاین رایگان فارسی شامل محاسبه‌گر، تبدیل متن، ویرایش تصویر، سئو، فال حافظ و طالع‌بینی",
+      "url": "https://laangar.com",
+      "logo": "https://laangar.com/assets/laangar-logo.png",
+      "image": "https://laangar.com/assets/social-logo.jpg",
+      "telephone": "",
+      "email": "info@laangar.com",
+      "priceRange": "رایگان",
+      "currenciesAccepted": "IRR",
+      "paymentAccepted": "Free",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IR",
+        "addressRegion": "تهران",
+        "addressLocality": "تهران",
+        "postalCode": "",
+        "streetAddress": ""
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "35.6892",
+        "longitude": "51.3890"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "ایران"
+      },
+      "serviceArea": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "35.6892",
+          "longitude": "51.3890"
+        },
+        "geoRadius": "5000000"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+        ],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "sameAs": [
+        "https://www.instagram.com/kiandavo"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "ابزارهای آنلاین لنگر",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "ابزارهای محاسباتی",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "محاسبه‌گر BMI"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "محاسبه‌گر وام"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "فال و طالع‌بینی",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "فال حافظ"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "فال تاروت"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "استخاره مولانا"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    };
+  } catch (error) {
+    console.error('Error generating local business schema:', error);
+    return null;
+  }
+};
+
+// Enhanced WebSite schema with SearchAction
+export const generateEnhancedWebsiteSchema = () => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://laangar.com/#website",
+      "name": "لنگر",
+      "alternateName": ["Laangar", "لنگر آنلاین", "Langar Tools"],
+      "url": "https://laangar.com",
+      "description": "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال حافظ و طالع‌بینی",
+      "inLanguage": "fa-IR",
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://laangar.com/#organization"
+      },
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://laangar.com/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      ],
+      "copyrightYear": "2024",
+      "copyrightHolder": {
+        "@type": "Organization",
+        "name": "لنگر"
+      }
+    };
+  } catch (error) {
+    console.error('Error generating enhanced website schema:', error);
+    return null;
+  }
+};
+
+// Enhanced Organization schema
+export const generateEnhancedOrganizationSchema = () => {
+  try {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://laangar.com/#organization",
+      "name": "لنگر",
+      "alternateName": ["Laangar", "Langar Online Tools"],
+      "url": "https://laangar.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://laangar.com/assets/laangar-logo.png",
+        "width": "512",
+        "height": "512"
+      },
+      "image": "https://laangar.com/assets/social-logo.jpg",
+      "description": "ارائه‌دهنده بیش از ۱۰۰ ابزار آنلاین رایگان فارسی برای محاسبات، تبدیل متن، ویرایش تصاویر، سئو، فال و طالع‌بینی",
+      "foundingDate": "2024",
+      "foundingLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "IR",
+          "addressLocality": "تهران"
+        }
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "ایران"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "availableLanguage": ["fa", "en"],
+          "email": "info@laangar.com"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/kiandavo"
+      ],
+      "knowsAbout": [
+        "Online Tools",
+        "Persian Fortune Telling",
+        "Calculators",
+        "Image Editing",
+        "SEO Tools",
+        "Text Conversion"
+      ]
+    };
+  } catch (error) {
+    console.error('Error generating enhanced organization schema:', error);
+    return null;
+  }
+};
+
 // Article schema for blog posts and guides
 export const generateArticleSchema = (
   headline: string,
