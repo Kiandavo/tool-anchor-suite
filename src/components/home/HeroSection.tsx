@@ -1,142 +1,259 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowDown, Search } from 'lucide-react';
+import { ArrowDown, Sparkles, Calculator, BookOpen, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 import { CriticalLoader } from '@/components/performance/CriticalLoader';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const FloatingOrb = ({ delay, size, x, y }: { delay: number; size: number; x: string; y: string }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{ 
+      opacity: [0.3, 0.6, 0.3],
+      scale: [1, 1.2, 1],
+      y: [0, -20, 0],
+    }}
+    transition={{
+      duration: 6,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+    className="absolute rounded-full blur-3xl pointer-events-none"
+    style={{
+      width: size,
+      height: size,
+      left: x,
+      top: y,
+      background: 'radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, transparent 70%)',
+    }}
+  />
+);
+
+const AnimatedWord = ({ children, delay }: { children: string; delay: number }) => (
+  <motion.span
+    initial={{ opacity: 0, y: 40, rotateX: -90 }}
+    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+    transition={{ 
+      duration: 0.8, 
+      delay,
+      ease: [0.16, 1, 0.3, 1]
+    }}
+    className="inline-block"
+  >
+    {children}
+  </motion.span>
+);
+
+const categories = [
+  { icon: Calculator, label: 'ابزار محاسباتی', count: '۵۰+', href: '/category/calculators' },
+  { icon: BookOpen, label: 'فال و طالع‌بینی', count: '۱۰+', href: '/category/readings' },
+  { icon: Star, label: 'فرهنگ فارسی', count: '۲۰+', href: '/category/persian-cultural' },
+];
 
 export const HeroSection = () => {
   const { scrollToElement } = useSmoothScroll();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % categories.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <CriticalLoader>
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background">
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-background z-0" />
-        
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          {/* Gradient mesh */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(var(--primary)/0.15),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_80%,hsl(var(--primary)/0.1),transparent)]" />
+          
+          {/* Grid pattern */}
+          <div 
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
+              backgroundSize: '60px 60px',
+            }}
+          />
+
+          {/* Floating orbs */}
+          <FloatingOrb delay={0} size={400} x="10%" y="20%" />
+          <FloatingOrb delay={2} size={300} x="70%" y="60%" />
+          <FloatingOrb delay={4} size={200} x="80%" y="10%" />
+        </div>
+
         {/* Main Content */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-6xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto">
             
-            {/* Location Tags */}
-            <motion.div 
+            {/* Badge */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex items-center justify-center gap-3 mb-12 text-sm tracking-[0.2em] text-primary/80"
+              className="flex justify-center mb-8"
             >
-              <span>ابزار</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
-              <span>فال</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
-              <span>محاسبه</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm">
+                <Sparkles className="w-4 h-4" />
+                <span>بیش از ۸۰ ابزار رایگان آنلاین</span>
+              </div>
             </motion.div>
 
-            {/* Main Title - Large Typography */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-8"
-            >
-              <h1 className="font-heading font-bold tracking-tight leading-none">
-                <span className="block text-[clamp(3rem,12vw,10rem)] text-foreground/10 stroke-text">
-                  لنگر
+            {/* Main Title */}
+            <div className="text-center mb-6 overflow-hidden">
+              <h1 className="font-heading font-bold text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] tracking-tight">
+                <AnimatedWord delay={0.1}>همه</AnimatedWord>{' '}
+                <AnimatedWord delay={0.2}>ابزارهای</AnimatedWord>{' '}
+                <span className="relative inline-block">
+                  <AnimatedWord delay={0.3}>فارسی</AnimatedWord>
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    className="absolute -bottom-2 left-0 right-0 h-3 bg-primary/20 -z-10 origin-right"
+                  />
+                </span>
+                <br />
+                <AnimatedWord delay={0.4}>در</AnimatedWord>{' '}
+                <span className="text-primary">
+                  <AnimatedWord delay={0.5}>یک</AnimatedWord>{' '}
+                  <AnimatedWord delay={0.6}>مکان</AnimatedWord>
                 </span>
               </h1>
-            </motion.div>
+            </div>
 
             {/* Subtitle */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg sm:text-xl text-primary tracking-wide mb-16"
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-center text-lg sm:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto"
             >
-              مجموعه ابزارهای آنلاین فارسی
+              محاسبه‌گر، مبدل، فال و طالع‌بینی، تقویم و ابزارهای فرهنگی فارسی
             </motion.p>
 
             {/* Search Section */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="max-w-2xl mx-auto mb-20"
+              transition={{ duration: 0.6, delay: 0.9 }}
+              className="max-w-2xl mx-auto mb-16"
             >
               <EnhancedSearchBar />
             </motion.div>
 
-            {/* Feature Grid */}
+            {/* Animated Categories */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.1 }}
+              className="flex flex-col items-center gap-6 mb-16"
             >
-              {[
-                { 
-                  label: 'ابزار',
-                  title: 'ابزارهای تخصصی',
-                  desc: 'محاسبه‌گر، مبدل و طراحی',
-                  href: '/category/calculators'
-                },
-                { 
-                  label: 'فرهنگ',
-                  title: 'فرهنگ فارسی',
-                  desc: 'تقویم، ادبیات و موسیقی',
-                  href: '/category/persian-cultural'
-                },
-                { 
-                  label: 'فال',
-                  title: 'طالع‌بینی',
-                  desc: 'فال حافظ، تاروت و طالع',
-                  href: '/category/readings'
-                },
-              ].map((item, index) => (
-                <Link key={index} to={item.href} className="group">
-                  <div className="relative p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-500 hover:border-primary/30 hover:bg-card/50 hover:-translate-y-1">
-                    <span className="absolute top-4 right-4 text-xs tracking-widest text-muted-foreground uppercase">
-                      {item.label}
-                    </span>
-                    <div className="pt-8">
-                      <h3 className="text-xl font-heading font-semibold mb-2 group-hover:text-primary transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+              {/* Category Pills */}
+              <div className="flex flex-wrap justify-center gap-3">
+                {categories.map((cat, index) => {
+                  const Icon = cat.icon;
+                  return (
+                    <Link key={index} to={cat.href}>
+                      <motion.div
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.98 }}
+                        className={`
+                          flex items-center gap-3 px-5 py-3 rounded-2xl border transition-all duration-300 cursor-pointer
+                          ${activeIndex === index 
+                            ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/25' 
+                            : 'bg-card/50 border-border/50 hover:border-primary/30 hover:bg-card'
+                          }
+                        `}
+                      >
+                        <Icon className="w-5 h-5" />
+                        <span className="font-medium">{cat.label}</span>
+                        <span className={`
+                          text-xs px-2 py-0.5 rounded-full
+                          ${activeIndex === index ? 'bg-primary-foreground/20' : 'bg-primary/10 text-primary'}
+                        `}>
+                          {cat.count}
+                        </span>
+                      </motion.div>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {/* Animated indicator */}
+              <div className="flex gap-1.5">
+                {categories.map((_, index) => (
+                  <motion.div
+                    key={index}
+                    animate={{
+                      width: activeIndex === index ? 24 : 8,
+                      backgroundColor: activeIndex === index 
+                        ? 'hsl(var(--primary))' 
+                        : 'hsl(var(--muted-foreground) / 0.3)'
+                    }}
+                    className="h-2 rounded-full cursor-pointer"
+                    onClick={() => setActiveIndex(index)}
+                  />
+                ))}
+              </div>
             </motion.div>
 
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
+              transition={{ duration: 0.6, delay: 1.3 }}
               className="flex flex-col sm:flex-row justify-center gap-4"
             >
               <Button 
                 size="lg" 
-                className="px-8 py-6 text-base font-medium rounded-full bg-foreground text-background hover:bg-foreground/90"
+                className="group relative px-8 py-6 text-base font-medium rounded-full overflow-hidden"
                 asChild
               >
                 <Link to="/all-tools">
-                  مشاهده همه ابزارها
+                  <span className="relative z-10">مشاهده همه ابزارها</span>
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary"
+                    animate={{ x: ['-100%', '100%'] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                    style={{ opacity: 0.3 }}
+                  />
                 </Link>
               </Button>
               <Button 
                 variant="outline"
                 size="lg" 
-                className="px-8 py-6 text-base font-medium rounded-full border-foreground/20 hover:bg-foreground/5"
+                className="px-8 py-6 text-base font-medium rounded-full border-2 hover:bg-primary/5"
                 onClick={() => scrollToElement('popular-tools')}
               >
                 ابزارهای محبوب
+                <ArrowDown className="w-4 h-4 mr-2" />
               </Button>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.5 }}
+              className="flex justify-center gap-8 sm:gap-16 mt-16 pt-8 border-t border-border/30"
+            >
+              {[
+                { value: '۸۰+', label: 'ابزار رایگان' },
+                { value: '۱۰۰٪', label: 'فارسی' },
+                { value: '۲۴/۷', label: 'در دسترس' },
+              ].map((stat, index) => (
+                <div key={index} className="text-center">
+                  <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
             </motion.div>
           </div>
         </div>
@@ -145,17 +262,17 @@ export const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: 0.6, delay: 1.7 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <button
             onClick={() => scrollToElement('popular-tools')}
-            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
           >
-            <span className="text-xs tracking-widest uppercase">بیشتر</span>
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
+              className="p-2 rounded-full border border-border/50 hover:border-primary/30"
             >
               <ArrowDown className="w-5 h-5" />
             </motion.div>
