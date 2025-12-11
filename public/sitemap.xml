@@ -2,147 +2,195 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <!-- Homepage -->
   <url>
-    <loc>https://langar.co/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
   <!-- All Tools Page -->
   <url>
-    <loc>https://langar.co/all-tools</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/all-tools</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  
+  <!-- Static Pages -->
+  <url>
+    <loc>https://laangar.com/about</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/faq</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/contact</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/privacy</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/terms</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
   
   <!-- Categories -->
   <url>
-    <loc>https://langar.co/category/calculators</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/calculators</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/text</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/text</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/image</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/image</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/seo</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/seo</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/persian-cultural</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/persian-cultural</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/readings</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/readings</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/number</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/number</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/random</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/random</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/educational</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/educational</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/productivity</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/productivity</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://langar.co/category/design</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/category/design</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
-  <!-- High Priority Tools -->
+  <!-- High Priority Reading Tools -->
   <url>
-    <loc>https://langar.co/tool/insurance-calculator</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/bmi-calculator</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/loan-calculator</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/age-calculator</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/qr-code-generator</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/password-generator</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/text-converter</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/color-picker</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/meta-tag-generator</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/horoscope</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://laangar.com/tool/hafez-fortune</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/tarot-reading</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/rumi-istikhara</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/horoscope</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- High Priority Calculator Tools -->
+  <url>
+    <loc>https://laangar.com/tool/bmi-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/loan-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/age-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/percentage-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- High Priority Utility Tools -->
+  <url>
+    <loc>https://laangar.com/tool/qr-code-generator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/password-generator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/color-picker</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/meta-tag-generator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 </urlset>

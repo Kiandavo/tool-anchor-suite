@@ -1,225 +1,271 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
+  <!-- Calculator Tools -->
   <url>
-    <loc>https://langar.co/tool/percentage-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/percentage-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/loan-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/loan-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/age-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/age-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/bmi-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/bmi-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/salary-tax-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/salary-tax-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/discount-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/discount-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/unit-converter</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/unit-converter</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/date-difference</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/date-difference</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/tip-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/tip-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/area-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/area-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/volume-calculator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/volume-calculator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Text Tools -->
+  <url>
+    <loc>https://laangar.com/tool/text-counter</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/text-counter</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/base64-encoder-decoder</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/base64-encoder-decoder</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/url-encoder-decoder</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/url-encoder-decoder</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/text-to-uppercase</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/text-to-uppercase</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/text-to-lowercase</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/text-to-lowercase</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/json-formatter</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- SEO Tools -->
+  <url>
+    <loc>https://laangar.com/tool/meta-tag-generator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/json-formatter</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/keyword-density</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/meta-tag-generator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/robots-txt-generator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Utility Tools -->
+  <url>
+    <loc>https://laangar.com/tool/qr-code-generator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/keyword-density</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/password-generator</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/robots-txt-generator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/color-palette-generator</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Image Tools -->
+  <url>
+    <loc>https://laangar.com/tool/image-compressor</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/qr-code-generator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/image-resizer</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/password-generator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/svg-to-png-converter</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/color-palette-generator</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/image-cropper</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <mobile:mobile/>
   </url>
+  
+  <!-- Reading & Fortune Tools - High Priority -->
   <url>
-    <loc>https://langar.co/tool/image-compressor</loc>
-    <lastmod>2025-01-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://laangar.com/tool/hafez-fortune</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/image-resizer</loc>
-    <lastmod>2025-01-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://laangar.com/tool/rumi-istikhara</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/svg-to-png-converter</loc>
-    <lastmod>2025-01-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://laangar.com/tool/tarot-reading</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/image-cropper</loc>
-    <lastmod>2025-01-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <mobile:mobile/>
-  </url>
-  <url>
-    <loc>https://langar.co/tool/hafez-fal</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/horoscope</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/rumi-istikhara</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/dream-interpretation</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/birth-chart</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/numerology</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/crystal-ball</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/coffee-reading</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+    <mobile:mobile/>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/saadi-oracle</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <mobile:mobile/>
   </url>
   <url>
-    <loc>https://langar.co/tool/tarot-reading</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://laangar.com/tool/shahname-reading</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+  </url>
+  <url>
+    <loc>https://laangar.com/tool/daily-horoscope</loc>
+    <lastmod>2025-12-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <mobile:mobile/>
