@@ -436,7 +436,7 @@ export default function PersianCalligraphy() {
 
                 <div className="flex flex-wrap gap-2">
                   <Button
-                    variant="apple"
+                    variant="default"
                     onClick={handlePrint}
                     className="flex items-center gap-2"
                   >
@@ -475,7 +475,7 @@ export default function PersianCalligraphy() {
               
               <div className="flex justify-center mt-4">
                 <Button
-                  variant="apple"
+                  variant="default"
                   onClick={handlePrint}
                   className="flex items-center gap-2"
                 >

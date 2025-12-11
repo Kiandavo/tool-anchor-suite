@@ -150,7 +150,7 @@ const Index = () => {
               </Suspense>
             </LazySection>
 
-            <SectionDivider variant="wave" />
+            <SectionDivider variant="fade" />
 
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
               <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>

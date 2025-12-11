@@ -1,14 +1,14 @@
-
+/* Modern Card Utilities */
 .card {
-  @apply bg-card text-card-foreground rounded-xl border shadow-sm;
+  @apply bg-card text-card-foreground rounded-xl border border-border/50 shadow-sm;
 }
 
 .card-header {
-  @apply p-6 pb-0;
+  @apply p-5 pb-0;
 }
 
 .card-title {
-  @apply text-lg font-semibold leading-tight;
+  @apply text-base font-semibold leading-tight;
 }
 
 .card-description {
@@ -16,11 +16,11 @@
 }
 
 .card-content {
-  @apply p-6;
+  @apply p-5;
 }
 
 .card-footer {
-  @apply flex items-center p-6 pt-0;
+  @apply flex items-center p-5 pt-0;
 }
 
 /* Card variants */
@@ -29,9 +29,13 @@
 }
 
 .card-elevated {
-  @apply shadow-lg;
+  @apply shadow-md border-transparent;
 }
 
 .card-glass {
-  @apply bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm border-white/20 dark:border-gray-800/20;
+  @apply bg-background/80 backdrop-blur-sm border-border/30;
+}
+
+.card-interactive {
+  @apply transition-all duration-200 hover:shadow-md hover:border-border;
 }

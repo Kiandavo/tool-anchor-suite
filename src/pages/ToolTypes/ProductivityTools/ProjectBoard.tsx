@@ -285,7 +285,7 @@ export default function ProjectBoard() {
             <Dialog open={isAddingTask} onOpenChange={setIsAddingTask}>
               <DialogTrigger asChild>
                 <Button
-                  variant="apple"
+                  variant="default"
                   size="sm"
                   className="flex items-center gap-2"
                 >
