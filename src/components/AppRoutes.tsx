@@ -5,6 +5,7 @@ import Index from "@/pages/index";
 
 // Lazy load all non-critical routes
 const Category = lazy(() => import("@/pages/Category"));
+const CategoryPage = lazy(() => import("@/pages/CategoryPage"));
 const Tool = lazy(() => import("@/pages/Tool"));
 const AllTools = lazy(() => import("@/pages/AllTools"));
 const Settings = lazy(() => import("@/pages/Settings"));
@@ -43,7 +44,30 @@ export const AppRoutes = () => {
     <Suspense fallback={<RouteLoader />}>
       <Routes>
         <Route path="/" element={<Index />} />
+        
+        {/* New clean category URLs */}
+        <Route path="/calculators" element={<CategoryPage categorySlug="calculators" />} />
+        <Route path="/text-tools" element={<CategoryPage categorySlug="text-tools" />} />
+        <Route path="/image-tools" element={<CategoryPage categorySlug="image-tools" />} />
+        <Route path="/persian-tools" element={<CategoryPage categorySlug="persian-tools" />} />
+        <Route path="/readings" element={<CategoryPage categorySlug="readings" />} />
+        <Route path="/seo-tools" element={<CategoryPage categorySlug="seo-tools" />} />
+        <Route path="/random-tools" element={<CategoryPage categorySlug="random-tools" />} />
+        <Route path="/number-tools" element={<CategoryPage categorySlug="number-tools" />} />
+        <Route path="/educational-tools" element={<CategoryPage categorySlug="educational-tools" />} />
+        <Route path="/productivity-tools" element={<CategoryPage categorySlug="productivity-tools" />} />
+        <Route path="/design-tools" element={<CategoryPage categorySlug="design-tools" />} />
+        
+        {/* Persian URL aliases for categories */}
+        <Route path="/محاسبه‌گرها" element={<CategoryPage categorySlug="calculators" />} />
+        <Route path="/ابزار-متنی" element={<CategoryPage categorySlug="text-tools" />} />
+        <Route path="/ابزار-تصویر" element={<CategoryPage categorySlug="image-tools" />} />
+        <Route path="/فرهنگ-فارسی" element={<CategoryPage categorySlug="persian-tools" />} />
+        <Route path="/فال-طالع‌بینی" element={<CategoryPage categorySlug="readings" />} />
+        
+        {/* Legacy category routes (backwards compatibility) */}
         <Route path="/category/:categoryId" element={<Category />} />
+        
         <Route path="/tool/:slug" element={<Tool />} />
         <Route path="/all-tools" element={<AllTools />} />
         <Route path="/settings" element={<Settings />} />
