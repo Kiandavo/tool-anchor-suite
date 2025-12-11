@@ -32,9 +32,11 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             alt="LAANGAR"
             width={128}
             height={128}
-            className="h-32 w-auto object-contain"
+            className="h-32 w-32 object-contain"
+            fetchPriority="high"
             style={{
-              animation: 'fadeIn 800ms ease-out, scale 600ms ease-out'
+              animation: 'fadeIn 800ms ease-out, scale 600ms ease-out',
+              aspectRatio: '1 / 1'
             }}
           />
         </div>
