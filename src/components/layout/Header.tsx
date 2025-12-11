@@ -5,7 +5,6 @@ import langarLogo from '@/assets/laangar-logo.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollProgress } from './ScrollProgress';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { QuickLaunchBar } from '@/components/ui/QuickLaunchBar';
 
 interface HeaderProps {
@@ -137,8 +136,6 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 </kbd>
               </motion.button>
 
-              {/* Theme Toggle */}
-              <ThemeToggle size="md" />
 
               {/* Keyboard Shortcuts Help */}
               <motion.button
