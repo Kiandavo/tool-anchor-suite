@@ -60,30 +60,16 @@ export const useHafezReading = () => {
   const getRandomPoem = async () => {
     setIsLoading(true);
 
-    // Simulate loading
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Faster loading
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
     try {
       const availablePoems = getFilteredPoems();
       const randomIndex = Math.floor(Math.random() * availablePoems.length);
       const selectedPoem = availablePoems[randomIndex];
 
-      // Add metadata for analysis (in production, this would come from database)
-      const enhancedPoem = {
-        ...selectedPoem,
-        keywords: ['می', 'ساقی', 'عشق', 'دل'],
-        theme: 'spiritual' as const,
-        emotion: 'contemplative' as const,
-        historicalContext: 'این غزل در دوران پختگی فکری حافظ سروده شده است.',
-        yearWritten: 'حدود 760 هجری قمری',
-        symbols: [
-          { term: 'می', meaning: 'شراب الهی، عشق حقیقی و معرفت', category: 'spiritual' },
-          { term: 'ساقی', meaning: 'مرشد کامل، راهنمای معنوی', category: 'spiritual' },
-          { term: 'عشق', meaning: 'محبت الهی و دلبستگی معنوی', category: 'love' },
-        ],
-      };
-
-      setPoem(enhancedPoem);
+      // Use the poem data directly - it already has all the fields
+      setPoem(selectedPoem);
 
       toast({
         title: 'فال حافظ',

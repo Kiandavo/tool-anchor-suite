@@ -1,546 +1,254 @@
-
-import React, { useState, useMemo, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useMemo } from 'react';
+import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { 
-  CreditCard, 
-  Landmark, 
-  TrendingUp, 
-  Calculator, 
-  FileText, 
-  PieChart, 
-  Info,
-  DollarSign,
-  RotateCcw,
-  Download,
-  BarChart3,
-  Clock,
-  Calendar,
-  Wallet
-} from "lucide-react";
+import { Landmark, RotateCcw, Copy, Check, TrendingUp, Wallet } from "lucide-react";
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPie, Pie, Cell, Legend } from 'recharts';
+import { Progress } from '@/components/ui/progress';
 
-// Enhanced tax brackets for different years
 const TAX_BRACKETS = {
   '1403': [
-    { max: 8_800_000, rate: 0, name: 'معاف از مالیات', color: '#22c55e' },
-    { max: 13_200_000, rate: 0.10, name: 'پله اول - ۱۰٪', color: '#84cc16' },
-    { max: 22_000_000, rate: 0.15, name: 'پله دوم - ۱۵٪', color: '#eab308' },
-    { max: 30_800_000, rate: 0.20, name: 'پله سوم - ۲۰٪', color: '#f97316' },
-    { max: Infinity, rate: 0.30, name: 'پله چهارم - ۳۰٪', color: '#ef4444' },
+    { max: 8_800_000, rate: 0, name: 'معاف', color: 'bg-green-500' },
+    { max: 13_200_000, rate: 0.10, name: '۱۰٪', color: 'bg-lime-500' },
+    { max: 22_000_000, rate: 0.15, name: '۱۵٪', color: 'bg-yellow-500' },
+    { max: 30_800_000, rate: 0.20, name: '۲۰٪', color: 'bg-orange-500' },
+    { max: Infinity, rate: 0.30, name: '۳۰٪', color: 'bg-red-500' },
   ],
   '1402': [
-    { max: 7_000_000, rate: 0, name: 'معاف از مالیات', color: '#22c55e' },
-    { max: 10_500_000, rate: 0.10, name: 'پله اول - ۱۰٪', color: '#84cc16' },
-    { max: 17_500_000, rate: 0.15, name: 'پله دوم - ۱۵٪', color: '#eab308' },
-    { max: 24_500_000, rate: 0.20, name: 'پله سوم - ۲۰٪', color: '#f97316' },
-    { max: Infinity, rate: 0.30, name: 'پله چهارم - ۳۰٪', color: '#ef4444' },
+    { max: 7_000_000, rate: 0, name: 'معاف', color: 'bg-green-500' },
+    { max: 10_500_000, rate: 0.10, name: '۱۰٪', color: 'bg-lime-500' },
+    { max: 17_500_000, rate: 0.15, name: '۱۵٪', color: 'bg-yellow-500' },
+    { max: 24_500_000, rate: 0.20, name: '۲۰٪', color: 'bg-orange-500' },
+    { max: Infinity, rate: 0.30, name: '۳۰٪', color: 'bg-red-500' },
   ]
-};
-
-interface TaxDetail {
-  bracket: string;
-  amount: number;
-  rate: number;
-  tax: number;
-  name: string;
-  color: string;
-}
-
-interface TaxResult {
-  grossSalary: number;
-  totalTax: number;
-  netSalary: number;
-  effectiveTaxRate: number;
-  marginalTaxRate: number;
-  details: TaxDetail[];
-}
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
 };
 
 export default function SalaryTaxCalculator() {
   const [salary, setSalary] = useState<string>('');
   const [taxYear, setTaxYear] = useState<string>('1403');
   const [calculationType, setCalculationType] = useState<string>('monthly');
-  const [result, setResult] = useState<TaxResult | null>(null);
-  const [isCalculating, setIsCalculating] = useState(false);
-  
-  // Format input with thousands separator
-  const formatInput = (value: string): string => {
-    const plainNumber = value.replace(/[^\d]/g, '');
-    if (plainNumber === '') return '';
-    return plainNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const [copied, setCopied] = useState(false);
+
+  const formatNumber = (value: string) => {
+    const num = value.replace(/[^\d]/g, '');
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatInput(e.target.value);
-    setSalary(formatted);
-  };
-  
-  const formatRial = (amount: number): string => {
-    return new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
-  };
+  const parseNumber = (value: string): number => parseFloat(value.replace(/,/g, '')) || 0;
 
-  const calculateTax = useCallback(async (yearToCalculate: string = taxYear): Promise<TaxResult | null> => {
-    const salaryValueRaw = parseFloat(salary.replace(/,/g, ''));
-    
-    if (isNaN(salaryValueRaw) || salaryValueRaw < 0) return null;
+  const formatCurrency = (amount: number): string =>
+    new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
+
+  const result = useMemo(() => {
+    const salaryValue = parseNumber(salary);
+    if (!salaryValue) return null;
 
     const isYearly = calculationType === 'yearly';
-    const salaryMonthly = isYearly ? salaryValueRaw / 12 : salaryValueRaw;
+    const monthlySalary = isYearly ? salaryValue / 12 : salaryValue;
 
-    const brackets = TAX_BRACKETS[yearToCalculate as keyof typeof TAX_BRACKETS];
-    let totalTaxMonthly = 0;
-    let remainingSalaryMonthly = salaryMonthly;
-    const detailsMonthly: TaxDetail[] = [];
+    const brackets = TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS];
+    let totalTax = 0;
+    let remainingSalary = monthlySalary;
     let previousMax = 0;
-    
+
+    const details: { name: string; amount: number; tax: number; color: string }[] = [];
+
     for (const bracket of brackets) {
-      const bracketRange = bracket.max === Infinity ? remainingSalaryMonthly : Math.min(bracket.max - previousMax, remainingSalaryMonthly);
-      
+      const bracketRange = bracket.max === Infinity 
+        ? remainingSalary 
+        : Math.min(bracket.max - previousMax, remainingSalary);
+
       if (bracketRange > 0) {
         const taxForBracket = bracketRange * bracket.rate;
-        totalTaxMonthly += taxForBracket;
+        totalTax += taxForBracket;
         
-        detailsMonthly.push({
-          bracket: `${formatRial(previousMax)} تا ${bracket.max !== Infinity ? formatRial(bracket.max) : 'بی‌نهایت'}`,
-          amount: bracketRange,
-          rate: bracket.rate * 100,
-          tax: taxForBracket,
+        details.push({
           name: bracket.name,
-          color: bracket.color
+          amount: bracketRange,
+          tax: taxForBracket,
+          color: bracket.color,
         });
-        
-        remainingSalaryMonthly -= bracketRange;
-        if (remainingSalaryMonthly <= 0) break;
+
+        remainingSalary -= bracketRange;
+        if (remainingSalary <= 0) break;
       }
-      
       previousMax = bracket.max === Infinity ? previousMax : bracket.max;
     }
 
-    const grossSalary = isYearly ? salaryMonthly * 12 : salaryMonthly;
-    const totalTax = isYearly ? totalTaxMonthly * 12 : totalTaxMonthly;
-    const netSalary = grossSalary - totalTax;
-    const effectiveTaxRate = grossSalary > 0 ? (totalTax / grossSalary) * 100 : 0;
-    const marginalTaxRate = detailsMonthly.length > 0 ? detailsMonthly[detailsMonthly.length - 1].rate : 0;
+    const grossSalary = isYearly ? monthlySalary * 12 : monthlySalary;
+    const totalTaxFinal = isYearly ? totalTax * 12 : totalTax;
+    const netSalary = grossSalary - totalTaxFinal;
+    const effectiveRate = grossSalary > 0 ? (totalTaxFinal / grossSalary) * 100 : 0;
 
-    const details = detailsMonthly.map(d => ({
-      ...d,
-      amount: isYearly ? d.amount * 12 : d.amount,
-      tax: isYearly ? d.tax * 12 : d.tax,
-    }));
-
-    return { grossSalary, totalTax, netSalary, effectiveTaxRate, marginalTaxRate, details };
+    return {
+      grossSalary,
+      totalTax: totalTaxFinal,
+      netSalary,
+      effectiveRate,
+      details: details.map(d => ({
+        ...d,
+        amount: isYearly ? d.amount * 12 : d.amount,
+        tax: isYearly ? d.tax * 12 : d.tax,
+      })),
+    };
   }, [salary, taxYear, calculationType]);
-
-  const handleCalculate = async () => {
-    setIsCalculating(true);
-    
-    try {
-      const salaryValue = parseFloat(salary.replace(/,/g, ''));
-      
-      if (isNaN(salaryValue) || salaryValue < 0) {
-        toast.error("مقدار نامعتبر", { description: "لطفا مقدار معتبری برای حقوق وارد کنید", position: "top-center" });
-        return;
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 800));
-      const taxResult = await calculateTax();
-      
-      if (taxResult) {
-        setResult(taxResult);
-        toast.success("محاسبه با موفقیت انجام شد", { description: `مالیات: ${formatRial(taxResult.totalTax)}`, position: "top-center" });
-      }
-    } catch (error) {
-      toast.error("خطا در محاسبه", { description: "لطفا مقادیر را بررسی کنید", position: "top-center" });
-    } finally {
-      setIsCalculating(false);
-    }
-  };
 
   const handleReset = () => {
     setSalary('');
-    setResult(null);
-    toast.info("فرم پاک شد", { description: "اطلاعات جدید وارد کنید", position: "top-center" });
   };
 
-  // Tax Bracket Chart Data
-  const taxBracketChartData = useMemo(() => {
-    if (!result) return [];
-    return result.details.filter(d => d.amount > 0).map(d => ({
-      name: d.name.replace(' - ', '\n'),
-      amount: Math.round(d.amount),
-      tax: Math.round(d.tax),
-      fill: d.color
-    }));
-  }, [result]);
+  const copyResult = async () => {
+    if (!result) return;
+    const text = `حقوق ناخالص: ${formatCurrency(result.grossSalary)}\nمالیات: ${formatCurrency(result.totalTax)}\nحقوق خالص: ${formatCurrency(result.netSalary)}`;
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast.success('کپی شد');
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-  // Pie Chart Data for Net vs Gross
-  const pieChartData = useMemo(() => {
-    if (!result) return [];
-    return [
-      { name: 'حقوق خالص', value: Math.round(result.netSalary), fill: '#22c55e' },
-      { name: 'مالیات', value: Math.round(result.totalTax), fill: '#ef4444' }
-    ];
-  }, [result]);
-
-  // Take-home pay breakdown
-  const takeHomeBreakdown = useMemo(() => {
-    if (!result) return null;
-    const monthly = calculationType === 'yearly' ? result.netSalary / 12 : result.netSalary;
-    return {
-      hourly: monthly / 176, // 22 days * 8 hours
-      daily: monthly / 22,
-      weekly: monthly / 4,
-      monthly: monthly,
-      yearly: monthly * 12
-    };
-  }, [result, calculationType]);
-
-  const taxBurdenPercentage = useMemo(() => {
-    if (!result) return 0;
-    return Math.min((result.effectiveTaxRate / 30) * 100, 100);
-  }, [result]);
+  const presets = [
+    { label: '۱۰ میلیون', value: '10000000' },
+    { label: '۱۵ میلیون', value: '15000000' },
+    { label: '۲۵ میلیون', value: '25000000' },
+    { label: '۴۰ میلیون', value: '40000000' },
+  ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <Card className="vibrant-card overflow-hidden">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 justify-center">
-            <div className="icon-container">
-              <Landmark className="h-6 w-6 text-primary" />
-            </div>
-            محاسبه‌گر پیشرفته مالیات حقوق
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="neo-glass rounded-xl p-4">
-            <h3 className="font-medium mb-3 flex items-center gap-2">
-              <Info className="h-4 w-4 text-primary" />
-              پلکان‌های مالیاتی سال {taxYear}
-            </h3>
-            <div className="text-sm text-muted-foreground space-y-1">
-              {TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS].map((bracket, index) => {
-                const isYearly = calculationType === 'yearly';
-                const prevMax = TAX_BRACKETS[taxYear as keyof typeof TAX_BRACKETS][index - 1]?.max || 0;
-                const displayMax = bracket.max === Infinity ? Infinity : (isYearly ? bracket.max * 12 : bracket.max);
-                return (
-                  <p key={index} className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full" style={{ backgroundColor: bracket.color }}></span>
-                    {bracket.name}: {displayMax === Infinity ? 'بیش از ' + formatRial(isYearly ? prevMax * 12 : prevMax) : `تا ${formatRial(displayMax)}`}
-                  </p>
-                );
-              })}
+    <div className="max-w-xl mx-auto space-y-6">
+      <Card className="border-primary/20 bg-card/50 backdrop-blur-sm">
+        <CardContent className="p-6 space-y-6">
+          {/* Header */}
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary">
+              <Landmark className="w-4 h-4" />
+              <span className="text-sm font-medium">محاسبه مالیات حقوق</span>
             </div>
           </div>
-          
-          <Tabs defaultValue="monthly" value={calculationType} onValueChange={setCalculationType}>
-            <TabsList className="grid grid-cols-2 mb-4 glass-effect">
-              <TabsTrigger value="monthly">محاسبه ماهیانه</TabsTrigger>
-              <TabsTrigger value="yearly">محاسبه سالیانه</TabsTrigger>
-            </TabsList>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="tax-year" className="flex items-center text-sm font-medium">
-                    <FileText className="ml-1 h-3 w-3 text-primary" />
-                    سال مالیاتی
-                  </Label>
-                  <Select value={taxYear} onValueChange={setTaxYear}>
-                    <SelectTrigger id="tax-year" className="mt-1 glass-effect">
-                      <SelectValue placeholder="انتخاب سال مالیاتی" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1403">۱۴۰۳</SelectItem>
-                      <SelectItem value="1402">۱۴۰۲</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <Label htmlFor="salary" className="flex items-center text-sm font-medium">
-                    <DollarSign className="ml-1 h-3 w-3 text-primary" />
-                    حقوق {calculationType === 'monthly' ? 'ماهیانه' : 'سالیانه'} (تومان)
-                  </Label>
-                  <Input
-                    id="salary"
-                    value={salary}
-                    onChange={handleSalaryChange}
-                    placeholder={`مثلاً ${calculationType === 'monthly' ? '15,000,000' : '180,000,000'}`}
-                    className="mt-1 glass-effect transition-all duration-300 focus:scale-105"
-                    dir="ltr"
-                  />
-                </div>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-4">
-                <Button 
-                  onClick={handleCalculate} 
-                  disabled={isCalculating}
-                  className="vibrant-button flex items-center justify-center hover:scale-105 transition-transform duration-300"
-                >
-                  <Calculator className={`ml-2 h-5 w-5 ${isCalculating ? 'animate-spin' : ''}`} />
-                  {isCalculating ? 'در حال محاسبه...' : 'محاسبه مالیات'}
-                </Button>
-                
-                <Button 
-                  onClick={handleReset}
-                  variant="outline"
-                  className="glass-effect flex items-center justify-center hover:-translate-y-1 transition-transform duration-300"
-                >
-                  <RotateCcw className="ml-2 h-4 w-4" />
-                  پاک کردن
-                </Button>
-              </div>
+
+          {/* Year & Type Selection */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-2">
+              <Label className="text-xs">سال مالیاتی</Label>
+              <Select value={taxYear} onValueChange={setTaxYear}>
+                <SelectTrigger className="bg-background/50">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1403">۱۴۰۳</SelectItem>
+                  <SelectItem value="1402">۱۴۰۲</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </Tabs>
-          
-          {result && (
-            <motion.div 
-              className="space-y-6"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-4 glass-effect">
-                  <TabsTrigger value="overview">خلاصه</TabsTrigger>
-                  <TabsTrigger value="brackets">پله‌های مالیاتی</TabsTrigger>
-                  <TabsTrigger value="comparison">مقایسه</TabsTrigger>
-                  <TabsTrigger value="breakdown">درآمد خالص</TabsTrigger>
+            <div className="space-y-2">
+              <Label className="text-xs">نوع محاسبه</Label>
+              <Tabs value={calculationType} onValueChange={setCalculationType}>
+                <TabsList className="grid w-full grid-cols-2 h-10">
+                  <TabsTrigger value="monthly" className="text-xs">ماهیانه</TabsTrigger>
+                  <TabsTrigger value="yearly" className="text-xs">سالیانه</TabsTrigger>
                 </TabsList>
-
-                <TabsContent value="overview" className="mt-6 space-y-4">
-                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <OutcomeInfoCard outcome={`حقوق خالص: ${formatRial(result.netSalary)}`} />
-                    <OutcomeInfoCard outcome={`مالیات کل: ${formatRial(result.totalTax)} (${result.effectiveTaxRate.toFixed(2)}%)`} />
-                  </motion.div>
-
-                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
-                      <div className="flex items-center mb-2">
-                        <DollarSign className="h-5 w-5 text-green-600 ml-2" />
-                        <h3 className="font-medium text-sm">حقوق ناخالص</h3>
-                      </div>
-                      <p className="text-lg font-bold text-green-600">{formatRial(result.grossSalary)}</p>
-                    </div>
-                    
-                    <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
-                      <div className="flex items-center mb-2">
-                        <TrendingUp className="h-5 w-5 text-red-600 ml-2" />
-                        <h3 className="font-medium text-sm">نرخ مالیات مؤثر</h3>
-                      </div>
-                      <p className="text-lg font-bold text-red-600">{result.effectiveTaxRate.toFixed(2)}%</p>
-                    </div>
-                    
-                    <div className="neo-glass rounded-xl p-5 transition-all duration-300 hover:-translate-y-1">
-                      <div className="flex items-center mb-2">
-                        <PieChart className="h-5 w-5 text-blue-600 ml-2" />
-                        <h3 className="font-medium text-sm">نرخ مالیات نهایی</h3>
-                      </div>
-                      <p className="text-lg font-bold text-blue-600">{result.marginalTaxRate.toFixed(0)}%</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center">
-                      <PieChart className="ml-2 h-5 w-5 text-primary" />
-                      بار مالیاتی
-                    </h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between text-sm">
-                        <span>درصد مالیات از درآمد</span>
-                        <span>{result.effectiveTaxRate.toFixed(2)}%</span>
-                      </div>
-                      <Progress value={taxBurdenPercentage} className="h-3" />
-                      <div className="flex justify-between text-xs text-muted-foreground">
-                        <span>۰%</span>
-                        <span>۱۵%</span>
-                        <span>۳۰%</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                </TabsContent>
-
-                <TabsContent value="brackets" className="mt-6 space-y-4">
-                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center">
-                      <BarChart3 className="ml-2 h-5 w-5 text-primary" />
-                      نمودار پله‌های مالیاتی
-                    </h3>
-                    <div className="h-80">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={taxBracketChartData} layout="vertical">
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis type="number" tickFormatter={(v) => (v / 1000000).toFixed(1) + 'M'} />
-                          <YAxis type="category" dataKey="name" width={100} tick={{ fontSize: 12 }} />
-                          <Tooltip 
-                            formatter={(value: number) => formatRial(value)}
-                            labelFormatter={(label) => `پله: ${label}`}
-                          />
-                          <Bar dataKey="amount" name="مبلغ مشمول" fill="#3b82f6" radius={[0, 4, 4, 0]} />
-                          <Bar dataKey="tax" name="مالیات" fill="#ef4444" radius={[0, 4, 4, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </motion.div>
-
-                  <motion.div variants={itemVariants} className="glass-effect rounded-xl overflow-hidden">
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full">
-                        <thead className="bg-muted/50">
-                          <tr>
-                            <th className="py-3 px-4 text-right text-xs font-medium">پله مالیاتی</th>
-                            <th className="py-3 px-4 text-right text-xs font-medium">مبلغ مشمول</th>
-                            <th className="py-3 px-4 text-right text-xs font-medium">نرخ</th>
-                            <th className="py-3 px-4 text-right text-xs font-medium">مالیات</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                          {result.details.map((detail, index) => (
-                            <tr key={index} className="text-sm hover:bg-muted/20 transition-colors">
-                              <td className="py-3 px-4 flex items-center gap-2">
-                                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: detail.color }}></span>
-                                {detail.name}
-                              </td>
-                              <td className="py-3 px-4">{formatRial(detail.amount)}</td>
-                              <td className="py-3 px-4">{detail.rate}٪</td>
-                              <td className="py-3 px-4 font-semibold">{formatRial(detail.tax)}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </motion.div>
-                </TabsContent>
-
-                <TabsContent value="comparison" className="mt-6 space-y-4">
-                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center">
-                      <PieChart className="ml-2 h-5 w-5 text-primary" />
-                      مقایسه ناخالص و خالص
-                    </h3>
-                    <div className="h-80">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <RechartsPie>
-                          <Pie
-                            data={pieChartData}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={60}
-                            outerRadius={100}
-                            paddingAngle={5}
-                            dataKey="value"
-                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
-                          >
-                            {pieChartData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={entry.fill} />
-                            ))}
-                          </Pie>
-                          <Tooltip formatter={(value: number) => formatRial(value)} />
-                          <Legend />
-                        </RechartsPie>
-                      </ResponsiveContainer>
-                    </div>
-                  </motion.div>
-
-                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="neo-glass rounded-xl p-5">
-                      <h4 className="font-medium text-sm text-muted-foreground mb-3">حقوق ناخالص</h4>
-                      <p className="text-2xl font-bold text-green-600">{formatRial(result.grossSalary)}</p>
-                      <div className="mt-2 w-full bg-muted rounded-full h-3">
-                        <div className="bg-green-500 h-3 rounded-full" style={{ width: '100%' }}></div>
-                      </div>
-                    </div>
-                    <div className="neo-glass rounded-xl p-5">
-                      <h4 className="font-medium text-sm text-muted-foreground mb-3">حقوق خالص</h4>
-                      <p className="text-2xl font-bold text-blue-600">{formatRial(result.netSalary)}</p>
-                      <div className="mt-2 w-full bg-muted rounded-full h-3">
-                        <div className="bg-blue-500 h-3 rounded-full" style={{ width: `${(result.netSalary / result.grossSalary) * 100}%` }}></div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </TabsContent>
-
-                <TabsContent value="breakdown" className="mt-6 space-y-4">
-                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center">
-                      <Wallet className="ml-2 h-5 w-5 text-primary" />
-                      درآمد خالص به تفکیک
-                    </h3>
-                    {takeHomeBreakdown && (
-                      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                        <div className="glass-effect rounded-xl p-4 text-center">
-                          <Clock className="h-6 w-6 text-primary mx-auto mb-2" />
-                          <p className="text-xs text-muted-foreground">ساعتی</p>
-                          <p className="text-lg font-bold text-primary">{formatRial(takeHomeBreakdown.hourly)}</p>
-                        </div>
-                        <div className="glass-effect rounded-xl p-4 text-center">
-                          <Calendar className="h-6 w-6 text-blue-600 mx-auto mb-2" />
-                          <p className="text-xs text-muted-foreground">روزانه</p>
-                          <p className="text-lg font-bold text-blue-600">{formatRial(takeHomeBreakdown.daily)}</p>
-                        </div>
-                        <div className="glass-effect rounded-xl p-4 text-center">
-                          <Calendar className="h-6 w-6 text-green-600 mx-auto mb-2" />
-                          <p className="text-xs text-muted-foreground">هفتگی</p>
-                          <p className="text-lg font-bold text-green-600">{formatRial(takeHomeBreakdown.weekly)}</p>
-                        </div>
-                        <div className="glass-effect rounded-xl p-4 text-center">
-                          <Wallet className="h-6 w-6 text-amber-600 mx-auto mb-2" />
-                          <p className="text-xs text-muted-foreground">ماهیانه</p>
-                          <p className="text-lg font-bold text-amber-600">{formatRial(takeHomeBreakdown.monthly)}</p>
-                        </div>
-                        <div className="glass-effect rounded-xl p-4 text-center">
-                          <TrendingUp className="h-6 w-6 text-purple-600 mx-auto mb-2" />
-                          <p className="text-xs text-muted-foreground">سالیانه</p>
-                          <p className="text-lg font-bold text-purple-600">{formatRial(takeHomeBreakdown.yearly)}</p>
-                        </div>
-                      </div>
-                    )}
-                  </motion.div>
-
-                  <motion.div variants={itemVariants} className="neo-glass rounded-xl p-6">
-                    <h3 className="font-semibold text-lg mb-4">تحلیل مالیاتی</h3>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 glass-effect rounded-lg">
-                        <span>صرفه‌جویی مالیاتی معاف</span>
-                        <span className="font-bold text-green-600">
-                          {formatRial(result.details.find(d => d.rate === 0)?.amount || 0)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 glass-effect rounded-lg">
-                        <span>بالاترین نرخ مالیاتی اعمال شده</span>
-                        <span className="font-bold text-red-600">{result.marginalTaxRate}%</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 glass-effect rounded-lg">
-                        <span>میانگین مالیات به ازای هر پله</span>
-                        <span className="font-bold text-blue-600">
-                          {formatRial(result.totalTax / result.details.filter(d => d.tax > 0).length || 0)}
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
-                </TabsContent>
               </Tabs>
+            </div>
+          </div>
+
+          {/* Salary Input */}
+          <div className="space-y-3">
+            <Label className="text-sm">
+              حقوق {calculationType === 'monthly' ? 'ماهیانه' : 'سالیانه'} (تومان)
+            </Label>
+            <Input
+              type="text"
+              value={salary}
+              onChange={(e) => setSalary(formatNumber(e.target.value))}
+              placeholder={calculationType === 'monthly' ? '۱۵,۰۰۰,۰۰۰' : '۱۸۰,۰۰۰,۰۰۰'}
+              className="text-lg bg-background/50"
+              dir="ltr"
+            />
+            <div className="flex flex-wrap gap-2">
+              {presets.map((preset) => (
+                <Button
+                  key={preset.value}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSalary(formatNumber(preset.value))}
+                  className="text-xs rounded-full"
+                >
+                  {preset.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Results */}
+          {result && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-4"
+            >
+              {/* Main Result */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 text-center">
+                  <Wallet className="w-5 h-5 mx-auto mb-2 text-green-500" />
+                  <p className="text-xl font-bold text-green-600 dark:text-green-400">
+                    {formatCurrency(result.netSalary)}
+                  </p>
+                  <p className="text-xs text-muted-foreground">حقوق خالص</p>
+                </div>
+                <div className="p-4 rounded-xl bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 text-center">
+                  <TrendingUp className="w-5 h-5 mx-auto mb-2 text-red-500" />
+                  <p className="text-xl font-bold text-red-600 dark:text-red-400">
+                    {formatCurrency(result.totalTax)}
+                  </p>
+                  <p className="text-xs text-muted-foreground">مالیات</p>
+                </div>
+              </div>
+
+              {/* Effective Rate */}
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>نرخ مؤثر مالیات</span>
+                  <span className="font-semibold text-primary">{result.effectiveRate.toFixed(2)}%</span>
+                </div>
+                <Progress value={Math.min(result.effectiveRate, 30) * 3.33} className="h-2" />
+              </div>
+
+              {/* Tax Brackets Breakdown */}
+              <div className="space-y-2">
+                <Label className="text-xs text-muted-foreground">جزئیات پله‌های مالیاتی</Label>
+                <div className="space-y-2">
+                  {result.details.map((detail, index) => (
+                    <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-secondary/30">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-3 h-3 rounded-full ${detail.color}`} />
+                        <span className="text-sm">{detail.name}</span>
+                      </div>
+                      <span className="text-sm font-medium">
+                        {formatCurrency(detail.tax)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           )}
+
+          {/* Actions */}
+          <div className="flex justify-center gap-3">
+            {result && (
+              <Button variant="outline" size="sm" onClick={copyResult} className="rounded-full">
+                {copied ? <Check className="w-4 h-4 ml-2" /> : <Copy className="w-4 h-4 ml-2" />}
+                کپی
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={handleReset} className="rounded-full text-muted-foreground">
+              <RotateCcw className="w-4 h-4 ml-2" />
+              پاک کردن
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
