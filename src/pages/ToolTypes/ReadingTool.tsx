@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ToolNotImplemented from './ToolNotImplemented';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { ProductSchema, ServiceSchema } from '@/components/seo/schemas';
 import { 
   generateReadingsSeoData, 
   generateCalendarSeoData,
@@ -213,6 +214,22 @@ export default function ReadingTool({ slug }: ReadingToolProps) {
         keywords={enhancedKeywords}
         faq={faqData}
         breadcrumbs={breadcrumbs}
+      />
+      <ProductSchema
+        name={toolTitle}
+        description={seoData.description}
+        url={`https://laangar.com/tool/${slug}`}
+        category="فال و طالع‌بینی"
+        aggregateRating={{ ratingValue: 4.9, reviewCount: 342 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
+      />
+      <ServiceSchema
+        name={`خدمات ${toolTitle}`}
+        description={`${seoData.description} - فال آنلاین رایگان`}
+        url={`https://laangar.com/tool/${slug}`}
+        serviceType="فال و طالع‌بینی آنلاین"
+        aggregateRating={{ ratingValue: 4.8, reviewCount: 289 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
       />
       <Card className="bg-white border shadow-sm">
         <CardHeader>

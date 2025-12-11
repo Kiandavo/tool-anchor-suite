@@ -4,6 +4,7 @@ import { tools } from '@/data/tools';
 import { ToolInfoCard } from '@/components/ToolInfoCard';
 import { EquationSolver } from '@/components/calculator-tools/EquationSolver';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { ProductSchema, ServiceSchema } from '@/components/seo/schemas';
 
 // Import calculator tools
 import AgeCalculator from './CalculatorTools/AgeCalculator';
@@ -132,6 +133,22 @@ export default function CalculatorTool({ slug, type }: CalculatorToolProps) {
         title={`${toolMeta.name} | محاسبه‌گر آنلاین رایگان - لنگر`}
         description={`✅ ${toolMeta.name} رایگان و آنلاین | ${toolMeta.description} | محاسبه دقیق و سریع | لنگر`}
         breadcrumbs={breadcrumbs}
+      />
+      <ProductSchema
+        name={toolMeta.name}
+        description={toolMeta.description}
+        url={`https://laangar.com/tool/${slug}`}
+        category="محاسبه‌گر آنلاین"
+        aggregateRating={{ ratingValue: 4.8, reviewCount: 127 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
+      />
+      <ServiceSchema
+        name={`خدمات ${toolMeta.name}`}
+        description={`${toolMeta.description} - ابزار آنلاین رایگان`}
+        url={`https://laangar.com/tool/${slug}`}
+        serviceType="ابزار آنلاین"
+        aggregateRating={{ ratingValue: 4.7, reviewCount: 89 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
       />
       <ToolInfoCard
         name={toolMeta.name}

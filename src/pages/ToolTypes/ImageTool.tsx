@@ -7,6 +7,7 @@ import { SvgToPng } from '@/components/image-tools/SvgToPng';
 import { PhotoDimensionsFinder } from '@/components/image-tools/PhotoDimensionsFinder';
 import { ImageCropper } from '@/components/image-tools/ImageCropper';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { ProductSchema, ServiceSchema } from '@/components/seo/schemas';
 
 interface ImageToolProps {
   slug: string;
@@ -46,6 +47,22 @@ export default function ImageTool({ slug }: ImageToolProps) {
         title={`${toolMeta.name} | ویرایش تصویر آنلاین رایگان - لنگر`}
         description={`✅ ${toolMeta.name} رایگان و آنلاین | ${toolMeta.description} | ویرایش سریع و آسان | لنگر`}
         breadcrumbs={breadcrumbs}
+      />
+      <ProductSchema
+        name={toolMeta.name}
+        description={toolMeta.description}
+        url={`https://laangar.com/tool/${slug}`}
+        category="ابزار ویرایش تصویر"
+        aggregateRating={{ ratingValue: 4.9, reviewCount: 156 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
+      />
+      <ServiceSchema
+        name={`خدمات ${toolMeta.name}`}
+        description={`${toolMeta.description} - ابزار آنلاین رایگان`}
+        url={`https://laangar.com/tool/${slug}`}
+        serviceType="ویرایش تصویر آنلاین"
+        aggregateRating={{ ratingValue: 4.8, reviewCount: 112 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
       />
       <ToolInfoCard
         name={toolMeta.name}

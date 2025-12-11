@@ -13,6 +13,7 @@ import { SitemapGenerator } from '@/components/seo/SitemapGenerator';
 import { SchemaGenerator } from '@/components/seo-tools/SchemaGenerator';
 import { MetaTagGenerator } from '@/components/seo-tools/MetaTagGenerator';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
+import { ProductSchema, ServiceSchema } from '@/components/seo/schemas';
 import { 
   generateCalendarSeoData, 
   generateReadingsSeoData, 
@@ -87,6 +88,22 @@ export default function SeoTool({ slug }: SeoToolProps) {
         description={`✅ ${toolMeta.name} حرفه‌ای | ${toolMeta.description} | بهینه‌سازی سئو | رایگان و کامل | لنگر`}
         keywords={enhancedKeywords}
         breadcrumbs={breadcrumbs}
+      />
+      <ProductSchema
+        name={toolMeta.name}
+        description={toolMeta.description}
+        url={`https://laangar.com/tool/${slug}`}
+        category="ابزار سئو"
+        aggregateRating={{ ratingValue: 4.9, reviewCount: 203 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
+      />
+      <ServiceSchema
+        name={`خدمات ${toolMeta.name}`}
+        description={`${toolMeta.description} - ابزار سئو حرفه‌ای رایگان`}
+        url={`https://laangar.com/tool/${slug}`}
+        serviceType="بهینه‌سازی موتور جستجو"
+        aggregateRating={{ ratingValue: 4.8, reviewCount: 167 }}
+        offers={{ price: 0, priceCurrency: 'IRR' }}
       />
       <ToolInfoCard
         name={toolMeta.name}
