@@ -66,11 +66,11 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               <img 
                 src={langarLogo} 
                 alt="لنگر"
-                width={120}
-                height={40}
+                width={140}
+                height={48}
                 loading="eager"
                 fetchPriority="high"
-                className="h-10 w-auto"
+                className="h-12 w-auto"
               />
             </Link>
 
