@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Hash, RefreshCw, Sparkles, Calendar, User } from "lucide-react";
+import { Hash, RefreshCw, Sparkles, Calendar, User, Copy, Info, BookOpen } from "lucide-react";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAdvancedNumerology } from '@/hooks/useAdvancedNumerology';
 import { NumerologyChart } from './numerology/NumerologyChart';
 import { PersianAbjad } from './numerology/PersianAbjad';
@@ -11,11 +12,26 @@ import { PersonalYear } from './numerology/PersonalYear';
 import { RelationshipCompatibility } from './numerology/RelationshipCompatibility';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EnhancedReadingWrapper } from './EnhancedReadingWrapper';
+import { TutorialStep } from './TutorialSystem';
+import { 
+  FloatingNumbers, 
+  SacredGeometryPattern, 
+  NumberWheel, 
+  NumerologyGrid,
+  PulsingNumber 
+} from '@/components/fal/graphics/NumerologyGraphics';
+import { copyToClipboard } from '@/utils/randomUtils';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 export const Numerology: React.FC = () => {
   const [name, setName] = useState('');
   const [persianName, setPersianName] = useState('');
   const [birthDate, setBirthDate] = useState('');
+  const [showGuide, setShowGuide] = useState(false);
   const { chart, isLoading, generateCompleteChart } = useAdvancedNumerology();
 
   const handleCalculate = () => {
@@ -34,146 +50,327 @@ export const Numerology: React.FC = () => {
     );
   };
 
+  const handleReset = () => {
+    setName('');
+    setPersianName('');
+    setBirthDate('');
+  };
+
+  const copyResults = () => {
+    if (!chart) return;
+    
+    const text = `
+📊 اعداد شناسی ${name}
+━━━━━━━━━━━━━━━━━━
+
+🔢 عدد مسیر زندگی: ${chart.lifePathNumber}
+
+✨ عدد بیان: ${chart.expressionNumber}
+📅 عدد روح: ${chart.soulUrgeNumber}
+🎯 عدد شخصیت: ${chart.personalityNumber}
+🗓️ عدد تولد: ${chart.birthdayNumber}
+
+📆 سال شخصی: ${chart.personalYear}
+━━━━━━━━━━━━━━━━━━
+🌐 محاسبه شده با ابزار اعداد شناسی
+    `.trim();
+    
+    copyToClipboard(text);
+    toast.success("نتایج کپی شد");
+  };
+
+  // Tutorial steps
+  const tutorialSteps: TutorialStep[] = [
+    {
+      target: '#name-input',
+      title: 'نام خود را وارد کنید',
+      description: 'نام کامل خود را به انگلیسی وارد کنید تا اعداد شما محاسبه شود',
+      position: 'bottom'
+    },
+    {
+      target: '#birth-date-input',
+      title: 'تاریخ تولد',
+      description: 'تاریخ تولد میلادی خود را وارد کنید',
+      position: 'bottom'
+    },
+    {
+      target: '#calculate-button',
+      title: 'محاسبه',
+      description: 'روی این دکمه کلیک کنید تا اعداد شما محاسبه شود',
+      position: 'top'
+    },
+  ];
+
+  // Narration text
+  const narrationText = chart ? `
+    اعداد شناسی ${name}.
+    عدد مسیر زندگی شما ${chart.lifePathNumber} است.
+    عدد بیان شما ${chart.expressionNumber} است.
+    عدد روح شما ${chart.soulUrgeNumber} است.
+    سال شخصی شما ${chart.personalYear} است.
+  ` : undefined;
+
+  // Reading data for export
+  const readingData = chart ? {
+    type: 'numerology',
+    title: `اعداد شناسی ${name}`,
+    content: `عدد مسیر زندگی: ${chart.lifePathNumber}\n\nعدد بیان: ${chart.expressionNumber}\nعدد روح: ${chart.soulUrgeNumber}\nسال شخصی: ${chart.personalYear}`,
+    timestamp: new Date(),
+    metadata: { name, birthDate }
+  } : undefined;
+
   return (
     <EnhancedReadingWrapper
       readingType="numerology"
-      readingData={chart ? {
-        type: 'numerology',
-        title: `اعداد شناسی ${name}`,
-        content: `عدد مسیر زندگی: ${chart.lifePathNumber}، عدد بیان: ${chart.expressionNumber}`,
-        timestamp: new Date()
-      } : undefined}
+      readingData={readingData}
+      narrationText={narrationText}
       elementId="numerology-content"
+      tutorialSteps={tutorialSteps}
       isLoading={isLoading}
-      loadingType="moon"
+      loadingType="stars"
     >
-    <Card id="numerology-content" className="bg-gradient-to-b from-[#eef9ff] to-[#e0f2ff] border-[#b3d7ff] shadow-md overflow-hidden relative">
-      <CardHeader className="bg-gradient-to-r from-[#b3d7ff] to-[#8fbbee] text-center pb-2 py-2 relative border-b border-[#b3d7ff]">
-        <h2 className="text-sm font-bold text-[#1a365d] flex items-center justify-center">
-          <Hash className="mr-2" size={16} />
-          اعداد شناسی (نومرولوژی)
-        </h2>
-      </CardHeader>
-      
-      <CardContent className="pt-4 px-4 relative z-10">
-        <div className="space-y-4">
-          {!chart ? (
-            <>
-              <div className="bg-white/60 p-4 rounded-lg shadow-sm border border-[#b3d7ff]/30 text-center">
-                <p className="text-sm text-[#1a365d] mb-2">
-                  اعداد شناسی یا نومرولوژی، علم باستانی مطالعه تأثیر اعداد بر زندگی و شخصیت انسان‌هاست. با وارد کردن نام و تاریخ تولد، اعداد مهم زندگی و معنای آن‌ها را کشف کنید.
+      <Card id="numerology-content" className="fortune-card-enhanced bg-gradient-to-b from-indigo-50 to-purple-50 border-indigo-200 shadow-lg overflow-hidden relative">
+        {/* Enhanced graphics */}
+        <FloatingNumbers />
+        <SacredGeometryPattern />
+        <NumerologyGrid />
+        
+        <CardHeader className="bg-gradient-to-r from-indigo-400 to-purple-500 text-center pb-3 py-3 relative border-b border-indigo-200">
+          <div className="flex items-center justify-center gap-2">
+            <Hash className="text-white" size={18} />
+            <h2 className="text-base font-bold text-white">
+              اعداد شناسی (نومرولوژی)
+            </h2>
+            <Sparkles className="text-white/80" size={14} />
+          </div>
+          
+          {/* Guide toggle */}
+          <Collapsible open={showGuide} onOpenChange={setShowGuide}>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="absolute left-2 top-2 text-white/80 hover:text-white hover:bg-white/10">
+                <Info size={16} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="absolute top-full left-0 right-0 z-50 bg-white/95 backdrop-blur-sm p-4 rounded-b-lg shadow-lg text-right">
+              <div className="space-y-2 text-sm text-indigo-900">
+                <p className="font-bold flex items-center gap-2">
+                  <BookOpen size={16} />
+                  راهنمای اعداد شناسی
                 </p>
-                <Input 
-                  value={persianName} 
-                  onChange={(e) => setPersianName(e.target.value)} 
-                  placeholder="نام فارسی (اختیاری)" 
-                  className="mt-2" 
-                />
+                <ul className="space-y-1 text-xs text-indigo-700">
+                  <li>• <strong>عدد مسیر زندگی:</strong> مهم‌ترین عدد - نشان‌دهنده هدف زندگی</li>
+                  <li>• <strong>عدد بیان:</strong> استعدادها و توانایی‌های ذاتی</li>
+                  <li>• <strong>عدد روح:</strong> خواسته‌ها و انگیزه‌های درونی</li>
+                  <li>• <strong>عدد شخصیت:</strong> نحوه دیده شدن توسط دیگران</li>
+                  <li>• <strong>اعداد کارمایی (۱۱، ۲۲، ۳۳):</strong> اعداد خاص با قدرت بیشتر</li>
+                </ul>
               </div>
-              
-              <div className="space-y-3">
-                <div className="bg-white/50 p-3 rounded-lg border border-[#b3d7ff]/20">
-                  <label className="block text-[#1a365d] text-xs mb-1.5 font-medium flex items-center">
-                    <User size={14} className="ml-1" />
-                    نام و نام خانوادگی:
-                  </label>
-                  <input 
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full text-xs p-2 border border-[#b3d7ff]/30 rounded-md focus:ring-1 focus:ring-[#8fbbee] focus:outline-none"
-                    placeholder="نام کامل خود را وارد کنید"
-                  />
+            </CollapsibleContent>
+          </Collapsible>
+        </CardHeader>
+        
+        <CardContent className="pt-4 px-4 relative z-10">
+          <AnimatePresence mode="wait">
+            {!chart ? (
+              <motion.div 
+                key="input"
+                className="space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <div className="bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-indigo-100 text-center">
+                  <p className="text-sm text-indigo-800 leading-relaxed">
+                    اعداد شناسی یا نومرولوژی، علم باستانی مطالعه تأثیر اعداد بر زندگی و شخصیت انسان‌هاست. با وارد کردن نام و تاریخ تولد، اعداد مهم زندگی و معنای آن‌ها را کشف کنید.
+                  </p>
                 </div>
                 
-                <div className="bg-white/50 p-3 rounded-lg border border-[#b3d7ff]/20">
-                  <label className="block text-[#1a365d] text-xs mb-1.5 font-medium flex items-center">
-                    <Calendar size={14} className="ml-1" />
-                    تاریخ تولد:
-                  </label>
-                  <input 
-                    type="date"
-                    value={birthDate}
-                    onChange={(e) => setBirthDate(e.target.value)}
-                    className="w-full text-xs p-2 border border-[#b3d7ff]/30 rounded-md focus:ring-1 focus:ring-[#8fbbee] focus:outline-none"
-                  />
-                  <p className="mt-1.5 text-[10px] text-[#1a365d]/70">تاریخ تولد میلادی (روز/ماه/سال)</p>
+                <div className="space-y-3">
+                  <motion.div 
+                    id="name-input"
+                    className="bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-indigo-100"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <label className="block text-indigo-800 text-sm mb-2 font-medium flex items-center gap-2">
+                      <User size={16} />
+                      نام و نام خانوادگی (انگلیسی):
+                    </label>
+                    <Input 
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full border-indigo-200 focus:ring-indigo-500"
+                      placeholder="مثال: John Smith"
+                    />
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-indigo-100"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <label className="block text-indigo-800 text-sm mb-2 font-medium flex items-center gap-2">
+                      <User size={16} />
+                      نام فارسی (اختیاری - برای حساب ابجد):
+                    </label>
+                    <Input 
+                      value={persianName} 
+                      onChange={(e) => setPersianName(e.target.value)} 
+                      placeholder="نام فارسی شما"
+                      className="border-indigo-200 focus:ring-indigo-500"
+                    />
+                  </motion.div>
+                  
+                  <motion.div 
+                    id="birth-date-input"
+                    className="bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-indigo-100"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <label className="block text-indigo-800 text-sm mb-2 font-medium flex items-center gap-2">
+                      <Calendar size={16} />
+                      تاریخ تولد (میلادی):
+                    </label>
+                    <Input 
+                      type="date"
+                      value={birthDate}
+                      onChange={(e) => setBirthDate(e.target.value)}
+                      className="w-full border-indigo-200 focus:ring-indigo-500"
+                    />
+                  </motion.div>
                 </div>
-              </div>
-              
-              <div className="flex justify-center py-3">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-[#e0f2ff] to-[#b3d7ff] flex items-center justify-center border border-[#b3d7ff] relative overflow-hidden">
-                  <div className="absolute inset-0 opacity-20" style={{
-                    background: "radial-gradient(circle at center, white 0%, transparent 70%)"
-                  }}></div>
-                  <Hash size={32} className="text-[#1a365d] opacity-60" />
+                
+                <motion.div 
+                  className="flex justify-center py-4"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <NumberWheel isAnimating={isLoading} />
+                </motion.div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="results"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                {/* Quick summary */}
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <motion.div 
+                    className="bg-white/80 backdrop-blur-sm rounded-lg p-3 text-center border border-indigo-100"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">
+                      {chart.lifePathNumber}
+                    </div>
+                    <p className="mt-2 text-xs font-medium text-indigo-800">مسیر زندگی</p>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="bg-white/80 backdrop-blur-sm rounded-lg p-3 text-center border border-indigo-100"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">
+                      {chart.expressionNumber}
+                    </div>
+                    <p className="mt-2 text-xs font-medium text-indigo-800">عدد بیان</p>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="bg-white/80 backdrop-blur-sm rounded-lg p-3 text-center border border-indigo-100"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">
+                      {chart.soulUrgeNumber}
+                    </div>
+                    <p className="mt-2 text-xs font-medium text-indigo-800">عدد روح</p>
+                  </motion.div>
                 </div>
-              </div>
-            </>
+                
+                <Tabs defaultValue="core" className="w-full">
+                  <TabsList className="grid w-full grid-cols-4 mb-4 bg-white/50">
+                    <TabsTrigger value="core" className="text-xs">اعداد اصلی</TabsTrigger>
+                    <TabsTrigger value="persian" className="text-xs">حساب ابجد</TabsTrigger>
+                    <TabsTrigger value="forecast" className="text-xs">پیش‌بینی</TabsTrigger>
+                    <TabsTrigger value="compatibility" className="text-xs">سازگاری</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="core">
+                    <NumerologyChart data={chart} />
+                  </TabsContent>
+                  
+                  <TabsContent value="persian">
+                    <PersianAbjad />
+                  </TabsContent>
+                  
+                  <TabsContent value="forecast">
+                    <PersonalYear 
+                      personalYear={chart.personalYear} 
+                      personalMonth={chart.personalMonth} 
+                      personalDay={chart.personalDay} 
+                    />
+                  </TabsContent>
+                  
+                  <TabsContent value="compatibility">
+                    <RelationshipCompatibility />
+                  </TabsContent>
+                </Tabs>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </CardContent>
+        
+        <CardFooter className="flex flex-wrap justify-center gap-2 pt-3 pb-4 bg-white/50 backdrop-blur-sm border-t border-indigo-100">
+          {!chart ? (
+            <Button
+              id="calculate-button"
+              onClick={handleCalculate}
+              disabled={isLoading || !name || !birthDate}
+              className="fortune-button-primary bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-sm h-10 px-6 relative overflow-hidden"
+            >
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:animate-shimmer"></span>
+              {isLoading ? 
+                <RefreshCw className="animate-spin ml-2" size={16} /> : 
+                <Sparkles className="ml-2" size={16} />
+              }
+              محاسبه اعداد شناسی
+            </Button>
           ) : (
-            <Tabs defaultValue="core" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 mb-4">
-                <TabsTrigger value="core">اعداد اصلی</TabsTrigger>
-                <TabsTrigger value="persian">حساب ابجد</TabsTrigger>
-                <TabsTrigger value="forecast">پیش‌بینی</TabsTrigger>
-                <TabsTrigger value="compatibility">سازگاری</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="core">
-                <NumerologyChart data={chart} />
-              </TabsContent>
-              
-              <TabsContent value="persian">
-                <PersianAbjad />
-              </TabsContent>
-              
-              <TabsContent value="forecast">
-                <PersonalYear 
-                  personalYear={chart.personalYear} 
-                  personalMonth={chart.personalMonth} 
-                  personalDay={chart.personalDay} 
-                />
-              </TabsContent>
-              
-              <TabsContent value="compatibility">
-                <RelationshipCompatibility />
-              </TabsContent>
-            </Tabs>
+            <>
+              <Button
+                onClick={copyResults}
+                variant="outline"
+                size="sm"
+                className="border-indigo-300 text-indigo-700 hover:bg-indigo-50"
+              >
+                <Copy size={14} className="ml-1" />
+                کپی نتایج
+              </Button>
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                size="sm"
+                className="border-indigo-300 text-indigo-700 hover:bg-indigo-50"
+              >
+                <RefreshCw size={14} className="ml-1" />
+                محاسبه مجدد
+              </Button>
+            </>
           )}
-        </div>
-      </CardContent>
-      
-      <CardFooter className="flex flex-col sm:flex-row justify-center gap-2 pt-3 pb-4 bg-white/30 border-t border-[#b3d7ff]/20">
-        {!chart ? (
-          <Button
-            onClick={handleCalculate}
-            disabled={isLoading || !name || !birthDate}
-            className="bg-[#8fbbee] hover:bg-[#75a9e3] text-white text-xs h-9 px-4 relative overflow-hidden group"
-          >
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
-            {isLoading ? 
-              <RefreshCw className="animate-spin mr-1" size={14} /> : 
-              <Sparkles className="mr-1" size={14} />
-            }
-            محاسبه اعداد شناسی
-          </Button>
-        ) : (
-          <Button
-            onClick={() => {
-              setName('');
-              setPersianName('');
-              setBirthDate('');
-            }}
-            variant="outline"
-            size="sm"
-            className="border-[#8fbbee] text-[#1a365d] text-xs h-9 px-3"
-          >
-            <RefreshCw size={14} className="mr-1" />
-            محاسبه مجدد
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
+        </CardFooter>
+      </Card>
     </EnhancedReadingWrapper>
   );
 };
