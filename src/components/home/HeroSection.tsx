@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowDown, Sparkles, Calculator, BookOpen, Star } from 'lucide-react';
+import { ArrowDown, FileText, Image, Hash } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
 import { CriticalLoader } from '@/components/performance/CriticalLoader';
@@ -89,20 +89,20 @@ const AnimatedCounter = ({ value, suffix = '', duration = 2 }: { value: number; 
   );
 };
 
-const categories = [
-  { icon: Calculator, label: 'ابزار محاسباتی', count: '۵۰+', href: '/category/calculators' },
-  { icon: BookOpen, label: 'فال و طالع‌بینی', count: '۱۰+', href: '/category/readings' },
-  { icon: Star, label: 'فرهنگ فارسی', count: '۲۰+', href: '/category/persian-cultural' },
+// Main category pillars - clear value proposition
+const mainCategories = [
+  { icon: FileText, label: 'متن و نوشتار', href: '/category/text-tools', color: 'from-blue-500 to-cyan-500' },
+  { icon: Image, label: 'تصویر و فایل', href: '/category/image-tools', color: 'from-purple-500 to-pink-500' },
+  { icon: Hash, label: 'محاسبه و تبدیل', href: '/category/calculators', color: 'from-amber-500 to-orange-500' },
 ];
 
 const stats = [
-  { value: 80, suffix: '+', label: 'ابزار آنلاین', icon: '🛠️' },
+  { value: 100, suffix: '+', label: 'ابزار آنلاین', icon: '🛠️' },
   { value: 50000, suffix: '+', label: 'کاربر ماهانه', icon: '👥' },
 ];
 
 export const HeroSection = () => {
   const { scrollToElement } = useSmoothScroll();
-  const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
   // Parallax scroll effects
@@ -116,13 +116,6 @@ export const HeroSection = () => {
   const y3 = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % categories.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <CriticalLoader>
@@ -163,127 +156,77 @@ export const HeroSection = () => {
           style={{ opacity, scale }}
           className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
         >
-          <div className="max-w-5xl mx-auto space-y-8">
+          <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
             
-            {/* Badge */}
+            {/* Main Title - Compact */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex justify-center"
+              className="text-center"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-500/10 via-amber-500/10 to-orange-500/10 border border-yellow-500/20 text-amber-600 dark:text-yellow-400 text-sm">
-                <Sparkles className="w-4 h-4" />
-                <span>بیش از ۸۰ ابزار رایگان آنلاین</span>
-              </div>
+              <h1 className="font-heading font-bold text-[clamp(1.75rem,6vw,3.5rem)] leading-[1.2] tracking-tight mb-4">
+                <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+                  جعبه ابزار
+                </span>{' '}
+                آنلاین فارسی
+              </h1>
+              
+              {/* Clear Value Proposition */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-lg sm:text-xl text-foreground/80 max-w-2xl mx-auto font-medium"
+              >
+                بیش از ۱۰۰ ابزار آنلاین فارسی برای متن، تصویر، و محاسبه در یک جا
+              </motion.p>
             </motion.div>
 
-            {/* Main Title */}
-            <div className="text-center overflow-hidden">
-              <h1 className="font-heading font-bold text-[clamp(2rem,7vw,4.5rem)] leading-[1.15] tracking-tight">
-                <AnimatedWord delay={0.1}>همه</AnimatedWord>{' '}
-                <AnimatedWord delay={0.2}>ابزارهای</AnimatedWord>{' '}
-                <span className="relative inline-block">
-                  <AnimatedWord delay={0.3}>فارسی</AnimatedWord>
-                  <motion.span
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                    className="absolute -bottom-1 left-0 right-0 h-2 bg-gradient-to-r from-yellow-400/30 via-amber-400/30 to-orange-400/30 -z-10 origin-right"
-                  />
-                </span>
-                <br />
-                <AnimatedWord delay={0.4}>در</AnimatedWord>{' '}
-                <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
-                  <AnimatedWord delay={0.5}>یک</AnimatedWord>{' '}
-                  <AnimatedWord delay={0.6}>مکان</AnimatedWord>
-                </span>
-              </h1>
-            </div>
-
-            {/* Subtitle */}
-            <motion.p
+            {/* Three Main Category Pillars */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="text-center text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="grid grid-cols-3 gap-3 sm:gap-4 max-w-xl mx-auto"
             >
-              محاسبه‌گر، مبدل، فال و طالع‌بینی، تقویم و ابزارهای فرهنگی فارسی
-            </motion.p>
+              {mainCategories.map((cat, index) => {
+                const Icon = cat.icon;
+                return (
+                  <Link key={index} to={cat.href}>
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -4 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex flex-col items-center gap-2 p-4 sm:p-5 rounded-2xl bg-card/60 backdrop-blur-sm border border-border/50 hover:border-amber-500/40 hover:bg-card/80 transition-all duration-300 cursor-pointer group"
+                    >
+                      <div className={`p-3 rounded-xl bg-gradient-to-br ${cat.color} text-white shadow-lg group-hover:scale-110 transition-transform`}>
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                      </div>
+                      <span className="text-xs sm:text-sm font-medium text-center text-foreground/80 group-hover:text-foreground transition-colors">
+                        {cat.label}
+                      </span>
+                    </motion.div>
+                  </Link>
+                );
+              })}
+            </motion.div>
 
             {/* Search Section */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
               className="max-w-2xl mx-auto"
             >
               <EnhancedSearchBar />
-            </motion.div>
-
-            {/* Animated Categories */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.1 }}
-              className="flex flex-col items-center gap-4"
-            >
-              {/* Category Pills */}
-              <div className="flex flex-wrap justify-center gap-3">
-                {categories.map((cat, index) => {
-                  const Icon = cat.icon;
-                  return (
-                    <Link key={index} to={cat.href}>
-                      <motion.div
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`
-                          flex items-center gap-3 px-5 py-3 rounded-2xl border transition-all duration-300 cursor-pointer
-                          ${activeIndex === index 
-                            ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 text-white border-transparent shadow-lg shadow-amber-500/25' 
-                            : 'bg-card/50 border-border/50 hover:border-amber-500/30 hover:bg-card'
-                          }
-                        `}
-                      >
-                        <Icon className="w-5 h-5" />
-                        <span className="font-medium">{cat.label}</span>
-                        <span className={`
-                          text-xs px-2 py-0.5 rounded-full
-                          ${activeIndex === index ? 'bg-white/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'}
-                        `}>
-                          {cat.count}
-                        </span>
-                      </motion.div>
-                    </Link>
-                  );
-                })}
-              </div>
-
-              {/* Animated indicator */}
-              <div className="flex gap-1.5">
-                {categories.map((_, index) => (
-                  <motion.div
-                    key={index}
-                    animate={{
-                      width: activeIndex === index ? 24 : 8,
-                    }}
-                    className={`h-2 rounded-full cursor-pointer transition-colors ${
-                      activeIndex === index 
-                        ? 'bg-gradient-to-r from-yellow-500 to-amber-500' 
-                        : 'bg-muted-foreground/30'
-                    }`}
-                    onClick={() => setActiveIndex(index)}
-                  />
-                ))}
-              </div>
             </motion.div>
 
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.3 }}
-              className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-4"
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
             >
               <Button 
                 size="lg" 
@@ -314,7 +257,7 @@ export const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.5 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
               className="grid grid-cols-2 gap-4 sm:gap-6 max-w-md mx-auto"
             >
               {stats.map((stat, index) => (
@@ -322,7 +265,7 @@ export const HeroSection = () => {
                   key={index}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1.6 + index * 0.1 }}
+                  transition={{ duration: 0.5, delay: 1.1 + index * 0.1 }}
                   className="relative group"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-amber-500/10 to-orange-500/10 rounded-xl blur-xl group-hover:blur-2xl transition-all opacity-0 group-hover:opacity-100" />
