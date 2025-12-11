@@ -9,15 +9,18 @@ import { LazySection } from '@/components/performance/LazySection';
 import { getAdSlot, shouldShowAds } from '@/config/ads';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
 import { SectionDivider } from '@/components/ui/SectionDivider';
-import { GeoTargeting } from '@/components/seo/GeoTargeting';
-import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
-import { ScrollAnimationWrapper } from '@/components/layout/ScrollAnimationWrapper';
-import { ScrollProgressIndicator } from '@/components/ui/ScrollProgressIndicator';
-import { FloatingSectionNav } from '@/components/ui/FloatingSectionNav';
-import { KeyboardShortcuts } from '@/components/ui/KeyboardShortcuts';
-import { QuickActions } from '@/components/ui/QuickActions';
-import { ScrollToTopButton } from '@/components/ui/ScrollToTopButton';
-import { WelcomeTooltip } from '@/components/ui/WelcomeTooltip';
+
+// Lazy load non-critical UI components
+const GeoTargeting = lazy(() => import('@/components/seo/GeoTargeting').then(m => ({ default: m.GeoTargeting })));
+const OpenGraphTags = lazy(() => import('@/components/seo/OpenGraphTags').then(m => ({ default: m.OpenGraphTags })));
+const ScrollAnimationWrapper = lazy(() => import('@/components/layout/ScrollAnimationWrapper').then(m => ({ default: m.ScrollAnimationWrapper })));
+const ScrollProgressIndicator = lazy(() => import('@/components/ui/ScrollProgressIndicator').then(m => ({ default: m.ScrollProgressIndicator })));
+const FloatingSectionNav = lazy(() => import('@/components/ui/FloatingSectionNav').then(m => ({ default: m.FloatingSectionNav })));
+const KeyboardShortcuts = lazy(() => import('@/components/ui/KeyboardShortcuts').then(m => ({ default: m.KeyboardShortcuts })));
+const QuickActions = lazy(() => import('@/components/ui/QuickActions').then(m => ({ default: m.QuickActions })));
+const ScrollToTopButton = lazy(() => import('@/components/ui/ScrollToTopButton').then(m => ({ default: m.ScrollToTopButton })));
+const WelcomeTooltip = lazy(() => import('@/components/ui/WelcomeTooltip').then(m => ({ default: m.WelcomeTooltip })));
+
 // Lazy load below-the-fold components for better initial load performance
 // Core sections - split into separate chunks
 const QuickToolsSection = lazy(() => import('@/components/home/QuickToolsSection').then(m => ({ default: m.QuickToolsSection })));
@@ -73,12 +76,16 @@ const Index = () => {
 
   return (
     <Layout>
-      <ScrollProgressIndicator />
-      <FloatingSectionNav />
-      <KeyboardShortcuts />
-      <QuickActions />
-      <ScrollToTopButton />
-      <WelcomeTooltip />
+      {/* Non-critical UI - lazy loaded */}
+      <Suspense fallback={null}>
+        <ScrollProgressIndicator />
+        <FloatingSectionNav />
+        <KeyboardShortcuts />
+        <QuickActions />
+        <ScrollToTopButton />
+        <WelcomeTooltip />
+      </Suspense>
+      
       <EnhancedSeoHead 
         pageType="home"
         title={homeTitle}
@@ -97,19 +104,21 @@ const Index = () => {
         </Helmet>
       )}
       
-      <GeoTargeting 
-        title={homeTitle}
-        description={homeDescription}
-        canonical="https://laangar.com/"
-      />
-      
-      <OpenGraphTags
-        title={homeTitle}
-        description={homeDescription}
-        url="https://laangar.com/"
-        type="website"
-        siteName="لنگر - ابزارهای آنلاین فارسی"
-      />
+      <Suspense fallback={null}>
+        <GeoTargeting 
+          title={homeTitle}
+          description={homeDescription}
+          canonical="https://laangar.com/"
+        />
+        
+        <OpenGraphTags
+          title={homeTitle}
+          description={homeDescription}
+          url="https://laangar.com/"
+          type="website"
+          siteName="لنگر - ابزارهای آنلاین فارسی"
+        />
+      </Suspense>
       
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main Content */}
@@ -118,12 +127,11 @@ const Index = () => {
           
           <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
             
-            {/* Essential Tools Section - Most Important */}
-            <ScrollAnimationWrapper direction="up" delay={0.1}>
-              <div id="essential-tools">
-                <EssentialToolsSection />
-              </div>
-            </ScrollAnimationWrapper>
+            {/* Essential Tools Section - Most Important - NO animation wrapper for LCP */}
+            <div id="essential-tools">
+              <EssentialToolsSection />
+            </div>
+
 
             <SectionDivider variant="dots" />
 
