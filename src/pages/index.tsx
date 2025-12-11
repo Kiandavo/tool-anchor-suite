@@ -10,7 +10,7 @@ import { generateWebsiteSchema, generateFAQSchema, generateOrganizationSchema, c
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { GeoTargeting } from '@/components/seo/GeoTargeting';
 import { OpenGraphTags } from '@/components/seo/OpenGraphTags';
-
+import { ScrollAnimationWrapper } from '@/components/layout/ScrollAnimationWrapper';
 // Lazy load below-the-fold components for better initial load performance
 // Core sections - split into separate chunks
 const QuickToolsSection = lazy(() => import('@/components/home/QuickToolsSection').then(m => ({ default: m.QuickToolsSection })));
@@ -96,18 +96,22 @@ const Index = () => {
           <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-[1200px] space-y-16 sm:space-y-24">
             
             {/* Essential Tools Section - Most Important */}
-            <div id="essential-tools">
-              <EssentialToolsSection />
-            </div>
+            <ScrollAnimationWrapper direction="up" delay={0.1}>
+              <div id="essential-tools">
+                <EssentialToolsSection />
+              </div>
+            </ScrollAnimationWrapper>
 
             <SectionDivider variant="dots" />
 
             {/* Quick Tools Section */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="100px">
               <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div id="quick-tools">
-                  <QuickToolsSection />
-                </div>
+                <ScrollAnimationWrapper direction="up" delay={0.1}>
+                  <div id="quick-tools">
+                    <QuickToolsSection />
+                  </div>
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
@@ -116,9 +120,11 @@ const Index = () => {
             {/* Enhanced Tools Section */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="200px">
               <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div id="tools-sections">
-                  <EnhancedToolsSection />
-                </div>
+                <ScrollAnimationWrapper direction="scale" delay={0.1}>
+                  <div id="tools-sections">
+                    <EnhancedToolsSection />
+                  </div>
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
@@ -137,7 +143,9 @@ const Index = () => {
             {/* Persian Calendar Widget */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
               <Suspense fallback={<div className="h-64 animate-pulse bg-muted/30 rounded-lg" />}>
-                <PersianCalendarWidget />
+                <ScrollAnimationWrapper direction="right" delay={0.1}>
+                  <PersianCalendarWidget />
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
@@ -145,9 +153,11 @@ const Index = () => {
 
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
               <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div id="popular-tools">
-                  <ModernProfessionalToolsSection />
-                </div>
+                <ScrollAnimationWrapper direction="up" delay={0.15}>
+                  <div id="popular-tools">
+                    <ModernProfessionalToolsSection />
+                  </div>
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
@@ -165,9 +175,11 @@ const Index = () => {
 
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
               <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div id="persian-cultural">
-                  <PersianCulturalEnhancedSection />
-                </div>
+                <ScrollAnimationWrapper direction="left" delay={0.1}>
+                  <div id="persian-cultural">
+                    <PersianCulturalEnhancedSection />
+                  </div>
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
@@ -175,9 +187,11 @@ const Index = () => {
             
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
               <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div id="readings">
-                  <MysticalReadingsSection />
-                </div>
+                <ScrollAnimationWrapper direction="scale" delay={0.1}>
+                  <div id="readings">
+                    <MysticalReadingsSection />
+                  </div>
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
@@ -186,9 +200,11 @@ const Index = () => {
             {/* Seasonal Persian Tools - Phase 5 */}
             <LazySection className="mb-16 sm:mb-24" rootMargin="150px">
               <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div id="seasonal-tools">
-                  <SeasonalToolsSection />
-                </div>
+                <ScrollAnimationWrapper direction="up" delay={0.1}>
+                  <div id="seasonal-tools">
+                    <SeasonalToolsSection />
+                  </div>
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
@@ -196,31 +212,37 @@ const Index = () => {
             
             <LazySection rootMargin="150px">
               <Suspense fallback={<div className="h-96 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div id="categories">
-                  <InteractiveCategoriesSection />
-                </div>
+                <ScrollAnimationWrapper direction="up" delay={0.1}>
+                  <div id="categories">
+                    <InteractiveCategoriesSection />
+                  </div>
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
             
             {/* Testimonials Section - Phase 3 */}
             <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
               <Suspense fallback={<div className="h-80 animate-pulse bg-muted/30 rounded-lg" />}>
-                <TestimonialSection />
+                <ScrollAnimationWrapper direction="fade" delay={0.1}>
+                  <TestimonialSection />
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
 
             {/* Trust Badges Section - Phase 4 */}
             <LazySection className="mt-16 sm:mt-24" rootMargin="150px">
               <Suspense fallback={<div className="h-64 animate-pulse bg-muted/30 rounded-lg" />}>
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                    اعتماد و امنیت
-                  </h2>
-                  <p className="text-muted-foreground">
-                    امنیت و حریم خصوصی شما برای ما در اولویت است
-                  </p>
-                </div>
-                <TrustBadges variant="horizontal" />
+                <ScrollAnimationWrapper direction="up" delay={0.1}>
+                  <div className="text-center mb-8">
+                    <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                      اعتماد و امنیت
+                    </h2>
+                    <p className="text-muted-foreground">
+                      امنیت و حریم خصوصی شما برای ما در اولویت است
+                    </p>
+                  </div>
+                  <TrustBadges variant="horizontal" />
+                </ScrollAnimationWrapper>
               </Suspense>
             </LazySection>
           </div>
