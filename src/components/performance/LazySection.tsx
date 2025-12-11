@@ -1,5 +1,4 @@
-import React, { ReactNode } from 'react';
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import React, { ReactNode, useState, useEffect, useRef } from 'react';
 
 interface LazySectionProps {
   children: ReactNode;
@@ -13,22 +12,33 @@ export const LazySection: React.FC<LazySectionProps> = ({
   children,
   fallback,
   className = '',
-  threshold = 0.1,
-  rootMargin = '100px'
+  threshold = 0,
+  rootMargin = '300px' // Increased for earlier loading
 }) => {
-  const { elementRef, hasIntersected } = useIntersectionObserver({
-    threshold,
-    rootMargin,
-    triggerOnce: true
-  });
+  const [hasIntersected, setHasIntersected] = useState(false);
+  const elementRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element || hasIntersected) return;
+
+    // Use requestIdleCallback for non-critical intersection checks
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setHasIntersected(true);
+          observer.disconnect();
+        }
+      },
+      { threshold, rootMargin }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [threshold, rootMargin, hasIntersected]);
 
   const defaultFallback = (
-    <div className="h-96 flex items-center justify-center bg-muted/20 rounded-lg animate-pulse">
-      <div className="text-center">
-        <div className="w-12 h-12 border-2 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-muted-foreground text-sm">در حال بارگذاری...</p>
-      </div>
-    </div>
+    <div className="h-64 bg-muted/10 rounded-lg" />
   );
 
   return (
