@@ -88,57 +88,87 @@ export const EnhancedSeoHead: React.FC<EnhancedSeoHeadProps> = ({
   
   return (
     <Helmet>
-      {/* Basic SEO */}
+      {/* Primary Meta Tags */}
       <title>{finalTitle}</title>
+      <meta name="title" content={finalTitle} />
       <meta name="description" content={finalDescription} />
       <meta name="keywords" content={finalKeywords} />
       
-      {/* Enhanced SEO Meta Tags */}
-      <meta name="author" content="لنگر" />
+      {/* Author & Publisher */}
+      <meta name="author" content="لنگر - Laangar" />
       <meta name="publisher" content="لنگر" />
-      <meta name="copyright" content="لنگر © 2024" />
-      <meta name="language" content="fa-IR" />
+      <meta name="creator" content="لنگر" />
+      <meta name="copyright" content="© 2025 لنگر - تمامی حقوق محفوظ است" />
+      
+      {/* Language & Region Targeting */}
+      <meta name="language" content="Persian" />
+      <meta httpEquiv="content-language" content="fa-IR" />
       <meta name="geo.region" content="IR" />
       <meta name="geo.country" content="Iran" />
+      <meta name="geo.placename" content="ایران" />
+      <meta name="target" content="all" />
+      <meta name="audience" content="all" />
+      <meta name="coverage" content="Worldwide" />
+      <meta name="distribution" content="Global" />
       
-      {/* Canonical */}
+      {/* Canonical & Alternate */}
       <link rel="canonical" href={finalCanonical} />
-      
-      {/* Hreflang tags for Persian language targeting - Phase 1 Enhancement */}
       <link rel="alternate" hrefLang="fa" href={finalCanonical} />
       <link rel="alternate" hrefLang="fa-IR" href={finalCanonical} />
       <link rel="alternate" hrefLang="x-default" href={finalCanonical} />
       
-      {/* Robots */}
+      {/* Robots & Indexing */}
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
-      <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+      <meta name="bingbot" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+      <meta name="revisit-after" content="3 days" />
+      <meta name="rating" content="general" />
       
-      {/* Open Graph */}
-      <meta property="og:type" content="website" />
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content={pageType === 'blog' ? 'article' : 'website'} />
+      <meta property="og:site_name" content="لنگر - ابزارهای آنلاین رایگان" />
       <meta property="og:title" content={finalTitle} />
       <meta property="og:description" content={finalDescription} />
       <meta property="og:url" content={finalCanonical} />
       <meta property="og:image" content={finalOgImage} />
+      <meta property="og:image:secure_url" content={finalOgImage} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={finalTitle} />
-      <meta property="og:site_name" content="لنگر" />
       <meta property="og:locale" content="fa_IR" />
+      <meta property="og:locale:alternate" content="en_US" />
       
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@laangar_ir" />
+      <meta name="twitter:creator" content="@laangar_ir" />
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDescription} />
       <meta name="twitter:image" content={finalOgImage} />
+      <meta name="twitter:image:alt" content={finalTitle} />
       
-      {/* Additional SEO enhancements */}
-      <meta name="theme-color" content="#3B82F6" />
+      {/* App & PWA Meta */}
+      <meta name="application-name" content="لنگر" />
+      <meta name="apple-mobile-web-app-title" content="لنگر" />
+      <meta name="theme-color" content="#eab308" />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="msapplication-TileColor" content="#eab308" />
+      <meta name="msapplication-config" content="/browserconfig.xml" />
       
-      {/* Performance hints */}
+      {/* Security Headers */}
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="referrer" content="origin-when-cross-origin" />
+      
+      {/* Performance Hints */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+      <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       
       {/* Structured Data */}
       {combinedSchema && (
@@ -147,13 +177,13 @@ export const EnhancedSeoHead: React.FC<EnhancedSeoHeadProps> = ({
         </script>
       )}
       
-      {/* Additional tool-specific meta tags */}
+      {/* Tool-specific meta tags */}
       {toolSeoData && (
         <>
-          <meta name="application-name" content={toolSeoData.title} />
           <meta name="msapplication-tooltip" content={toolSeoData.description} />
           <meta name="msapplication-starturl" content={finalCanonical} />
-          <meta name="format-detection" content="telephone=no" />
+          <meta property="article:author" content="لنگر" />
+          <meta property="article:publisher" content="https://laangar.com" />
         </>
       )}
     </Helmet>
