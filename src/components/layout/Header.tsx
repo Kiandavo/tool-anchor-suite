@@ -211,6 +211,8 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 <img 
                   src={langarLogo} 
                   alt="لنگر"
+                  width={32}
+                  height={32}
                   className="h-8 w-auto"
                 />
                 <motion.button

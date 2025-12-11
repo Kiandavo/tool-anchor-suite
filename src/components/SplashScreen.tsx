@@ -30,6 +30,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
           <img
             src={laangarLogo}
             alt="LAANGAR"
+            width={128}
+            height={128}
             className="h-32 w-auto object-contain"
             style={{
               animation: 'fadeIn 800ms ease-out, scale 600ms ease-out'
