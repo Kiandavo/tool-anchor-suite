@@ -99,7 +99,6 @@ const categories = [
 const stats = [
   { value: 80, suffix: '+', label: 'ابزار آنلاین', icon: '🛠️' },
   { value: 50000, suffix: '+', label: 'کاربر ماهانه', icon: '👥' },
-  { value: 99, suffix: '%', label: 'رضایت کاربران', icon: '⭐' },
 ];
 
 export const HeroSection = () => {
@@ -293,7 +292,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.5 }}
-              className="grid grid-cols-3 gap-4 sm:gap-8 mt-16"
+              className="grid grid-cols-2 gap-4 sm:gap-8 mt-16 max-w-lg mx-auto"
             >
               {stats.map((stat, index) => (
                 <motion.div
