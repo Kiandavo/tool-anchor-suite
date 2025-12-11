@@ -71,6 +71,13 @@ export default function SeoTool({ slug }: SeoToolProps) {
     }
   };
 
+  // Generate breadcrumbs for SEO
+  const breadcrumbs = [
+    { name: 'لنگر', url: 'https://laangar.com/' },
+    { name: 'ابزارهای سئو', url: 'https://laangar.com/category/seo' },
+    { name: toolMeta.name, url: `https://laangar.com/tool/${slug}` }
+  ];
+
   return (
     <div className="space-y-6">
       <EnhancedSeoHead
@@ -79,6 +86,7 @@ export default function SeoTool({ slug }: SeoToolProps) {
         title={`${toolMeta.name} | ابزار سئو حرفه‌ای رایگان - لنگر`}
         description={`✅ ${toolMeta.name} حرفه‌ای | ${toolMeta.description} | بهینه‌سازی سئو | رایگان و کامل | لنگر`}
         keywords={enhancedKeywords}
+        breadcrumbs={breadcrumbs}
       />
       <ToolInfoCard
         name={toolMeta.name}
