@@ -274,15 +274,22 @@
         opacity: 1;
       }
       
-      /* Static content uses position absolute to overlay without causing reflow */
+      /* Static content positioned absolutely to prevent layout shift when hidden */
       #static-content {
-        contain: layout style;
-        min-height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        background: #fafaff;
+        contain: layout style paint;
       }
       
-      /* When React mounts, fade out static content without layout shift */
+      /* When React mounts, hide static content without layout shift */
       #static-content.hidden {
-        display: none !important;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
       }
       
       /* Offscreen rendering optimization */
@@ -313,9 +320,8 @@
 </head>
   <body>
     <div id="root">
-      <!-- SEO-Critical Static Content - Crawlable HTML with real links -->
-      <!-- Uses contain: layout to prevent layout shifts during React hydration -->
-      <div id="static-content" style="font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; contain: layout style; min-height: 100vh;">
+      <!-- SEO-Critical Static Content - positioned absolutely to prevent layout shifts -->
+      <div id="static-content" style="font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl;">
         <!-- Header with navigation - fixed height to prevent CLS -->
         <header style="padding: 1rem 2rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; height: 72px; box-sizing: border-box;">
           <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
@@ -524,15 +530,16 @@
         if (!staticContent || !root) return;
         
         var hideStaticContent = function() {
-          if (staticContent) {
-            // Use visibility:hidden first to avoid layout shift, then remove
-            staticContent.style.visibility = 'hidden';
-            staticContent.style.position = 'absolute';
-            staticContent.style.pointerEvents = 'none';
-            // Remove from DOM after a brief delay
+          if (staticContent && staticContent.parentNode) {
+            // Simply add hidden class - CSS handles the rest without layout shift
+            staticContent.classList.add('hidden');
+            // Remove from DOM after paint to avoid layout recalculation
             requestAnimationFrame(function() {
-              staticContent.classList.add('hidden');
-              staticContent.remove();
+              requestAnimationFrame(function() {
+                if (staticContent && staticContent.parentNode) {
+                  staticContent.parentNode.removeChild(staticContent);
+                }
+              });
             });
           }
         };
@@ -548,7 +555,7 @@
         
         observer.observe(root, { childList: true, subtree: false });
         
-        // Faster fallback: 2s max wait (a bit longer to ensure React loads)
+        // Faster fallback: 2s max wait
         setTimeout(function() {
           observer.disconnect();
           hideStaticContent();
