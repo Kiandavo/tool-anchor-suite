@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ArrowLeft, Calculator, FileText, Image, Calendar, Sparkles, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const categories = [
   { icon: Calculator, label: 'محاسبات', href: '/calculators' },
@@ -13,97 +13,134 @@ const categories = [
 ];
 
 export const ModernHeroSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Parallax transforms - different speeds for depth
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, 30]);
+  const y4 = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const y5 = useTransform(scrollYProgress, [0, 1], [0, 70]);
+  const glowOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
+
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-background to-background" />
       
-      {/* Subtle accent glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/[0.04] rounded-full blur-3xl pointer-events-none" />
+      {/* Subtle accent glow with parallax */}
+      <motion.div 
+        style={{ opacity: glowOpacity }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/[0.04] rounded-full blur-3xl pointer-events-none" 
+      />
       
-      {/* Floating accent shapes */}
+      {/* Floating accent shapes with parallax */}
       {/* Diamond - top right */}
       <motion.div
+        style={{ y: y1 }}
         className="absolute top-20 right-[15%] hidden sm:block"
-        animate={{ 
-          y: [0, -10, 0],
-          rotate: [45, 45, 45],
-          opacity: [0.15, 0.25, 0.15]
-        }}
-        transition={{ 
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
       >
-        <div className="w-3 h-3 border border-primary/30 rotate-45" />
+        <motion.div
+          animate={{ 
+            y: [0, -10, 0],
+            opacity: [0.15, 0.25, 0.15]
+          }}
+          transition={{ 
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="w-3 h-3 border border-primary/30 rotate-45" />
+        </motion.div>
       </motion.div>
       
       {/* Ring - top left */}
       <motion.div
+        style={{ y: y2 }}
         className="absolute top-28 left-[12%] hidden sm:block"
-        animate={{ 
-          y: [0, -8, 0],
-          opacity: [0.12, 0.22, 0.12]
-        }}
-        transition={{ 
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1.5
-        }}
       >
-        <div className="w-4 h-4 rounded-full border border-primary/25" />
+        <motion.div
+          animate={{ 
+            y: [0, -8, 0],
+            opacity: [0.12, 0.22, 0.12]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5
+          }}
+        >
+          <div className="w-4 h-4 rounded-full border border-primary/25" />
+        </motion.div>
       </motion.div>
       
       {/* Small dot - bottom right */}
       <motion.div
-        className="absolute bottom-32 right-[18%] w-1.5 h-1.5 rounded-full bg-primary/20 hidden sm:block"
-        animate={{ 
-          y: [0, -6, 0],
-          opacity: [0.15, 0.3, 0.15]
-        }}
-        transition={{ 
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      />
+        style={{ y: y3 }}
+        className="absolute bottom-32 right-[18%] hidden sm:block"
+      >
+        <motion.div
+          className="w-1.5 h-1.5 rounded-full bg-primary/20"
+          animate={{ 
+            y: [0, -6, 0],
+            opacity: [0.15, 0.3, 0.15]
+          }}
+          transition={{ 
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+      </motion.div>
       
       {/* Diamond - bottom left */}
       <motion.div
+        style={{ y: y4 }}
         className="absolute bottom-24 left-[16%] hidden sm:block"
-        animate={{ 
-          y: [0, -8, 0],
-          rotate: [45, 45, 45],
-          opacity: [0.1, 0.2, 0.1]
-        }}
-        transition={{ 
-          duration: 4.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 0.8
-        }}
       >
-        <div className="w-2 h-2 border border-primary/20 rotate-45" />
+        <motion.div
+          animate={{ 
+            y: [0, -8, 0],
+            opacity: [0.1, 0.2, 0.1]
+          }}
+          transition={{ 
+            duration: 4.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.8
+          }}
+        >
+          <div className="w-2 h-2 border border-primary/20 rotate-45" />
+        </motion.div>
       </motion.div>
       
       {/* Ring - middle right */}
       <motion.div
+        style={{ y: y5 }}
         className="absolute top-1/2 right-[8%] hidden lg:block"
-        animate={{ 
-          y: [0, -12, 0],
-          opacity: [0.08, 0.16, 0.08]
-        }}
-        transition={{ 
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 3
-        }}
       >
-        <div className="w-5 h-5 rounded-full border border-primary/15" />
+        <motion.div
+          animate={{ 
+            y: [0, -12, 0],
+            opacity: [0.08, 0.16, 0.08]
+          }}
+          transition={{ 
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+        >
+          <div className="w-5 h-5 rounded-full border border-primary/15" />
+        </motion.div>
       </motion.div>
       
       <div className="container relative">
