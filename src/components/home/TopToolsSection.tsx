@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { tools } from '@/data/tools';
+import { tools, getNewTools } from '@/data/tools';
 import { ArrowLeft } from 'lucide-react';
 import { 
   Calculator, 
@@ -16,6 +16,12 @@ import {
   Calendar,
   Type
 } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 // 12 top tools - hardcoded for consistency
 const topToolSlugs = [
@@ -52,56 +58,66 @@ export const TopToolsSection = () => {
   const topTools = topToolSlugs
     .map(slug => tools.find(t => t.slug === slug))
     .filter(Boolean);
+  
+  const newToolSlugs = getNewTools().map(t => t.slug);
 
   return (
-    <section className="section-padding bg-muted/30">
+    <section className="py-6 sm:py-8 bg-muted/30">
       <div className="container-narrow">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg sm:text-xl font-bold text-foreground">
             ابزارهای پرکاربرد
           </h2>
           <Link 
             to="/all-tools" 
-            className="text-sm text-link flex items-center gap-1 font-medium"
+            className="text-xs text-primary flex items-center gap-1 font-medium hover:underline"
           >
             همه ابزارها
-            <ArrowLeft className="icon-sm" />
+            <ArrowLeft className="w-3 h-3" />
           </Link>
         </div>
 
-        {/* 12 tools in unified grid */}
-        <div className="grid-tools">
-          {topTools.map((tool) => {
-            if (!tool) return null;
-            const Icon = iconMap[tool.slug] || Calculator;
-            
-            return (
-              <Link
-                key={tool.slug}
-                to={`/tool/${tool.slug}`}
-                className="tool-card group"
-              >
-                {/* Icon */}
-                <div className="icon-box group-hover:bg-primary/20 transition-colors">
-                  <Icon className="icon-md" />
-                </div>
-                
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors truncate">
-                    {tool.name}
-                  </h3>
-                  <p className="text-xs text-muted-foreground truncate mt-0.5">
-                    {tool.description}
-                  </p>
-                </div>
-
-                {/* Arrow indicator */}
-                <ArrowLeft className="icon-sm text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
-              </Link>
-            );
-          })}
-        </div>
+        {/* Compact 4-column grid with tooltips */}
+        <TooltipProvider delayDuration={200}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+            {topTools.map((tool) => {
+              if (!tool) return null;
+              const Icon = iconMap[tool.slug] || Calculator;
+              const isNew = newToolSlugs.includes(tool.slug);
+              
+              return (
+                <Tooltip key={tool.slug}>
+                  <TooltipTrigger asChild>
+                    <Link
+                      to={`/tool/${tool.slug}`}
+                      className="group relative flex items-center gap-2.5 p-3 rounded-lg bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all duration-200"
+                    >
+                      {/* New badge */}
+                      {isNew && (
+                        <span className="absolute -top-1.5 -right-1.5 text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground">
+                          جدید
+                        </span>
+                      )}
+                      
+                      {/* Icon */}
+                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors flex-shrink-0">
+                        <Icon className="w-4 h-4 text-primary" />
+                      </div>
+                      
+                      {/* Title only */}
+                      <span className="font-medium text-sm text-foreground group-hover:text-primary transition-colors truncate">
+                        {tool.name}
+                      </span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="max-w-[200px] text-center">
+                    <p className="text-xs">{tool.description}</p>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </div>
+        </TooltipProvider>
       </div>
     </section>
   );

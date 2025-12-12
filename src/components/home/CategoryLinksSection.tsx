@@ -9,52 +9,64 @@ import {
   Calendar
 } from 'lucide-react';
 
-// 6 main clusters matching meta description
+// 6 main clusters with example tools
 const categories = [
   {
     slug: 'calculators',
-    name: 'محاسبات و تبدیل اعداد',
-    description: 'BMI، درصد، وام، تخفیف، تبدیل واحد',
+    name: 'محاسبات',
+    examples: ['BMI', 'درصد', 'وام', 'تخفیف'],
     icon: Calculator,
+    color: 'bg-blue-50 border-blue-100 hover:border-blue-200',
+    iconColor: 'text-blue-600',
   },
   {
     slug: 'text',
-    name: 'ابزارهای متن و نوشتار',
-    description: 'شمارش کلمات، JSON، Base64، URL',
+    name: 'متن',
+    examples: ['شمارش', 'JSON', 'Base64'],
     icon: FileText,
+    color: 'bg-emerald-50 border-emerald-100 hover:border-emerald-200',
+    iconColor: 'text-emerald-600',
   },
   {
     slug: 'image',
-    name: 'تصویر و فایل',
-    description: 'فشرده‌سازی، تغییر اندازه، تبدیل فرمت',
+    name: 'تصویر',
+    examples: ['فشرده‌سازی', 'تغییر سایز', 'تبدیل'],
     icon: Image,
+    color: 'bg-purple-50 border-purple-100 hover:border-purple-200',
+    iconColor: 'text-purple-600',
   },
   {
     slug: 'seo',
-    name: 'ابزارهای سئو و وب',
-    description: 'متا تگ، چگالی کلمات، robots.txt',
+    name: 'سئو',
+    examples: ['متا تگ', 'چگالی کلمات'],
     icon: Globe,
+    color: 'bg-orange-50 border-orange-100 hover:border-orange-200',
+    iconColor: 'text-orange-600',
   },
   {
     slug: 'persian-cultural',
-    name: 'تقویم و تاریخ',
-    description: 'تقویم فارسی، تبدیل تاریخ، محاسبه سن',
+    name: 'تاریخ',
+    examples: ['تقویم', 'تبدیل', 'سن'],
     icon: Calendar,
+    color: 'bg-rose-50 border-rose-100 hover:border-rose-200',
+    iconColor: 'text-rose-600',
   },
   {
     slug: 'readings',
-    name: 'فال و طالع‌بینی',
-    description: 'فال حافظ، تاروت، طالع‌بینی، استخاره',
+    name: 'فال',
+    examples: ['حافظ', 'تاروت', 'استخاره'],
     icon: Sparkles,
+    color: 'bg-amber-50 border-amber-100 hover:border-amber-200',
+    iconColor: 'text-amber-600',
   },
 ];
 
 export const CategoryLinksSection = () => {
   return (
-    <section className="section-padding">
+    <section className="py-6 sm:py-8">
       <div className="container-narrow">
-        {/* Category strip - 6 items, unified grid */}
-        <div className="grid-categories">
+        {/* 3x2 grid on desktop, 2x3 on mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {categories.map((category) => {
             const Icon = category.icon;
             
@@ -62,14 +74,19 @@ export const CategoryLinksSection = () => {
               <Link
                 key={category.slug}
                 to={`/category/${category.slug}`}
-                className="group flex flex-col items-center p-4 rounded-lg bg-card border border-border hover:border-primary/40 hover:shadow-md transition-all duration-200 text-center"
+                className={`group flex flex-col p-4 rounded-xl border transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${category.color}`}
               >
-                <div className="icon-box mb-2 group-hover:bg-primary/20 transition-colors">
-                  <Icon className="icon-md" />
+                <div className="flex items-center gap-2 mb-2">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-background/80 ${category.iconColor}`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-bold text-sm text-foreground">
+                    {category.name}
+                  </h3>
                 </div>
-                <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
-                  {category.name}
-                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {category.examples.join('، ')}
+                </p>
               </Link>
             );
           })}
