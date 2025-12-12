@@ -96,7 +96,7 @@ export const TarotControls: React.FC<TarotControlsProps> = ({
           onClick={onDrawCards} 
           disabled={isAnimating}
           size="sm" 
-          className="bg-[#b0c8e6] hover:bg-[#95b1d6] text-[#143a5c] text-[14px] h-9 px-4 transition-all duration-300 hover:shadow-md relative overflow-hidden group"
+          className="fortune-button-primary bg-[#b0c8e6] hover:bg-[#95b1d6] text-[#143a5c] text-[14px] h-9 px-4 transition-all duration-300 hover:shadow-md relative overflow-hidden group"
         >
           <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
           {isAnimating ? 
