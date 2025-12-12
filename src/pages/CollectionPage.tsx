@@ -168,43 +168,39 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-12"
+            className="mb-10"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-xl bg-amber-500/10">
-                <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-foreground">ابزارهای پیشنهادی</h2>
-                <p className="text-sm text-muted-foreground">پرکاربردترین ابزارهای این مجموعه</p>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                <h2 className="text-lg font-semibold text-foreground">ابزارهای پیشنهادی</h2>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-              {featuredTools.map((tool, index) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {featuredTools.map((tool) => (
                 tool && (
-                  <motion.div
+                  <Link
                     key={tool.id}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    whileHover={{ y: -6 }}
-                    className="relative"
+                    to={`/tool/${tool.slug}`}
+                    className="group relative flex items-start gap-3 p-4 rounded-xl bg-card border border-amber-200/50 hover:border-amber-400/60 hover:shadow-sm transition-all"
                   >
-                    <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ring-2 ring-amber-400/40 hover:ring-amber-400/60">
-                      {/* Star indicator - inside card */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <motion.div 
-                          className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.3 + index * 0.1, type: "spring" }}
-                        >
-                          <Star className="w-4 h-4 text-white fill-white" />
-                        </motion.div>
-                      </div>
-                      <ToolCard tool={tool} />
+                    <div className="absolute top-2 left-2">
+                      <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                     </div>
-                  </motion.div>
+                    
+                    <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/20 transition-colors">
+                      <Wrench className="w-5 h-5 text-amber-600 group-hover:text-amber-700 transition-colors" />
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                        {tool.name}
+                      </h3>
+                      <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                        {tool.description}
+                      </p>
+                    </div>
+                  </Link>
                 )
               ))}
             </div>
