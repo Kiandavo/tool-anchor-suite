@@ -190,19 +190,18 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
                     whileHover={{ y: -6 }}
                     className="relative"
                   >
-                    {/* Featured badge */}
-                    <motion.div 
-                      className="absolute -top-3 -right-2 z-10"
-                      initial={{ scale: 0, rotate: -10 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ delay: 0.3 + index * 0.1, type: "spring" }}
-                    >
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold shadow-lg">
-                        <Star className="w-3 h-3 fill-current" />
-                        پیشنهادی
-                      </span>
-                    </motion.div>
-                    <div className="ring-2 ring-amber-400/40 hover:ring-amber-400/60 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ring-2 ring-amber-400/40 hover:ring-amber-400/60">
+                      {/* Star indicator - inside card */}
+                      <div className="absolute top-3 left-3 z-10">
+                        <motion.div 
+                          className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.3 + index * 0.1, type: "spring" }}
+                        >
+                          <Star className="w-4 h-4 text-white fill-white" />
+                        </motion.div>
+                      </div>
                       <ToolCard tool={tool} />
                     </div>
                   </motion.div>
