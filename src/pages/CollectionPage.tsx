@@ -3,11 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { ToolCard } from '@/components/ToolCard';
-import { tools } from '@/data/tools';
+import { tools, categoryLabels } from '@/data/tools';
 import { collections, getCollectionBySlug } from '@/data/collections';
-import { ChevronRight, ArrowLeft, Sparkles, Star, Wrench } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ChevronRight, ArrowLeft, Sparkles, Star, Wrench, TrendingUp, Zap, Grid3X3 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SectionDecorator } from '@/components/home/SectionDecorator';
+import { getCollectionTheme } from '@/data/collectionThemes';
+import { Badge } from '@/components/ui/badge';
 
 interface CollectionPageProps {
   collectionSlug?: string;
@@ -18,8 +20,11 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
   const slug = collectionSlug || params.slug || '';
   
   const collection = getCollectionBySlug(slug);
+  const theme = collection ? getCollectionTheme(collection.slug) : null;
   
-  if (!collection) {
+  const [activeCategory, setActiveCategory] = React.useState<string | null>(null);
+  
+  if (!collection || !theme) {
     return (
       <Layout>
         <div className="text-center py-16">
@@ -41,6 +46,14 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
   const featuredTools = collectionTools.slice(0, 3);
   const remainingTools = collectionTools.slice(3);
 
+  // Get unique categories from collection tools
+  const toolCategories = [...new Set(collectionTools.map(t => t?.category))].filter(Boolean);
+
+  // Filter tools by category
+  const filteredTools = activeCategory 
+    ? remainingTools.filter(t => t?.category === activeCategory)
+    : remainingTools;
+
   // Other collections for cross-linking
   const otherCollections = collections.filter(c => c.id !== collection.id).slice(0, 4);
 
@@ -52,13 +65,37 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
         keywords={`ابزار آنلاین، ${collection.title}، لنگر`}
       />
 
-      {/* Hero Section */}
-      <section className="relative py-12 mb-8 bg-gradient-to-br from-primary/5 via-background to-persian-turquoise/5 overflow-hidden -mx-4 px-4 sm:-mx-6 sm:px-6">
+      {/* Hero Section with Collection Theme */}
+      <section className={`relative py-12 mb-8 bg-gradient-to-br ${theme.gradient} overflow-hidden -mx-4 px-4 sm:-mx-6 sm:px-6`}>
         <SectionDecorator variant="diamonds" position="right" opacity={0.1} />
         
-        {/* Floating orbs */}
-        <div className="absolute top-10 left-[5%] w-32 h-32 rounded-full bg-gradient-to-br from-primary/10 to-transparent blur-3xl animate-float pointer-events-none" />
-        <div className="absolute bottom-5 right-[10%] w-24 h-24 rounded-full bg-gradient-to-br from-persian-gold/10 to-transparent blur-2xl animate-float pointer-events-none" style={{ animationDelay: '-1.5s' }} />
+        {/* Animated Floating orbs */}
+        <motion.div 
+          className={`absolute top-10 left-[5%] w-32 h-32 rounded-full bg-gradient-to-br ${theme.gradient} blur-3xl pointer-events-none`}
+          animate={{ 
+            y: [0, -20, 0], 
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.5, 0.3] 
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className={`absolute bottom-5 right-[10%] w-24 h-24 rounded-full bg-gradient-to-br ${theme.gradient} blur-2xl pointer-events-none`}
+          animate={{ 
+            y: [0, 15, 0], 
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2] 
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        />
+        <motion.div 
+          className={`absolute top-1/2 left-[30%] w-16 h-16 rounded-full bg-gradient-to-br ${theme.gradient} blur-xl pointer-events-none`}
+          animate={{ 
+            x: [0, 20, 0], 
+            opacity: [0.1, 0.3, 0.1] 
+          }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
         
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Breadcrumb */}
@@ -75,10 +112,14 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="flex items-start gap-4 mb-5">
-              <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-4xl shadow-lg">
+            <div className="flex items-start gap-5 mb-5">
+              <motion.div 
+                className={`flex-shrink-0 w-20 h-20 rounded-2xl ${theme.iconBg} flex items-center justify-center text-5xl shadow-xl border border-white/20`}
+                whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+                transition={{ duration: 0.4 }}
+              >
                 {collection.icon}
-              </div>
+              </motion.div>
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
                   {collection.title}
@@ -89,16 +130,32 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
               </div>
             </div>
             
-            {/* Stats badges */}
-            <div className="flex flex-wrap gap-3 mt-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
+            {/* Stats badges with animations */}
+            <div className="flex flex-wrap gap-3 mt-6">
+              <motion.div 
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${theme.badgeBg} ${theme.badgeText} text-sm font-medium shadow-sm`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Wrench className="w-4 h-4" />
                 {collectionTools.length} ابزار
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-persian-gold/10 text-persian-gold text-sm font-medium">
+              </motion.div>
+              <motion.div 
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-700 text-sm font-medium shadow-sm"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Sparkles className="w-4 h-4" />
                 رایگان و آنلاین
-              </div>
+              </motion.div>
+              <motion.div 
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 text-green-700 text-sm font-medium shadow-sm"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Zap className="w-4 h-4" />
+                بدون ثبت‌نام
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -111,29 +168,41 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-10"
+            className="mb-12"
           >
-            <div className="flex items-center gap-2 mb-5">
-              <Star className="w-5 h-5 text-persian-gold fill-persian-gold" />
-              <h2 className="text-lg font-semibold text-foreground">ابزارهای پیشنهادی</h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-xl bg-amber-500/10">
+                <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-foreground">ابزارهای پیشنهادی</h2>
+                <p className="text-sm text-muted-foreground">پرکاربردترین ابزارهای این مجموعه</p>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               {featuredTools.map((tool, index) => (
                 tool && (
                   <motion.div
                     key={tool.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ y: -6 }}
                     className="relative"
                   >
-                    <div className="absolute -top-2 -right-2 z-10">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-persian-gold text-white text-xs font-medium shadow-md">
+                    {/* Featured badge */}
+                    <motion.div 
+                      className="absolute -top-3 -right-2 z-10"
+                      initial={{ scale: 0, rotate: -10 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ delay: 0.3 + index * 0.1, type: "spring" }}
+                    >
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold shadow-lg">
                         <Star className="w-3 h-3 fill-current" />
                         پیشنهادی
                       </span>
-                    </div>
-                    <div className="ring-2 ring-persian-gold/30 rounded-xl overflow-hidden">
+                    </motion.div>
+                    <div className="ring-2 ring-amber-400/40 hover:ring-amber-400/60 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
                       <ToolCard tool={tool} />
                     </div>
                   </motion.div>
@@ -141,6 +210,54 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
               ))}
             </div>
           </motion.section>
+        )}
+
+        {/* Category Filter */}
+        {toolCategories.length > 1 && remainingTools.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mb-6"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Grid3X3 className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">فیلتر بر اساس دسته:</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <motion.button
+                onClick={() => setActiveCategory(null)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeCategory === null 
+                    ? 'bg-primary text-primary-foreground shadow-md' 
+                    : 'bg-muted hover:bg-muted/80 text-muted-foreground'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                همه ({remainingTools.length})
+              </motion.button>
+              {toolCategories.map((category) => {
+                const count = remainingTools.filter(t => t?.category === category).length;
+                if (count === 0) return null;
+                return (
+                  <motion.button
+                    key={category}
+                    onClick={() => setActiveCategory(category === activeCategory ? null : category!)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      activeCategory === category 
+                        ? 'bg-primary text-primary-foreground shadow-md' 
+                        : 'bg-muted hover:bg-muted/80 text-muted-foreground'
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {categoryLabels[category!]} ({count})
+                  </motion.button>
+                );
+              })}
+            </div>
+          </motion.div>
         )}
 
         {/* All Tools Grid */}
@@ -151,36 +268,58 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
             transition={{ delay: 0.2 }}
             className="mb-12"
           >
-            <div className="flex items-center gap-2 mb-5">
-              <Wrench className="w-5 h-5 text-muted-foreground" />
-              <h2 className="text-lg font-semibold text-foreground">سایر ابزارها</h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-xl bg-muted">
+                <Wrench className="w-5 h-5 text-muted-foreground" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-foreground">سایر ابزارها</h2>
+                <p className="text-sm text-muted-foreground">
+                  {activeCategory ? `${filteredTools.length} ابزار در دسته ${categoryLabels[activeCategory]}` : `${remainingTools.length} ابزار دیگر در این مجموعه`}
+                </p>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {remainingTools.map((tool, index) => (
-                tool && (
-                  <motion.div
-                    key={tool.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 + index * 0.03 }}
-                  >
-                    <ToolCard tool={tool} />
-                  </motion.div>
-                )
-              ))}
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={activeCategory || 'all'}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+              >
+                {filteredTools.map((tool, index) => (
+                  tool && (
+                    <motion.div
+                      key={tool.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.03 }}
+                      whileHover={{ y: -4 }}
+                    >
+                      <ToolCard tool={tool} />
+                    </motion.div>
+                  )
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </motion.section>
         )}
 
-        {/* Other Collections */}
+        {/* Other Collections with themed cards */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="pt-8 border-t border-border/50"
+          className="pt-10 border-t border-border/50"
         >
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-semibold text-foreground">مجموعه‌های مرتبط</h2>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-primary/10">
+                <TrendingUp className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-xl font-bold text-foreground">مجموعه‌های مرتبط</h2>
+            </div>
             <Link 
               to="/collections" 
               className="text-sm text-primary hover:underline flex items-center gap-1"
@@ -190,40 +329,65 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {otherCollections.map((col, index) => (
-              <motion.div
-                key={col.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.05 }}
-              >
-                <Link
-                  to={`/collection/${col.slug}`}
-                  className="group flex flex-col p-4 bg-card border border-border/50 hover:border-primary/30 hover:shadow-md rounded-xl transition-all duration-300"
+            {otherCollections.map((col, index) => {
+              const colTheme = getCollectionTheme(col.slug);
+              const colToolCount = col.toolSlugs.filter(s => tools.some(t => t.slug === s)).length;
+              
+              return (
+                <motion.div
+                  key={col.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.05 }}
+                  whileHover={{ y: -4, scale: 1.02 }}
                 >
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-2xl">{col.icon}</span>
-                    <h3 className="font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                      {col.title}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{col.description}</p>
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    to={`/collection/${col.slug}`}
+                    className={`group flex flex-col h-full p-5 bg-gradient-to-br ${colTheme.gradient} border ${colTheme.borderColor} ${colTheme.hoverBorder} hover:shadow-lg rounded-xl transition-all duration-300`}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <motion.div 
+                        className={`w-12 h-12 rounded-xl ${colTheme.iconBg} flex items-center justify-center`}
+                        whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+                      >
+                        <span className="text-2xl">{col.icon}</span>
+                      </motion.div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                          {col.title}
+                        </h3>
+                        <span className={`text-xs ${colTheme.badgeText}`}>{colToolCount} ابزار</span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground line-clamp-2 flex-1">{col.description}</p>
+                    <div className="mt-3 pt-3 border-t border-border/30 flex justify-end">
+                      <span className="text-xs text-muted-foreground group-hover:text-primary flex items-center gap-1 transition-colors">
+                        مشاهده
+                        <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.section>
 
         {/* Back Link */}
-        <div className="mt-10 pt-6 border-t border-border/30 text-center">
+        <motion.div 
+          className="mt-12 pt-6 border-t border-border/30 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
           <Link
             to="/all-tools"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/10 text-primary font-medium hover:bg-primary/20 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all shadow-lg hover:shadow-xl"
           >
             <ArrowLeft className="w-4 h-4" />
             مشاهده همه ابزارها
           </Link>
-        </div>
+        </motion.div>
       </div>
     </Layout>
   );
