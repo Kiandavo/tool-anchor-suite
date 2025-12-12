@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ToolRenderer } from '@/components/tool/ToolRenderer';
-import { ToolPageLayout } from '@/components/tool/ToolPageLayout';
+import { ToolPageBlueprint } from '@/components/tool/ToolPageBlueprint';
 import { tools, categoryLabels } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
 import { ToolSeoHead } from '@/components/seo/ToolSeoHead';
 import { toolsSeoData } from '@/data/seo-content';
-import { generateDefaultFAQ, generateHowToSteps } from '@/utils/seoOptimization';
+import { generateHowToSteps } from '@/utils/seoOptimization';
+import { toolMetaRegistry } from '@/data/toolMeta';
 
 const Tool = () => {
   const { slug } = useParams();
@@ -35,10 +36,14 @@ const Tool = () => {
     );
   }
 
-  // Get SEO data
-  const categoryLabel = (categoryLabels as any)[tool.category] || tool.category;
+  // Get tool-specific metadata or use defaults
+  const toolMeta = toolMetaRegistry[tool.slug];
   const toolSeoData = toolsSeoData[tool.slug];
   const howToSteps = toolSeoData?.howToUse || generateHowToSteps(tool.name, 'tool');
+  
+  // Job title and use cases
+  const jobTitle = toolMeta?.jobTitle || tool.name;
+  const useCases = toolMeta?.useCases || tool.description;
   
   // Short, practical FAQ (max 5)
   const defaultFaq = [
@@ -56,7 +61,7 @@ const Tool = () => {
     }
   ];
   
-  const faq = toolSeoData?.faq?.slice(0, 5) || defaultFaq;
+  const faq = toolMeta?.faq || toolSeoData?.faq?.slice(0, 5) || defaultFaq;
 
   return (
     <Layout>
@@ -65,9 +70,14 @@ const Tool = () => {
         howToSteps={howToSteps}
       />
       
-      <ToolPageLayout tool={tool} faq={faq}>
+      <ToolPageBlueprint 
+        tool={tool} 
+        jobTitle={jobTitle}
+        useCases={useCases}
+        faq={faq}
+      >
         <ToolRenderer tool={tool} slug={slug!} />
-      </ToolPageLayout>
+      </ToolPageBlueprint>
     </Layout>
   );
 };
