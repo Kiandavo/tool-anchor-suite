@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Hash, RefreshCw, Sparkles, Calendar, User, Copy, Info, BookOpen } from "lucide-react";
+import { Hash, RefreshCw, Sparkles, Calendar, User, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAdvancedNumerology } from '@/hooks/useAdvancedNumerology';
@@ -10,6 +10,7 @@ import { NumerologyChart } from './numerology/NumerologyChart';
 import { PersianAbjad } from './numerology/PersianAbjad';
 import { PersonalYear } from './numerology/PersonalYear';
 import { RelationshipCompatibility } from './numerology/RelationshipCompatibility';
+import { NumerologyGuide } from './numerology/NumerologyGuide';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EnhancedReadingWrapper } from './EnhancedReadingWrapper';
 import { TutorialStep } from './TutorialSystem';
@@ -21,17 +22,11 @@ import {
   PulsingNumber 
 } from '@/components/fal/graphics/NumerologyGraphics';
 import { copyToClipboard } from '@/utils/randomUtils';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 
 export const Numerology: React.FC = () => {
   const [name, setName] = useState('');
   const [persianName, setPersianName] = useState('');
   const [birthDate, setBirthDate] = useState('');
-  const [showGuide, setShowGuide] = useState(false);
   const { chart, isLoading, generateCompleteChart } = useAdvancedNumerology();
 
   const handleCalculate = () => {
@@ -136,37 +131,17 @@ export const Numerology: React.FC = () => {
         <NumerologyGrid />
         
         <CardHeader className="bg-gradient-to-r from-indigo-400 to-purple-500 text-center pb-3 py-3 relative border-b border-indigo-200">
-          <div className="flex items-center justify-center gap-2">
-            <Hash className="text-white" size={18} />
-            <h2 className="text-base font-bold text-white">
-              اعداد شناسی (نومرولوژی)
-            </h2>
-            <Sparkles className="text-white/80" size={14} />
+          <div className="flex items-center justify-between">
+            <NumerologyGuide />
+            <div className="flex-1 flex items-center justify-center gap-2">
+              <Hash className="text-white" size={18} />
+              <h2 className="text-base font-bold text-white">
+                اعداد شناسی (نومرولوژی)
+              </h2>
+              <Sparkles className="text-white/80" size={14} />
+            </div>
+            <div className="w-[70px]"></div> {/* Spacer for balance */}
           </div>
-          
-          {/* Guide toggle */}
-          <Collapsible open={showGuide} onOpenChange={setShowGuide}>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="absolute left-2 top-2 text-white/80 hover:text-white hover:bg-white/10">
-                <Info size={16} />
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="absolute top-full left-0 right-0 z-50 bg-white/95 backdrop-blur-sm p-4 rounded-b-lg shadow-lg text-right">
-              <div className="space-y-2 text-sm text-indigo-900">
-                <p className="font-bold flex items-center gap-2">
-                  <BookOpen size={16} />
-                  راهنمای اعداد شناسی
-                </p>
-                <ul className="space-y-1 text-xs text-indigo-700">
-                  <li>• <strong>عدد مسیر زندگی:</strong> مهم‌ترین عدد - نشان‌دهنده هدف زندگی</li>
-                  <li>• <strong>عدد بیان:</strong> استعدادها و توانایی‌های ذاتی</li>
-                  <li>• <strong>عدد روح:</strong> خواسته‌ها و انگیزه‌های درونی</li>
-                  <li>• <strong>عدد شخصیت:</strong> نحوه دیده شدن توسط دیگران</li>
-                  <li>• <strong>اعداد کارمایی (۱۱، ۲۲، ۳۳):</strong> اعداد خاص با قدرت بیشتر</li>
-                </ul>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
         </CardHeader>
         
         <CardContent className="pt-4 px-4 relative z-10">
