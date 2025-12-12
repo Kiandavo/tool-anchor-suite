@@ -54,23 +54,23 @@ export const TopToolsSection = () => {
     .filter(Boolean);
 
   return (
-    <section className="py-10 sm:py-12 bg-muted/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <section className="section-padding bg-muted/30">
+      <div className="container-narrow">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground">
             ابزارهای پرکاربرد
           </h2>
           <Link 
             to="/all-tools" 
-            className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1 font-medium"
+            className="text-sm text-link flex items-center gap-1 font-medium"
           >
             همه ابزارها
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="icon-sm" />
           </Link>
         </div>
 
-        {/* 12 tools in a clean grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* 12 tools in unified grid */}
+        <div className="grid-tools">
           {topTools.map((tool) => {
             if (!tool) return null;
             const Icon = iconMap[tool.slug] || Calculator;
@@ -79,16 +79,16 @@ export const TopToolsSection = () => {
               <Link
                 key={tool.slug}
                 to={`/tool/${tool.slug}`}
-                className="group flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-amber-500/50 hover:shadow-md transition-all duration-200"
+                className="tool-card group"
               >
                 {/* Icon */}
-                <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-600 group-hover:bg-amber-500/20 transition-colors flex-shrink-0">
-                  <Icon className="w-5 h-5" />
+                <div className="icon-box group-hover:bg-primary/20 transition-colors">
+                  <Icon className="icon-md" />
                 </div>
                 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-sm text-foreground group-hover:text-amber-600 transition-colors truncate">
+                  <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors truncate">
                     {tool.name}
                   </h3>
                   <p className="text-xs text-muted-foreground truncate mt-0.5">
@@ -97,7 +97,7 @@ export const TopToolsSection = () => {
                 </div>
 
                 {/* Arrow indicator */}
-                <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-amber-500 transition-colors flex-shrink-0" />
+                <ArrowLeft className="icon-sm text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
               </Link>
             );
           })}

@@ -51,10 +51,10 @@ const categories = [
 
 export const CategoryLinksSection = () => {
   return (
-    <section className="py-10 sm:py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-        {/* Category strip - 6 items, functional grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+    <section className="section-padding">
+      <div className="container-narrow">
+        {/* Category strip - 6 items, unified grid */}
+        <div className="grid-categories">
           {categories.map((category) => {
             const Icon = category.icon;
             
@@ -62,12 +62,12 @@ export const CategoryLinksSection = () => {
               <Link
                 key={category.slug}
                 to={`/category/${category.slug}`}
-                className="group flex flex-col items-center p-4 rounded-xl bg-card border border-border hover:border-amber-500/50 hover:bg-amber-50/50 transition-all duration-200 text-center"
+                className="group flex flex-col items-center p-4 rounded-lg bg-card border border-border hover:border-primary/40 hover:shadow-md transition-all duration-200 text-center"
               >
-                <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-600 mb-2 group-hover:bg-amber-500/20 transition-colors">
-                  <Icon className="w-5 h-5" />
+                <div className="icon-box mb-2 group-hover:bg-primary/20 transition-colors">
+                  <Icon className="icon-md" />
                 </div>
-                <h3 className="font-semibold text-sm text-foreground group-hover:text-amber-600 transition-colors line-clamp-2 leading-tight">
+                <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                   {category.name}
                 </h3>
               </Link>
