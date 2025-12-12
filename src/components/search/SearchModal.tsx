@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, X, ArrowLeft, TrendingUp, Clock, Trash2, Sparkles, Calculator, BookOpen, Palette, Settings, Zap } from 'lucide-react';
+import { Search, X, ArrowLeft, TrendingUp, Clock, Trash2, Sparkles, Calculator, BookOpen, Palette, Zap, Image, Globe, Calendar, Hash, FileText } from 'lucide-react';
 import { useSearchModal } from '@/hooks/useSearchModal';
 import { useSearchHistory } from '@/hooks/useSearchHistory';
 import { tools, getPopularTools, categoryLabels } from '@/data/tools';
@@ -8,13 +8,16 @@ import { Tool } from '@/types/tool-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-// Quick category filters
+// Extended category filters with all main categories
 const categoryFilters = [
   { key: 'all', label: 'همه', icon: Zap },
   { key: 'calculators', label: 'محاسبه‌گر', icon: Calculator },
+  { key: 'text', label: 'متن', icon: FileText },
+  { key: 'image', label: 'تصویر', icon: Image },
   { key: 'readings', label: 'فال', icon: Sparkles },
-  { key: 'design', label: 'طراحی', icon: Palette },
-  { key: 'text', label: 'متن', icon: BookOpen },
+  { key: 'seo', label: 'سئو', icon: Globe },
+  { key: 'persian-cultural', label: 'فرهنگی', icon: Calendar },
+  { key: 'number', label: 'عددی', icon: Hash },
 ];
 
 // Popular search suggestions
@@ -90,13 +93,7 @@ export const SearchModal = () => {
 
       // Apply category filter
       if (activeFilter !== 'all') {
-        filtered = filtered.filter(tool => {
-          if (activeFilter === 'calculators') return tool.category === 'calculators';
-          if (activeFilter === 'readings') return tool.category === 'readings';
-          if (activeFilter === 'design') return ['image-tools', 'design-tools'].includes(tool.category);
-          if (activeFilter === 'text') return ['text-tools', 'seo-tools'].includes(tool.category);
-          return true;
-        });
+        filtered = filtered.filter(tool => tool.category === activeFilter);
       }
 
       setResults(filtered.slice(0, 8));
@@ -108,7 +105,10 @@ export const SearchModal = () => {
     }
   }, [query, activeFilter]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  // Get current filter index for Tab navigation
+  const currentFilterIndex = categoryFilters.findIndex(f => f.key === activeFilter);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       close();
     } else if (e.key === 'ArrowDown') {
@@ -120,8 +120,15 @@ export const SearchModal = () => {
     } else if (e.key === 'Enter' && results.length > 0) {
       e.preventDefault();
       handleSelectTool(results[selectedIndex]);
+    } else if (e.key === 'Tab') {
+      // Tab to cycle through filters
+      e.preventDefault();
+      const nextIndex = e.shiftKey 
+        ? (currentFilterIndex - 1 + categoryFilters.length) % categoryFilters.length
+        : (currentFilterIndex + 1) % categoryFilters.length;
+      setActiveFilter(categoryFilters[nextIndex].key);
     }
-  };
+  }, [close, results, selectedIndex, currentFilterIndex]);
 
   const handleSelectTool = (tool: Tool) => {
     if (query.trim()) {
@@ -424,10 +431,14 @@ export const SearchModal = () => {
           </AnimatePresence>
 
           {/* Keyboard Hints */}
-          <div className="flex justify-center gap-6 mt-6 text-sm text-muted-foreground">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <kbd className="px-2.5 py-1.5 bg-card rounded-lg border border-border/50 text-xs">↑↓</kbd>
               <span>حرکت</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <kbd className="px-2.5 py-1.5 bg-card rounded-lg border border-border/50 text-xs">Tab</kbd>
+              <span>فیلتر</span>
             </div>
             <div className="flex items-center gap-2">
               <kbd className="px-2.5 py-1.5 bg-card rounded-lg border border-border/50 text-xs">Enter</kbd>
