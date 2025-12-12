@@ -3,10 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/Layout';
 import { FocusedHeroSection } from '@/components/home/FocusedHeroSection';
 import { GlobalSearchBar } from '@/components/home/GlobalSearchBar';
-import { CategoryCardsSection } from '@/components/home/CategoryCardsSection';
 import { TopToolsSection } from '@/components/home/TopToolsSection';
 import { NewToolsSection } from '@/components/home/NewToolsSection';
 import { RecentlyUsedSection } from '@/components/home/RecentlyUsedSection';
+import { CategoryPreviewSection } from '@/components/home/CategoryPreviewSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
 import { Link } from 'react-router-dom';
@@ -18,12 +18,11 @@ const OpenGraphTags = lazy(() => import('@/components/seo/OpenGraphTags').then(m
 const BackToTop = lazy(() => import('@/components/ui/BackToTop').then(m => ({ default: m.BackToTop })));
 
 const Index = () => {
-  // SEO data - matches meta promise
+  // SEO data
   const homeTitle = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی | لنگر";
   const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. همه ابزارها رایگان، بدون ثبت‌نام، سریع | لنگر";
   const homeKeywords = "ابزار آنلاین رایگان, محاسبه گر, تبدیل متن فارسی, ویرایش تصویر آنلاین, ابزار سئو, فال حافظ, فال تاروت, لنگر";
 
-  // FAQ for schema
   const homeFAQ = [
     {
       question: "آیا ابزارهای لنگر رایگان هستند؟",
@@ -60,7 +59,6 @@ const Index = () => {
         faq={homeFAQ}
       />
       
-      {/* JSON-LD Structured Data */}
       {combinedSchema && (
         <Helmet>
           <script type="application/ld+json">
@@ -75,7 +73,6 @@ const Index = () => {
           description={homeDescription}
           canonical="https://laangar.com/"
         />
-        
         <OpenGraphTags
           title={homeTitle}
           description={homeDescription}
@@ -88,33 +85,35 @@ const Index = () => {
       {/* 1. Hero - H1 + trust badges */}
       <FocusedHeroSection />
 
-      {/* 2. Global Search Bar - right under hero */}
+      {/* 2. Visible Search Bar with label */}
       <GlobalSearchBar />
 
-      {/* 3. Recently Used Tools (localStorage-based) */}
-      <RecentlyUsedSection maxItems={6} />
+      {/* 3. Recently Used (only shows if user has history) */}
+      <RecentlyUsedSection maxItems={5} />
 
-      {/* 4. Category Cards - 6 main clusters */}
-      <CategoryCardsSection />
-
-      {/* 5. Popular tools - 12 tools with tooltips */}
+      {/* 4. Popular tools this week */}
       <TopToolsSection />
 
-      {/* 6. New Tools Section */}
+      {/* 5. New tools */}
       <NewToolsSection />
 
+      {/* 6. Category previews (3-4 tools per category) */}
+      <CategoryPreviewSection />
+
       {/* 7. Footer CTA */}
-      <section className="py-8 text-center">
+      <section className="py-10 text-center border-t border-border bg-muted/30">
+        <p className="text-sm text-muted-foreground mb-4">
+          می‌خواهید همه ابزارها را ببینید؟
+        </p>
         <Link 
           to="/all-tools"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
         >
-          مشاهده همه ابزارها
+          مشاهده همه +۱۰۰ ابزار
           <ArrowLeft className="w-4 h-4" />
         </Link>
       </section>
 
-      {/* Back to Top */}
       <Suspense fallback={null}>
         <BackToTop />
       </Suspense>
