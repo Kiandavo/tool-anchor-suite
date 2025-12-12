@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Tool, categoryLabels } from '@/data/tools';
 import { generateToolSchema, generateBreadcrumbSchema, generateHowToSchema, combineSchemas } from '@/utils/schemaUtils';
+import { getCategoryUrl } from '@/utils/internal-linking';
 
 interface ToolSeoHeadProps {
   tool: Tool;
@@ -56,7 +57,7 @@ export const ToolSeoHead: React.FC<ToolSeoHeadProps> = ({ tool, howToSteps }) =>
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'لنگر', url: baseUrl },
-    { name: categoryName, url: `${baseUrl}/category/${tool.category}` },
+    { name: categoryName, url: `${baseUrl}${getCategoryUrl(tool.category)}` },
     { name: tool.name, url: toolUrl },
   ]);
 

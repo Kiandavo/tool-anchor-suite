@@ -5,7 +5,12 @@
 User-agent: *
 Allow: /
 Allow: /tool/
-Allow: /category/
+Allow: /calculators
+Allow: /text-tools
+Allow: /image-tools
+Allow: /persian-tools
+Allow: /readings
+Allow: /seo-tools
 Allow: /blog/
 Allow: /about
 Allow: /faq

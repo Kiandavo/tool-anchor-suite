@@ -5,6 +5,7 @@
 
 import { Tool, ToolCategory } from '@/types/tool-types';
 import { tools, categoryLabels } from '@/data/tools';
+import { getCategoryUrl } from '@/utils/internal-linking';
 
 export interface ToolSeoContent {
   title: string;
@@ -293,8 +294,9 @@ export function generateToolsSitemapEntries(): string[] {
  */
 export function generateCategorySitemapEntries(): string[] {
   return Object.keys(categoryLabels).map(category => {
+    const categoryPath = getCategoryUrl(category);
     return `  <url>
-    <loc>https://laangar.com/category/${category}</loc>
+    <loc>https://laangar.com${categoryPath}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
