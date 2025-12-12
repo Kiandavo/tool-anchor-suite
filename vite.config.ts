@@ -62,29 +62,31 @@ export default defineConfig(({ mode }) => ({
     devSourcemap: mode === 'development',
   },
   build: {
-    target: 'es2015',
+    target: 'es2020', // Modern target for better performance (supports BigInt, optional chaining, etc.)
     minify: 'terser',
     cssMinify: true,
     assetsInlineLimit: 4096,
     reportCompressedSize: false,
+    chunkSizeWarningLimit: 600,
     terserOptions: {
       compress: {
         drop_console: mode === 'production',
         drop_debugger: mode === 'production',
+        passes: 2,
       },
     },
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // Core React - smallest possible
+          // Core React - smallest possible, loaded first
           if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
             return 'react-core';
           }
-          // Router - loaded on navigation
+          // Router - essential for navigation
           if (id.includes('react-router')) {
             return 'router';
           }
-          // Heavy animation library - load on demand
+          // Heavy animation library - defer loading
           if (id.includes('framer-motion')) {
             return 'animations';
           }
@@ -92,15 +94,23 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('three') || id.includes('@react-three')) {
             return 'three-vendor';
           }
-          // Charts - load on demand
+          // Charts - load on demand for dashboards
           if (id.includes('recharts') || id.includes('d3')) {
             return 'charts';
           }
-          // PDF/Canvas libraries - load on demand
+          // PDF/Canvas libraries - load on demand for exports
           if (id.includes('jspdf') || id.includes('html2canvas')) {
             return 'export-libs';
           }
-          // Radix UI - split by component
+          // QR Code - specific tool
+          if (id.includes('qrcode')) {
+            return 'qrcode';
+          }
+          // OpenAI - AI tools only
+          if (id.includes('openai')) {
+            return 'ai-libs';
+          }
+          // Radix UI primitives - commonly used across app
           if (id.includes('@radix-ui')) {
             return 'ui-radix';
           }
@@ -112,11 +122,19 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('date-fns')) {
             return 'date-utils';
           }
-          // Supabase
+          // Form handling
+          if (id.includes('react-hook-form') || id.includes('@hookform') || id.includes('zod')) {
+            return 'forms';
+          }
+          // Supabase client
           if (id.includes('@supabase')) {
             return 'supabase';
           }
-          // Other node_modules
+          // TanStack Query
+          if (id.includes('@tanstack')) {
+            return 'query';
+          }
+          // Other node_modules go to vendor chunk
           if (id.includes('node_modules')) {
             return 'vendor';
           }
