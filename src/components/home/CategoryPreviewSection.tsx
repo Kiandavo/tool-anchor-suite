@@ -5,47 +5,54 @@ import { tools, categoryLabels } from '@/data/tools';
 import { ToolCategory } from '@/types/tool-types';
 import { SectionDecorator } from './SectionDecorator';
 
-// Category config with icons and featured tools
+// Category config with icons, URLs and featured tools
 const categoryConfig: {
   category: ToolCategory;
+  url: string;
   icon: React.ComponentType<{ className?: string }>;
   featuredSlugs: string[];
   gradient: string;
 }[] = [
   {
     category: 'calculators',
+    url: '/calculators',
     icon: Calculator,
     featuredSlugs: ['bmi-calculator', 'percentage-calculator', 'discount-calculator', 'age-calculator'],
     gradient: 'from-blue-500/10 to-blue-600/5'
   },
   {
     category: 'text',
+    url: '/text-tools',
     icon: FileText,
-    featuredSlugs: ['text-counter', 'json-formatter', 'password-generator', 'base64-encoder-decoder'],
+    featuredSlugs: ['text-counter', 'password-generator', 'base64-encoder-decoder', 'text-translator'],
     gradient: 'from-emerald-500/10 to-emerald-600/5'
   },
   {
     category: 'image',
+    url: '/image-tools',
     icon: Image,
     featuredSlugs: ['image-compressor', 'image-resizer', 'qr-code-generator', 'image-cropper'],
     gradient: 'from-purple-500/10 to-purple-600/5'
   },
   {
     category: 'readings',
+    url: '/readings',
     icon: Sparkles,
     featuredSlugs: ['hafez-fortune', 'tarot-reading', 'horoscope', 'numerology'],
     gradient: 'from-amber-500/10 to-amber-600/5'
   },
   {
     category: 'seo',
+    url: '/seo-tools',
     icon: Code,
     featuredSlugs: ['meta-tag-generator', 'keyword-density', 'robots-txt-generator', 'utm-builder'],
     gradient: 'from-rose-500/10 to-rose-600/5'
   },
   {
     category: 'persian-cultural',
+    url: '/persian-tools',
     icon: Globe,
-    featuredSlugs: ['persian-calendar', 'persian-names', 'persian-proverbs', 'persian-holidays'],
+    featuredSlugs: ['today-date', 'age-calculator', 'date-difference', 'world-time'],
     gradient: 'from-teal-500/10 to-teal-600/5'
   }
 ];
@@ -58,7 +65,7 @@ export const CategoryPreviewSection = () => {
       <div className="absolute bottom-1/4 left-0 w-64 h-64 rounded-full bg-gradient-to-br from-persian-turquoise/5 to-transparent blur-3xl pointer-events-none" />
       
       <div className="container-narrow relative z-10 space-y-4">
-        {categoryConfig.map(({ category, icon: Icon, featuredSlugs, gradient }, categoryIndex) => {
+        {categoryConfig.map(({ category, url, icon: Icon, featuredSlugs, gradient }, categoryIndex) => {
           const categoryTools = featuredSlugs
             .map(slug => tools.find(t => t.slug === slug))
             .filter(Boolean)
@@ -87,7 +94,7 @@ export const CategoryPreviewSection = () => {
                   </h3>
                 </div>
                 <Link
-                  to={`/category/${category}`}
+                  to={url}
                   className="text-xs text-primary hover:underline flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity"
                 >
                   همه

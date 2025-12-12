@@ -12,6 +12,29 @@ export interface InternalLink {
   title: string;
 }
 
+// Centralized category ID to URL slug mapping
+const categoryToSlugMap: Record<string, string> = {
+  'calculators': 'calculators',
+  'text': 'text-tools',
+  'image': 'image-tools',
+  'persian-cultural': 'persian-tools',
+  'readings': 'readings',
+  'seo': 'seo-tools',
+  'random': 'random-tools',
+  'number': 'number-tools',
+  'educational': 'educational-tools',
+  'productivity': 'productivity-tools',
+  'design': 'design-tools',
+};
+
+/**
+ * Get category URL from category ID
+ */
+export function getCategoryUrl(category: string): string {
+  const slug = categoryToSlugMap[category] || category;
+  return `/${slug}`;
+}
+
 /**
  * Extract potential internal link opportunities from content
  */
@@ -40,7 +63,7 @@ export function generateInternalLinks(content: string, currentToolSlug?: string)
     if (regex.test(content)) {
       links.push({
         text: label,
-        url: `/category/${category}`,
+        url: getCategoryUrl(category),
         title: `مشاهده تمام ${label}`
       });
     }
@@ -59,7 +82,7 @@ export function getContextualLinks(category: ToolCategory, currentToolSlug?: str
   const categoryLabel = categoryLabels[category];
   links.push({
     text: `سایر ${categoryLabel}`,
-    url: `/category/${category}`,
+    url: getCategoryUrl(category),
     title: `مشاهده تمام ${categoryLabel}`
   });
 
@@ -102,7 +125,7 @@ export function generateBreadcrumbLinks(
     const categoryLabel = categoryLabels[category];
     links.push({
       text: categoryLabel,
-      url: `/category/${category}`,
+      url: getCategoryUrl(category),
       title: `دسته‌بندی ${categoryLabel} - ابزارهای تخصصی`
     });
   }

@@ -11,59 +11,59 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
-// 6 main category cards with clear descriptions
+// 6 main category cards with clean URLs
 const categories = [
   {
     slug: 'calculators',
+    url: '/calculators',
     name: 'محاسبه‌گرها',
     description: 'BMI، درصد، وام، تخفیف و تبدیل واحد',
     icon: Calculator,
-    gradient: 'from-blue-500 to-blue-600',
     bgLight: 'bg-blue-50 hover:bg-blue-100',
     iconBg: 'bg-blue-500',
   },
   {
     slug: 'text',
+    url: '/text-tools',
     name: 'ابزارهای متنی',
     description: 'شمارش کلمات، JSON، Base64 و تبدیل متن',
     icon: FileText,
-    gradient: 'from-emerald-500 to-emerald-600',
     bgLight: 'bg-emerald-50 hover:bg-emerald-100',
     iconBg: 'bg-emerald-500',
   },
   {
     slug: 'image',
+    url: '/image-tools',
     name: 'ابزارهای تصویر',
     description: 'فشرده‌سازی، تغییر سایز و تبدیل فرمت',
     icon: Image,
-    gradient: 'from-purple-500 to-purple-600',
     bgLight: 'bg-purple-50 hover:bg-purple-100',
     iconBg: 'bg-purple-500',
   },
   {
     slug: 'seo',
+    url: '/seo-tools',
     name: 'ابزارهای سئو',
     description: 'متا تگ، چگالی کلمات و تحلیل سایت',
     icon: Globe,
-    gradient: 'from-orange-500 to-orange-600',
     bgLight: 'bg-orange-50 hover:bg-orange-100',
     iconBg: 'bg-orange-500',
   },
   {
     slug: 'persian-cultural',
-    name: 'تقویم و تاریخ',
+    url: '/persian-tools',
+    name: 'فرهنگ فارسی',
     description: 'تقویم فارسی، تبدیل تاریخ و محاسبه سن',
     icon: Calendar,
-    gradient: 'from-rose-500 to-rose-600',
     bgLight: 'bg-rose-50 hover:bg-rose-100',
     iconBg: 'bg-rose-500',
   },
   {
     slug: 'readings',
+    url: '/readings',
     name: 'فال و طالع‌بینی',
     description: 'فال حافظ، تاروت، استخاره و طالع‌بینی',
     icon: Sparkles,
-    gradient: 'from-amber-500 to-amber-600',
     bgLight: 'bg-amber-50 hover:bg-amber-100',
     iconBg: 'bg-amber-500',
   },
@@ -107,7 +107,7 @@ export const CategoryCardsSection = () => {
             return (
               <motion.div key={category.slug} variants={cardVariants}>
                 <Link
-                  to={`/category/${category.slug}`}
+                  to={category.url}
                   className={`group flex items-center gap-4 p-4 rounded-xl border border-transparent transition-all duration-300 ${category.bgLight}`}
                 >
                   {/* Icon */}
