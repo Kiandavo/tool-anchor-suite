@@ -98,15 +98,15 @@ export function FooterSitemap() {
 
             {/* Quick Links */}
             <div className="flex items-center gap-4 text-sm">
-              <Link to="/category/calculators" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/calculators" className="text-muted-foreground hover:text-primary transition-colors">
                 محاسبه‌گرها
               </Link>
               <span className="text-border">•</span>
-              <Link to="/category/text" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/text-tools" className="text-muted-foreground hover:text-primary transition-colors">
                 ابزار متن
               </Link>
               <span className="text-border">•</span>
-              <Link to="/category/seo" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/seo-tools" className="text-muted-foreground hover:text-primary transition-colors">
                 سئو
               </Link>
             </div>

@@ -2,6 +2,7 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ToolCategory, categoryLabels } from '@/data/tools';
+import { getCategoryUrl } from '@/utils/internal-linking';
 import { 
   TextIcon, 
   Image, 
@@ -42,9 +43,10 @@ interface CategoryCardProps {
 export const CategoryCard = memo(function CategoryCard({ category, count }: CategoryCardProps) {
   const IconComponent = categoryIcons[category] || TextIcon;
   const theme = categoryThemes[category] || categoryThemes.text;
+  const categoryUrl = getCategoryUrl(category);
   
   return (
-    <Link to={`/category/${category}`} className="block focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
+    <Link to={categoryUrl} className="block focus:outline-none focus:ring-2 focus:ring-apple-blue/40 rounded-3xl">
       <motion.div 
         className="card-apple-gradient rounded-3xl p-5 flex flex-col items-center group hover:shadow-lg will-change-transform transition-all duration-300"
         whileHover={{ y: -6, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
