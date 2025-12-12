@@ -125,7 +125,7 @@ export function TextToolForm({
         type="button" 
         onClick={handleProcess} 
         size="lg" 
-        className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white"
+        className="w-full"
         disabled={!textInput.trim()}
       >
         {processButtonText}

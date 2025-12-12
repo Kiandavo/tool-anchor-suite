@@ -121,7 +121,7 @@ export const DirectoryFilters: React.FC<DirectoryFiltersProps> = ({
               className={cn(
                 "px-3 py-1.5 rounded-full text-sm font-medium border transition-all",
                 isActive
-                  ? "bg-amber-500/10 border-amber-500/50 text-amber-600"
+                  ? "bg-primary/10 border-primary/50 text-primary"
                   : "bg-card border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
               )}
             >

@@ -101,20 +101,20 @@ export const ToolCardUnified: React.FC<ToolCardUnifiedProps> = ({
     <UnifiedCard href={href} variant="default" size="md" className={className}>
       <div className="flex items-start gap-3">
         {/* Icon container - consistent size and color */}
-        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-          <Icon className="w-5 h-5" />
+        <div className="icon-box">
+          <Icon className="icon-md" />
         </div>
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <h3 className="font-medium text-card-foreground truncate">{name}</h3>
             {isNew && (
-              <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded-full font-medium">
                 جدید
               </span>
             )}
             {isPopular && (
-              <span className="text-xs bg-amber-500/10 text-amber-600 px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded-full font-medium">
                 محبوب
               </span>
             )}
