@@ -79,6 +79,12 @@ export const collections: Collection[] = [
       'color-palette-generator',
       'qr-generator',
       'hafez-fortune',
+      'reading-time-calculator',
+      'image-converter',
+      'text-translator',
+      'gradient-generator',
+      'pomodoro-timer',
+      'note-to-self',
     ],
   },
   {
