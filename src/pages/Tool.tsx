@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { ToolRenderer } from '@/components/tool/ToolRenderer';
 import { ToolPageBlueprint } from '@/components/tool/ToolPageBlueprint';
-import { tools, categoryLabels } from '@/data/tools';
+import { tools } from '@/data/tools';
 import { useRecentTools } from '@/hooks/useRecentTools';
 import { ToolSeoHead } from '@/components/seo/ToolSeoHead';
 import { toolsSeoData } from '@/data/seo-content';
 import { generateHowToSteps } from '@/utils/seoOptimization';
-import { toolMetaRegistry } from '@/data/toolMeta';
+import { getToolMeta } from '@/data/toolMeta';
 
 const Tool = () => {
   const { slug } = useParams();
@@ -36,32 +36,12 @@ const Tool = () => {
     );
   }
 
-  // Get tool-specific metadata or use defaults
-  const toolMeta = toolMetaRegistry[tool.slug];
+  // Get tool metadata with fallback
+  const toolMeta = getToolMeta(tool.slug, tool.name, tool.description);
   const toolSeoData = toolsSeoData[tool.slug];
   const howToSteps = toolSeoData?.howToUse || generateHowToSteps(tool.name, 'tool');
   
-  // Job title and use cases
-  const jobTitle = toolMeta?.jobTitle || tool.name;
-  const useCases = toolMeta?.useCases || tool.description;
-  
-  // Short, practical FAQ (max 5)
-  const defaultFaq = [
-    {
-      question: `آیا ${tool.name} رایگان است؟`,
-      answer: 'بله، این ابزار کاملاً رایگان است و نیازی به ثبت‌نام ندارد.'
-    },
-    {
-      question: 'آیا اطلاعات من ذخیره می‌شود؟',
-      answer: 'خیر، تمام پردازش‌ها در مرورگر شما انجام می‌شود و داده‌ای ذخیره نمی‌شود.'
-    },
-    {
-      question: 'آیا روی موبایل کار می‌کند؟',
-      answer: 'بله، این ابزار برای تمام دستگاه‌ها (موبایل، تبلت، دسکتاپ) بهینه شده است.'
-    }
-  ];
-  
-  const faq = toolMeta?.faq || toolSeoData?.faq?.slice(0, 5) || defaultFaq;
+  const { jobTitle, useCases, faq } = toolMeta;
 
   return (
     <Layout>
