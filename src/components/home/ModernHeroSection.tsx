@@ -14,8 +14,14 @@ const categories = [
 
 export const ModernHeroSection = () => {
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-background">
-      <div className="container">
+    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-background to-background" />
+      
+      {/* Subtle accent glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/[0.04] rounded-full blur-3xl pointer-events-none" />
+      
+      <div className="container relative">
         <div className="max-w-3xl mx-auto text-center">
           {/* Main Headline */}
           <motion.h1 
@@ -25,7 +31,10 @@ export const ModernHeroSection = () => {
             className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground mb-4 leading-tight"
           >
             بیش از{' '}
-            <span className="text-primary">۱۰۰ ابزار</span>
+            <span className="text-primary relative">
+              ۱۰۰ ابزار
+              <span className="absolute -inset-1 bg-primary/10 rounded-lg blur-sm -z-10" />
+            </span>
             {' '}آنلاین رایگان
           </motion.h1>
 
