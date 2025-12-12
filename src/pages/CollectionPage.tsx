@@ -261,18 +261,18 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="mb-12"
+            className="mb-10"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-xl bg-muted">
-                <Wrench className="w-5 h-5 text-muted-foreground" />
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Wrench className="w-4 h-4 text-muted-foreground" />
+                <h2 className="text-lg font-semibold text-foreground">سایر ابزارها</h2>
               </div>
-              <div>
-                <h2 className="text-xl font-bold text-foreground">سایر ابزارها</h2>
-                <p className="text-sm text-muted-foreground">
-                  {activeCategory ? `${filteredTools.length} ابزار در دسته ${categoryLabels[activeCategory]}` : `${remainingTools.length} ابزار دیگر در این مجموعه`}
-                </p>
-              </div>
+              {activeCategory && (
+                <span className="text-xs text-muted-foreground">
+                  {filteredTools.length} ابزار
+                </span>
+              )}
             </div>
             <AnimatePresence mode="wait">
               <motion.div 
@@ -281,19 +281,28 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
               >
-                {filteredTools.map((tool, index) => (
+                {filteredTools.map((tool) => (
                   tool && (
-                    <motion.div
+                    <Link
                       key={tool.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.03 }}
-                      whileHover={{ y: -4 }}
+                      to={`/tool/${tool.slug}`}
+                      className="group flex items-start gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all"
                     >
-                      <ToolCard tool={tool} />
-                    </motion.div>
+                      <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                        <Wrench className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                          {tool.name}
+                        </h3>
+                        <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                          {tool.description}
+                        </p>
+                      </div>
+                    </Link>
                   )
                 ))}
               </motion.div>
