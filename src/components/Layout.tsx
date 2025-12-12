@@ -6,13 +6,13 @@ import { Helmet } from 'react-helmet-async';
 import { AdSenseScript } from '@/components/ads/AdSenseScript';
 import { ADS_CONFIG } from '@/config/ads';
 import { InstallPrompt } from '@/components/pwa/InstallPrompt';
+import { ScrollToTopButton } from '@/components/ui/ScrollToTopButton';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  console.log('Layout component initializing...');
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -85,6 +85,9 @@ export const Layout = ({ children }: LayoutProps) => {
       </main>
 
       <FooterSitemap />
+      
+      {/* Floating back-to-top button with scroll progress */}
+      <ScrollToTopButton />
       
       {/* PWA Install Prompt */}
       <InstallPrompt />
