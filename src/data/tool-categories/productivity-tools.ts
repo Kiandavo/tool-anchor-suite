@@ -48,8 +48,28 @@ export const productivityTools: Tool[] = [
     name: "برد پروژه",
     category: "productivity",
     description: "مدیریت ساده پروژه به روش کانبان",
-    isNew: true,
+    isNew: false,
     icon: "layout-grid",
+    isComingSoon: false
+  },
+  {
+    id: "habit-tracker",
+    slug: "habit-tracker",
+    name: "پیگیری عادت",
+    category: "productivity",
+    description: "عادت‌های روزانه را پیگیری کنید و استریک بسازید",
+    isNew: true,
+    icon: "target",
+    isComingSoon: false
+  },
+  {
+    id: "invoice-generator",
+    slug: "invoice-generator",
+    name: "ساخت فاکتور",
+    category: "productivity",
+    description: "فاکتور حرفه‌ای برای کسب‌وکار خود بسازید",
+    isNew: true,
+    icon: "file-text",
     isComingSoon: false
   }
 ];

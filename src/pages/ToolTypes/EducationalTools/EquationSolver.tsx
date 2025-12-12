@@ -1,260 +1,411 @@
-import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Calculator, ArrowRight, AlertCircle } from "lucide-react";
+import React, { useState, useMemo } from 'react';
+import { CalculatorCard } from '@/components/calculator/CalculatorCard';
+import { VisualizationCard } from '@/components/calculator/VisualizationCard';
+import { Calculator, ArrowRight, TrendingUp, Copy } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from '@/hooks/use-toast';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+
+interface Solution {
+  type: 'linear' | 'quadratic' | 'system';
+  values: number[] | string;
+  steps: string[];
+}
 
 const EquationSolver = () => {
-  const [equation, setEquation] = useState("");
-  const [solution, setSolution] = useState<any>(null);
-  const [steps, setSteps] = useState<string[]>([]);
-  const [error, setError] = useState("");
+  const [mode, setMode] = useState<'linear' | 'quadratic' | 'system'>('linear');
+  const [equation, setEquation] = useState('');
+  const [equation2, setEquation2] = useState('');
+  const [solution, setSolution] = useState<Solution | null>(null);
+  const [error, setError] = useState('');
+  const [history, setHistory] = useState<{ eq: string; sol: string }[]>([]);
 
-  const solveEquation = () => {
-    setError("");
+  const persianToEnglish = (str: string) => {
+    const persianNums = '۰۱۲۳۴۵۶۷۸۹';
+    return str.replace(/[۰-۹]/g, (d) => String(persianNums.indexOf(d)));
+  };
+
+  const solveLinear = () => {
+    setError('');
     setSolution(null);
-    setSteps([]);
 
-    if (!equation.trim()) {
-      setError("لطفاً معادله‌ای وارد کنید");
+    let eq = persianToEnglish(equation).replace(/\s/g, '').toLowerCase();
+    
+    // Parse ax + b = c
+    const match = eq.match(/^([+-]?\d*\.?\d*)x([+-]\d*\.?\d*)=([+-]?\d*\.?\d*)$/);
+    
+    if (!match) {
+      setError('فرمت معادله صحیح نیست. مثال: 2x+5=11');
       return;
     }
 
-    try {
-      // Clean and standardize the equation
-      let cleanEquation = equation.replace(/\s/g, '').toLowerCase();
-      
-      // Check if it's a linear equation in form ax + b = c
-      const linearMatch = cleanEquation.match(/^([+-]?\d*\.?\d*)x([+-]\d*\.?\d*)=([+-]?\d*\.?\d*)$/);
-      
-      if (linearMatch) {
-        solveLinearEquation(linearMatch);
-        return;
-      }
-
-      // Check if it's a quadratic equation in form ax² + bx + c = 0
-      const quadraticMatch = cleanEquation.match(/^([+-]?\d*\.?\d*)x²?([+-]?\d*\.?\d*)x([+-]\d*\.?\d*)=0$/);
-      
-      if (quadraticMatch) {
-        solveQuadraticEquation(quadraticMatch);
-        return;
-      }
-
-      // Check simple arithmetic
-      const arithmeticMatch = cleanEquation.match(/^([+-]?\d*\.?\d*)([+\-*/])([+-]?\d*\.?\d*)=([+-]?\d*\.?\d*)$/);
-      
-      if (arithmeticMatch) {
-        solveArithmetic(arithmeticMatch);
-        return;
-      }
-
-      setError("فرمت معادله شناخته نشد. از فرمت‌هایی مثل 'x + 5 = 10' یا '2x² + 3x - 1 = 0' استفاده کنید");
-      
-    } catch (err) {
-      setError("خطا در حل معادله");
-    }
-  };
-
-  const solveLinearEquation = (match: RegExpMatchArray) => {
     const a = parseFloat(match[1]) || 1;
     const b = parseFloat(match[2]) || 0;
     const c = parseFloat(match[3]) || 0;
 
-    const solutionSteps = [];
-    solutionSteps.push(`معادله اصلی: ${a}x + (${b}) = ${c}`);
-    
+    const steps: string[] = [];
+    steps.push(`معادله: ${a}x + (${b}) = ${c}`);
+
     if (a === 0) {
       if (b === c) {
-        setSolution("بی‌نهایت جواب");
-        solutionSteps.push("چون ضریب x صفر است و دو طرف معادله برابرند، معادله بی‌نهایت جواب دارد");
+        setSolution({ type: 'linear', values: 'بی‌نهایت جواب', steps });
       } else {
-        setSolution("بدون جواب");
-        solutionSteps.push("چون ضریب x صفر است و دو طرف معادله برابر نیستند، معادله جواب ندارد");
+        setSolution({ type: 'linear', values: 'بدون جواب', steps });
       }
-    } else {
-      const newC = c - b;
-      solutionSteps.push(`${b} را از دو طرف کم می‌کنیم: ${a}x = ${newC}`);
-      
-      const x = newC / a;
-      solutionSteps.push(`دو طرف را بر ${a} تقسیم می‌کنیم: x = ${newC}/${a}`);
-      solutionSteps.push(`x = ${x}`);
-      
-      setSolution(x);
+      return;
     }
-    
-    setSteps(solutionSteps);
+
+    const result = (c - b) / a;
+    steps.push(`${b} را از دو طرف کم می‌کنیم: ${a}x = ${c - b}`);
+    steps.push(`دو طرف را بر ${a} تقسیم می‌کنیم: x = ${result}`);
+
+    setSolution({ type: 'linear', values: [result], steps });
+    addToHistory(equation, `x = ${result}`);
   };
 
-  const solveQuadraticEquation = (match: RegExpMatchArray) => {
+  const solveQuadratic = () => {
+    setError('');
+    setSolution(null);
+
+    let eq = persianToEnglish(equation).replace(/\s/g, '').toLowerCase();
+    
+    // Parse ax² + bx + c = 0
+    const match = eq.match(/^([+-]?\d*\.?\d*)x[²2]([+-]\d*\.?\d*)x([+-]\d*\.?\d*)=0$/);
+    
+    if (!match) {
+      setError('فرمت معادله صحیح نیست. مثال: x²-4x+3=0');
+      return;
+    }
+
     const a = parseFloat(match[1]) || 1;
     const b = parseFloat(match[2]) || 0;
     const c = parseFloat(match[3]) || 0;
 
-    const solutionSteps = [];
-    solutionSteps.push(`معادله درجه دوم: ${a}x² + (${b})x + (${c}) = 0`);
-    
+    const steps: string[] = [];
+    steps.push(`معادله: ${a}x² + (${b})x + (${c}) = 0`);
+
     const discriminant = b * b - 4 * a * c;
-    solutionSteps.push(`محاسبه تشخیص‌دهنده: Δ = b² - 4ac = ${b}² - 4×${a}×${c} = ${discriminant}`);
+    steps.push(`دلتا: Δ = b² - 4ac = ${b}² - 4×${a}×${c} = ${discriminant}`);
 
     if (discriminant < 0) {
-      setSolution("جواب حقیقی ندارد");
-      solutionSteps.push("چون تشخیص‌دهنده منفی است، معادله جواب حقیقی ندارد");
+      steps.push('چون Δ < 0، معادله جواب حقیقی ندارد');
+      setSolution({ type: 'quadratic', values: 'بدون جواب حقیقی', steps });
     } else if (discriminant === 0) {
       const x = -b / (2 * a);
-      solutionSteps.push(`چون تشخیص‌دهنده صفر است، یک جواب مضاعف داریم:`);
-      solutionSteps.push(`x = -b/2a = ${-b}/${2 * a} = ${x}`);
-      setSolution([x]);
+      steps.push(`چون Δ = 0، یک جواب مضاعف داریم: x = -b/2a = ${x}`);
+      setSolution({ type: 'quadratic', values: [x], steps });
+      addToHistory(equation, `x = ${x}`);
     } else {
-      const sqrtDiscriminant = Math.sqrt(discriminant);
-      const x1 = (-b + sqrtDiscriminant) / (2 * a);
-      const x2 = (-b - sqrtDiscriminant) / (2 * a);
-      
-      solutionSteps.push(`چون تشخیص‌دهنده مثبت است، دو جواب داریم:`);
-      solutionSteps.push(`x₁ = (-b + √Δ)/2a = (${-b} + √${discriminant})/${2 * a} = ${x1.toFixed(3)}`);
-      solutionSteps.push(`x₂ = (-b - √Δ)/2a = (${-b} - √${discriminant})/${2 * a} = ${x2.toFixed(3)}`);
-      
-      setSolution([x1, x2]);
+      const sqrt = Math.sqrt(discriminant);
+      const x1 = (-b + sqrt) / (2 * a);
+      const x2 = (-b - sqrt) / (2 * a);
+      steps.push(`x₁ = (-b + √Δ)/2a = ${x1.toFixed(3)}`);
+      steps.push(`x₂ = (-b - √Δ)/2a = ${x2.toFixed(3)}`);
+      setSolution({ type: 'quadratic', values: [x1, x2], steps });
+      addToHistory(equation, `x₁=${x1.toFixed(2)}, x₂=${x2.toFixed(2)}`);
     }
+  };
+
+  const solveSystem = () => {
+    setError('');
+    setSolution(null);
+
+    // Parse two equations: ax + by = c
+    const eq1 = persianToEnglish(equation).replace(/\s/g, '').toLowerCase();
+    const eq2 = persianToEnglish(equation2).replace(/\s/g, '').toLowerCase();
+
+    const parseEq = (eq: string) => {
+      const match = eq.match(/^([+-]?\d*\.?\d*)x([+-]\d*\.?\d*)y=([+-]?\d*\.?\d*)$/);
+      if (!match) return null;
+      return {
+        a: parseFloat(match[1]) || 1,
+        b: parseFloat(match[2]) || 0,
+        c: parseFloat(match[3]) || 0,
+      };
+    };
+
+    const p1 = parseEq(eq1);
+    const p2 = parseEq(eq2);
+
+    if (!p1 || !p2) {
+      setError('فرمت معادلات صحیح نیست. مثال: 2x+3y=7');
+      return;
+    }
+
+    const steps: string[] = [];
+    steps.push(`معادله ۱: ${p1.a}x + ${p1.b}y = ${p1.c}`);
+    steps.push(`معادله ۲: ${p2.a}x + ${p2.b}y = ${p2.c}`);
+
+    const det = p1.a * p2.b - p2.a * p1.b;
+    steps.push(`دترمینان: D = ${p1.a}×${p2.b} - ${p2.a}×${p1.b} = ${det}`);
+
+    if (det === 0) {
+      steps.push('چون D = 0، دستگاه یا بی‌نهایت جواب دارد یا جوابی ندارد');
+      setSolution({ type: 'system', values: 'دستگاه ناسازگار یا وابسته', steps });
+      return;
+    }
+
+    const x = (p1.c * p2.b - p2.c * p1.b) / det;
+    const y = (p1.a * p2.c - p2.a * p1.c) / det;
+
+    steps.push(`x = (${p1.c}×${p2.b} - ${p2.c}×${p1.b}) / ${det} = ${x.toFixed(3)}`);
+    steps.push(`y = (${p1.a}×${p2.c} - ${p2.a}×${p1.c}) / ${det} = ${y.toFixed(3)}`);
+
+    setSolution({ type: 'system', values: [x, y], steps });
+    addToHistory(`${equation}, ${equation2}`, `x=${x.toFixed(2)}, y=${y.toFixed(2)}`);
+  };
+
+  const addToHistory = (eq: string, sol: string) => {
+    setHistory((prev) => [{ eq, sol }, ...prev.slice(0, 9)]);
+  };
+
+  const handleSolve = () => {
+    if (mode === 'linear') solveLinear();
+    else if (mode === 'quadratic') solveQuadratic();
+    else solveSystem();
+  };
+
+  const copyResult = () => {
+    if (!solution || typeof solution.values === 'string') return;
+    const text = solution.values.map((v, i) => `x${solution.values.length > 1 ? i + 1 : ''} = ${v}`).join(', ');
+    navigator.clipboard.writeText(text);
+    toast({ title: 'کپی شد!' });
+  };
+
+  // Generate graph data for quadratic
+  const graphData = useMemo(() => {
+    if (mode !== 'quadratic' || !solution || typeof solution.values === 'string') return [];
     
-    setSteps(solutionSteps);
-  };
+    let eq = persianToEnglish(equation).replace(/\s/g, '').toLowerCase();
+    const match = eq.match(/^([+-]?\d*\.?\d*)x[²2]([+-]\d*\.?\d*)x([+-]\d*\.?\d*)=0$/);
+    if (!match) return [];
 
-  const solveArithmetic = (match: RegExpMatchArray) => {
-    const num1 = parseFloat(match[1]);
-    const operator = match[2];
-    const num2 = parseFloat(match[3]);
-    const result = parseFloat(match[4]);
+    const a = parseFloat(match[1]) || 1;
+    const b = parseFloat(match[2]) || 0;
+    const c = parseFloat(match[3]) || 0;
 
-    const solutionSteps = [];
-    let unknown;
-
-    switch (operator) {
-      case '+':
-        unknown = result - num1;
-        solutionSteps.push(`${num1} + x = ${result}`);
-        solutionSteps.push(`x = ${result} - ${num1} = ${unknown}`);
-        break;
-      case '-':
-        unknown = num1 - result;
-        solutionSteps.push(`${num1} - x = ${result}`);
-        solutionSteps.push(`x = ${num1} - ${result} = ${unknown}`);
-        break;
-      case '*':
-        unknown = result / num1;
-        solutionSteps.push(`${num1} × x = ${result}`);
-        solutionSteps.push(`x = ${result} ÷ ${num1} = ${unknown}`);
-        break;
-      case '/':
-        unknown = num1 / result;
-        solutionSteps.push(`${num1} ÷ x = ${result}`);
-        solutionSteps.push(`x = ${num1} ÷ ${result} = ${unknown}`);
-        break;
+    const vertex = -b / (2 * a);
+    const range = 5;
+    const data = [];
+    
+    for (let x = vertex - range; x <= vertex + range; x += 0.2) {
+      data.push({ x: x.toFixed(1), y: a * x * x + b * x + c });
     }
+    return data;
+  }, [equation, solution, mode]);
 
-    setSolution(unknown);
-    setSteps(solutionSteps);
+  const examples = {
+    linear: ['2x+5=11', '3x-7=14', '-x+10=5'],
+    quadratic: ['x²-4x+3=0', 'x²+2x-8=0', '2x²-5x+2=0'],
+    system: [['2x+3y=7', 'x-y=1'], ['3x+2y=12', 'x+y=5']],
   };
 
-  const exampleEquations = [
-    "2x + 5 = 11",
-    "x² - 4x + 3 = 0",
-    "3x - 7 = 14",
-    "x² + 2x - 8 = 0"
-  ];
+  const reset = () => {
+    setEquation('');
+    setEquation2('');
+    setSolution(null);
+    setError('');
+  };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="w-5 h-5 text-primary" />
-            حل‌کننده معادلات ریاضی
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            معادلات خطی و درجه دوم خود را وارد کنید تا با نمایش مراحل حل شوند.
-          </p>
+    <div className="space-y-6">
+      <CalculatorCard title="حل‌کننده معادلات" icon={Calculator} onReset={reset}>
+        {/* Mode Tabs */}
+        <Tabs value={mode} onValueChange={(v) => { setMode(v as typeof mode); reset(); }}>
+          <TabsList className="grid grid-cols-3">
+            <TabsTrigger value="linear">خطی</TabsTrigger>
+            <TabsTrigger value="quadratic">درجه دوم</TabsTrigger>
+            <TabsTrigger value="system">دستگاه</TabsTrigger>
+          </TabsList>
 
-          <div className="space-y-4">
-            <div>
+          <TabsContent value="linear" className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label>معادله خطی (ax + b = c)</Label>
               <Input
-                placeholder="مثال: 2x + 5 = 11 یا x² - 4x + 3 = 0"
                 value={equation}
                 onChange={(e) => setEquation(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && solveEquation()}
-                className="text-left"
+                placeholder="مثال: 2x+5=11"
                 dir="ltr"
+                className="text-center font-mono"
+                onKeyDown={(e) => e.key === 'Enter' && handleSolve()}
               />
             </div>
-
-            <Button onClick={solveEquation} className="w-full" disabled={!equation.trim()}>
-              <Calculator className="w-4 h-4 ml-2" />
-              حل معادله
-            </Button>
-
-            {error && (
-              <div className="p-3 border border-destructive/20 rounded-lg bg-destructive/5 text-destructive">
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4" />
-                  {error}
-                </div>
-              </div>
-            )}
-
-            <div className="space-y-2">
-              <p className="text-sm font-medium">نمونه معادلات:</p>
-              <div className="flex flex-wrap gap-2">
-                {exampleEquations.map((ex, index) => (
-                  <Badge
-                    key={index}
-                    variant="outline"
-                    className="cursor-pointer hover:bg-primary/10"
-                    onClick={() => setEquation(ex)}
-                  >
-                    {ex}
-                  </Badge>
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {examples.linear.map((ex) => (
+                <Badge key={ex} variant="outline" className="cursor-pointer" onClick={() => setEquation(ex)}>
+                  {ex}
+                </Badge>
+              ))}
             </div>
-          </div>
+          </TabsContent>
 
-          {(solution !== null || steps.length > 0) && (
-            <div className="mt-6 space-y-4 p-4 border rounded-lg bg-muted/30">
-              <h3 className="text-lg font-semibold">مراحل حل:</h3>
-              
-              <div className="space-y-2">
-                {steps.map((step, index) => (
-                  <div key={index} className="flex items-start gap-2 p-2 bg-background rounded">
-                    <Badge variant="outline" className="min-w-8 h-6 flex items-center justify-center">
-                      {index + 1}
-                    </Badge>
-                    <span className="text-sm">{step}</span>
-                  </div>
+          <TabsContent value="quadratic" className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label>معادله درجه دوم (ax² + bx + c = 0)</Label>
+              <Input
+                value={equation}
+                onChange={(e) => setEquation(e.target.value)}
+                placeholder="مثال: x²-4x+3=0"
+                dir="ltr"
+                className="text-center font-mono"
+                onKeyDown={(e) => e.key === 'Enter' && handleSolve()}
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {examples.quadratic.map((ex) => (
+                <Badge key={ex} variant="outline" className="cursor-pointer" onClick={() => setEquation(ex)}>
+                  {ex}
+                </Badge>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="system" className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label>دستگاه دو معادله دو مجهول</Label>
+              <Input
+                value={equation}
+                onChange={(e) => setEquation(e.target.value)}
+                placeholder="معادله ۱: 2x+3y=7"
+                dir="ltr"
+                className="text-center font-mono"
+              />
+              <Input
+                value={equation2}
+                onChange={(e) => setEquation2(e.target.value)}
+                placeholder="معادله ۲: x-y=1"
+                dir="ltr"
+                className="text-center font-mono"
+                onKeyDown={(e) => e.key === 'Enter' && handleSolve()}
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {examples.system.map((ex, i) => (
+                <Badge
+                  key={i}
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={() => { setEquation(ex[0]); setEquation2(ex[1]); }}
+                >
+                  {ex[0]}, {ex[1]}
+                </Badge>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        <Button onClick={handleSolve} className="w-full gap-2" disabled={!equation.trim()}>
+          <Calculator className="h-4 w-4" />
+          حل معادله
+        </Button>
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg text-destructive text-sm"
+          >
+            {error}
+          </motion.div>
+        )}
+      </CalculatorCard>
+
+      {/* Solution */}
+      <AnimatePresence>
+        {solution && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <VisualizationCard title="مراحل حل">
+              <div className="space-y-3">
+                {solution.steps.map((step, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex items-start gap-3 p-2 bg-muted/30 rounded-lg"
+                  >
+                    <Badge variant="outline" className="shrink-0">{i + 1}</Badge>
+                    <span className="text-sm font-mono" dir="ltr">{step}</span>
+                  </motion.div>
                 ))}
               </div>
 
-              {solution !== null && (
-                <div className="p-4 bg-primary/10 rounded-lg border-r-4 border-primary">
+              {/* Final Answer */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-4 p-4 bg-primary/10 rounded-xl border-r-4 border-primary"
+              >
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <ArrowRight className="w-4 h-4 text-primary" />
-                    <strong>جواب نهایی:</strong>
-                    <span className="text-lg font-mono">
-                      {Array.isArray(solution) 
-                        ? solution.map((x, i) => `x${i+1} = ${typeof x === 'number' ? x.toFixed(3) : x}`).join(', ')
-                        : typeof solution === 'number' 
-                          ? `x = ${solution.toFixed(3)}`
-                          : solution
-                      }
+                    <ArrowRight className="h-5 w-5 text-primary" />
+                    <span className="font-medium">جواب:</span>
+                    <span className="text-lg font-mono font-bold">
+                      {typeof solution.values === 'string'
+                        ? solution.values
+                        : solution.type === 'system'
+                        ? `x = ${solution.values[0].toFixed(3)}, y = ${solution.values[1].toFixed(3)}`
+                        : solution.values.map((v, i) => `x${solution.values.length > 1 ? i + 1 : ''} = ${v.toFixed(3)}`).join(', ')}
                     </span>
                   </div>
+                  {typeof solution.values !== 'string' && (
+                    <Button variant="ghost" size="icon" onClick={copyResult}>
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
-              )}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+              </motion.div>
+            </VisualizationCard>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Graph for Quadratic */}
+      {mode === 'quadratic' && graphData.length > 0 && (
+        <VisualizationCard title="نمودار">
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={graphData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" />
+                <XAxis dataKey="x" tick={{ fontSize: 10 }} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <ReferenceLine y={0} stroke="hsl(var(--muted-foreground))" />
+                <Line
+                  type="monotone"
+                  dataKey="y"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </VisualizationCard>
+      )}
+
+      {/* History */}
+      {history.length > 0 && (
+        <VisualizationCard title="تاریخچه">
+          <div className="space-y-2 max-h-48 overflow-y-auto">
+            {history.map((h, i) => (
+              <div key={i} className="flex items-center justify-between p-2 bg-muted/30 rounded-lg text-sm">
+                <span className="font-mono" dir="ltr">{h.eq}</span>
+                <span className="font-mono text-primary" dir="ltr">{h.sol}</span>
+              </div>
+            ))}
+          </div>
+        </VisualizationCard>
+      )}
     </div>
   );
 };
