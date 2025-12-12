@@ -3,6 +3,8 @@ import { Layout } from "@/components/Layout";
 import { ToolCardWithTags } from "@/components/tools/ToolCardWithTags";
 import { CategorySidebar } from "@/components/tools/CategorySidebar";
 import { DirectoryFilters, SortType, FilterChipType } from "@/components/tools/DirectoryFilters";
+import { NewToolsBanner } from "@/components/tools/NewToolsBanner";
+import { RecentToolsBanner } from "@/components/tools/RecentToolsBanner";
 import { tools, ToolCategory, categoryLabels } from "@/data/tools";
 import { SeoHead } from "@/components/seo/SeoHead";
 import { Menu, X } from "lucide-react";
@@ -173,6 +175,10 @@ const AllTools = () => {
 
             {/* Tools Grid */}
             <div className="flex-1 min-w-0">
+              {/* Banners at top of grid area */}
+              <RecentToolsBanner limit={5} />
+              <NewToolsBanner limit={6} />
+              
               {filteredTools.length === 0 ? (
                 <div className="text-center py-16 bg-card rounded-xl border border-border">
                   <div className="text-5xl mb-4">🔍</div>
