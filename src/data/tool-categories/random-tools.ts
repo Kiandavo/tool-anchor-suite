@@ -176,7 +176,34 @@ export const randomTools: Tool[] = [
     name: "دستور پخت تصادفی",
     category: "random",
     description: "یک دستور پخت تصادفی برای آشپزی پیشنهاد می‌دهد",
-    isNew: true,
+    isNew: false,
     icon: "sparkles"
+  },
+  {
+    id: "dice-roller",
+    slug: "dice-roller",
+    name: "پرتاب تاس",
+    category: "random",
+    description: "تاس بیندازید با انیمیشن و تاریخچه",
+    isNew: true,
+    icon: "dices"
+  },
+  {
+    id: "coin-flip",
+    slug: "coin-flip",
+    name: "شیر یا خط",
+    category: "random",
+    description: "سکه بیندازید با آمار و تاریخچه",
+    isNew: true,
+    icon: "coins"
+  },
+  {
+    id: "persian-name-generator",
+    slug: "persian-name-generator",
+    name: "تولید نام فارسی",
+    category: "random",
+    description: "نام‌های زیبای فارسی با معنی تولید کنید",
+    isNew: true,
+    icon: "user"
   }
 ];

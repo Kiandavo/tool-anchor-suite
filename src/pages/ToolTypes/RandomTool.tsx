@@ -13,7 +13,7 @@ import { RandomBibleVerse } from '@/components/random-tools/RandomBibleVerse';
 import { RandomMovie } from '@/components/random-tools/RandomMovie';
 import { RandomRecipe } from '@/components/random-tools/RandomRecipe';
 import RandomColorGenerator from '@/components/RandomColorGenerator';
-import CoinFlip from '@/components/CoinFlip';
+import { CoinFlip } from '@/components/random-tools/CoinFlip';
 import { RandomPicker } from '@/components/random-tools/RandomPicker';
 import { RandomNickname } from '@/components/random-tools/RandomNickname';
 import { RandomDecision } from '@/components/random-tools/RandomDecision';
@@ -26,6 +26,7 @@ import { RandomQRCodeGenerator } from '@/components/random-tools/RandomQRCodeGen
 import { RandomMoviePicker } from '@/components/random-tools/RandomMoviePicker';
 import { RandomNumberGenerator } from '@/components/random-tools/RandomNumberGenerator';
 import { RandomColorPicker } from '@/components/random-tools/RandomColorPicker';
+import { PersianNameGenerator } from '@/components/random-tools/PersianNameGenerator';
 
 interface RandomToolProps {
   slug: string;
@@ -86,6 +87,8 @@ export default function RandomTool({ slug }: RandomToolProps) {
         return <RandomNumberGenerator />;
       case 'random-color-picker':
         return <RandomColorPicker />;
+      case 'persian-name-generator':
+        return <PersianNameGenerator />;
       default:
         return (
           <div className="rounded-lg border p-6 shadow-sm">
