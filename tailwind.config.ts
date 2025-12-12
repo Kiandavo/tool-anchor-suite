@@ -254,7 +254,7 @@ export default {
     			float: 'float 3s ease-in-out infinite',
     			'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite',
     			'scale-subtle': 'scale-subtle 4s ease-in-out infinite',
-    			shimmer: 'shimmer 3s infinite'
+    			shimmer: 'shimmer 1.5s infinite'
     		},
     		fontFamily: {
     			sans: [
