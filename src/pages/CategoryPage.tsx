@@ -175,8 +175,27 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categorySlug }) => {
           </motion.div>
         )}
 
+        {/* Related Categories */}
+        <div className="mt-12 pt-8 border-t border-border">
+          <h2 className="text-lg font-semibold text-foreground mb-4">دسته‌بندی‌های مرتبط</h2>
+          <div className="flex flex-wrap gap-2">
+            {Object.entries(slugToCategoryMap)
+              .filter(([s]) => s !== slug)
+              .slice(0, 5)
+              .map(([relatedSlug, relatedCategory]) => (
+                <Link
+                  key={relatedSlug}
+                  to={`/${relatedSlug}`}
+                  className="px-4 py-2 bg-secondary/60 hover:bg-secondary text-sm text-foreground rounded-lg transition-colors"
+                >
+                  {categoryLabels[relatedCategory]}
+                </Link>
+              ))}
+          </div>
+        </div>
+
         {/* Back Link */}
-        <div className="mt-12 text-center">
+        <div className="mt-8 text-center">
           <Link
             to="/all-tools"
             className="inline-flex items-center gap-2 text-primary hover:underline"
