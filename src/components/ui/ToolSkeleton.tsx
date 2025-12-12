@@ -5,14 +5,45 @@ interface ToolSkeletonProps {
   className?: string;
 }
 
+/**
+ * Individual tool page skeleton - shows instantly while tool loads
+ */
+export const ToolPageSkeleton = ({ title, className }: ToolSkeletonProps & { title?: string }) => {
+  return (
+    <div className={cn("animate-pulse space-y-6 p-4", className)}>
+      {/* Tool info card skeleton */}
+      <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-muted flex-shrink-0" />
+          <div className="space-y-2 flex-1">
+            {title ? (
+              <h1 className="text-xl font-bold text-foreground">{title}</h1>
+            ) : (
+              <div className="h-6 w-48 rounded bg-muted" />
+            )}
+            <div className="h-4 w-full max-w-md rounded bg-muted" />
+          </div>
+        </div>
+      </div>
+      
+      {/* Main tool area skeleton */}
+      <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+        <div className="h-32 rounded-lg bg-muted" />
+        <div className="flex gap-3 justify-center">
+          <div className="h-10 w-28 rounded-lg bg-muted" />
+          <div className="h-10 w-28 rounded-lg bg-muted" />
+        </div>
+        <div className="h-24 rounded-lg bg-muted" />
+      </div>
+    </div>
+  );
+};
+
 export const ToolCardSkeleton = ({ className }: ToolSkeletonProps) => {
   return (
     <div className={cn("p-4 rounded-xl bg-card border border-border/30 animate-pulse", className)}>
       <div className="flex items-start gap-4">
-        {/* Icon Skeleton */}
         <div className="w-12 h-12 rounded-xl bg-muted shrink-0" />
-        
-        {/* Content Skeleton */}
         <div className="flex-1 space-y-3">
           <div className="h-4 bg-muted rounded w-3/4" />
           <div className="h-3 bg-muted rounded w-full" />

@@ -1,27 +1,16 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './styles/index.css'
 import { BrowserRouter } from 'react-router-dom'
 
-// Defer rendering to improve FCP
+// Initialize app immediately for fastest TTI
 const initializeApp = () => {
-  console.log('Main entry point loading...');
-
-  // Ensure root element exists
   const rootElement = document.getElementById('root');
-  if (!rootElement) {
-    console.error('Root element not found!');
-    throw new Error('Root element not found');
-  }
-
-  console.log('Root element found, creating React root...');
+  if (!rootElement) return;
 
   try {
     const root = ReactDOM.createRoot(rootElement);
-    
-    // Smooth transition from static to React content
     root.render(
       <React.StrictMode>
         <BrowserRouter>
@@ -29,11 +18,7 @@ const initializeApp = () => {
         </BrowserRouter>
       </React.StrictMode>
     );
-    
-    console.log('React app rendered successfully');
   } catch (error) {
-    console.error('Failed to render React app:', error);
-    
     // Secure fallback rendering without innerHTML
     const fallbackContainer = document.createElement('div');
     fallbackContainer.style.cssText = 'display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: system-ui;';
@@ -63,11 +48,9 @@ const initializeApp = () => {
   }
 };
 
-// Initialize app when DOM is ready
-if (typeof window !== 'undefined') {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
-  } else {
-    initializeApp();
-  }
+// Initialize immediately if DOM is ready, otherwise wait
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  initializeApp();
 }
