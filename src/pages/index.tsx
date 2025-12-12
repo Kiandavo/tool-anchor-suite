@@ -2,8 +2,8 @@ import React, { Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/Layout';
 import { FocusedHeroSection } from '@/components/home/FocusedHeroSection';
-import { QuickActionsStrip } from '@/components/home/QuickActionsStrip';
-import { CategoryLinksSection } from '@/components/home/CategoryLinksSection';
+import { GlobalSearchBar } from '@/components/home/GlobalSearchBar';
+import { CategoryCardsSection } from '@/components/home/CategoryCardsSection';
 import { TopToolsSection } from '@/components/home/TopToolsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
@@ -83,14 +83,14 @@ const Index = () => {
         />
       </Suspense>
 
-      {/* 1. Hero - H1 + search + trust badges */}
+      {/* 1. Hero - H1 + trust badges */}
       <FocusedHeroSection />
 
-      {/* 2. Quick actions strip - fast access */}
-      <QuickActionsStrip />
+      {/* 2. Global Search Bar - right under hero */}
+      <GlobalSearchBar />
 
-      {/* 3. Category cards - 6 main clusters */}
-      <CategoryLinksSection />
+      {/* 3. Category Cards - 6 main clusters */}
+      <CategoryCardsSection />
 
       {/* 4. Popular tools - 12 tools with tooltips */}
       <TopToolsSection />
