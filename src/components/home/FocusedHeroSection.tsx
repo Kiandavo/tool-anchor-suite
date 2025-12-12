@@ -1,34 +1,45 @@
 import React from 'react';
-import { EnhancedSearchBar } from '@/components/search/EnhancedSearchBar';
+import { Search } from 'lucide-react';
+import { useSearchModal } from '@/hooks/useSearchModal';
 
 export const FocusedHeroSection = () => {
-  return (
-    <section className="relative py-16 sm:py-24 bg-gradient-to-b from-amber-50/50 to-background">
-      {/* Subtle background accent */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-amber-400/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-gradient-to-tr from-orange-400/10 to-transparent rounded-full blur-3xl" />
-      </div>
+  const { open } = useSearchModal();
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+  const handleSearchClick = () => {
+    open();
+  };
+
+  return (
+    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-amber-50/40 to-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center space-y-6">
-          {/* H1 - Outcome based */}
-          <h1 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-foreground">
+          {/* H1 - Clear value proposition */}
+          <h1 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl leading-tight text-foreground">
             بیش از{' '}
             <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
-              ۱۰۰ ابزار آنلاین فارسی
+              ۱۰۰ ابزار آنلاین رایگان فارسی
             </span>
-            {' '}برای متن، تصویر و محاسبات در یک جا
+            {' '}در یک جا
           </h1>
 
-          {/* One-line subcopy */}
-          <p className="text-lg sm:text-xl text-muted-foreground">
-            همه ابزارها رایگان، بدون ثبت‌نام، سریع
+          {/* Subtext - Matches meta description categories */}
+          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
+            برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. بدون ثبت‌نام، سریع و امن
           </p>
 
-          {/* Primary search input */}
-          <div className="max-w-xl mx-auto pt-4">
-            <EnhancedSearchBar />
+          {/* Primary search input - functional, not decorative */}
+          <div className="max-w-lg mx-auto pt-2">
+            <button
+              onClick={handleSearchClick}
+              className="w-full flex items-center gap-3 px-5 py-4 bg-card border-2 border-border rounded-full text-muted-foreground hover:border-amber-500/50 hover:shadow-lg transition-all duration-200 text-right"
+              aria-label="جستجو بین همه ابزارها"
+            >
+              <Search className="w-5 h-5 text-amber-500 flex-shrink-0" />
+              <span className="flex-1">جستجو بین همه ابزارها</span>
+              <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs bg-muted rounded border border-border text-muted-foreground">
+                ⌘K
+              </kbd>
+            </button>
           </div>
         </div>
       </div>

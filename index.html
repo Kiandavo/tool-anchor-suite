@@ -319,107 +319,88 @@
         </header>
         
         <!-- Hero Section -->
-        <main style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
-          <section style="text-align: center; padding: 3rem 1rem; background: linear-gradient(to bottom, #fffbeb, #ffffff);">
-            <h1 style="font-size: 2.25rem; font-weight: 800; color: #1f2937; margin-bottom: 1rem; line-height: 1.3;">
-              بیش از <span style="background: linear-gradient(135deg, #eab308, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">۱۰۰ ابزار آنلاین فارسی</span> برای متن، تصویر و محاسبات در یک جا
+        <main style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+          <section style="text-align: center; padding: 2.5rem 1rem; background: linear-gradient(to bottom, #fffbeb, #ffffff); border-radius: 1rem;">
+            <h1 style="font-size: 1.75rem; font-weight: 800; color: #1f2937; margin-bottom: 0.75rem; line-height: 1.4;">
+              بیش از <span style="background: linear-gradient(135deg, #eab308, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">۱۰۰ ابزار آنلاین رایگان فارسی</span> در یک جا
             </h1>
-            <p style="font-size: 1.25rem; color: #6b7280; margin: 0 auto 2rem;">همه ابزارها رایگان، بدون ثبت‌نام، سریع</p>
-            <!-- Search placeholder -->
-            <div style="max-width: 500px; margin: 0 auto;">
-              <input type="search" placeholder="جستجوی ابزار..." style="width: 100%; padding: 1rem 1.5rem; border: 2px solid #e5e7eb; border-radius: 9999px; font-size: 1rem; outline: none;">
+            <p style="font-size: 1rem; color: #6b7280; margin: 0 auto 1.5rem; max-width: 500px;">برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. بدون ثبت‌نام، سریع و امن</p>
+            <div style="max-width: 450px; margin: 0 auto;">
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.25rem; background: #fff; border: 2px solid #e5e7eb; border-radius: 9999px;">
+                <span style="color: #d97706;">🔍</span>
+                <span style="color: #9ca3af; flex: 1; text-align: right;">جستجو بین همه ابزارها</span>
+              </div>
             </div>
           </section>
           
-          <!-- Categories Section -->
-          <section style="margin-bottom: 3rem; padding: 2rem; background: #f9fafb; border-radius: 1rem;">
-            <h2 style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 1.5rem;">دسته‌بندی‌ها</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-              <a href="/category/calculators" style="padding: 1.5rem; background: #f9fafb; border-radius: 0.75rem; text-decoration: none; color: #1f2937;">
-                <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem;">محاسبه‌گرها</h3>
-                <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">محاسبه درصد، BMI، وام، سن و...</p>
+          <!-- Category Strip - 6 main clusters -->
+          <section style="padding: 1.5rem 0;">
+            <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem;">
+              <a href="/category/calculators" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">محاسبات و تبدیل اعداد</div>
               </a>
-              <a href="/category/text" style="padding: 1.5rem; background: #f9fafb; border-radius: 0.75rem; text-decoration: none; color: #1f2937;">
-                <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem;">ابزارهای متنی</h3>
-                <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">شمارش کلمات، تبدیل متن، JSON و...</p>
+              <a href="/category/text" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">ابزارهای متن و نوشتار</div>
               </a>
-              <a href="/category/image" style="padding: 1.5rem; background: #f9fafb; border-radius: 0.75rem; text-decoration: none; color: #1f2937;">
-                <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem;">ابزارهای تصویر</h3>
-                <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">فشرده‌سازی، تغییر اندازه، تبدیل فرمت</p>
+              <a href="/category/image" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">تصویر و فایل</div>
               </a>
-              <a href="/category/readings" style="padding: 1.5rem; background: #f9fafb; border-radius: 0.75rem; text-decoration: none; color: #1f2937;">
-                <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem;">فال و طالع‌بینی</h3>
-                <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">فال حافظ، تاروت، طالع‌بینی</p>
+              <a href="/category/seo" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">ابزارهای سئو و وب</div>
               </a>
-              <a href="/category/persian-cultural" style="padding: 1.5rem; background: #f9fafb; border-radius: 0.75rem; text-decoration: none; color: #1f2937;">
-                <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem;">فرهنگ فارسی</h3>
-                <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">تقویم فارسی، تبدیل تاریخ، مناسبت‌ها</p>
+              <a href="/category/persian-cultural" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">تقویم و تاریخ</div>
               </a>
-              <a href="/category/seo" style="padding: 1.5rem; background: #f9fafb; border-radius: 0.75rem; text-decoration: none; color: #1f2937;">
-                <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem;">سئو و وب</h3>
-                <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">متا تگ، چگالی کلمات، robots.txt</p>
+              <a href="/category/readings" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">فال و طالع‌بینی</div>
               </a>
             </div>
           </section>
           
-          <!-- Top Tools This Week Section -->
-          <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.75rem; font-weight: 700; color: #1f2937; margin-bottom: 1.5rem;">ابزارهای پرکاربرد این هفته</h2>
-            <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0;">
-              <li><a href="/tool/bmi-calculator" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">محاسبه‌گر BMI</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">شاخص توده بدنی خود را محاسبه کنید</span>
-              </a></li>
-              <li><a href="/tool/percentage-calculator" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">محاسبه‌گر درصد</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">محاسبات درصدی را به سرعت انجام دهید</span>
-              </a></li>
-              <li><a href="/tool/text-counter" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">شمارنده متن</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">شمارش کاراکترها، کلمات و پاراگراف‌ها</span>
-              </a></li>
-              <li><a href="/tool/image-compressor" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">فشرده‌سازی تصویر</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">کاهش حجم تصاویر با حفظ کیفیت</span>
-              </a></li>
-              <li><a href="/tool/hafez-fortune" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">فال حافظ</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">دریافت فال از دیوان حافظ شیرازی</span>
-              </a></li>
-              <li><a href="/tool/tarot-reading" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">فال تاروت</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">فال‌گیری با کارت‌های تاروت</span>
-              </a></li>
-              <li><a href="/tool/qr-code-generator" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">ساخت QR Code</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">ایجاد کد QR برای لینک و متن</span>
-              </a></li>
-              <li><a href="/tool/json-formatter" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">فرمت‌دهی JSON</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">مرتب‌سازی و زیباسازی کد JSON</span>
-              </a></li>
-              <li><a href="/tool/discount-calculator" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">محاسبه تخفیف</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">محاسبه قیمت نهایی با تخفیف</span>
-              </a></li>
-              <li><a href="/tool/age-calculator" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">محاسبه سن</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">محاسبه سن بر اساس تاریخ تولد</span>
-              </a></li>
-              <li><a href="/tool/horoscope" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">طالع‌بینی</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">پیش‌بینی بر اساس برج تولد</span>
-              </a></li>
-              <li><a href="/tool/password-generator" style="display: block; padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none;">
-                <strong style="color: #1f2937;">ساخت رمز عبور</strong>
-                <span style="display: block; font-size: 0.875rem; color: #6b7280;">تولید رمز عبور امن و تصادفی</span>
-              </a></li>
-            </ul>
-          </section>
-          
-          <!-- All Tools Link -->
-          <section style="text-align: center; padding: 2rem;">
-            <a href="/all-tools" style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(135deg, #eab308, #f59e0b); color: #fff; font-weight: 600; border-radius: 0.5rem; text-decoration: none;">مشاهده همه ابزارها</a>
+          <!-- Popular Tools Section - 12 tools -->
+          <section style="margin: 2rem 0; padding: 1.5rem; background: #f9fafb; border-radius: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h2 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin: 0;">ابزارهای پرکاربرد</h2>
+              <a href="/all-tools" style="font-size: 0.875rem; color: #d97706; text-decoration: none;">همه ابزارها ←</a>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
+              <a href="/tool/bmi-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه‌گر BMI</strong>
+              </a>
+              <a href="/tool/percentage-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه‌گر درصد</strong>
+              </a>
+              <a href="/tool/text-counter" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">شمارنده متن</strong>
+              </a>
+              <a href="/tool/image-compressor" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">فشرده‌سازی تصویر</strong>
+              </a>
+              <a href="/tool/hafez-fortune" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">فال حافظ</strong>
+              </a>
+              <a href="/tool/qr-code-generator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">ساخت QR Code</strong>
+              </a>
+              <a href="/tool/json-formatter" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">فرمت‌دهی JSON</strong>
+              </a>
+              <a href="/tool/password-generator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">ساخت رمز عبور</strong>
+              </a>
+              <a href="/tool/discount-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه تخفیف</strong>
+              </a>
+              <a href="/tool/age-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه سن</strong>
+              </a>
+              <a href="/tool/color-palette-generator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">پالت رنگ</strong>
+              </a>
+              <a href="/tool/unit-converter" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
+                <strong style="color: #1f2937; font-size: 0.875rem;">تبدیل واحد</strong>
+              </a>
+            </div>
           </section>
           
           <!-- Calculator Tools List -->
