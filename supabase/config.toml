@@ -2,3 +2,6 @@ project_id = "bycgbbaipkdbewijmolg"
 
 [functions.submit-metrics]
 verify_jwt = false
+
+[functions.ai-chat]
+verify_jwt = false
