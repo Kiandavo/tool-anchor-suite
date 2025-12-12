@@ -10,6 +10,7 @@ import { FinglishConverter } from './FinglishConverter';
 import { EnhancedFinglishConverter } from './EnhancedFinglishConverter';
 import { SpecialCharRemover } from './SpecialCharRemover';
 import DeepseekAI from './DeepseekAI';
+import { AITextTranslator } from './AITextTranslator';
  
 export default function TextToolContainer({ slug }: { slug: string }) {
   const [text, setText] = useState("");
@@ -49,8 +50,11 @@ export default function TextToolContainer({ slug }: { slug: string }) {
           case "binary-to-text":
             return <CodeTools type={slug} text={text} setText={setText} outcomeMsg={outcomeMsg} setOutcomeMsg={setOutcomeMsg} />;
           
-          // Translation and conversion
+          // AI Translation
           case "text-translator":
+            return <AITextTranslator />;
+            
+          // Translation and conversion
           case "persian-number-to-english":
           case "english-number-to-persian":
           case "non-persian-remover":
