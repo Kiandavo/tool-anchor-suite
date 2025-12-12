@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, HelpCircle, BookOpen, Star, ArrowRight, Sparkles } from 'lucide-react';
+import { CheckCircle, HelpCircle, BookOpen, Star, ArrowRight, Sparkles, ArrowLeft, Wrench } from 'lucide-react';
 import { categorySeoData } from '@/data/category-seo-content';
+import { tools } from '@/data/tools';
 
 interface CategorySeoContentProps {
   categoryName: string;
@@ -149,17 +151,46 @@ export const CategorySeoContent: React.FC<CategorySeoContentProps> = ({
 
       {/* Related Tools */}
       {relatedTools.length > 0 && (
-        <Card>
+        <Card className="border-border">
           <CardContent className="p-6">
-            <h3 className="text-xl font-semibold mb-4">ابزارهای پیشنهادی در این دسته</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {relatedTools.slice(0, 8).map((tool) => (
-                <a key={tool.slug} href={`/tool/${tool.slug}`}>
-                  <div className="p-3 border rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-center">
-                    <span className="text-sm font-medium">{tool.name}</span>
-                  </div>
-                </a>
-              ))}
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold flex items-center gap-3">
+                <Wrench className="w-5 h-5 text-primary" />
+                ابزارهای پیشنهادی در این دسته
+              </h3>
+              <Link 
+                to={`/category/${categorySlug}`}
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+              >
+                همه
+                <ArrowLeft className="w-3 h-3" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {relatedTools.slice(0, 8).map((tool) => {
+                const fullTool = tools.find(t => t.slug === tool.slug);
+                return (
+                  <Link 
+                    key={tool.slug} 
+                    to={`/tool/${tool.slug}`}
+                    className="group flex items-start gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                      <Wrench className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                        {tool.name}
+                      </h4>
+                      {fullTool && (
+                        <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                          {fullTool.description}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </CardContent>
         </Card>
