@@ -2,11 +2,13 @@ import React, { Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/Layout';
 import { FocusedHeroSection } from '@/components/home/FocusedHeroSection';
+import { QuickActionsStrip } from '@/components/home/QuickActionsStrip';
 import { CategoryLinksSection } from '@/components/home/CategoryLinksSection';
 import { TopToolsSection } from '@/components/home/TopToolsSection';
-import { NewToolsSection } from '@/components/home/NewToolsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 // Lazy load non-critical UI components
 const GeoTargeting = lazy(() => import('@/components/seo/GeoTargeting').then(m => ({ default: m.GeoTargeting })));
@@ -81,17 +83,28 @@ const Index = () => {
         />
       </Suspense>
 
-      {/* 1. Hero - H1 + subtext + search */}
+      {/* 1. Hero - H1 + search + trust badges */}
       <FocusedHeroSection />
 
-      {/* 2. Category strip - 6 main clusters */}
+      {/* 2. Quick actions strip - fast access */}
+      <QuickActionsStrip />
+
+      {/* 3. Category cards - 6 main clusters */}
       <CategoryLinksSection />
 
-      {/* 3. Popular tools - 12 tools max */}
+      {/* 4. Popular tools - 12 tools with tooltips */}
       <TopToolsSection />
 
-      {/* 4. New tools - reason to come back */}
-      <NewToolsSection />
+      {/* 5. Footer CTA */}
+      <section className="py-8 text-center">
+        <Link 
+          to="/all-tools"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+        >
+          مشاهده همه ابزارها
+          <ArrowLeft className="w-4 h-4" />
+        </Link>
+      </section>
 
       {/* Back to Top */}
       <Suspense fallback={null}>
