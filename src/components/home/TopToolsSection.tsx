@@ -22,7 +22,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { SectionDecorator } from './SectionDecorator';
 
 // 12 top tools - hardcoded for consistency
 const topToolSlugs = [
@@ -63,14 +62,9 @@ export const TopToolsSection = () => {
   const newToolSlugs = getNewTools().map(t => t.slug);
 
   return (
-    <section className="relative py-6 sm:py-8 bg-gradient-to-br from-muted/50 via-muted/30 to-background overflow-hidden">
-      {/* Decorative elements */}
-      <SectionDecorator variant="diamonds" position="right" opacity={0.12} />
+    <section className="relative py-6 sm:py-8 bg-gradient-to-b from-muted/30 to-transparent">
       
-      {/* Floating orb */}
-      <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-br from-primary/5 to-persian-turquoise/5 blur-3xl pointer-events-none" />
-      
-      <div className="container-narrow relative z-10">
+      <div className="container-narrow">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg sm:text-xl font-bold text-foreground">
             ابزارهای پرکاربرد
