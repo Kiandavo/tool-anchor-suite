@@ -11,12 +11,12 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Reduced splash duration from 2s to 800ms for faster TTI
+    // Reduced splash duration to 500ms for faster TTI
     const timer = setTimeout(() => {
       setIsVisible(false);
       // Wait for fade out animation to complete
-      setTimeout(onComplete, 300);
-    }, 800);
+      setTimeout(onComplete, 200);
+    }, 500);
 
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -24,7 +24,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-background transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-background transition-opacity duration-200 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >

@@ -59,7 +59,8 @@ export const DefaultResourceHints: React.FC = () => {
         dnsPrefetch={[
           'https://fonts.googleapis.com',
           'https://cdn.jsdelivr.net',
-          'https://www.googletagmanager.com'
+          'https://www.googletagmanager.com',
+          'https://pagead2.googlesyndication.com'
         ]}
         preconnect={[
           'https://fonts.googleapis.com',
@@ -69,6 +70,12 @@ export const DefaultResourceHints: React.FC = () => {
         preload={[
           {
             href: 'https://cdn.jsdelivr.net/gh/nicholabs/yekanbakh@main/woff2/YekanBakh-Bold.woff2',
+            as: 'font',
+            type: 'font/woff2',
+            crossOrigin: true
+          },
+          {
+            href: 'https://cdn.jsdelivr.net/gh/nicholabs/dana-font-1.6@main/woff2/Dana-Regular.woff2',
             as: 'font',
             type: 'font/woff2',
             crossOrigin: true
