@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calculator, FileText, Image, Globe, Sparkles, Hash, BookMarked, BookOpen, Calendar, Palette, Dice1 } from 'lucide-react';
+import { Calculator, FileText, Image, Globe, Sparkles, Hash, BookMarked, BookOpen, Calendar, Palette, Dice1, LucideIcon } from 'lucide-react';
 import { ToolCategory, categoryLabels } from '@/data/tools';
 import { cn } from '@/lib/utils';
 
@@ -9,7 +9,7 @@ interface CategorySidebarProps {
   categoryCounts: Record<ToolCategory, number>;
 }
 
-const categoryIcons: Record<ToolCategory, React.ComponentType<{ className?: string }>> = {
+const categoryIcons: Record<ToolCategory, LucideIcon> = {
   calculators: Calculator,
   text: FileText,
   image: Image,
@@ -23,18 +23,19 @@ const categoryIcons: Record<ToolCategory, React.ComponentType<{ className?: stri
   design: Palette,
 };
 
-const categoryColors: Record<ToolCategory, string> = {
-  calculators: 'text-blue-600 bg-blue-500/10',
-  text: 'text-emerald-600 bg-emerald-500/10',
-  image: 'text-purple-600 bg-purple-500/10',
-  'persian-cultural': 'text-rose-600 bg-rose-500/10',
-  readings: 'text-violet-600 bg-violet-500/10',
-  seo: 'text-orange-600 bg-orange-500/10',
-  random: 'text-cyan-600 bg-cyan-500/10',
-  number: 'text-amber-600 bg-amber-500/10',
-  educational: 'text-indigo-600 bg-indigo-500/10',
-  productivity: 'text-teal-600 bg-teal-500/10',
-  design: 'text-pink-600 bg-pink-500/10',
+// Simplified category display names for sidebar
+const sidebarLabels: Partial<Record<ToolCategory, string>> = {
+  calculators: 'محاسبات',
+  text: 'متن و نوشتار',
+  image: 'تصویر',
+  seo: 'سئو',
+  'persian-cultural': 'تاریخ و تقویم',
+  readings: 'فال و طالع‌بینی',
+  random: 'تصادفی',
+  number: 'اعداد',
+  educational: 'آموزشی',
+  productivity: 'بهره‌وری',
+  design: 'طراحی',
 };
 
 export const CategorySidebar: React.FC<CategorySidebarProps> = ({
@@ -45,61 +46,54 @@ export const CategorySidebar: React.FC<CategorySidebarProps> = ({
   const categories = Object.keys(categoryLabels) as ToolCategory[];
   const totalCount = Object.values(categoryCounts).reduce((a, b) => a + b, 0);
 
+  // Sort categories by count (descending)
+  const sortedCategories = [...categories]
+    .filter(cat => categoryCounts[cat] > 0)
+    .sort((a, b) => categoryCounts[b] - categoryCounts[a]);
+
   return (
-    <aside className="w-full lg:w-64 flex-shrink-0">
-      <div className="sticky top-20 bg-card rounded-xl border border-border p-4">
-        <h2 className="font-bold text-lg mb-4 text-foreground">دسته‌بندی‌ها</h2>
+    <aside className="w-full lg:w-56 flex-shrink-0">
+      <div className="sticky top-20 bg-card rounded-xl border border-border overflow-hidden">
+        <div className="px-4 py-3 border-b border-border bg-muted/30">
+          <h2 className="font-bold text-foreground">دسته‌بندی‌ها</h2>
+        </div>
         
-        <nav className="space-y-1">
+        <nav className="py-1">
           {/* All tools option */}
           <button
             onClick={() => onCategorySelect(null)}
             className={cn(
-              "w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+              "w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors",
               selectedCategory === null
-                ? "bg-primary text-primary-foreground"
+                ? "bg-primary/10 text-primary font-semibold border-r-2 border-primary"
                 : "text-foreground hover:bg-muted"
             )}
           >
-            <span>همه ابزارها</span>
-            <span className={cn(
-              "text-xs px-2 py-0.5 rounded-full",
-              selectedCategory === null ? "bg-white/20" : "bg-muted"
-            )}>
+            <span>همه</span>
+            <span className="text-xs text-muted-foreground font-medium tabular-nums">
               {totalCount}
             </span>
           </button>
 
-          {/* Category list */}
-          {categories.map((category) => {
-            const Icon = categoryIcons[category];
-            const count = categoryCounts[category] || 0;
+          {/* Category list with counts */}
+          {sortedCategories.map((category) => {
+            const count = categoryCounts[category];
             const isSelected = selectedCategory === category;
-            
-            if (count === 0) return null;
+            const label = sidebarLabels[category] || categoryLabels[category];
 
             return (
               <button
                 key={category}
                 onClick={() => onCategorySelect(category)}
                 className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all",
+                  "w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors",
                   isSelected
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-primary/10 text-primary font-semibold border-r-2 border-primary"
                     : "text-foreground hover:bg-muted"
                 )}
               >
-                <div className={cn(
-                  "p-1.5 rounded-md",
-                  isSelected ? "bg-white/20" : categoryColors[category]
-                )}>
-                  <Icon className="w-4 h-4" />
-                </div>
-                <span className="flex-1 text-right font-medium">{categoryLabels[category]}</span>
-                <span className={cn(
-                  "text-xs px-2 py-0.5 rounded-full",
-                  isSelected ? "bg-white/20" : "bg-muted text-muted-foreground"
-                )}>
+                <span>{label}</span>
+                <span className="text-xs text-muted-foreground font-medium tabular-nums">
                   {count}
                 </span>
               </button>

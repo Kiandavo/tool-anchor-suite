@@ -2,13 +2,12 @@ import React, { useState, useMemo } from "react";
 import { Layout } from "@/components/Layout";
 import { ToolCardWithTags } from "@/components/tools/ToolCardWithTags";
 import { CategorySidebar } from "@/components/tools/CategorySidebar";
-import { DirectoryFilters, DirectoryFilterType } from "@/components/tools/DirectoryFilters";
+import { DirectoryFilters, SortType, FilterChipType } from "@/components/tools/DirectoryFilters";
 import { tools, ToolCategory, categoryLabels } from "@/data/tools";
 import { SeoHead } from "@/components/seo/SeoHead";
-import { useSearchParams } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
-// Popular tools for "محبوب‌ترین" filter
+// Popular tools for sorting
 const POPULAR_SLUGS = [
   'bmi-calculator', 'percentage-calculator', 'text-counter', 'image-compressor',
   'qr-code-generator', 'password-generator', 'json-formatter', 'unit-converter',
@@ -16,16 +15,10 @@ const POPULAR_SLUGS = [
   'discount-calculator', 'age-calculator', 'horoscope'
 ];
 
-// Recommended tools for "پیشنهادی" filter
-const RECOMMENDED_SLUGS = [
-  'bmi-calculator', 'text-counter', 'image-compressor', 'hafez-fortune',
-  'qr-code-generator', 'percentage-calculator', 'json-formatter', 'password-generator'
-];
-
 const AllTools = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState<DirectoryFilterType>('all');
+  const [sortType, setSortType] = useState<SortType>('popular');
+  const [activeChips, setActiveChips] = useState<FilterChipType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<ToolCategory | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -38,11 +31,20 @@ const AllTools = () => {
     return counts;
   }, []);
 
-  // Filter tools based on all criteria
+  // Handle chip toggle
+  const handleChipToggle = (chip: FilterChipType) => {
+    setActiveChips(prev => 
+      prev.includes(chip) 
+        ? prev.filter(c => c !== chip)
+        : [...prev, chip]
+    );
+  };
+
+  // Filter and sort tools
   const filteredTools = useMemo(() => {
     let result = tools.filter(t => !t.isComingSoon);
 
-    // Category filter
+    // Category filter from sidebar
     if (selectedCategory) {
       result = result.filter(t => t.category === selectedCategory);
     }
@@ -57,32 +59,55 @@ const AllTools = () => {
       );
     }
 
-    // Type filter
-    switch (activeFilter) {
-      case 'new':
-        result = result.filter(t => t.isNew);
-        break;
+    // Filter chips
+    if (activeChips.includes('persian')) {
+      result = result.filter(t => 
+        t.category === 'persian-cultural' || t.category === 'readings'
+      );
+    }
+    if (activeChips.includes('numbers')) {
+      result = result.filter(t => 
+        t.category === 'calculators' || t.category === 'number'
+      );
+    }
+    if (activeChips.includes('image')) {
+      result = result.filter(t => t.category === 'image');
+    }
+
+    // Sorting
+    switch (sortType) {
       case 'popular':
-        result = result.filter(t => POPULAR_SLUGS.includes(t.slug));
+        result = [...result].sort((a, b) => {
+          const aPopular = POPULAR_SLUGS.indexOf(a.slug);
+          const bPopular = POPULAR_SLUGS.indexOf(b.slug);
+          if (aPopular === -1 && bPopular === -1) return 0;
+          if (aPopular === -1) return 1;
+          if (bPopular === -1) return -1;
+          return aPopular - bPopular;
+        });
         break;
-      case 'recommended':
-        result = result.filter(t => RECOMMENDED_SLUGS.includes(t.slug));
+      case 'newest':
+        result = [...result].sort((a, b) => {
+          if (a.isNew && !b.isNew) return -1;
+          if (!a.isNew && b.isNew) return 1;
+          return 0;
+        });
+        break;
+      case 'alphabetical':
+        result = [...result].sort((a, b) => a.name.localeCompare(b.name, 'fa'));
         break;
     }
 
     return result;
-  }, [searchQuery, activeFilter, selectedCategory]);
+  }, [searchQuery, sortType, activeChips, selectedCategory]);
 
   const handleCategorySelect = (category: ToolCategory | null) => {
     setSelectedCategory(category);
     setSidebarOpen(false);
-    // Reset other filters when category changes
-    setActiveFilter('all');
   };
 
   const handleTagClick = (category: ToolCategory) => {
     setSelectedCategory(category);
-    setActiveFilter('all');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -95,42 +120,48 @@ const AllTools = () => {
         canonical="https://laangar.com/all-tools"
       />
 
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-background">
         {/* Header */}
-        <div className="bg-gradient-to-b from-amber-50/50 to-background py-8 sm:py-12">
-          <div className="container mx-auto px-4 max-w-7xl">
-            <div className="text-center mb-8">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2">
-                همه ابزارها
-              </h1>
-              <p className="text-muted-foreground">
-                بیش از {tools.filter(t => !t.isComingSoon).length} ابزار رایگان • ابزار مورد نظرت رو پیدا کن
-              </p>
-            </div>
+        <div className="border-b border-border bg-card/50">
+          <div className="container mx-auto px-4 max-w-6xl py-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+                  همه ابزارها
+                </h1>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {tools.filter(t => !t.isComingSoon).length} ابزار آنلاین رایگان
+                </p>
+              </div>
 
-            {/* Mobile sidebar toggle */}
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 mb-4 bg-card border border-border rounded-lg text-sm font-medium"
-            >
-              {sidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-              {selectedCategory ? categoryLabels[selectedCategory] : 'دسته‌بندی‌ها'}
-            </button>
+              {/* Mobile sidebar toggle */}
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden flex items-center gap-2 px-3 py-2 bg-card border border-border rounded-lg text-sm font-medium"
+              >
+                {sidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                <span className="sr-only sm:not-sr-only">
+                  {selectedCategory ? categoryLabels[selectedCategory] : 'دسته‌ها'}
+                </span>
+              </button>
+            </div>
 
             {/* Filters */}
             <DirectoryFilters
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
+              sortType={sortType}
+              onSortChange={setSortType}
+              activeChips={activeChips}
+              onChipToggle={handleChipToggle}
               resultCount={filteredTools.length}
             />
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="container mx-auto px-4 max-w-7xl py-8">
-          <div className="flex flex-col lg:flex-row gap-8">
+        <div className="container mx-auto px-4 max-w-6xl py-6">
+          <div className="flex gap-6">
             {/* Sidebar - Desktop always visible, Mobile toggleable */}
             <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block`}>
               <CategorySidebar
@@ -141,12 +172,12 @@ const AllTools = () => {
             </div>
 
             {/* Tools Grid */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               {filteredTools.length === 0 ? (
                 <div className="text-center py-16 bg-card rounded-xl border border-border">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <h3 className="text-xl font-semibold mb-2">ابزاری یافت نشد</h3>
-                  <p className="text-muted-foreground mb-4">
+                  <div className="text-5xl mb-4">🔍</div>
+                  <h3 className="text-lg font-semibold mb-2">ابزاری یافت نشد</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
                     {searchQuery 
                       ? `برای "${searchQuery}" نتیجه‌ای یافت نشد.`
                       : 'ابزاری با این فیلتر موجود نیست.'
@@ -155,10 +186,10 @@ const AllTools = () => {
                   <button
                     onClick={() => {
                       setSearchQuery('');
-                      setActiveFilter('all');
+                      setActiveChips([]);
                       setSelectedCategory(null);
                     }}
-                    className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                    className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors"
                   >
                     نمایش همه ابزارها
                   </button>
@@ -167,8 +198,8 @@ const AllTools = () => {
                 <>
                   {/* Selected category header */}
                   {selectedCategory && (
-                    <div className="flex items-center justify-between mb-6">
-                      <h2 className="text-xl font-bold text-foreground">
+                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-border">
+                      <h2 className="text-lg font-bold text-foreground">
                         {categoryLabels[selectedCategory]}
                       </h2>
                       <button
@@ -180,8 +211,8 @@ const AllTools = () => {
                     </div>
                   )}
 
-                  {/* Tools grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {/* Tools grid - 3 columns */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
                     {filteredTools.map((tool) => (
                       <ToolCardWithTags 
                         key={tool.id} 
