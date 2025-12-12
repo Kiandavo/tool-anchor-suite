@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { tools } from '@/data/tools';
+import { ArrowLeft } from 'lucide-react';
 import { 
   Calculator, 
   FileText, 
@@ -16,7 +17,7 @@ import {
   Type
 } from 'lucide-react';
 
-// Top tools based on common usage - hardcoded for consistency
+// 12 top tools - hardcoded for consistency
 const topToolSlugs = [
   'bmi-calculator',
   'percentage-calculator',
@@ -53,13 +54,23 @@ export const TopToolsSection = () => {
     .filter(Boolean);
 
   return (
-    <section className="py-12 sm:py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-8">
-          ابزارهای پرکاربرد این هفته
-        </h2>
+    <section className="py-10 sm:py-12 bg-muted/30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+            ابزارهای پرکاربرد
+          </h2>
+          <Link 
+            to="/all-tools" 
+            className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1 font-medium"
+          >
+            همه ابزارها
+            <ArrowLeft className="w-4 h-4" />
+          </Link>
+        </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* 12 tools in a clean grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {topTools.map((tool) => {
             if (!tool) return null;
             const Icon = iconMap[tool.slug] || Calculator;
@@ -68,19 +79,25 @@ export const TopToolsSection = () => {
               <Link
                 key={tool.slug}
                 to={`/tool/${tool.slug}`}
-                className="group flex flex-col p-4 sm:p-5 rounded-xl bg-card border border-border/60 hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-200"
+                className="group flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-amber-500/50 hover:shadow-md transition-all duration-200"
               >
-                <div className="flex items-start gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500/10 to-orange-500/10 text-amber-600 group-hover:from-amber-500/20 group-hover:to-orange-500/20 transition-colors">
-                    <Icon className="w-5 h-5" />
-                  </div>
+                {/* Icon */}
+                <div className="p-2.5 rounded-lg bg-amber-500/10 text-amber-600 group-hover:bg-amber-500/20 transition-colors flex-shrink-0">
+                  <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold text-sm sm:text-base text-foreground group-hover:text-amber-600 transition-colors line-clamp-1">
-                  {tool.name}
-                </h3>
-                <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">
-                  {tool.description}
-                </p>
+                
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm text-foreground group-hover:text-amber-600 transition-colors truncate">
+                    {tool.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground truncate mt-0.5">
+                    {tool.description}
+                  </p>
+                </div>
+
+                {/* Arrow indicator */}
+                <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-amber-500 transition-colors flex-shrink-0" />
               </Link>
             );
           })}

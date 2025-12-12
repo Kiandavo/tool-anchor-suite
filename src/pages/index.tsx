@@ -2,19 +2,19 @@ import React, { Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/Layout';
 import { FocusedHeroSection } from '@/components/home/FocusedHeroSection';
-import { TopToolsSection } from '@/components/home/TopToolsSection';
 import { CategoryLinksSection } from '@/components/home/CategoryLinksSection';
+import { TopToolsSection } from '@/components/home/TopToolsSection';
+import { NewToolsSection } from '@/components/home/NewToolsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
 
 // Lazy load non-critical UI components
 const GeoTargeting = lazy(() => import('@/components/seo/GeoTargeting').then(m => ({ default: m.GeoTargeting })));
 const OpenGraphTags = lazy(() => import('@/components/seo/OpenGraphTags').then(m => ({ default: m.OpenGraphTags })));
-const ScrollToTopButton = lazy(() => import('@/components/ui/ScrollToTopButton').then(m => ({ default: m.ScrollToTopButton })));
 const BackToTop = lazy(() => import('@/components/ui/BackToTop').then(m => ({ default: m.BackToTop })));
 
 const Index = () => {
-  // SEO data
+  // SEO data - matches meta promise
   const homeTitle = "بیش از ۱۰۰ ابزار آنلاین رایگان فارسی | لنگر";
   const homeDescription = "بیش از ۱۰۰ ابزار آنلاین رایگان برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. همه ابزارها رایگان، بدون ثبت‌نام، سریع | لنگر";
   const homeKeywords = "ابزار آنلاین رایگان, محاسبه گر, تبدیل متن فارسی, ویرایش تصویر آنلاین, ابزار سئو, فال حافظ, فال تاروت, لنگر";
@@ -81,19 +81,21 @@ const Index = () => {
         />
       </Suspense>
 
-      {/* 1. Hero Section */}
+      {/* 1. Hero - H1 + subtext + search */}
       <FocusedHeroSection />
 
-      {/* 2. Top Tools This Week */}
-      <TopToolsSection />
-
-      {/* 3. Categories */}
+      {/* 2. Category strip - 6 main clusters */}
       <CategoryLinksSection />
 
-      {/* Back to Top Button */}
+      {/* 3. Popular tools - 12 tools max */}
+      <TopToolsSection />
+
+      {/* 4. New tools - reason to come back */}
+      <NewToolsSection />
+
+      {/* Back to Top */}
       <Suspense fallback={null}>
         <BackToTop />
-        <ScrollToTopButton />
       </Suspense>
     </Layout>
   );
