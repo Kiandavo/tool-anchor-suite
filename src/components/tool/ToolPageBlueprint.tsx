@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronLeft } from 'lucide-react';
 import { Tool, ToolCategory } from '@/types/tool-types';
 import { tools, categoryLabels } from '@/data/tools';
-import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface FAQItem {
   question: string;
@@ -44,77 +44,81 @@ export const ToolPageBlueprint: React.FC<ToolPageBlueprintProps> = ({
   const categoryLabel = categoryLabels[tool.category as ToolCategory] || tool.category;
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-3xl mx-auto px-4 sm:px-0">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+      <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
         <Link to="/" className="hover:text-foreground transition-colors">خانه</Link>
-        <span>/</span>
+        <ChevronLeft className="w-4 h-4" />
         <Link to={`/category/${tool.category}`} className="hover:text-foreground transition-colors">
           {categoryLabel}
         </Link>
-        <span>/</span>
-        <span className="text-foreground">{tool.name}</span>
+        <ChevronLeft className="w-4 h-4" />
+        <span className="text-foreground font-medium">{tool.name}</span>
       </nav>
 
       {/* Header Section */}
       <header className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 leading-tight">
           {jobTitle}
         </h1>
-        <p className="text-muted-foreground text-base leading-relaxed">
+        <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
           {useCases}
         </p>
       </header>
 
-      {/* Tool Zone */}
-      <div className="mb-12">
-        {children}
-      </div>
+      {/* Tool Interface Zone */}
+      <Card className="mb-10 border-border/50 shadow-sm">
+        <CardContent className="p-4 sm:p-6">
+          {children}
+        </CardContent>
+      </Card>
 
       {/* FAQ Section */}
-      <section className="mb-10 pt-8 border-t border-border">
-        <h2 className="text-lg font-semibold text-foreground mb-4">
-          سوالات متداول
-        </h2>
-        <div className="space-y-4" itemScope itemType="https://schema.org/FAQPage">
-          {faq.map((item, index) => (
-            <div 
-              key={index}
-              className="p-4 rounded-lg bg-muted/30 border border-border/50"
-              itemScope 
-              itemProp="mainEntity" 
-              itemType="https://schema.org/Question"
-            >
-              <h3 className="font-medium text-foreground mb-2" itemProp="name">
-                {item.question}
-              </h3>
-              <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                <p className="text-sm text-muted-foreground" itemProp="text">
-                  {item.answer}
-                </p>
+      {faq.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-lg font-semibold text-foreground mb-4">
+            سوالات متداول
+          </h2>
+          <div className="space-y-3" itemScope itemType="https://schema.org/FAQPage">
+            {faq.map((item, index) => (
+              <div 
+                key={index}
+                className="p-4 rounded-lg bg-muted/40 border border-border/40"
+                itemScope 
+                itemProp="mainEntity" 
+                itemType="https://schema.org/Question"
+              >
+                <h3 className="font-medium text-foreground mb-1.5" itemProp="name">
+                  {item.question}
+                </h3>
+                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p className="text-sm text-muted-foreground leading-relaxed" itemProp="text">
+                    {item.answer}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Related Tools */}
       {relatedTools.length > 0 && (
-        <section className="mb-8 pt-8 border-t border-border">
+        <section className="mb-8 pt-6 border-t border-border/50">
           <h2 className="text-lg font-semibold text-foreground mb-4">
-            ابزارهای مرتبط
+            ابزارهای مرتبط در {categoryLabel}
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
             {relatedTools.map((relTool) => (
               <Link
                 key={relTool.slug}
                 to={`/tool/${relTool.slug}`}
-                className="group flex items-center gap-2 p-3 rounded-lg border border-border bg-card hover:border-primary/30 hover:bg-primary/5 transition-all"
+                className="group flex items-center justify-between p-3 rounded-lg border border-border/50 bg-card hover:border-primary/40 hover:bg-primary/5 transition-all"
               >
                 <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
                   {relTool.name}
                 </span>
-                <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 mr-auto" />
+                <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
               </Link>
             ))}
           </div>
