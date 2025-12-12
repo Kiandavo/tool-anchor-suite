@@ -16,12 +16,6 @@ import {
   Calendar,
   Type
 } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 
 // 12 top tools - hardcoded for consistency
 const topToolSlugs = [
@@ -77,43 +71,40 @@ export const TopToolsSection = () => {
           </Link>
         </div>
 
-        <TooltipProvider delayDuration={200}>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-            {topTools.map((tool) => {
-              if (!tool) return null;
-              const Icon = iconMap[tool.slug] || Calculator;
-              const isNew = newToolSlugs.includes(tool.slug);
-              
-              return (
-                <Tooltip key={tool.slug}>
-                  <TooltipTrigger asChild>
-                    <Link
-                      to={`/tool/${tool.slug}`}
-                      className="group relative flex items-center gap-2.5 p-3 rounded-lg bg-card border border-border hover:border-primary/40 transition-colors"
-                    >
-                      {isNew && (
-                        <span className="absolute -top-1.5 -right-1.5 text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground">
-                          جدید
-                        </span>
-                      )}
-                      
-                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                      </div>
-                      
-                      <span className="text-sm text-foreground group-hover:text-primary transition-colors truncate">
-                        {tool.name}
-                      </span>
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent side="bottom" className="max-w-[200px] text-center">
-                    <p className="text-xs">{tool.description}</p>
-                  </TooltipContent>
-                </Tooltip>
-              );
-            })}
-          </div>
-        </TooltipProvider>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {topTools.map((tool) => {
+            if (!tool) return null;
+            const Icon = iconMap[tool.slug] || Calculator;
+            const isNew = newToolSlugs.includes(tool.slug);
+            
+            return (
+              <Link
+                key={tool.slug}
+                to={`/tool/${tool.slug}`}
+                className="group relative flex items-start gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all"
+              >
+                {isNew && (
+                  <span className="absolute -top-2 -right-2 text-[9px] font-medium px-2 py-0.5 rounded-full bg-primary text-primary-foreground">
+                    جدید
+                  </span>
+                )}
+                
+                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                  <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                    {tool.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                    {tool.description}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

@@ -9,7 +9,7 @@ import { RecentlyUsedSection } from '@/components/home/RecentlyUsedSection';
 import { CollectionsSection } from '@/components/home/CollectionsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { ScrollReveal } from '@/components/home/ScrollReveal';
 
@@ -111,7 +111,7 @@ const Index = () => {
         <CollectionsSection />
       </ScrollReveal>
 
-      {/* Footer CTA */}
+      {/* Footer CTA - only shown on homepage */}
       <section className="py-8 text-center">
         <Link 
           to="/all-tools"

@@ -55,21 +55,23 @@ export const ModernHeroSection = () => {
             </Link>
           </motion.div>
 
-          {/* Category Pills */}
+          {/* Category Grid */}
           <motion.div 
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-2"
+            className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto"
           >
             {categories.map((category) => (
               <Link
                 key={category.href}
                 to={category.href}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card text-sm text-foreground hover:border-primary/50 hover:bg-primary/5 transition-colors"
+                className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all"
               >
-                <category.icon className="w-4 h-4 text-muted-foreground" />
-                {category.label}
+                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <category.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                <span className="text-sm font-medium text-foreground">{category.label}</span>
               </Link>
             ))}
           </motion.div>
