@@ -5,7 +5,7 @@ import { SeoHead } from '@/components/seo/SeoHead';
 import { ToolCard } from '@/components/ToolCard';
 import { tools, categoryLabels } from '@/data/tools';
 import { collections, getCollectionBySlug } from '@/data/collections';
-import { ChevronRight, ArrowLeft, Sparkles, Star, Wrench, TrendingUp, Zap, Grid3X3 } from 'lucide-react';
+import { ChevronRight, ArrowLeft, Sparkles, Star, Wrench, Zap, Grid3X3, Layers } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SectionDecorator } from '@/components/home/SectionDecorator';
 import { getCollectionTheme } from '@/data/collectionThemes';
@@ -310,68 +310,54 @@ const CollectionPage: React.FC<CollectionPageProps> = ({ collectionSlug }) => {
           </motion.section>
         )}
 
-        {/* Other Collections with themed cards */}
+        {/* Other Collections */}
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="pt-10 border-t border-border/50"
+          className="pt-8 border-t border-border/50"
         >
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-primary/10">
-                <TrendingUp className="w-5 h-5 text-primary" />
-              </div>
-              <h2 className="text-xl font-bold text-foreground">مجموعه‌های مرتبط</h2>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Layers className="w-4 h-4 text-muted-foreground" />
+              <h2 className="text-lg font-semibold text-foreground">مجموعه‌های مرتبط</h2>
             </div>
             <Link 
               to="/collections" 
-              className="text-sm text-primary hover:underline flex items-center gap-1"
+              className="text-xs text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
             >
-              همه مجموعه‌ها
+              همه
               <ArrowLeft className="w-3 h-3" />
             </Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {otherCollections.map((col, index) => {
-              const colTheme = getCollectionTheme(col.slug);
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {otherCollections.map((col) => {
               const colToolCount = col.toolSlugs.filter(s => tools.some(t => t.slug === s)).length;
               
               return (
-                <motion.div
+                <Link
                   key={col.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.05 }}
-                  whileHover={{ y: -4, scale: 1.02 }}
+                  to={`/collection/${col.slug}`}
+                  className="group flex items-start gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all"
                 >
-                  <Link
-                    to={`/collection/${col.slug}`}
-                    className={`group flex flex-col h-full p-5 bg-gradient-to-br ${colTheme.gradient} border ${colTheme.borderColor} ${colTheme.hoverBorder} hover:shadow-lg rounded-xl transition-all duration-300`}
-                  >
-                    <div className="flex items-center gap-3 mb-3">
-                      <motion.div 
-                        className={`w-12 h-12 rounded-xl ${colTheme.iconBg} flex items-center justify-center`}
-                        whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-                      >
-                        <span className="text-2xl">{col.icon}</span>
-                      </motion.div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                          {col.title}
-                        </h3>
-                        <span className={`text-xs ${colTheme.badgeText}`}>{colToolCount} ابزار</span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2 flex-1">{col.description}</p>
-                    <div className="mt-3 pt-3 border-t border-border/30 flex justify-end">
-                      <span className="text-xs text-muted-foreground group-hover:text-primary flex items-center gap-1 transition-colors">
-                        مشاهده
-                        <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
+                  <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                    <span className="text-xl">{col.icon}</span>
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                        {col.title.replace('ابزارهای ', '').replace('برای ', '')}
+                      </h3>
+                      <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full flex-shrink-0">
+                        {colToolCount}
                       </span>
                     </div>
-                  </Link>
-                </motion.div>
+                    <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                      {col.description}
+                    </p>
+                  </div>
+                </Link>
               );
             })}
           </div>
