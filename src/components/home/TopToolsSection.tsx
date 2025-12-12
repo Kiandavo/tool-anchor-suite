@@ -62,26 +62,24 @@ export const TopToolsSection = () => {
   const newToolSlugs = getNewTools().map(t => t.slug);
 
   return (
-    <section className="relative py-6 sm:py-8 bg-gradient-to-b from-muted/30 to-transparent">
-      
+    <section className="py-8">
       <div className="container-narrow">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg sm:text-xl font-bold text-foreground">
-            ابزارهای پرکاربرد
+          <h2 className="text-lg font-semibold text-foreground">
+            پرکاربرد
           </h2>
           <Link 
             to="/all-tools" 
-            className="text-xs text-primary flex items-center gap-1 font-medium hover:underline"
+            className="text-xs text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
           >
-            همه ابزارها
+            همه
             <ArrowLeft className="w-3 h-3" />
           </Link>
         </div>
 
-        {/* Compact 4-column grid with tooltips */}
         <TooltipProvider delayDuration={200}>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-            {topTools.map((tool, index) => {
+            {topTools.map((tool) => {
               if (!tool) return null;
               const Icon = iconMap[tool.slug] || Calculator;
               const isNew = newToolSlugs.includes(tool.slug);
@@ -91,23 +89,19 @@ export const TopToolsSection = () => {
                   <TooltipTrigger asChild>
                     <Link
                       to={`/tool/${tool.slug}`}
-                      className="group relative flex items-center gap-2.5 p-3 rounded-lg bg-card/80 backdrop-blur-sm border border-border hover:border-primary/40 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
-                      style={{ animationDelay: `${index * 50}ms` }}
+                      className="group relative flex items-center gap-2.5 p-3 rounded-lg bg-card border border-border hover:border-primary/40 transition-colors"
                     >
-                      {/* New badge */}
                       {isNew && (
                         <span className="absolute -top-1.5 -right-1.5 text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground">
                           جدید
                         </span>
                       )}
                       
-                      {/* Icon */}
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center group-hover:from-primary/20 group-hover:to-primary/5 transition-all duration-300 flex-shrink-0">
-                        <Icon className="w-4 h-4 text-primary" />
+                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                       </div>
                       
-                      {/* Title only */}
-                      <span className="font-medium text-sm text-foreground group-hover:text-primary transition-colors truncate">
+                      <span className="text-sm text-foreground group-hover:text-primary transition-colors truncate">
                         {tool.name}
                       </span>
                     </Link>
