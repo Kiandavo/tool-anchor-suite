@@ -1,16 +1,5 @@
-
-import OpenAI from 'openai';
+import { supabase } from '@/integrations/supabase/client';
 import { Message } from './types';
-
-/**
- * Maps UI-friendly model names to actual API model identifiers
- */
-const MODEL_MAPPING = {
-  'deepseek-v3-base': 'deepseek/deepseek-v3-0324:free',
-  'deepseek-r1': 'tngtech/deepseek-r1t-chimera:free',
-  'google-gemini-flash': 'google/gemini-2.0-flash-exp:free',
-  'llama4-maverick': 'meta-llama/llama-4-maverick:free'
-};
 
 export const fetchDeepseekResponse = async (
   apiKey: string, 
@@ -24,12 +13,12 @@ export const fetchDeepseekResponse = async (
       throw new Error('اتصال اینترنت برقرار نیست. لطفا اتصال خود را بررسی کنید.');
     }
 
-    // Validate API key format
+    // Basic API key validation (server will validate fully)
     if (!apiKey || !apiKey.startsWith('sk-or-v1-')) {
       throw new Error('کلید API نامعتبر است. لطفا کلید معتبر OpenRouter وارد کنید.');
     }
 
-    console.log('Attempting API call with model:', selectedModel);
+    console.log('Sending request to ai-chat edge function with model:', selectedModel);
     
     // Format messages for API
     const formattedMessages = messageHistory.map(msg => ({
@@ -37,53 +26,39 @@ export const fetchDeepseekResponse = async (
       content: msg.content
     }));
 
-    // Get the correct model identifier
-    const modelIdentifier = MODEL_MAPPING[selectedModel as keyof typeof MODEL_MAPPING] || 'google/gemini-2.0-flash-exp:free';
-    
-    // Initialize OpenAI client with OpenRouter config
-    const openai = new OpenAI({
-      baseURL: "https://openrouter.ai/api/v1",
-      apiKey: apiKey,
-      defaultHeaders: {
-        "HTTP-Referer": window.location.origin,
-        "X-Title": "Persian Text Tools"
-      },
-      dangerouslyAllowBrowser: true,
-      timeout: 30000
+    // Call edge function instead of direct API
+    const { data, error } = await supabase.functions.invoke('ai-chat', {
+      body: {
+        messages: formattedMessages,
+        model: selectedModel,
+        temperature: Math.max(0.1, Math.min(1.0, temperature)),
+        apiKey: apiKey
+      }
     });
-    
-    const completion = await openai.chat.completions.create({
-      model: modelIdentifier,
-      messages: formattedMessages,
-      temperature: Math.max(0.1, Math.min(1.0, temperature)), // Clamp temperature
-      max_tokens: 2000,
-      top_p: 0.95
-    });
-    
-    // Extract text content from the response
-    const content = completion.choices[0]?.message?.content;
-    if (!content) {
+
+    if (error) {
+      console.error('Edge function error:', error);
+      throw new Error(error.message || 'خطا در ارتباط با سرور');
+    }
+
+    if (data?.error) {
+      throw new Error(data.error);
+    }
+
+    if (!data?.content) {
       throw new Error('پاسخی از API دریافت نشد.');
     }
     
-    return content;
+    return data.content;
   } catch (error: any) {
-    console.error('API request error details:', error);
+    console.error('API request error:', error);
     
-    // Handle specific OpenAI API errors
-    if (error.status === 401) {
-      throw new Error('خطا در احراز هویت API. لطفا کلید API خود را بررسی کنید.');
-    } else if (error.status === 429) {
-      throw new Error('محدودیت درخواست‌ها به API رسیده است. لطفا کمی صبر کنید.');
-    } else if (error.status === 400) {
-      throw new Error(`خطا در پارامترهای ارسالی: ${error.message || 'پارامترهای نامعتبر'}`);
-    } else if (error.cause?.code === 'ECONNREFUSED' || error.cause?.code === 'ECONNRESET') {
-      throw new Error('خطا در اتصال به سرور API. لطفا اتصال اینترنت خود را بررسی کنید.');
-    } else if (error.message && error.message.includes('Failed to fetch')) {
-      throw new Error('خطا در اتصال به سرور API. لطفا اتصال اینترنت خود را بررسی کنید.');
-    } else {
-      throw new Error(`خطا در درخواست به API: ${error.status || ''} ${error.message || ''}`);
+    // Re-throw with user-friendly message
+    if (error.message) {
+      throw error;
     }
+    
+    throw new Error('خطا در درخواست به API');
   }
 };
 
