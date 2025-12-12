@@ -70,12 +70,38 @@ export default function AboutUs() {
         {/* Origin Story */}
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-4">داستان ما</h2>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="text-muted-foreground leading-relaxed mb-4">
             لنگر از سال ۱۴۰۰ با هدف ساده‌ای شروع شد: ساخت ابزارهای کاربردی به زبان فارسی که 
             بدون نیاز به ثبت‌نام، بدون تبلیغات مزاحم و کاملاً رایگان قابل استفاده باشند. 
             ما یک تیم کوچک از توسعه‌دهندگان ایرانی هستیم که معتقدیم ابزارهای دیجیتال 
             باید ساده، سریع و قابل اعتماد باشند.
           </p>
+          <p className="text-muted-foreground leading-relaxed">
+            تمام ابزارها در مرورگر شما اجرا می‌شوند - هیچ اطلاعاتی به سرور ارسال نمی‌شود.
+          </p>
+        </section>
+
+        {/* Future Plans */}
+        <section>
+          <h2 className="text-xl font-semibold text-foreground mb-4">برنامه‌های آینده</h2>
+          <ul className="space-y-2 text-muted-foreground">
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              افزودن ابزارهای جدید هر هفته
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              API برای توسعه‌دهندگان
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              حساب کاربری اختیاری برای ذخیره تنظیمات
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              اپلیکیشن موبایل
+            </li>
+          </ul>
         </section>
 
         {/* What Laangar Covers */}
