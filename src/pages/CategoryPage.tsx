@@ -5,8 +5,7 @@ import { ToolCard } from '@/components/ToolCard';
 import { categoryLabels, ToolCategory, tools } from '@/data/tools';
 import { CategorySeoHead } from '@/components/seo/CategorySeoHead';
 import { ToolFilters } from '@/components/tools/ToolFilters';
-import { RecentlyUsedSection } from '@/components/tools/RecentlyUsedSection';
-import { useToolFilters, FilterType } from '@/hooks/useToolFilters';
+import { useToolFilters } from '@/hooks/useToolFilters';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { SocialShare } from '@/components/social/SocialShare';
@@ -118,9 +117,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categorySlug }) => {
             {categoryDescriptions[category]}
           </p>
         </motion.div>
-
-        {/* Recently Used (category-specific would be better, but showing global for now) */}
-        <RecentlyUsedSection maxItems={4} />
 
         {/* Filters */}
         <div className="mb-8">
