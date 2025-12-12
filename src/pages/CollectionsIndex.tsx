@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { SeoHead } from '@/components/seo/SeoHead';
 import { collections } from '@/data/collections';
-import { tools } from '@/data/tools';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Layers, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { CollectionCard } from '@/components/collections/CollectionCard';
 
 const CollectionsIndex: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const CollectionsIndex: React.FC = () => {
         keywords="مجموعه ابزار، ابزار آنلاین، لنگر، ابزار رایگان"
       />
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <Link to="/" className="hover:text-foreground transition-colors">خانه</Link>
@@ -28,73 +28,66 @@ const CollectionsIndex: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-10"
+          className="text-center mb-12"
         >
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
-            مجموعه‌های ابزار
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+            <Layers className="w-4 h-4" />
+            <span>مجموعه‌های تخصصی</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            ابزارهای لنگر برای هر نیاز
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            ابزارهای لنگر را بر اساس نیاز و حرفه خود پیدا کنید. هر مجموعه شامل ابزارهای منتخب برای یک گروه خاص است.
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            مجموعه‌های منتخب ابزارها بر اساس حرفه و نیاز شما. هر مجموعه شامل ابزارهای کاربردی برای یک گروه خاص است.
           </p>
+        </motion.div>
+
+        {/* Featured Badge */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center gap-2 mb-6"
+        >
+          <Sparkles className="w-5 h-5 text-amber-500" />
+          <span className="text-sm font-medium text-muted-foreground">
+            {collections.length} مجموعه تخصصی
+          </span>
         </motion.div>
 
         {/* Collections Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {collections.map((collection, index) => {
-            const toolCount = collection.toolSlugs.filter(
-              slug => tools.some(t => t.slug === slug)
-            ).length;
-
-            return (
-              <motion.div
-                key={collection.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
-                <Link
-                  to={`/collection/${collection.slug}`}
-                  className="group block h-full p-6 bg-card hover:bg-secondary/50 border border-border rounded-xl transition-all duration-200 hover:shadow-md"
-                >
-                  <div className="flex items-start gap-4">
-                    <span className="text-4xl flex-shrink-0">{collection.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <h2 className="font-semibold text-foreground group-hover:text-primary transition-colors mb-2 line-clamp-2">
-                        {collection.title}
-                      </h2>
-                      <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                        {collection.description}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-muted-foreground">
-                          {toolCount} ابزار
-                        </span>
-                        <span className="inline-flex items-center gap-1 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                          مشاهده
-                          <ArrowLeft className="w-3.5 h-3.5" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
+          {collections.map((collection, index) => (
+            <CollectionCard
+              key={collection.id}
+              collection={collection}
+              index={index}
+              featured={index < 3}
+            />
+          ))}
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center py-8 border-t border-border">
-          <p className="text-muted-foreground mb-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-16 text-center py-10 px-6 rounded-2xl bg-gradient-to-br from-primary/5 via-primary/10 to-transparent border border-primary/20"
+        >
+          <h2 className="text-xl font-bold text-foreground mb-3">
             نمی‌دانید کدام مجموعه برای شماست؟
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            همه ابزارهای لنگر را در یک نگاه ببینید و ابزار مناسب خود را پیدا کنید.
           </p>
           <Link
             to="/all-tools"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-medium hover:opacity-90 transition-opacity"
           >
             مشاهده همه ابزارها
             <ArrowLeft className="w-4 h-4" />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </Layout>
   );
