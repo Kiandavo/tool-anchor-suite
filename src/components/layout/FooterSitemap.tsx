@@ -54,10 +54,10 @@ export function FooterSitemap() {
               </li>
               <li>
                 <Link
-                  to="/astrology-guide"
+                  to="/about"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  راهنمای طالع‌بینی
+                  درباره ما
                 </Link>
               </li>
               <li>
