@@ -71,7 +71,7 @@ export const ToolFilters: React.FC<ToolFiltersProps> = ({
             {activeFilter === filter && (
               <motion.div
                 layoutId="activeFilterBg"
-                className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"
+                className="absolute inset-0 bg-primary rounded-full"
                 initial={false}
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />

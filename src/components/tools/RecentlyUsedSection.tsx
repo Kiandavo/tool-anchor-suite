@@ -29,16 +29,18 @@ export const RecentlyUsedSection: React.FC<RecentlyUsedSectionProps> = ({
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Clock className="w-5 h-5 text-amber-500" />
+          <div className="icon-box-sm">
+            <Clock className="icon-sm" />
+          </div>
           <h2 className="text-lg font-semibold text-foreground">اخیراً استفاده شده</h2>
         </div>
         {recentTools.length > maxItems && (
           <Link 
             to="/all-tools?filter=recent" 
-            className="text-sm text-primary hover:underline flex items-center gap-1"
+            className="text-sm text-link flex items-center gap-1"
           >
             مشاهده همه
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="icon-sm" />
           </Link>
         )}
       </div>
@@ -53,9 +55,9 @@ export const RecentlyUsedSection: React.FC<RecentlyUsedSectionProps> = ({
           >
             <Link
               to={`/tool/${tool.slug}`}
-              className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card/60 border border-border/50 hover:border-amber-500/40 hover:bg-card transition-all group"
+              className="flex flex-col items-center gap-2 p-3 rounded-lg bg-card border border-border hover:border-primary/40 hover:shadow-md transition-all group"
             >
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500/10 to-orange-500/10 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+              <div className="icon-box group-hover:bg-primary/20 transition-colors">
                 {tool.icon}
               </div>
               <span className="text-xs font-medium text-center text-muted-foreground group-hover:text-foreground transition-colors line-clamp-2">

@@ -57,35 +57,26 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, highlight = false }) =
     <Link 
       to={`/tool/${tool.slug}`}
       className={cn(
-        // Base styles using design tokens
-        "block p-4 rounded-xl border transition-all duration-200",
-        "bg-card text-card-foreground border-border",
-        // Hover states
-        "hover:border-primary/30 hover:shadow-lg hover:-translate-y-0.5",
-        // Focus states for accessibility
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
-        // Active state
-        "active:scale-[0.98]",
-        // Highlight variant
+        "tool-card group",
         highlight && "border-primary/20 shadow-sm"
       )}
     >
       <div className="flex items-start gap-3">
         {/* Consistent icon container */}
-        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-          <Icon className="w-5 h-5" />
+        <div className="icon-box group-hover:bg-primary/20 transition-colors">
+          <Icon className="icon-md" />
         </div>
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h3 className="font-medium text-foreground truncate">{tool.name}</h3>
+            <h3 className="font-medium text-foreground truncate group-hover:text-primary transition-colors">{tool.name}</h3>
             {tool.isNew && (
-              <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded-full font-medium">
                 جدید
               </span>
             )}
             {tool.isComingSoon && (
-              <span className="text-xs bg-amber-500/10 text-amber-600 px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] bg-muted text-muted-foreground px-1.5 py-0.5 rounded-full font-medium">
                 به زودی
               </span>
             )}

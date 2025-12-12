@@ -25,7 +25,7 @@ export const ToolExamples: React.FC<ToolExamplesProps> = ({
   return (
     <div className={cn("space-y-3", className)}>
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Lightbulb className="w-4 h-4 text-amber-500" />
+        <Lightbulb className="icon-sm text-primary" />
         <span>امتحان کنید:</span>
       </div>
       

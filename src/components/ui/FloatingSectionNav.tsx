@@ -80,7 +80,7 @@ export const FloatingSectionNav = () => {
                 {activeSection === section.id && (
                   <motion.div
                     layoutId="activeNavBg"
-                    className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-amber-500/20 rounded-full"
+                    className="absolute inset-0 bg-primary/20 rounded-full"
                     initial={false}
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
