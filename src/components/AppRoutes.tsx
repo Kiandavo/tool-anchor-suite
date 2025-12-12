@@ -1,6 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { AnimatePresence } from "framer-motion";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { PageTransition } from "@/components/PageTransition";
 import Index from "@/pages/index";
 
 // Lazy load all non-critical routes
@@ -38,77 +40,88 @@ const RouteLoader = () => (
   </div>
 );
 
+// Helper to wrap page components with transition
+const withTransition = (Component: React.ComponentType<any>, props?: any) => (
+  <PageTransition>
+    <Component {...props} />
+  </PageTransition>
+);
+
 export const AppRoutes = () => {
+  const location = useLocation();
   useScrollToTop();
+  
   return (
-    <Suspense fallback={<RouteLoader />}>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        
-        {/* New clean category URLs */}
-        <Route path="/calculators" element={<CategoryPage categorySlug="calculators" />} />
-        <Route path="/text-tools" element={<CategoryPage categorySlug="text-tools" />} />
-        <Route path="/image-tools" element={<CategoryPage categorySlug="image-tools" />} />
-        <Route path="/persian-tools" element={<CategoryPage categorySlug="persian-tools" />} />
-        <Route path="/readings" element={<CategoryPage categorySlug="readings" />} />
-        <Route path="/seo-tools" element={<CategoryPage categorySlug="seo-tools" />} />
-        <Route path="/random-tools" element={<CategoryPage categorySlug="random-tools" />} />
-        <Route path="/number-tools" element={<CategoryPage categorySlug="number-tools" />} />
-        <Route path="/educational-tools" element={<CategoryPage categorySlug="educational-tools" />} />
-        <Route path="/productivity-tools" element={<CategoryPage categorySlug="productivity-tools" />} />
-        <Route path="/design-tools" element={<CategoryPage categorySlug="design-tools" />} />
-        
-        {/* Persian URL aliases for categories */}
-        <Route path="/محاسبه‌گرها" element={<CategoryPage categorySlug="calculators" />} />
-        <Route path="/ابزار-متنی" element={<CategoryPage categorySlug="text-tools" />} />
-        <Route path="/ابزار-تصویر" element={<CategoryPage categorySlug="image-tools" />} />
-        <Route path="/فرهنگ-فارسی" element={<CategoryPage categorySlug="persian-tools" />} />
-        <Route path="/فال-طالع‌بینی" element={<CategoryPage categorySlug="readings" />} />
-        
-        {/* Legacy category routes (backwards compatibility) */}
-        <Route path="/category/:categoryId" element={<Category />} />
-        
-        <Route path="/tool/:slug" element={<Tool />} />
-        <Route path="/all-tools" element={<AllTools />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/درباره-ما" element={<AboutUs />} />
-        <Route path="/faq" element={<FAQEnhanced />} />
-        <Route path="/سوالات-متداول" element={<FAQEnhanced />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/وبلاگ" element={<Blog />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/وبلاگ/:slug" element={<BlogPost />} />
-        <Route path="/guides/calculators" element={<CalculatorsGuide />} />
-        <Route path="/راهنما/محاسبه‌گرها" element={<CalculatorsGuide />} />
-        <Route path="/press-kit" element={<PressKit />} />
-        <Route path="/کیت-رسانه‌ای" element={<PressKit />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/منابع" element={<Resources />} />
-        <Route path="/widgets" element={<WidgetsPage />} />
-        <Route path="/ویجت" element={<WidgetsPage />} />
-        <Route path="/bookmarks" element={<Bookmarks />} />
-        <Route path="/نشان-شده-ها" element={<Bookmarks />} />
-        <Route path="/compare" element={<ToolComparison />} />
-        <Route path="/مقایسه" element={<ToolComparison />} />
-        <Route path="/astrology-guide" element={<AstrologyGuide />} />
-        <Route path="/راهنمای-طالع‌بینی" element={<AstrologyGuide />} />
-        <Route path="/horoscope-forecasts" element={<HoroscopeForecasts />} />
-        <Route path="/horoscope-forecasts/:sign/:period" element={<HoroscopeForecasts />} />
-        <Route path="/طالع-روزانه" element={<HoroscopeForecasts />} />
-        <Route path="/astrology-quiz" element={<AstrologyQuiz />} />
-        <Route path="/astrology-quiz/:category" element={<AstrologyQuiz />} />
-        <Route path="/آزمون-طالع‌بینی" element={<AstrologyQuiz />} />
-        <Route path="/persian-date-events" element={<PersianDateEvents />} />
-        <Route path="/رویدادهای-تاریخی" element={<PersianDateEvents />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/seo-audit" element={<SeoAudit />} />
-        <Route path="/ممیزی-سئو" element={<SeoAudit />} />
-        <Route path="/performance" element={<PerformanceDashboard />} />
-        <Route path="/عملکرد" element={<PerformanceDashboard />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+    <AnimatePresence mode="wait">
+      <Suspense fallback={<RouteLoader />} key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={withTransition(Index)} />
+          
+          {/* New clean category URLs */}
+          <Route path="/calculators" element={withTransition(CategoryPage, { categorySlug: "calculators" })} />
+          <Route path="/text-tools" element={withTransition(CategoryPage, { categorySlug: "text-tools" })} />
+          <Route path="/image-tools" element={withTransition(CategoryPage, { categorySlug: "image-tools" })} />
+          <Route path="/persian-tools" element={withTransition(CategoryPage, { categorySlug: "persian-tools" })} />
+          <Route path="/readings" element={withTransition(CategoryPage, { categorySlug: "readings" })} />
+          <Route path="/seo-tools" element={withTransition(CategoryPage, { categorySlug: "seo-tools" })} />
+          <Route path="/random-tools" element={withTransition(CategoryPage, { categorySlug: "random-tools" })} />
+          <Route path="/number-tools" element={withTransition(CategoryPage, { categorySlug: "number-tools" })} />
+          <Route path="/educational-tools" element={withTransition(CategoryPage, { categorySlug: "educational-tools" })} />
+          <Route path="/productivity-tools" element={withTransition(CategoryPage, { categorySlug: "productivity-tools" })} />
+          <Route path="/design-tools" element={withTransition(CategoryPage, { categorySlug: "design-tools" })} />
+          
+          {/* Persian URL aliases for categories */}
+          <Route path="/محاسبه‌گرها" element={withTransition(CategoryPage, { categorySlug: "calculators" })} />
+          <Route path="/ابزار-متنی" element={withTransition(CategoryPage, { categorySlug: "text-tools" })} />
+          <Route path="/ابزار-تصویر" element={withTransition(CategoryPage, { categorySlug: "image-tools" })} />
+          <Route path="/فرهنگ-فارسی" element={withTransition(CategoryPage, { categorySlug: "persian-tools" })} />
+          <Route path="/فال-طالع‌بینی" element={withTransition(CategoryPage, { categorySlug: "readings" })} />
+          
+          {/* Legacy category routes (backwards compatibility) */}
+          <Route path="/category/:categoryId" element={<PageTransition><Category /></PageTransition>} />
+          
+          <Route path="/tool/:slug" element={<PageTransition><Tool /></PageTransition>} />
+          <Route path="/all-tools" element={withTransition(AllTools)} />
+          <Route path="/settings" element={withTransition(Settings)} />
+          <Route path="/about" element={withTransition(AboutUs)} />
+          <Route path="/درباره-ما" element={withTransition(AboutUs)} />
+          <Route path="/faq" element={withTransition(FAQEnhanced)} />
+          <Route path="/سوالات-متداول" element={withTransition(FAQEnhanced)} />
+          <Route path="/blog" element={withTransition(Blog)} />
+          <Route path="/وبلاگ" element={withTransition(Blog)} />
+          <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+          <Route path="/وبلاگ/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+          <Route path="/guides/calculators" element={withTransition(CalculatorsGuide)} />
+          <Route path="/راهنما/محاسبه‌گرها" element={withTransition(CalculatorsGuide)} />
+          <Route path="/press-kit" element={withTransition(PressKit)} />
+          <Route path="/کیت-رسانه‌ای" element={withTransition(PressKit)} />
+          <Route path="/resources" element={withTransition(Resources)} />
+          <Route path="/منابع" element={withTransition(Resources)} />
+          <Route path="/widgets" element={withTransition(WidgetsPage)} />
+          <Route path="/ویجت" element={withTransition(WidgetsPage)} />
+          <Route path="/bookmarks" element={withTransition(Bookmarks)} />
+          <Route path="/نشان-شده-ها" element={withTransition(Bookmarks)} />
+          <Route path="/compare" element={withTransition(ToolComparison)} />
+          <Route path="/مقایسه" element={withTransition(ToolComparison)} />
+          <Route path="/astrology-guide" element={withTransition(AstrologyGuide)} />
+          <Route path="/راهنمای-طالع‌بینی" element={withTransition(AstrologyGuide)} />
+          <Route path="/horoscope-forecasts" element={withTransition(HoroscopeForecasts)} />
+          <Route path="/horoscope-forecasts/:sign/:period" element={<PageTransition><HoroscopeForecasts /></PageTransition>} />
+          <Route path="/طالع-روزانه" element={withTransition(HoroscopeForecasts)} />
+          <Route path="/astrology-quiz" element={withTransition(AstrologyQuiz)} />
+          <Route path="/astrology-quiz/:category" element={<PageTransition><AstrologyQuiz /></PageTransition>} />
+          <Route path="/آزمون-طالع‌بینی" element={withTransition(AstrologyQuiz)} />
+          <Route path="/persian-date-events" element={withTransition(PersianDateEvents)} />
+          <Route path="/رویدادهای-تاریخی" element={withTransition(PersianDateEvents)} />
+          <Route path="/privacy-policy" element={withTransition(PrivacyPolicy)} />
+          <Route path="/terms-of-service" element={withTransition(TermsOfService)} />
+          <Route path="/seo-audit" element={withTransition(SeoAudit)} />
+          <Route path="/ممیزی-سئو" element={withTransition(SeoAudit)} />
+          <Route path="/performance" element={withTransition(PerformanceDashboard)} />
+          <Route path="/عملکرد" element={withTransition(PerformanceDashboard)} />
+          <Route path="*" element={withTransition(NotFound)} />
+        </Routes>
+      </Suspense>
+    </AnimatePresence>
   );
 };
