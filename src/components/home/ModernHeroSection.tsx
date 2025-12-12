@@ -62,9 +62,9 @@ export const ModernHeroSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-heading font-black text-4xl sm:text-5xl lg:text-6xl leading-[1.15] text-foreground mb-5"
           >
-            همه ابزارها
+            سریع، ساده،
             <br />
-            <span className="text-primary">در یک جا</span>
+            <span className="text-primary">رایگان</span>
           </motion.h1>
 
           {/* Subtitle */}
