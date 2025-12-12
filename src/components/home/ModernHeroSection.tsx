@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Calculator, FileText, Image, Sparkles } from 'lucide-react';
+import { ArrowLeft, Calculator, FileText, Image, Percent, Palette, QrCode, Hash, Type, Crop } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -7,6 +7,16 @@ const categories = [
   { icon: Calculator, label: 'محاسبه‌گرها', href: '/calculators' },
   { icon: FileText, label: 'ابزار متنی', href: '/text-tools' },
   { icon: Image, label: 'تصویر و فایل', href: '/image-tools' },
+];
+
+const floatingIcons = [
+  { Icon: Calculator, position: 'top-20 left-[8%]', delay: 0, size: 20 },
+  { Icon: Percent, position: 'top-32 right-[12%]', delay: 1.5, size: 16 },
+  { Icon: Palette, position: 'bottom-28 left-[15%]', delay: 0.8, size: 18 },
+  { Icon: QrCode, position: 'bottom-20 right-[8%]', delay: 2, size: 20 },
+  { Icon: Hash, position: 'top-1/3 left-[5%]', delay: 0.5, size: 14 },
+  { Icon: Type, position: 'top-1/4 right-[6%]', delay: 1.2, size: 16 },
+  { Icon: Crop, position: 'bottom-1/3 right-[10%]', delay: 1.8, size: 14 },
 ];
 
 export const ModernHeroSection = () => {
@@ -50,6 +60,30 @@ export const ModernHeroSection = () => {
           delay: 2
         }}
       />
+
+      {/* Floating tool icons */}
+      {floatingIcons.map(({ Icon, position, delay, size }, index) => (
+        <motion.div
+          key={index}
+          className={`absolute ${position} pointer-events-none hidden lg:block`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ 
+            opacity: [0.15, 0.25, 0.15],
+            y: [0, -8, 0],
+            rotate: [0, 5, 0]
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: delay
+          }}
+        >
+          <div className="p-2.5 rounded-xl bg-muted/40 backdrop-blur-sm border border-border/30">
+            <Icon size={size} className="text-muted-foreground/60" strokeWidth={1.5} />
+          </div>
+        </motion.div>
+      ))}
 
       {/* Decorative lines */}
       <div className="absolute top-1/4 left-8 w-px h-20 bg-gradient-to-b from-transparent via-border to-transparent opacity-40 hidden lg:block" />
