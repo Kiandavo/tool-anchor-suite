@@ -323,12 +323,19 @@
             <img src="/assets/laangar-logo.png" alt="لنگر" width="48" height="48" style="border-radius: 0.5rem; aspect-ratio: 1/1;">
             <span style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">لنگر</span>
           </a>
-          <nav style="display: flex; gap: 1.5rem;">
+          <nav style="display: flex; gap: 1.5rem; align-items: center;">
             <a href="/all-tools" style="color: #4b5563; text-decoration: none;">همه ابزارها</a>
-            <a href="/category/calculators" style="color: #4b5563; text-decoration: none;">محاسبه‌گرها</a>
-            <a href="/category/text" style="color: #4b5563; text-decoration: none;">ابزار متنی</a>
-            <a href="/category/readings" style="color: #4b5563; text-decoration: none;">فال و طالع‌بینی</a>
+            <span style="color: #4b5563; cursor: default;">دسته‌بندی‌ها ▾</span>
           </nav>
+          <!-- Category links for crawlers (hidden visually but accessible) -->
+          <div style="display: none;">
+            <a href="/calculators">محاسبه‌گرها</a>
+            <a href="/text-tools">ابزارهای متنی</a>
+            <a href="/image-tools">ابزارهای تصویر</a>
+            <a href="/persian-tools">فرهنگ فارسی</a>
+            <a href="/readings">فال و طالع‌بینی</a>
+            <a href="/seo-tools">سئو و وب</a>
+          </div>
         </header>
         
         <!-- Hero Section - uses min-height to reserve space and prevent CLS -->
