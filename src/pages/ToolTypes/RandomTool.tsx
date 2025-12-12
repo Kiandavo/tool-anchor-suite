@@ -56,7 +56,7 @@ export default function RandomTool({ slug }: RandomToolProps) {
         return <RandomDice />;
       case 'random-bible-verse':
         return <RandomBibleVerse />;
-      case 'random-movie-picker':
+      case 'random-movie-suggestion':
         return <RandomMovie />;
       case 'random-recipe-generator':
         return <RandomRecipe />;
