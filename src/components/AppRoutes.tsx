@@ -99,6 +99,7 @@ export const AppRoutes = () => {
           <Route path="/ابزار-تصویر" element={withTransition(CategoryPage, { categorySlug: "image-tools" })} />
           <Route path="/فرهنگ-فارسی" element={withTransition(CategoryPage, { categorySlug: "persian-tools" })} />
           <Route path="/فال-طالع‌بینی" element={withTransition(CategoryPage, { categorySlug: "readings" })} />
+          <Route path="/fortune-telling" element={withTransition(CategoryPage, { categorySlug: "readings" })} />
           
           {/* Legacy category routes (backwards compatibility) */}
           <Route path="/category/:categoryId" element={<PageTransition><Category /></PageTransition>} />
