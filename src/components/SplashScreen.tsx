@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-// Use public path to match preload hint in index.html for better LCP
-const laangarLogo = '/assets/laangar-logo.png';
+// Use optimized 1024x1024 logo for 128px display (better for retina displays)
+const laangarLogo = '/assets/laangar-logo-128.png';
 
 interface SplashScreenProps {
   onComplete: () => void;
