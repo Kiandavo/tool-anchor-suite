@@ -37,21 +37,22 @@ export const ShahnameReading = () => {
         </div>
       
         <CardHeader className="lcp-tool-header">
-          <div className="flex items-center justify-center">
-            <Crown className="text-amber-100 mr-2" size={18} />
-            <h2 className="lcp-tool-title">
-              راهنمایی از شاهنامه فردوسی
-              <span className="mr-2 inline-block"><Sparkles size={14} className="text-amber-100 animate-pulse" /></span>
-            </h2>
+          <div className="flex items-center justify-between">
+            <ShahnameGuide />
+            <div className="flex-1 flex items-center justify-center gap-2">
+              <Crown className="text-amber-100" size={18} />
+              <h2 className="lcp-tool-title">
+                راهنمایی از شاهنامه فردوسی
+                <Sparkles size={14} className="text-amber-100 animate-pulse inline-block mr-2" />
+              </h2>
+            </div>
+            <div className="w-[70px]"></div> {/* Spacer for balance */}
           </div>
           
           {/* Enhanced subtitle */}
-          <p className="lcp-tool-subtitle">
+          <p className="lcp-tool-subtitle text-center mt-1">
             حکمت و اندرز از حماسه ملی ایران
           </p>
-          
-          {/* Help button */}
-          <ShahnameGuide />
         </CardHeader>
       
         <CardContent className="lcp-content-area">

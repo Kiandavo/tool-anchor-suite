@@ -39,19 +39,20 @@ export const RumiIstikhara = () => {
         <FlowingArabicPattern />
       
         <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-center pb-3 py-4 relative border-b border-primary/30">
-          <div className="flex items-center justify-center">
-            <BookOpen className="text-primary-foreground mr-2" size={18} />
-            <h2 className="text-base font-bold text-primary-foreground flex items-center">
-              استخاره با مولانا
-              <span className="mr-2 inline-block"><Sparkles size={14} className="text-primary-foreground animate-pulse" /></span>
-            </h2>
+          <div className="flex items-center justify-between">
+            <RumiGuide />
+            <div className="flex-1 flex items-center justify-center gap-2">
+              <BookOpen className="text-primary-foreground" size={18} />
+              <h2 className="text-base font-bold text-primary-foreground">
+                استخاره با مولانا
+                <Sparkles size={14} className="text-primary-foreground animate-pulse inline-block mr-2" />
+              </h2>
+            </div>
+            <div className="w-[70px]"></div> {/* Spacer for balance */}
           </div>
           
           {/* Enhanced subtitle */}
-          <p className="text-primary-foreground/80 text-xs mt-1 font-medium">راهنمایی عرفانی از اشعار جلال‌الدین مولوی</p>
-          
-          {/* Help button */}
-          <RumiGuide />
+          <p className="text-primary-foreground/80 text-xs mt-1 font-medium text-center">راهنمایی عرفانی از اشعار جلال‌الدین مولوی</p>
         </CardHeader>
       
         <CardContent className="pt-4 px-4 relative min-h-[300px]">
