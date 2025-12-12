@@ -27,52 +27,17 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen font-body persian-optimized" dir="rtl">
       <Helmet>
-        {/* Enhanced Security Headers */}
+        {/* Essential Security Headers Only */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="X-Frame-Options" content="DENY" />
-        <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
-        <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-        <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
         
-        {/* Mobile Optimization - Enhanced for Phase 1 */}
+        {/* Mobile Optimization */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="HandheldFriendly" content="true" />
-        
-        {/* Touch Icon for mobile */}
-        <meta name="msapplication-tap-highlight" content="no" />
-        
-        {/* Content Security Policy - AdSense Ready */}
-        <meta httpEquiv="Content-Security-Policy" content="
-          default-src 'self';
-          script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://www.googletagservices.com https://www.google.com https://googleads.g.doubleclick.net;
-          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
-          img-src 'self' data: https: blob: https://pagead2.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net;
-          font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
-          connect-src 'self' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://cdn.jsdelivr.net;
-          frame-src https://googleads.g.doubleclick.net https://www.google.com;
-          object-src 'none';
-          base-uri 'self';
-          form-action 'self';
-        " />
-        
-        {/* Performance and Caching */}
-        <meta httpEquiv="Cache-Control" content="public, max-age=31536000" />
-        
-        {/* Modern Browser Support */}
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         
         {/* Accessibility */}
         <meta name="color-scheme" content="light" />
-        
-        {/* Additional Security */}
-        <meta name="robots" content="index, follow" />
-        
-        {/* Font Optimization */}
-        <meta name="font-display" content="swap" />
       </Helmet>
       
       {/* Load AdSense Script */}
