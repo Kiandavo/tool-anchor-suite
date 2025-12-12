@@ -1,168 +1,142 @@
-
-import React, { useState, useEffect, useRef } from 'react';
-import { Clock, Play, Pause, RotateCcw, Settings, Bell, Volume2, VolumeX } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { CalculatorCard } from '@/components/calculator/CalculatorCard';
+import { VisualizationCard } from '@/components/calculator/VisualizationCard';
+import { Clock, Play, Pause, RotateCcw, Settings, Volume2, VolumeX, Target, TrendingUp, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
+import { Slider } from '@/components/ui/slider';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/hooks/use-toast';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 type TimerMode = 'work' | 'shortBreak' | 'longBreak';
 
 interface TimerSettings {
-  work: number; // in seconds
-  shortBreak: number; // in seconds
-  longBreak: number; // in seconds
-  longBreakInterval: number; // after how many work sessions
+  work: number;
+  shortBreak: number;
+  longBreak: number;
+  longBreakInterval: number;
+  dailyGoal: number;
 }
 
+interface SessionRecord {
+  date: string;
+  sessions: number;
+  minutes: number;
+}
+
+const defaultSettings: TimerSettings = {
+  work: 25 * 60,
+  shortBreak: 5 * 60,
+  longBreak: 15 * 60,
+  longBreakInterval: 4,
+  dailyGoal: 8,
+};
+
+const modeConfig = {
+  work: { label: 'تمرکز', color: 'hsl(var(--destructive))', bgClass: 'from-red-500/20 to-red-500/5' },
+  shortBreak: { label: 'استراحت کوتاه', color: 'hsl(142, 76%, 36%)', bgClass: 'from-green-500/20 to-green-500/5' },
+  longBreak: { label: 'استراحت طولانی', color: 'hsl(217, 91%, 60%)', bgClass: 'from-blue-500/20 to-blue-500/5' },
+};
+
 export default function PomodoroTimer() {
-  const { toast } = useToast();
-  const bellSoundRef = useRef<HTMLAudioElement | null>(null);
-  
-  // Timer state
-  const [isRunning, setIsRunning] = useState(false);
-  const [mode, setMode] = useState<TimerMode>('work');
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [sessions, setSessions] = useState(0);
-  const [settings, setSettings] = useState<TimerSettings>({
-    work: 25 * 60, // 25 minutes
-    shortBreak: 5 * 60, // 5 minutes
-    longBreak: 15 * 60, // 15 minutes
-    longBreakInterval: 4 // Take a long break after 4 work sessions
+  const [settings, setSettings] = useState<TimerSettings>(() => {
+    const saved = localStorage.getItem('pomodoroSettings');
+    return saved ? JSON.parse(saved) : defaultSettings;
   });
 
-  // Audio settings
+  const [mode, setMode] = useState<TimerMode>('work');
+  const [timeLeft, setTimeLeft] = useState(settings.work);
+  const [isRunning, setIsRunning] = useState(false);
+  const [sessions, setSessions] = useState(0);
+  const [todayMinutes, setTodayMinutes] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  
-  // Refs for managing intervals
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [history, setHistory] = useState<SessionRecord[]>(() => {
+    const saved = localStorage.getItem('pomodoroHistory');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  
-  // Load settings from localStorage on initial render
+  const bellRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize audio and request notification permission
   useEffect(() => {
-    const savedSettings = localStorage.getItem('pomodoroSettings');
-    if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
+    bellRef.current = new Audio('https://assets.mixkit.co/sfx/download/mixkit-alarm-digital-clock-beep-989.wav');
+    
+    // Load today's progress
+    const today = new Date().toISOString().split('T')[0];
+    const todayRecord = history.find(h => h.date === today);
+    if (todayRecord) {
+      setSessions(todayRecord.sessions);
+      setTodayMinutes(todayRecord.minutes);
     }
-    
-    // Initialize audio
-    bellSoundRef.current = new Audio("https://assets.mixkit.co/sfx/download/mixkit-alarm-digital-clock-beep-989.wav");
-    
-    // Initialize timer based on current mode
-    resetTimer();
-    
-    // Cleanup on unmount
+
     return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
+      if (timerRef.current) clearInterval(timerRef.current);
     };
   }, []);
-  
-  // Reset timer based on current mode
-  const resetTimer = () => {
-    setTimeLeft(settings[mode]);
-    setIsRunning(false);
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
+
+  // Save history to localStorage
+  useEffect(() => {
+    localStorage.setItem('pomodoroHistory', JSON.stringify(history));
+  }, [history]);
+
+  // Save settings
+  useEffect(() => {
+    localStorage.setItem('pomodoroSettings', JSON.stringify(settings));
+  }, [settings]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && !e.target?.toString().includes('Input')) {
+        e.preventDefault();
+        toggleTimer();
+      }
+      if (e.code === 'KeyR' && e.ctrlKey) {
+        e.preventDefault();
+        handleReset();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isRunning, mode]);
+
+  const requestNotificationPermission = async () => {
+    if ('Notification' in window) {
+      const permission = await Notification.requestPermission();
+      setNotificationsEnabled(permission === 'granted');
     }
   };
-  
-  // Format time as MM:SS
+
+  const showNotification = (title: string, body: string) => {
+    if (notificationsEnabled && 'Notification' in window) {
+      new Notification(title, { body, icon: '/favicon.ico' });
+    }
+  };
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-  
-  // Calculate progress percentage
-  const calculateProgress = () => {
-    const totalTime = settings[mode];
-    return ((totalTime - timeLeft) / totalTime) * 100;
+
+  const getProgress = () => {
+    const total = settings[mode];
+    return ((total - timeLeft) / total) * 100;
   };
-  
-  // Handle timer start/pause
-  const toggleTimer = () => {
-    if (isRunning) {
-      // Pause timer
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-      setIsRunning(false);
-    } else {
-      // Start timer
-      setIsRunning(true);
-      timerRef.current = setInterval(() => {
-        setTimeLeft(prev => {
-          if (prev <= 1) {
-            // Timer complete
-            if (timerRef.current) {
-              clearInterval(timerRef.current);
-              timerRef.current = null;
-            }
-            
-            // Play sound if enabled
-            if (soundEnabled && bellSoundRef.current) {
-              bellSoundRef.current.play().catch(error => {
-                console.error("Error playing sound:", error);
-              });
-            }
-            
-            // Show notification
-            const nextMode = getNextMode();
-            toast({
-              title: `زمان ${getModeLabel(mode)} به پایان رسید`,
-              description: `زمان ${getModeLabel(nextMode)} آغاز می‌شود.`,
-              duration: 5000
-            });
-            
-            // Update sessions counter if needed
-            if (mode === 'work') {
-              setSessions(prev => prev + 1);
-            }
-            
-            // Switch to next mode
-            switchMode(nextMode);
-            
-            return settings[nextMode];
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-  };
-  
-  // Reset the timer and sessions
-  const handleReset = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    setIsRunning(false);
-    setMode('work');
-    setTimeLeft(settings.work);
-    setSessions(0);
-  };
-  
-  // Get next timer mode based on current mode and sessions
+
   const getNextMode = (): TimerMode => {
     if (mode === 'work') {
-      // After work session, check if it's time for a long break
       return (sessions + 1) % settings.longBreakInterval === 0 ? 'longBreak' : 'shortBreak';
-    } else {
-      // After any break, go back to work
-      return 'work';
     }
+    return 'work';
   };
-  
-  // Switch timer mode manually
+
   const switchMode = (newMode: TimerMode) => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -172,306 +146,318 @@ export default function PomodoroTimer() {
     setMode(newMode);
     setTimeLeft(settings[newMode]);
   };
-  
-  // Get human-readable label for timer mode
-  const getModeLabel = (mode: TimerMode): string => {
-    switch (mode) {
-      case 'work': return 'تمرکز';
-      case 'shortBreak': return 'استراحت کوتاه';
-      case 'longBreak': return 'استراحت طولانی';
-    }
-  };
-  
-  // Get color theme based on current mode
-  const getModeColor = (): string => {
-    switch (mode) {
-      case 'work': return 'bg-red-600';
-      case 'shortBreak': return 'bg-green-600';
-      case 'longBreak': return 'bg-blue-600';
-    }
-  };
-  
-  // Save settings to localStorage
-  const saveSettings = (newSettings: TimerSettings) => {
-    setSettings(newSettings);
-    localStorage.setItem('pomodoroSettings', JSON.stringify(newSettings));
-    resetTimer();
-  };
-  
-  // Convert minutes to seconds
-  const minutesToSeconds = (minutes: number): number => {
-    return Math.max(1, Math.floor(minutes * 60));
-  };
-  
-  // Update specific setting field
-  const updateSetting = (field: keyof TimerSettings, value: number) => {
-    const newSettings = { 
-      ...settings,
-      [field]: field.endsWith('Interval') ? Math.max(1, value) : minutesToSeconds(value)
-    };
-    saveSettings(newSettings);
-  };
-  
-  // Toggle sound
-  const toggleSound = () => {
-    setSoundEnabled(!soundEnabled);
+
+  const updateHistory = (addedMinutes: number) => {
+    const today = new Date().toISOString().split('T')[0];
+    setHistory(prev => {
+      const existing = prev.find(h => h.date === today);
+      if (existing) {
+        return prev.map(h => 
+          h.date === today 
+            ? { ...h, sessions: h.sessions + 1, minutes: h.minutes + addedMinutes }
+            : h
+        );
+      }
+      return [...prev.slice(-29), { date: today, sessions: 1, minutes: addedMinutes }];
+    });
   };
 
+  const toggleTimer = useCallback(() => {
+    if (isRunning) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      setIsRunning(false);
+    } else {
+      setIsRunning(true);
+      timerRef.current = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            if (timerRef.current) {
+              clearInterval(timerRef.current);
+              timerRef.current = null;
+            }
+
+            if (soundEnabled && bellRef.current) {
+              bellRef.current.play().catch(() => {});
+            }
+
+            const nextMode = getNextMode();
+            const modeLabel = modeConfig[mode].label;
+            const nextLabel = modeConfig[nextMode].label;
+
+            toast({ 
+              title: `${modeLabel} تمام شد!`,
+              description: `وقت ${nextLabel} است.`
+            });
+
+            showNotification(`${modeLabel} تمام شد!`, `وقت ${nextLabel} است.`);
+
+            if (mode === 'work') {
+              const addedMinutes = Math.round(settings.work / 60);
+              setSessions(s => s + 1);
+              setTodayMinutes(m => m + addedMinutes);
+              updateHistory(addedMinutes);
+            }
+
+            setMode(nextMode);
+            setIsRunning(false);
+            return settings[nextMode];
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+  }, [isRunning, mode, settings, soundEnabled, notificationsEnabled]);
+
+  const handleReset = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    setIsRunning(false);
+    setMode('work');
+    setTimeLeft(settings.work);
+  };
+
+  const goalProgress = Math.min((sessions / settings.dailyGoal) * 100, 100);
+  const circumference = 2 * Math.PI * 45;
+  const strokeDashoffset = circumference - (getProgress() / 100) * circumference;
+
+  // Chart data - last 7 days
+  const chartData = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (6 - i));
+    const dateStr = date.toISOString().split('T')[0];
+    const record = history.find(h => h.date === dateStr);
+    return {
+      day: date.toLocaleDateString('fa-IR', { weekday: 'short' }),
+      minutes: record?.minutes || 0,
+    };
+  });
+
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <Card className="shadow-md">
-        <CardHeader className={`bg-gradient-to-b from-${mode === 'work' ? 'red' : mode === 'shortBreak' ? 'green' : 'blue'}-50 to-white`}>
-          <div className="flex items-center gap-3">
-            <Clock className={`w-6 h-6 text-${mode === 'work' ? 'red' : mode === 'shortBreak' ? 'green' : 'blue'}-600`} />
-            <CardTitle>تایمر پومودورو</CardTitle>
+    <div className="space-y-6">
+      <CalculatorCard title="تایمر پومودورو" icon={Clock} onReset={handleReset}>
+        {/* Mode Selector */}
+        <div className="grid grid-cols-3 gap-2">
+          {(Object.keys(modeConfig) as TimerMode[]).map((m) => (
+            <Button
+              key={m}
+              variant={mode === m ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => switchMode(m)}
+              className={mode === m ? '' : 'hover:bg-muted/50'}
+            >
+              {modeConfig[m].label}
+            </Button>
+          ))}
+        </div>
+
+        {/* Timer Circle */}
+        <div className="flex justify-center py-4">
+          <div className="relative w-56 h-56">
+            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                fill="none"
+                stroke="hsl(var(--muted))"
+                strokeWidth="6"
+              />
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="45"
+                fill="none"
+                stroke={modeConfig[mode].color}
+                strokeWidth="6"
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                animate={{ strokeDashoffset }}
+                transition={{ duration: 0.5 }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={timeLeft}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="text-5xl font-bold tabular-nums"
+                >
+                  {formatTime(timeLeft)}
+                </motion.div>
+              </AnimatePresence>
+              <span className="text-sm text-muted-foreground mt-1">
+                {modeConfig[mode].label}
+              </span>
+            </div>
           </div>
-        </CardHeader>
-        
-        <CardContent className="pt-6">
-          <Tabs defaultValue="timer" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="timer">تایمر</TabsTrigger>
-              <TabsTrigger value="stats">آمار</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="timer">
-              <div className="flex flex-col items-center">
-                {/* Timer Circle */}
-                <div className="relative w-64 h-64 rounded-full border-8 border-gray-100 flex items-center justify-center mb-4">
-                  <svg className="absolute inset-0 transform -rotate-90" viewBox="0 0 100 100">
-                    <circle 
-                      cx="50" 
-                      cy="50" 
-                      r="45" 
-                      fill="none" 
-                      stroke="#f3f4f6" 
-                      strokeWidth="8" 
-                    />
-                    <circle 
-                      cx="50" 
-                      cy="50" 
-                      r="45" 
-                      fill="none" 
-                      stroke={mode === 'work' ? '#ef4444' : mode === 'shortBreak' ? '#22c55e' : '#3b82f6'} 
-                      strokeWidth="8" 
-                      strokeDasharray="282.7"
-                      strokeDashoffset={282.7 - (calculateProgress() / 100 * 282.7)}
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <div className="flex flex-col items-center z-10">
-                    <div className="text-4xl font-bold">{formatTime(timeLeft)}</div>
-                    <Badge 
-                      variant="outline" 
-                      className={`mt-2 ${
-                        mode === 'work' 
-                          ? 'border-red-200 text-red-700' 
-                          : mode === 'shortBreak' 
-                            ? 'border-green-200 text-green-700' 
-                            : 'border-blue-200 text-blue-700'
-                      }`}
-                    >
-                      {getModeLabel(mode)}
-                    </Badge>
-                  </div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex justify-center gap-3">
+          <Button
+            size="lg"
+            onClick={toggleTimer}
+            className="w-32 gap-2"
+          >
+            {isRunning ? (
+              <><Pause className="h-5 w-5" /> توقف</>
+            ) : (
+              <><Play className="h-5 w-5" /> شروع</>
+            )}
+          </Button>
+          
+          <Button variant="outline" size="icon" onClick={() => setSoundEnabled(!soundEnabled)}>
+            {soundEnabled ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+          </Button>
+
+          <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={requestNotificationPermission}
+            className={notificationsEnabled ? 'bg-primary/10' : ''}
+          >
+            <Bell className="h-5 w-5" />
+          </Button>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Settings className="h-5 w-5" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>تنظیمات تایمر</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-6 py-4">
+                <div className="space-y-2">
+                  <Label>زمان تمرکز: {Math.round(settings.work / 60)} دقیقه</Label>
+                  <Slider
+                    value={[settings.work / 60]}
+                    onValueChange={([v]) => setSettings(s => ({ ...s, work: v * 60 }))}
+                    min={5}
+                    max={60}
+                    step={5}
+                  />
                 </div>
-                
-                {/* Mode Selector */}
-                <div className="grid grid-cols-3 gap-2 w-full mb-6">
-                  <Button 
-                    variant={mode === 'work' ? 'default' : 'outline'}
-                    size="sm"
-                    className={mode === 'work' ? 'bg-red-600 hover:bg-red-700 text-primary-foreground' : ''}
-                    onClick={() => switchMode('work')}
-                  >
-                    تمرکز
-                  </Button>
-                  <Button 
-                    variant={mode === 'shortBreak' ? 'default' : 'outline'}
-                    size="sm"
-                    className={mode === 'shortBreak' ? 'bg-green-600 hover:bg-green-700 text-primary-foreground' : ''}
-                    onClick={() => switchMode('shortBreak')}
-                  >
-                    استراحت کوتاه
-                  </Button>
-                  <Button 
-                    variant={mode === 'longBreak' ? 'default' : 'outline'}
-                    size="sm"
-                    className={mode === 'longBreak' ? 'bg-blue-600 hover:bg-blue-700 text-primary-foreground' : ''}
-                    onClick={() => switchMode('longBreak')}
-                  >
-                    استراحت طولانی
-                  </Button>
+                <div className="space-y-2">
+                  <Label>استراحت کوتاه: {Math.round(settings.shortBreak / 60)} دقیقه</Label>
+                  <Slider
+                    value={[settings.shortBreak / 60]}
+                    onValueChange={([v]) => setSettings(s => ({ ...s, shortBreak: v * 60 }))}
+                    min={1}
+                    max={15}
+                  />
                 </div>
-                
-                {/* Control Buttons */}
-                <div className="flex gap-2 mb-4">
-                  <Button
-                    variant={isRunning ? 'destructive' : 'default'}
-                    size="lg"
-                    className="w-32"
-                    onClick={toggleTimer}
-                  >
-                    {isRunning ? (
-                      <>
-                        <Pause size={18} className="mr-1" /> توقف
-                      </>
-                    ) : (
-                      <>
-                        <Play size={18} className="mr-1" /> شروع
-                      </>
-                    )}
-                  </Button>
-                  
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={handleReset}
-                    title="ریست کردن"
-                  >
-                    <RotateCcw size={18} />
-                  </Button>
-                  
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={toggleSound}
-                    title={soundEnabled ? 'قطع صدا' : 'روشن کردن صدا'}
-                  >
-                    {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-                  </Button>
-                  
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        title="تنظیمات"
-                      >
-                        <Settings size={18} />
-                      </Button>
-                    </DialogTrigger>
-                    
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>تنظیمات تایمر</DialogTitle>
-                      </DialogHeader>
-                      
-                      <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="workTime">مدت زمان تمرکز (دقیقه)</Label>
-                          <Input 
-                            id="workTime"
-                            type="number"
-                            min="1"
-                            value={settings.work / 60}
-                            onChange={(e) => updateSetting('work', parseFloat(e.target.value))}
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="shortBreakTime">استراحت کوتاه (دقیقه)</Label>
-                          <Input 
-                            id="shortBreakTime"
-                            type="number"
-                            min="1"
-                            value={settings.shortBreak / 60}
-                            onChange={(e) => updateSetting('shortBreak', parseFloat(e.target.value))}
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="longBreakTime">استراحت طولانی (دقیقه)</Label>
-                          <Input 
-                            id="longBreakTime"
-                            type="number"
-                            min="1"
-                            value={settings.longBreak / 60}
-                            onChange={(e) => updateSetting('longBreak', parseFloat(e.target.value))}
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="longBreakInterval">استراحت طولانی پس از چند دوره تمرکز</Label>
-                          <Input 
-                            id="longBreakInterval"
-                            type="number"
-                            min="1"
-                            value={settings.longBreakInterval}
-                            onChange={(e) => updateSetting('longBreakInterval', parseInt(e.target.value))}
-                          />
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <Label htmlFor="sound">صدای اعلان</Label>
-                          <Switch 
-                            id="sound"
-                            checked={soundEnabled}
-                            onCheckedChange={setSoundEnabled}
-                          />
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                <div className="space-y-2">
+                  <Label>استراحت طولانی: {Math.round(settings.longBreak / 60)} دقیقه</Label>
+                  <Slider
+                    value={[settings.longBreak / 60]}
+                    onValueChange={([v]) => setSettings(s => ({ ...s, longBreak: v * 60 }))}
+                    min={10}
+                    max={30}
+                  />
                 </div>
-                
-                {/* Session Counter */}
-                <div className="text-center text-sm text-gray-500">
-                  دوره‌های تمرکز: {sessions} / {settings.longBreakInterval}
+                <div className="space-y-2">
+                  <Label>هدف روزانه: {settings.dailyGoal} دوره</Label>
+                  <Slider
+                    value={[settings.dailyGoal]}
+                    onValueChange={([v]) => setSettings(s => ({ ...s, dailyGoal: v }))}
+                    min={1}
+                    max={16}
+                  />
                 </div>
               </div>
-            </TabsContent>
-            
-            <TabsContent value="stats">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="font-medium">آمار امروز</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 p-4 rounded-lg text-center">
-                      <p className="text-sm text-gray-500 mb-1">دوره‌های تمرکز</p>
-                      <p className="text-2xl font-bold">{sessions}</p>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg text-center">
-                      <p className="text-sm text-gray-500 mb-1">زمان تمرکز</p>
-                      <p className="text-2xl font-bold">{Math.floor(sessions * (settings.work / 60))} دقیقه</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <h3 className="font-medium">تنظیمات فعلی</h3>
-                  <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">زمان تمرکز:</span>
-                      <span>{settings.work / 60} دقیقه</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">استراحت کوتاه:</span>
-                      <span>{settings.shortBreak / 60} دقیقه</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">استراحت طولانی:</span>
-                      <span>{settings.longBreak / 60} دقیقه</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">فاصله استراحت طولانی:</span>
-                      <span>{settings.longBreakInterval} دوره</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-        
-        <CardFooter className="bg-gray-50 flex justify-between text-xs text-gray-500 py-2">
-          <p>از روش پومودورو برای افزایش تمرکز و بهره‌وری استفاده کنید</p>
-          <div className="flex items-center">
-            <Bell size={14} className="mr-1" />
-            {soundEnabled ? "صدا روشن" : "صدا خاموش"}
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        {/* Keyboard hint */}
+        <p className="text-center text-xs text-muted-foreground">
+          <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs">Space</kbd> شروع/توقف
+          <span className="mx-2">•</span>
+          <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs">Ctrl+R</kbd> ریست
+        </p>
+      </CalculatorCard>
+
+      {/* Daily Goal */}
+      <VisualizationCard title="هدف روزانه">
+        <div className="flex items-center gap-6">
+          <div className="relative w-20 h-20">
+            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--muted))" strokeWidth="8" />
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="40"
+                fill="none"
+                stroke="hsl(var(--primary))"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeDasharray={2 * Math.PI * 40}
+                animate={{ strokeDashoffset: 2 * Math.PI * 40 * (1 - goalProgress / 100) }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Target className="h-6 w-6 text-primary" />
+            </div>
           </div>
-        </CardFooter>
-      </Card>
+          <div className="flex-1">
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-bold">{sessions}</span>
+              <span className="text-muted-foreground">/ {settings.dailyGoal} دوره</span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {todayMinutes} دقیقه تمرکز امروز
+            </p>
+            {sessions >= settings.dailyGoal && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-sm text-green-600 font-medium mt-1"
+              >
+                🎉 به هدف روزانه رسیدید!
+              </motion.p>
+            )}
+          </div>
+        </div>
+      </VisualizationCard>
+
+      {/* Weekly Stats */}
+      <VisualizationCard title="آمار هفتگی">
+        <div className="h-48">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData}>
+              <defs>
+                <linearGradient id="colorMinutes" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="day" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 12 }} />
+              <Tooltip 
+                formatter={(value: number) => [`${value} دقیقه`, 'زمان تمرکز']}
+                labelStyle={{ fontFamily: 'inherit' }}
+              />
+              <Area
+                type="monotone"
+                dataKey="minutes"
+                stroke="hsl(var(--primary))"
+                fillOpacity={1}
+                fill="url(#colorMinutes)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </VisualizationCard>
     </div>
   );
 }
