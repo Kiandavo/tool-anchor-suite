@@ -4,40 +4,54 @@ import { Layout } from '@/components/Layout';
 import { ToolCard } from '@/components/ToolCard';
 import { categoryLabels, ToolCategory, tools } from '@/data/tools';
 import { CategorySeoHead } from '@/components/seo/CategorySeoHead';
-import { ToolFilters } from '@/components/tools/ToolFilters';
-import { useToolFilters } from '@/hooks/useToolFilters';
-import { ChevronRight, ArrowLeft } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { SocialShare } from '@/components/social/SocialShare';
+import { ChevronLeft } from 'lucide-react';
 
-// Map URL slugs to category IDs
-const slugToCategoryMap: Record<string, ToolCategory> = {
-  'calculators': 'calculators',
-  'text-tools': 'text',
-  'image-tools': 'image',
-  'persian-tools': 'persian-cultural',
-  'readings': 'readings',
-  'seo-tools': 'seo',
-  'random-tools': 'random',
-  'number-tools': 'number',
-  'educational-tools': 'educational',
-  'productivity-tools': 'productivity',
-  'design-tools': 'design',
+// The 6 main categories with their display names and descriptions
+const MAIN_CATEGORIES: Record<string, {
+  category: ToolCategory;
+  h1: string;
+  description: string;
+}> = {
+  'calculators': {
+    category: 'calculators',
+    h1: 'محاسبه‌گرهای آنلاین',
+    description: 'محاسبه‌گرهای رایگان برای BMI، درصد، وام، تبدیل واحد، معدل و موارد دیگر. دقیق، سریع و بدون ثبت‌نام.',
+  },
+  'text-tools': {
+    category: 'text',
+    h1: 'ابزارهای متنی',
+    description: 'شمارش کاراکتر و کلمات، تبدیل حروف، کدگذاری Base64، ترجمه متن و ابزارهای پردازش متن فارسی.',
+  },
+  'image-tools': {
+    category: 'image',
+    h1: 'ابزارهای تصویر',
+    description: 'فشرده‌سازی، تغییر اندازه، تبدیل فرمت، برش و چرخش تصویر. همه کارها در مرورگر شما انجام می‌شود.',
+  },
+  'persian-tools': {
+    category: 'persian-cultural',
+    h1: 'فرهنگ فارسی',
+    description: 'تقویم شمسی، تبدیل تاریخ میلادی به شمسی، معانی نام‌های ایرانی و ابزارهای فرهنگی.',
+  },
+  'readings': {
+    category: 'readings',
+    h1: 'فال و طالع‌بینی',
+    description: 'فال حافظ، فال تاروت، استخاره با قرآن، طالع‌بینی روزانه و تعبیر خواب آنلاین.',
+  },
+  'seo-tools': {
+    category: 'seo',
+    h1: 'ابزارهای سئو و وب',
+    description: 'تولید متا تگ، بررسی تراکم کلمات کلیدی، ساخت robots.txt و ابزارهای بهینه‌سازی سایت.',
+  },
 };
 
-// Category descriptions for SEO
-const categoryDescriptions: Record<ToolCategory, string> = {
-  calculators: 'محاسبه‌گرهای آنلاین رایگان برای BMI، درصد، وام، تبدیل واحد و موارد دیگر. دقیق و سریع.',
-  text: 'ابزارهای متنی آنلاین: شمارنده کاراکتر، تبدیل متن، کدگذاری Base64، فرمت JSON و بیشتر.',
-  image: 'ابزارهای ویرایش تصویر آنلاین: فشرده‌سازی، تغییر سایز، تبدیل فرمت و برش تصویر.',
-  'persian-cultural': 'ابزارهای فرهنگ فارسی: تقویم شمسی، تبدیل تاریخ، معانی نام‌های ایرانی و موارد دیگر.',
-  readings: 'فال و طالع‌بینی آنلاین: فال حافظ، تاروت، استخاره، طالع‌بینی روزانه و تعبیر خواب.',
-  seo: 'ابزارهای سئو و وبمستری: تولید متا تگ، تراکم کلمات کلیدی، robots.txt و آنالیز وب.',
-  random: 'ابزارهای تصادفی: تولید رمز عبور، انتخاب تصادفی، تولید QR کد و موارد دیگر.',
-  number: 'ابزارهای عددی: تبدیل واحد، محاسبات ریاضی، تبدیل پایه و موارد دیگر.',
-  educational: 'ابزارهای آموزشی: یادگیری زبان، آزمون و تست، محتوای آموزشی.',
-  productivity: 'ابزارهای بهره‌وری: مدیریت زمان، یادداشت، برنامه‌ریزی و موارد دیگر.',
-  design: 'ابزارهای طراحی: پالت رنگ، گرادیانت، فونت و موارد دیگر.',
+// Related categories mapping for "ابزارهای مرتبط در دسته‌های دیگر"
+const RELATED_CATEGORIES: Record<string, string[]> = {
+  'calculators': ['text-tools', 'seo-tools'],
+  'text-tools': ['seo-tools', 'calculators'],
+  'image-tools': ['seo-tools', 'text-tools'],
+  'persian-tools': ['readings', 'calculators'],
+  'readings': ['persian-tools', 'text-tools'],
+  'seo-tools': ['text-tools', 'image-tools'],
 };
 
 interface CategoryPageProps {
@@ -48,10 +62,9 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categorySlug }) => {
   const params = useParams<{ categorySlug: string }>();
   const slug = categorySlug || params.categorySlug || '';
   
-  // Get category from slug
-  const category = slugToCategoryMap[slug] as ToolCategory;
+  const categoryData = MAIN_CATEGORIES[slug];
   
-  if (!category) {
+  if (!categoryData) {
     return (
       <Layout>
         <div className="text-center py-16">
@@ -64,142 +77,70 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ categorySlug }) => {
     );
   }
 
-  const categoryName = categoryLabels[category];
-  const allCategoryTools = tools.filter(t => t.category === category);
-
-  const {
-    searchQuery,
-    setSearchQuery,
-    activeFilter,
-    setActiveFilter,
-    filteredTools,
-    totalCount,
-    clearFilters,
-  } = useToolFilters(category);
+  const { category, h1, description } = categoryData;
+  const categoryTools = tools.filter(t => t.category === category && !t.isComingSoon);
+  const relatedSlugs = RELATED_CATEGORIES[slug] || [];
 
   return (
     <Layout>
       <CategorySeoHead category={category} slug={slug} />
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+        <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
           <Link to="/" className="hover:text-foreground transition-colors">خانه</Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link to="/all-tools" className="hover:text-foreground transition-colors">همه ابزارها</Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-foreground font-medium">{categoryName}</span>
+          <ChevronLeft className="w-4 h-4" />
+          <span className="text-foreground font-medium">{h1}</span>
         </nav>
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <div className="flex items-start justify-between gap-4 mb-4">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                {categoryName}
-              </h1>
-              <p className="text-muted-foreground">
-                {allCategoryTools.length} ابزار رایگان و حرفه‌ای
-              </p>
-            </div>
-            <SocialShare 
-              url={`https://laangar.com/${slug}`}
-              title={`${categoryName} | لنگر`}
-              description={categoryDescriptions[category]}
-              size="sm"
-            />
-          </div>
-          <p className="text-foreground/80 leading-relaxed">
-            {categoryDescriptions[category]}
+        <header className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
+            {h1}
+          </h1>
+          <p className="text-muted-foreground leading-relaxed">
+            {description}
           </p>
-        </motion.div>
-
-        {/* Filters */}
-        <div className="mb-8">
-          <ToolFilters
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            activeFilter={activeFilter}
-            onFilterChange={setActiveFilter}
-            totalCount={totalCount}
-            showRecentFilter={false}
-          />
-        </div>
+        </header>
 
         {/* Tools Grid */}
-        {filteredTools.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16"
-          >
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold mb-2">ابزاری یافت نشد</h3>
-            <p className="text-muted-foreground mb-4">
-              {searchQuery 
-                ? `برای "${searchQuery}" نتیجه‌ای یافت نشد.`
-                : 'ابزاری با این فیلتر موجود نیست.'
-              }
-            </p>
-            <button
-              onClick={clearFilters}
-              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              نمایش همه ابزارها
-            </button>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-          >
-            {filteredTools.map((tool, index) => (
-              <motion.div
-                key={tool.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.03 }}
-              >
-                <ToolCard tool={tool} />
-              </motion.div>
+        <section className="mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {categoryTools.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} />
             ))}
-          </motion.div>
-        )}
+          </div>
+          
+          {categoryTools.length === 0 && (
+            <div className="text-center py-12 text-muted-foreground">
+              ابزاری در این دسته موجود نیست.
+            </div>
+          )}
+        </section>
 
         {/* Related Categories */}
-        <div className="mt-12 pt-8 border-t border-border">
-          <h2 className="text-lg font-semibold text-foreground mb-4">دسته‌بندی‌های مرتبط</h2>
-          <div className="flex flex-wrap gap-2">
-            {Object.entries(slugToCategoryMap)
-              .filter(([s]) => s !== slug)
-              .slice(0, 5)
-              .map(([relatedSlug, relatedCategory]) => (
-                <Link
-                  key={relatedSlug}
-                  to={`/${relatedSlug}`}
-                  className="px-4 py-2 bg-secondary/60 hover:bg-secondary text-sm text-foreground rounded-lg transition-colors"
-                >
-                  {categoryLabels[relatedCategory]}
-                </Link>
-              ))}
-          </div>
-        </div>
-
-        {/* Back Link */}
-        <div className="mt-8 text-center">
-          <Link
-            to="/all-tools"
-            className="inline-flex items-center gap-2 text-primary hover:underline"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            بازگشت به همه ابزارها
-          </Link>
-        </div>
+        {relatedSlugs.length > 0 && (
+          <section className="pt-8 border-t border-border">
+            <h2 className="text-lg font-semibold text-foreground mb-4">
+              ابزارهای مرتبط در دسته‌های دیگر
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {relatedSlugs.map((relatedSlug) => {
+                const related = MAIN_CATEGORIES[relatedSlug];
+                if (!related) return null;
+                return (
+                  <Link
+                    key={relatedSlug}
+                    to={`/${relatedSlug}`}
+                    className="px-4 py-2 bg-muted hover:bg-muted/80 text-sm text-foreground rounded-lg transition-colors"
+                  >
+                    {related.h1}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
     </Layout>
   );
