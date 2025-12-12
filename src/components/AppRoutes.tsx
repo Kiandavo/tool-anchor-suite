@@ -32,10 +32,31 @@ const SeoAudit = lazy(() => import("@/pages/SeoAudit"));
 const PerformanceDashboard = lazy(() => import("@/pages/PerformanceDashboard"));
 
 const RouteLoader = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="text-center">
-      <div className="w-12 h-12 border-2 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
-      <p className="text-muted-foreground">در حال بارگذاری...</p>
+  <div className="min-h-[60vh] py-8">
+    <div className="container-narrow space-y-8">
+      {/* Page header skeleton */}
+      <div className="space-y-4 mb-8">
+        <div className="h-10 w-1/2 max-w-xs bg-muted rounded-md animate-pulse" />
+        <div className="h-5 w-3/4 max-w-md bg-muted rounded-md animate-pulse" />
+      </div>
+      {/* Content skeleton */}
+      <div className="space-y-3">
+        <div className="h-6 w-1/3 bg-muted rounded-md animate-pulse" />
+        <div className="h-4 w-full bg-muted rounded-md animate-pulse" />
+        <div className="h-4 w-5/6 bg-muted rounded-md animate-pulse" />
+      </div>
+      {/* Grid skeleton */}
+      <div className="pt-4">
+        <div className="h-6 w-32 mb-4 bg-muted rounded-md animate-pulse" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-2.5 p-3 rounded-lg bg-card border border-border">
+              <div className="w-8 h-8 rounded-lg bg-muted animate-pulse flex-shrink-0" />
+              <div className="h-4 w-24 bg-muted rounded-md animate-pulse" />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 );
