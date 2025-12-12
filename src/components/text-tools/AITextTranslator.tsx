@@ -7,17 +7,17 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 const languages = [
-  { code: 'fa', name: 'فارسی', flag: '🇮🇷' },
-  { code: 'en', name: 'انگلیسی', flag: '🇬🇧' },
-  { code: 'ar', name: 'عربی', flag: '🇸🇦' },
-  { code: 'fr', name: 'فرانسوی', flag: '🇫🇷' },
-  { code: 'de', name: 'آلمانی', flag: '🇩🇪' },
-  { code: 'es', name: 'اسپانیایی', flag: '🇪🇸' },
-  { code: 'tr', name: 'ترکی', flag: '🇹🇷' },
-  { code: 'ru', name: 'روسی', flag: '🇷🇺' },
-  { code: 'zh', name: 'چینی', flag: '🇨🇳' },
-  { code: 'ja', name: 'ژاپنی', flag: '🇯🇵' },
-  { code: 'ko', name: 'کره‌ای', flag: '🇰🇷' },
+  { code: 'fa', name: 'فارسی' },
+  { code: 'en', name: 'انگلیسی' },
+  { code: 'ar', name: 'عربی' },
+  { code: 'fr', name: 'فرانسوی' },
+  { code: 'de', name: 'آلمانی' },
+  { code: 'es', name: 'اسپانیایی' },
+  { code: 'tr', name: 'ترکی' },
+  { code: 'ru', name: 'روسی' },
+  { code: 'zh', name: 'چینی' },
+  { code: 'ja', name: 'ژاپنی' },
+  { code: 'ko', name: 'کره‌ای' },
 ];
 
 export function AITextTranslator() {
@@ -108,10 +108,7 @@ export function AITextTranslator() {
           <SelectContent>
             {languages.map((lang) => (
               <SelectItem key={lang.code} value={lang.code}>
-                <span className="flex items-center gap-2">
-                  <span>{lang.flag}</span>
-                  <span>{lang.name}</span>
-                </span>
+                {lang.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -133,10 +130,7 @@ export function AITextTranslator() {
           <SelectContent>
             {languages.map((lang) => (
               <SelectItem key={lang.code} value={lang.code}>
-                <span className="flex items-center gap-2">
-                  <span>{lang.flag}</span>
-                  <span>{lang.name}</span>
-                </span>
+                {lang.name}
               </SelectItem>
             ))}
           </SelectContent>
