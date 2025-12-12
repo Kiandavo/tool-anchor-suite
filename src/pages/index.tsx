@@ -11,7 +11,8 @@ import { CollectionsSection } from '@/components/home/CollectionsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
+import { SectionDecorator } from '@/components/home/SectionDecorator';
 
 // Lazy load non-critical UI components
 const GeoTargeting = lazy(() => import('@/components/seo/GeoTargeting').then(m => ({ default: m.GeoTargeting })));
@@ -105,17 +106,30 @@ const Index = () => {
       <CollectionsSection />
 
       {/* 7. Footer CTA */}
-      <section className="py-10 text-center border-t border-border bg-muted/30">
-        <p className="text-sm text-muted-foreground mb-4">
-          می‌خواهید همه ابزارها را ببینید؟
-        </p>
-        <Link 
-          to="/all-tools"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
-        >
-          مشاهده همه +۱۰۰ ابزار
-          <ArrowLeft className="w-4 h-4" />
-        </Link>
+      <section className="relative py-12 text-center border-t border-border/50 bg-gradient-to-br from-primary/5 via-muted/30 to-persian-gold/5 overflow-hidden">
+        {/* Decorative elements */}
+        <SectionDecorator variant="stars" position="both" opacity={0.12} />
+        
+        {/* Floating orbs */}
+        <div className="absolute top-6 left-[10%] w-28 h-28 rounded-full bg-gradient-to-br from-primary/10 to-transparent blur-2xl animate-float pointer-events-none" />
+        <div className="absolute bottom-4 right-[15%] w-20 h-20 rounded-full bg-gradient-to-br from-persian-gold/10 to-transparent blur-2xl animate-float pointer-events-none" style={{ animationDelay: '-2s' }} />
+        
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            کاوش بیشتر
+          </div>
+          <p className="text-muted-foreground mb-5">
+            می‌خواهید همه ابزارها را ببینید؟
+          </p>
+          <Link 
+            to="/all-tools"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90 hover:-translate-y-0.5 transition-all duration-300 shadow-lg shadow-primary/20"
+          >
+            مشاهده همه +۱۰۰ ابزار
+            <ArrowLeft className="w-4 h-4" />
+          </Link>
+        </div>
       </section>
 
       <Suspense fallback={null}>
