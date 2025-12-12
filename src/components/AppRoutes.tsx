@@ -30,6 +30,7 @@ const AstrologyQuiz = lazy(() => import("@/pages/AstrologyQuiz"));
 const PersianDateEvents = lazy(() => import("@/pages/ToolTypes/PersianCultural/PersianDateEvents"));
 const SeoAudit = lazy(() => import("@/pages/SeoAudit"));
 const PerformanceDashboard = lazy(() => import("@/pages/PerformanceDashboard"));
+const CollectionPage = lazy(() => import("@/pages/CollectionPage"));
 
 const RouteLoader = () => (
   <div className="min-h-[60vh] py-8">
@@ -140,6 +141,11 @@ export const AppRoutes = () => {
           <Route path="/ممیزی-سئو" element={withTransition(SeoAudit)} />
           <Route path="/performance" element={withTransition(PerformanceDashboard)} />
           <Route path="/عملکرد" element={withTransition(PerformanceDashboard)} />
+          
+          {/* Collection pages */}
+          <Route path="/collection/:slug" element={<PageTransition><CollectionPage /></PageTransition>} />
+          <Route path="/مجموعه/:slug" element={<PageTransition><CollectionPage /></PageTransition>} />
+          
           <Route path="*" element={withTransition(NotFound)} />
         </Routes>
       </Suspense>

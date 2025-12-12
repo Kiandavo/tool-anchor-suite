@@ -7,6 +7,7 @@ import { TopToolsSection } from '@/components/home/TopToolsSection';
 import { NewToolsSection } from '@/components/home/NewToolsSection';
 import { RecentlyUsedSection } from '@/components/home/RecentlyUsedSection';
 import { CategoryPreviewSection } from '@/components/home/CategoryPreviewSection';
+import { CollectionsSection } from '@/components/home/CollectionsSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
 import { Link } from 'react-router-dom';
@@ -99,6 +100,9 @@ const Index = () => {
 
       {/* 6. Category previews (3-4 tools per category) */}
       <CategoryPreviewSection />
+
+      {/* 7. Curated collections */}
+      <CollectionsSection />
 
       {/* 7. Footer CTA */}
       <section className="py-10 text-center border-t border-border bg-muted/30">
