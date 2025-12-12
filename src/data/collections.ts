@@ -167,6 +167,12 @@ export const collections: Collection[] = [
       'gradient-generator',
       'unit-converter',
       'random-color',
+      'image-rotate',
+      'image-flip',
+      'contrast-checker',
+      'aspect-ratio-calculator',
+      'pixel-converter',
+      'svg-to-png',
     ],
   },
   {
