@@ -8,6 +8,7 @@ import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { CategorySeoContent } from '@/components/seo/CategorySeoContent';
 import { SocialShare } from '@/components/social/SocialShare';
 import { motion } from 'framer-motion';
+import { getCategoryUrl } from '@/utils/internal-linking';
 
 // Enhanced category data with unique H1 and detailed intro
 const categoryContent: Record<ToolCategory, { h1: string; intro: string }> = {
@@ -104,10 +105,10 @@ const Category = () => {
         title={seoTitle}
         description={seoDescription}
         keywords={seoKeywords.join(', ')}
-        canonical={`https://laangar.com/category/${category}`}
+        canonical={`https://laangar.com${getCategoryUrl(category)}`}
         breadcrumbs={[
           { name: 'لنگر', url: 'https://laangar.com/' },
-          { name: categoryName, url: `https://laangar.com/category/${category}` }
+          { name: categoryName, url: `https://laangar.com${getCategoryUrl(category)}` }
         ]}
       />
 

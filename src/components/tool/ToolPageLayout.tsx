@@ -4,6 +4,7 @@ import { ArrowLeft, HelpCircle } from 'lucide-react';
 import { Tool, ToolCategory } from '@/types/tool-types';
 import { tools, categoryLabels } from '@/data/tools';
 import { cn } from '@/lib/utils';
+import { getCategoryUrl } from '@/utils/internal-linking';
 
 interface ToolPageLayoutProps {
   tool: Tool;
@@ -53,7 +54,7 @@ export const ToolPageLayout: React.FC<ToolPageLayoutProps> = ({
       <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <Link to="/" className="hover:text-foreground transition-colors">خانه</Link>
         <span>/</span>
-        <Link to={`/category/${tool.category}`} className="hover:text-foreground transition-colors">
+        <Link to={getCategoryUrl(tool.category)} className="hover:text-foreground transition-colors">
           {categoryLabel}
         </Link>
         <span>/</span>

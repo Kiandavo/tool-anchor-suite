@@ -10,6 +10,7 @@ import {
   Calendar,
   ArrowLeft
 } from 'lucide-react';
+import { getCategoryUrl } from '@/utils/internal-linking';
 
 // 6 main clusters with example tools
 const categories = [
@@ -125,7 +126,7 @@ export const CategoryLinksSection = () => {
             return (
               <motion.div key={category.slug} variants={cardVariants}>
                 <Link
-                  to={`/category/${category.slug}`}
+                  to={getCategoryUrl(category.slug)}
                   className="block"
                 >
                   <motion.div 

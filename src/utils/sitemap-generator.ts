@@ -157,7 +157,12 @@ Disallow: /static/
 
 # Allow important directories
 Allow: /tool/
-Allow: /category/
+Allow: /calculators
+Allow: /text-tools
+Allow: /image-tools
+Allow: /persian-tools
+Allow: /readings
+Allow: /seo-tools
 Allow: /blog/
 Allow: /assets/
 

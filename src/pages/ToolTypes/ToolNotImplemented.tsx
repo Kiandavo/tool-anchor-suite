@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { AlertCircle, Clock, Sparkles, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import { getCategoryUrl } from '@/utils/internal-linking';
 
 interface ToolNotImplementedProps {
   toolName?: string;
@@ -60,7 +60,7 @@ export default function ToolNotImplemented({
             
             {category && (
               <Button asChild variant="outline" className="border-amber-400 text-amber-700 hover:bg-amber-50">
-                <Link to={`/category/${category}`}>
+                <Link to={getCategoryUrl(category)}>
                   مشاهده سایر ابزارهای {category}
                 </Link>
               </Button>
