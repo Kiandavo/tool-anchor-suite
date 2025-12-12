@@ -92,10 +92,9 @@ User-agent: Google-Extended
 Disallow: /
 
 # Sitemaps
-Sitemap: https://laangar.com/sitemap-index.xml
-Sitemap: https://laangar.com/sitemap.xml
-Sitemap: https://laangar.com/sitemap-tools.xml
-Sitemap: https://laangar.com/sitemap-images.xml
+Sitemap: https://bycgbbaipkdbewijmolg.supabase.co/functions/v1/sitemap?type=index
+Sitemap: https://bycgbbaipkdbewijmolg.supabase.co/functions/v1/sitemap?type=main
+Sitemap: https://bycgbbaipkdbewijmolg.supabase.co/functions/v1/sitemap?type=tools
 
 # Host declaration
 Host: https://laangar.com
