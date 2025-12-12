@@ -314,8 +314,9 @@
 </head>
   <body>
     <div id="root">
-      <!-- SEO-Critical Static Content - positioned absolutely to prevent layout shifts -->
-      <div id="static-content" style="font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl;">
+      <!-- SEO-Critical Static Content - Only visible on homepage for crawlers -->
+      <!-- This content is immediately hidden by JavaScript on non-homepage routes -->
+      <div id="static-content" style="font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; display: none;">
         <!-- Header with navigation - fixed height to prevent CLS -->
         <header style="padding: 1rem 2rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; height: 72px; box-sizing: border-box;">
           <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
@@ -338,166 +339,92 @@
               بیش از <span style="background: linear-gradient(135deg, #eab308, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">۱۰۰ ابزار آنلاین رایگان فارسی</span> در یک جا
             </h1>
             <p style="font-size: 1rem; color: #6b7280; margin: 0 auto 1.5rem; max-width: 500px; min-height: 1.5em;">برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. بدون ثبت‌نام، سریع و امن</p>
-            <div style="max-width: 450px; margin: 0 auto;">
-              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.25rem; background: #fff; border: 2px solid #e5e7eb; border-radius: 9999px; height: 52px; box-sizing: border-box;">
-                <span style="color: #d97706;">🔍</span>
-                <span style="color: #9ca3af; flex: 1; text-align: right;">جستجو بین همه ابزارها</span>
-              </div>
-            </div>
           </section>
           
           <!-- Category Strip - 6 main clusters -->
           <section style="padding: 1.5rem 0;">
             <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem;">
               <a href="/category/calculators" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">محاسبات و تبدیل اعداد</div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">محاسبات</div>
               </a>
               <a href="/category/text" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">ابزارهای متن و نوشتار</div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">متن</div>
               </a>
               <a href="/category/image" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">تصویر و فایل</div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">تصویر</div>
               </a>
               <a href="/category/seo" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">ابزارهای سئو و وب</div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">سئو</div>
               </a>
               <a href="/category/persian-cultural" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">تقویم و تاریخ</div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">تقویم</div>
               </a>
               <a href="/category/readings" style="padding: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none; text-align: center;">
-                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">فال و طالع‌بینی</div>
+                <div style="font-size: 0.875rem; font-weight: 600; color: #1f2937;">فال</div>
               </a>
             </div>
           </section>
           
-          <!-- Popular Tools Section - 12 tools -->
+          <!-- Popular Tools Section - compact -->
           <section style="margin: 2rem 0; padding: 1.5rem; background: #f9fafb; border-radius: 1rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <h2 style="font-size: 1.25rem; font-weight: 700; color: #1f2937; margin: 0;">ابزارهای پرکاربرد</h2>
-              <a href="/all-tools" style="font-size: 0.875rem; color: #d97706; text-decoration: none;">همه ابزارها ←</a>
+              <h2 style="font-size: 1.125rem; font-weight: 600; color: #1f2937; margin: 0;">پرکاربرد</h2>
+              <a href="/all-tools" style="font-size: 0.875rem; color: #6b7280; text-decoration: none;">همه ←</a>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
-              <a href="/tool/bmi-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه‌گر BMI</strong>
-              </a>
-              <a href="/tool/percentage-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه‌گر درصد</strong>
-              </a>
-              <a href="/tool/text-counter" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">شمارنده متن</strong>
-              </a>
-              <a href="/tool/image-compressor" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">فشرده‌سازی تصویر</strong>
-              </a>
-              <a href="/tool/hafez-fortune" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">فال حافظ</strong>
-              </a>
-              <a href="/tool/qr-code-generator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">ساخت QR Code</strong>
-              </a>
-              <a href="/tool/json-formatter" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">فرمت‌دهی JSON</strong>
-              </a>
-              <a href="/tool/password-generator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">ساخت رمز عبور</strong>
-              </a>
-              <a href="/tool/discount-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه تخفیف</strong>
-              </a>
-              <a href="/tool/age-calculator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">محاسبه سن</strong>
-              </a>
-              <a href="/tool/color-palette-generator" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">پالت رنگ</strong>
-              </a>
-              <a href="/tool/unit-converter" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.75rem; text-decoration: none;">
-                <strong style="color: #1f2937; font-size: 0.875rem;">تبدیل واحد</strong>
-              </a>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;">
+              <a href="/tool/bmi-calculator" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">محاسبه‌گر BMI</a>
+              <a href="/tool/percentage-calculator" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">محاسبه‌گر درصد</a>
+              <a href="/tool/text-counter" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">شمارنده متن</a>
+              <a href="/tool/image-compressor" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">فشرده‌سازی تصویر</a>
+              <a href="/tool/hafez-fortune" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">فال حافظ</a>
+              <a href="/tool/qr-code-generator" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">ساخت QR Code</a>
+              <a href="/tool/password-generator" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">ساخت رمز عبور</a>
+              <a href="/tool/discount-calculator" style="padding: 0.75rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.5rem; text-decoration: none; font-size: 0.875rem; color: #1f2937;">محاسبه تخفیف</a>
             </div>
-          </section>
-          
-          <!-- Calculator Tools List -->
-          <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">محاسبه‌گرهای آنلاین</h2>
-            <ul style="columns: 2; column-gap: 2rem; list-style: none; padding: 0;">
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/percentage-calculator" style="color: #4b5563; text-decoration: none;">محاسبه‌گر درصد</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/loan-calculator" style="color: #4b5563; text-decoration: none;">ماشین حساب وام</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/age-calculator" style="color: #4b5563; text-decoration: none;">محاسبه سن</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/bmi-calculator" style="color: #4b5563; text-decoration: none;">محاسبه‌گر BMI</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/salary-tax-calculator" style="color: #4b5563; text-decoration: none;">محاسبه مالیات حقوق</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/discount-calculator" style="color: #4b5563; text-decoration: none;">محاسبه تخفیف</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/unit-converter" style="color: #4b5563; text-decoration: none;">تبدیل واحد</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/date-difference" style="color: #4b5563; text-decoration: none;">محاسبه اختلاف تاریخ</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/mortgage-calculator" style="color: #4b5563; text-decoration: none;">محاسبه اقساط مسکن</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/tip-calculator" style="color: #4b5563; text-decoration: none;">محاسبه انعام</a></li>
-            </ul>
-          </section>
-          
-          <!-- Text Tools List -->
-          <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">ابزارهای متنی</h2>
-            <ul style="columns: 2; column-gap: 2rem; list-style: none; padding: 0;">
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/text-analyzer" style="color: #4b5563; text-decoration: none;">تحلیل‌گر متن</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/text-counter" style="color: #4b5563; text-decoration: none;">شمارنده متن</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/text-to-uppercase" style="color: #4b5563; text-decoration: none;">تبدیل به حروف بزرگ</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/text-to-lowercase" style="color: #4b5563; text-decoration: none;">تبدیل به حروف کوچک</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/text-reverser" style="color: #4b5563; text-decoration: none;">معکوس کننده متن</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/json-formatter" style="color: #4b5563; text-decoration: none;">فرمت‌دهی JSON</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/base64-encoder-decoder" style="color: #4b5563; text-decoration: none;">رمزگذاری Base64</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/url-encoder-decoder" style="color: #4b5563; text-decoration: none;">رمزگذاری URL</a></li>
-            </ul>
-          </section>
-          
-          <!-- Readings Tools List -->
-          <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">فال و طالع‌بینی</h2>
-            <ul style="columns: 2; column-gap: 2rem; list-style: none; padding: 0;">
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/hafez-fortune" style="color: #4b5563; text-decoration: none;">فال حافظ</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/tarot-reading" style="color: #4b5563; text-decoration: none;">فال تاروت</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/horoscope" style="color: #4b5563; text-decoration: none;">طالع‌بینی</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/daily-horoscope" style="color: #4b5563; text-decoration: none;">طالع روزانه</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/numerology" style="color: #4b5563; text-decoration: none;">علم اعداد</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/birth-chart" style="color: #4b5563; text-decoration: none;">نقشه تولد</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/rumi-istikhara" style="color: #4b5563; text-decoration: none;">استخاره مولانا</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/saadi-oracle" style="color: #4b5563; text-decoration: none;">فال سعدی</a></li>
-            </ul>
-          </section>
-          
-          <!-- Image Tools List -->
-          <section style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">ابزارهای تصویر</h2>
-            <ul style="columns: 2; column-gap: 2rem; list-style: none; padding: 0;">
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/image-compressor" style="color: #4b5563; text-decoration: none;">فشرده‌سازی تصویر</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/image-resizer" style="color: #4b5563; text-decoration: none;">تغییر اندازه تصویر</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/image-cropper" style="color: #4b5563; text-decoration: none;">برش تصویر</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/svg-to-png-converter" style="color: #4b5563; text-decoration: none;">تبدیل SVG به PNG</a></li>
-              <li style="margin-bottom: 0.5rem;"><a href="/tool/image-to-base64" style="color: #4b5563; text-decoration: none;">تبدیل تصویر به Base64</a></li>
-            </ul>
           </section>
         </main>
         
         <!-- Footer -->
-        <footer style="background: #f9fafb; padding: 2rem; text-align: center; border-top: 1px solid #e5e7eb;">
-          <p style="color: #6b7280; margin: 0 0 1rem;">لنگر - مجموعه ابزارهای آنلاین رایگان فارسی</p>
+        <footer style="background: #f9fafb; padding: 1.5rem; text-align: center; border-top: 1px solid #e5e7eb;">
           <nav style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
-            <a href="/about" style="color: #4b5563; text-decoration: none;">درباره ما</a>
-            <a href="/faq" style="color: #4b5563; text-decoration: none;">سوالات متداول</a>
-            <a href="/privacy-policy" style="color: #4b5563; text-decoration: none;">حریم خصوصی</a>
-            <a href="/contact" style="color: #4b5563; text-decoration: none;">تماس با ما</a>
+            <a href="/about" style="color: #4b5563; text-decoration: none; font-size: 0.875rem;">درباره ما</a>
+            <a href="/all-tools" style="color: #4b5563; text-decoration: none; font-size: 0.875rem;">همه ابزارها</a>
+            <a href="/faq" style="color: #4b5563; text-decoration: none; font-size: 0.875rem;">سوالات متداول</a>
+            <a href="/privacy-policy" style="color: #4b5563; text-decoration: none; font-size: 0.875rem;">حریم خصوصی</a>
           </nav>
         </footer>
       </div>
       
-      <!-- Loading indicator that appears during React hydration -->
+      <!-- Minimal loading skeleton for non-homepage routes -->
+      <div id="loading-skeleton" style="display: none; font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; padding: 2rem; max-width: 1000px; margin: 0 auto;">
+        <div style="height: 2rem; width: 60%; background: #f3f4f6; border-radius: 0.5rem; margin-bottom: 1rem;"></div>
+        <div style="height: 1rem; width: 80%; background: #f3f4f6; border-radius: 0.5rem; margin-bottom: 2rem;"></div>
+        <div style="height: 300px; background: #f9fafb; border-radius: 1rem; border: 1px solid #e5e7eb;"></div>
+      </div>
+      
+      <!-- Script to show appropriate content based on route -->
+      <script>
+        (function() {
+          var path = window.location.pathname;
+          var isHomepage = path === '/' || path === '';
+          var staticContent = document.getElementById('static-content');
+          var loadingSkeleton = document.getElementById('loading-skeleton');
+          
+          if (isHomepage && staticContent) {
+            // Show static homepage content for SEO and fast LCP on homepage
+            staticContent.style.display = 'block';
+          } else if (loadingSkeleton) {
+            // Show minimal loading skeleton on other routes
+            loadingSkeleton.style.display = 'block';
+          }
+        })();
+      </script>
+      
+      <!-- CSS for hiding static content after React mounts -->
       <style>
-        #static-content {
-          transition: opacity 0.2s ease-out;
-        }
-        #static-content.hydrating {
-          opacity: 0.7;
-        }
-        #static-content.hidden {
-          display: none;
+        #static-content.hidden,
+        #loading-skeleton.hidden {
+          display: none !important;
         }
       </style>
     </div>
@@ -520,14 +447,14 @@
       // Fast React mount detection using MutationObserver (more efficient than setInterval)
       (function() {
         var staticContent = document.getElementById('static-content');
+        var loadingSkeleton = document.getElementById('loading-skeleton');
         var root = document.getElementById('root');
-        if (!staticContent || !root) return;
+        if (!root) return;
         
-        var hideStaticContent = function() {
+        var hidePreRenderContent = function() {
+          // Hide static content
           if (staticContent && staticContent.parentNode) {
-            // Simply add hidden class - CSS handles the rest without layout shift
             staticContent.classList.add('hidden');
-            // Remove from DOM after paint to avoid layout recalculation
             requestAnimationFrame(function() {
               requestAnimationFrame(function() {
                 if (staticContent && staticContent.parentNode) {
@@ -536,14 +463,28 @@
               });
             });
           }
+          // Hide loading skeleton
+          if (loadingSkeleton && loadingSkeleton.parentNode) {
+            loadingSkeleton.classList.add('hidden');
+            requestAnimationFrame(function() {
+              requestAnimationFrame(function() {
+                if (loadingSkeleton && loadingSkeleton.parentNode) {
+                  loadingSkeleton.parentNode.removeChild(loadingSkeleton);
+                }
+              });
+            });
+          }
         };
         
         // Use MutationObserver for efficient DOM change detection
         var observer = new MutationObserver(function(mutations) {
-          // Check if React rendered something besides our static content
-          if (root.children.length > 1 || (root.firstElementChild && root.firstElementChild.id !== 'static-content')) {
+          // Check if React rendered something besides our pre-render content
+          var hasReactContent = Array.from(root.children).some(function(child) {
+            return child.id !== 'static-content' && child.id !== 'loading-skeleton';
+          });
+          if (hasReactContent) {
             observer.disconnect();
-            hideStaticContent();
+            hidePreRenderContent();
           }
         });
         
@@ -552,7 +493,7 @@
         // Faster fallback: 2s max wait
         setTimeout(function() {
           observer.disconnect();
-          hideStaticContent();
+          hidePreRenderContent();
         }, 2000);
       })();
       
