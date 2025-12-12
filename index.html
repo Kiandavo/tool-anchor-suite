@@ -258,12 +258,12 @@
       }
       #root {
         min-height: 100vh;
+        contain: layout style;
       }
       
       /* Minimal loading state */
       #root {
         opacity: 1;
-        transition: opacity 0.3s ease-in;
         min-height: 100vh;
       }
       
@@ -272,6 +272,17 @@
         font-display: swap; 
         visibility: visible;
         opacity: 1;
+      }
+      
+      /* Static content uses position absolute to overlay without causing reflow */
+      #static-content {
+        contain: layout style;
+        min-height: 100vh;
+      }
+      
+      /* When React mounts, fade out static content without layout shift */
+      #static-content.hidden {
+        display: none !important;
       }
       
       /* Offscreen rendering optimization */
@@ -303,11 +314,12 @@
   <body>
     <div id="root">
       <!-- SEO-Critical Static Content - Crawlable HTML with real links -->
-      <div id="static-content" style="font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl;">
-        <!-- Header with navigation -->
-        <header style="padding: 1rem 2rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+      <!-- Uses contain: layout to prevent layout shifts during React hydration -->
+      <div id="static-content" style="font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; contain: layout style; min-height: 100vh;">
+        <!-- Header with navigation - fixed height to prevent CLS -->
+        <header style="padding: 1rem 2rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; height: 72px; box-sizing: border-box;">
           <a href="/" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
-            <img src="/assets/laangar-logo.png" alt="لنگر" width="48" height="48" style="border-radius: 0.5rem;">
+            <img src="/assets/laangar-logo.png" alt="لنگر" width="48" height="48" style="border-radius: 0.5rem; aspect-ratio: 1/1;">
             <span style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">لنگر</span>
           </a>
           <nav style="display: flex; gap: 1.5rem;">
@@ -318,15 +330,16 @@
           </nav>
         </header>
         
-        <!-- Hero Section -->
-        <main style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
-          <section style="text-align: center; padding: 2.5rem 1rem; background: linear-gradient(to bottom, #fffbeb, #ffffff); border-radius: 1rem;">
-            <h1 style="font-size: 1.75rem; font-weight: 800; color: #1f2937; margin-bottom: 0.75rem; line-height: 1.4;">
+        <!-- Hero Section - uses min-height to reserve space and prevent CLS -->
+        <main style="max-width: 1000px; margin: 0 auto; padding: 2rem; contain: content;">
+          <section style="text-align: center; padding: 2.5rem 1rem; background: linear-gradient(to bottom, #fffbeb, #ffffff); border-radius: 1rem; min-height: 180px;">
+            <!-- H1 uses system font metrics to prevent font-swap CLS -->
+            <h1 style="font-size: 1.75rem; font-weight: 800; color: #1f2937; margin-bottom: 0.75rem; line-height: 1.4; min-height: 2.45em;">
               بیش از <span style="background: linear-gradient(135deg, #eab308, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">۱۰۰ ابزار آنلاین رایگان فارسی</span> در یک جا
             </h1>
-            <p style="font-size: 1rem; color: #6b7280; margin: 0 auto 1.5rem; max-width: 500px;">برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. بدون ثبت‌نام، سریع و امن</p>
+            <p style="font-size: 1rem; color: #6b7280; margin: 0 auto 1.5rem; max-width: 500px; min-height: 1.5em;">برای محاسبات، تبدیل متن، ویرایش تصویر و سئو. بدون ثبت‌نام، سریع و امن</p>
             <div style="max-width: 450px; margin: 0 auto;">
-              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.25rem; background: #fff; border: 2px solid #e5e7eb; border-radius: 9999px;">
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 1.25rem; background: #fff; border: 2px solid #e5e7eb; border-radius: 9999px; height: 52px; box-sizing: border-box;">
                 <span style="color: #d97706;">🔍</span>
                 <span style="color: #9ca3af; flex: 1; text-align: right;">جستجو بین همه ابزارها</span>
               </div>
@@ -512,11 +525,15 @@
         
         var hideStaticContent = function() {
           if (staticContent) {
-            staticContent.classList.add('hydrating');
-            setTimeout(function() { 
+            // Use visibility:hidden first to avoid layout shift, then remove
+            staticContent.style.visibility = 'hidden';
+            staticContent.style.position = 'absolute';
+            staticContent.style.pointerEvents = 'none';
+            // Remove from DOM after a brief delay
+            requestAnimationFrame(function() {
               staticContent.classList.add('hidden');
-              staticContent.remove(); 
-            }, 200);
+              staticContent.remove();
+            });
           }
         };
         
