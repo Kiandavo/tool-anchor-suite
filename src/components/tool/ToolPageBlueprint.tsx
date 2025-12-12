@@ -12,17 +12,32 @@ interface FAQItem {
 
 interface ToolPageBlueprintProps {
   tool: Tool;
-  /** Clear job description for H1 - what does this tool do? */
+  /** H1: Tool name + job description (e.g., "محاسبه‌گر BMI شاخص توده بدنی آنلاین") */
   jobTitle: string;
-  /** Use cases subline - who is this for? */
+  /** 1-2 line description: when/why it's useful */
   useCases: string;
   /** The tool interface component */
   children: React.ReactNode;
-  /** 3-5 short FAQ items covering accuracy, limits, privacy */
+  /** 3-5 short FAQ items */
   faq: FAQItem[];
 }
 
-// Get related tools from same category (4-6 tools)
+// Map internal category IDs to URL slugs
+const categoryToSlugMap: Record<string, string> = {
+  'calculators': 'calculators',
+  'text': 'text-tools',
+  'image': 'image-tools',
+  'persian-cultural': 'persian-tools',
+  'readings': 'readings',
+  'seo': 'seo-tools',
+  'random': 'random-tools',
+  'number': 'number-tools',
+  'educational': 'educational-tools',
+  'productivity': 'productivity-tools',
+  'design': 'design-tools',
+};
+
+// Get related tools from same category (max 6)
 const getRelatedTools = (tool: Tool, limit: number = 6) => {
   return tools
     .filter(t => 
@@ -42,32 +57,33 @@ export const ToolPageBlueprint: React.FC<ToolPageBlueprintProps> = ({
 }) => {
   const relatedTools = getRelatedTools(tool);
   const categoryLabel = categoryLabels[tool.category as ToolCategory] || tool.category;
+  const categorySlug = categoryToSlugMap[tool.category] || tool.category;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-0">
+    <div className="max-w-3xl mx-auto">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
         <Link to="/" className="hover:text-foreground transition-colors">خانه</Link>
         <ChevronLeft className="w-4 h-4" />
-        <Link to={`/category/${tool.category}`} className="hover:text-foreground transition-colors">
+        <Link to={`/${categorySlug}`} className="hover:text-foreground transition-colors">
           {categoryLabel}
         </Link>
         <ChevronLeft className="w-4 h-4" />
         <span className="text-foreground font-medium">{tool.name}</span>
       </nav>
 
-      {/* Header Section */}
-      <header className="mb-8">
+      {/* Header: H1 + Description */}
+      <header className="mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 leading-tight">
           {jobTitle}
         </h1>
-        <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+        <p className="text-muted-foreground leading-relaxed">
           {useCases}
         </p>
       </header>
 
-      {/* Tool Interface Zone */}
-      <Card className="mb-10 border-border/50 shadow-sm">
+      {/* Tool UI - The Main Character */}
+      <Card className="mb-8 border-border/50 shadow-sm">
         <CardContent className="p-4 sm:p-6">
           {children}
         </CardContent>
@@ -75,7 +91,7 @@ export const ToolPageBlueprint: React.FC<ToolPageBlueprintProps> = ({
 
       {/* FAQ Section */}
       {faq.length > 0 && (
-        <section className="mb-10">
+        <section className="mb-8">
           <h2 className="text-lg font-semibold text-foreground mb-4">
             سوالات متداول
           </h2>
@@ -102,23 +118,23 @@ export const ToolPageBlueprint: React.FC<ToolPageBlueprintProps> = ({
         </section>
       )}
 
-      {/* Related Tools */}
+      {/* Related Tools - Small group at bottom */}
       {relatedTools.length > 0 && (
-        <section className="mb-8 pt-6 border-t border-border/50">
-          <h2 className="text-lg font-semibold text-foreground mb-4">
-            ابزارهای مرتبط در {categoryLabel}
+        <section className="pt-6 border-t border-border/50">
+          <h2 className="text-base font-semibold text-foreground mb-3">
+            ابزارهای مرتبط
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {relatedTools.map((relTool) => (
               <Link
                 key={relTool.slug}
                 to={`/tool/${relTool.slug}`}
-                className="group flex items-center justify-between p-3 rounded-lg border border-border/50 bg-card hover:border-primary/40 hover:bg-primary/5 transition-all"
+                className="group flex items-center justify-between p-2.5 rounded-lg border border-border/50 bg-card hover:border-primary/40 hover:bg-primary/5 transition-all"
               >
                 <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
                   {relTool.name}
                 </span>
-                <ArrowLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+                <ArrowLeft className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
               </Link>
             ))}
           </div>
