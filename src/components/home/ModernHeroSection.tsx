@@ -1,15 +1,15 @@
 import React from 'react';
-import { ArrowLeft, Calculator, FileText, Image, Percent, Palette, QrCode, Hash, Type, Crop, Search, Calendar, Sparkles } from 'lucide-react';
+import { ArrowLeft, Calculator, FileText, Image, Percent, Palette, QrCode, Hash, Type, Crop, Search, Calendar, Sparkles, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const categories = [
-  { label: 'محاسبات و تبدیل اعداد', href: '/calculators' },
-  { label: 'ابزارهای متن و نوشتار', href: '/text-tools' },
-  { label: 'تصویر و فایل', href: '/image-tools' },
-  { label: 'ابزارهای سئو و وب', href: '/seo-tools' },
-  { label: 'تقویم و تاریخ', href: '/persian-cultural' },
-  { label: 'فال و طالع‌بینی', href: '/fortune-telling' },
+  { icon: Calculator, label: 'محاسبات و تبدیل', href: '/calculators', desc: 'محاسبه‌گر درصد، BMI، تخفیف و وام' },
+  { icon: FileText, label: 'متن و نوشتار', href: '/text-tools', desc: 'شمارش کلمات، فرمت متن و مقایسه' },
+  { icon: Image, label: 'تصویر و فایل', href: '/image-tools', desc: 'فشرده‌سازی، تغییر اندازه و تبدیل' },
+  { icon: Globe, label: 'سئو و وب', href: '/seo-tools', desc: 'متاتگ، کلیدواژه و بهینه‌سازی' },
+  { icon: Calendar, label: 'تقویم و تاریخ', href: '/persian-cultural', desc: 'تبدیل تاریخ و تقویم فارسی' },
+  { icon: Sparkles, label: 'فال و طالع', href: '/fortune-telling', desc: 'فال حافظ، تاروت و طالع‌بینی' },
 ];
 
 const floatingIcons = [
@@ -24,7 +24,7 @@ const floatingIcons = [
 
 export const ModernHeroSection = () => {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-background">
+    <section className="relative py-12 sm:py-16 lg:py-20 overflow-hidden bg-background">
       {/* Subtle dot pattern */}
       <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
         <svg width="100%" height="100%">
@@ -68,10 +68,10 @@ export const ModernHeroSection = () => {
       {floatingIcons.map(({ Icon, position, delay, size }, index) => (
         <motion.div
           key={index}
-          className={`absolute ${position} pointer-events-none hidden lg:block`}
+          className={`absolute ${position} pointer-events-none hidden xl:block`}
           initial={{ opacity: 0, y: 10 }}
           animate={{ 
-            opacity: [0.15, 0.25, 0.15],
+            opacity: [0.12, 0.2, 0.12],
             y: [0, -8, 0],
             rotate: [0, 5, 0]
           }}
@@ -83,7 +83,7 @@ export const ModernHeroSection = () => {
           }}
         >
           <div className="p-2.5 rounded-xl bg-muted/40 backdrop-blur-sm border border-border/30">
-            <Icon size={size} className="text-muted-foreground/60" strokeWidth={1.5} />
+            <Icon size={size} className="text-muted-foreground/50" strokeWidth={1.5} />
           </div>
         </motion.div>
       ))}
@@ -93,77 +93,75 @@ export const ModernHeroSection = () => {
       <div className="absolute bottom-8 right-8 w-12 h-12 border-r border-b border-border/30 rounded-br-lg opacity-50 hidden sm:block" />
       
       <div className="container relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          {/* Main Headline */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl leading-[1.2] text-foreground mb-5"
-          >
-            بیش از{' '}
-            <span className="text-primary">۱۰۰ ابزار</span>
-            {' '}آنلاین رایگان فارسی
-            <br className="hidden sm:block" />
-            در یک جا
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed"
-          >
-            برای محاسبات، تبدیل متن، ویرایش تصویر و سئو.
-            <br className="hidden sm:block" />
-            <span className="text-foreground font-medium">بدون ثبت‌نام، سریع و امن</span>
-          </motion.p>
-
-          {/* CTA Button */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mb-10"
-          >
-            <Link
-              to="/all-tools"
-              className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-foreground text-background font-medium hover:bg-foreground/90 transition-all duration-300 shadow-sm hover:shadow-md"
+        <div className="max-w-4xl mx-auto">
+          {/* Text Content - Centered */}
+          <div className="text-center mb-10">
+            {/* Main Headline */}
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl leading-[1.2] text-foreground mb-4"
             >
-              <span>مشاهده همه ابزارها</span>
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
+              بیش از{' '}
+              <span className="text-primary">۱۰۰ ابزار</span>
+              {' '}آنلاین رایگان فارسی در یک جا
+            </motion.h1>
 
-          {/* Category Band */}
+            {/* Subtitle */}
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
+            >
+              برای محاسبات، تبدیل متن، ویرایش تصویر و سئو.
+              {' '}<span className="text-foreground font-medium">بدون ثبت‌نام، سریع و امن</span>
+            </motion.p>
+
+            {/* CTA Button */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="mb-10"
+            >
+              <Link
+                to="/all-tools"
+                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-foreground text-background font-medium hover:bg-foreground/90 transition-all duration-300 shadow-sm hover:shadow-md"
+              >
+                <span>مشاهده همه ابزارها</span>
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Category Cards Grid */}
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="pt-6 border-t border-border/40"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"
           >
-            <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2">
-              {categories.map((category, index) => (
-                <React.Fragment key={index}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.45 + index * 0.06 }}
-                  >
-                    <Link
-                      to={category.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors px-2 py-1"
-                    >
-                      {category.label}
-                    </Link>
-                  </motion.div>
-                  {index < categories.length - 1 && (
-                    <span className="text-border/60 text-xs">•</span>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
+            {categories.map((category, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.45 + index * 0.05 }}
+              >
+                <Link
+                  to={category.href}
+                  className="group flex flex-col items-center text-center p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-md transition-all duration-300"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                    <category.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground mb-1">{category.label}</span>
+                  <span className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{category.desc}</span>
+                </Link>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
