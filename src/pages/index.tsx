@@ -5,6 +5,8 @@ import { FocusedHeroSection } from '@/components/home/FocusedHeroSection';
 import { GlobalSearchBar } from '@/components/home/GlobalSearchBar';
 import { CategoryCardsSection } from '@/components/home/CategoryCardsSection';
 import { TopToolsSection } from '@/components/home/TopToolsSection';
+import { NewToolsSection } from '@/components/home/NewToolsSection';
+import { RecentlyUsedSection } from '@/components/home/RecentlyUsedSection';
 import { EnhancedSeoHead } from '@/components/seo/EnhancedSeoHead';
 import { generateEnhancedWebsiteSchema, generateFAQSchema, generateEnhancedOrganizationSchema, generateLocalBusinessSchema, combineSchemas } from '@/utils/schemaUtils';
 import { Link } from 'react-router-dom';
@@ -89,13 +91,19 @@ const Index = () => {
       {/* 2. Global Search Bar - right under hero */}
       <GlobalSearchBar />
 
-      {/* 3. Category Cards - 6 main clusters */}
+      {/* 3. Recently Used Tools (localStorage-based) */}
+      <RecentlyUsedSection maxItems={6} />
+
+      {/* 4. Category Cards - 6 main clusters */}
       <CategoryCardsSection />
 
-      {/* 4. Popular tools - 12 tools with tooltips */}
+      {/* 5. Popular tools - 12 tools with tooltips */}
       <TopToolsSection />
 
-      {/* 5. Footer CTA */}
+      {/* 6. New Tools Section */}
+      <NewToolsSection />
+
+      {/* 7. Footer CTA */}
       <section className="py-8 text-center">
         <Link 
           to="/all-tools"
