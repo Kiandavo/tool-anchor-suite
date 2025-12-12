@@ -1,12 +1,15 @@
 import React from 'react';
-import { ArrowLeft, Calculator, FileText, Image, Percent, Palette, QrCode, Hash, Type, Crop } from 'lucide-react';
+import { ArrowLeft, Calculator, FileText, Image, Percent, Palette, QrCode, Hash, Type, Crop, Search, Calendar, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const categories = [
-  { icon: Calculator, label: 'محاسبه‌گرها', href: '/calculators' },
-  { icon: FileText, label: 'ابزار متنی', href: '/text-tools' },
-  { icon: Image, label: 'تصویر و فایل', href: '/image-tools' },
+  { label: 'محاسبات و تبدیل اعداد', href: '/calculators' },
+  { label: 'ابزارهای متن و نوشتار', href: '/text-tools' },
+  { label: 'تصویر و فایل', href: '/image-tools' },
+  { label: 'ابزارهای سئو و وب', href: '/seo-tools' },
+  { label: 'تقویم و تاریخ', href: '/persian-cultural' },
+  { label: 'فال و طالع‌بینی', href: '/fortune-telling' },
 ];
 
 const floatingIcons = [
@@ -21,7 +24,7 @@ const floatingIcons = [
 
 export const ModernHeroSection = () => {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-28 overflow-hidden bg-background">
+    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-background">
       {/* Subtle dot pattern */}
       <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
         <svg width="100%" height="100%">
@@ -85,45 +88,24 @@ export const ModernHeroSection = () => {
         </motion.div>
       ))}
 
-      {/* Decorative lines */}
-      <div className="absolute top-1/4 left-8 w-px h-20 bg-gradient-to-b from-transparent via-border to-transparent opacity-40 hidden lg:block" />
-      <div className="absolute top-1/3 right-8 w-px h-16 bg-gradient-to-b from-transparent via-border to-transparent opacity-40 hidden lg:block" />
-      
       {/* Corner accents */}
       <div className="absolute top-8 left-8 w-12 h-12 border-l border-t border-border/30 rounded-tl-lg opacity-50 hidden sm:block" />
       <div className="absolute bottom-8 right-8 w-12 h-12 border-r border-b border-border/30 rounded-br-lg opacity-50 hidden sm:block" />
       
       <div className="container relative z-10">
-        <div className="max-w-2xl mx-auto text-center">
-          {/* Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-muted/60 backdrop-blur-sm border border-border/40 text-muted-foreground text-xs font-medium mb-8"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span>بیش از ۱۰۰ ابزار رایگان</span>
-          </motion.div>
-
+        <div className="max-w-3xl mx-auto text-center">
           {/* Main Headline */}
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-heading font-black text-4xl sm:text-5xl lg:text-6xl leading-[1.1] text-foreground mb-6"
+            className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl leading-[1.2] text-foreground mb-5"
           >
-            سریع، ساده،
-            <br />
-            <span className="relative inline-block">
-              <span className="text-primary">رایگان</span>
-              <motion.span 
-                className="absolute -bottom-1 left-0 right-0 h-[3px] bg-primary/20 rounded-full"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-              />
-            </span>
+            بیش از{' '}
+            <span className="text-primary">۱۰۰ ابزار</span>
+            {' '}آنلاین رایگان فارسی
+            <br className="hidden sm:block" />
+            در یک جا
           </motion.h1>
 
           {/* Subtitle */}
@@ -131,11 +113,11 @@ export const ModernHeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-lg mx-auto mb-10 leading-relaxed"
+            className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed"
           >
-            محاسبه، تبدیل متن، ویرایش تصویر و سئو
-            <span className="mx-2 text-border">—</span>
-            <span className="text-foreground font-medium">بدون ثبت‌نام</span>
+            برای محاسبات، تبدیل متن، ویرایش تصویر و سئو.
+            <br className="hidden sm:block" />
+            <span className="text-foreground font-medium">بدون ثبت‌نام، سریع و امن</span>
           </motion.p>
 
           {/* CTA Button */}
@@ -143,48 +125,45 @@ export const ModernHeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mb-12"
+            className="mb-10"
           >
             <Link
               to="/all-tools"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-foreground text-background font-medium hover:bg-foreground/90 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-foreground text-background font-medium hover:bg-foreground/90 transition-all duration-300 shadow-sm hover:shadow-md"
             >
-              <span>مشاهده ابزارها</span>
+              <span>مشاهده همه ابزارها</span>
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             </Link>
           </motion.div>
 
-          {/* Divider */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="w-16 h-px bg-border mx-auto mb-8"
-          />
-
-          {/* Category Links */}
+          {/* Category Band */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-3"
+            className="pt-6 border-t border-border/40"
           >
-            {categories.map((category, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.45 + index * 0.08 }}
-              >
-                <Link
-                  to={category.href}
-                  className="group flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-card border border-border/50 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
-                >
-                  <category.icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                  <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">{category.label}</span>
-                </Link>
-              </motion.div>
-            ))}
+            <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2">
+              {categories.map((category, index) => (
+                <React.Fragment key={index}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.45 + index * 0.06 }}
+                  >
+                    <Link
+                      to={category.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors px-2 py-1"
+                    >
+                      {category.label}
+                    </Link>
+                  </motion.div>
+                  {index < categories.length - 1 && (
+                    <span className="text-border/60 text-xs">•</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -192,11 +171,6 @@ export const ModernHeroSection = () => {
       {/* Bottom decorative element */}
       <div className="absolute bottom-0 inset-x-0">
         <div className="h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
-        <div className="flex justify-center -mt-3">
-          <div className="w-6 h-6 rounded-full bg-background border border-border/50 flex items-center justify-center">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-          </div>
-        </div>
       </div>
     </section>
   );
