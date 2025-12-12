@@ -21,58 +21,90 @@ export const ModernHeroSection = () => {
       {/* Subtle accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/[0.04] rounded-full blur-3xl pointer-events-none" />
       
-      {/* Floating accent dots */}
+      {/* Floating accent shapes */}
+      {/* Diamond - top right */}
       <motion.div
-        className="absolute top-20 right-[15%] w-2 h-2 rounded-full bg-primary/20 hidden sm:block"
+        className="absolute top-20 right-[15%] hidden sm:block"
         animate={{ 
-          y: [0, -12, 0],
-          opacity: [0.2, 0.4, 0.2]
-        }}
-        transition={{ 
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      <motion.div
-        className="absolute top-32 left-[12%] w-1.5 h-1.5 rounded-full bg-primary/15 hidden sm:block"
-        animate={{ 
-          y: [0, -8, 0],
-          opacity: [0.15, 0.3, 0.15]
+          y: [0, -10, 0],
+          rotate: [45, 45, 45],
+          opacity: [0.15, 0.25, 0.15]
         }}
         transition={{ 
           duration: 5,
           repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
+          ease: "easeInOut"
         }}
-      />
+      >
+        <div className="w-3 h-3 border border-primary/30 rotate-45" />
+      </motion.div>
+      
+      {/* Ring - top left */}
       <motion.div
-        className="absolute bottom-28 right-[20%] w-1 h-1 rounded-full bg-primary/25 hidden sm:block"
+        className="absolute top-28 left-[12%] hidden sm:block"
         animate={{ 
-          y: [0, -6, 0],
-          opacity: [0.2, 0.35, 0.2]
+          y: [0, -8, 0],
+          opacity: [0.12, 0.22, 0.12]
         }}
         transition={{ 
-          duration: 3.5,
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1.5
+        }}
+      >
+        <div className="w-4 h-4 rounded-full border border-primary/25" />
+      </motion.div>
+      
+      {/* Small dot - bottom right */}
+      <motion.div
+        className="absolute bottom-32 right-[18%] w-1.5 h-1.5 rounded-full bg-primary/20 hidden sm:block"
+        animate={{ 
+          y: [0, -6, 0],
+          opacity: [0.15, 0.3, 0.15]
+        }}
+        transition={{ 
+          duration: 4,
           repeat: Infinity,
           ease: "easeInOut",
           delay: 2
         }}
       />
+      
+      {/* Diamond - bottom left */}
       <motion.div
-        className="absolute bottom-40 left-[18%] w-1.5 h-1.5 rounded-full bg-primary/20 hidden sm:block"
+        className="absolute bottom-24 left-[16%] hidden sm:block"
         animate={{ 
-          y: [0, -10, 0],
-          opacity: [0.15, 0.3, 0.15]
+          y: [0, -8, 0],
+          rotate: [45, 45, 45],
+          opacity: [0.1, 0.2, 0.1]
         }}
         transition={{ 
           duration: 4.5,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: 0.5
+          delay: 0.8
         }}
-      />
+      >
+        <div className="w-2 h-2 border border-primary/20 rotate-45" />
+      </motion.div>
+      
+      {/* Ring - middle right */}
+      <motion.div
+        className="absolute top-1/2 right-[8%] hidden lg:block"
+        animate={{ 
+          y: [0, -12, 0],
+          opacity: [0.08, 0.16, 0.08]
+        }}
+        transition={{ 
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3
+        }}
+      >
+        <div className="w-5 h-5 rounded-full border border-primary/15" />
+      </motion.div>
       
       <div className="container relative">
         <div className="max-w-3xl mx-auto text-center">
