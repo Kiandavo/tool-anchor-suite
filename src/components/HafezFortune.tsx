@@ -1,11 +1,19 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { RefreshCw, Copy, BookOpen, Sparkles } from "lucide-react";
+import { RefreshCw, Copy, BookOpen, Sparkles, CircleHelp } from "lucide-react";
 import { useHafezReading } from '@/hooks/useHafezReading';
 import { copyToClipboard } from '@/utils/randomUtils';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const HafezFortune = () => {
   const {
@@ -30,7 +38,7 @@ export const HafezFortune = () => {
     <div className="max-w-2xl mx-auto">
       <Card className="border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden">
         {/* Header */}
-        <div className="p-6 text-center border-b border-border/50">
+        <div className="p-6 text-center border-b border-border/50 relative">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
             <BookOpen className="w-4 h-4" />
             <span className="text-sm font-medium">فال حافظ</span>
@@ -38,6 +46,44 @@ export const HafezFortune = () => {
           <p className="text-sm text-muted-foreground">
             نیت کنید و فال بگیرید
           </p>
+          
+          {/* Guide Button */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" className="absolute top-4 left-4 p-2 h-8 w-8 rounded-full">
+                <CircleHelp size={16} className="text-muted-foreground" />
+                <span className="sr-only">راهنما</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl text-right">
+              <DialogHeader>
+                <DialogTitle className="flex items-center justify-center gap-2">
+                  <Sparkles size={18} className="text-primary" />
+                  راهنمای فال حافظ
+                </DialogTitle>
+                <DialogDescription>
+                  آشنایی با تاریخچه و روش استخاره با دیوان حافظ
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 mt-4">
+                <div className="bg-muted/50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-2">تاریخچه فال حافظ</h3>
+                  <p className="text-sm text-muted-foreground leading-6">
+                    خواجه شمس‌الدین محمد حافظ شیرازی از بزرگترین شاعران غزل‌سرای ایران است. 
+                    استفاده از دیوان حافظ برای تفال سنتی کهن در فرهنگ ایرانی است.
+                  </p>
+                </div>
+                <div className="bg-muted/50 p-4 rounded-lg">
+                  <h3 className="font-bold mb-2">نحوه استفاده</h3>
+                  <ol className="space-y-2 text-sm text-muted-foreground list-decimal list-inside">
+                    <li>نیت خود را در ذهن یا نوشتاری مشخص کنید</li>
+                    <li>روی دکمه "فال بگیر" کلیک کنید</li>
+                    <li>غزل و تفسیر آن را با دقت بخوانید</li>
+                  </ol>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
         
         <CardContent className="p-6 space-y-6">
