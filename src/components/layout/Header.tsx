@@ -19,14 +19,14 @@ interface HeaderProps {
   isScrolled: boolean;
 }
 
-// Category items for dropdown
+// Category items for dropdown - using clean URLs
 const categoryItems = [
-  { label: 'محاسبه‌گرها', href: '/category/calculators', icon: Calculator },
-  { label: 'ابزارهای متنی', href: '/category/text', icon: FileText },
-  { label: 'ابزارهای تصویر', href: '/category/image', icon: Image },
-  { label: 'فرهنگ فارسی', href: '/category/persian-cultural', icon: Calendar },
-  { label: 'فال و طالع‌بینی', href: '/category/readings', icon: Sparkles },
-  { label: 'سئو و وب', href: '/category/seo', icon: Globe },
+  { label: 'محاسبه‌گرها', href: '/calculators', icon: Calculator },
+  { label: 'ابزارهای متنی', href: '/text-tools', icon: FileText },
+  { label: 'ابزارهای تصویر', href: '/image-tools', icon: Image },
+  { label: 'فرهنگ فارسی', href: '/persian-tools', icon: Calendar },
+  { label: 'فال و طالع‌بینی', href: '/readings', icon: Sparkles },
+  { label: 'سئو و وب', href: '/seo-tools', icon: Globe },
 ];
 
 export function Header({ title, backUrl, isScrolled }: HeaderProps) {
