@@ -22,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { SectionDecorator } from './SectionDecorator';
 
 // 12 top tools - hardcoded for consistency
 const topToolSlugs = [
@@ -62,8 +63,14 @@ export const TopToolsSection = () => {
   const newToolSlugs = getNewTools().map(t => t.slug);
 
   return (
-    <section className="py-6 sm:py-8 bg-muted/30">
-      <div className="container-narrow">
+    <section className="relative py-6 sm:py-8 bg-gradient-to-br from-muted/50 via-muted/30 to-background overflow-hidden">
+      {/* Decorative elements */}
+      <SectionDecorator variant="diamonds" position="right" opacity={0.12} />
+      
+      {/* Floating orb */}
+      <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-br from-primary/5 to-persian-turquoise/5 blur-3xl pointer-events-none" />
+      
+      <div className="container-narrow relative z-10">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg sm:text-xl font-bold text-foreground">
             ابزارهای پرکاربرد
@@ -80,7 +87,7 @@ export const TopToolsSection = () => {
         {/* Compact 4-column grid with tooltips */}
         <TooltipProvider delayDuration={200}>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-            {topTools.map((tool) => {
+            {topTools.map((tool, index) => {
               if (!tool) return null;
               const Icon = iconMap[tool.slug] || Calculator;
               const isNew = newToolSlugs.includes(tool.slug);
@@ -90,7 +97,8 @@ export const TopToolsSection = () => {
                   <TooltipTrigger asChild>
                     <Link
                       to={`/tool/${tool.slug}`}
-                      className="group relative flex items-center gap-2.5 p-3 rounded-lg bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all duration-200"
+                      className="group relative flex items-center gap-2.5 p-3 rounded-lg bg-card/80 backdrop-blur-sm border border-border hover:border-primary/40 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
+                      style={{ animationDelay: `${index * 50}ms` }}
                     >
                       {/* New badge */}
                       {isNew && (
@@ -100,7 +108,7 @@ export const TopToolsSection = () => {
                       )}
                       
                       {/* Icon */}
-                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors flex-shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center group-hover:from-primary/20 group-hover:to-primary/5 transition-all duration-300 flex-shrink-0">
                         <Icon className="w-4 h-4 text-primary" />
                       </div>
                       
