@@ -36,7 +36,8 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             width={128}
             height={128}
             className="h-32 w-32 object-contain"
-            fetchPriority="high"
+            // @ts-ignore - fetchpriority is valid HTML but React types don't recognize it yet
+            fetchpriority="high"
             style={{
               animation: 'fadeIn 800ms ease-out, scale 600ms ease-out',
               aspectRatio: '1 / 1'
