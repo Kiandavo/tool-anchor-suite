@@ -21,7 +21,7 @@ export const NewToolsSection: React.FC = () => {
       <div className="absolute top-10 left-[10%] w-32 h-32 rounded-full bg-gradient-to-br from-primary/10 to-transparent blur-2xl animate-float pointer-events-none" />
       <div className="absolute bottom-10 right-[15%] w-24 h-24 rounded-full bg-gradient-to-br from-persian-gold/10 to-transparent blur-2xl animate-float pointer-events-none" style={{ animationDelay: '-1.5s' }} />
       
-      <div className="container mx-auto px-4 max-w-5xl relative z-10">
+      <div className="container-narrow relative z-10">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-primary/10">
