@@ -7,6 +7,7 @@ const FONT_CACHE = `laangar-fonts-${CACHE_VERSION}`;
 // Assets to precache on install
 const PRECACHE_ASSETS = [
   '/',
+  '/assets/laangar-logo-128.png',
   '/assets/laangar-logo.png',
   '/favicon.png',
 ];
