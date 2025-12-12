@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, Menu, X, Search, Home, BookOpen, Calculator, Sparkles, LayoutGrid } from 'lucide-react';
+import { ArrowRight, Menu, X, Search, LayoutGrid, ChevronDown, Calculator, FileText, Image, Calendar, Sparkles, Globe } from 'lucide-react';
 const langarLogo = '/assets/laangar-logo.png';
 import { useSearchModal } from '@/hooks/useSearchModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollProgress } from './ScrollProgress';
 import { cn } from '@/lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface HeaderProps {
   title?: string;
@@ -13,12 +19,14 @@ interface HeaderProps {
   isScrolled: boolean;
 }
 
-const navItems = [
-  { label: 'خانه', href: '/', icon: Home },
-  { label: 'همه ابزارها', href: '/all-tools', icon: LayoutGrid },
-  { label: 'محاسبه‌گر', href: '/category/calculators', icon: Calculator },
-  { label: 'فال و طالع', href: '/category/readings', icon: Sparkles },
-  { label: 'فرهنگ فارسی', href: '/category/persian-cultural', icon: BookOpen },
+// Category items for dropdown
+const categoryItems = [
+  { label: 'محاسبه‌گرها', href: '/category/calculators', icon: Calculator },
+  { label: 'ابزارهای متنی', href: '/category/text', icon: FileText },
+  { label: 'ابزارهای تصویر', href: '/category/image', icon: Image },
+  { label: 'فرهنگ فارسی', href: '/category/persian-cultural', icon: Calendar },
+  { label: 'فال و طالع‌بینی', href: '/category/readings', icon: Sparkles },
+  { label: 'سئو و وب', href: '/category/seo', icon: Globe },
 ];
 
 export function Header({ title, backUrl, isScrolled }: HeaderProps) {
@@ -45,6 +53,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
   const showBackButton = !!backUrl || (location.pathname !== "/" && !backUrl);
   const isActive = (href: string) => location.pathname === href;
+  const isCategoryActive = categoryItems.some(item => location.pathname === item.href);
 
   return (
     <>
@@ -76,34 +85,72 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    to={item.href}
+              {/* All Tools */}
+              <Link
+                to="/all-tools"
+                className={cn(
+                  'relative px-3 py-1.5 rounded-md text-sm transition-colors',
+                  isActive('/all-tools') 
+                    ? 'text-foreground font-medium' 
+                    : 'text-muted-foreground hover:text-foreground'
+                )}
+              >
+                <span className="flex items-center gap-1.5">
+                  <LayoutGrid size={15} className={isActive('/all-tools') ? 'text-primary' : ''} />
+                  همه ابزارها
+                </span>
+                {isActive('/all-tools') && (
+                  <motion.div
+                    layoutId="nav-indicator"
+                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                  />
+                )}
+              </Link>
+
+              {/* Categories Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
                     className={cn(
-                      'relative px-3 py-1.5 rounded-md text-sm transition-colors',
-                      active 
+                      'relative flex items-center gap-1 px-3 py-1.5 rounded-md text-sm transition-colors',
+                      isCategoryActive 
                         ? 'text-foreground font-medium' 
                         : 'text-muted-foreground hover:text-foreground'
                     )}
                   >
-                    <span className="flex items-center gap-1.5">
-                      <Icon size={15} className={active ? 'text-primary' : ''} />
-                      {item.label}
-                    </span>
-                    {active && (
+                    <span>دسته‌بندی‌ها</span>
+                    <ChevronDown size={14} />
+                    {isCategoryActive && (
                       <motion.div
                         layoutId="nav-indicator"
                         className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
                         transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                       />
                     )}
-                  </Link>
-                );
-              })}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-background border border-border shadow-lg z-[100]">
+                  {categoryItems.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(item.href);
+                    return (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link
+                          to={item.href}
+                          className={cn(
+                            'flex items-center gap-2 px-3 py-2 cursor-pointer',
+                            active && 'bg-secondary font-medium'
+                          )}
+                        >
+                          <Icon size={16} className={active ? 'text-primary' : 'text-muted-foreground'} />
+                          <span>{item.label}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </nav>
 
             {/* Right Actions */}
@@ -160,7 +207,7 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 w-72 z-50 bg-background border-l border-border lg:hidden"
+              className="fixed top-0 right-0 bottom-0 w-72 z-50 bg-background border-l border-border lg:hidden overflow-y-auto"
             >
               {/* Menu Header */}
               <div className="flex items-center justify-between p-4 border-b border-border">
@@ -193,10 +240,27 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 </button>
               </div>
 
-              {/* Navigation Links */}
+              {/* All Tools Link */}
               <div className="px-3 py-2">
-                <p className="text-xs text-muted-foreground mb-2 px-3">منو</p>
-                {navItems.map((item, index) => {
+                <Link
+                  to="/all-tools"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors',
+                    isActive('/all-tools') 
+                      ? 'bg-secondary text-foreground font-medium' 
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/60'
+                  )}
+                >
+                  <LayoutGrid size={18} className={isActive('/all-tools') ? 'text-primary' : ''} />
+                  <span>همه ابزارها</span>
+                </Link>
+              </div>
+
+              {/* Categories Section */}
+              <div className="px-3 py-2">
+                <p className="text-xs text-muted-foreground mb-2 px-3">دسته‌بندی‌ها</p>
+                {categoryItems.map((item, index) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
                   return (
