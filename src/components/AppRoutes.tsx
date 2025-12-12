@@ -31,6 +31,7 @@ const PersianDateEvents = lazy(() => import("@/pages/ToolTypes/PersianCultural/P
 const SeoAudit = lazy(() => import("@/pages/SeoAudit"));
 const PerformanceDashboard = lazy(() => import("@/pages/PerformanceDashboard"));
 const CollectionPage = lazy(() => import("@/pages/CollectionPage"));
+const CollectionsIndex = lazy(() => import("@/pages/CollectionsIndex"));
 
 const RouteLoader = () => (
   <div className="min-h-[60vh] py-8">
@@ -143,6 +144,8 @@ export const AppRoutes = () => {
           <Route path="/عملکرد" element={withTransition(PerformanceDashboard)} />
           
           {/* Collection pages */}
+          <Route path="/collections" element={withTransition(CollectionsIndex)} />
+          <Route path="/مجموعه‌ها" element={withTransition(CollectionsIndex)} />
           <Route path="/collection/:slug" element={<PageTransition><CollectionPage /></PageTransition>} />
           <Route path="/مجموعه/:slug" element={<PageTransition><CollectionPage /></PageTransition>} />
           
