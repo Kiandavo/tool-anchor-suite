@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Layout } from '@/components/Layout';
-import { FocusedHeroSection } from '@/components/home/FocusedHeroSection';
+import { ModernHeroSection } from '@/components/home/ModernHeroSection';
 import { GlobalSearchBar } from '@/components/home/GlobalSearchBar';
 import { TopToolsSection } from '@/components/home/TopToolsSection';
 import { NewToolsSection } from '@/components/home/NewToolsSection';
@@ -83,8 +83,8 @@ const Index = () => {
         />
       </Suspense>
 
-      {/* 1. Hero - H1 + trust badges */}
-      <FocusedHeroSection />
+      {/* 1. Hero - Modern design with patterns */}
+      <ModernHeroSection />
 
       {/* 2. Visible Search Bar with label */}
       <GlobalSearchBar />
