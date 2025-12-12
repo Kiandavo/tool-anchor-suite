@@ -21,6 +21,59 @@ export const ModernHeroSection = () => {
       {/* Subtle accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/[0.04] rounded-full blur-3xl pointer-events-none" />
       
+      {/* Floating accent dots */}
+      <motion.div
+        className="absolute top-20 right-[15%] w-2 h-2 rounded-full bg-primary/20 hidden sm:block"
+        animate={{ 
+          y: [0, -12, 0],
+          opacity: [0.2, 0.4, 0.2]
+        }}
+        transition={{ 
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div
+        className="absolute top-32 left-[12%] w-1.5 h-1.5 rounded-full bg-primary/15 hidden sm:block"
+        animate={{ 
+          y: [0, -8, 0],
+          opacity: [0.15, 0.3, 0.15]
+        }}
+        transition={{ 
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      />
+      <motion.div
+        className="absolute bottom-28 right-[20%] w-1 h-1 rounded-full bg-primary/25 hidden sm:block"
+        animate={{ 
+          y: [0, -6, 0],
+          opacity: [0.2, 0.35, 0.2]
+        }}
+        transition={{ 
+          duration: 3.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2
+        }}
+      />
+      <motion.div
+        className="absolute bottom-40 left-[18%] w-1.5 h-1.5 rounded-full bg-primary/20 hidden sm:block"
+        animate={{ 
+          y: [0, -10, 0],
+          opacity: [0.15, 0.3, 0.15]
+        }}
+        transition={{ 
+          duration: 4.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 0.5
+        }}
+      />
+      
       <div className="container relative">
         <div className="max-w-3xl mx-auto text-center">
           {/* Main Headline */}
