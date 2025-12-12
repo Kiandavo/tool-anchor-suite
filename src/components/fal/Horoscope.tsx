@@ -82,16 +82,17 @@ export const Horoscope = () => {
       </div>
       
       <CardHeader className="fortune-header fortune-header-horoscope text-center pb-2 py-2 relative">
-        <div className="icon-text justify-center">
-          <Star className="text-purple-800" size={16} />
-          <h2 className="text-sm font-bold text-purple-800 icon-text-sm">
-            طالع بینی
-            <span className="inline-block"><Sparkles size={12} className="text-purple-800" /></span>
-          </h2>
+        <div className="flex items-center justify-between">
+          <HoroscopeGuide />
+          <div className="flex-1 flex items-center justify-center gap-2">
+            <Star className="text-purple-800" size={16} />
+            <h2 className="text-sm font-bold text-purple-800">
+              طالع بینی
+              <Sparkles size={12} className="text-purple-800 inline-block mr-1" />
+            </h2>
+          </div>
+          <div className="w-[70px]"></div> {/* Spacer for balance */}
         </div>
-        
-        {/* Help button */}
-        <HoroscopeGuide />
       </CardHeader>
       
       <CardContent className="pt-3 px-3" id="horoscope-content">
