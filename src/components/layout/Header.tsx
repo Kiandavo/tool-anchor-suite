@@ -78,7 +78,8 @@ export function Header({ title, backUrl, isScrolled }: HeaderProps) {
                 width={200}
                 height={64}
                 loading="eager"
-                fetchPriority="high"
+                // @ts-expect-error - React 18 doesn't fully support fetchpriority yet
+                fetchpriority="high"
                 className="h-16 w-auto transition-transform duration-300 ease-out group-hover:scale-105"
               />
             </Link>
