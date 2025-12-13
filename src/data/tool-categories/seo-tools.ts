@@ -6,7 +6,7 @@ export const seoTools: Tool[] = [
     slug: "meta-tag-generator",
     name: "ایجاد کننده متا تگ",
     category: "seo",
-    description: "تگ‌های متا برای سایت خود را بسازید",
+    description: "ساخت تگ‌های title، description و keywords",
     isNew: false,
     icon: "code"
   },
@@ -15,7 +15,7 @@ export const seoTools: Tool[] = [
     slug: "html-meta-tags",
     name: "تحلیل تگ‌های HTML",
     category: "seo",
-    description: "استخراج و بررسی تگ‌های HTML و سئو صفحه",
+    description: "استخراج متادیتا و تگ‌های سئو از هر صفحه",
     isNew: false,
     icon: "code"
   },
@@ -24,7 +24,7 @@ export const seoTools: Tool[] = [
     slug: "robots-txt-generator",
     name: "ساخت robots.txt",
     category: "seo",
-    description: "ایجاد robots.txt سفارشی",
+    description: "تنظیم دسترسی ربات‌های موتور جستجو",
     isNew: false,
     icon: "code"
   },
@@ -33,7 +33,7 @@ export const seoTools: Tool[] = [
     slug: "utm-builder",
     name: "ساخت UTM",
     category: "seo",
-    description: "افزودن UTM به لینک‌ها",
+    description: "پارامترهای ردیابی کمپین به لینک اضافه کنید",
     isNew: false,
     icon: "filter"
   },
@@ -42,7 +42,7 @@ export const seoTools: Tool[] = [
     slug: "keyword-density",
     name: "چگالی کلمات کلیدی",
     category: "seo",
-    description: "چگالی کلمات کلیدی در متن خود را بررسی کنید",
+    description: "تحلیل فراوانی کلمات در محتوا",
     isNew: false,
     icon: "filter"
   },
@@ -51,7 +51,7 @@ export const seoTools: Tool[] = [
     slug: "open-graph-generator",
     name: "ساخت OG Tag",
     category: "seo",
-    description: "تولید OG Tag برای شبکه‌های اجتماعی",
+    description: "پیش‌نمایش زیبا در اشتراک‌گذاری اجتماعی",
     isNew: false,
     icon: "code"
   },
@@ -60,7 +60,7 @@ export const seoTools: Tool[] = [
     slug: "sitemap-generator",
     name: "ساخت sitemap.xml",
     category: "seo",
-    description: "ایجاد نقشه سایت XML",
+    description: "نقشه سایت برای ایندکس بهتر گوگل",
     isNew: false,
     icon: "code"
   },
@@ -69,7 +69,7 @@ export const seoTools: Tool[] = [
     slug: "favicon-generator",
     name: "ساخت favicon",
     category: "seo",
-    description: "تولید favicon از لوگو",
+    description: "تبدیل تصویر به آیکون مرورگر",
     isNew: false,
     icon: "image"
   },
@@ -78,7 +78,7 @@ export const seoTools: Tool[] = [
     slug: "page-title-check",
     name: "بررسی طول عنوان صفحه",
     category: "seo",
-    description: "طول عنوان مناسب برای سئو",
+    description: "کنترل کاراکتر عنوان برای نمایش کامل",
     isNew: false,
     icon: "type"
   },
@@ -87,7 +87,7 @@ export const seoTools: Tool[] = [
     slug: "canonical-check",
     name: "بررسی canonical",
     category: "seo",
-    description: "بررسی وجود تگ canonical",
+    description: "جلوگیری از محتوای تکراری",
     isNew: false,
     icon: "code"
   },
@@ -96,7 +96,7 @@ export const seoTools: Tool[] = [
     slug: "alt-text-analyzer",
     name: "بررسی alt تصاویر",
     category: "seo",
-    description: "آمار و وضعیت alt تصاویر داخل HTML",
+    description: "گزارش وضعیت متن جایگزین تصاویر",
     isNew: false,
     icon: "filter"
   },
@@ -105,7 +105,7 @@ export const seoTools: Tool[] = [
     slug: "friendly-url-checker",
     name: "بررسی سئو URL",
     category: "seo",
-    description: "بررسی خوانایی و سئو URL",
+    description: "ارزیابی خوانایی و ساختار آدرس",
     isNew: false,
     icon: "hash"
   },
@@ -114,7 +114,7 @@ export const seoTools: Tool[] = [
     slug: "heading-structure-checker",
     name: "بررسی ساختار هدینگ",
     category: "seo",
-    description: "ساختار صحیح هدینگ‌های H1-H6",
+    description: "اعتبارسنجی سلسله‌مراتب H1 تا H6",
     isNew: false,
     icon: "type"
   },
@@ -123,7 +123,7 @@ export const seoTools: Tool[] = [
     slug: "seo-title-case",
     name: "حالت عنوان سئو",
     category: "seo",
-    description: "عنوان صفحات خود را به فرمت سئو تبدیل کنید",
+    description: "فرمت‌دهی حرفه‌ای عناوین",
     isNew: false,
     icon: "type"
   },
@@ -132,7 +132,7 @@ export const seoTools: Tool[] = [
     slug: "auto-shorten-link",
     name: "کوتاه کننده لینک",
     category: "seo",
-    description: "لینک های طولانی را کوتاه کنید",
+    description: "تبدیل URL طولانی به لینک کوتاه",
     isNew: false,
     icon: "hash"
   },
@@ -141,7 +141,7 @@ export const seoTools: Tool[] = [
     slug: "meta-description-suggester",
     name: "پیشنهاد توضیحات متا",
     category: "seo",
-    description: "توضیح متای سئو برای صفحات خود بسازید",
+    description: "خلاصه جذاب برای نتایج جستجو",
     isNew: false,
     icon: "filter"
   },
@@ -150,7 +150,7 @@ export const seoTools: Tool[] = [
     slug: "alt-attribute-generator",
     name: "ایجاد Alt تصاویر",
     category: "seo",
-    description: "متن جایگزین برای تصاویر را تولید کنید",
+    description: "نوشتن متن توصیفی برای تصاویر",
     isNew: false,
     icon: "filter"
   },
@@ -159,7 +159,7 @@ export const seoTools: Tool[] = [
     slug: "bulk-url-checker",
     name: "بررسی گروهی URL",
     category: "seo",
-    description: "بررسی چندین آدرس سایت به صورت همزمان",
+    description: "کنترل همزمان چندین آدرس",
     isNew: false,
     icon: "filter"
   },
@@ -168,7 +168,7 @@ export const seoTools: Tool[] = [
     slug: "seo-redirect-generator",
     name: "تولید ریدایرکت سئو",
     category: "seo",
-    description: "ساخت سریع کد ریدایرکت سایت",
+    description: "کد 301 و 302 برای انتقال صفحات",
     isNew: false,
     icon: "filter"
   },
@@ -177,7 +177,7 @@ export const seoTools: Tool[] = [
     slug: "meta-viewport-checker",
     name: "بررسی متا ویوپورت",
     category: "seo",
-    description: "وضعیت تگ viewport سایت را بررسی کنید",
+    description: "کنترل تنظیمات نمایش موبایل",
     isNew: false,
     icon: "filter"
   },
@@ -186,7 +186,7 @@ export const seoTools: Tool[] = [
     slug: "html-heading-extractor",
     name: "استخراج هدینگ‌ها",
     category: "seo",
-    description: "استخراج ساختار هدینگ‌های HTML",
+    description: "لیست عناوین صفحه با سلسله‌مراتب",
     isNew: true,
     icon: "code"
   },
@@ -195,7 +195,7 @@ export const seoTools: Tool[] = [
     slug: "social-tags-generator",
     name: "تگ‌های شبکه‌های اجتماعی",
     category: "seo",
-    description: "تولید تگ‌های مورد نیاز شبکه‌های اجتماعی",
+    description: "متادیتا برای توییتر، فیسبوک و لینکدین",
     isNew: true,
     icon: "code"
   },
@@ -204,7 +204,7 @@ export const seoTools: Tool[] = [
     slug: "meta-refresh-generator",
     name: "تولید Meta Refresh",
     category: "seo",
-    description: "ایجاد تگ meta برای ریدایرکت",
+    description: "ریدایرکت خودکار با تاخیر زمانی",
     isNew: true,
     icon: "code"
   },
@@ -213,7 +213,7 @@ export const seoTools: Tool[] = [
     slug: "schema-generator",
     name: "تولید Schema.org",
     category: "seo",
-    description: "ایجاد کد Schema.org برای محتوا",
+    description: "داده ساختاریافته برای ریچ اسنیپت",
     isNew: true,
     icon: "code"
   },
@@ -222,7 +222,7 @@ export const seoTools: Tool[] = [
     slug: "html-lang-checker",
     name: "بررسی زبان HTML",
     category: "seo",
-    description: "بررسی تگ lang در HTML",
+    description: "اعتبارسنجی تگ زبان صفحه",
     isNew: true,
     icon: "code"
   },
@@ -231,7 +231,7 @@ export const seoTools: Tool[] = [
     slug: "meta-keywords-extractor",
     name: "استخراج کلمات کلیدی",
     category: "seo",
-    description: "استخراج متا کلمات کلیدی از HTML",
+    description: "شناسایی کلمات کلیدی از متادیتا",
     isNew: true,
     icon: "code"
   }

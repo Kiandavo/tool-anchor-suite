@@ -1,4 +1,3 @@
-
 import { Tool } from '@/types/tool-types';
 
 export const randomTools: Tool[] = [
@@ -7,7 +6,7 @@ export const randomTools: Tool[] = [
     slug: "password-generator", 
     name: "تولید رمز عبور امن",
     category: "random",
-    description: "ایجاد رمزهای عبور قوی و امن با تنظیمات کامل",
+    description: "رمز قوی با حروف، اعداد و نمادها",
     isNew: false,
     icon: "key"
   },
@@ -16,7 +15,7 @@ export const randomTools: Tool[] = [
     slug: "qr-code-generator",
     name: "تولید کننده QR کد",
     category: "random",
-    description: "ایجاد QR کد از متن، URL و محتوای دیگر",
+    description: "تبدیل متن و لینک به QR کد",
     isNew: false,
     icon: "qr-code"
   },
@@ -25,7 +24,7 @@ export const randomTools: Tool[] = [
     slug: "random-color-generator",
     name: "تولید رنگ تصادفی",
     category: "random",
-    description: "هر بار یک رنگ جدید بسازید",
+    description: "کد HEX و RGB رنگ‌های تصادفی",
     isNew: false,
     icon: "dice"
   },
@@ -34,7 +33,7 @@ export const randomTools: Tool[] = [
     slug: "random-string",
     name: "رشته تصادفی",
     category: "random",
-    description: "رشته متنی تصادفی تولید کنید",
+    description: "متن تصادفی با طول دلخواه",
     isNew: false,
     icon: "key"
   },
@@ -43,7 +42,7 @@ export const randomTools: Tool[] = [
     slug: "random-date",
     name: "تاریخ تصادفی",
     category: "random",
-    description: "تولید یک تاریخ تصادفی",
+    description: "انتخاب تاریخ در بازه زمانی",
     isNew: false,
     icon: "calendar"
   },
@@ -52,7 +51,7 @@ export const randomTools: Tool[] = [
     slug: "random-number",
     name: "عدد تصادفی",
     category: "random",
-    description: "تولید اعداد تصادفی در محدوده دلخواه",
+    description: "عدد در محدوده حداقل و حداکثر",
     isNew: false,
     icon: "dice",
     isComingSoon: false
@@ -62,7 +61,7 @@ export const randomTools: Tool[] = [
     slug: "random-picker",
     name: "انتخابگر تصادفی",
     category: "random",
-    description: "به طور تصادفی از بین لیست انتخاب کن",
+    description: "انتخاب یک گزینه از لیست",
     isNew: false,
     icon: "dice"
   },
@@ -71,7 +70,7 @@ export const randomTools: Tool[] = [
     slug: "random-emoji-generator",
     name: "تولید ایموجی تصادفی",
     category: "random",
-    description: "هر بار یک ایموجی جدید",
+    description: "ایموجی متفاوت با هر کلیک",
     isNew: false,
     icon: "sparkles"
   },
@@ -80,7 +79,7 @@ export const randomTools: Tool[] = [
     slug: "random-word-generator",
     name: "تولید واژه تصادفی",
     category: "random",
-    description: "تولید کلمات فارسی و انگلیسی تصادفی",
+    description: "کلمات فارسی و انگلیسی",
     isNew: false,
     icon: "random"
   },
@@ -89,7 +88,7 @@ export const randomTools: Tool[] = [
     slug: "random-quote-generator",
     name: "جمله قصار تصادفی",
     category: "random",
-    description: "عبارت یا نقل‌قول انگیزشی هر بار!",
+    description: "نقل‌قول‌های الهام‌بخش",
     isNew: false,
     icon: "sparkles"
   },
@@ -98,7 +97,7 @@ export const randomTools: Tool[] = [
     slug: "random-username-generator",
     name: "تولید نام کاربری هوشمند",
     category: "random",
-    description: "نام کاربری تصادفی بر اساس ترجیحات شما",
+    description: "نام کاربری منحصر بر اساس ترجیحات",
     isNew: false,
     icon: "key"
   },
@@ -107,7 +106,7 @@ export const randomTools: Tool[] = [
     slug: "random-qrcode-generator",
     name: "تولید QRCode تصادفی",
     category: "random",
-    description: "تولید کد QR برای هر مقدار تصادفی",
+    description: "کد QR با محتوای تصادفی",
     isNew: false,
     icon: "random",
     isComingSoon: false
@@ -117,7 +116,7 @@ export const randomTools: Tool[] = [
     slug: "random-array-shuffler",
     name: "مرتب‌سازی تصادفی آرایه",
     category: "random",
-    description: "آرایه‌ای از اعداد یا متن را به صورت تصادفی مرتب کنید",
+    description: "برهم زدن ترتیب اعضای لیست",
     isNew: true,
     icon: "shuffle",
     isComingSoon: false
@@ -127,7 +126,7 @@ export const randomTools: Tool[] = [
     slug: "random-team-generator",
     name: "تولید تیم تصادفی",
     category: "random",
-    description: "افراد را به صورت تصادفی به تیم‌ها تقسیم کنید",
+    description: "تقسیم افراد به گروه‌های مساوی",
     isNew: true,
     icon: "random"
   },
@@ -136,7 +135,7 @@ export const randomTools: Tool[] = [
     slug: "random-card-picker",
     name: "انتخاب کارت تصادفی",
     category: "random",
-    description: "یک کارت تصادفی از بازی ورق انتخاب کنید",
+    description: "کشیدن کارت از دسته ورق",
     isNew: true,
     icon: "random",
     isComingSoon: false
@@ -146,7 +145,7 @@ export const randomTools: Tool[] = [
     slug: "random-nickname-generator",
     name: "تولید نام مستعار تصادفی",
     category: "random",
-    description: "یک نام مستعار جالب و تصادفی بسازید",
+    description: "لقب‌های خلاقانه و سرگرم‌کننده",
     isNew: true,
     icon: "sparkles",
     isComingSoon: false
@@ -156,7 +155,7 @@ export const randomTools: Tool[] = [
     slug: "random-decision-maker",
     name: "تصمیم‌گیری تصادفی",
     category: "random",
-    description: "بین چند گزینه به صورت تصادفی تصمیم‌گیری کنید",
+    description: "انتخاب بین چند گزینه",
     isNew: true,
     icon: "random",
     isComingSoon: false
@@ -166,7 +165,7 @@ export const randomTools: Tool[] = [
     slug: "random-movie-picker",
     name: "انتخاب فیلم تصادفی",
     category: "random",
-    description: "یک فیلم تصادفی برای تماشا پیشنهاد می‌دهد",
+    description: "پیشنهاد فیلم برای تماشا",
     isNew: true,
     icon: "sparkles"
   },
@@ -175,7 +174,7 @@ export const randomTools: Tool[] = [
     slug: "random-recipe-generator",
     name: "دستور پخت تصادفی",
     category: "random",
-    description: "یک دستور پخت تصادفی برای آشپزی پیشنهاد می‌دهد",
+    description: "ایده غذا برای امروز",
     isNew: false,
     icon: "sparkles"
   },
@@ -184,7 +183,7 @@ export const randomTools: Tool[] = [
     slug: "dice-roller",
     name: "پرتاب تاس",
     category: "random",
-    description: "تاس بیندازید با انیمیشن و تاریخچه",
+    description: "تاس سه‌بعدی با تاریخچه نتایج",
     isNew: true,
     icon: "dices"
   },
@@ -193,7 +192,7 @@ export const randomTools: Tool[] = [
     slug: "coin-flip",
     name: "شیر یا خط",
     category: "random",
-    description: "سکه بیندازید با آمار و تاریخچه",
+    description: "سکه‌اندازی با آمار پرتاب‌ها",
     isNew: true,
     icon: "coins"
   },
@@ -202,7 +201,7 @@ export const randomTools: Tool[] = [
     slug: "persian-name-generator",
     name: "تولید نام فارسی",
     category: "random",
-    description: "نام‌های زیبای فارسی با معنی تولید کنید",
+    description: "نام‌های ایرانی همراه معنی",
     isNew: true,
     icon: "user"
   }
