@@ -7,7 +7,7 @@ export const calculatorTools: Tool[] = [
     slug: "percentage-calculator",
     name: "محاسبه گر درصد",
     category: "calculators",
-    description: "محاسبات درصدی را به سرعت انجام دهید",
+    description: "درصد از عدد، درصد تغییرات و تبدیل کسر به درصد",
     isNew: false,
     icon: "percent"
   },
@@ -16,7 +16,7 @@ export const calculatorTools: Tool[] = [
     slug: "loan-calculator",
     name: "ماشین حساب وام",
     category: "calculators",
-    description: "محاسبه اقساط وام",
+    description: "اقساط ماهانه و کل سود وام را ببینید",
     isNew: false,
     icon: "calculator"
   },
@@ -25,7 +25,7 @@ export const calculatorTools: Tool[] = [
     slug: "age-calculator",
     name: "محاسبه سن",
     category: "calculators",
-    description: "محاسبه سن بر اساس تاریخ تولد",
+    description: "سن دقیق به سال، ماه و روز",
     isNew: false,
     icon: "activity"
   },
@@ -34,7 +34,7 @@ export const calculatorTools: Tool[] = [
     slug: "bmi-calculator",
     name: "محاسبه گر BMI",
     category: "calculators",
-    description: "شاخص توده بدنی خود را محاسبه کنید",
+    description: "شاخص توده بدنی و وضعیت سلامت وزن",
     isNew: false,
     icon: "activity"
   },
@@ -43,7 +43,7 @@ export const calculatorTools: Tool[] = [
     slug: "salary-tax-calculator",
     name: "محاسبه مالیات حقوق",
     category: "calculators",
-    description: "محاسبه مالیات سالانه یا ماهیانه",
+    description: "مالیات سالانه یا ماهیانه حقوق",
     isNew: false,
     icon: "calculator"
   },
@@ -52,7 +52,7 @@ export const calculatorTools: Tool[] = [
     slug: "discount-calculator",
     name: "محاسبه‌گر تخفیف",
     category: "calculators",
-    description: "محاسبه قیمت پس از اعمال تخفیف",
+    description: "قیمت نهایی پس از اعمال تخفیف",
     isNew: false,
     icon: "percent"
   },
@@ -61,7 +61,7 @@ export const calculatorTools: Tool[] = [
     slug: "unit-converter",
     name: "تبدیل واحدها",
     category: "calculators",
-    description: "تبدیل اندازه‌ها و واحدها",
+    description: "تبدیل طول، وزن، حجم و دما",
     isNew: false,
     icon: "calculator"
   },
@@ -70,7 +70,7 @@ export const calculatorTools: Tool[] = [
     slug: "date-difference",
     name: "محاسبه اختلاف تاریخ",
     category: "calculators",
-    description: "تفاوت بین دو تاریخ",
+    description: "فاصله زمانی بین دو تاریخ",
     isNew: false,
     icon: "calendar"
   },
@@ -79,7 +79,7 @@ export const calculatorTools: Tool[] = [
     slug: "tip-calculator",
     name: "محاسبه انعام",
     category: "calculators",
-    description: "انعام را برای صورت حساب محاسبه کنید",
+    description: "انعام و سهم هر نفر از صورتحساب",
     isNew: false,
     icon: "calculator"
   },
@@ -88,7 +88,7 @@ export const calculatorTools: Tool[] = [
     slug: "area-calculator",
     name: "محاسبه مساحت",
     category: "calculators",
-    description: "مساحت اشکال را محاسبه کنید",
+    description: "مساحت مربع، مستطیل، دایره و...",
     isNew: false,
     icon: "calculator"
   },
@@ -97,7 +97,7 @@ export const calculatorTools: Tool[] = [
     slug: "volume-calculator",
     name: "محاسبه حجم",
     category: "calculators",
-    description: "حجم اشکال را محاسبه کنید",
+    description: "حجم مکعب، استوانه، کره و...",
     isNew: false,
     icon: "calculator"
   },
@@ -107,7 +107,7 @@ export const calculatorTools: Tool[] = [
     slug: "calorie-calculator",
     name: "محاسبه کالری",
     category: "calculators",
-    description: "کالری مورد نیاز روزانه خود را محاسبه کنید",
+    description: "کالری روزانه بر اساس سن، وزن و فعالیت",
     isNew: true,
     icon: "calculator"
   },
@@ -116,7 +116,7 @@ export const calculatorTools: Tool[] = [
     slug: "weight-converter",
     name: "تبدیل واحدهای وزن",
     category: "calculators",
-    description: "تبدیل بین واحدهای مختلف وزن",
+    description: "کیلوگرم به پوند، گرم به اونس و...",
     isNew: true,
     icon: "calculator"
   },
@@ -125,7 +125,7 @@ export const calculatorTools: Tool[] = [
     slug: "length-converter",
     name: "تبدیل واحدهای طول",
     category: "calculators",
-    description: "تبدیل بین واحدهای مختلف طول",
+    description: "متر به فوت، کیلومتر به مایل و...",
     isNew: true,
     icon: "calculator"
   },
@@ -134,7 +134,7 @@ export const calculatorTools: Tool[] = [
     slug: "speed-calculator",
     name: "محاسبه سرعت",
     category: "calculators",
-    description: "محاسبه سرعت، زمان و مسافت",
+    description: "سرعت، زمان یا مسافت را بیابید",
     isNew: true,
     icon: "calculator"
   },
@@ -143,7 +143,7 @@ export const calculatorTools: Tool[] = [
     slug: "time-calculator",
     name: "محاسبه زمان",
     category: "calculators",
-    description: "جمع و تفریق زمان‌ها",
+    description: "جمع و تفریق ساعت و دقیقه",
     isNew: true,
     icon: "calculator"
   },
@@ -152,7 +152,7 @@ export const calculatorTools: Tool[] = [
     slug: "mortgage-calculator",
     name: "محاسبه گر رهن و اجاره",
     category: "calculators",
-    description: "تبدیل رهن به اجاره و بالعکس",
+    description: "تبدیل رهن به اجاره ماهانه",
     isNew: true,
     icon: "calculator"
   },
@@ -161,7 +161,7 @@ export const calculatorTools: Tool[] = [
     slug: "investment-calculator",
     name: "محاسبه گر سرمایه‌گذاری",
     category: "calculators",
-    description: "محاسبه سود سرمایه‌گذاری",
+    description: "سود مرکب و رشد سرمایه",
     isNew: true,
     icon: "calculator"
   },
@@ -170,7 +170,7 @@ export const calculatorTools: Tool[] = [
     slug: "power-calculator",
     name: "محاسبه گر توان",
     category: "calculators",
-    description: "محاسبه ولتاژ، جریان و توان الکتریکی",
+    description: "ولتاژ، جریان و توان الکتریکی",
     isNew: true,
     icon: "calculator"
   },
@@ -179,7 +179,7 @@ export const calculatorTools: Tool[] = [
     slug: "gpa-calculator",
     name: "محاسبه گر معدل",
     category: "calculators",
-    description: "محاسبه معدل تحصیلی",
+    description: "معدل دانشگاهی با واحدهای مختلف",
     isNew: true,
     icon: "calculator"
   },
@@ -188,7 +188,7 @@ export const calculatorTools: Tool[] = [
     slug: "scientific-calculator",
     name: "ماشین حساب علمی",
     category: "calculators",
-    description: "انجام محاسبات پیچیده علمی",
+    description: "توان، لگاریتم، مثلثات و...",
     isNew: true,
     icon: "calculator"
   },
@@ -197,7 +197,7 @@ export const calculatorTools: Tool[] = [
     slug: "today-date",
     name: "تبدیل تاریخ امروز",
     category: "calculators",
-    description: "تبدیل تاریخ امروز به شمسی، قمری و میلادی",
+    description: "تاریخ شمسی، قمری و میلادی امروز",
     isNew: true,
     icon: "calendar"
   },
@@ -206,7 +206,7 @@ export const calculatorTools: Tool[] = [
     slug: "world-time",
     name: "ساعت جهانی",
     category: "calculators",
-    description: "نمایش ساعت در نقاط مختلف جهان",
+    description: "ساعت شهرهای مختلف دنیا",
     isNew: true,
     icon: "clock"
   },
@@ -215,7 +215,7 @@ export const calculatorTools: Tool[] = [
     slug: "profit-calculator",
     name: "محاسبه سود و بهره",
     category: "calculators",
-    description: "محاسبه سود سپرده و وام",
+    description: "سود سپرده بانکی و وام",
     isNew: true,
     icon: "calculator"
   },
@@ -224,7 +224,7 @@ export const calculatorTools: Tool[] = [
     slug: "rent-factors-calculator",
     name: "محاسبه عوامل اجاره",
     category: "calculators",
-    description: "محاسبه عوامل مختلف اجاره مانند درآمد موردنیاز و هزینه‌های جانبی",
+    description: "درآمد لازم و هزینه‌های جانبی اجاره",
     isNew: true,
     icon: "calculator"
   },

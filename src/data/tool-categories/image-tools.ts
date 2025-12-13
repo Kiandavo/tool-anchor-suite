@@ -6,7 +6,7 @@ export const imageTools: Tool[] = [
     slug: "image-compressor",
     name: "فشرده ساز تصویر",
     category: "image",
-    description: "حجم تصاویر را بدون کاهش کیفیت کاهش دهید",
+    description: "کاهش حجم عکس با حفظ کیفیت",
     isNew: true, 
     icon: "image"
   },
@@ -15,7 +15,7 @@ export const imageTools: Tool[] = [
     slug: "image-to-webp",
     name: "تبدیل به WebP",
     category: "image",
-    description: "فرمت تصویر خود را به WebP تبدیل کنید",
+    description: "فرمت سبک‌تر برای وب‌سایت",
     isNew: false,
     icon: "image"
   },
@@ -24,7 +24,7 @@ export const imageTools: Tool[] = [
     slug: "image-to-jpg",
     name: "تبدیل به JPG",
     category: "image",
-    description: "تصویر را به فرمت JPG تبدیل کنید",
+    description: "فرمت استاندارد عکس",
     isNew: false,
     icon: "image"
   },
@@ -33,7 +33,7 @@ export const imageTools: Tool[] = [
     slug: "image-to-png",
     name: "تبدیل به PNG",
     category: "image",
-    description: "تصویر را به فرمت PNG تبدیل کنید",
+    description: "فرمت با پشتیبانی شفافیت",
     isNew: false,
     icon: "image"
   },
@@ -42,7 +42,7 @@ export const imageTools: Tool[] = [
     slug: "image-cropper",
     name: "برش‌دهنده تصویر",
     category: "image",
-    description: "بخشی از عکس را انتخاب و برش دهید",
+    description: "انتخاب و برش بخشی از عکس",
     isNew: false,
     icon: "image",
     isComingSoon: false
@@ -52,7 +52,7 @@ export const imageTools: Tool[] = [
     slug: "image-rotate",
     name: "چرخش تصویر",
     category: "image",
-    description: "تصویر را بچرخانید",
+    description: "چرخش ۹۰، ۱۸۰ یا ۲۷۰ درجه",
     isNew: false,
     icon: "image"
   },
@@ -61,7 +61,7 @@ export const imageTools: Tool[] = [
     slug: "image-flip",
     name: "آینه‌ای کردن تصویر",
     category: "image",
-    description: "تصویر را به صورت افقی یا عمودی وارونه کنید",
+    description: "وارونه کردن افقی یا عمودی",
     isNew: false,
     icon: "image"
   },
@@ -70,7 +70,7 @@ export const imageTools: Tool[] = [
     slug: "image-blur",
     name: "محو کردن تصویر",
     category: "image",
-    description: "افکت محو ساده روی عکس",
+    description: "اعمال افکت تاری (Blur)",
     isNew: false,
     icon: "image"
   },
@@ -79,7 +79,7 @@ export const imageTools: Tool[] = [
     slug: "image-resizer",
     name: "تغییر اندازه تصویر",
     category: "image",
-    description: "اندازه تصاویر را به سرعت تغییر دهید",
+    description: "تنظیم عرض و ارتفاع دلخواه",
     isNew: false,
     icon: "maximize"
   },
@@ -88,7 +88,7 @@ export const imageTools: Tool[] = [
     slug: "image-grayscale",
     name: "سیاه‌ و سفید کردن تصویر",
     category: "image",
-    description: "تصویر رنگی را به حالت سیاه سفید درآورید",
+    description: "حذف رنگ از عکس",
     isNew: false,
     icon: "image"
   },
@@ -97,7 +97,7 @@ export const imageTools: Tool[] = [
     slug: "photo-dimensions-finder",
     name: "یافتن ابعاد عکس",
     category: "image",
-    description: "ابعاد دقیق تصاویر خود را مشاهده کنید",
+    description: "نمایش عرض، ارتفاع و نسبت تصویر",
     isNew: false,
     icon: "image",
     isComingSoon: false
@@ -107,7 +107,7 @@ export const imageTools: Tool[] = [
     slug: "svg-to-png-converter",
     name: "تبدیل SVG به PNG",
     category: "image",
-    description: "فرمت SVG عکس را به PNG تبدیل کنید",
+    description: "تبدیل وکتور به تصویر رستری",
     isNew: false,
     icon: "image"
   },
@@ -116,7 +116,7 @@ export const imageTools: Tool[] = [
     slug: "image-invert",
     name: "معکوس کردن رنگ تصویر",
     category: "image",
-    description: "رنگ‌های تصویر را معکوس کنید",
+    description: "نگاتیو کردن رنگ‌های عکس",
     isNew: true,
     icon: "image"
   }
