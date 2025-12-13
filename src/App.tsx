@@ -31,11 +31,20 @@ const KeyboardShortcutsProvider = ({ children }: { children: React.ReactNode }) 
 };
 
 const App = () => {
-  const [showSplash, setShowSplash] = React.useState(true);
+  // Skip splash for returning users in the same session
+  const [showSplash, setShowSplash] = React.useState(() => {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('splashShown')) {
+      return false;
+    }
+    return true;
+  });
   
   // Memoize callback to prevent SplashScreen timer reset on re-renders
   const handleSplashComplete = React.useCallback(() => {
     setShowSplash(false);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('splashShown', 'true');
+    }
   }, []);
   
   // Initialize font optimization and service worker on app startup
