@@ -26,10 +26,6 @@ const getRelatedTools = (tool: Tool, limit: number = 6) => {
 // Generate short, practical FAQ
 const getDefaultFAQ = (toolName: string) => [
   {
-    question: `آیا ${toolName} رایگان است؟`,
-    answer: 'بله، کاملاً رایگان و بدون نیاز به ثبت‌نام است.'
-  },
-  {
     question: 'آیا اطلاعات من ذخیره می‌شود؟',
     answer: 'خیر، تمام پردازش‌ها در مرورگر شما انجام می‌شود و هیچ داده‌ای به سرور ارسال نمی‌شود.'
   },

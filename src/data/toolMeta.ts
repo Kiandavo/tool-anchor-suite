@@ -18,8 +18,8 @@ interface ToolMeta {
 // Common FAQ items reused across tools
 const commonFAQ = {
   free: {
-    question: 'آیا این ابزار رایگان است؟',
-    answer: 'بله، کاملاً رایگان و بدون نیاز به ثبت‌نام.'
+    question: 'چگونه از این ابزار استفاده کنم؟',
+    answer: 'کافی است اطلاعات مورد نیاز را وارد کنید و نتیجه به صورت فوری نمایش داده می‌شود.'
   },
   privacy: {
     question: 'آیا اطلاعات من ذخیره می‌شود؟',
@@ -45,7 +45,6 @@ export const toolMetaRegistry: Record<string, ToolMeta> = {
     faq: [
       { question: 'BMI چیست؟', answer: 'شاخص توده بدنی (BMI) معیاری برای سنجش تناسب وزن با قد است. از تقسیم وزن (کیلوگرم) بر مجذور قد (متر) به دست می‌آید.' },
       { question: 'BMI نرمال چند است؟', answer: 'BMI بین ۱۸.۵ تا ۲۴.۹ نرمال محسوب می‌شود. زیر ۱۸.۵ کم‌وزن و بالای ۲۵ اضافه‌وزن است.' },
-      commonFAQ.free,
       commonFAQ.privacy
     ]
   },

@@ -104,10 +104,6 @@ export const generateComprehensiveKeywords = (
 export const generateDefaultFAQ = (toolName: string, category: string) => {
   return [
     {
-      question: `آیا ${toolName} رایگان است؟`,
-      answer: `بله، ${toolName} کاملاً رایگان است و نیازی به ثبت‌نام یا پرداخت ندارد. می‌توانید بدون محدودیت از آن استفاده کنید.`
-    },
-    {
       question: `چگونه از ${toolName} استفاده کنم؟`,
       answer: `استفاده از ${toolName} بسیار آسان است. کافی است اطلاعات مورد نیاز را وارد کنید و نتیجه به صورت فوری نمایش داده می‌شود.`
     },
