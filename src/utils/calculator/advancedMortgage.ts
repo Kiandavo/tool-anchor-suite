@@ -347,17 +347,18 @@ export function calculateAffordability(
 /**
  * Get market rates for different Iranian cities
  */
+// Market rates updated for 1403 - Source: Central Bank, Amlak.com
 export function getMarketRates(): Record<string, { rentRate: number; mortgageRate: number; appreciation: number }> {
   return {
-    'تهران': { rentRate: 28, mortgageRate: 26, appreciation: 12 },
-    'اصفهان': { rentRate: 25, mortgageRate: 24, appreciation: 8 },
-    'مشهد': { rentRate: 24, mortgageRate: 23, appreciation: 7 },
-    'شیراز': { rentRate: 23, mortgageRate: 22, appreciation: 6 },
-    'تبریز': { rentRate: 22, mortgageRate: 21, appreciation: 5 },
-    'کرج': { rentRate: 26, mortgageRate: 25, appreciation: 10 },
-    'اهواز': { rentRate: 21, mortgageRate: 20, appreciation: 4 },
-    'قم': { rentRate: 24, mortgageRate: 23, appreciation: 7 },
-    'رشت': { rentRate: 20, mortgageRate: 19, appreciation: 3 },
-    'کرمان': { rentRate: 19, mortgageRate: 18, appreciation: 3 }
+    'تهران': { rentRate: 36, mortgageRate: 30, appreciation: 35 },
+    'اصفهان': { rentRate: 32, mortgageRate: 28, appreciation: 25 },
+    'مشهد': { rentRate: 30, mortgageRate: 26, appreciation: 22 },
+    'شیراز': { rentRate: 28, mortgageRate: 25, appreciation: 20 },
+    'تبریز': { rentRate: 26, mortgageRate: 24, appreciation: 18 },
+    'کرج': { rentRate: 34, mortgageRate: 28, appreciation: 30 },
+    'اهواز': { rentRate: 24, mortgageRate: 22, appreciation: 15 },
+    'قم': { rentRate: 28, mortgageRate: 25, appreciation: 20 },
+    'رشت': { rentRate: 24, mortgageRate: 22, appreciation: 15 },
+    'کرمان': { rentRate: 22, mortgageRate: 20, appreciation: 12 }
   };
 }

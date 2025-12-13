@@ -12,54 +12,56 @@ import { formatPersianNumber } from '@/utils/persianNumbers';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 // Property presets with typical Tehran prices
+// Property presets with latest Tehran prices (1403)
+// Source: EghtesadOnline, EcoIran - آذر ۱۴۰۳
 const PROPERTY_PRESETS = [
   { 
     id: 'small-apt',
     label: 'آپارتمان کوچک',
     icon: '🏢',
-    description: '۵۰-۷۰ متر، منطقه متوسط',
-    mortgage: 200000000,
-    rent: 4000000,
+    description: '۵۰-۷۰ متر، منطقه متوسط (تهرانپارس، نارمک)',
+    mortgage: 500000000,
+    rent: 12000000,
   },
   { 
     id: 'medium-apt',
     label: 'آپارتمان متوسط',
     icon: '🏠',
-    description: '۸۰-۱۰۰ متر، منطقه خوب',
-    mortgage: 500000000,
-    rent: 10000000,
+    description: '۸۰-۱۰۰ متر، منطقه خوب (سعادت‌آباد، پونک)',
+    mortgage: 1200000000,
+    rent: 25000000,
   },
   { 
     id: 'large-apt',
     label: 'آپارتمان بزرگ',
     icon: '🏡',
-    description: '۱۲۰-۱۵۰ متر، منطقه عالی',
-    mortgage: 1000000000,
-    rent: 20000000,
+    description: '۱۲۰-۱۵۰ متر، منطقه عالی (الهیه، فرمانیه)',
+    mortgage: 2500000000,
+    rent: 50000000,
   },
   { 
     id: 'villa',
     label: 'ویلایی',
     icon: '🏘️',
-    description: '۲۰۰+ متر با حیاط',
-    mortgage: 2000000000,
-    rent: 35000000,
+    description: '۲۰۰+ متر با حیاط (شمال تهران)',
+    mortgage: 5000000000,
+    rent: 100000000,
   },
 ];
 
 const QUICK_AMOUNTS = [
-  { label: '۵۰ میلیون', value: 50000000 },
-  { label: '۱۰۰ میلیون', value: 100000000 },
-  { label: '۲۰۰ میلیون', value: 200000000 },
   { label: '۳۰۰ میلیون', value: 300000000 },
   { label: '۵۰۰ میلیون', value: 500000000 },
+  { label: '۸۰۰ میلیون', value: 800000000 },
+  { label: '۱ میلیارد', value: 1000000000 },
+  { label: '۲ میلیارد', value: 2000000000 },
 ];
 
 const QUICK_RENTS = [
-  { label: '۲ میلیون', value: 2000000 },
-  { label: '۵ میلیون', value: 5000000 },
   { label: '۱۰ میلیون', value: 10000000 },
   { label: '۱۵ میلیون', value: 15000000 },
+  { label: '۲۵ میلیون', value: 25000000 },
+  { label: '۴۰ میلیون', value: 40000000 },
 ];
 
 const DEFAULT_RATE = 24;
