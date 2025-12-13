@@ -20,20 +20,21 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
+  // Start visible with subtle position offset for reveal effect
   const getInitialPosition = () => {
     switch (direction) {
       case 'up':
-        return { opacity: 0, y: 40 };
+        return { opacity: 0.3, y: 20 };
       case 'down':
-        return { opacity: 0, y: -40 };
+        return { opacity: 0.3, y: -20 };
       case 'left':
-        return { opacity: 0, x: 40 };
+        return { opacity: 0.3, x: 20 };
       case 'right':
-        return { opacity: 0, x: -40 };
+        return { opacity: 0.3, x: -20 };
       case 'none':
-        return { opacity: 0 };
+        return { opacity: 0.3 };
       default:
-        return { opacity: 0, y: 40 };
+        return { opacity: 0.3, y: 20 };
     }
   };
 

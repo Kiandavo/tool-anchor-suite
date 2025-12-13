@@ -251,14 +251,14 @@ code, pre {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Font Loading States */
+/* Font Loading States - NEVER hide content for font loading */
 .font-loading {
   font-display: swap;
-  visibility: hidden;
+  /* visibility: hidden removed - causes white screen if fonts fail */
 }
 
 .font-loaded {
-  visibility: visible;
+  /* Content always visible */
 }
 
 /* Responsive Typography - Enhanced for mobile readability */
