@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "@/providers/HelmetProvider";
 import { AppRoutes } from "@/components/AppRoutes";
@@ -10,6 +10,7 @@ import { registerServiceWorker } from "@/utils/serviceWorkerRegistration";
 import { DefaultResourceHints } from "@/components/performance/ResourceHints";
 import { CoreWebVitals } from "@/components/performance/CoreWebVitals";
 import { SplashScreen } from "@/components/SplashScreen";
+import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { KeyboardShortcutsHelp } from "@/components/ui/KeyboardShortcutsHelp";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
@@ -76,7 +77,9 @@ const App = () => {
             <KeyboardShortcutsHelp />
             <InstallPrompt />
             {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-            <AppRoutes />
+            <Suspense fallback={<LoadingSkeleton />}>
+              <AppRoutes />
+            </Suspense>
           </KeyboardShortcutsProvider>
         </QueryClientProvider>
       </HelmetProvider>
