@@ -457,47 +457,23 @@
       // Immediately visible - remove any blocking
       document.body.style.visibility = 'visible';
       
-      // Fast React mount detection using MutationObserver (more efficient than setInterval)
+      // Fallback-only mechanism - App.tsx handles primary hide logic
+      // This is a safety net for edge cases where React doesn't mount properly
       (function() {
         var staticContent = document.getElementById('static-content');
         var loadingSkeleton = document.getElementById('loading-skeleton');
-        var root = document.getElementById('root');
-        if (!root) return;
         
         var hidePreRenderContent = function() {
-          // Add class to body for CSS-based hiding (unified with App.tsx)
-          document.body.classList.add('react-mounted');
+          // Check if already hidden by App.tsx to avoid double-processing
+          if (document.body.classList.contains('react-mounted')) return;
           
-          // Hide static content via CSS only - no DOM removal to avoid race conditions
-          if (staticContent) {
-            staticContent.style.display = 'none';
-          }
-          // Hide loading skeleton
-          if (loadingSkeleton) {
-            loadingSkeleton.style.display = 'none';
-          }
+          document.body.classList.add('react-mounted');
+          if (staticContent) staticContent.style.display = 'none';
+          if (loadingSkeleton) loadingSkeleton.style.display = 'none';
         };
         
-        // Use MutationObserver for efficient DOM change detection
-        var observer = new MutationObserver(function(mutations) {
-          // Check if React rendered any content
-          var hasReactContent = root.children.length > 0 && 
-            Array.from(root.children).some(function(child) {
-              return child.id !== 'static-content' && child.id !== 'loading-skeleton';
-            });
-          if (hasReactContent) {
-            observer.disconnect();
-            hidePreRenderContent();
-          }
-        });
-        
-        observer.observe(root, { childList: true, subtree: true });
-        
-        // Increased fallback timeout for slower browsers
-        setTimeout(function() {
-          observer.disconnect();
-          hidePreRenderContent();
-        }, 1500);
+        // Long fallback timeout - only triggers if React fails to mount
+        setTimeout(hidePreRenderContent, 3000);
       })();
       
       // Optimize main thread by yielding control

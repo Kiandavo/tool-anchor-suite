@@ -55,22 +55,12 @@ const App = () => {
   
   // Initialize font optimization and service worker on app startup
   React.useEffect(() => {
+    // Immediately hide static content when React mounts - no timing games
+    hideStaticContent();
+    
     initializeFontOptimization();
     registerServiceWorker();
-    
-    // For returning users (no splash), hide static content after React paints
-    if (splashAlreadyShown) {
-      // Use requestAnimationFrame to wait for React to paint first
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          // Small delay for Safari which has different rendering timing
-          setTimeout(() => {
-            hideStaticContent();
-          }, 50);
-        });
-      });
-    }
-  }, [splashAlreadyShown, hideStaticContent]);
+  }, [hideStaticContent]);
 
   // Render app content immediately with splash overlay on top
   // This allows LCP to paint while splash shows, improving TTI
