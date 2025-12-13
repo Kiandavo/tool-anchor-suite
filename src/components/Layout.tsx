@@ -45,7 +45,7 @@ export const Layout = ({ children }: LayoutProps) => {
       
       <Header isScrolled={isScrolled} />
       
-      <main className="container mx-auto px-4 py-6 max-w-6xl pt-24 font-body touch-manipulation">
+      <main className="container mx-auto px-4 py-6 max-w-6xl pt-28 font-body touch-manipulation">
         {children}
       </main>
 
