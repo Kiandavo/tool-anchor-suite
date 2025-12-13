@@ -281,11 +281,14 @@
       }
       
       /* When React mounts, hide static content without layout shift */
+      /* Target both :root and body for cross-browser compatibility */
       #static-content.hidden,
+      :root.react-mounted #static-content,
+      body.react-mounted #static-content,
       .react-mounted #static-content {
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
         display: none !important;
       }
       
@@ -462,22 +465,16 @@
         if (!root) return;
         
         var hidePreRenderContent = function() {
-          // Add class to root for CSS-based hiding
-          document.documentElement.classList.add('react-mounted');
+          // Add class to body for CSS-based hiding (unified with App.tsx)
+          document.body.classList.add('react-mounted');
           
-          // Hide static content immediately
+          // Hide static content via CSS only - no DOM removal to avoid race conditions
           if (staticContent) {
             staticContent.style.display = 'none';
-            if (staticContent.parentNode) {
-              staticContent.parentNode.removeChild(staticContent);
-            }
           }
           // Hide loading skeleton
           if (loadingSkeleton) {
             loadingSkeleton.style.display = 'none';
-            if (loadingSkeleton.parentNode) {
-              loadingSkeleton.parentNode.removeChild(loadingSkeleton);
-            }
           }
         };
         
@@ -496,11 +493,11 @@
         
         observer.observe(root, { childList: true, subtree: true });
         
-        // Faster fallback: 1s max wait
+        // Increased fallback timeout for slower browsers
         setTimeout(function() {
           observer.disconnect();
           hidePreRenderContent();
-        }, 1000);
+        }, 1500);
       })();
       
       // Optimize main thread by yielding control
