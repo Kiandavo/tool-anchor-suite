@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "@/providers/HelmetProvider";
 import { AppRoutes } from "@/components/AppRoutes";
@@ -10,7 +10,6 @@ import { registerServiceWorker } from "@/utils/serviceWorkerRegistration";
 import { DefaultResourceHints } from "@/components/performance/ResourceHints";
 import { CoreWebVitals } from "@/components/performance/CoreWebVitals";
 import { SplashScreen } from "@/components/SplashScreen";
-import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { KeyboardShortcutsHelp } from "@/components/ui/KeyboardShortcutsHelp";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
@@ -36,13 +35,23 @@ const App = () => {
   const splashAlreadyShown = typeof window !== 'undefined' && sessionStorage.getItem('splashShown');
   const [showSplash, setShowSplash] = React.useState(!splashAlreadyShown);
   
-  // Helper to hide static content
+  // Helper to hide static content after paint
   const hideStaticContent = React.useCallback(() => {
-    const staticContent = document.getElementById('static-content');
-    if (staticContent) {
-      staticContent.style.display = 'none';
-    }
-    document.body.classList.add('react-mounted');
+    // Double RAF ensures content has actually painted before hiding static HTML
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const staticContent = document.getElementById('static-content');
+        if (staticContent) {
+          staticContent.style.opacity = '0';
+          staticContent.style.pointerEvents = 'none';
+          // Remove from DOM after fade out
+          setTimeout(() => {
+            staticContent.style.display = 'none';
+          }, 150);
+        }
+        document.body.classList.add('react-mounted');
+      });
+    });
   }, []);
   
   // Memoize callback to prevent SplashScreen timer reset on re-renders
@@ -77,9 +86,7 @@ const App = () => {
             <KeyboardShortcutsHelp />
             <InstallPrompt />
             {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-            <Suspense fallback={<LoadingSkeleton />}>
-              <AppRoutes />
-            </Suspense>
+            <AppRoutes />
           </KeyboardShortcutsProvider>
         </QueryClientProvider>
       </HelmetProvider>
