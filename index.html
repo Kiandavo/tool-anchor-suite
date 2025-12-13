@@ -277,13 +277,16 @@
         z-index: 1;
         background: #fafaff;
         contain: layout style paint;
+        transition: opacity 0.15s ease-out;
       }
       
       /* When React mounts, hide static content without layout shift */
-      #static-content.hidden {
+      #static-content.hidden,
+      .react-mounted #static-content {
         visibility: hidden;
         opacity: 0;
         pointer-events: none;
+        display: none !important;
       }
       
       /* Offscreen rendering optimization */
@@ -459,49 +462,45 @@
         if (!root) return;
         
         var hidePreRenderContent = function() {
-          // Hide static content
-          if (staticContent && staticContent.parentNode) {
-            staticContent.classList.add('hidden');
-            requestAnimationFrame(function() {
-              requestAnimationFrame(function() {
-                if (staticContent && staticContent.parentNode) {
-                  staticContent.parentNode.removeChild(staticContent);
-                }
-              });
-            });
+          // Add class to root for CSS-based hiding
+          document.documentElement.classList.add('react-mounted');
+          
+          // Hide static content immediately
+          if (staticContent) {
+            staticContent.style.display = 'none';
+            if (staticContent.parentNode) {
+              staticContent.parentNode.removeChild(staticContent);
+            }
           }
           // Hide loading skeleton
-          if (loadingSkeleton && loadingSkeleton.parentNode) {
-            loadingSkeleton.classList.add('hidden');
-            requestAnimationFrame(function() {
-              requestAnimationFrame(function() {
-                if (loadingSkeleton && loadingSkeleton.parentNode) {
-                  loadingSkeleton.parentNode.removeChild(loadingSkeleton);
-                }
-              });
-            });
+          if (loadingSkeleton) {
+            loadingSkeleton.style.display = 'none';
+            if (loadingSkeleton.parentNode) {
+              loadingSkeleton.parentNode.removeChild(loadingSkeleton);
+            }
           }
         };
         
         // Use MutationObserver for efficient DOM change detection
         var observer = new MutationObserver(function(mutations) {
-          // Check if React rendered something besides our pre-render content
-          var hasReactContent = Array.from(root.children).some(function(child) {
-            return child.id !== 'static-content' && child.id !== 'loading-skeleton';
-          });
+          // Check if React rendered any content
+          var hasReactContent = root.children.length > 0 && 
+            Array.from(root.children).some(function(child) {
+              return child.id !== 'static-content' && child.id !== 'loading-skeleton';
+            });
           if (hasReactContent) {
             observer.disconnect();
             hidePreRenderContent();
           }
         });
         
-        observer.observe(root, { childList: true, subtree: false });
+        observer.observe(root, { childList: true, subtree: true });
         
-        // Faster fallback: 2s max wait
+        // Faster fallback: 1s max wait
         setTimeout(function() {
           observer.disconnect();
           hidePreRenderContent();
-        }, 2000);
+        }, 1000);
       })();
       
       // Optimize main thread by yielding control
