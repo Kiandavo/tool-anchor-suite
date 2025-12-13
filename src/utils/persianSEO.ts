@@ -218,14 +218,15 @@ export function generatePersianMetaDescription(
   year: number = 2025
 ): string {
   const descriptions = [
-    `${tool} رایگان و حرفه‌ای ${toPersianNumber(year)} | ${features.slice(0, 2).join('، ')} | استفاده آسان بدون ثبت‌نام ✅`,
-    `بهترین ${tool} آنلاین | ${features[0]} با دقت بالا | ${toPersianNumber(year)} | رایگان و سریع`,
-    `آموزش و استفاده از ${tool} | ${features.slice(0, 3).join(' | ')} | کاملاً رایگان ${toPersianNumber(year)}`,
-    `${tool} حرفه‌ای و دقیق | ${features[0]} | بدون نیاز به نصب | ${toPersianNumber(year)}`
+    `${tool} حرفه‌ای | ${features.slice(0, 2).join('، ')} | ساده و کاربردی ✅`,
+    `بهترین ${tool} آنلاین | ${features[0]} با دقت بالا | سریع و آسان`,
+    `${tool} | ${features.slice(0, 3).join(' | ')} | آماده استفاده`,
+    `${tool} دقیق و کاربردی | ${features[0]} | مستقیم در مرورگر`
   ];
 
-  // Return random description
-  return descriptions[Math.floor(Math.random() * descriptions.length)];
+  // Return consistent description based on tool name hash
+  const hash = tool.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return descriptions[hash % descriptions.length];
 }
 
 /**
