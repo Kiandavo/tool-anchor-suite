@@ -32,12 +32,8 @@ const KeyboardShortcutsProvider = ({ children }: { children: React.ReactNode }) 
 
 const App = () => {
   // Skip splash for returning users in the same session
-  const [showSplash, setShowSplash] = React.useState(() => {
-    if (typeof window !== 'undefined' && sessionStorage.getItem('splashShown')) {
-      return false;
-    }
-    return true;
-  });
+  const splashAlreadyShown = typeof window !== 'undefined' && sessionStorage.getItem('splashShown');
+  const [showSplash, setShowSplash] = React.useState(!splashAlreadyShown);
   
   // Memoize callback to prevent SplashScreen timer reset on re-renders
   const handleSplashComplete = React.useCallback(() => {
@@ -48,9 +44,18 @@ const App = () => {
   }, []);
   
   // Initialize font optimization and service worker on app startup
+  // Also immediately hide static content when React mounts
   React.useEffect(() => {
     initializeFontOptimization();
     registerServiceWorker();
+    
+    // Hide static content immediately when React mounts
+    const staticContent = document.getElementById('static-content');
+    if (staticContent) {
+      staticContent.style.display = 'none';
+    }
+    // Add react-mounted class to body for CSS-based hiding
+    document.body.classList.add('react-mounted');
   }, []);
 
   // Render app content immediately with splash overlay on top
