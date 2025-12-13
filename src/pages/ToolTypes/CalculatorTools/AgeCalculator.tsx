@@ -16,7 +16,7 @@ export default function AgeCalculator() {
   const [gregorianDate, setGregorianDate] = useState('');
   const [copied, setCopied] = useState(false);
 
-  const currentPersianYear = 1403;
+  const currentPersianYear = 1404;
   const persianYears = Array.from({ length: currentPersianYear - 1299 }, (_, i) => currentPersianYear - i);
   
   const persianMonths = [

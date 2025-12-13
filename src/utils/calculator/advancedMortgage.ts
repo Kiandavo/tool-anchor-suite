@@ -347,7 +347,7 @@ export function calculateAffordability(
 /**
  * Get market rates for different Iranian cities
  */
-// Market rates updated for 1403 - Source: Central Bank, Amlak.com
+// Market rates updated for 1404 - Source: Central Bank, Amlak.com
 export function getMarketRates(): Record<string, { rentRate: number; mortgageRate: number; appreciation: number }> {
   return {
     'تهران': { rentRate: 36, mortgageRate: 30, appreciation: 35 },
