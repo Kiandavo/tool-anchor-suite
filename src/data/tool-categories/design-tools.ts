@@ -1,4 +1,3 @@
-
 import { Tool } from '@/types/tool-types';
 
 export const designTools: Tool[] = [
@@ -7,7 +6,7 @@ export const designTools: Tool[] = [
     slug: "color-palette-generator",
     name: "تولیدکننده پالت رنگ",
     category: "design",
-    description: "ایجاد پالت‌های رنگی هماهنگ برای طراحی‌های گرافیکی",
+    description: "پالت‌های هماهنگ از یک رنگ پایه",
     isNew: false,
     icon: "palette",
     isComingSoon: false
@@ -17,7 +16,7 @@ export const designTools: Tool[] = [
     slug: "gradient-generator",
     name: "سازنده گرادیانت",
     category: "design",
-    description: "ایجاد گرادیانت‌های CSS زیبا با پیش‌نمایش زنده",
+    description: "گرادیانت CSS با کپی کد آماده",
     isNew: true,
     icon: "paintbrush",
     isComingSoon: false
@@ -27,7 +26,7 @@ export const designTools: Tool[] = [
     slug: "box-shadow-generator",
     name: "سازنده سایه",
     category: "design",
-    description: "طراحی سایه‌های CSS با چندین لایه و تنظیمات پیشرفته",
+    description: "سایه چندلایه با پیش‌نمایش زنده",
     isNew: true,
     icon: "square",
     isComingSoon: false
@@ -37,7 +36,7 @@ export const designTools: Tool[] = [
     slug: "typography-scale",
     name: "مقیاس تایپوگرافی",
     category: "design",
-    description: "محاسبه اندازه‌های فونت با نسبت‌های هارمونیک",
+    description: "سلسله‌مراتب فونت با نسبت طلایی",
     isNew: true,
     icon: "type",
     isComingSoon: false
@@ -47,7 +46,7 @@ export const designTools: Tool[] = [
     slug: "contrast-checker",
     name: "بررسی کنتراست رنگ",
     category: "design",
-    description: "بررسی دسترس‌پذیری رنگ‌ها طبق استاندارد WCAG",
+    description: "سازگاری رنگ با استاندارد WCAG",
     isNew: true,
     icon: "eye",
     isComingSoon: false
