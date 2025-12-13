@@ -63,7 +63,10 @@ const App = () => {
       // Use requestAnimationFrame to wait for React to paint first
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          hideStaticContent();
+          // Small delay for Safari which has different rendering timing
+          setTimeout(() => {
+            hideStaticContent();
+          }, 50);
         });
       });
     }
