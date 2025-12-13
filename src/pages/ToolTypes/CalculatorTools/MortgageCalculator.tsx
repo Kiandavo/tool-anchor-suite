@@ -11,9 +11,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { formatPersianNumber } from '@/utils/persianNumbers';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
-// Property presets with typical Tehran prices
-// Property presets with latest Tehran prices (1403)
-// Source: EghtesadOnline, EcoIran - آذر ۱۴۰۳
+// Property presets with latest Tehran prices (1404)
+// Source: EghtesadOnline, EcoIran - آذر ۱۴۰۴
 const PROPERTY_PRESETS = [
   { 
     id: 'small-apt',

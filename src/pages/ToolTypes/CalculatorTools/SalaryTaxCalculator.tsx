@@ -11,7 +11,7 @@ import { motion } from 'framer-motion';
 import { Progress } from '@/components/ui/progress';
 
 const TAX_BRACKETS = {
-  '1403': [
+  '1404': [
     { max: 8_800_000, rate: 0, name: 'معاف', color: 'bg-green-500' },
     { max: 13_200_000, rate: 0.10, name: '۱۰٪', color: 'bg-lime-500' },
     { max: 22_000_000, rate: 0.15, name: '۱۵٪', color: 'bg-yellow-500' },
@@ -29,7 +29,7 @@ const TAX_BRACKETS = {
 
 export default function SalaryTaxCalculator() {
   const [salary, setSalary] = useState<string>('');
-  const [taxYear, setTaxYear] = useState<string>('1403');
+  const [taxYear, setTaxYear] = useState<string>('1404');
   const [calculationType, setCalculationType] = useState<string>('monthly');
   const [copied, setCopied] = useState(false);
 
@@ -142,8 +142,8 @@ export default function SalaryTaxCalculator() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="1404">۱۴۰۴</SelectItem>
                   <SelectItem value="1403">۱۴۰۳</SelectItem>
-                  <SelectItem value="1402">۱۴۰۲</SelectItem>
                 </SelectContent>
               </Select>
             </div>

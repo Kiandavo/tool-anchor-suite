@@ -23,7 +23,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'محاسبه‌گر علمی',
     verified: true,
-    date: 'دی ۱۴۰۳'
+    date: 'دی ۱۴۰۴'
   },
   {
     name: 'زهرا احمدی',
@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'فشرده‌ساز تصویر',
     verified: true,
-    date: 'آذر ۱۴۰۳'
+    date: 'آذر ۱۴۰۴'
   },
   {
     name: 'علی کریمی',
@@ -41,7 +41,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'محاسبه‌گر وام',
     verified: true,
-    date: 'آبان ۱۴۰۳'
+    date: 'آبان ۱۴۰۴'
   },
   {
     name: 'فاطمه موسوی',
@@ -50,7 +50,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'ابزارهای سئو',
     verified: true,
-    date: 'مهر ۱۴۰۳'
+    date: 'مهر ۱۴۰۴'
   },
   {
     name: 'حسین نوری',
@@ -59,7 +59,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'ابزارهای متنی',
     verified: true,
-    date: 'شهریور ۱۴۰۳'
+    date: 'شهریور ۱۴۰۴'
   },
   {
     name: 'مریم صادقی',
@@ -68,7 +68,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'محاسبه‌گر معدل',
     verified: true,
-    date: 'مرداد ۱۴۰۳'
+    date: 'مرداد ۱۴۰۴'
   },
   {
     name: 'رضا احمدپور',
@@ -77,7 +77,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'تبدیل فرمت تصویر',
     verified: true,
-    date: 'تیر ۱۴۰۳'
+    date: 'تیر ۱۴۰۴'
   },
   {
     name: 'سارا محمدی',
@@ -86,7 +86,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'شمارنده متن',
     verified: true,
-    date: 'خرداد ۱۴۰۳'
+    date: 'خرداد ۱۴۰۴'
   },
   {
     name: 'امیر حسینی',
@@ -95,7 +95,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
     tool: 'محاسبه‌گر انعام',
     verified: true,
-    date: 'اردیبهشت ۱۴۰۳'
+    date: 'اردیبهشت ۱۴۰۴'
   }
 ];
 
