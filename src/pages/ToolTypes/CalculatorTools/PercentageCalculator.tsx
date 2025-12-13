@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { OutcomeInfoCard } from '@/components/OutcomeInfoCard';
-import { Calculator, Percent, TrendingUp, Equal, PieChart } from 'lucide-react';
+import { Calculator, Percent, TrendingUp, Equal, PieChart, Copy, Check, Keyboard } from 'lucide-react';
 import { CalculatorCard } from '@/components/calculator/CalculatorCard';
 import { VisualizationCard } from '@/components/calculator/VisualizationCard';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { formatPersianNumber } from '@/utils/persianNumbers';
+import { useToolKeyboardShortcuts } from '@/hooks/useToolKeyboardShortcuts';
+import { toast } from 'sonner';
 
 export default function PercentageCalculator() {
   const [value, setValue] = useState<string>('');
@@ -15,6 +17,15 @@ export default function PercentageCalculator() {
   const [result, setResult] = useState<string | null>(null);
   const [calcType, setCalcType] = useState<'percentOf' | 'isWhatPercent' | 'percentIncrease'>('percentOf');
   const [visualPercentage, setVisualPercentage] = useState<number>(0);
+  const [copied, setCopied] = useState(false);
+
+  const copyResult = useCallback(async () => {
+    if (!result) return;
+    await navigator.clipboard.writeText(result);
+    setCopied(true);
+    toast.success('نتیجه کپی شد');
+    setTimeout(() => setCopied(false), 2000);
+  }, [result]);
 
   const calculate = () => {
     const numValue = parseFloat(value);
@@ -49,12 +60,28 @@ export default function PercentageCalculator() {
     }
   };
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setValue('');
     setPercentage('');
     setResult(null);
     setVisualPercentage(0);
-  };
+  }, []);
+
+  useToolKeyboardShortcuts([
+    {
+      key: 'Enter',
+      ctrlKey: true,
+      callback: calculate,
+      description: 'محاسبه',
+    },
+    {
+      key: 'r',
+      ctrlKey: true,
+      shiftKey: true,
+      callback: handleReset,
+      description: 'پاک کردن',
+    },
+  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
     const value = e.target.value.replace(/[^0-9.]/g, '');
@@ -65,6 +92,19 @@ export default function PercentageCalculator() {
 
   return (
     <div className="space-y-6">
+      {/* Keyboard Shortcuts Hint */}
+      <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1">
+          <Keyboard className="w-3 h-3" />
+          <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px]">Ctrl+Enter</kbd>
+          محاسبه
+        </span>
+        <span className="flex items-center gap-1">
+          <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px]">Ctrl+Shift+R</kbd>
+          پاک کردن
+        </span>
+      </div>
+
       <CalculatorCard title="محاسبه‌گر درصد" icon={Percent} onReset={handleReset}>
         {/* Calculation Type Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -196,10 +236,18 @@ export default function PercentageCalculator() {
           </div>
         )}
 
-        <Button onClick={calculate} className="w-full gap-2" size="lg">
-          <Calculator className="h-5 w-5" />
-          محاسبه کن
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={calculate} className="flex-1 gap-2" size="lg">
+            <Calculator className="h-5 w-5" />
+            محاسبه کن
+          </Button>
+          {result && (
+            <Button onClick={copyResult} variant="outline" size="lg" className="gap-2">
+              {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+              کپی
+            </Button>
+          )}
+        </div>
 
         {/* Visual Percentage Chart */}
         {result && visualPercentage > 0 && (

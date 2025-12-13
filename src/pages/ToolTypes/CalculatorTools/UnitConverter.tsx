@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowRightLeft, Copy, Check, Ruler, Scale, Droplet, Thermometer, Gauge, Square } from 'lucide-react';
+import { ArrowRightLeft, Copy, Check, Ruler, Scale, Droplet, Thermometer, Gauge, Square, RotateCcw, Keyboard } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { useToolKeyboardShortcuts } from '@/hooks/useToolKeyboardShortcuts';
 
 const categories = {
   length: {
@@ -153,7 +154,7 @@ export default function UnitConverter() {
     setToUnit(fromUnit);
   };
 
-  const copyResult = async () => {
+  const copyResult = useCallback(async () => {
     if (!result) return;
     const category = categories[activeCategory as keyof typeof categories];
     const fromName = (category.units as Record<string, { name: string }>)[fromUnit]?.name;
@@ -162,7 +163,34 @@ export default function UnitConverter() {
     setCopied(true);
     toast.success('کپی شد');
     setTimeout(() => setCopied(false), 2000);
-  };
+  }, [result, activeCategory, fromUnit, toUnit, inputValue]);
+
+  const handleReset = useCallback(() => {
+    setInputValue('');
+    const units = Object.keys(categories[activeCategory as keyof typeof categories].units);
+    setFromUnit(units[0] || '');
+    setToUnit(units[1] || units[0] || '');
+  }, [activeCategory]);
+
+  useToolKeyboardShortcuts([
+    {
+      key: 'Enter',
+      ctrlKey: true,
+      callback: () => {
+        if (result) {
+          toast.success('تبدیل انجام شد');
+        }
+      },
+      description: 'تبدیل',
+    },
+    {
+      key: 'r',
+      ctrlKey: true,
+      shiftKey: true,
+      callback: handleReset,
+      description: 'پاک کردن',
+    },
+  ]);
 
   // Quick presets for common conversions
   const presets: Record<string, { from: string; to: string; value: string; label: string }[]> = {
@@ -215,6 +243,19 @@ export default function UnitConverter() {
 
   return (
     <div className="max-w-xl mx-auto space-y-6">
+      {/* Keyboard Shortcuts Hint */}
+      <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1">
+          <Keyboard className="w-3 h-3" />
+          <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px]">Ctrl+Enter</kbd>
+          تبدیل
+        </span>
+        <span className="flex items-center gap-1">
+          <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px]">Ctrl+Shift+R</kbd>
+          پاک کردن
+        </span>
+      </div>
+
       <Card className="border-primary/20 bg-card/50 backdrop-blur-sm">
         <CardContent className="p-6 space-y-6">
           {/* Header */}
@@ -326,6 +367,14 @@ export default function UnitConverter() {
                 </div>
 
                 {/* Result Display */}
+                {/* Reset Button */}
+                <div className="flex justify-center">
+                  <Button variant="outline" size="sm" onClick={handleReset} className="gap-2">
+                    <RotateCcw className="w-4 h-4" />
+                    پاک کردن
+                  </Button>
+                </div>
+
                 {result && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
