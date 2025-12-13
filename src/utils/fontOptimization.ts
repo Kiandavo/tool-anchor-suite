@@ -121,29 +121,30 @@ export const getFontOptimizationClasses = (element: 'heading' | 'body' | 'suppor
  * Initialize font loading optimization
  */
 export const initializeFontOptimization = (): void => {
-  // Add font-loading class to body initially
-  document.body.classList.add('font-loading');
+  // Mark fonts as loaded after a short timeout to prevent infinite loading
+  const markFontsLoaded = () => {
+    document.body.classList.remove('font-loading');
+    document.body.classList.add('font-loaded');
+  };
 
-  // Check if fonts are loaded
+  // Safety timeout - never leave fonts in loading state
+  const safetyTimeout = setTimeout(markFontsLoaded, 1500);
+
+  // Check if fonts are loaded (but don't block on it)
   Promise.all([
     checkFontLoaded(FontFamilies.primary),
     checkFontLoaded(FontFamilies.heading),
     checkFontLoaded(FontFamilies.support)
-  ]).then((results) => {
-    const allLoaded = results.every(Boolean);
-    
-    if (allLoaded) {
-      document.body.classList.remove('font-loading');
-      document.body.classList.add('font-loaded');
-    }
+  ]).then(() => {
+    clearTimeout(safetyTimeout);
+    markFontsLoaded();
+  }).catch(() => {
+    clearTimeout(safetyTimeout);
+    markFontsLoaded();
   });
 
-  // Preload fonts for better performance
-  preloadFonts().catch(() => {
-    // Graceful fallback - fonts will load normally
-    document.body.classList.remove('font-loading');
-    document.body.classList.add('font-loaded');
-  });
+  // Preload fonts in background (non-blocking)
+  preloadFonts().catch(() => {});
 };
 
 /**
