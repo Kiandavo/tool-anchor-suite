@@ -17,7 +17,7 @@ export function Footer() {
               <img src={logoSvg} alt="لنگر" width={110} height={40} loading="lazy" className="h-10 w-auto" />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              بزرگترین مجموعه ابزارهای آنلاین فارسی با بیش از 80 ابزار رایگان و 500,000 کاربر فعال
+              مجموعه‌ای از ابزارهای آنلاین فارسی برای محاسبه، تبدیل و پردازش متن و تصویر
             </p>
             <div className="flex flex-col gap-2 text-sm">
               <a 
