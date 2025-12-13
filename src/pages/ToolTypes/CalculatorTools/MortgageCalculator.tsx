@@ -5,10 +5,47 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Home, Calculator, Sparkles, Settings2, ArrowLeftRight } from 'lucide-react';
+import { Home, Calculator, Sparkles, Settings2, ArrowLeftRight, Building2, TrendingUp, BarChart3 } from 'lucide-react';
 import { Slider } from "@/components/ui/slider";
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatPersianNumber } from '@/utils/persianNumbers';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+
+// Property presets with typical Tehran prices
+const PROPERTY_PRESETS = [
+  { 
+    id: 'small-apt',
+    label: 'آپارتمان کوچک',
+    icon: '🏢',
+    description: '۵۰-۷۰ متر، منطقه متوسط',
+    mortgage: 200000000,
+    rent: 4000000,
+  },
+  { 
+    id: 'medium-apt',
+    label: 'آپارتمان متوسط',
+    icon: '🏠',
+    description: '۸۰-۱۰۰ متر، منطقه خوب',
+    mortgage: 500000000,
+    rent: 10000000,
+  },
+  { 
+    id: 'large-apt',
+    label: 'آپارتمان بزرگ',
+    icon: '🏡',
+    description: '۱۲۰-۱۵۰ متر، منطقه عالی',
+    mortgage: 1000000000,
+    rent: 20000000,
+  },
+  { 
+    id: 'villa',
+    label: 'ویلایی',
+    icon: '🏘️',
+    description: '۲۰۰+ متر با حیاط',
+    mortgage: 2000000000,
+    rent: 35000000,
+  },
+];
 
 const QUICK_AMOUNTS = [
   { label: '۵۰ میلیون', value: 50000000 },
@@ -25,15 +62,16 @@ const QUICK_RENTS = [
   { label: '۱۵ میلیون', value: 15000000 },
 ];
 
-const DEFAULT_RATE = 24; // Standard rate in Iran
+const DEFAULT_RATE = 24;
 
 export default function MortgageCalculator() {
-  const [mode, setMode] = useState<'simple' | 'professional'>('simple');
+  const [mode, setMode] = useState<'simple' | 'professional' | 'compare'>('simple');
   const [conversionType, setConversionType] = useState<'mortgage-to-rent' | 'rent-to-mortgage'>('mortgage-to-rent');
   
   // Simple mode states
   const [simpleAmount, setSimpleAmount] = useState<string>('');
   const [simpleResult, setSimpleResult] = useState<number | null>(null);
+  const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   
   // Professional mode states
   const [mortgageAmount, setMortgageAmount] = useState<string>('');
@@ -45,6 +83,12 @@ export default function MortgageCalculator() {
   const [interestRateR2M, setInterestRateR2M] = useState<number>(DEFAULT_RATE);
   const [durationR2M, setDurationR2M] = useState<number>(12);
   const [rentResult, setRentResult] = useState<{ mortgage: number } | null>(null);
+
+  // Comparison mode states
+  const [compareMortgage, setCompareMortgage] = useState<string>('500,000,000');
+  const [compareRent, setCompareRent] = useState<string>('10,000,000');
+  const [compareRate, setCompareRate] = useState<number>(DEFAULT_RATE);
+  const [comparisonData, setComparisonData] = useState<any[]>([]);
 
   // Auto-calculate in simple mode
   useEffect(() => {
@@ -62,6 +106,33 @@ export default function MortgageCalculator() {
       }
     }
   }, [simpleAmount, conversionType, mode]);
+
+  // Generate comparison data
+  useEffect(() => {
+    if (mode === 'compare') {
+      const mortgage = parseFloat(compareMortgage.replace(/,/g, '')) || 0;
+      const rent = parseFloat(compareRent.replace(/,/g, '')) || 0;
+      const monthlyRate = compareRate / 12 / 100;
+      const equivalentRent = mortgage * monthlyRate;
+      
+      const data = [];
+      for (let year = 1; year <= 5; year++) {
+        const months = year * 12;
+        const totalRentPaid = rent * months;
+        const totalEquivalentRent = equivalentRent * months;
+        const savings = totalRentPaid - totalEquivalentRent;
+        
+        data.push({
+          year: `سال ${formatPersianNumber(year)}`,
+          'پرداخت اجاره': totalRentPaid,
+          'معادل رهن': totalEquivalentRent,
+          savings,
+          recommendation: savings > 0 ? 'رهن بهتر است' : 'اجاره بهتر است',
+        });
+      }
+      setComparisonData(data);
+    }
+  }, [compareMortgage, compareRent, compareRate, mode]);
 
   const handleMortgageToRent = () => {
     const amount = parseFloat(mortgageAmount.replace(/,/g, ''));
@@ -92,11 +163,22 @@ export default function MortgageCalculator() {
 
   const handleQuickSelect = (value: number) => {
     setSimpleAmount(value.toLocaleString('en-US'));
+    setSelectedPreset(null);
+  };
+
+  const handlePresetSelect = (preset: typeof PROPERTY_PRESETS[0]) => {
+    if (conversionType === 'mortgage-to-rent') {
+      setSimpleAmount(preset.mortgage.toLocaleString('en-US'));
+    } else {
+      setSimpleAmount(preset.rent.toLocaleString('en-US'));
+    }
+    setSelectedPreset(preset.id);
   };
 
   const handleReset = () => {
     setSimpleAmount('');
     setSimpleResult(null);
+    setSelectedPreset(null);
     setMortgageAmount('');
     setMortgageResult(null);
     setRentAmount('');
@@ -107,6 +189,11 @@ export default function MortgageCalculator() {
     setConversionType(prev => prev === 'mortgage-to-rent' ? 'rent-to-mortgage' : 'mortgage-to-rent');
     setSimpleAmount('');
     setSimpleResult(null);
+    setSelectedPreset(null);
+  };
+
+  const formatTooltipValue = (value: number) => {
+    return value.toLocaleString('fa-IR') + ' تومان';
   };
 
   return (
@@ -116,11 +203,15 @@ export default function MortgageCalculator() {
       onReset={handleReset}
     >
       {/* Mode Switcher */}
-      <Tabs value={mode} onValueChange={(v) => setMode(v as 'simple' | 'professional')} className="mb-6">
+      <Tabs value={mode} onValueChange={(v) => setMode(v as 'simple' | 'professional' | 'compare')} className="mb-6">
         <TabsList className="w-full">
           <TabsTrigger value="simple" className="flex-1 gap-2">
             <Sparkles className="h-4 w-4" />
             ساده
+          </TabsTrigger>
+          <TabsTrigger value="compare" className="flex-1 gap-2">
+            <BarChart3 className="h-4 w-4" />
+            مقایسه
           </TabsTrigger>
           <TabsTrigger value="professional" className="flex-1 gap-2">
             <Settings2 className="h-4 w-4" />
@@ -156,9 +247,46 @@ export default function MortgageCalculator() {
               </span>
             </div>
 
+            {/* Property Presets */}
+            <div className="space-y-3">
+              <Label className="text-sm flex items-center gap-2">
+                <Building2 className="h-4 w-4" />
+                انتخاب نوع ملک (قیمت‌های تهران):
+              </Label>
+              <div className="grid grid-cols-2 gap-3">
+                {PROPERTY_PRESETS.map((preset) => (
+                  <motion.button
+                    key={preset.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handlePresetSelect(preset)}
+                    className={`p-3 rounded-xl border text-right transition-all ${
+                      selectedPreset === preset.id
+                        ? 'bg-primary/10 border-primary'
+                        : 'bg-card border-border hover:border-primary/50'
+                    }`}
+                  >
+                    <div className="flex items-start gap-2">
+                      <span className="text-2xl">{preset.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm">{preset.label}</p>
+                        <p className="text-xs text-muted-foreground truncate">{preset.description}</p>
+                        <p className="text-xs text-primary mt-1">
+                          {conversionType === 'mortgage-to-rent' 
+                            ? `رهن: ${(preset.mortgage / 1000000).toLocaleString('fa-IR')} میلیون`
+                            : `اجاره: ${(preset.rent / 1000000).toLocaleString('fa-IR')} میلیون`
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
             {/* Quick Amount Buttons */}
             <div className="space-y-3">
-              <Label className="text-sm text-muted-foreground">انتخاب سریع:</Label>
+              <Label className="text-sm text-muted-foreground">یا انتخاب سریع مبلغ:</Label>
               <div className="flex flex-wrap gap-2">
                 {(conversionType === 'mortgage-to-rent' ? QUICK_AMOUNTS : QUICK_RENTS).map((item) => (
                   <Button
@@ -167,7 +295,7 @@ export default function MortgageCalculator() {
                     size="sm"
                     onClick={() => handleQuickSelect(item.value)}
                     className={`transition-all ${
-                      simpleAmount === item.value.toLocaleString('en-US')
+                      simpleAmount === item.value.toLocaleString('en-US') && !selectedPreset
                         ? 'bg-primary text-primary-foreground border-primary'
                         : ''
                     }`}
@@ -188,7 +316,10 @@ export default function MortgageCalculator() {
                 type="text"
                 dir="ltr"
                 value={simpleAmount}
-                onChange={(e) => formatInput(e.target.value, setSimpleAmount)}
+                onChange={(e) => {
+                  formatInput(e.target.value, setSimpleAmount);
+                  setSelectedPreset(null);
+                }}
                 placeholder={conversionType === 'mortgage-to-rent' ? '۱۰۰,۰۰۰,۰۰۰' : '۵,۰۰۰,۰۰۰'}
                 className="text-lg h-12 text-center font-medium"
               />
@@ -216,11 +347,185 @@ export default function MortgageCalculator() {
                 </motion.div>
               )}
             </AnimatePresence>
+          </motion.div>
+        ) : mode === 'compare' ? (
+          <motion.div
+            key="compare"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-6"
+          >
+            {/* Comparison Inputs */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="compareMortgage">مبلغ رهن (تومان)</Label>
+                <Input
+                  id="compareMortgage"
+                  type="text"
+                  dir="ltr"
+                  value={compareMortgage}
+                  onChange={(e) => formatInput(e.target.value, setCompareMortgage)}
+                  placeholder="۵۰۰,۰۰۰,۰۰۰"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="compareRent">اجاره ماهیانه (تومان)</Label>
+                <Input
+                  id="compareRent"
+                  type="text"
+                  dir="ltr"
+                  value={compareRent}
+                  onChange={(e) => formatInput(e.target.value, setCompareRent)}
+                  placeholder="۱۰,۰۰۰,۰۰۰"
+                />
+              </div>
+            </div>
 
-            {/* Hint */}
-            <p className="text-center text-xs text-muted-foreground">
-              برای تنظیم نرخ سود و مدت قرارداد، از حالت «حرفه‌ای» استفاده کنید
-            </p>
+            {/* Rate Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <Label>نرخ سود سالیانه</Label>
+                <span className="text-sm font-medium">{formatPersianNumber(compareRate)}٪</span>
+              </div>
+              <Slider
+                min={12}
+                max={36}
+                step={1}
+                value={[compareRate]}
+                onValueChange={(value) => setCompareRate(value[0])}
+              />
+            </div>
+
+            {/* Quick Preset Buttons for Comparison */}
+            <div className="flex flex-wrap gap-2">
+              {PROPERTY_PRESETS.map((preset) => (
+                <Button
+                  key={preset.id}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setCompareMortgage(preset.mortgage.toLocaleString('en-US'));
+                    setCompareRent(preset.rent.toLocaleString('en-US'));
+                  }}
+                >
+                  {preset.icon} {preset.label}
+                </Button>
+              ))}
+            </div>
+
+            {/* Comparison Chart */}
+            {comparisonData.length > 0 && (
+              <VisualizationCard title="مقایسه هزینه‌ها در طول زمان">
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={comparisonData}>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+                      <XAxis 
+                        dataKey="year" 
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                      />
+                      <YAxis 
+                        tickFormatter={(value) => `${(value / 1000000).toFixed(0)}M`}
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                      />
+                      <Tooltip 
+                        formatter={formatTooltipValue}
+                        contentStyle={{ 
+                          backgroundColor: 'hsl(var(--card))',
+                          border: '1px solid hsl(var(--border))',
+                          borderRadius: '8px',
+                          direction: 'rtl'
+                        }}
+                      />
+                      <Legend />
+                      <Area 
+                        type="monotone" 
+                        dataKey="پرداخت اجاره" 
+                        stroke="hsl(var(--destructive))" 
+                        fill="hsl(var(--destructive) / 0.2)" 
+                        strokeWidth={2}
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="معادل رهن" 
+                        stroke="hsl(var(--primary))" 
+                        fill="hsl(var(--primary) / 0.2)" 
+                        strokeWidth={2}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </VisualizationCard>
+            )}
+
+            {/* Summary Cards */}
+            {comparisonData.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[0, 2, 4].map((index) => {
+                  const data = comparisonData[index];
+                  if (!data) return null;
+                  const isMortgageBetter = data.savings > 0;
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className={`p-4 rounded-xl border ${
+                        isMortgageBetter 
+                          ? 'bg-green-500/10 border-green-500/20' 
+                          : 'bg-destructive/10 border-destructive/20'
+                      }`}
+                    >
+                      <p className="text-xs text-muted-foreground mb-1">{data.year}</p>
+                      <div className="flex items-center gap-2 mb-2">
+                        <TrendingUp className={`h-4 w-4 ${isMortgageBetter ? 'text-green-600' : 'text-destructive'}`} />
+                        <span className={`text-sm font-medium ${isMortgageBetter ? 'text-green-600' : 'text-destructive'}`}>
+                          {data.recommendation}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        تفاوت: {Math.abs(data.savings).toLocaleString('fa-IR')} تومان
+                      </p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Recommendation */}
+            {comparisonData.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="p-4 bg-muted/50 rounded-xl text-center"
+              >
+                <p className="text-sm text-muted-foreground mb-2">نتیجه‌گیری:</p>
+                {(() => {
+                  const mortgage = parseFloat(compareMortgage.replace(/,/g, '')) || 0;
+                  const rent = parseFloat(compareRent.replace(/,/g, '')) || 0;
+                  const monthlyRate = compareRate / 12 / 100;
+                  const equivalentRent = mortgage * monthlyRate;
+                  
+                  if (rent > equivalentRent) {
+                    const savingsPerMonth = rent - equivalentRent;
+                    return (
+                      <p className="text-green-600 font-medium">
+                        رهن کامل به صرفه‌تر است! ماهانه {savingsPerMonth.toLocaleString('fa-IR')} تومان صرفه‌جویی می‌کنید.
+                      </p>
+                    );
+                  } else {
+                    const extraPerMonth = equivalentRent - rent;
+                    return (
+                      <p className="text-destructive font-medium">
+                        اجاره فعلی به صرفه‌تر است! ماهانه {extraPerMonth.toLocaleString('fa-IR')} تومان کمتر می‌پردازید.
+                      </p>
+                    );
+                  }
+                })()}
+              </motion.div>
+            )}
           </motion.div>
         ) : (
           <motion.div
