@@ -11,12 +11,6 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Hide static content when splash mounts
-    const staticContent = document.getElementById('static-content');
-    if (staticContent) {
-      staticContent.style.display = 'none';
-    }
-    
     // Reduced splash duration to 500ms for faster TTI
     const timer = setTimeout(() => {
       setIsVisible(false);

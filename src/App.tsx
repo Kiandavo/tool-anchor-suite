@@ -35,28 +35,39 @@ const App = () => {
   const splashAlreadyShown = typeof window !== 'undefined' && sessionStorage.getItem('splashShown');
   const [showSplash, setShowSplash] = React.useState(!splashAlreadyShown);
   
-  // Memoize callback to prevent SplashScreen timer reset on re-renders
-  const handleSplashComplete = React.useCallback(() => {
-    setShowSplash(false);
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('splashShown', 'true');
-    }
-  }, []);
-  
-  // Initialize font optimization and service worker on app startup
-  // Also immediately hide static content when React mounts
-  React.useEffect(() => {
-    initializeFontOptimization();
-    registerServiceWorker();
-    
-    // Hide static content immediately when React mounts
+  // Helper to hide static content
+  const hideStaticContent = React.useCallback(() => {
     const staticContent = document.getElementById('static-content');
     if (staticContent) {
       staticContent.style.display = 'none';
     }
-    // Add react-mounted class to body for CSS-based hiding
     document.body.classList.add('react-mounted');
   }, []);
+  
+  // Memoize callback to prevent SplashScreen timer reset on re-renders
+  const handleSplashComplete = React.useCallback(() => {
+    setShowSplash(false);
+    hideStaticContent();
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('splashShown', 'true');
+    }
+  }, [hideStaticContent]);
+  
+  // Initialize font optimization and service worker on app startup
+  React.useEffect(() => {
+    initializeFontOptimization();
+    registerServiceWorker();
+    
+    // For returning users (no splash), hide static content after React paints
+    if (splashAlreadyShown) {
+      // Use requestAnimationFrame to wait for React to paint first
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          hideStaticContent();
+        });
+      });
+    }
+  }, [splashAlreadyShown, hideStaticContent]);
 
   // Render app content immediately with splash overlay on top
   // This allows LCP to paint while splash shows, improving TTI
