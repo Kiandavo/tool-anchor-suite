@@ -1,4 +1,3 @@
-
 import { Tool } from '@/types/tool-types';
 
 export const productivityTools: Tool[] = [
@@ -7,7 +6,7 @@ export const productivityTools: Tool[] = [
     slug: "todo-list",
     name: "فهرست کارها",
     category: "productivity",
-    description: "مدیریت فهرست کارهای روزانه با قابلیت اولویت‌بندی",
+    description: "لیست وظایف با زیرکارها و تگ‌بندی",
     isNew: true,
     icon: "list-check",
     isComingSoon: false
@@ -17,7 +16,7 @@ export const productivityTools: Tool[] = [
     slug: "pomodoro-timer",
     name: "تایمر پومودورو",
     category: "productivity",
-    description: "تایمر مبتنی بر روش پومودورو برای افزایش تمرکز و بهره‌وری",
+    description: "۲۵ دقیقه تمرکز، ۵ دقیقه استراحت",
     isNew: true,
     icon: "clock",
     isComingSoon: false
@@ -27,7 +26,7 @@ export const productivityTools: Tool[] = [
     slug: "note-taking",
     name: "یادداشت‌برداری",
     category: "productivity",
-    description: "ابزار ساده برای یادداشت‌برداری سریع و سازمان‌دهی اطلاعات",
+    description: "نوشتن، سنجاق و جستجوی یادداشت",
     isNew: true,
     icon: "pencil",
     isComingSoon: false
@@ -37,7 +36,7 @@ export const productivityTools: Tool[] = [
     slug: "calendar-scheduler",
     name: "تقویم و برنامه‌ریز",
     category: "productivity",
-    description: "مدیریت زمان‌بندی روزانه، هفتگی و ماهانه",
+    description: "برنامه‌ریزی روز، هفته و ماه",
     isNew: true,
     icon: "calendar",
     isComingSoon: false
@@ -47,7 +46,7 @@ export const productivityTools: Tool[] = [
     slug: "project-board",
     name: "برد پروژه",
     category: "productivity",
-    description: "مدیریت ساده پروژه به روش کانبان",
+    description: "مدیریت کارها به سبک کانبان",
     isNew: false,
     icon: "layout-grid",
     isComingSoon: false
@@ -57,7 +56,7 @@ export const productivityTools: Tool[] = [
     slug: "habit-tracker",
     name: "پیگیری عادت",
     category: "productivity",
-    description: "عادت‌های روزانه را پیگیری کنید و استریک بسازید",
+    description: "ثبت عادت روزانه و مشاهده استریک",
     isNew: true,
     icon: "target",
     isComingSoon: false
@@ -67,7 +66,7 @@ export const productivityTools: Tool[] = [
     slug: "invoice-generator",
     name: "ساخت فاکتور",
     category: "productivity",
-    description: "فاکتور حرفه‌ای برای کسب‌وکار خود بسازید",
+    description: "فاکتور قابل چاپ با محاسبه مالیات",
     isNew: true,
     icon: "file-text",
     isComingSoon: false
