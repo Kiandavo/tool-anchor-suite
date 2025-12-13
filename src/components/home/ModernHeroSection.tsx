@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Calculator, FileText, Image, Calendar, Sparkles, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +11,23 @@ const categories = [
   { icon: Sparkles, label: 'فال', href: '/fortune-telling' },
 ];
 
+// Skeleton for category cards
+const CategorySkeleton = () => (
+  <div className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card animate-pulse">
+    <div className="w-10 h-10 rounded-lg bg-muted" />
+    <div className="h-4 w-12 rounded bg-muted" />
+  </div>
+);
+
 export const ModernHeroSection = () => {
+  const [isHydrated, setIsHydrated] = useState(false);
+  
+  useEffect(() => {
+    // Mark as hydrated after a brief delay to show skeleton
+    const timer = setTimeout(() => setIsHydrated(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Subtle gradient background */}
@@ -58,18 +74,27 @@ export const ModernHeroSection = () => {
 
           {/* Category Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            {categories.map((category) => (
-              <Link
-                key={category.href}
-                to={category.href}
-                className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all"
-              >
-                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                  <category.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <span className="text-sm font-medium text-foreground">{category.label}</span>
-              </Link>
-            ))}
+            {!isHydrated ? (
+              // Skeleton loading state
+              <>
+                {[...Array(6)].map((_, i) => (
+                  <CategorySkeleton key={i} />
+                ))}
+              </>
+            ) : (
+              categories.map((category) => (
+                <Link
+                  key={category.href}
+                  to={category.href}
+                  className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card hover:border-primary/50 hover:bg-primary/5 transition-all"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                    <category.icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground">{category.label}</span>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </div>
