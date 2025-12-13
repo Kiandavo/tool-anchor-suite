@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -10,12 +9,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   Calculator, Heart, Scale, Target, TrendingUp, Activity, AlertCircle, CheckCircle, Ruler, BarChart3,
-  User, Zap, Trophy, Apple, RotateCcw, Dumbbell, Droplets, Salad, Timer
+  User, Zap, Trophy, Apple, RotateCcw, Dumbbell, Droplets, Salad, Timer, Copy, Check, Keyboard
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import { useToolKeyboardShortcuts } from '@/hooks/useToolKeyboardShortcuts';
 
 interface BMIResult {
   bmi: number;
@@ -65,6 +65,24 @@ export default function BmiCalculator() {
   const [result, setResult] = useState<BMIResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const [targetWeight, setTargetWeight] = useState<string>('');
+  const [copied, setCopied] = useState(false);
+
+  const copyResult = useCallback(async () => {
+    if (!result) return;
+    const text = `
+محاسبه BMI
+قد: ${height} سانتی‌متر
+وزن: ${weight} کیلوگرم
+BMI: ${result.bmi}
+وضعیت: ${result.category}
+ریسک سلامتی: ${result.healthRisk}
+وزن ایده‌آل: ${result.idealWeightRange.min.toFixed(1)} تا ${result.idealWeightRange.max.toFixed(1)} کیلوگرم
+    `.trim();
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast.success('نتیجه کپی شد');
+    setTimeout(() => setCopied(false), 2000);
+  }, [result, height, weight]);
 
   const calculate = useCallback(async () => {
     setIsCalculating(true);
@@ -142,6 +160,25 @@ export default function BmiCalculator() {
       setIsCalculating(false);
     }
   }, [height, weight, age, bodyFrame]);
+
+  useToolKeyboardShortcuts([
+    {
+      key: 'Enter',
+      ctrlKey: true,
+      callback: calculate,
+      description: 'محاسبه',
+    },
+    {
+      key: 'r',
+      ctrlKey: true,
+      shiftKey: true,
+      callback: () => {
+        setHeight(''); setWeight(''); setAge(''); setTargetWeight(''); setResult(null);
+        toast.info("فرم پاک شد");
+      },
+      description: 'پاک کردن',
+    },
+  ]);
 
   // Calculate ideal weight using multiple formulas
   const idealWeightFormulas = useMemo((): IdealWeightFormulas | null => {
@@ -221,6 +258,19 @@ export default function BmiCalculator() {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Keyboard Shortcuts Hint */}
+      <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1">
+          <Keyboard className="w-3 h-3" />
+          <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px]">Ctrl+Enter</kbd>
+          محاسبه
+        </span>
+        <span className="flex items-center gap-1">
+          <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px]">Ctrl+Shift+R</kbd>
+          پاک کردن
+        </span>
+      </div>
+
       <Card className="vibrant-card overflow-hidden">
         <div className="flex flex-col space-y-6 p-6">
           <div className="flex items-center justify-center space-x-2 space-x-reverse mb-4">
@@ -295,6 +345,13 @@ export default function BmiCalculator() {
                 <Calculator className={`ml-2 h-5 w-5 ${isCalculating ? 'animate-spin' : ''}`} />
                 {isCalculating ? 'در حال محاسبه...' : 'محاسبه BMI'}
               </Button>
+              {result && (
+                <Button onClick={copyResult} variant="outline"
+                  className="glass-effect flex items-center justify-center hover:-translate-y-1 transition-transform duration-300">
+                  {copied ? <Check className="ml-2 h-4 w-4 text-green-500" /> : <Copy className="ml-2 h-4 w-4" />}
+                  کپی نتیجه
+                </Button>
+              )}
               <Button onClick={handleReset} variant="outline"
                 className="glass-effect flex items-center justify-center hover:-translate-y-1 transition-transform duration-300">
                 <RotateCcw className="ml-2 h-4 w-4" />

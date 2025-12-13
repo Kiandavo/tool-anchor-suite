@@ -16,7 +16,7 @@ import { useToolKeyboardShortcuts } from '@/hooks/useToolKeyboardShortcuts';
 import { iranianBanks, loanCategories, getBanksByCategory, getBankColor, type BankLoanProduct, type LoanCategory } from '@/data/iranian-banks';
 import { 
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
-  ResponsiveContainer, Legend, Cell 
+  ResponsiveContainer, Legend, Cell, PieChart, Pie
 } from 'recharts';
 import {
   Table,
@@ -178,6 +178,15 @@ export default function LoanCalculator() {
       interest: loan.result?.totalInterest || 0,
     }));
   }, [comparisonLoans]);
+
+  const pieChartData = useMemo(() => {
+    if (!result) return [];
+    const amount = parseNumber(loanAmount);
+    return [
+      { name: 'اصل وام', value: amount, fill: 'hsl(var(--primary))' },
+      { name: 'سود', value: result.totalInterest, fill: 'hsl(var(--chart-2))' },
+    ];
+  }, [result, loanAmount]);
 
   const handleReset = useCallback(() => {
     setLoanAmount('');
@@ -508,17 +517,41 @@ ${selectedBank ? `بانک: ${selectedBank.bankName} - ${selectedBank.loanType}`
                       </Card>
                     </div>
 
-                    {/* Interest vs Principal */}
+                    {/* Interest vs Principal with Pie Chart */}
                     <Card>
                       <CardContent className="p-4 space-y-3">
-                        <div className="flex justify-between text-sm">
-                          <span>اصل وام</span>
-                          <span className="text-primary font-medium">{result.principalPercentage.toFixed(1)}%</span>
+                        <h4 className="font-medium text-sm text-center mb-2">نسبت اصل وام به سود</h4>
+                        <div className="h-40">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                              <Pie
+                                data={pieChartData}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={40}
+                                outerRadius={60}
+                                paddingAngle={2}
+                                dataKey="value"
+                                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                labelLine={false}
+                              >
+                                {pieChartData.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                                ))}
+                              </Pie>
+                              <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                            </PieChart>
+                          </ResponsiveContainer>
                         </div>
-                        <Progress value={result.principalPercentage} className="h-3" />
-                        <div className="flex justify-between text-sm">
-                          <span>سود</span>
-                          <span className="text-amber-500 font-medium">{result.interestPercentage.toFixed(1)}%</span>
+                        <div className="flex justify-around text-sm">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-primary" />
+                            <span>اصل وام: {result.principalPercentage.toFixed(1)}%</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(var(--chart-2))' }} />
+                            <span>سود: {result.interestPercentage.toFixed(1)}%</span>
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
